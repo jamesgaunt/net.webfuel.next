@@ -2,6 +2,7 @@ import _ from '../shared/underscore';
 import { HttpInterceptor, HttpHandler, HttpClient, HttpEvent, HttpResponse, HttpRequest, HttpHeaders } from '@angular/common/http';
 import { Observable, Observer, BehaviorSubject } from 'rxjs';
 import { retry } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 // import { GrowlService } from './growl.service';
 
 export interface ApiFile {
@@ -17,6 +18,7 @@ export interface ApiOptions {
   file?: ApiFile;
 }
 
+@Injectable()
 export class ApiService {
 
   // Needs to match the key in the AuthenticationService

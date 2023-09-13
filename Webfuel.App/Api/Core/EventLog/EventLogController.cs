@@ -9,7 +9,7 @@ namespace Webfuel.App.Api
 {
     [TypefuelController]
     [Route("api/[controller]")]
-    public class EventLogController : Controller
+    public class EventLogController : ControllerBase
     {
         private readonly IEventLogService EventLogService;
 

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+
+  <Entity Name="Widget">
+    <Key Name="Id" Type="guid" />
+
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="Age" Type="int" /> 
+    
+  </Entity>
+
+</Schema>

@@ -9,6 +9,10 @@ namespace Webfuel
             services.AddSingleton<IRepositoryAccessor<EventLog>, EventLogRepositoryAccessor>();
             services.AddSingleton<IRepositoryMapper<EventLog>, RepositoryDefaultMapper<EventLog>>();
             
+            services.AddSingleton<IWidgetRepository, WidgetRepository>();
+            services.AddSingleton<IRepositoryAccessor<Widget>, WidgetRepositoryAccessor>();
+            services.AddSingleton<IRepositoryMapper<Widget>, RepositoryDefaultMapper<Widget>>();
+            
         }
     }
 }

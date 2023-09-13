@@ -1,18 +1,7 @@
-export interface IEventLog {
+export interface IWidget {
     id: string;
-    level: number;
-    message: string;
-    source: string;
-    detail: string;
-    context: string;
-    entityId: string | null | null;
-    tenantId: string | null | null;
-    identityId: string;
-    ipAddress: string;
-    exception: string;
-    requestUrl: string;
-    requestMethod: string;
-    requestHeaders: string;
+    name: string;
+    age: number;
 }
 
 export interface IQueryResult<T> {
@@ -40,6 +29,23 @@ export interface IQueryFilter {
 export interface IQuerySort {
     field: string;
     direction: number;
+}
+
+export interface IEventLog {
+    id: string;
+    level: number;
+    message: string;
+    source: string;
+    detail: string;
+    context: string;
+    entityId: string | null | null;
+    tenantId: string | null | null;
+    identityId: string;
+    ipAddress: string;
+    exception: string;
+    requestUrl: string;
+    requestMethod: string;
+    requestHeaders: string;
 }
 
 

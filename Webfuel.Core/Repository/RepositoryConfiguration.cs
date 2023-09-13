@@ -19,7 +19,7 @@ namespace Webfuel
     [ServiceImplementation(typeof(IRepositoryConfiguration))]
     internal class RepositoryConfiguration: IRepositoryConfiguration
     {
-        internal RepositoryConfiguration(IConfiguration configuration)
+        public RepositoryConfiguration(IConfiguration configuration)
         {
             DatabaseSchema = configuration["Webfuel:Repository:DatabaseSchema"];
             ConnectionString = configuration["Webfuel:Repository:ConnectionString"];
