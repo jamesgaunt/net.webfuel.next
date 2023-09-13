@@ -8,6 +8,7 @@
     <SpaProxyServerUrl>https://localhost:44426</SpaProxyServerUrl>
     <SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>85708f9f-12c3-489f-ade2-3979537c06b2</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,9 +23,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\core\" />
     <Folder Include="ClientApp\src\app\api\" />
-    <Folder Include="Api\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Webfuel.Core\Webfuel.Core.csproj" />
   </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, DestroyRef, forwardRef, inject, Inp
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { debounceTime, noop, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import _ from 'shared/underscore';
 
 @Component({
   selector: 'number-input',

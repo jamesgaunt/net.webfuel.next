@@ -1,3 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
- 
+﻿using Webfuel.Tools.Datafuel;
+
+Console.WriteLine("Datafuel");
+SchemaGenerator.Generate(Schema.Load());
