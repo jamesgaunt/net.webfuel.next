@@ -1,0 +1,87 @@
+
+body {
+  background-color: #F8F8F6;
+}
+
+.chrome-wrap {
+  .chrome-side {
+    z-index: 1;
+    position: fixed;
+    width: 18rem;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(21, 30, 47,1);
+    padding-top: 3.75rem;
+    overflow-x: hidden;
+
+    .menu-list {
+      width: 18rem;
+
+      a {
+        color: #FFF;
+
+        .text {
+          display: inline-block;
+          padding-left: 0.3rem;
+        }
+
+        &:hover {
+          background-color: #1D283C;
+          border-right: 6px solid #2869FF;
+        }
+      }
+    }
+  }
+
+  .chrome-main {
+    z-index: 0;
+    position: relative;
+    padding: 4rem 1.5rem 6rem 19.5rem;
+    max-width: 100%;
+  }
+}
+
+.chrome.collapsed {
+  .chrome-side {
+    width: 3rem;
+
+    .menu-list {
+      width: auto;
+
+      a {
+        .text {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .chrome-main {
+    padding-left: 4.5rem;
+  }
+}
+
+.chrome.hidden {
+  .navbar {
+    display: none;
+  }
+
+  .chrome-side {
+    display: none;
+  }
+
+  .chrome-main {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 0;
+    margin: 0;
+
+    > .container {
+      max-width: unset;
+    }
+  }
+}

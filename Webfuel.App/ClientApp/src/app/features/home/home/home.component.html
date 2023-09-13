@@ -1,10 +1,61 @@
-<h1>Home Component</h1>
 
-<form [formGroup]="formData">
+<div class="container">
 
-  <text-input formControlName="email" placeholder="email" />
-</form>
+  <h1 class="title is-3">Home Component</h1>
+
+  <form [formGroup]="formData">
+    <div class="columns">
+      <div class="column">
+        <div class="field">
+          <label class="label">Name</label>
+          <div class="control">
+            <input class="input" type="text" placeholder="required" formControlName="name" />
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="field">
+          <label class="label">Age</label>
+          <div class="control has-icons-left">
+            <input class="input" type="number" placeholder="required" formControlName="name" />
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="columns">
+      <div class="column">
+        <div class="field">
+          <label class="label">Name</label>
+          <div class="control">
+            <div class="select">
+              <select>
+                <option>Select dropdown</option>
+                <option>With options</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <div class="field">
+          <label class="label">Age</label>
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox">
+              Remember me
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button class="button is-success" type="button" (click)="doSomething()">Do Something</button>
+    </div>
+  </form>
 
 
 
-<button type="button" (click)="doSomething()">Do Something</button>
+</div>

@@ -1,0 +1,44 @@
+<div class="chrome" [class.collapsed]="chromeCollapsed">
+  <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand" (click)="toggleChrome()">
+      <a class="navbar-item">
+        <h1 class="title is-4 has-text-white"><span class="icon"><i class="fas fa-bars"></i></span> &nbsp;RSS Leicester Project Database</h1>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown">
+          <a class="navbar-link">
+            james.gaunt@webfuel.com
+          </a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item">
+              <div style="position: relative">
+                <span class="icon"><i class="fas fa-fw fa-key"></i></span> <span>Change Password</span>
+              </div>
+            </a>
+            <a class="navbar-item">
+              <div style="position: relative">
+                <span class="icon"><i class="fas fa-fw fa-sign-out"></i></span> <span>Logout</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="chrome-wrap">
+    <div class="chrome-side">
+      <ul class="menu-list">
+        <li>
+          <a ><span class="icon"><i class="fas fa-envelope"></i></span> <span class="text">An Option</span></a>
+        </li>
+      </ul>
+    </div>
+    <div class="chrome-main">
+      <div class="container">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

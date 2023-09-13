@@ -14,8 +14,8 @@ export class HomeComponent {
   }
 
   formData = new FormGroup({
-    email: new FormControl('', { nonNullable: true }),
-    name: new FormControl('', { nonNullable: true })
+    name: new FormControl('', { nonNullable: true }),
+    age: new FormControl(null),
   });
 
   doSomething() {
