@@ -2,7 +2,6 @@
 
 .button {
   display: inline-flex;
-  cursor: pointer;
   justify-content: center;
   align-items: center;
   border: none;
@@ -12,7 +11,7 @@
   color: var(--palette-text);
   background-color: #FFF;
   border: 1px solid #dbdbdb;
-
+  white-space: nowrap;
 
   &.is-success {
     color: var(--palette-success-contrast);

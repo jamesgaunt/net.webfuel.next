@@ -20,7 +20,7 @@ export class DialogService {
     options = options || {};
 
     const dialogRef = this.dialog.open<TResult, TData, unknown>(component, {
-      data: options.data
+      data: options.data,
     });
   }
 }

@@ -3,7 +3,8 @@
 .table {
   border: 1px solid #dbdbdb;
   background-color: #FFF;
-  padding: 0.5rem;
+  padding: 0 0.5rem 0.5rem 0.5rem;
+  overflow-x: auto;
 
   table {
     width: 100%;
@@ -12,14 +13,23 @@
     th, td {
       text-align: left;
       padding: 0.5em 0.75em;
-      vertical-align: top;
+
+      &.is-narrow {
+        width: 1px;
+      }
+
+      &.is-right {
+          text-align: right;
+      }
     }
 
     th {
+      vertical-align: middle;
       border-bottom: 2px solid var(--border-color);
     }
 
     td {
+      vertical-align: top;
       border-top: 1px solid var(--border-color);
     }
 

@@ -12,57 +12,7 @@
     </ul>
   </div>
 
-  <form class="form" [formGroup]="formData">
-    <div class="grid has-columns-2">
-      <div class="field">
-        <label class="label">Name</label>
-        <input class="input" type="text" placeholder="required" formControlName="name" />
-      </div>
-      <div class="field">
-        <label class="label">Age</label>
-        <div class="control">
-          <div class="icon"><i class="fas fa-envelope"></i></div>
-          <input class="input" type="number" placeholder="required" formControlName="name" />
-          <button class="button is-success"><i class="fal fa-calendar-alt"></i></button>
-        </div>
-      </div>
-      <div class="field">
-        <label class="label">Name</label>
-        <select class="select">
-          <option>Select dropdown</option>
-          <option>With options</option>
-        </select>
-      </div>
-      <div class="field">
-        <label class="label">Age</label>
-        <label class="checkbox">
-          <input type="checkbox">
-          Remember me
-        </label>
-      </div>
-      <div class="field">
-        <div class="radio-group">
-          <label class="radio">
-            <input type="radio" name="rsvp">
-            Going
-          </label>
-          <label class="radio">
-            <input type="radio" name="rsvp">
-            Not going
-          </label>
-          <label class="radio" disabled>
-            <input type="radio" name="rsvp" disabled>
-            Maybe
-          </label>
-        </div>
-      </div>
-      <div class="buttons">
-        <button class="button is-success" type="button" (click)="doSomething()">Do Something</button>
-        <button class="button is-danger" type="button" (click)="openDialog()">Dialog</button>
-        <button class="button" type="button" (click)="isOpen = !isOpen" cdkOverlayOrigin #trigger="cdkOverlayOrigin">Overlay</button>
-      </div>
-    </div>
-  </form>
+  <button class="button" type="button" (click)="isOpen = !isOpen" cdkOverlayOrigin #trigger="cdkOverlayOrigin">Overlay</button>
 
   <div class="table">
     <table>

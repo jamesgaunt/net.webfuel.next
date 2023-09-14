@@ -5,3 +5,12 @@ html {
   font-family: var(--font-family);
   font-size: 16px;
 }
+
+a, button {
+    cursor: pointer;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+

@@ -43,7 +43,7 @@ namespace net.app.Api
         }
 
         [HttpPost("")]
-        public async Task<Widget> Insert([FromBody]Widget widget)
+        public async Task<Widget> Insert([Omit("Id")][FromBody]Widget widget)
         {
             return await WidgetService.InsertWidgetAsync(widget: widget);
         }

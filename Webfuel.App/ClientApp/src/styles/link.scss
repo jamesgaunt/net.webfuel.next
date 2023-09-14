@@ -1,0 +1,28 @@
+@import 'config.scss';
+
+.link {
+  font-weight: bold;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &.is-primary {
+    color: var(--palette-primary);
+  }
+
+  &.is-success {
+    color: var(--palette-success);
+  }
+
+  &.is-danger {
+    color: var(--palette-danger);
+  }
+}
+
+.links {
+  .link + .link {
+    margin-left: calc(var(--gap) / 2);
+  }
+}
+

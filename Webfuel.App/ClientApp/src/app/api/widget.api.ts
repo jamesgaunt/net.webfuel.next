@@ -18,7 +18,7 @@ export class WidgetApi {
         return this.apiService.GET("api/Widget/" + params.widgetId + "?r=" + Math.random(), options).pipe(map((res) => <IWidget>res.body));
     }
     
-    public insert (params: { widget: IWidget }, options?: ApiOptions): Observable<IWidget> {
+    public insert (params: { widget: Omit<IWidget, "id"> }, options?: ApiOptions): Observable<IWidget> {
         options = options || {};
         return this.apiService.POST("api/Widget?r=" + Math.random(), params.widget, options).pipe(map((res) => <IWidget>res.body));
     }
