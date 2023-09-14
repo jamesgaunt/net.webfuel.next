@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\src\app\api\" />
+    <Folder Include="ClientApp\src\app\shared\table\" />
   </ItemGroup>
 
   <ItemGroup>
