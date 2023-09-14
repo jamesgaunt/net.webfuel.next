@@ -1,11 +1,11 @@
+// External
+@import '@angular/cdk/overlay-prebuilt.css';
 
 // Reset
-
 @import 'normalize.scss';
 @import 'reset.scss';
 
 // Configuration Variables
-
 @import 'config.scss';
 
 // Features
@@ -17,5 +17,8 @@
 @import 'table.scss';
 @import 'form.scss';
 @import 'tabs.scss';
+@import 'dialog.scss';
+
+
 
 

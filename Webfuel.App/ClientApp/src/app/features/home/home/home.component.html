@@ -58,11 +58,10 @@
       </div>
       <div class="buttons">
         <button class="button is-success" type="button" (click)="doSomething()">Do Something</button>
-        <button class="button is-danger" type="button" (click)="doSomething()">Delete</button>
-        <button class="button" type="button" (click)="doSomething()">Cancel</button>
+        <button class="button is-danger" type="button" (click)="openDialog()">Dialog</button>
+        <button class="button" type="button" (click)="isOpen = !isOpen" cdkOverlayOrigin #trigger="cdkOverlayOrigin">Overlay</button>
       </div>
     </div>
-
   </form>
 
   <div class="table">
@@ -95,3 +94,12 @@
   </div>
 
 </div>
+
+
+<ng-template cdkConnectedOverlay cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop" [cdkConnectedOverlayOrigin]="trigger" [cdkConnectedOverlayOpen]="isOpen" [cdkConnectedOverlayHasBackdrop]="true" (detach)="isOpen=false" (backdropClick)="isOpen=false">
+  <ul style="margin: 0; background-color: #FFF; padding: 20px; border: 1px solid #dadada; box-shadow: 2px 2px 4px RGBA(0, 0, 0, 0.3)">
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+  </ul>
+</ng-template>

@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { DialogModule } from '@angular/cdk/dialog';
 
 import { ChromeComponent } from './chrome/chrome.component';
 
@@ -14,6 +16,8 @@ import { NumberInputComponent } from './form/number-input/number-input.component
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
+    OverlayModule,
+    DialogModule,
   ],
   declarations: [
 
@@ -27,6 +31,8 @@ import { NumberInputComponent } from './form/number-input/number-input.component
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
+    OverlayModule,
+    DialogModule,
 
     ChromeComponent,
 

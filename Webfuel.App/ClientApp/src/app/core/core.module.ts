@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 
 import { ApiService } from './api.service';
+import { DialogService } from './dialog.service';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { ApiService } from './api.service';
   ],
   providers: [
     ApiService,
+    DialogService
   ]
 })
 export class CoreModule {

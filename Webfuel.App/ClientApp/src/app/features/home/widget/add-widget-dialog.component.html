@@ -1,0 +1,58 @@
+<div class="dialog">
+  <div class="dialog-head">
+    Add Widget
+  </div>
+  <div class="dialog-body">
+    <form class="form" [formGroup]="formData">
+      <div class="grid has-columns-2">
+        <div class="field">
+          <label class="label">Name</label>
+          <input class="input" type="text" placeholder="required" formControlName="name" />
+        </div>
+        <div class="field">
+          <label class="label">Age</label>
+          <div class="control">
+            <div class="icon"><i class="fas fa-envelope"></i></div>
+            <input class="input" type="number" placeholder="required" formControlName="name" />
+            <button class="button is-success"><i class="fal fa-calendar-alt"></i></button>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Name</label>
+          <select class="select">
+            <option>Select dropdown</option>
+            <option>With options</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="label">Age</label>
+          <label class="checkbox">
+            <input type="checkbox">
+            Remember me
+          </label>
+        </div>
+        <div class="field">
+          <div class="radio-group">
+            <label class="radio">
+              <input type="radio" name="rsvp">
+              Going
+            </label>
+            <label class="radio">
+              <input type="radio" name="rsvp">
+              Not going
+            </label>
+            <label class="radio" disabled>
+              <input type="radio" name="rsvp" disabled>
+              Maybe
+            </label>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="dialog-buttons">
+    <button type="button" class="is-success" (click)="save()">Save</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+  </div>
+</div>
+
