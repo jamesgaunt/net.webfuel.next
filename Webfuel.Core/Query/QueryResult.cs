@@ -5,16 +5,15 @@ using System.Text;
 namespace Webfuel
 {
     [TypefuelInterface]
-    public class QueryResult<TItem, TQuery>
+    public class QueryResult<TItem, TQuery> where TQuery: class
     {
-        public QueryResult(TQuery query)
+        public QueryResult()
         {
             Items = new List<TItem>();
             TotalCount = 0;
-            Query = query;
         }
 
-        public QueryResult(TQuery query, List<TItem> items, int? totalCount = null)
+        public QueryResult(List<TItem> items, int? totalCount = null, TQuery? query = null)
         {
             Items = items;
             TotalCount = totalCount ?? items.Count;
@@ -25,6 +24,6 @@ namespace Webfuel
 
         public int TotalCount { get; set; }
 
-        public TQuery Query { get; set; }
+        public TQuery? Query { get; set; }
     }
 }

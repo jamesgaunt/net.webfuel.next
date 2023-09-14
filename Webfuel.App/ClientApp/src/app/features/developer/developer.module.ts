@@ -4,7 +4,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { DeveloperRoutingModule } from './developer-routing.module';
 
 import { WidgetListComponent } from './widget/widget-list/widget-list.component';
-import { WidgetAddDialogComponent } from './widget/widget-add-dialog/widget-add-dialog.component';
+import { WidgetDialogComponent } from './widget/widget-dialog/widget-dialog.component';
 
 
 @NgModule({
@@ -15,7 +15,7 @@ import { WidgetAddDialogComponent } from './widget/widget-add-dialog/widget-add-
   ],
   declarations: [
     WidgetListComponent,
-    WidgetAddDialogComponent
+    WidgetDialogComponent
   ]
 })
 export class DeveloperModule { }

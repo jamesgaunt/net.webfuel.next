@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Microsoft.Data.SqlClient;
 
 namespace Webfuel
 {
@@ -90,7 +90,7 @@ namespace Webfuel
         }
         public async Task<RepositoryQueryResult<EventLog>> QueryEventLogAsync(RepositoryQuery query)
         {
-            return await RepositoryQueryService.ExecuteQueryAsync("QueryEventLog", query, new EventLogRepositoryAccessor());
+            return await RepositoryQueryService.ExecuteQueryAsync("RepositoryQueryEventLog", query, new EventLogRepositoryAccessor());
         }
         public async Task<EventLog?> GetEventLogAsync(Guid id)
         {

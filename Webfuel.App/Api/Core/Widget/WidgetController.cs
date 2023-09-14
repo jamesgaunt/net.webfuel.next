@@ -25,17 +25,6 @@ namespace net.app.Api
             return "Hello!";
         }
 
-        [HttpPost("do-something")]
-        public async Task DoSomething()
-        {
-            var entity = await WidgetService.InsertWidgetAsync(new Widget { Name = "Bob", Age = 42 });
-
-            entity.Name = "Sid";
-            await WidgetService.UpdateWidgetAsync(entity);
-
-            await WidgetService.DeleteWidgetAsync(entity.Id);
-        }
-
         [HttpGet("{widgetId:guid}")]
         public async Task<Widget> Get(Guid widgetId)
         {
@@ -43,7 +32,7 @@ namespace net.app.Api
         }
 
         [HttpPost("")]
-        public async Task<Widget> Insert([Omit("Id")][FromBody]Widget widget)
+        public async Task<Widget> Insert([FromBody]Widget widget)
         {
             return await WidgetService.InsertWidgetAsync(widget: widget);
         }

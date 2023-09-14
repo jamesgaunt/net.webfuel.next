@@ -30,15 +30,4 @@ namespace Webfuel
     {
         public string Signature { get; set; } = String.Empty;
     }
-
-    [AttributeUsage(AttributeTargets.Parameter)]
-    public class OmitAttribute: Attribute
-    {
-        public OmitAttribute(params string[] keys)
-        {
-            Keys.AddRange(Keys);
-        }
-
-        public List<string> Keys { get; } = new List<string>();
-    }
 }

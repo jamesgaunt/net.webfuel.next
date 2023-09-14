@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Microsoft.Data.SqlClient;
 
 namespace Webfuel
 {
@@ -66,7 +66,7 @@ namespace Webfuel
         }
         public async Task<RepositoryQueryResult<Widget>> QueryWidgetAsync(RepositoryQuery query)
         {
-            return await RepositoryQueryService.ExecuteQueryAsync("QueryWidget", query, new WidgetRepositoryAccessor());
+            return await RepositoryQueryService.ExecuteQueryAsync("RepositoryQueryWidget", query, new WidgetRepositoryAccessor());
         }
         public async Task<Widget?> GetWidgetAsync(Guid id)
         {

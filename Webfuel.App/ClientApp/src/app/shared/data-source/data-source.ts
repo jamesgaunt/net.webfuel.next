@@ -11,11 +11,11 @@ export class DataSource<TItem, TQuery extends IQuery> {
 
   }
 
-  // Query
+  private query: TQuery | undefined;
 
-  query: TQuery | undefined;
+  private queryResult: IQueryResult<TItem, TQuery> | undefined;
 
-  queryResult: IQueryResult<TItem, TQuery> | undefined;
+
 
 
   // Sort Helpers

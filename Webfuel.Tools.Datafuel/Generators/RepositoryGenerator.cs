@@ -33,9 +33,9 @@ namespace Webfuel.Tools.Datafuel
         {
             sb.WriteLine("using System;");
             sb.WriteLine("using System.Linq;");
-            sb.WriteLine("using System.Data.SqlClient;");
             sb.WriteLine("using System.Threading.Tasks;");
             sb.WriteLine("using System.Collections.Generic;");
+            sb.WriteLine("using Microsoft.Data.SqlClient;");
             sb.WriteLine("");
         }
 
@@ -59,7 +59,7 @@ namespace Webfuel.Tools.Datafuel
                     }
                 }
 
-                sb.WriteLine($"Task<QueryResult<{entity.Name}>> Query{entity.Name}Async(Query query);");
+                sb.WriteLine($"Task<RepositoryQueryResult<{entity.Name}>> Query{entity.Name}Async(RepositoryQuery query);");
 
                 foreach (var query in entity.Queries)
                     QueryInterface(sb, query);
@@ -180,9 +180,9 @@ namespace Webfuel.Tools.Datafuel
 
         static void Query(ScriptBuilder sb, SchemaEntity entity)
         {
-            using (sb.OpenBrace($"public async Task<QueryResult<{entity.Name}>> Query{entity.Name}Async(Query query)"))
+            using (sb.OpenBrace($"public async Task<RepositoryQueryResult<{entity.Name}>> Query{entity.Name}Async(RepositoryQuery query)"))
             {
-                sb.WriteLine($"return await RepositoryQueryService.ExecuteQueryAsync(\"Query{entity.Name}\", query, new {entity.Name}RepositoryAccessor());");
+                sb.WriteLine($"return await RepositoryQueryService.ExecuteQueryAsync(\"RepositoryQuery{entity.Name}\", query, new {entity.Name}RepositoryAccessor());");
             }
         }
 

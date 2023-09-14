@@ -12,7 +12,7 @@ namespace Webfuel.Tools.Datafuel
 
         public static string DatabaseSchema { get { return "next"; } }
 
-        public static string DatabaseServer { get { return "Data Source=JAMES-RTX\\SQLEXPRESS;integrated Security=true"; } }
+        public static string DatabaseServer { get { return "Data Source=JAMES-RTX\\SQLEXPRESS;Integrated Security=true;TrustServerCertificate=true"; } }
 
         // Solution
 

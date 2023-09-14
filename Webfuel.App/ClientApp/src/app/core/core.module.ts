@@ -4,6 +4,7 @@ import { SharedModule } from '../shared/shared.module';
 
 import { ApiService } from './api.service';
 import { DialogService } from './dialog.service';
+import { GrowlService } from './growl.service';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { DialogService } from './dialog.service';
   ],
   providers: [
     ApiService,
-    DialogService
+    DialogService,
+    GrowlService
   ]
 })
 export class CoreModule {

@@ -2,12 +2,12 @@
 
 .form {
   margin: var(--gap) 0 var(--gap) 0;
+}
 
-  &.attempted {
-    .input.ng-invalid {
-        border-color: var(--palette-danger);
-        box-shadow: inset 0 0 2px var(--palette-danger);
-    }
+.validating {
+  .input.ng-invalid {
+    border-color: var(--palette-danger);
+    box-shadow: inset 0 0 2px var(--palette-danger);
   }
 }
 

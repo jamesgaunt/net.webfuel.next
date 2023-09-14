@@ -49,7 +49,7 @@ export interface IEventLog {
 export interface IQueryResult<TItem, TQuery> {
     items: Array<TItem>;
     totalCount: number;
-    query: TQuery;
+    query: TQuery | null;
 }
 
 export interface IQuery {

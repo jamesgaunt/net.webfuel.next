@@ -33,5 +33,5 @@
 :root {
   --border-color: #dbdbdb;
   --border-color-hover: #ababab;
-  --border-color-focus: #337ab7;
+  --border-color-focus: var(--palette-primary);
 }
