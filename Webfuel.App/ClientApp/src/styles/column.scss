@@ -1,0 +1,19 @@
+@import 'config.scss';
+
+.columns {
+  display: flex;
+  flex-flow: row wrap;
+  gap: var(--gap);
+
+  .column {
+    flex: 1;
+
+    &.is-050, &.is-half {
+      width: 50%;
+    }
+
+    &.is-025 {
+      width: 25%;
+    }
+  }
+}

@@ -1,0 +1,34 @@
+
+
+:root {
+  --container-breakpoint-sm: 768px;
+  --container-breakpoint-md: 992px;
+  --container-breakpoint-lg: 1200px;
+}
+
+:root {
+  --palette-text: #333;
+  --palette-success: hsl(173, 70%, 35%);
+  --palette-success-hover: hsl(173, 70%, 30%);
+  --palette-success-contrast: #FFF;
+  --palette-warning: hsl(25, 100%, 40%);
+  --palette-warning-hover: hsl(25, 100%, 35%);
+  --palette-warning-contrast: #FFF;
+  --palette-danger: hsl(351, 52%, 43%);
+  --palette-danger-hover: hsl(351, 52%, 38%);
+  --palette-danger-contrast: #FFF;
+}
+
+:root {
+  --font-family: "Poppins", sans-serif;
+}
+
+:root {
+  --gap: 1.0rem;
+}
+
+:root {
+  --border-color: #dbdbdb;
+  --border-color-hover: #ababab;
+  --border-color-focus: #337ab7;
+}

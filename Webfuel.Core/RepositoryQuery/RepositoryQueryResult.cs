@@ -4,27 +4,22 @@ using System.Text;
 
 namespace Webfuel
 {
-    [TypefuelInterface]
-    public class QueryResult<TItem, TQuery>
+    public class RepositoryQueryResult<TItem>
     {
-        public QueryResult(TQuery query)
+        public RepositoryQueryResult()
         {
             Items = new List<TItem>();
             TotalCount = 0;
-            Query = query;
         }
 
-        public QueryResult(TQuery query, List<TItem> items, int? totalCount = null)
+        public RepositoryQueryResult(List<TItem> items, int? totalCount = null)
         {
             Items = items;
             TotalCount = totalCount ?? items.Count;
-            Query = query;
         }
 
         public List<TItem> Items { get; set; }
 
         public int TotalCount { get; set; }
-
-        public TQuery Query { get; set; }
     }
 }

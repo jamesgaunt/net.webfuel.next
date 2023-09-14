@@ -26,7 +26,7 @@ namespace Webfuel.App.Api
 
         [HttpPost("query")]
         [TypefuelAction(RetryCount = 3)]
-        public async Task<QueryResult<EventLog>> Query([FromBody] Query query)
+        public async Task<RepositoryQueryResult<EventLog>> Query([FromBody] RepositoryQuery query)
         {
             return await EventLogService.QueryEventLogAsync(query);
         }

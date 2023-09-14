@@ -14,7 +14,7 @@ namespace Webfuel
         Task<EventLog> UpdateEventLogAsync(EventLog updated, EventLog original);
         Task<EventLog> UpdateEventLogAsync(EventLog updated, EventLog original, IEnumerable<string> properties);
         Task DeleteEventLogAsync(Guid key);
-        Task<QueryResult<EventLog>> QueryEventLogAsync(Query query);
+        Task<RepositoryQueryResult<EventLog>> QueryEventLogAsync(RepositoryQuery query);
         Task<EventLog?> GetEventLogAsync(Guid id);
         Task<EventLog> RequireEventLogAsync(Guid id);
         Task<int> CountEventLogAsync();
@@ -88,7 +88,7 @@ namespace Webfuel
         {
             await RepositoryService.ExecuteDeleteAsync<EventLog>("DeleteEventLog", key);
         }
-        public async Task<QueryResult<EventLog>> QueryEventLogAsync(Query query)
+        public async Task<RepositoryQueryResult<EventLog>> QueryEventLogAsync(RepositoryQuery query)
         {
             return await RepositoryQueryService.ExecuteQueryAsync("QueryEventLog", query, new EventLogRepositoryAccessor());
         }

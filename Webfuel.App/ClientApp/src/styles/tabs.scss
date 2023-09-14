@@ -1,0 +1,41 @@
+@import 'config.scss';
+
+.tabs {
+  display: flex;
+  justify-content: space-between;
+
+  ul {
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 0;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #dbdbdb;
+
+    li {
+      display: flex;
+      padding: 0;
+      margin: 0;
+
+      a {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #dbdbdb;
+        margin-bottom: -1px;
+        padding: 0.5em 1em;
+        cursor: pointer;
+
+        &:hover {
+          border-bottom-color: #485fc7;
+        }
+      }
+
+      &.is-active a {
+        border-bottom-color: #485fc7;
+        color: #485fc7;
+      }
+    }
+  }
+}

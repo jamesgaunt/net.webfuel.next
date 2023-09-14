@@ -4,26 +4,24 @@ export interface IWidget {
     age: number;
 }
 
-export interface IQueryResult<T> {
-    items: Array<T>;
+export interface IRepositoryQueryResult<TItem> {
+    items: Array<TItem>;
     totalCount: number;
 }
 
-export interface IQuery {
+export interface IRepositoryQuery {
     projection: Array<string>;
-    search: string | null;
-    where: string | null;
-    filters: Array<IQueryFilter>;
+    filters: Array<IRepositoryQueryFilter>;
     sort: Array<IQuerySort>;
     skip: number;
     take: number;
 }
 
-export interface IQueryFilter {
+export interface IRepositoryQueryFilter {
     field: string;
     op: string;
     value: any | null;
-    filters: Array<IQueryFilter> | null;
+    filters: Array<IRepositoryQueryFilter> | null;
 }
 
 export interface IQuerySort {
@@ -46,6 +44,18 @@ export interface IEventLog {
     requestUrl: string;
     requestMethod: string;
     requestHeaders: string;
+}
+
+export interface IQueryResult<TItem, TQuery> {
+    items: Array<TItem>;
+    totalCount: number;
+    query: TQuery;
+}
+
+export interface IQuery {
+    sort: Array<IQuerySort>;
+    skip: number;
+    take: number;
 }
 
 

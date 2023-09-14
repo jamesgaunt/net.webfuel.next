@@ -17,7 +17,7 @@ namespace Webfuel
 
         Task DeleteWidgetAsync(Guid widgetId);
 
-        Task<QueryResult<Widget>> QueryWidgetAsync(Query query);
+        Task<RepositoryQueryResult<Widget>> QueryWidgetAsync(RepositoryQuery query);
     }
 
     [ServiceImplementation(typeof(IWidgetService))]
@@ -52,7 +52,7 @@ namespace Webfuel
             await WidgetRepository.DeleteWidgetAsync(widgetId);
         }
 
-        public async Task<QueryResult<Widget>> QueryWidgetAsync(Query query)
+        public async Task<RepositoryQueryResult<Widget>> QueryWidgetAsync(RepositoryQuery query)
         {
             return await WidgetRepository.QueryWidgetAsync(query);
         }

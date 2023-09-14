@@ -10,7 +10,7 @@ namespace Webfuel
     {
         Task<EventLog> InsertEventLogAsync(EventLog eventLog);
 
-        Task<QueryResult<EventLog>> QueryEventLogAsync(Query query);
+        Task<RepositoryQueryResult<EventLog>> QueryEventLogAsync(RepositoryQuery query);
     }
 
     [ServiceImplementation(typeof(IEventLogService))]
@@ -28,7 +28,7 @@ namespace Webfuel
             return await EventLogRepository.InsertEventLogAsync(eventLog);
         }
 
-        public async Task<QueryResult<EventLog>> QueryEventLogAsync(Query query)
+        public async Task<RepositoryQueryResult<EventLog>> QueryEventLogAsync(RepositoryQuery query)
         {
             return await EventLogRepository.QueryEventLogAsync(query);
         }

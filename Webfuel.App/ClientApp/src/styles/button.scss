@@ -1,0 +1,58 @@
+@import 'config.scss';
+
+.button {
+  display: inline-flex;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  height: 2.5em;
+  padding: 0 1em 0 1em;
+  transition: background-color 0.25s ease;
+  color: var(--palette-text);
+  background-color: #FFF;
+  border: 1px solid #dbdbdb;
+
+
+  &.is-success {
+    color: var(--palette-success-contrast);
+    background-color: var(--palette-success);
+    border-color: var(--palette-success);
+
+    &:hover, &:focus {
+      background-color: var(--palette-success-hover);
+    }
+  }
+
+  &.is-warning {
+    color: var(--palette-warning-contrast);
+    background-color: var(--palette-warning);
+    border-color: var(--palette-warning);
+
+    &:hover, &:focus {
+      background-color: var(--palette-warning-hover);
+    }
+  }
+
+  &.is-danger {
+    color: var(--palette-danger-contrast);
+    background-color: var(--palette-danger);
+    border-color: var(--palette-danger);
+
+    &:hover, &:focus {
+      background-color: var(--palette-danger-hover);
+    }
+  }
+
+  &.is-small {
+    font-size: 0.8em;
+    height: 2.0em;
+    padding: 0 0.5em 0 0.5em;
+  }
+}
+
+.buttons {
+    .button + .button {
+        margin-left: calc(var(--gap) / 2);
+    }
+}

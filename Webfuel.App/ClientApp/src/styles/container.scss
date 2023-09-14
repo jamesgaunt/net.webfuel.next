@@ -1,0 +1,26 @@
+@import 'config.scss';
+
+.container {
+    margin: auto;
+    max-width: var(--container-breakpoint-lg);
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+@media (min-width: var(---container-breakpoint-lg)) {
+    .container {
+        max-width: var(--container-breakpoint-md);
+    }
+}
+
+@media (min-width: var(---container-breakpoint-md)) {
+  .container {
+    max-width: var(--container-breakpoint-sm);
+  }
+}
+
+@media (min-width: var(---container-breakpoint-sm)) {
+  .container {
+    max-width: 100%;
+  }
+}

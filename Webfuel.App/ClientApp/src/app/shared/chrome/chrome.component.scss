@@ -1,87 +1,65 @@
+@import '/src/styles/config.scss';
 
-body {
-  background-color: #F8F8F6;
-}
+.chrome {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
 
-.chrome-wrap {
-  .chrome-side {
-    z-index: 1;
-    position: fixed;
-    width: 18rem;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    background-color: rgba(21, 30, 47,1);
-    padding-top: 3.75rem;
-    overflow-x: hidden;
+  .chrome-head {
+  }
 
-    .menu-list {
-      width: 18rem;
+  .chrome-body {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    overflow: hidden;
 
-      a {
-        color: #FFF;
+    .chrome-side {
+      overflow-y: auto;
+      display: flex;
+    }
 
-        .text {
-          display: inline-block;
-          padding-left: 0.3rem;
-        }
-
-        &:hover {
-          background-color: #1D283C;
-          border-right: 6px solid #2869FF;
-        }
-      }
+    .chrome-main {
+      overflow-y: auto;
     }
   }
-
-  .chrome-main {
-    z-index: 0;
-    position: relative;
-    padding: 4rem 1.5rem 6rem 19.5rem;
-    max-width: 100%;
-  }
 }
 
-.chrome.collapsed {
-  .chrome-side {
-    width: 3rem;
-
-    .menu-list {
-      width: auto;
-
-      a {
-        .text {
-          display: none;
-        }
-      }
-    }
-  }
-
-  .chrome-main {
-    padding-left: 4.5rem;
-  }
+.navbar {
+  background: #000;
+  color: #FFf;
+  padding: 0.3rem 1rem 0.3rem 1rem;
 }
 
-.chrome.hidden {
-  .navbar {
-    display: none;
-  }
+.sidebar {
+  background: #000;
+  color: #FFf;
+  width: 300px;
 
-  .chrome-side {
-    display: none;
-  }
-
-  .chrome-main {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 0;
+  .sidebar-list {
+    list-style-type: none;
     margin: 0;
+    padding: 0;
 
-    > .container {
-      max-width: unset;
+    li {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+
+      a {
+        display: block;
+        padding: 1rem;
+        border-right: 6px solid transparent;
+
+        i {
+          margin-right: 0.75rem;
+        }
+      }
+
+      a:hover, &.is-active a {
+        background-color: #333;
+        border-right: 6px solid #0de3f6;
+      }
     }
   }
 }

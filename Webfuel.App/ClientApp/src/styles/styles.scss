@@ -1,5 +1,21 @@
-@import 'bulma.scss';
-@import 'bulma/bulma.sass';
+
+// Reset
+
+@import 'normalize.scss';
+@import 'reset.scss';
+
+// Configuration Variables
+
+@import 'config.scss';
+
+// Features
+@import 'global.scss';
+@import 'container.scss';
+@import 'column.scss';
+@import 'grid.scss';
+@import 'button.scss';
+@import 'table.scss';
 @import 'form.scss';
+@import 'tabs.scss';
 
 
