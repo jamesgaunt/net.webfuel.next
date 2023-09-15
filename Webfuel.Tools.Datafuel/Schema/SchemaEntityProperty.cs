@@ -121,6 +121,8 @@ namespace Webfuel.Tools.Datafuel
                     return new SchemaEntityPropertyEnum(entity, element, nullable, tag);
                 case "flags":
                     return new SchemaEntityPropertyEnum(entity, element, nullable, tag) { Flags = true };
+                case "date":
+                    return new SchemaEntityPropertyDate(entity, element, nullable);
 
                 case "meta:name":
                     return new SchemaEntityPropertyString(entity, element, nullable, "64");

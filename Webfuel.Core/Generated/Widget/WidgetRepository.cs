@@ -48,6 +48,7 @@ namespace Webfuel
             var _properties = new List<string>();
             if(updated.Name != original.Name) _properties.Add("Name");
             if(updated.Age != original.Age) _properties.Add("Age");
+            if(updated.ShippingDate != original.ShippingDate) _properties.Add("ShippingDate");
             if(_properties.Count == 0) return updated;
             return await RepositoryService.ExecuteUpdateAsync("UpdateWidget", updated, _properties);
         }
@@ -57,6 +58,7 @@ namespace Webfuel
             var _properties = new List<string>();
             if(properties.Contains("Name") && updated.Name != original.Name) _properties.Add("Name");
             if(properties.Contains("Age") && updated.Age != original.Age) _properties.Add("Age");
+            if(properties.Contains("ShippingDate") && updated.ShippingDate != original.ShippingDate) _properties.Add("ShippingDate");
             if(_properties.Count == 0) return updated;
             return await RepositoryService.ExecuteUpdateAsync("UpdateWidget", updated, _properties);
         }

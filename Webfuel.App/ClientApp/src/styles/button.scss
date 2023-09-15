@@ -13,33 +13,15 @@
   border: 1px solid #dbdbdb;
   white-space: nowrap;
 
-  &.is-success {
-    color: var(--palette-success-contrast);
-    background-color: var(--palette-success);
-    border-color: var(--palette-success);
+  @each $p in $paletteAction {
+    &.is-#{$p} {
+      color: var(--palette-#{$p}-contrast);
+      background-color: var(--palette-#{$p});
+      border-color: var(--palette-#{$p});
 
-    &:hover, &:focus {
-      background-color: var(--palette-success-hover);
-    }
-  }
-
-  &.is-warning {
-    color: var(--palette-warning-contrast);
-    background-color: var(--palette-warning);
-    border-color: var(--palette-warning);
-
-    &:hover, &:focus {
-      background-color: var(--palette-warning-hover);
-    }
-  }
-
-  &.is-danger {
-    color: var(--palette-danger-contrast);
-    background-color: var(--palette-danger);
-    border-color: var(--palette-danger);
-
-    &:hover, &:focus {
-      background-color: var(--palette-danger-hover);
+      &:hover, &:focus {
+        background-color: var(--palette-#{$p}-hover);
+      }
     }
   }
 

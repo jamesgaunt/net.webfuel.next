@@ -28,6 +28,225 @@ export default class Underscore {
     return (typeof value === 'object' && value !== null && !Underscore.isFunction(value));
   }
 
+  // Collection Operators
+
+  static find<T>(arr: Array<T>, iter: (item: T) => boolean): T | undefined {
+    if (!arr)
+      return undefined;
+    for (var i = 0; i < arr.length; i++) {
+      if (iter(arr[i]) === true)
+        return arr[i];
+    }
+    return undefined;
+  }
+
+  static findIndex<T>(arr: Array<T>, iter: (item: T) => boolean) {
+    if (!arr)
+      return -1;
+    for (var i = 0; i < arr.length; i++) {
+      if (iter(arr[i]) === true)
+        return i;
+    }
+    return -1;
+  }
+
+  static some<T>(arr: Array<T>, iter: (item: T) => boolean) {
+    if (!arr)
+      return false;
+    for (var i = 0; i < arr.length; i++) {
+      if (iter(arr[i]) === true)
+        return true;
+    }
+    return false;
+  }
+
+  static includes<T>(arr: Array<T>, item: T) {
+    return Underscore.some(arr, (p) => p == item);
+  }
+
+  static none<T>(arr: Array<T>, iter: (item: T) => boolean) {
+    if (!arr)
+      return true;
+    for (var i = 0; i < arr.length; i++) {
+      if (iter(arr[i]) === true)
+        return false;
+    }
+    return true;
+  }
+
+  static all<T>(arr: Array<T>, iter: (item: T) => boolean) {
+    if (!arr)
+      return false;
+    for (var i = 0; i < arr.length; i++) {
+      if (iter(arr[i]) === false)
+        return false;
+    }
+    return true;
+  }
+
+  static forEach<T>(arr: Array<T>, iter: (item: T) => any) {
+    if (!arr)
+      return;
+    for (var i = 0; i < arr.length; i++) {
+      if (iter(arr[i]) === false)
+        break;
+    }
+  }
+
+  static filter<T>(arr: Array<T>, iter: (item: T) => boolean) {
+    var res: Array<T> = [];
+    if (!arr)
+      return res;
+    for (var i = 0; i < arr.length; i++) {
+      if (iter(arr[i]) === true)
+        res.push(arr[i]);
+    }
+    return res;
+  }
+
+  static splice<T>(arr: Array<T>, iter: (item: T) => boolean) {
+    var index = this.findIndex(arr, iter);
+    if (index >= 0)
+      arr.splice(index, 1);
+    return arr;
+  }
+
+  static remove<T>(arr: Array<T>, iter: (item: T) => boolean) {
+    var res: Array<T> = [];
+    if (!arr)
+      return res;
+    for (var i = 0; i < arr.length; i++) {
+      if (iter(arr[i]) !== true)
+        res.push(arr[i]);
+    }
+    return res;
+  }
+
+  static removeAt<T>(arr: Array<T>, index: number) {
+    var res: Array<T> = [];
+    if (!arr)
+      return res;
+    for (var i = 0; i < arr.length; i++) {
+      if (i !== index)
+        res.push(arr[i]);
+    }
+    return res;
+  }
+
+  static sortBy<T>(arr: Array<T>, iter: (item: T) => any) {
+    if (!arr)
+      return [];
+    return arr.sort((a, b) => {
+      var ai = iter(a);
+      var bi = iter(b);
+      if (ai > bi)
+        return 1;
+      if (bi > ai)
+        return -1;
+      return 0;
+    });
+  }
+
+  static map<T, A>(arr: Array<T>, iter: (item: T) => A) {
+    if (!arr)
+      return [];
+    var result: Array<A> = new Array(arr.length);
+    for (var i = 0; i < arr.length; i++) {
+      result[i] = iter(arr[i]);
+    }
+    return result;
+  }
+
+  static reduce<T, A>(arr: Array<T>, func: (item: T, acc: A) => A, init: A) {
+    if (!arr)
+      return init;
+    for (var i = 0; i < arr.length; i++) {
+      init = func(arr[i], init);
+    }
+    return init;
+  }
+
+  // String
+
+  static capitalise(input: string) {
+    if (!input)
+      return input;
+    return input[0].toUpperCase() + input.slice(1);
+  }
+
+  static splitCamelCase(input: string) {
+    var output = [], i, l, capRe = /[A-Z]/;
+    for (i = 0, l = input.length; i < l; i += 1) {
+      if (i === 0) {
+        output.push(input[i].toUpperCase());
+      }
+      else {
+        if (i > 0 && capRe.test(input[i])) {
+          output.push(" ");
+        }
+        output.push(input[i]);
+      }
+    }
+    return output.join("");
+  }
+
+  static nameToUniqueId(name: string) {
+    if (!name)
+      return name;
+    var uniqueId = "";
+    var valid = false;
+    var inTag = false;
+    for (var i = 0; i < name.length; i++) {
+      var c = name[i];
+      if (inTag) {
+        if (c == '>') {
+          inTag = false;
+        }
+      } else {
+        if (c == '<') {
+          inTag = true;
+        } else if (c.match(/[a-zA-Z0-9]/)) {
+          if (!valid)
+            c = c.toUpperCase();
+          uniqueId += c;
+          valid = true;
+        } else if (valid) {
+          valid = false;
+        }
+      }
+    }
+    return uniqueId;
+  }
+
+  static nameToPath(name: string) {
+    if (!name)
+      return name;
+    var path = "/";
+    var valid = false;
+    var inTag = false;
+    for (var i = 0; i < name.length; i++) {
+      var c = name[i];
+      if (inTag) {
+        if (c == '>') {
+          inTag = false;
+        }
+      } else {
+        if (c == '<') {
+          inTag = true;
+        } else if (c.match(/[a-zA-Z0-9]/)) {
+          path += c.toLowerCase();
+          valid = true;
+        } else if (valid) {
+          path += "-";
+          valid = false;
+        }
+      }
+    }
+    if (path[path.length - 1] == "-")
+      path = path.substring(0, path.length - 1);
+    return path;
+  }
+
   // Format / Parse Number
 
   static formatNumber(n: number | null, dp: number): string {

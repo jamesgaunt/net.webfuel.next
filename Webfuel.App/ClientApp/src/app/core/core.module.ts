@@ -6,6 +6,8 @@ import { ApiService } from './api.service';
 import { DialogService } from './dialog.service';
 import { GrowlService } from './growl.service';
 
+import { ConfirmDeleteDialogComponent } from './dialogs/confirm-delete-dialog.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -16,7 +18,8 @@ import { GrowlService } from './growl.service';
   providers: [
     ApiService,
     DialogService,
-    GrowlService
+    GrowlService,
+    ConfirmDeleteDialogComponent
   ]
 })
 export class CoreModule {

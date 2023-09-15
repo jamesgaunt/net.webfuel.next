@@ -6,7 +6,8 @@
     <Key Name="Id" Type="guid" />
 
     <Property Name="Name" Type="meta:name" />
-    <Property Name="Age" Type="int" /> 
+    <Property Name="Age" Type="int" />
+    <Property Name="ShippingDate" Type="date" />
     
   </Entity>
 

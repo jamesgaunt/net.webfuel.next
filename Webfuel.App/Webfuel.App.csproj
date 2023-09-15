@@ -24,8 +24,6 @@
 
   <ItemGroup>
     <Folder Include="ClientApp\src\app\api\" />
-    <Folder Include="ClientApp\src\app\core\dialogs\" />
-    <Folder Include="ClientApp\src\app\shared\data-grid\" />
     <Folder Include="ClientApp\src\app\shared\table\" />
   </ItemGroup>
 

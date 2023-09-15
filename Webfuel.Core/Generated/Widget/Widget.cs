@@ -9,12 +9,14 @@ namespace Webfuel
         public Guid Id  { get; set; } = Guid.Empty;
         public string Name  { get; set; } = String.Empty;
         public int Age  { get; set; } = 0;
+        public DateOnly ShippingDate  { get; set; } = new DateOnly(1900, 1, 1);
         public Widget Copy()
         {
             var entity = new Widget();
             entity.Id = Id;
             entity.Name = Name;
             entity.Age = Age;
+            entity.ShippingDate = ShippingDate;
             return entity;
         }
     }

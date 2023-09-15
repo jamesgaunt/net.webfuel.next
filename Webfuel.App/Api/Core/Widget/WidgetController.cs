@@ -51,7 +51,7 @@ namespace net.app.Api
 
         [HttpPost("query")]
         [TypefuelAction(RetryCount = 3)]
-        public async Task<RepositoryQueryResult<Widget>> Query([FromBody]RepositoryQuery query)
+        public async Task<QueryResult<Widget>> Query([FromBody]SimpleQuery query)
         {
             return await WidgetService.QueryWidgetAsync(query: query);
         }

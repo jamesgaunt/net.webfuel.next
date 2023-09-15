@@ -95,6 +95,8 @@ namespace Webfuel.Tools.Datafuel
                     return new PrimativeEnum(nullable, tag);
                 case "flags":
                     return new PrimativeEnum(nullable, tag) { Flags = true };
+                case "date":
+                    return new PrimativeDate(nullable);
                 case "meta:name":
                     return new PrimativeString(nullable, max: 64);
                 case "meta:path":

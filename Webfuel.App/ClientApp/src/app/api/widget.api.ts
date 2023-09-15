@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService, ApiOptions } from '../core/api.service';
-import { IWidget, IRepositoryQuery, IRepositoryQueryResult } from './api.types';
+import { IWidget, ISimpleQuery, IQueryResult } from './api.types';
 
 @Injectable()
 export class WidgetApi {
@@ -28,10 +28,10 @@ export class WidgetApi {
         return this.apiService.DELETE("api/Widget/" + params.widgetId + "?r=" + Math.random(), options);
     }
     
-    public query (params: { query: IRepositoryQuery }, options?: ApiOptions): Observable<IRepositoryQueryResult<IWidget>> {
+    public query (params: { query: ISimpleQuery }, options?: ApiOptions): Observable<IQueryResult<IWidget>> {
         options = options || {};
         options.retryCount = options.retryCount || 3;
-        return this.apiService.POST("api/Widget/query?r=" + Math.random(), params.query, options).pipe(map((res) => <IRepositoryQueryResult<IWidget>>res.body));
+        return this.apiService.POST("api/Widget/query?r=" + Math.random(), params.query, options).pipe(map((res) => <IQueryResult<IWidget>>res.body));
     }
 }
 

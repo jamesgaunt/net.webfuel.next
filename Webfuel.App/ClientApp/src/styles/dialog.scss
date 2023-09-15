@@ -18,9 +18,11 @@
     color: var(--palette-success-contrast);
     background-color: var(--palette-success);
 
-    &.is-danger {
-      color: var(--palette-danger-contrast);
-      background-color: var(--palette-danger);
+    @each $p in $paletteAction {
+      &.is-#{$p} {
+        background-color: var(--palette-#{$p});
+        color: var(--palette-#{$p}-contrast);
+      }
     }
   }
 
@@ -52,9 +54,11 @@
         background-color: #D2D2D2;
       }
 
-      &.is-success:hover {
-        background-color: var(--palette-success);
-        color: var(--palette-success-contrast);
+      @each $p in $paletteAction {
+        &.is-#{$p}:hover {
+          background-color: var(--palette-#{$p});
+          color: var(--palette-#{$p}-contrast);
+        }
       }
     }
   }

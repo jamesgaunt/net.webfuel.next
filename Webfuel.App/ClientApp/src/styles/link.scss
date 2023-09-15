@@ -7,16 +7,10 @@
     text-decoration: underline;
   }
 
-  &.is-primary {
-    color: var(--palette-primary);
-  }
-
-  &.is-success {
-    color: var(--palette-success);
-  }
-
-  &.is-danger {
-    color: var(--palette-danger);
+  @each $p in $paletteAction {
+    &.is-#{$p} {
+      color: var(--palette-#{$p});
+    }
   }
 }
 

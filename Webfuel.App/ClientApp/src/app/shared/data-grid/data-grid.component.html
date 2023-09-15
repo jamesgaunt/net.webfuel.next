@@ -1,0 +1,33 @@
+<div *ngIf="dataSource" class="table">
+  <table>
+    <thead>
+      <tr>
+        <th *ngFor="let column of columns" [style.text-align]="column.justify">
+          <ng-container *ngTemplateOutlet="column.headTemplateRef; context: { dataSource: dataSource }"></ng-container>
+        </th>
+      </tr>
+    </thead>
+    <tbody *ngIf="dataSource.queryResult.totalCount > 0">
+      <tr *ngFor="let item of dataSource.queryResult.items">
+        <td *ngFor="let column of columns" [style.text-align]="column.justify">
+          <ng-container *ngTemplateOutlet="column.itemTemplateRef; context: { $implicit: item }"></ng-container>
+        </td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="dataSource.queryResult.totalCount == 0">
+      <tr>
+        <td [attr.colspan]="columnCount">
+          <i>No items to display</i>
+        </td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="dataSource.queryResult.totalCount < 0">
+      <tr>
+        <td [attr.colspan]="columnCount">
+          <i class="fas fa-spin fa-sync"></i> Loading
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

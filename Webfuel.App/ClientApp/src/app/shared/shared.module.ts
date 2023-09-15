@@ -11,6 +11,10 @@ import { ChromeComponent } from './chrome/chrome.component';
 import { TextInputComponent } from './form/text-input/text-input.component';
 import { NumberInputComponent } from './form/number-input/number-input.component';
 
+// Data Grid
+import { DataGridComponent } from './data-grid/data-grid.component';
+import { DataGridColumnComponent } from './data-grid/data-grid-column.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -26,6 +30,10 @@ import { NumberInputComponent } from './form/number-input/number-input.component
     // Form
     TextInputComponent,
     NumberInputComponent,
+
+    // Data Grid
+    DataGridComponent,
+    DataGridColumnComponent,
   ],
   exports: [
     CommonModule,
@@ -39,6 +47,10 @@ import { NumberInputComponent } from './form/number-input/number-input.component
     // Form
     TextInputComponent,
     NumberInputComponent,
+
+    // Data Grid
+    DataGridComponent,
+    DataGridColumnComponent,
   ]
 })
 export class SharedModule { }

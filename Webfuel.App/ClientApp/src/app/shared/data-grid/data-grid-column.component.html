@@ -1,0 +1,39 @@
+<!-- Head Templates -->
+
+<ng-template #sortHeadTemplate let-dataSource="dataSource">
+  <!--
+  <ez-grid-sorter [column]="name" [label]="label" [dataSource]="dataSource"></ez-grid-sorter>
+    -->
+  {{ label }}
+</ng-template>
+
+<ng-template #textHeadTemplate>
+  {{ label }}
+</ng-template>
+
+<!-- Item Templates -->
+
+<ng-template #textItemTemplate let-item>
+  {{ item[name] }}
+</ng-template>
+
+<ng-template #boldItemTemplate let-item>
+  <b>{{ item[name] }}</b>
+</ng-template>
+
+<ng-template #flagItemTemplate let-item>
+  <span class="fas fa-{{ item[name] ? 'check': 'times' }}"></span>
+</ng-template>
+
+<ng-template #dateItemTemplate let-item>
+  {{ item[name] | date: 'dd/MM/yy' }}
+</ng-template>
+
+<ng-template #utcItemTemplate let-item>
+  {{ item[name] | date: 'dd/MM/yy HH:mm' }}
+</ng-template>
+
+
+
+
+
