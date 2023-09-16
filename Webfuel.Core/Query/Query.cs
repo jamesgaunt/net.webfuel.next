@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Webfuel
+﻿namespace Webfuel
 {
     [TypefuelInterface]
     public class Query<TFilter> where TFilter : class
@@ -24,8 +18,8 @@ namespace Webfuel
     }
 
     [TypefuelInterface]
-    public class SimpleQuery: Query<Object>
-    { 
+    public class SimpleQuery : Query<Object>
+    {
     }
 
     [TypefuelInterface]
@@ -35,7 +29,7 @@ namespace Webfuel
     }
 
     [TypefuelInterface]
-    public class SearchQuery: Query<SearchFilter>
+    public class SearchQuery : Query<SearchFilter>
     { }
 
 }

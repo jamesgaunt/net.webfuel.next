@@ -16,17 +16,10 @@ namespace Webfuel.Tools.Datafuel
             set { ((PrimativeEnum)Primative).Flags = value; }
         }
 
-        public override void GenerateValidation(ScriptBuilder sb)
+        public override IEnumerable<string> GenerateValidationRules()
         {
-            var primative = (PrimativeEnum)Primative;
-
-            if (!primative.Flags)
-            {
-                sb.Write("if(");
-                if (Nullable)
-                    sb.Write($"entity.{Name} != null && ");
-                sb.WriteLine($"!Enum.IsDefined(typeof({primative.EnumType}), entity.{Name}{(Nullable ? ".Value" : "")})) throw new InvalidOperationException(\"{Name}: Not a defined value for enum {primative.EnumType}.\");");
-            }
+            if (!Flags)
+                yield return $".IsInEnum()" + (Nullable ? ".When(x => x != null, ApplyConditionTo.CurrentValidator)" : "");
         }
     }
 }

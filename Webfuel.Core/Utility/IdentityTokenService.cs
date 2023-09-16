@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Webfuel
+﻿namespace Webfuel
 {
     public interface IIdentityTokenService
     {
@@ -27,7 +19,7 @@ namespace Webfuel
 
         public string GenerateToken(Guid identityId, DateTime expiryUtc, string ipAddress)
         {
-            if(ipAddress.StartsWith("::"))
+            if (ipAddress.StartsWith("::"))
                 ipAddress = "127.0.0.1";
 
             return TimeLimitedTokenService.EncodeToken(content: identityId.ToString(), key: ipAddress, expiryUtc: expiryUtc);

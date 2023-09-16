@@ -1,7 +1,4 @@
-﻿using System;
-using System.Data.SqlClient;
-using System.Globalization;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Webfuel
@@ -10,7 +7,7 @@ namespace Webfuel
     public struct DateTimeUtc
     {
         private DateTime DateTime;
-        
+
         public DateTimeUtc(DateTime dateTime)
         {
             DateTime = dateTime.ToUniversalTime();
@@ -60,7 +57,7 @@ namespace Webfuel
 
         public static DateTimeUtc? RobustParse(string text)
         {
-            if(DateTime.TryParse(text, out var result))
+            if (DateTime.TryParse(text, out var result))
             {
                 return new DateTimeUtc(result);
             }

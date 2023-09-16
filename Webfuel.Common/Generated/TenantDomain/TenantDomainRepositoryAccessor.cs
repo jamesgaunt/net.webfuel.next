@@ -1,11 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+using FluentValidation;
 
 namespace Webfuel.Common
 {
     internal class TenantDomainRepositoryAccessor: IRepositoryAccessor<TenantDomain>
     {
+        private readonly TenantDomainRepositoryValidator _validator = new TenantDomainRepositoryValidator();
         public string DatabaseSchema => "next";
         public string DatabaseTable => "TenantDomain";
         public string DefaultOrderBy => "ORDER BY Id ASC";
@@ -50,10 +49,9 @@ namespace Webfuel.Common
         {
             entity.Domain = entity.Domain ?? String.Empty;
             entity.Domain = entity.Domain.Trim();
-            if(entity.Domain.Length > 64) throw new InvalidOperationException("Domain: Cannot be longer than 64 characters.");
             entity.RedirectTo = entity.RedirectTo ?? String.Empty;
             entity.RedirectTo = entity.RedirectTo.Trim();
-            if(entity.RedirectTo.Length > 64) throw new InvalidOperationException("RedirectTo: Cannot be longer than 64 characters.");
+            _validator.ValidateAndThrow(entity);
         }
         public IEnumerable<string> InsertProperties
         {

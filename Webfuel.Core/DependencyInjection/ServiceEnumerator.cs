@@ -1,9 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 namespace Webfuel
 {
@@ -13,7 +8,7 @@ namespace Webfuel
     }
 
     [ServiceImplementation(typeof(IServiceEnumerator))]
-    class ServiceEnumerator: IServiceEnumerator
+    class ServiceEnumerator : IServiceEnumerator
     {
         private readonly IServiceProvider ServiceProvider;
 

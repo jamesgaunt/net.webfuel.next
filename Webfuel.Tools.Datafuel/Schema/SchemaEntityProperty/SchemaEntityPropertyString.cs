@@ -9,45 +9,47 @@ namespace Webfuel.Tools.Datafuel
             : base(entity, element, new PrimativeString(nullable, (int?)ParseMinMaxTag(tag).max))
         {
             var minMax = ParseMinMaxTag(tag);
-            Min = (int?)minMax.min;
-            Max = (int?)minMax.max;
+            MinLength = (int?)minMax.min;
+            MaxLength = (int?)minMax.max;
             Trim = element.BooleanProperty("Trim") ?? true;
             CaseSensitive = element.BooleanProperty("CaseSensitive") ?? false;
         }
 
-        public int? Min { get; private set; }
+        public int? MinLength { get; private set; }
 
-        public int? Max { get; private set; }
+        public int? MaxLength { get; private set; }
 
         public bool Trim { get; private set; }
 
         // Generators
 
-        public override void GenerateValidation(ScriptBuilder sb)
+        public override IEnumerable<string> GenerateValidationMetadata()
+        {
+            if (MinLength.HasValue)
+                yield return $"public const int {Name}_MinLength = {MinLength};";
+            if (MaxLength.HasValue)
+                yield return $"public const int {Name}_MaxLength = {MaxLength};";
+        }
+
+        public override IEnumerable<string> GenerateValidationRules()
+        {
+            if (!Nullable)
+                yield return ".NotNull()";
+
+            if (MinLength.HasValue)
+                yield return $".MinimumLength({Name}_MinLength).When(x => x != null, ApplyConditionTo.CurrentValidator)";
+
+            if (MaxLength.HasValue)
+                yield return $".MaximumLength({Name}_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator)";
+
+        }
+
+        public override void GenerateCoercion(ScriptBuilder sb)
         {
             if (!Nullable)
                 sb.WriteLine($"entity.{Name} = entity.{Name} ?? String.Empty;");
-
             if(Trim)
                 sb.WriteLine($"entity.{Name} = entity.{Name}{(Nullable ? "?" : "")}.Trim();");
-
-            if (Min.HasValue)
-            {
-                sb.Write("if(");
-                if (Nullable)
-                    sb.Write($"entity.{Name} != null && ");
-                sb.WriteLine($"entity.{Name}.Length < {Min.Value}) throw new InvalidOperationException(\"{Name}: Cannot be shorter than {Min.Value} characters.\");");
-            }
-
-            if (Max.HasValue)
-            {
-                sb.Write("if(");
-                if (Nullable)
-                    sb.Write($"entity.{Name} != null && ");
-                sb.WriteLine($"entity.{Name}.Length > {Max.Value}) throw new InvalidOperationException(\"{Name}: Cannot be longer than {Max.Value} characters.\");");
-            }
-
-
         }
     }
 }

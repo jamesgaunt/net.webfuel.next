@@ -9,33 +9,31 @@ namespace Webfuel.Tools.Datafuel
             : base(entity, element, new PrimativeInt32(nullable))
         {
             var minMax = ParseMinMaxTag(tag);
-            Min = (int?)minMax.min;
-            Max = (int?)minMax.max;
+            MinValue = (int?)minMax.min;
+            MaxValue = (int?)minMax.max;
         }
 
-        public int? Min { get; private set; }
+        public int? MinValue { get; private set; }
 
-        public int? Max { get; private set; }
+        public int? MaxValue { get; private set; }
 
         // Generators
 
-        public override void GenerateValidation(ScriptBuilder sb)
+        public override IEnumerable<string> GenerateValidationMetadata()
         {
-            if (Min.HasValue)
-            {
-                sb.Write("if(");
-                if (Nullable)
-                    sb.Write($"entity.{Name} != null && ");
-                sb.WriteLine($"entity.{Name} < {Min.Value}) throw new InvalidOperationException(\"{Name}: Cannot be less than {Min.Value}.\");");
-            }
+            if (MinValue.HasValue)
+                yield return $"public const int {Name}_MinValue = {MinValue};";
+            if (MaxValue.HasValue)
+                yield return $"public const int {Name}_MaxValue = {MaxValue};";
+        }
 
-            if (Max.HasValue)
-            {
-                sb.Write("if(");
-                if (Nullable)
-                    sb.Write($"entity.{Name} != null && ");
-                sb.WriteLine($"entity.{Name} > {Max.Value}) throw new InvalidOperationException(\"{Name}: Cannot be more than {Max.Value}.\");");
-            }
+        public override IEnumerable<string> GenerateValidationRules()
+        {
+            if (MinValue.HasValue)
+                yield return $".GreaterThanOrEqualTo({Name}_MinValue)" + (Nullable ? ".When(x => x != null, ApplyConditionTo.CurrentValidator)" : "");
+
+            if (MaxValue.HasValue)
+                yield return $".LessThanOrEqualTo({Name}_MaxValue)" + (Nullable ? ".When(x => x != null, ApplyConditionTo.CurrentValidator)" : "");
         }
     }
 }

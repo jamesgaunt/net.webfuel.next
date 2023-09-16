@@ -49,6 +49,9 @@ namespace Webfuel
             if(updated.Name != original.Name) _properties.Add("Name");
             if(updated.Age != original.Age) _properties.Add("Age");
             if(updated.ShippingDate != original.ShippingDate) _properties.Add("ShippingDate");
+            if(updated.NullableInt != original.NullableInt) _properties.Add("NullableInt");
+            if(updated.NullableString != original.NullableString) _properties.Add("NullableString");
+            if(updated.DayOfWeek != original.DayOfWeek) _properties.Add("DayOfWeek");
             if(updated.CreatedAt != original.CreatedAt) _properties.Add("CreatedAt");
             if(updated.UpdatedAt != original.UpdatedAt) _properties.Add("UpdatedAt");
             if(_properties.Count == 0) return updated;
@@ -61,6 +64,9 @@ namespace Webfuel
             if(properties.Contains("Name") && updated.Name != original.Name) _properties.Add("Name");
             if(properties.Contains("Age") && updated.Age != original.Age) _properties.Add("Age");
             if(properties.Contains("ShippingDate") && updated.ShippingDate != original.ShippingDate) _properties.Add("ShippingDate");
+            if(properties.Contains("NullableInt") && updated.NullableInt != original.NullableInt) _properties.Add("NullableInt");
+            if(properties.Contains("NullableString") && updated.NullableString != original.NullableString) _properties.Add("NullableString");
+            if(properties.Contains("DayOfWeek") && updated.DayOfWeek != original.DayOfWeek) _properties.Add("DayOfWeek");
             if(properties.Contains("CreatedAt") && updated.CreatedAt != original.CreatedAt) _properties.Add("CreatedAt");
             if(properties.Contains("UpdatedAt") && updated.UpdatedAt != original.UpdatedAt) _properties.Add("UpdatedAt");
             if(_properties.Count == 0) return updated;

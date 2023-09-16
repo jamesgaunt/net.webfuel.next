@@ -8,33 +8,7 @@
     <Property Name="Level" Type="int" />
     <Property Name="Message" Type="string" />
 
-    <Property Name="Source" Type="string" />
-    <Property Name="Detail" Type="string" />
-    <Property Name="Context" Type="string" />
-
-    <Property Name="EntityId" Type="guid?" />
-    <Property Name="TenantId" Type="guid?" />
-
-    <Property Name="IdentityId" Type="meta:name" />
-    <Property Name="IPAddress" Type="meta:name" />
-
-    <Property Name="Exception" Type="string" />
-
-    <Property Name="RequestUrl" Type="string" />
-    <Property Name="RequestMethod" Type="string" />
-    <Property Name="RequestHeaders" Type="string" />
-
-    <!--
-    <Property Name="CreatedUTC" Type="DateTime" />
-    -->
-
-    <Index Unique="false">
-      <Member Name="TenantId" />
-    </Index>
-
-    <Index Unique="false">
-      <Member Name="EntityId" />
-    </Index>
+    
 
   </Entity>
 

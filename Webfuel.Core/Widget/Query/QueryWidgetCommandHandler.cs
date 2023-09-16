@@ -1,17 +1,12 @@
 ﻿using MediatR;
-using System.Windows.Input;
 
 namespace Webfuel
 {
-    public class QueryWidgetCommand: SearchQuery, IRequest<QueryResult<Widget>>
-    {
-    }
-
-    internal class QueryWidgetHandler : IRequestHandler<QueryWidgetCommand, QueryResult<Widget>>
+    internal class QueryWidgetCommandHandler : IRequestHandler<QueryWidgetCommand, QueryResult<Widget>>
     {
         private readonly IWidgetRepository _widgetRepository;
 
-        public QueryWidgetHandler(IWidgetRepository widgetRepository) 
+        public QueryWidgetCommandHandler(IWidgetRepository widgetRepository)
         {
             _widgetRepository = widgetRepository;
         }

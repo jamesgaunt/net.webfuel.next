@@ -18,8 +18,8 @@ namespace Webfuel.Tools.Typefuel
                 var typeInfo = type.GetTypeInfo();
 
                 // Detect Controllers
-                if (typeInfo.IsClass && typeInfo.GetCustomAttribute<TypefuelControllerAttribute>() != null)
-                    schema.Controllers.Add(AnalyseController(schema, type));
+                //if (typeInfo.IsClass && typeInfo.GetCustomAttribute<TypefuelControllerAttribute>() != null)
+                //    schema.Controllers.Add(AnalyseController(schema, type));
             }
 
             return this;
@@ -52,11 +52,11 @@ namespace Webfuel.Tools.Typefuel
             action.Route = AnalyseRoute(action, methodInfo);
             action.ReturnTypeDescriptor = controller.Schema.TypeContext.GetTypeDescriptor(methodInfo.ReturnType);
 
-            var typefuelActionAttribute = methodInfo.GetCustomAttribute<TypefuelActionAttribute>();
-            if (typefuelActionAttribute != null)
-            {
-                action.RetryCount = typefuelActionAttribute.RetryCount;
-            }
+            //var typefuelActionAttribute = methodInfo.GetCustomAttribute<TypefuelActionAttribute>();
+            //if (typefuelActionAttribute != null)
+            //{
+            //    action.RetryCount = typefuelActionAttribute.RetryCount;
+            //}
 
             if (!ValidReturnType(action.ReturnTypeDescriptor))
                 throw new InvalidOperationException($"Invalid Action {methodInfo.DeclaringType.Name}.{methodInfo.Name}: API actions must return JSON");

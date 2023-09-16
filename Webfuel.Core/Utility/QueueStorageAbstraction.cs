@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Azure.Storage.Queues;
 using System.Text;
-using System.Threading.Tasks;
-using Azure.Storage.Queues;
 
 namespace Webfuel
 {
@@ -57,7 +54,7 @@ namespace Webfuel
         public async Task<List<QueueMessage>> ReceiveMessagesAsync(int maxMessages = 10)
         {
             var response = new List<QueueMessage>();
-            foreach(var message in (await Client.ReceiveMessagesAsync(maxMessages: 10)).Value)
+            foreach (var message in (await Client.ReceiveMessagesAsync(maxMessages: 10)).Value)
             {
                 if (message == null)
                     continue;

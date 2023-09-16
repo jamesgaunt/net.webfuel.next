@@ -10,41 +10,6 @@ Build select / multi-select logic
 
 Tenant / User / Login backbone
 
+Integrate repository/codefuel with Fluent Validation
 
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { ApiService, ApiOptions } from '../core/api.service';
-import { IWidget, ISearchQuery, IQueryResult, ICreateWidgetCommand, IUpdateWidgetCommand, IDeleteWidgetCommand, IQueryWidgetCommand } from './api.types';
-
-@Injectable()
-export class WidgetApi {
-    constructor(private apiService: ApiService) { }
-    
-    //public get (params: { widgetId: string }, options?: ApiOptions): Observable<IWidget> {
-    //    options = options || {};
-    //    return this.apiService.GET("api/Widget/" + params.widgetId + "?r=" + Math.random(), options).pipe(map((res) => <IWidget>res.body));
-    //}
-    
-    public insert (params: ICreateWidgetCommand, options?: ApiOptions): Observable<IWidget> {
-        options = options || {};
-        return this.apiService.POST("api/create-widget?r=" + Math.random(), params, options).pipe(map((res) => <IWidget>res.body));
-    }
-    
-    public update (params: IUpdateWidgetCommand, options?: ApiOptions): Observable<IWidget> {
-        options = options || {};
-      return this.apiService.POST("api/update-widget?r=" + Math.random(), params, options).pipe(map((res) => <IWidget>res.body));
-    }
-    
-    public delete (params: IDeleteWidgetCommand, options?: ApiOptions): Observable<any> {
-        options = options || {};
-      return this.apiService.POST("api/delete-widget?r=" + Math.random(), params, options);
-    }
-    
-    public query (params: IQueryWidgetCommand, options?: ApiOptions): Observable<IQueryResult<IWidget>> {
-        options = options || {};
-        options.retryCount = options.retryCount || 3;
-      return this.apiService.POST("api/query-widget?r=" + Math.random(), params, options).pipe(map((res) => <IQueryResult<IWidget>>res.body));
-    }
-}
-
+Pass cancellation token down to the database

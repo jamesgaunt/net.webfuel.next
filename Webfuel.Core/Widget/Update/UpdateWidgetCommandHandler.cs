@@ -1,23 +1,12 @@
 ﻿using MediatR;
-using System.Windows.Input;
 
 namespace Webfuel
 {
-    public class UpdateWidgetCommand: IRequest<Widget>
-    {
-        public Guid Id { get; set; }
-
-        public string Name { get; set; } = String.Empty;
-
-        public int Age {  get; set; }
-    }
-
-
-    internal class UpdateWidgetHandler : IRequestHandler<UpdateWidgetCommand, Widget>
+    internal class UpdateWidgetCommandHandler : IRequestHandler<UpdateWidgetCommand, Widget>
     {
         private readonly IWidgetRepository _widgetRepository;
 
-        public UpdateWidgetHandler(IWidgetRepository widgetRepository) 
+        public UpdateWidgetCommandHandler(IWidgetRepository widgetRepository)
         {
             _widgetRepository = widgetRepository;
         }
@@ -30,7 +19,7 @@ namespace Webfuel
             updated.Name = request.Name;
             updated.Age = request.Age;
 
-            return await _widgetRepository.UpdateWidgetAsync(original: original, updated: updated);;
+            return await _widgetRepository.UpdateWidgetAsync(original: original, updated: updated); ;
         }
     }
 }

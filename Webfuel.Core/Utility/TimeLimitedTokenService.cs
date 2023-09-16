@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Webfuel
 {
@@ -23,7 +18,7 @@ namespace Webfuel
 
         public string EncodeToken(string content, string key, DateTime expiryUtc)
         {
-            if(key.StartsWith("::"))
+            if (key.StartsWith("::"))
                 key = "127.0.0.1";
 
             var hash = GenerateHash(content, expiryUtc, key);

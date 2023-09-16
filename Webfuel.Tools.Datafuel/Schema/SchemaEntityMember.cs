@@ -53,8 +53,18 @@ namespace Webfuel.Tools.Datafuel
 
         }
 
-        public virtual void GenerateValidation(ScriptBuilder sb)
+        public virtual void GenerateCoercion(ScriptBuilder sb)
         {
+        }
+
+        public virtual IEnumerable<string> GenerateValidationMetadata()
+        {
+            yield break;
+        }
+
+        public virtual IEnumerable<string> GenerateValidationRules()
+        {
+            yield break;
         }
 
         public virtual void GenerateCopy(ScriptBuilder sb)

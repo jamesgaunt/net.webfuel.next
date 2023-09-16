@@ -1,20 +1,12 @@
 ﻿using MediatR;
-using System.Windows.Input;
 
 namespace Webfuel
 {
-    public class CreateWidgetCommand: IRequest<Widget>
-    {
-        public string Name { get; set; } = String.Empty;
-
-        public int Age {  get; set; }
-    }
-
-    internal class CreateWidgetHandler : IRequestHandler<CreateWidgetCommand, Widget>
+    internal class CreateWidgetCommandHandler : IRequestHandler<CreateWidgetCommand, Widget>
     {
         private readonly IWidgetRepository _widgetRepository;
 
-        public CreateWidgetHandler(IWidgetRepository widgetRepository) 
+        public CreateWidgetCommandHandler(IWidgetRepository widgetRepository)
         {
             _widgetRepository = widgetRepository;
         }

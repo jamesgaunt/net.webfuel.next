@@ -1,10 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Webfuel
+﻿namespace Webfuel
 {
     public interface IEventLogService
     {

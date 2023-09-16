@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Webfuel
+﻿namespace Webfuel
 {
     public static class GuidGenerator
     {

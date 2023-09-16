@@ -63,6 +63,9 @@ namespace Webfuel.Tools.Datafuel
                 if (trim.StartsWith("case ") && inCase)
                     indent--;
 
+                if (trim.StartsWith("."))
+                    indent++;
+
                 for (int i = 0; i < indent * 4; i++)
                     output.Append(" ");
 
@@ -77,6 +80,9 @@ namespace Webfuel.Tools.Datafuel
 
                 if (trim.StartsWith("}") || trim.StartsWith("]"))
                     indent++;
+
+                if (trim.StartsWith("."))
+                    indent--;
 
                 // Determine the impact on indent
                 indent += line.Count(p => p == '{') - line.Count(p => p == '}') + line.Count(p => p == '[') - line.Count(p => p == ']');

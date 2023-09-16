@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Webfuel
+﻿namespace Webfuel
 {
     public class RepositoryQuery
     {
@@ -54,9 +49,9 @@ namespace Webfuel
         List<RepositoryQueryFilter> Transform(List<RepositoryQueryFilter> filters, Func<RepositoryQueryFilter, RepositoryQueryFilter?> action)
         {
             var result = new List<RepositoryQueryFilter>();
-            foreach(var filter in filters)
+            foreach (var filter in filters)
             {
-                if(filter.Filters == null)
+                if (filter.Filters == null)
                 {
                     // Clause
                     var transform = action(filter);

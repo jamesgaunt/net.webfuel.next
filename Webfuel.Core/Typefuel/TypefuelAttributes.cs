@@ -1,38 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Webfuel
+﻿namespace Webfuel
 {
-    /*
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class TypefuelEndpointAttribute<TCommand> : Attribute { }
-    */
 
     [AttributeUsage(AttributeTargets.Class)]
     public class TypefuelApiAttribute : Attribute
     {
     }
 
-    [AttributeUsage(AttributeTargets.Class)]
-    public class TypefuelControllerAttribute: Attribute
-    {
-    }
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Method | AttributeTargets.Parameter)]
-    public class TypefuelIgnoreAttribute: Attribute
+    public class TypefuelIgnoreAttribute : Attribute
     {
     }
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum)]
-    public class TypefuelStaticAttribute: Attribute
+    public class TypefuelStaticAttribute : Attribute
     {
-    }
-
-    [AttributeUsage(AttributeTargets.Method)]
-    public class TypefuelActionAttribute: Attribute
-    {
-        public int RetryCount { get; set; } = -1;
     }
 
     [AttributeUsage(AttributeTargets.Class)]

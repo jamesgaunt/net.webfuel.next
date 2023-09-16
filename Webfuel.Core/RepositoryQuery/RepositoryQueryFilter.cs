@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Text;
 
 namespace Webfuel
 {
@@ -37,8 +35,8 @@ namespace Webfuel
         {
             if (value == null)
                 return "null";
-            
-            if(value is String)
+
+            if (value is String)
                 return $"\'{EscapeString(value.ToString()!)}\'";
 
             if (value is Boolean)

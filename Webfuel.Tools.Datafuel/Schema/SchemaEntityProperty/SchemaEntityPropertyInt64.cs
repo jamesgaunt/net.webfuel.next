@@ -9,33 +9,31 @@ namespace Webfuel.Tools.Datafuel
             : base(entity, element, new PrimativeInt64(nullable))
         {
             var minMax = ParseMinMaxTag(tag);
-            Min = minMax.min;
-            Max = minMax.max;
+            MinValue = minMax.min;
+            MaxValue = minMax.max;
         }
 
-        public long? Min { get; private set; }
+        public long? MinValue { get; private set; }
 
-        public long? Max { get; private set; }
+        public long? MaxValue { get; private set; }
 
         // Generators
 
-        public override void GenerateValidation(ScriptBuilder sb)
+        public override IEnumerable<string> GenerateValidationMetadata()
         {
-            if (Min.HasValue)
-            {
-                sb.Write("if(");
-                if (Nullable)
-                    sb.Write($"entity.{Name} != null && ");
-                sb.WriteLine($"entity.{Name} < {Min.Value}) throw new InvalidOperationException(\"{Name}: Cannot be less than {Min.Value}.\");");
-            }
+            if (MinValue.HasValue)
+                yield return $"public const int {Name}_MinValue = {MinValue};";
+            if (MaxValue.HasValue)
+                yield return $"public const int {Name}_MaxValue = {MaxValue};";
+        }
 
-            if (Max.HasValue)
-            {
-                sb.Write("if(");
-                if (Nullable)
-                    sb.Write($"entity.{Name} != null && ");
-                sb.WriteLine($"entity.{Name} > {Max.Value}) throw new InvalidOperationException(\"{Name}: Cannot be more than {Max.Value}.\");");
-            }
+        public override IEnumerable<string> GenerateValidationRules()
+        {
+            if (MinValue.HasValue)
+                yield return $".GreaterThanOrEqualTo({Name}_MinValue)" + (Nullable ? ".When(x => x != null, ApplyConditionTo.CurrentValidator)" : "");
+
+            if (MaxValue.HasValue)
+                yield return $".LessThanOrEqualTo({Name}_MaxValue)" + (Nullable ? ".When(x => x != null, ApplyConditionTo.CurrentValidator)" : "");
         }
     }
 }

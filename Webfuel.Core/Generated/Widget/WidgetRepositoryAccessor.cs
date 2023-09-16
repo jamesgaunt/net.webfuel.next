@@ -1,11 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+using FluentValidation;
 
 namespace Webfuel
 {
     internal class WidgetRepositoryAccessor: IRepositoryAccessor<Widget>
     {
+        private readonly WidgetRepositoryValidator _validator = new WidgetRepositoryValidator();
         public string DatabaseSchema => "next";
         public string DatabaseTable => "Widget";
         public string DefaultOrderBy => "ORDER BY Id ASC";
@@ -21,6 +20,12 @@ namespace Webfuel
                     return entity.Age;
                 case nameof(Widget.ShippingDate):
                     return entity.ShippingDate;
+                case nameof(Widget.NullableInt):
+                    return entity.NullableInt;
+                case nameof(Widget.NullableString):
+                    return entity.NullableString;
+                case nameof(Widget.DayOfWeek):
+                    return entity.DayOfWeek;
                 case nameof(Widget.CreatedAt):
                     return entity.CreatedAt.ToDateTime();
                 case nameof(Widget.UpdatedAt):
@@ -44,6 +49,15 @@ namespace Webfuel
                 case nameof(Widget.ShippingDate):
                     entity.ShippingDate = DateOnly.FromDateTime((DateTime)value!);
                     break;
+                case nameof(Widget.NullableInt):
+                    entity.NullableInt = value == DBNull.Value ? (int?)null : (int?)value;
+                    break;
+                case nameof(Widget.NullableString):
+                    entity.NullableString = value == DBNull.Value ? (string?)null : (string?)value;
+                    break;
+                case nameof(Widget.DayOfWeek):
+                    entity.DayOfWeek = (DayOfWeek)value!;
+                    break;
                 case nameof(Widget.CreatedAt):
                     entity.CreatedAt = new DateTimeUtc((DateTime)value!);
                     break;
@@ -60,7 +74,8 @@ namespace Webfuel
         {
             entity.Name = entity.Name ?? String.Empty;
             entity.Name = entity.Name.Trim();
-            if(entity.Name.Length > 64) throw new InvalidOperationException("Name: Cannot be longer than 64 characters.");
+            entity.NullableString = entity.NullableString?.Trim();
+            _validator.ValidateAndThrow(entity);
         }
         public IEnumerable<string> InsertProperties
         {
@@ -70,6 +85,9 @@ namespace Webfuel
                 yield return "Name";
                 yield return "Age";
                 yield return "ShippingDate";
+                yield return "NullableInt";
+                yield return "NullableString";
+                yield return "DayOfWeek";
                 yield return "CreatedAt";
                 yield return "UpdatedAt";
             }
@@ -81,6 +99,9 @@ namespace Webfuel
                 yield return "Name";
                 yield return "Age";
                 yield return "ShippingDate";
+                yield return "NullableInt";
+                yield return "NullableString";
+                yield return "DayOfWeek";
                 yield return "CreatedAt";
                 yield return "UpdatedAt";
             }

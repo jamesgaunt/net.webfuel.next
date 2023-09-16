@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Webfuel
+﻿namespace Webfuel
 {
     public sealed class MimeTypes
     {
@@ -27,7 +24,7 @@ namespace Webfuel
             mimeTypes.Add("aim", "application/x-aim");
             mimeTypes.Add("aip", "text/x-audiosoft-intra");
             mimeTypes.Add("ani", "application/x-navi-animation");
-            mimeTypes.Add("aos", "application/x-nokia-9000-communicator-add-on-software"); 
+            mimeTypes.Add("aos", "application/x-nokia-9000-communicator-add-on-software");
             mimeTypes.Add("application", "application/x-ms-application");
             mimeTypes.Add("aps", "application/mime");
             mimeTypes.Add("art", "image/x-jg");

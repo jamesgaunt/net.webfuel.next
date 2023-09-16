@@ -1,9 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Webfuel
 {
@@ -17,7 +12,7 @@ namespace Webfuel
 
 
     [ServiceImplementation(typeof(IRepositoryConfiguration))]
-    internal class RepositoryConfiguration: IRepositoryConfiguration
+    internal class RepositoryConfiguration : IRepositoryConfiguration
     {
         public RepositoryConfiguration(IConfiguration configuration)
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,7 +14,8 @@ namespace Webfuel.Tools.Datafuel
             Directory.CreateDirectory(entity.GeneratedDirectory + @"\" + entity.Name);
 
             File.WriteAllText(entity.GeneratedDirectory + $@"\{entity.Name}\{entity.Name}.cs", Entity(entity));
-            File.WriteAllText(entity.GeneratedDirectory + $@"\{entity.Name}\{entity.Name}Accessor.cs", Accessor(entity));
+            File.WriteAllText(entity.GeneratedDirectory + $@"\{entity.Name}\{entity.Name}RepositoryAccessor.cs", Accessor(entity));
+            File.WriteAllText(entity.GeneratedDirectory + $@"\{entity.Name}\{entity.Name}RepositoryValidation.cs", Validator(entity));
 
             if (entity.Repository)
                 RepositoryGenerator.GenerateRepository(entity);
@@ -43,9 +45,7 @@ namespace Webfuel.Tools.Datafuel
 
         static void Usings(ScriptBuilder sb, SchemaEntity entity)
         {
-            sb.WriteLine("using System;");
-            sb.WriteLine("using System.Collections.Generic;");
-            sb.WriteLine("using System.ComponentModel.DataAnnotations.Schema;");
+            sb.WriteLine("using FluentValidation;");
             sb.WriteLine("");
         }
 
@@ -56,7 +56,7 @@ namespace Webfuel.Tools.Datafuel
             if (entity.Audited)
                 result += "IAudited";
 
-            if(!String.IsNullOrEmpty(entity.Interface))
+            if (!String.IsNullOrEmpty(entity.Interface))
             {
                 if (result != String.Empty)
                     result += ", ";
@@ -79,6 +79,61 @@ namespace Webfuel.Tools.Datafuel
             }
         }
 
+        static string Validator(SchemaEntity entity)
+        {
+            var sb = new ScriptBuilder();
+
+            Usings(sb, entity);
+            using (sb.OpenBrace($"namespace {entity.Namespace}"))
+            {
+                using (sb.OpenBrace($"internal class {entity.Name}RepositoryValidator: AbstractValidator<{entity.Name}>"))
+                {
+                    using (sb.OpenBrace($"public {entity.Name}RepositoryValidator()"))
+                    {
+                        foreach (var member in entity.Members)
+                        {
+                            if (member.GenerateValidationRules().Count() == 0)
+                                continue;
+
+                            sb.WriteLine($"RuleFor(x => x.{member.Name}).Use({entity.Name}RepositoryValidationRules.{member.Name});");
+                        }
+                    }
+                }
+
+                using (sb.OpenBrace($"public static class {entity.Name}RepositoryValidationRules"))
+                {
+                    foreach (var member in entity.Members)
+                    {
+                        foreach (var metadata in member.GenerateValidationMetadata())
+                        {
+                            sb.WriteLine(metadata);
+                        }
+                    }
+
+                    foreach (var member in entity.Members)
+                    {
+                        var rules = member.GenerateValidationRules().ToList();
+                        if (rules.Count > 0)
+                        {
+                            sb.WriteLine();
+                            using (sb.OpenBrace($"public static void {member.Name}<T>(IRuleBuilder<T, {member.CLRTypeWithNullable}> ruleBuilder)"))
+                            {
+                                sb.WriteLine("ruleBuilder");
+
+                                for (var i = 0; i < rules.Count; i++)
+                                {
+                                    sb.WriteLine(rules[i] + (i == rules.Count - 1 ? ";" : ""));
+                                }
+
+                            }
+                        }
+                    }
+
+                }
+            }
+            return sb.ToString();
+        }
+
         static string Accessor(SchemaEntity entity)
         {
             var sb = new ScriptBuilder();
@@ -88,6 +143,7 @@ namespace Webfuel.Tools.Datafuel
             {
                 using (sb.OpenBrace($"internal class {entity.Name}RepositoryAccessor: IRepositoryAccessor<{entity.Name}>"))
                 {
+                    sb.WriteLine($"private readonly {entity.Name}RepositoryValidator _validator = new {entity.Name}RepositoryValidator();");
                     sb.WriteLine($"public string DatabaseSchema => \"{Settings.DatabaseSchema}\";");
                     sb.WriteLine($"public string DatabaseTable => \"{entity.Name}\";");
                     sb.WriteLine($"public string DefaultOrderBy => \"{entity.DefaultOrderBy}\";");
@@ -128,7 +184,8 @@ namespace Webfuel.Tools.Datafuel
                     using (sb.OpenBrace($"public void Validate({entity.Name} entity)"))
                     {
                         foreach (var member in entity.Members)
-                            member.GenerateValidation(sb);
+                            member.GenerateCoercion(sb);
+                        sb.WriteLine("_validator.ValidateAndThrow(entity);");
                     }
 
 

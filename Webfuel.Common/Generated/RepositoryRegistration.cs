@@ -5,6 +5,10 @@ namespace Webfuel.Common
     {
         public static void AddRepositoryServices(this IServiceCollection services)
         {
+            services.AddSingleton<IJobRepository, JobRepository>();
+            services.AddSingleton<IRepositoryAccessor<Job>, JobRepositoryAccessor>();
+            services.AddSingleton<IRepositoryMapper<Job>, RepositoryDefaultMapper<Job>>();
+            
             services.AddSingleton<ITenantRepository, TenantRepository>();
             services.AddSingleton<IRepositoryAccessor<Tenant>, TenantRepositoryAccessor>();
             services.AddSingleton<IRepositoryMapper<Tenant>, RepositoryDefaultMapper<Tenant>>();

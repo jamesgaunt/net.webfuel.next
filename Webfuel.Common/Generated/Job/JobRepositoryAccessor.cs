@@ -1,51 +1,45 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+using FluentValidation;
 
 namespace Webfuel.Common
 {
-    internal class TenantRepositoryAccessor: IRepositoryAccessor<Tenant>
+    internal class JobRepositoryAccessor: IRepositoryAccessor<Job>
     {
+        private readonly JobRepositoryValidator _validator = new JobRepositoryValidator();
         public string DatabaseSchema => "next";
-        public string DatabaseTable => "Tenant";
+        public string DatabaseTable => "Job";
         public string DefaultOrderBy => "ORDER BY Id ASC";
-        public object? GetValue(Tenant entity, string property)
+        public object? GetValue(Job entity, string property)
         {
             switch(property)
             {
-                case nameof(Tenant.Id):
+                case nameof(Job.Id):
                     return entity.Id;
-                case nameof(Tenant.Name):
+                case nameof(Job.Name):
                     return entity.Name;
-                case nameof(Tenant.Live):
-                    return entity.Live;
                     default: throw new InvalidOperationException($"Unrecognised entity property {property}");
             }
         }
-        public void SetValue(Tenant entity, string property, object? value)
+        public void SetValue(Job entity, string property, object? value)
         {
             switch(property)
             {
-                case nameof(Tenant.Id):
+                case nameof(Job.Id):
                     entity.Id = (Guid)value!;
                     break;
-                case nameof(Tenant.Name):
+                case nameof(Job.Name):
                     entity.Name = (string)value!;
-                    break;
-                case nameof(Tenant.Live):
-                    entity.Live = (bool)value!;
                     break;
             }
         }
-        public Tenant CreateInstance()
+        public Job CreateInstance()
         {
-            return new Tenant();
+            return new Job();
         }
-        public void Validate(Tenant entity)
+        public void Validate(Job entity)
         {
             entity.Name = entity.Name ?? String.Empty;
             entity.Name = entity.Name.Trim();
-            if(entity.Name.Length > 64) throw new InvalidOperationException("Name: Cannot be longer than 64 characters.");
+            _validator.ValidateAndThrow(entity);
         }
         public IEnumerable<string> InsertProperties
         {
@@ -53,7 +47,6 @@ namespace Webfuel.Common
             {
                 yield return "Id";
                 yield return "Name";
-                yield return "Live";
             }
         }
         public IEnumerable<string> UpdateProperties
@@ -61,7 +54,6 @@ namespace Webfuel.Common
             get
             {
                 yield return "Name";
-                yield return "Live";
             }
         }
     }

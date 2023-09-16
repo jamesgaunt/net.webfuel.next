@@ -118,7 +118,8 @@ namespace Webfuel
         protected virtual List<SqlParameter> ExtractParameters(TEntity entity, IEnumerable<string> properties)
         {
             var result = new List<SqlParameter>();
-            foreach (var property in properties) {
+            foreach (var property in properties)
+            {
                 if (property == "Id")
                     continue;
                 result.Add(new SqlParameter { ParameterName = $"@{property}", Value = Accessor.GetValue(entity, property) ?? DBNull.Value });

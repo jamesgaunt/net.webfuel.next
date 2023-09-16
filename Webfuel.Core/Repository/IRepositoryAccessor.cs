@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Webfuel
+﻿namespace Webfuel
 {
     public interface IRepositoryAccessor<TEntity> where TEntity : class
     {

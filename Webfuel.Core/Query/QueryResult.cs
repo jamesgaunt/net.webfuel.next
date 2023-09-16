@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Webfuel
+﻿namespace Webfuel
 {
     [TypefuelInterface]
     public class QueryResult<TItem>
