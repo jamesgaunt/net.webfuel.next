@@ -43,10 +43,10 @@ export class ApiService {
   }
   private _counter = 0;
 
-  public COMMAND<T>(url: string, data: T, options: ApiOptions): Observable<HttpResponse<Object>> {
+  public COMMAND<T>(url: string, data: T, options?: ApiOptions): Observable<HttpResponse<Object>> {
     options = options || {};
 
-    return this.enhance(this.httpClient.post(url,
+    return this.enhance(this.httpClient.post(url + "?r=" + Math.random(),
       JSON.stringify(data),
       {
         headers: new HttpHeaders({ 'Content-Type': 'application/json', 'IDENTITY_TOKEN': this.token || "NONE" }),
@@ -54,7 +54,7 @@ export class ApiService {
       }), options);
   }
 
-  public GET(url: string, options: ApiOptions): Observable<HttpResponse<Object>> {
+  public GET(url: string, options?: ApiOptions): Observable<HttpResponse<Object>> {
     options = options || {};
     if (options.retryCount === undefined)
       options.retryCount = 2;
@@ -66,11 +66,11 @@ export class ApiService {
       }), options);
   }
 
-  public POST<T>(url: string, data: T, options: ApiOptions): Observable<HttpResponse<Object>> {
+  public POST<T>(url: string, data: T, options?: ApiOptions): Observable<HttpResponse<Object>> {
     options = options || {};
 
     if (!options.file) {
-      return this.enhance(this.httpClient.post(url,
+      return this.enhance(this.httpClient.post(url + "?r=" + Math.random(),
         JSON.stringify(data),
         {
           headers: new HttpHeaders({ 'Content-Type': 'application/json', 'IDENTITY_TOKEN': this.token || "NONE" }),
@@ -84,7 +84,7 @@ export class ApiService {
         formData.append("path", options.file.path);
       if(options.file.data)
         formData.append("data", JSON.stringify(options.file.data));
-      return this.enhance(this.httpClient.post(url,
+      return this.enhance(this.httpClient.post(url + "?r=" + Math.random(),
         formData,
         {
           headers: new HttpHeaders({ 'IDENTITY_TOKEN': this.token || "NONE" }),
@@ -93,11 +93,10 @@ export class ApiService {
     }
   }
 
-  public PUT<T>(url: string, data: T, options: ApiOptions): Observable<HttpResponse<Object>> {
+  public PUT<T>(url: string, data: T, options?: ApiOptions): Observable<HttpResponse<Object>> {
     options = options || {};
 
-    return this.enhance(this.httpClient.put(
-      url,
+    return this.enhance(this.httpClient.put(url + "?r=" + Math.random(),
       JSON.stringify(data),
       {
         headers: new HttpHeaders({ 'Content-Type': 'application/json', 'IDENTITY_TOKEN': this.token || "NONE" }),
@@ -105,11 +104,10 @@ export class ApiService {
       }), options);
   }
 
-  public DELETE(url: string, options: ApiOptions): Observable<HttpResponse<Object>> {
+  public DELETE(url: string, options?: ApiOptions): Observable<HttpResponse<Object>> {
     options = options || {};
 
-    return this.enhance(this.httpClient.delete(
-      url,
+    return this.enhance(this.httpClient.delete(url + "?r=" + Math.random(),
       {
         headers: new HttpHeaders({ 'IDENTITY_TOKEN': this.token || "NONE" }),
         observe: 'response'
