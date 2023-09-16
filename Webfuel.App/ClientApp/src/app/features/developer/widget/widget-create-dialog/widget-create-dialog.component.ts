@@ -3,15 +3,18 @@ import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IWidget } from 'api/api.types';
 import { WidgetApi } from 'api/widget.api';
+import { GrowlService } from '../../../../core/growl.service';
 
 @Component({
+  selector: 'widget-create-dialog-component',
   templateUrl: './widget-create-dialog.component.html'
 })
 export class WidgetCreateDialogComponent {
 
   constructor(
     private dialogRef: DialogRef<IWidget>,
-    private widgetApi: WidgetApi
+    private growlService: GrowlService,
+    private widgetApi: WidgetApi,
   ) {
   }
 
@@ -23,10 +26,11 @@ export class WidgetCreateDialogComponent {
   save() {
     if (!this.formData.valid) {
       this.formData.markAllAsTouched();
+      this.growlService.growlDanger("Please complete all fields");
       return;
     }
 
-    this.widgetApi.createWidget(this.formData.getRawValue()).subscribe((result) => {
+    this.widgetApi.createWidget(this.formData.getRawValue(), { successGrowl: "Widget Created" }).subscribe((result) => {
       this.dialogRef.close();
     });
   }

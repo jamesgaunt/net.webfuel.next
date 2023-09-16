@@ -1,0 +1,32 @@
+@import 'config.scss';
+
+.growl-container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  z-index: 70000;
+}
+
+.growl {
+  position: relative;
+  display: block;
+  max-height: 400px;
+  width: 400px;
+  overflow: auto;
+  z-index: 70000;
+  padding: 16px 20px 16px 20px;
+  margin-bottom: 16px;
+  margin-right: 16px;
+  margin-left: auto;
+  color: var(--palette-primary-contrast);
+  background-color: var(--palette-primary);
+  box-shadow: 1px 1px 10px #000000;
+
+  @each $p in $paletteAction {
+    &.is-#{$p} {
+      color: var(--palette-#{$p}-contrast);
+      background-color: var(--palette-#{$p});
+    }
+  }
+}

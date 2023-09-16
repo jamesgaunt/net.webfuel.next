@@ -1,6 +1,8 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
@@ -49,7 +51,12 @@ namespace Webfuel
                     }
                     catch (Exception ex)
                     {
-                        return Results.BadRequest(ex);
+                        if(ex is ValidationException validationException)
+                        {
+                            return Results.BadRequest(new ValidationError(validationException));
+                        }
+
+                        return Results.StatusCode(500);
                     }
                 });
             }

@@ -19,4 +19,9 @@
   </div>
 </div>
 
+<div class="growl-container">
+  <div *ngFor="let growl of growlService.growls | async" class="growl {{ growl.class }}">
+    <div>{{ growl.message }}</div>
+  </div>
+</div>
 

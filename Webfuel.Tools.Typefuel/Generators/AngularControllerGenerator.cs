@@ -46,10 +46,6 @@ namespace Webfuel.Tools.Typefuel
             sb.WriteLine();
             sb.WriteLine($"public " + action.Name.ToCamelCase() + $" {AngularActionGenerator.Signature(action)} {{");
             {
-                //sb.WriteLine("options = options || {};");
-                //if (action.RetryCount >= 0)
-                //    sb.WriteLine($"options.retryCount = options.retryCount || {action.RetryCount};");
-
                 sb.Write($"return this.apiService.{action.Verb}(\"{AngularActionGenerator.RouteUrl(action)}\"");
 
                 if (action.Verb == "POST" || action.Verb == "PUT" || action.Verb == "COMMAND")
@@ -62,7 +58,7 @@ namespace Webfuel.Tools.Typefuel
                         sb.Write($", undefined");
                 }
 
-                sb.WriteLine(", options)" + AngularActionGenerator.Map(action) + ";");
+                sb.WriteLine(", options);"); // + AngularActionGenerator.Map(action) + ";")
             }
             sb.WriteLine("}");
         }

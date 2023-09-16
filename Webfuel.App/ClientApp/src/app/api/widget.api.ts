@@ -9,11 +9,11 @@ export class WidgetApi {
     constructor(private apiService: ApiService) { }
     
     public createWidget (command: ICreateWidgetCommand, options?: ApiOptions): Observable<IWidget> {
-        return this.apiService.COMMAND("api/CreateWidget", command, options).pipe(map((res) => <IWidget>res.body));
+        return this.apiService.COMMAND("api/CreateWidget", command, options);
     }
     
     public updateWidget (command: IUpdateWidgetCommand, options?: ApiOptions): Observable<IWidget> {
-        return this.apiService.COMMAND("api/UpdateWidget", command, options).pipe(map((res) => <IWidget>res.body));
+        return this.apiService.COMMAND("api/UpdateWidget", command, options);
     }
     
     public deleteWidget (command: IDeleteWidgetCommand, options?: ApiOptions): Observable<any> {
@@ -21,7 +21,7 @@ export class WidgetApi {
     }
     
     public queryWidget (command: IQueryWidgetCommand, options?: ApiOptions): Observable<IQueryResult<IWidget>> {
-        return this.apiService.COMMAND("api/QueryWidget", command, options).pipe(map((res) => <IQueryResult<IWidget>>res.body));
+        return this.apiService.COMMAND("api/QueryWidget", command, options);
     }
 }
 

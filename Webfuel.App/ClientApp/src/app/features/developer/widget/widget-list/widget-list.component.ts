@@ -13,8 +13,7 @@ import { WidgetUpdateDialogComponent } from '../widget-update-dialog/widget-upda
 export class WidgetListComponent {
   constructor(
     private dialogService: DialogService,
-    private widgetApi: WidgetApi
-
+    private widgetApi: WidgetApi,
   ) {
   }
 
@@ -44,10 +43,10 @@ export class WidgetListComponent {
     this.dialogService.confirmDelete({
       title: item.name,
       confirmedCallback: () => {
-        this.widgetApi.deleteWidget({ id: item.id }).subscribe((result) => {
+        this.widgetApi.deleteWidget({ id: item.id }, { successGrowl: "Widget Deleted" }).subscribe((result) => {
           this.dataSource.fetch();
         })
       }
-    })
+    });
   }
 }

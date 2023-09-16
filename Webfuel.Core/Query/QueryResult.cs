@@ -1,6 +1,5 @@
 ﻿namespace Webfuel
 {
-    [TypefuelInterface]
     public class QueryResult<TItem>
     {
         public QueryResult()

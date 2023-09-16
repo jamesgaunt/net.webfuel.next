@@ -1,6 +1,5 @@
 ﻿namespace Webfuel
 {
-    [TypefuelInterface]
     public class Query<TFilter> where TFilter : class
     {
         public List<QuerySort> Sort { get; set; } = new List<QuerySort>();
@@ -17,18 +16,15 @@
         }
     }
 
-    [TypefuelInterface]
     public class SimpleQuery : Query<Object>
     {
     }
 
-    [TypefuelInterface]
     public class SearchFilter
     {
         public string Search { get; set; } = String.Empty;
     }
 
-    [TypefuelInterface]
     public class SearchQuery : Query<SearchFilter>
     { }
 

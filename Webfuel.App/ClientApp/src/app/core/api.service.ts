@@ -1,168 +1,60 @@
 import _ from '../shared/underscore';
 import { HttpInterceptor, HttpHandler, HttpClient, HttpEvent, HttpResponse, HttpRequest, HttpHeaders } from '@angular/common/http';
-import { Observable, Observer, BehaviorSubject } from 'rxjs';
-import { retry } from 'rxjs/operators';
+import { Observable, Observer, BehaviorSubject, throwError } from 'rxjs';
+import { catchError, map, retry } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-// import { GrowlService } from './growl.service';
-
-export interface ApiFile {
-  file?: File;
-  path?: string;
-  data?: any;
-}
+import { GrowlService } from './growl.service';
+import { IValidationError } from '../api/api.types';
 
 export interface ApiOptions {
-  errorGrowl?: boolean;
-  savedGrowl?: boolean;
-  retryCount?: number;
-  file?: ApiFile;
+  failureGrowl?: string;
+  successGrowl?: string;
 }
 
 @Injectable()
 export class ApiService {
 
-  // Needs to match the key in the AuthenticationService
-  private key = 'IDENTITY_TOKEN';
-
   constructor(
     private httpClient: HttpClient,
-    // private growlService: GrowlService
+    private growlService: GrowlService
   ) { }
 
-  pending = new BehaviorSubject<boolean>(false);
-
-  private incCounter() {
-    this._counter++;
-    if (this._counter == 1)
-      this.pending.next(true);
-  }
-  private decCounter() {
-    this._counter--;
-    if (this._counter == 0)
-      this.pending.next(false);
-  }
-  private _counter = 0;
-
-  public COMMAND<T>(url: string, data: T, options?: ApiOptions): Observable<HttpResponse<Object>> {
+  public COMMAND<TRequest, TResponse>(url: string, data: TRequest, options?: ApiOptions): Observable<TResponse> {
     options = options || {};
 
-    return this.enhance(this.httpClient.post(url + "?r=" + Math.random(),
-      JSON.stringify(data),
-      {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json', 'IDENTITY_TOKEN': this.token || "NONE" }),
-        observe: 'response'
-      }), options);
+    var observable = <Observable<TResponse>>this.httpClient.post(url + "?r=" + Math.random(), data, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    });
+
+    return observable.pipe(
+      map(result => {
+        if (options?.successGrowl)
+          this.growlService.growlSuccess(options.successGrowl);
+
+        return result;
+      }),
+      catchError(err => {
+        this.processError(err.error);
+        return throwError(() => err);
+      })
+    );
   }
 
-  public GET(url: string, options?: ApiOptions): Observable<HttpResponse<Object>> {
-    options = options || {};
-    if (options.retryCount === undefined)
-      options.retryCount = 2;
-
-    return this.enhance(this.httpClient.get(url,
-      {
-        headers: new HttpHeaders({ 'IDENTITY_TOKEN': this.token || "NONE" }),
-        observe: 'response'
-      }), options);
+  growlError(message: string) {
+    this.growlService.growlDanger(message);
   }
 
-  public POST<T>(url: string, data: T, options?: ApiOptions): Observable<HttpResponse<Object>> {
-    options = options || {};
+  processError(error: any) {
+    if (!error)
+      return;
 
-    if (!options.file) {
-      return this.enhance(this.httpClient.post(url + "?r=" + Math.random(),
-        JSON.stringify(data),
-        {
-          headers: new HttpHeaders({ 'Content-Type': 'application/json', 'IDENTITY_TOKEN': this.token || "NONE" }),
-          observe: 'response'
-        }), options);
-    } else {
-      const formData = new FormData();
-      if(options.file.file)
-        formData.append("file", options.file.file);
-      if(options.file.path)
-        formData.append("path", options.file.path);
-      if(options.file.data)
-        formData.append("data", JSON.stringify(options.file.data));
-      return this.enhance(this.httpClient.post(url + "?r=" + Math.random(),
-        formData,
-        {
-          headers: new HttpHeaders({ 'IDENTITY_TOKEN': this.token || "NONE" }),
-          observe: 'response'
-        }), options);
-    }
+    if (error.errorType == "Validation Error")
+      return this.processValidationError(error);
   }
 
-  public PUT<T>(url: string, data: T, options?: ApiOptions): Observable<HttpResponse<Object>> {
-    options = options || {};
-
-    return this.enhance(this.httpClient.put(url + "?r=" + Math.random(),
-      JSON.stringify(data),
-      {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json', 'IDENTITY_TOKEN': this.token || "NONE" }),
-        observe: 'response'
-      }), options);
-  }
-
-  public DELETE(url: string, options?: ApiOptions): Observable<HttpResponse<Object>> {
-    options = options || {};
-
-    return this.enhance(this.httpClient.delete(url + "?r=" + Math.random(),
-      {
-        headers: new HttpHeaders({ 'IDENTITY_TOKEN': this.token || "NONE" }),
-        observe: 'response'
-      }), options);
-  }
-
-  private enhance(o: Observable<HttpResponse<Object>>, options: ApiOptions) {
-    if (options.retryCount)
-      o = o.pipe(retry(options.retryCount));
-    o = o.pipe(this.let(options));
-    return o;
-  }
-
-  private let(options: ApiOptions) {
-    return (source: Observable<HttpResponse<Object>>) => {
-      return Observable.create((observer: Observer<HttpResponse<Object>>) => {
-        var open = true;
-        this.incCounter();
-        source.subscribe(
-          (next) => {
-            if (open) {
-              open = false;
-              this.decCounter();
-            }
-            if (options.savedGrowl === true) {
-              // this.growlService.growlSaved();
-            }
-            observer.next(next);
-          },
-          (err) => {
-            if (open) {
-              open = false;
-              this.decCounter();
-            }
-            if (options.errorGrowl !== false) {
-              // this.growlService.growlError(err);
-            }
-            observer.error(err);
-          },
-          () => {
-            if (open) {
-              open = false;
-              this.decCounter();
-            }
-            observer.complete();
-          }
-        );
-      });
-    };
-  }
-
-  private get token() {
-    var token = _.getLocalStorage(this.key);
-    if (!token)
-      return null;
-    return token;
+  processValidationError(error: IValidationError) {
+    _.forEach(error.errors, (x) => {
+      this.growlError(x.errorMessage);
+    });
   }
 }

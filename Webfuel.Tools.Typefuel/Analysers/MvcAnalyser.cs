@@ -34,7 +34,7 @@ namespace Webfuel.Tools.Typefuel
             // Detect Actions
             foreach (var method in controllerType.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
             {
-                if (method.GetCustomAttribute<HttpMethodAttribute>() == null || method.GetCustomAttribute<TypefuelIgnoreAttribute>() != null)
+                if (method.GetCustomAttribute<HttpMethodAttribute>() == null /*|| method.GetCustomAttribute<TypefuelIgnoreAttribute>() != null*/)
                     continue;
 
                 controller.Actions.Add(AnalyseAction(controller, method));
@@ -63,8 +63,8 @@ namespace Webfuel.Tools.Typefuel
 
             foreach (var parameterInfo in methodInfo.GetParameters())
             {
-                if (parameterInfo.GetCustomAttribute<TypefuelIgnoreAttribute>() != null)
-                    continue;
+                //if (parameterInfo.GetCustomAttribute<TypefuelIgnoreAttribute>() != null)
+                //    continue;
                 if (parameterInfo.GetCustomAttributes().Any(p => (p is IBindingSourceMetadata) && !(p is FromBodyAttribute) && !(p is FromRouteAttribute)))
                     continue;
                 action.Parameters.Add(AnalyseActionParameter(action, parameterInfo));

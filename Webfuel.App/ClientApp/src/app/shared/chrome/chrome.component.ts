@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { GrowlService } from '../../core/growl.service';
 
 @Component({
   selector: 'chrome',
@@ -8,9 +9,9 @@ import { Router } from '@angular/router';
 })
 export class ChromeComponent implements OnInit, OnDestroy {
 
-
   constructor(
     private router: Router,
+    public growlService: GrowlService
   ) {
   }
 

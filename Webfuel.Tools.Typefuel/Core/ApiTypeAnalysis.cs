@@ -41,8 +41,8 @@ namespace Webfuel.Tools.Typefuel
             if (type.FullName.StartsWith("System.") || type.FullName.StartsWith("Microsoft.") || type.FullName.StartsWith("MediatR."))
                 return false;
 
-            if (type.GetCustomAttribute<TypefuelIgnoreAttribute>() != null)
-                return false;
+            //if (type.GetCustomAttribute<TypefuelIgnoreAttribute>() != null)
+            //    return false;
 
             return true;
         }
