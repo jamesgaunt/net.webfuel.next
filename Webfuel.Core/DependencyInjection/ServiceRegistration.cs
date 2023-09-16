@@ -3,9 +3,9 @@ using System.Reflection;
 
 namespace Webfuel
 {
-    public static class ServiceImplementation
+    public static class ServiceRegistration
     {
-        public static void Discover(Assembly assembly, IServiceCollection services)
+        public static void RegisterServiceImplementationsFromAssembly(this IServiceCollection services, Assembly assembly)
         {
             foreach (var type in assembly.DefinedTypes)
             {

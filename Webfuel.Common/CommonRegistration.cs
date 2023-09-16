@@ -4,10 +4,11 @@ namespace Webfuel.Common
 {
     public static class CommonRegistration
     {
-        public static void ConfigureServices(this IServiceCollection services)
+        public static void RegisterCommonServices(this IServiceCollection services)
         {
             RepositoryRegistration.AddRepositoryServices(services);
-            ServiceImplementation.Discover(typeof(CommonRegistration).Assembly, services);
+
+            services.RegisterServiceImplementationsFromAssembly(typeof(CommonRegistration).Assembly);
         }
     }
 }

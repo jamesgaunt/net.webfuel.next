@@ -4,10 +4,11 @@ namespace Webfuel
 {
     public static class CoreRegistration
     {
-        public static void ConfigureServices(this IServiceCollection services)
+        public static void RegisterCoreServices(this IServiceCollection services)
         {
             RepositoryRegistration.AddRepositoryServices(services);
-            ServiceImplementation.Discover(typeof(CoreRegistration).Assembly, services);
+
+            services.RegisterServiceImplementationsFromAssembly(typeof(CoreRegistration).Assembly);
         }
     }
 }

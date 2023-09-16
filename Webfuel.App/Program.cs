@@ -2,6 +2,7 @@ using Webfuel;
 using FluentValidation;
 using Webfuel.MediatR;
 using MediatR;
+using Webfuel.Common;
 
 namespace Webfuel.App
 {
@@ -11,9 +12,8 @@ namespace Webfuel.App
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            Webfuel.CoreRegistration.ConfigureServices(builder.Services);
-            Webfuel.Common.CommonRegistration.ConfigureServices(builder.Services);
-
+            builder.Services.RegisterCoreServices();
+            builder.Services.RegisterCommonServices();
             builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblyContaining<Webfuel.BlobStorage>());
             builder.Services.AddScoped<IValidator<CreateWidgetCommand>, CreateWidgetCommandValidator>();
 
