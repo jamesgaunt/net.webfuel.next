@@ -22,6 +22,7 @@ namespace Webfuel.Tools.Typefuel
             var sb = new ScriptBuilder();
 
             sb.Write("(");
+            
             if (action.Parameters.Count > 0)
             {
                 sb.Write("params: { ");
@@ -42,6 +43,13 @@ namespace Webfuel.Tools.Typefuel
                 }
                 sb.Write(" }, ");
             }
+            else if(action.CommandTypeDescriptor != null)
+            {
+                sb.Write("command: ");
+                AngularTypesGenerator.TypeDescriptor(sb, action.CommandTypeDescriptor);
+                sb.Write(", ");
+            }
+            
             sb.Write("options?: ApiOptions): Observable<");
             AngularTypesGenerator.TypeDescriptor(sb, action.ReturnTypeDescriptor);
             sb.Write(">");

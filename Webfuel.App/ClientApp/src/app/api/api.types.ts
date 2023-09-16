@@ -1,27 +1,3 @@
-export interface IWidget {
-    id: string;
-    name: string;
-    age: number;
-    shippingDate: any;
-}
-
-export interface IQueryResult<TItem> {
-    items: Array<TItem>;
-    totalCount: number;
-}
-
-export interface ISimpleQuery extends IQuery<any> {
-    sort: Array<IQuerySort>;
-    skip: number;
-    take: number;
-    filter: any | null;
-}
-
-export interface IQuerySort {
-    field: string;
-    direction: number;
-}
-
 export interface IQuery<TFilter> {
     sort: Array<IQuerySort>;
     skip: number;
@@ -29,41 +5,16 @@ export interface IQuery<TFilter> {
     filter: TFilter | null;
 }
 
-export interface IEventLog {
-    id: string;
-    level: number;
-    message: string;
-    source: string;
-    detail: string;
-    context: string;
-    entityId: string | null | null;
-    tenantId: string | null | null;
-    identityId: string;
-    ipAddress: string;
-    exception: string;
-    requestUrl: string;
-    requestMethod: string;
-    requestHeaders: string;
+export interface IQuerySort {
+    field: string;
+    direction: number;
 }
 
-export interface IRepositoryQueryResult<TItem> {
-    items: Array<TItem>;
-    totalCount: number;
-}
-
-export interface IRepositoryQuery {
-    projection: Array<string>;
-    filters: Array<IRepositoryQueryFilter>;
+export interface ISimpleQuery extends IQuery<any> {
     sort: Array<IQuerySort>;
     skip: number;
     take: number;
-}
-
-export interface IRepositoryQueryFilter {
-    field: string;
-    op: string;
-    value: any | null;
-    filters: Array<IRepositoryQueryFilter> | null;
+    filter: any | null;
 }
 
 export interface ISearchFilter {
@@ -75,6 +26,42 @@ export interface ISearchQuery extends IQuery<ISearchFilter> {
     skip: number;
     take: number;
     filter: ISearchFilter | null;
+}
+
+export interface IQueryResult<TItem> {
+    items: Array<TItem>;
+    totalCount: number;
+}
+
+export interface IQueryWidgetCommand extends ISearchQuery {
+    sort: Array<IQuerySort>;
+    skip: number;
+    take: number;
+    filter: ISearchFilter | null;
+}
+
+export interface IWidget {
+    id: string;
+    name: string;
+    age: number;
+    shippingDate: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface ICreateWidgetCommand {
+    name: string;
+    age: number;
+}
+
+export interface IUpdateWidgetCommand {
+    id: string;
+    name: string;
+    age: number;
+}
+
+export interface IDeleteWidgetCommand {
+    id: string;
 }
 
 

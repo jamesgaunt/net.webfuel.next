@@ -9,7 +9,7 @@ namespace Webfuel
 {
     public interface IRepositoryQueryService
     {
-        Task<RepositoryQueryResult<TItem>> ExecuteQueryAsync<TItem>(string spanName, RepositoryQuery query, IRepositoryAccessor<TItem> accessor) where TItem : class;
+        Task<QueryResult<TItem>> ExecuteQueryAsync<TItem>(string spanName, RepositoryQuery query, IRepositoryAccessor<TItem> accessor) where TItem : class;
     }
 
     [ServiceImplementation(typeof(IRepositoryQueryService))]
@@ -22,7 +22,7 @@ namespace Webfuel
             RepositoryService = repositoryService;
         }
 
-        public async Task<RepositoryQueryResult<TItem>> ExecuteQueryAsync<TItem>(string spanName, RepositoryQuery query, IRepositoryAccessor<TItem> accessor) where TItem : class
+        public async Task<QueryResult<TItem>> ExecuteQueryAsync<TItem>(string spanName, RepositoryQuery query, IRepositoryAccessor<TItem> accessor) where TItem : class
         {
             var fields = accessor.InsertProperties.ToList();
 
@@ -48,7 +48,7 @@ namespace Webfuel
                 totalCount = (int)(await RepositoryService.ExecuteScalarAsync(spanName, querySql, RepositoryQueryUtility.SqlParameters(parameters)))!;
             }
 
-            return new RepositoryQueryResult<TItem>(items, totalCount);
+            return new QueryResult<TItem>(items, totalCount);
         }
     }
 }

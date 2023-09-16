@@ -10,6 +10,8 @@ namespace Webfuel
         public string Name  { get; set; } = String.Empty;
         public int Age  { get; set; } = 0;
         public DateOnly ShippingDate  { get; set; } = new DateOnly(1900, 1, 1);
+        public DateTimeUtc CreatedAt  { get; set; } = new DateTimeUtc(599266080000000000L);
+        public DateTimeUtc UpdatedAt  { get; set; } = new DateTimeUtc(599266080000000000L);
         public Widget Copy()
         {
             var entity = new Widget();
@@ -17,6 +19,8 @@ namespace Webfuel
             entity.Name = Name;
             entity.Age = Age;
             entity.ShippingDate = ShippingDate;
+            entity.CreatedAt = CreatedAt;
+            entity.UpdatedAt = UpdatedAt;
             return entity;
         }
     }

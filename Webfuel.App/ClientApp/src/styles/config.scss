@@ -35,5 +35,5 @@ $paletteAction: 'primary', 'success', 'warning', 'danger';
 :root {
   --border-color: #dbdbdb;
   --border-color-hover: #ababab;
-  --border-color-focus: var(--palette-primary);
+  --border-color-focus: hsl(208, 10%, 41%);
 }

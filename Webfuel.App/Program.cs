@@ -10,18 +10,13 @@ namespace Webfuel.App
 
             Webfuel.CoreRegistration.ConfigureServices(builder.Services);
             Webfuel.Common.CommonRegistration.ConfigureServices(builder.Services);
-            builder.Services.AddControllers();
+
+            builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblyContaining<Webfuel.BlobStorage>());
 
             var app = builder.Build();
 
             app.UseStaticFiles();
-
-            app.UseRouting();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.RegisterEndpointsFromAssemblyContaining<Program>();            
 
             app.Run();
         }

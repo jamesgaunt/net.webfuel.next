@@ -97,6 +97,9 @@ namespace Webfuel.Tools.Datafuel
                     return new PrimativeEnum(nullable, tag) { Flags = true };
                 case "date":
                     return new PrimativeDate(nullable);
+                case "utc":
+                case "datetimeutc":
+                    return new PrimativeDateTimeUtc(nullable);
                 case "meta:name":
                     return new PrimativeString(nullable, max: 64);
                 case "meta:path":

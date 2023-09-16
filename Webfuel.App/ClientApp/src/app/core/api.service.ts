@@ -43,6 +43,17 @@ export class ApiService {
   }
   private _counter = 0;
 
+  public COMMAND<T>(url: string, data: T, options: ApiOptions): Observable<HttpResponse<Object>> {
+    options = options || {};
+
+    return this.enhance(this.httpClient.post(url,
+      JSON.stringify(data),
+      {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json', 'IDENTITY_TOKEN': this.token || "NONE" }),
+        observe: 'response'
+      }), options);
+  }
+
   public GET(url: string, options: ApiOptions): Observable<HttpResponse<Object>> {
     options = options || {};
     if (options.retryCount === undefined)

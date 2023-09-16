@@ -8,6 +8,10 @@
     <Property Name="Name" Type="meta:name" />
     <Property Name="Age" Type="int" />
     <Property Name="ShippingDate" Type="date" />
+
+    <Property Name="CreatedAt" Type="utc" />
+    <Property Name="UpdatedAt" Type="utc" />
+      
     
   </Entity>
 

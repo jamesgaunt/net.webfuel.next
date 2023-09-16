@@ -11,9 +11,13 @@ namespace Webfuel.Tools.Typefuel
 
             var schema = new ApiSchema();
 
-            new MvcAnalyser()
+            new TypeAnalyser()
                 .AnalyseAssembly(schema, typeof(Webfuel.App.Program).GetTypeInfo().Assembly)
                 .AnalyseAssembly(schema, typeof(Webfuel.CoreRegistration).GetTypeInfo().Assembly);
+
+            new ApiAnalyser()
+                .AnalyseAssembly(schema, typeof(Webfuel.App.Program).GetTypeInfo().Assembly);
+
             AngularApiGenerator.GenerateApi(schema);
         }
     }

@@ -10,24 +10,14 @@ namespace Webfuel.Tools.Datafuel
         {
         }
 
-        /*
         // Generators
-
-        public override void GenerateRepositoryGetter(ScriptBuilder sb)
-        {
-            if (Nullable)
-                sb.WriteLine($"return entity.{Name}?.ToDateTime();");
-            else
-                sb.WriteLine($"return entity.{Name}.ToDateTime();");
-        }
 
         public override void GenerateRepositorySetter(ScriptBuilder sb)
         {
             if(Nullable)
-                sb.WriteLine($"entity.{Name} = value == DBNull.Value ? (Date?)null : ((DateTime)value!).ToDate();");
+                sb.WriteLine($"entity.{Name} = value == DBNull.Value ? (DateOnly?)null : DateOnly.FromDateTime((DateTime)value!);");
             else
-                sb.WriteLine($"entity.{Name} = ((DateTime)value!).ToDate();");
+                sb.WriteLine($"entity.{Name} = DateOnly.FromDateTime((DateTime)value!);");
         }
-        */
     }
 }

@@ -4,6 +4,16 @@ using System.Text;
 
 namespace Webfuel
 {
+    /*
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+    public class TypefuelEndpointAttribute<TCommand> : Attribute { }
+    */
+
+    [AttributeUsage(AttributeTargets.Class)]
+    public class TypefuelApiAttribute : Attribute
+    {
+    }
+
     [AttributeUsage(AttributeTargets.Class)]
     public class TypefuelControllerAttribute: Attribute
     {

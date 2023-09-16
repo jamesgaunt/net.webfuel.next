@@ -26,6 +26,8 @@ namespace Webfuel.Tools.Typefuel
 
         public ApiActionParameter BodyParameter { get { return Parameters.FirstOrDefault(p => p.Source == ApiActionParameterSource.Body); } }
 
+        public ApiTypeDescriptor CommandTypeDescriptor { get; set; } 
+
         public ApiTypeDescriptor ReturnTypeDescriptor { get; set; }
     }
 }

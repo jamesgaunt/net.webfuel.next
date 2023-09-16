@@ -26,7 +26,7 @@ namespace Webfuel.Tools.Typefuel
 
             var complexTypes = EnumerateTypes(controller);
             if (complexTypes.Count > 0)
-                sb.WriteLine($"import {{ { String.Join(", ", complexTypes.Select(p => AngularTypesGenerator.TypeName(p))) } }} from './api.types';");
+                sb.WriteLine($"import {{ {String.Join(", ", complexTypes.Select(p => AngularTypesGenerator.TypeName(p)))} }} from './api.types';");
 
             sb.WriteLine();
             sb.WriteLine("@Injectable()");
@@ -53,10 +53,12 @@ namespace Webfuel.Tools.Typefuel
 
                 sb.Write($"return this.apiService.{action.Verb}(\"{AngularActionGenerator.RouteUrl(action)}?r=\" + Math.random()");
 
-                if (action.Verb == "POST" || action.Verb == "PUT")
+                if (action.Verb == "POST" || action.Verb == "PUT" || action.Verb == "COMMAND")
                 {
                     if (action.BodyParameter != null)
                         sb.Write($", params.{AngularActionGenerator.FixReservedNames(action.BodyParameter.Name)}");
+                    else if (action.CommandTypeDescriptor != null)
+                        sb.Write($", command");
                     else
                         sb.Write($", undefined");
                 }
@@ -91,6 +93,16 @@ namespace Webfuel.Tools.Typefuel
                     if (!result.Contains(type) && type is ApiComplexType)
                         result.Add(type as ApiComplexType);
                 }
+
+                if (action.CommandTypeDescriptor != null)
+                {
+                    foreach (var type in action.CommandTypeDescriptor.EnumerateTypes())
+                    {
+                        if (!result.Contains(type) && type is ApiComplexType)
+                            result.Add(type as ApiComplexType);
+                    }
+                }
+
             }
             return result;
         }

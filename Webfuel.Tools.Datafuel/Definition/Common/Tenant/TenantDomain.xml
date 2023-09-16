@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+
+  <Entity Name="TenantDomain">
+    <Key Name="Id" Type="guid" />
+    <Reference Name="TenantId" Type="Tenant" CascadeDelete="true" />
+    <Property Name="Domain" Type="meta:name" />
+    <Property Name="RedirectTo" Type="meta:name" />
+
+    <Index Unique="true">
+      <Member Name="Domain" />
+    </Index>
+    <Index Unique="false">
+      <Member Name="TenantId" />
+    </Index>
+  </Entity>
+
+</Schema>

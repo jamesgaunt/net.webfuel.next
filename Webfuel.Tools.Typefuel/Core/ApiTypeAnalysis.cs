@@ -38,7 +38,7 @@ namespace Webfuel.Tools.Typefuel
             if (type.IsConstructedGenericType)
                 type = type.GetGenericTypeDefinition();
 
-            if (type.FullName.StartsWith("System.") || type.FullName.StartsWith("Microsoft."))
+            if (type.FullName.StartsWith("System.") || type.FullName.StartsWith("Microsoft.") || type.FullName.StartsWith("MediatR."))
                 return false;
 
             if (type.GetCustomAttribute<TypefuelIgnoreAttribute>() != null)
@@ -88,8 +88,8 @@ namespace Webfuel.Tools.Typefuel
                 return ApiTypeCode.Guid;
             if (IsDateTimeType(type))
                 return ApiTypeCode.DateTime;
-            //if (IsDateType(type))
-            //    return ApiTypeCode.Date;
+            if (IsDateType(type))
+                return ApiTypeCode.Date;
             if (IsBooleanType(type))
                 return ApiTypeCode.Boolean;
             if (IsVoidType(type))
@@ -173,7 +173,14 @@ namespace Webfuel.Tools.Typefuel
 
         public static bool IsDateTimeType(Type type)
         {
-            if (type == typeof(DateTime))
+            if (type == typeof(DateTime) || type == typeof(DateTimeUtc))
+                return true;
+            return false;
+        }
+
+        public static bool IsDateType(Type type)
+        {
+            if (type == typeof(DateOnly))
                 return true;
             return false;
         }

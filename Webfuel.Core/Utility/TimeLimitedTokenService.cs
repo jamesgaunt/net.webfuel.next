@@ -109,7 +109,7 @@ namespace Webfuel
                 throw new ArgumentNullException("key");
 
             // Derive a new Salt and IV from the Key
-            using (var keyDerivationFunction = new Rfc2898DeriveBytes(key, saltSize))
+            using (var keyDerivationFunction = new Rfc2898DeriveBytes(key, saltSize, 1, HashAlgorithmName.SHA256))
             {
                 var saltBytes = keyDerivationFunction.Salt;
                 var keyBytes = keyDerivationFunction.GetBytes(32);
@@ -158,7 +158,7 @@ namespace Webfuel
             var saltBytes = allTheBytes.Take(saltSize).ToArray();
             var ciphertextBytes = allTheBytes.Skip(saltSize).Take(allTheBytes.Length - saltSize).ToArray();
 
-            using (var keyDerivationFunction = new Rfc2898DeriveBytes(key, saltBytes))
+            using (var keyDerivationFunction = new Rfc2898DeriveBytes(key, saltSize, 1, HashAlgorithmName.SHA256))
             {
                 // Derive the previous IV from the Key and Salt
                 var keyBytes = keyDerivationFunction.GetBytes(32);

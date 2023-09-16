@@ -2,6 +2,8 @@ import _ from './underscore';
 import { BehaviorSubject, Observable, Observer } from 'rxjs';
 import { IQuery, IQueryResult } from '../api/api.types';
 import { FormGroup } from '@angular/forms';
+import { debounceTime, noop, tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export class DataSource<TItem, TFilter> {
 
@@ -13,6 +15,15 @@ export class DataSource<TItem, TFilter> {
   }) {
     if (options.query)
       this.query = options.query;
+
+    if (options.filterForm) {
+      options.filterForm.valueChanges
+        .pipe(
+          debounceTime(200),
+          tap(value => this.fetch()),
+        )
+        .subscribe();
+    }
   }
 
   public query: IQuery<TFilter> = { skip: 0, take: 15, sort: [], filter: null };
@@ -27,6 +38,9 @@ export class DataSource<TItem, TFilter> {
     //if (!this.localStorageLoaded) {
     //  this.loadLocalStorage();
     //}
+
+    if (this.options.filterForm)
+      this.query.filter = this.options.filterForm.value;
 
     this.options.fetch(this.query).subscribe((response) => {
       if (response.totalCount > 0 && response.items.length === 0 && this.query.skip > 0) {

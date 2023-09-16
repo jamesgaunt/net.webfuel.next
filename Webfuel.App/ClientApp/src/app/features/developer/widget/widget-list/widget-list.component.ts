@@ -1,10 +1,11 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ISimpleQuery, IWidget } from 'api/api.types';
+import { ISearchFilter, IWidget } from 'api/api.types';
 import { WidgetApi } from 'api/widget.api';
 import { DialogService } from 'core/dialog.service';
 import { DataSource } from '../../../../shared/data-source';
-import { WidgetDialogComponent } from '../widget-dialog/widget-dialog.component';
+import { WidgetCreateDialogComponent } from '../widget-create-dialog/widget-create-dialog.component';
+import { WidgetUpdateDialogComponent } from '../widget-update-dialog/widget-update-dialog.component';
 
 @Component({
   templateUrl: './widget-list.component.html'
@@ -17,18 +18,23 @@ export class WidgetListComponent {
   ) {
   }
 
-  dataSource = new DataSource<IWidget, ISimpleQuery>({
-    fetch: (query) => this.widgetApi.query({ query: query })
+  filterForm = new FormGroup({
+    search: new FormControl('')
+  });
+
+  dataSource = new DataSource<IWidget, ISearchFilter>({
+    fetch: (query) => this.widgetApi.queryWidget(query),
+    filterForm: this.filterForm
   });
 
   add() {
-    this.dialogService.open(WidgetDialogComponent, {
+    this.dialogService.open(WidgetCreateDialogComponent, {
       callback: () => this.dataSource.fetch()
     });
   }
 
   edit(item: IWidget) {
-    this.dialogService.open(WidgetDialogComponent, {
+    this.dialogService.open(WidgetUpdateDialogComponent, {
       data: item,
       callback: () => this.dataSource.fetch()
     });
@@ -36,8 +42,9 @@ export class WidgetListComponent {
 
   delete(item: IWidget) {
     this.dialogService.confirmDelete({
+      title: item.name,
       confirmedCallback: () => {
-        this.widgetApi.delete({ widgetId: item.id }).subscribe((result) => {
+        this.widgetApi.deleteWidget({ id: item.id }).subscribe((result) => {
           this.dataSource.fetch();
         })
       }

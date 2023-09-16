@@ -14,12 +14,12 @@ import { ConfirmDeleteDialogComponent } from './dialogs/confirm-delete-dialog.co
     SharedModule,
   ],
   declarations: [
+    ConfirmDeleteDialogComponent
   ],
   providers: [
     ApiService,
     DialogService,
-    GrowlService,
-    ConfirmDeleteDialogComponent
+    GrowlService
   ]
 })
 export class CoreModule {

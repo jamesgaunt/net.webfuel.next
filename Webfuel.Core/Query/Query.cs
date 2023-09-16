@@ -16,11 +16,17 @@ namespace Webfuel
         public int Take { get; set; }
 
         public TFilter? Filter { get; set; }
+
+        public virtual RepositoryQuery ToRepositoryQuery()
+        {
+            return new RepositoryQuery { Skip = Skip, Take = Take, Sort = Sort };
+        }
     }
 
     [TypefuelInterface]
     public class SimpleQuery: Query<Object>
-    { }
+    { 
+    }
 
     [TypefuelInterface]
     public class SearchFilter

@@ -14,7 +14,7 @@ namespace Webfuel
         Task<Widget> UpdateWidgetAsync(Widget updated, Widget original);
         Task<Widget> UpdateWidgetAsync(Widget updated, Widget original, IEnumerable<string> properties);
         Task DeleteWidgetAsync(Guid key);
-        Task<RepositoryQueryResult<Widget>> QueryWidgetAsync(RepositoryQuery query);
+        Task<QueryResult<Widget>> QueryWidgetAsync(RepositoryQuery query);
         Task<Widget?> GetWidgetAsync(Guid id);
         Task<Widget> RequireWidgetAsync(Guid id);
         Task<int> CountWidgetAsync();
@@ -49,6 +49,8 @@ namespace Webfuel
             if(updated.Name != original.Name) _properties.Add("Name");
             if(updated.Age != original.Age) _properties.Add("Age");
             if(updated.ShippingDate != original.ShippingDate) _properties.Add("ShippingDate");
+            if(updated.CreatedAt != original.CreatedAt) _properties.Add("CreatedAt");
+            if(updated.UpdatedAt != original.UpdatedAt) _properties.Add("UpdatedAt");
             if(_properties.Count == 0) return updated;
             return await RepositoryService.ExecuteUpdateAsync("UpdateWidget", updated, _properties);
         }
@@ -59,6 +61,8 @@ namespace Webfuel
             if(properties.Contains("Name") && updated.Name != original.Name) _properties.Add("Name");
             if(properties.Contains("Age") && updated.Age != original.Age) _properties.Add("Age");
             if(properties.Contains("ShippingDate") && updated.ShippingDate != original.ShippingDate) _properties.Add("ShippingDate");
+            if(properties.Contains("CreatedAt") && updated.CreatedAt != original.CreatedAt) _properties.Add("CreatedAt");
+            if(properties.Contains("UpdatedAt") && updated.UpdatedAt != original.UpdatedAt) _properties.Add("UpdatedAt");
             if(_properties.Count == 0) return updated;
             return await RepositoryService.ExecuteUpdateAsync("UpdateWidget", updated, _properties);
         }
@@ -66,7 +70,7 @@ namespace Webfuel
         {
             await RepositoryService.ExecuteDeleteAsync<Widget>("DeleteWidget", key);
         }
-        public async Task<RepositoryQueryResult<Widget>> QueryWidgetAsync(RepositoryQuery query)
+        public async Task<QueryResult<Widget>> QueryWidgetAsync(RepositoryQuery query)
         {
             return await RepositoryQueryService.ExecuteQueryAsync("RepositoryQueryWidget", query, new WidgetRepositoryAccessor());
         }

@@ -24,9 +24,6 @@ export class DataGridComponent implements OnDestroy, AfterContentInit {
     return this._dataSource;
   }
   set dataSource(value: DataSource<any, any>) {
-    if (value.query.take == 0)
-      value.query.take = 15;
-
     this._dataSource = value;
     this._dataSource.change.subscribe((response) => {
       this.cd.detectChanges();

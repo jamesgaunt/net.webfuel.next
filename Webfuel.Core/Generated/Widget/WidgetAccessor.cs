@@ -20,7 +20,11 @@ namespace Webfuel
                 case nameof(Widget.Age):
                     return entity.Age;
                 case nameof(Widget.ShippingDate):
-                    return entity.ShippingDate.ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc);
+                    return entity.ShippingDate;
+                case nameof(Widget.CreatedAt):
+                    return entity.CreatedAt.ToDateTime();
+                case nameof(Widget.UpdatedAt):
+                    return entity.UpdatedAt.ToDateTime();
                     default: throw new InvalidOperationException($"Unrecognised entity property {property}");
             }
         }
@@ -39,6 +43,12 @@ namespace Webfuel
                     break;
                 case nameof(Widget.ShippingDate):
                     entity.ShippingDate = DateOnly.FromDateTime((DateTime)value!);
+                    break;
+                case nameof(Widget.CreatedAt):
+                    entity.CreatedAt = new DateTimeUtc((DateTime)value!);
+                    break;
+                case nameof(Widget.UpdatedAt):
+                    entity.UpdatedAt = new DateTimeUtc((DateTime)value!);
                     break;
             }
         }
@@ -60,6 +70,8 @@ namespace Webfuel
                 yield return "Name";
                 yield return "Age";
                 yield return "ShippingDate";
+                yield return "CreatedAt";
+                yield return "UpdatedAt";
             }
         }
         public IEnumerable<string> UpdateProperties
@@ -69,6 +81,8 @@ namespace Webfuel
                 yield return "Name";
                 yield return "Age";
                 yield return "ShippingDate";
+                yield return "CreatedAt";
+                yield return "UpdatedAt";
             }
         }
     }

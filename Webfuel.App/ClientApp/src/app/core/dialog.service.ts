@@ -7,6 +7,7 @@ import { ConfirmDeleteDialogComponent, IConfirmDeleteDialogOptions } from "./dia
 export interface IDialogOptions<TResult, TData> {
   data?: TData;
   callback?: (result: TResult | undefined) => void;
+  width?: string;
 }
 
 @Injectable()
@@ -24,6 +25,7 @@ export class DialogService {
 
     const dialogRef = this.dialog.open<TResult, TData, unknown>(component, {
       data: options.data,
+      width: options.width
     });
 
     if (options.callback) {
@@ -38,7 +40,8 @@ export class DialogService {
       callback: (result) => {
         if (result === true && options && options.confirmedCallback)
           options.confirmedCallback();
-      }
+      },
+      width: '500px'
     })
   }
 }

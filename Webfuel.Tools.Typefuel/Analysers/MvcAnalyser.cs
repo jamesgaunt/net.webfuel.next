@@ -20,18 +20,6 @@ namespace Webfuel.Tools.Typefuel
                 // Detect Controllers
                 if (typeInfo.IsClass && typeInfo.GetCustomAttribute<TypefuelControllerAttribute>() != null)
                     schema.Controllers.Add(AnalyseController(schema, type));
-
-                // Detect Static Classes
-                if (typeInfo.IsClass && typeInfo.GetCustomAttribute<TypefuelStaticAttribute>() != null)
-                    schema.AnalyseStatic(type);
-
-                // Detect Static Enums
-                if (typeInfo.IsEnum && typeInfo.GetCustomAttribute<TypefuelStaticAttribute>() != null)
-                    schema.AnalyseStatic(type);
-
-                // Detect Interfaces
-                if (typeInfo.IsClass && typeInfo.GetCustomAttribute<TypefuelInterfaceAttribute>() != null)
-                    schema.TypeContext.GetTypeDescriptor(type);
             }
 
             return this;

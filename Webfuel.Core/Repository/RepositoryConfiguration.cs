@@ -21,8 +21,8 @@ namespace Webfuel
     {
         public RepositoryConfiguration(IConfiguration configuration)
         {
-            DatabaseSchema = configuration["Webfuel:Repository:DatabaseSchema"];
-            ConnectionString = configuration["Webfuel:Repository:ConnectionString"];
+            DatabaseSchema = configuration["Webfuel:Repository:DatabaseSchema"] ?? String.Empty;
+            ConnectionString = configuration["Webfuel:Repository:ConnectionString"] ?? String.Empty;
         }
 
         public string DatabaseSchema { get; private set; }

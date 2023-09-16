@@ -1,4 +1,3 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
@@ -7,11 +6,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.App", "Webfuel.App\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.Tools.Datafuel", "Webfuel.Tools.Datafuel\Webfuel.Tools.Datafuel.csproj", "{7C01F6C6-1363-498F-9D00-9B1378B20EBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webfuel.Core", "Webfuel.Core\Webfuel.Core.csproj", "{23B5AB95-9A78-4131-AEE7-B11DB374B17C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.Core", "Webfuel.Core\Webfuel.Core.csproj", "{23B5AB95-9A78-4131-AEE7-B11DB374B17C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webfuel.Tools.Typefuel", "Webfuel.Tools.Typefuel\Webfuel.Tools.Typefuel.csproj", "{7940906B-5232-4654-AC0C-0A0C8D612856}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.Tools.Typefuel", "Webfuel.Tools.Typefuel\Webfuel.Tools.Typefuel.csproj", "{7940906B-5232-4654-AC0C-0A0C8D612856}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webfuel.Common", "Webfuel.Common\Webfuel.Common.csproj", "{5527CF3C-BDEE-44BF-9D6B-826B0AF09DDD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.Common", "Webfuel.Common\Webfuel.Common.csproj", "{5527CF3C-BDEE-44BF-9D6B-826B0AF09DDD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{39D09A22-C764-4FAF-BD91-352CE317A602}"
+	ProjectSection(SolutionItems) = preProject
+		todo.txt = todo.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

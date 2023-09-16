@@ -4,11 +4,9 @@
   margin: var(--gap) 0 var(--gap) 0;
 }
 
-.validating {
-  .input.ng-invalid {
-    border-color: var(--palette-danger);
-    box-shadow: inset 0 0 2px var(--palette-danger);
-  }
+.input.ng-invalid.ng-touched {
+  border-color: var(--palette-danger);
+  box-shadow: inset 0 0 2px var(--palette-danger);
 }
 
 .field {
