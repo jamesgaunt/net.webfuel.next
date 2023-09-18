@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Webfuel
 {
-    public static class ServiceRegistration
+    public static class ServiceImplementationRegistration
     {
         public static void RegisterServiceImplementationsFromAssembly(this IServiceCollection services, Assembly assembly)
         {

@@ -168,10 +168,22 @@ export default class Underscore {
 
   // String
 
+  static compareInsensitive(string1: string, string2: string) {
+    if (string1 === string2)
+      return true;
+    if (!string1 || !string2)
+      return false;
+    return string1.toUpperCase() === string2.toUpperCase();
+  }
+
   static capitalise(input: string) {
     if (!input)
       return input;
     return input[0].toUpperCase() + input.slice(1);
+  }
+
+  static camelCaseToLabel(input: string) {
+    return this.capitalise(this.splitCamelCase(input));
   }
 
   static splitCamelCase(input: string) {

@@ -32,15 +32,15 @@ namespace Webfuel
         }
         public async Task<EventLog> InsertEventLogAsync(EventLog entity)
         {
-            return await RepositoryService.ExecuteInsertAsync("InsertEventLog", entity);
+            return await RepositoryService.ExecuteInsertAsync(entity);
         }
         public async Task<EventLog> UpdateEventLogAsync(EventLog entity)
         {
-            return await RepositoryService.ExecuteUpdateAsync("UpdateEventLog", entity);
+            return await RepositoryService.ExecuteUpdateAsync(entity);
         }
         public async Task<EventLog> UpdateEventLogAsync(EventLog entity, IEnumerable<string> properties)
         {
-            return await RepositoryService.ExecuteUpdateAsync("UpdateEventLog", entity, properties);
+            return await RepositoryService.ExecuteUpdateAsync(entity, properties);
         }
         public async Task<EventLog> UpdateEventLogAsync(EventLog updated, EventLog original)
         {
@@ -49,7 +49,7 @@ namespace Webfuel
             if(updated.Level != original.Level) _properties.Add("Level");
             if(updated.Message != original.Message) _properties.Add("Message");
             if(_properties.Count == 0) return updated;
-            return await RepositoryService.ExecuteUpdateAsync("UpdateEventLog", updated, _properties);
+            return await RepositoryService.ExecuteUpdateAsync(updated, _properties);
         }
         public async Task<EventLog> UpdateEventLogAsync(EventLog updated, EventLog original, IEnumerable<string> properties)
         {
@@ -58,15 +58,15 @@ namespace Webfuel
             if(properties.Contains("Level") && updated.Level != original.Level) _properties.Add("Level");
             if(properties.Contains("Message") && updated.Message != original.Message) _properties.Add("Message");
             if(_properties.Count == 0) return updated;
-            return await RepositoryService.ExecuteUpdateAsync("UpdateEventLog", updated, _properties);
+            return await RepositoryService.ExecuteUpdateAsync(updated, _properties);
         }
         public async Task DeleteEventLogAsync(Guid key)
         {
-            await RepositoryService.ExecuteDeleteAsync<EventLog>("DeleteEventLog", key);
+            await RepositoryService.ExecuteDeleteAsync<EventLog>(key);
         }
         public async Task<QueryResult<EventLog>> QueryEventLogAsync(RepositoryQuery query)
         {
-            return await RepositoryQueryService.ExecuteQueryAsync("RepositoryQueryEventLog", query, new EventLogRepositoryAccessor());
+            return await RepositoryQueryService.ExecuteQueryAsync(query, new EventLogRepositoryAccessor());
         }
         public async Task<EventLog?> GetEventLogAsync(Guid id)
         {
@@ -75,7 +75,7 @@ namespace Webfuel
             {
                 new SqlParameter("@Id", id),
             };
-            return (await RepositoryService.ExecuteReaderAsync<EventLog>("GetEventLog", sql, parameters)).SingleOrDefault();
+            return (await RepositoryService.ExecuteReaderAsync<EventLog>(sql, parameters)).SingleOrDefault();
         }
         public async Task<EventLog> RequireEventLogAsync(Guid id)
         {
@@ -84,12 +84,12 @@ namespace Webfuel
         public async Task<int> CountEventLogAsync()
         {
             var sql = @"SELECT COUNT(Id) FROM [next].[EventLog]";
-            return (int)((await RepositoryService.ExecuteScalarAsync("CountEventLog", sql))!);
+            return (int)((await RepositoryService.ExecuteScalarAsync(sql))!);
         }
         public async Task<List<EventLog>> SelectEventLogAsync()
         {
             var sql = @"SELECT * FROM [next].[EventLog] ORDER BY Id DESC";
-            return await RepositoryService.ExecuteReaderAsync<EventLog>("SelectEventLog", sql);
+            return await RepositoryService.ExecuteReaderAsync<EventLog>(sql);
         }
         public async Task<List<EventLog>> SelectEventLogWithPageAsync(int skip, int take)
         {
@@ -99,7 +99,7 @@ namespace Webfuel
                 new SqlParameter("@Skip", skip),
                 new SqlParameter("@Take", take),
             };
-            return await RepositoryService.ExecuteReaderAsync<EventLog>("SelectEventLogWithPage", sql, parameters);
+            return await RepositoryService.ExecuteReaderAsync<EventLog>(sql, parameters);
         }
     }
 }

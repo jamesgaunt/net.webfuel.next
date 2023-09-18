@@ -74,7 +74,7 @@ namespace Webfuel.Tools.Typefuel
             }
 
             var signature = String.Empty;
-            var typefuelAttribute = clrType.GetCustomAttribute<TypefuelInterfaceAttribute>();
+            var typefuelAttribute = clrType.GetCustomAttribute<ApiTypeAttribute>();
             if (typefuelAttribute != null)
                 signature = typefuelAttribute.Signature;
 

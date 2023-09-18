@@ -4,6 +4,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IWidget } from 'api/api.types';
 import { WidgetApi } from 'api/widget.api';
 import { GrowlService } from '../../../../core/growl.service';
+import { FormManager } from '../../../../shared/form/form-manager';
+import { FormService } from '../../../../core/form.service';
 
 @Component({
   selector: 'widget-create-dialog-component',
@@ -13,24 +15,21 @@ export class WidgetCreateDialogComponent {
 
   constructor(
     private dialogRef: DialogRef<IWidget>,
-    private growlService: GrowlService,
+    private formService: FormService,
     private widgetApi: WidgetApi,
   ) {
   }
 
-  formData = new FormGroup({
+  formManager = this.formService.buildManager({
     name: new FormControl('', { validators: [Validators.required], nonNullable: true }),
-    age: new FormControl<number>(null!, { validators: [Validators.required], nonNullable: true })
+    age: new FormControl<number>(null!, { validators: [Validators.required, Validators.max(100)], nonNullable: true })
   });
 
   save() {
-    if (!this.formData.valid) {
-      this.formData.markAllAsTouched();
-      this.growlService.growlDanger("Please complete all fields");
+    if (this.formManager.hasErrors())
       return;
-    }
 
-    this.widgetApi.createWidget(this.formData.getRawValue(), { successGrowl: "Widget Created" }).subscribe((result) => {
+    this.widgetApi.createWidget(this.formManager.getRawValue(), { successGrowl: "Widget Created", errorHandler: this.formManager }).subscribe((result) => {
       this.dialogRef.close();
     });
   }

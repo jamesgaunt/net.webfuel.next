@@ -15,7 +15,7 @@ namespace Webfuel.Tools.Typefuel
                 .AnalyseAssembly(schema, typeof(Webfuel.App.Program).GetTypeInfo().Assembly)
                 .AnalyseAssembly(schema, typeof(Webfuel.CoreRegistration).GetTypeInfo().Assembly);
 
-            new ApiAnalyser()
+            new MinimalApiAnalyser()
                 .AnalyseAssembly(schema, typeof(Webfuel.App.Program).GetTypeInfo().Assembly);
 
             AngularApiGenerator.GenerateApi(schema);

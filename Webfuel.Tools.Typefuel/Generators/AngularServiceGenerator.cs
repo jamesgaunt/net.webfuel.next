@@ -8,14 +8,14 @@ using System.Text.RegularExpressions;
 
 namespace Webfuel.Tools.Typefuel
 {
-    public static class AngularControllerGenerator
+    public static class AngularServiceGenerator
     {
-        public static void GenerateController(ApiController controller)
+        public static void GenerateService(ApiService controller)
         {
-            File.WriteAllText(Settings.ApiRoot + $@"\{ControllerFilename(controller)}.ts", Controller(controller));
+            File.WriteAllText(Settings.ApiRoot + $@"\{ServiceFilename(controller)}.ts", Controller(controller));
         }
 
-        static string Controller(ApiController controller)
+        static string Controller(ApiService controller)
         {
             var sb = new ScriptBuilder();
 
@@ -34,45 +34,40 @@ namespace Webfuel.Tools.Typefuel
             using (sb.OpenBrace("export class " + controller.Name + "Api"))
             {
                 sb.WriteLine("constructor(private apiService: ApiService) { }");
-                foreach (var action in controller.Actions)
+                foreach (var action in controller.Methods)
                     Action(sb, action);
             }
 
             return sb.ToString().FormatScript();
         }
 
-        static void Action(ScriptBuilder sb, ApiAction action)
+        static void Action(ScriptBuilder sb, ApiMethod action)
         {
             sb.WriteLine();
-            sb.WriteLine($"public " + action.Name.ToCamelCase() + $" {AngularActionGenerator.Signature(action)} {{");
+            sb.WriteLine($"public " + action.Name.ToCamelCase() + $" {AngularMethodGenerator.Signature(action)} {{");
             {
-                sb.Write($"return this.apiService.{action.Verb}(\"{AngularActionGenerator.RouteUrl(action)}\"");
+                sb.Write($"return this.apiService.request(\"{action.Verb}\", \"{AngularMethodGenerator.RouteUrl(action)}\"");
 
-                if (action.Verb == "POST" || action.Verb == "PUT" || action.Verb == "COMMAND")
-                {
-                    if (action.BodyParameter != null)
-                        sb.Write($", params.{AngularActionGenerator.FixReservedNames(action.BodyParameter.Name)}");
-                    else if (action.CommandTypeDescriptor != null)
-                        sb.Write($", command");
-                    else
-                        sb.Write($", undefined");
-                }
+                if (action.BodyParameter != null)
+                    sb.Write($", body");
+                else
+                    sb.Write($", undefined");
 
-                sb.WriteLine(", options);"); // + AngularActionGenerator.Map(action) + ";")
+                sb.WriteLine(", options);"); 
             }
             sb.WriteLine("}");
         }
 
-        public static string ControllerFilename(ApiController controller)
+        public static string ServiceFilename(ApiService service)
         {
-            return Regex.Replace(controller.Name, @"([a-z])([A-Z])", "$1-$2").ToLower() + ".api";
+            return Regex.Replace(service.Name, @"([a-z])([A-Z])", "$1-$2").ToLower() + ".api";
         }
 
-        static List<ApiComplexType> EnumerateTypes(ApiController controller)
+        static List<ApiComplexType> EnumerateTypes(ApiService controller)
         {
             var result = new List<ApiComplexType>();
 
-            foreach (var action in controller.Actions)
+            foreach (var action in controller.Methods)
             {
                 foreach (var parameter in action.Parameters)
                 {
@@ -88,16 +83,6 @@ namespace Webfuel.Tools.Typefuel
                     if (!result.Contains(type) && type is ApiComplexType)
                         result.Add(type as ApiComplexType);
                 }
-
-                if (action.CommandTypeDescriptor != null)
-                {
-                    foreach (var type in action.CommandTypeDescriptor.EnumerateTypes())
-                    {
-                        if (!result.Contains(type) && type is ApiComplexType)
-                            result.Add(type as ApiComplexType);
-                    }
-                }
-
             }
             return result;
         }

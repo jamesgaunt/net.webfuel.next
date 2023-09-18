@@ -5,6 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ApiService } from './api.service';
 import { DialogService } from './dialog.service';
 import { GrowlService } from './growl.service';
+import { FormService } from './form.service';
 
 import { ConfirmDeleteDialogComponent } from './dialogs/confirm-delete-dialog.component';
 
@@ -19,7 +20,8 @@ import { ConfirmDeleteDialogComponent } from './dialogs/confirm-delete-dialog.co
   providers: [
     ApiService,
     DialogService,
-    GrowlService
+    GrowlService,
+    FormService,
   ]
 })
 export class CoreModule {

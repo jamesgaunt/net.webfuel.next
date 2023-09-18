@@ -7,10 +7,10 @@ namespace Webfuel
     {
         TEntity ActivateEntity(SqlDataReader dr);
 
-        Task<TEntity> ExecuteInsertAsync(string spanName, IRepositoryService repositoryService, TEntity entity, IEnumerable<string>? properties = null);
+        Task<TEntity> ExecuteInsertAsync(IRepositoryService repositoryService, TEntity entity, IEnumerable<string>? properties = null, CancellationToken? cancellationToken = null);
 
-        Task<TEntity> ExecuteUpdateAsync(string spanName, IRepositoryService repositoryService, TEntity entity, IEnumerable<string>? properties = null);
+        Task<TEntity> ExecuteUpdateAsync(IRepositoryService repositoryService, TEntity entity, IEnumerable<string>? properties = null, CancellationToken? cancellationToken = null);
 
-        Task ExecuteDeleteAsync(string spanName, IRepositoryService repositoryService, object key);
+        Task ExecuteDeleteAsync(IRepositoryService repositoryService, object key, CancellationToken? cancellationToken = null);
     }
 }

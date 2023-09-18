@@ -101,7 +101,7 @@ namespace Webfuel.Tools.Datafuel
         {
             using (sb.OpenBrace($"public async Task<{entity.Name}> Insert{entity.Name}Async({entity.Name} entity)"))
             {
-                sb.WriteLine($"return await RepositoryService.ExecuteInsertAsync(\"Insert{entity.Name}\", entity);");
+                sb.WriteLine($"return await RepositoryService.ExecuteInsertAsync(entity);");
             }
         }
 
@@ -112,11 +112,11 @@ namespace Webfuel.Tools.Datafuel
 
             using (sb.OpenBrace($"public async Task<{entity.Name}> Update{entity.Name}Async({entity.Name} entity)"))
             {
-                sb.WriteLine($"return await RepositoryService.ExecuteUpdateAsync(\"Update{entity.Name}\", entity);");
+                sb.WriteLine($"return await RepositoryService.ExecuteUpdateAsync(entity);");
             }
             using (sb.OpenBrace($"public async Task<{entity.Name}> Update{entity.Name}Async({entity.Name} entity, IEnumerable<string> properties)"))
             {
-                sb.WriteLine($"return await RepositoryService.ExecuteUpdateAsync(\"Update{entity.Name}\", entity, properties);");
+                sb.WriteLine($"return await RepositoryService.ExecuteUpdateAsync(entity, properties);");
             }
         }
 
@@ -137,7 +137,7 @@ namespace Webfuel.Tools.Datafuel
                 }
 
                 sb.WriteLine("if(_properties.Count == 0) return updated;");
-                sb.WriteLine($"return await RepositoryService.ExecuteUpdateAsync(\"Update{entity.Name}\", updated, _properties);");
+                sb.WriteLine($"return await RepositoryService.ExecuteUpdateAsync(updated, _properties);");
             }
 
             using (sb.OpenBrace($"public async Task<{entity.Name}> Update{entity.Name}Async({entity.Name} updated, {entity.Name} original, IEnumerable<string> properties)"))
@@ -152,7 +152,7 @@ namespace Webfuel.Tools.Datafuel
                 }
 
                 sb.WriteLine("if(_properties.Count == 0) return updated;");
-                sb.WriteLine($"return await RepositoryService.ExecuteUpdateAsync(\"Update{entity.Name}\", updated, _properties);");
+                sb.WriteLine($"return await RepositoryService.ExecuteUpdateAsync(updated, _properties);");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Webfuel.Tools.Datafuel
 
             using (sb.OpenBrace($"public async Task Delete{entity.Name}Async({entity.Key.CLRType} key)"))
             {
-                sb.WriteLine($"await RepositoryService.ExecuteDeleteAsync<{entity.Name}>(\"Delete{entity.Name}\", key);");
+                sb.WriteLine($"await RepositoryService.ExecuteDeleteAsync<{entity.Name}>(key);");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Webfuel.Tools.Datafuel
         {
             using (sb.OpenBrace($"public async Task<QueryResult<{entity.Name}>> Query{entity.Name}Async(RepositoryQuery query)"))
             {
-                sb.WriteLine($"return await RepositoryQueryService.ExecuteQueryAsync(\"RepositoryQuery{entity.Name}\", query, new {entity.Name}RepositoryAccessor());");
+                sb.WriteLine($"return await RepositoryQueryService.ExecuteQueryAsync(query, new {entity.Name}RepositoryAccessor());");
             }
         }
 
@@ -205,16 +205,16 @@ namespace Webfuel.Tools.Datafuel
                 switch (query.Shape)
                 {
                     case QueryShape.Get:
-                        sb.WriteLine($"return (await RepositoryService.ExecuteReaderAsync<{query.Entity.Name}>(\"{query.Name}\", sql{(query.Parameters.Count > 0 ? ", parameters" : "")})).SingleOrDefault();");
+                        sb.WriteLine($"return (await RepositoryService.ExecuteReaderAsync<{query.Entity.Name}>(sql{(query.Parameters.Count > 0 ? ", parameters" : "")})).SingleOrDefault();");
                         break;
                     case QueryShape.Select:
-                        sb.WriteLine($"return await RepositoryService.ExecuteReaderAsync<{query.Entity.Name}>(\"{query.Name}\", sql{(query.Parameters.Count > 0 ? ", parameters" : "")});");
+                        sb.WriteLine($"return await RepositoryService.ExecuteReaderAsync<{query.Entity.Name}>(sql{(query.Parameters.Count > 0 ? ", parameters" : "")});");
                         break;
                     case QueryShape.Count:
-                        sb.WriteLine($"return (int)((await RepositoryService.ExecuteScalarAsync(\"{query.Name}\", sql{(query.Parameters.Count > 0 ? ", parameters" : "")}))!);");
+                        sb.WriteLine($"return (int)((await RepositoryService.ExecuteScalarAsync(sql{(query.Parameters.Count > 0 ? ", parameters" : "")}))!);");
                         break;
                     case QueryShape.Unknown:
-                        sb.WriteLine($"return await RepositoryService.ExecuteScalarAsync(\"{query.Name}\", sql{(query.Parameters.Count > 0 ? ", parameters" : "")});");
+                        sb.WriteLine($"return await RepositoryService.ExecuteScalarAsync(sql{(query.Parameters.Count > 0 ? ", parameters" : "")});");
                         break;
                 }
             }

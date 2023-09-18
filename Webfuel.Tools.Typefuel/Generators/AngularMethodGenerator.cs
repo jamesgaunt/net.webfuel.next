@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Webfuel.Tools.Typefuel
 {
-    public static class AngularActionGenerator
+    public static class AngularMethodGenerator
     {
         public static string FixReservedNames(string name)
         {
@@ -17,21 +18,30 @@ namespace Webfuel.Tools.Typefuel
             return name;
         }
 
-        public static string Signature(ApiAction action)
+        public static string Signature(ApiMethod method)
         {
+            method.Validate();
+
             var sb = new ScriptBuilder();
 
             sb.Write("(");
             
-            if (action.Parameters.Count > 0)
+            if(method.BodyParameter != null)
+            {
+                sb.Write("body: ");
+                AngularTypesGenerator.TypeDescriptor(sb, method.BodyParameter.TypeDescriptor);
+                sb.Write(", ");
+            }
+
+            if (method.RouteParameters.Count() > 0)
             {
                 sb.Write("params: { ");
-                for (int i = 0; i < action.Parameters.Count; i++)
+                for (int i = 0; i < method.RouteParameters.Count(); i++)
                 {
                     if (i > 0)
                         sb.Write(", ");
 
-                    var parameter = action.Parameters[i];
+                    var parameter = method.RouteParameters.ElementAt(i);
 
                     sb.Write(FixReservedNames(parameter.Name.ToCamelCase()));
 
@@ -43,40 +53,15 @@ namespace Webfuel.Tools.Typefuel
                 }
                 sb.Write(" }, ");
             }
-            else if(action.CommandTypeDescriptor != null)
-            {
-                sb.Write("command: ");
-                AngularTypesGenerator.TypeDescriptor(sb, action.CommandTypeDescriptor);
-                sb.Write(", ");
-            }
             
             sb.Write("options?: ApiOptions): Observable<");
-            AngularTypesGenerator.TypeDescriptor(sb, action.ReturnTypeDescriptor);
+            AngularTypesGenerator.TypeDescriptor(sb, method.ReturnTypeDescriptor);
             sb.Write(">");
 
             return sb.ToString();
         }
 
-        public static string Map(ApiAction action)
-        {
-            if(action.ReturnTypeDescriptor.Type is ApiComplexType)
-                return $".pipe(map((res) => <{AngularTypesGenerator.TypeDescriptor(action.ReturnTypeDescriptor)}>res.body))";
-
-            if(action.ReturnTypeDescriptor.Type is ApiPrimativeType)
-            {
-                var primativeReturnType = action.ReturnTypeDescriptor.Type as ApiPrimativeType;
-
-                switch (primativeReturnType.TypeCode)
-                {
-                    case ApiTypeCode.Void:
-                        return String.Empty;
-                }
-            }
-
-            throw new InvalidOperationException("Unrecognised api return type");
-        }
-
-        public static string RouteUrl(ApiAction action)
+        public static string RouteUrl(ApiMethod action)
         {
             var sb = new ScriptBuilder();
 
@@ -94,7 +79,7 @@ namespace Webfuel.Tools.Typefuel
                 {
                     if (i > 0)
                         sb.Write("/");
-                    sb.Write(action.Controller.Name);
+                    sb.Write(action.Service.Name);
                 }
                 else if(segment is ApiRouteParameterSegment)
                 {

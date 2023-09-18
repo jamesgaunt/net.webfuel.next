@@ -32,15 +32,15 @@ namespace Webfuel.Common
         }
         public async Task<Job> InsertJobAsync(Job entity)
         {
-            return await RepositoryService.ExecuteInsertAsync("InsertJob", entity);
+            return await RepositoryService.ExecuteInsertAsync(entity);
         }
         public async Task<Job> UpdateJobAsync(Job entity)
         {
-            return await RepositoryService.ExecuteUpdateAsync("UpdateJob", entity);
+            return await RepositoryService.ExecuteUpdateAsync(entity);
         }
         public async Task<Job> UpdateJobAsync(Job entity, IEnumerable<string> properties)
         {
-            return await RepositoryService.ExecuteUpdateAsync("UpdateJob", entity, properties);
+            return await RepositoryService.ExecuteUpdateAsync(entity, properties);
         }
         public async Task<Job> UpdateJobAsync(Job updated, Job original)
         {
@@ -48,7 +48,7 @@ namespace Webfuel.Common
             var _properties = new List<string>();
             if(updated.Name != original.Name) _properties.Add("Name");
             if(_properties.Count == 0) return updated;
-            return await RepositoryService.ExecuteUpdateAsync("UpdateJob", updated, _properties);
+            return await RepositoryService.ExecuteUpdateAsync(updated, _properties);
         }
         public async Task<Job> UpdateJobAsync(Job updated, Job original, IEnumerable<string> properties)
         {
@@ -56,15 +56,15 @@ namespace Webfuel.Common
             var _properties = new List<string>();
             if(properties.Contains("Name") && updated.Name != original.Name) _properties.Add("Name");
             if(_properties.Count == 0) return updated;
-            return await RepositoryService.ExecuteUpdateAsync("UpdateJob", updated, _properties);
+            return await RepositoryService.ExecuteUpdateAsync(updated, _properties);
         }
         public async Task DeleteJobAsync(Guid key)
         {
-            await RepositoryService.ExecuteDeleteAsync<Job>("DeleteJob", key);
+            await RepositoryService.ExecuteDeleteAsync<Job>(key);
         }
         public async Task<QueryResult<Job>> QueryJobAsync(RepositoryQuery query)
         {
-            return await RepositoryQueryService.ExecuteQueryAsync("RepositoryQueryJob", query, new JobRepositoryAccessor());
+            return await RepositoryQueryService.ExecuteQueryAsync(query, new JobRepositoryAccessor());
         }
         public async Task<Job?> GetJobAsync(Guid id)
         {
@@ -73,7 +73,7 @@ namespace Webfuel.Common
             {
                 new SqlParameter("@Id", id),
             };
-            return (await RepositoryService.ExecuteReaderAsync<Job>("GetJob", sql, parameters)).SingleOrDefault();
+            return (await RepositoryService.ExecuteReaderAsync<Job>(sql, parameters)).SingleOrDefault();
         }
         public async Task<Job> RequireJobAsync(Guid id)
         {
@@ -82,12 +82,12 @@ namespace Webfuel.Common
         public async Task<int> CountJobAsync()
         {
             var sql = @"SELECT COUNT(Id) FROM [next].[Job]";
-            return (int)((await RepositoryService.ExecuteScalarAsync("CountJob", sql))!);
+            return (int)((await RepositoryService.ExecuteScalarAsync(sql))!);
         }
         public async Task<List<Job>> SelectJobAsync()
         {
             var sql = @"SELECT * FROM [next].[Job] ORDER BY Id ASC";
-            return await RepositoryService.ExecuteReaderAsync<Job>("SelectJob", sql);
+            return await RepositoryService.ExecuteReaderAsync<Job>(sql);
         }
         public async Task<List<Job>> SelectJobWithPageAsync(int skip, int take)
         {
@@ -97,7 +97,7 @@ namespace Webfuel.Common
                 new SqlParameter("@Skip", skip),
                 new SqlParameter("@Take", take),
             };
-            return await RepositoryService.ExecuteReaderAsync<Job>("SelectJobWithPage", sql, parameters);
+            return await RepositoryService.ExecuteReaderAsync<Job>(sql, parameters);
         }
     }
 }

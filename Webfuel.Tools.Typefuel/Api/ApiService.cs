@@ -4,17 +4,17 @@ using System.Text;
 
 namespace Webfuel.Tools.Typefuel
 {
-    public class ApiController
+    public class ApiService
     {
         public readonly ApiSchema Schema;
 
-        public ApiController(ApiSchema schema)
+        public ApiService(ApiSchema schema)
         {
             Schema = schema;
         }
 
         public string Name { get; set; }
 
-        public List<ApiAction> Actions { get; } = new List<ApiAction>();
+        public List<ApiMethod> Methods { get; } = new List<ApiMethod>();
     }
 }

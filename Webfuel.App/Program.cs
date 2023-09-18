@@ -3,6 +3,8 @@ using FluentValidation;
 using Webfuel.MediatR;
 using MediatR;
 using Webfuel.Common;
+using Microsoft.AspNetCore.Diagnostics;
+using System.Net;
 
 namespace Webfuel.App
 {
@@ -14,16 +16,16 @@ namespace Webfuel.App
 
             builder.Services.RegisterCoreServices();
             builder.Services.RegisterCommonServices();
-            builder.Services.AddMediatR(c => c.RegisterServicesFromAssemblyContaining<Webfuel.BlobStorage>());
-            builder.Services.AddScoped<IValidator<CreateWidgetCommand>, CreateWidgetCommandValidator>();
 
-            builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+
 
             var app = builder.Build();
 
+            app.UseMiddleware<ValidationMiddleware>();
+
             app.UseStaticFiles();
 
-            app.RegisterEndpointsFromAssemblyContaining<Program>();            
+            app.RegisterApiServicesFromAssemblyContaining<Program>();            
 
             app.Run();
         }

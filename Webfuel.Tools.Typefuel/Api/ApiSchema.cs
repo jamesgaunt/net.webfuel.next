@@ -15,10 +15,9 @@ namespace Webfuel.Tools.Typefuel
 
         public ApiTypeContext TypeContext { get; private set; }
 
-        public List<ApiController> Controllers { get; } = new List<ApiController>();
+        public List<ApiService> Services { get; } = new List<ApiService>();
 
         public Dictionary<Type, ApiStatic> Static { get; } = new Dictionary<Type, ApiStatic>();
-
 
         public ApiStatic AnalyseStatic(Type staticType)
         {

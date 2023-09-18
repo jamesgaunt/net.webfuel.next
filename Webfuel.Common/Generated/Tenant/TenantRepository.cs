@@ -34,15 +34,15 @@ namespace Webfuel.Common
         }
         public async Task<Tenant> InsertTenantAsync(Tenant entity)
         {
-            return await RepositoryService.ExecuteInsertAsync("InsertTenant", entity);
+            return await RepositoryService.ExecuteInsertAsync(entity);
         }
         public async Task<Tenant> UpdateTenantAsync(Tenant entity)
         {
-            return await RepositoryService.ExecuteUpdateAsync("UpdateTenant", entity);
+            return await RepositoryService.ExecuteUpdateAsync(entity);
         }
         public async Task<Tenant> UpdateTenantAsync(Tenant entity, IEnumerable<string> properties)
         {
-            return await RepositoryService.ExecuteUpdateAsync("UpdateTenant", entity, properties);
+            return await RepositoryService.ExecuteUpdateAsync(entity, properties);
         }
         public async Task<Tenant> UpdateTenantAsync(Tenant updated, Tenant original)
         {
@@ -51,7 +51,7 @@ namespace Webfuel.Common
             if(updated.Name != original.Name) _properties.Add("Name");
             if(updated.Live != original.Live) _properties.Add("Live");
             if(_properties.Count == 0) return updated;
-            return await RepositoryService.ExecuteUpdateAsync("UpdateTenant", updated, _properties);
+            return await RepositoryService.ExecuteUpdateAsync(updated, _properties);
         }
         public async Task<Tenant> UpdateTenantAsync(Tenant updated, Tenant original, IEnumerable<string> properties)
         {
@@ -60,15 +60,15 @@ namespace Webfuel.Common
             if(properties.Contains("Name") && updated.Name != original.Name) _properties.Add("Name");
             if(properties.Contains("Live") && updated.Live != original.Live) _properties.Add("Live");
             if(_properties.Count == 0) return updated;
-            return await RepositoryService.ExecuteUpdateAsync("UpdateTenant", updated, _properties);
+            return await RepositoryService.ExecuteUpdateAsync(updated, _properties);
         }
         public async Task DeleteTenantAsync(Guid key)
         {
-            await RepositoryService.ExecuteDeleteAsync<Tenant>("DeleteTenant", key);
+            await RepositoryService.ExecuteDeleteAsync<Tenant>(key);
         }
         public async Task<QueryResult<Tenant>> QueryTenantAsync(RepositoryQuery query)
         {
-            return await RepositoryQueryService.ExecuteQueryAsync("RepositoryQueryTenant", query, new TenantRepositoryAccessor());
+            return await RepositoryQueryService.ExecuteQueryAsync(query, new TenantRepositoryAccessor());
         }
         public async Task<Tenant?> GetTenantAsync(Guid id)
         {
@@ -77,7 +77,7 @@ namespace Webfuel.Common
             {
                 new SqlParameter("@Id", id),
             };
-            return (await RepositoryService.ExecuteReaderAsync<Tenant>("GetTenant", sql, parameters)).SingleOrDefault();
+            return (await RepositoryService.ExecuteReaderAsync<Tenant>(sql, parameters)).SingleOrDefault();
         }
         public async Task<Tenant> RequireTenantAsync(Guid id)
         {
@@ -86,12 +86,12 @@ namespace Webfuel.Common
         public async Task<int> CountTenantAsync()
         {
             var sql = @"SELECT COUNT(Id) FROM [next].[Tenant]";
-            return (int)((await RepositoryService.ExecuteScalarAsync("CountTenant", sql))!);
+            return (int)((await RepositoryService.ExecuteScalarAsync(sql))!);
         }
         public async Task<List<Tenant>> SelectTenantAsync()
         {
             var sql = @"SELECT * FROM [next].[Tenant] ORDER BY Id ASC";
-            return await RepositoryService.ExecuteReaderAsync<Tenant>("SelectTenant", sql);
+            return await RepositoryService.ExecuteReaderAsync<Tenant>(sql);
         }
         public async Task<List<Tenant>> SelectTenantWithPageAsync(int skip, int take)
         {
@@ -101,7 +101,7 @@ namespace Webfuel.Common
                 new SqlParameter("@Skip", skip),
                 new SqlParameter("@Take", take),
             };
-            return await RepositoryService.ExecuteReaderAsync<Tenant>("SelectTenantWithPage", sql, parameters);
+            return await RepositoryService.ExecuteReaderAsync<Tenant>(sql, parameters);
         }
         public async Task<Tenant?> GetTenantByNameAsync(string name)
         {
@@ -110,7 +110,7 @@ namespace Webfuel.Common
             {
                 new SqlParameter("@Name", name),
             };
-            return (await RepositoryService.ExecuteReaderAsync<Tenant>("GetTenantByName", sql, parameters)).SingleOrDefault();
+            return (await RepositoryService.ExecuteReaderAsync<Tenant>(sql, parameters)).SingleOrDefault();
         }
         public async Task<Tenant> RequireTenantByNameAsync(string name)
         {

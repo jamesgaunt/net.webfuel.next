@@ -8,17 +8,17 @@ namespace Webfuel
 {
     public interface IRepositoryService
     {
-        Task<object?> ExecuteScalarAsync(string spanName, string sql, IEnumerable<SqlParameter>? parameters = null);
+        Task<object?> ExecuteScalarAsync(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null);
 
-        Task<int> ExecuteNonQueryAsync(string spanName, string sql, IEnumerable<SqlParameter>? parameters = null);
+        Task<int> ExecuteNonQueryAsync(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null);
 
-        Task<List<TEntity>> ExecuteReaderAsync<TEntity>(string spanName, string sql, IEnumerable<SqlParameter>? parameters = null) where TEntity : class;
+        Task<List<TEntity>> ExecuteReaderAsync<TEntity>(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null) where TEntity : class;
 
-        Task<TEntity> ExecuteInsertAsync<TEntity>(string spanName, TEntity entity, IEnumerable<string>? properties = null) where TEntity : class;
+        Task<TEntity> ExecuteInsertAsync<TEntity>(TEntity entity, IEnumerable<string>? properties = null, CancellationToken? cancellationToken = null) where TEntity : class;
 
-        Task<TEntity> ExecuteUpdateAsync<TEntity>(string spanName, TEntity entity, IEnumerable<string>? properties = null) where TEntity : class;
+        Task<TEntity> ExecuteUpdateAsync<TEntity>(TEntity entity, IEnumerable<string>? properties = null, CancellationToken? cancellationToken = null) where TEntity : class;
 
-        Task ExecuteDeleteAsync<TEntity>(string spanName, object key) where TEntity : class;
+        Task ExecuteDeleteAsync<TEntity>(object key, CancellationToken? cancellationToken = null) where TEntity : class;
     }
 
     [ServiceImplementation(typeof(IRepositoryService))]
@@ -33,105 +33,90 @@ namespace Webfuel
             RepositoryConfiguration = repositoryConfiguration;
         }
 
-        public async Task<object?> ExecuteScalarAsync(string spanName, string sql, IEnumerable<SqlParameter>? parameters = null)
+        public async Task<object?> ExecuteScalarAsync(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null)
         {
-            // using (var span = Log.Segment("SQL", BuildSegmentName(spanName, sql, parameters)))
+            for (int retryCount = 0; retryCount < TransientErrorRetryCount; retryCount++)
             {
-                // span.DbStatement = sql;
-
-                for (int retryCount = 0; retryCount < TransientErrorRetryCount; retryCount++)
+                try
                 {
-                    try
+                    using (var connection = OpenSqlConnection())
+                    using (var command = BuildSqlCommand(connection, sql, parameters))
+                        return cancellationToken == null ? await command.ExecuteScalarAsync() : await command.ExecuteScalarAsync(cancellationToken.Value);
+                }
+                catch (Exception ex)
+                {
+                    var retryDelay = TransientErrorRetryDelay(ex, retryCount);
+                    if (retryDelay == 0)
+                        throw;
+                    await Task.Delay(retryDelay);
+                }
+            }
+            throw new InvalidOperationException("Maximum SQL Retry Count Exceeded");
+        }
+
+        public async Task<int> ExecuteNonQueryAsync(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null)
+        {
+            for (int retryCount = 0; retryCount < TransientErrorRetryCount; retryCount++)
+            {
+                try
+                {
+                    using (var connection = OpenSqlConnection())
+                    using (var command = BuildSqlCommand(connection, sql, parameters))
+                        return cancellationToken == null ? await command.ExecuteNonQueryAsync() : await command.ExecuteNonQueryAsync(cancellationToken.Value);
+                }
+                catch (Exception ex)
+                {
+                    var retryDelay = TransientErrorRetryDelay(ex, retryCount);
+                    if (retryDelay == 0)
+                        throw;
+                    await Task.Delay(retryDelay);
+                }
+            }
+            throw new InvalidOperationException("Maximum SQL Retry Count Exceeded");
+        }
+
+        public async Task<List<TEntity>> ExecuteReaderAsync<TEntity>(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null) where TEntity : class
+        {
+
+            var mapper = GetMapper<TEntity>();
+            for (int retryCount = 0; retryCount < TransientErrorRetryCount; retryCount++)
+            {
+                try
+                {
+                    using (var connection = OpenSqlConnection())
+                    using (var command = BuildSqlCommand(connection, sql, parameters))
+                    using (var dr = cancellationToken == null ? await command.ExecuteReaderAsync() : await command.ExecuteReaderAsync(cancellationToken.Value))
                     {
-                        using (var connection = OpenSqlConnection())
-                        using (var command = BuildSqlCommand(connection, sql, parameters))
-                            return await command.ExecuteScalarAsync();
-                    }
-                    catch (Exception ex)
-                    {
-                        var retryDelay = TransientErrorRetryDelay(ex, retryCount);
-                        if (retryDelay == 0)
-                            throw;
-                        await Task.Delay(retryDelay);
+                        List<TEntity> result = new List<TEntity>();
+                        while (await dr.ReadAsync())
+                            result.Add((TEntity)mapper.ActivateEntity(dr));
+                        return result;
                     }
                 }
-                throw new InvalidOperationException("Maximum SQL Retry Count Exceeded");
-            }
-        }
-
-        public async Task<int> ExecuteNonQueryAsync(string spanName, string sql, IEnumerable<SqlParameter>? parameters = null)
-        {
-            // using (var span = Log.Segment("SQL", BuildSegmentName(spanName, sql, parameters)))
-            {
-                // span.DbStatement = sql;
-
-                for (int retryCount = 0; retryCount < TransientErrorRetryCount; retryCount++)
+                catch (Exception ex)
                 {
-                    try
-                    {
-                        using (var connection = OpenSqlConnection())
-                        using (var command = BuildSqlCommand(connection, sql, parameters))
-                            return await command.ExecuteNonQueryAsync();
-                    }
-                    catch (Exception ex)
-                    {
-                        var retryDelay = TransientErrorRetryDelay(ex, retryCount);
-                        if (retryDelay == 0)
-                            throw;
-                        await Task.Delay(retryDelay);
-                    }
+                    var retryDelay = TransientErrorRetryDelay(ex, retryCount);
+                    if (retryDelay == 0)
+                        throw;
+                    await Task.Delay(retryDelay);
                 }
-                throw new InvalidOperationException("Maximum SQL Retry Count Exceeded");
             }
-
+            throw new InvalidOperationException("Maximum SQL Retry Count Exceeded");
         }
 
-        public async Task<List<TEntity>> ExecuteReaderAsync<TEntity>(string spanName, string sql, IEnumerable<SqlParameter>? parameters = null) where TEntity : class
+        public async Task<TEntity> ExecuteInsertAsync<TEntity>(TEntity entity, IEnumerable<string>? properties = null, CancellationToken? cancellationToken = null) where TEntity : class
         {
-            // using (var span = Log.Segment("SQL", BuildSegmentName(spanName, sql, parameters)))
-            {
-                // span.DbStatement = sql;
-
-                var mapper = GetMapper<TEntity>();
-                for (int retryCount = 0; retryCount < TransientErrorRetryCount; retryCount++)
-                {
-                    try
-                    {
-                        using (var connection = OpenSqlConnection())
-                        using (var command = BuildSqlCommand(connection, sql, parameters))
-                        using (var dr = await command.ExecuteReaderAsync())
-                        {
-                            List<TEntity> result = new List<TEntity>();
-                            while (await dr.ReadAsync())
-                                result.Add((TEntity)mapper.ActivateEntity(dr));
-                            return result;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        var retryDelay = TransientErrorRetryDelay(ex, retryCount);
-                        if (retryDelay == 0)
-                            throw;
-                        await Task.Delay(retryDelay);
-                    }
-                }
-                throw new InvalidOperationException("Maximum SQL Retry Count Exceeded");
-            }
+            return await GetMapper<TEntity>().ExecuteInsertAsync(this, entity, properties, cancellationToken);
         }
 
-        public async Task<TEntity> ExecuteInsertAsync<TEntity>(string spanName, TEntity entity, IEnumerable<string>? properties = null) where TEntity : class
+        public async Task<TEntity> ExecuteUpdateAsync<TEntity>(TEntity entity, IEnumerable<string>? properties = null, CancellationToken? cancellationToken = null) where TEntity : class
         {
-            return await GetMapper<TEntity>().ExecuteInsertAsync(spanName, this, entity, properties);
+            return await GetMapper<TEntity>().ExecuteUpdateAsync(this, entity, properties, cancellationToken);
         }
 
-        public async Task<TEntity> ExecuteUpdateAsync<TEntity>(string spanName, TEntity entity, IEnumerable<string>? properties = null) where TEntity : class
+        public async Task ExecuteDeleteAsync<TEntity>(object key, CancellationToken? cancellationToken = null) where TEntity : class
         {
-            return await GetMapper<TEntity>().ExecuteUpdateAsync(spanName, this, entity, properties);
-        }
-
-        public async Task ExecuteDeleteAsync<TEntity>(string spanName, object key) where TEntity : class
-        {
-            await GetMapper<TEntity>().ExecuteDeleteAsync(spanName, this, key);
+            await GetMapper<TEntity>().ExecuteDeleteAsync(this, key, cancellationToken);
         }
 
         // Transient Error Retry Logic
@@ -180,42 +165,6 @@ namespace Webfuel
         IRepositoryMapper<TEntity> GetMapper<TEntity>() where TEntity : class
         {
             return ServiceProvider.GetRequiredService<IRepositoryMapper<TEntity>>();
-        }
-
-        string BuildSegmentName(string spanName, string sql, IEnumerable<SqlParameter>? parameters = null)
-        {
-#if !SQL_DEBUG
-            return spanName;
-#else
-            var sb = new StringBuilder();
-            sb.Append(spanName).Append(" ");
-
-            sb.Append(sql).Append(" ");
-
-            if (parameters != null)
-            {
-                foreach (var parameter in parameters)
-                {
-                    sb.Append(parameter.ParameterName).Append(": ").Append(FormatParameterValue(parameter.Value)).Append(", ");
-                }
-            }
-
-            return sb.ToString();
-#endif
-        }
-
-        string FormatParameterValue(object? value)
-        {
-            if (value == null)
-                return "NULL";
-
-            var s = value.ToString();
-            if (s == null)
-                return "NULL";
-
-            if (s.Length > 32)
-                s = s.Substring(0, 32);
-            return s;
         }
     }
 }

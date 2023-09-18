@@ -45,10 +45,6 @@ export interface IUpdateWidgetCommand {
     age: number;
 }
 
-export interface IDeleteWidgetCommand {
-    id: string;
-}
-
 export interface IQueryResult<TItem> {
     items: Array<TItem>;
     totalCount: number;

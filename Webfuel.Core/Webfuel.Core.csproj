@@ -16,5 +16,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Generated\" />
+    <Folder Include="Reflection\" />
   </ItemGroup>
 </Project>

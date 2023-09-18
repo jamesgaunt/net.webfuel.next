@@ -18,15 +18,15 @@ namespace Webfuel.Tools.Typefuel
                 var typeInfo = type.GetTypeInfo();
 
                 // Detect Static Classes
-                if (typeInfo.IsClass && typeInfo.GetCustomAttribute<TypefuelStaticAttribute>() != null)
+                if (typeInfo.IsClass && typeInfo.GetCustomAttribute<ApiStaticAttribute>() != null)
                     schema.AnalyseStatic(type);
 
                 // Detect Static Enums
-                if (typeInfo.IsEnum && typeInfo.GetCustomAttribute<TypefuelStaticAttribute>() != null)
+                if (typeInfo.IsEnum && typeInfo.GetCustomAttribute<ApiStaticAttribute>() != null)
                     schema.AnalyseStatic(type);
 
                 // Detect Interfaces
-                if (typeInfo.IsClass && typeInfo.GetCustomAttribute<TypefuelInterfaceAttribute>() != null)
+                if (typeInfo.IsClass && typeInfo.GetCustomAttribute<ApiTypeAttribute>() != null)
                     schema.TypeContext.GetTypeDescriptor(type);
             }
 

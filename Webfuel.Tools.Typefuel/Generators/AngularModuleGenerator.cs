@@ -20,16 +20,16 @@ namespace Webfuel.Tools.Typefuel
 
             sb.WriteLine("import { NgModule } from '@angular/core';");
 
-            foreach (var controller in schema.Controllers)
+            foreach (var service in schema.Services)
             {
-                sb.WriteLine($"import {{ {controller.Name}Api }} from './{AngularControllerGenerator.ControllerFilename(controller)}';");
+                sb.WriteLine($"import {{ {service.Name}Api }} from './{AngularServiceGenerator.ServiceFilename(service)}';");
             }
             sb.WriteLine();
             sb.WriteLine("@NgModule({");
             sb.WriteLine("\tproviders: [");
-            for (var i = 0; i < schema.Controllers.Count; i++)
+            for (var i = 0; i < schema.Services.Count; i++)
             {
-                sb.WriteLine(schema.Controllers[i].Name + "Api" + (i < schema.Controllers.Count - 1 ? "," : ""));
+                sb.WriteLine(schema.Services[i].Name + "Api" + (i < schema.Services.Count - 1 ? "," : ""));
             }
             sb.WriteLine("\t]");
             sb.WriteLine("})");

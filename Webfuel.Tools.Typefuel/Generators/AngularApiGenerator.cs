@@ -17,8 +17,8 @@ namespace Webfuel.Tools.Typefuel
             AngularStaticGenerator.GenerateStatic(schema);
             AngularModuleGenerator.GenerateModule(schema);
 
-            foreach (var controller in schema.Controllers)
-                AngularControllerGenerator.GenerateController(controller);
+            foreach (var controller in schema.Services)
+                AngularServiceGenerator.GenerateService(controller);
         }
     }
 }

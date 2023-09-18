@@ -35,15 +35,15 @@ namespace Webfuel.Common
         }
         public async Task<TenantDomain> InsertTenantDomainAsync(TenantDomain entity)
         {
-            return await RepositoryService.ExecuteInsertAsync("InsertTenantDomain", entity);
+            return await RepositoryService.ExecuteInsertAsync(entity);
         }
         public async Task<TenantDomain> UpdateTenantDomainAsync(TenantDomain entity)
         {
-            return await RepositoryService.ExecuteUpdateAsync("UpdateTenantDomain", entity);
+            return await RepositoryService.ExecuteUpdateAsync(entity);
         }
         public async Task<TenantDomain> UpdateTenantDomainAsync(TenantDomain entity, IEnumerable<string> properties)
         {
-            return await RepositoryService.ExecuteUpdateAsync("UpdateTenantDomain", entity, properties);
+            return await RepositoryService.ExecuteUpdateAsync(entity, properties);
         }
         public async Task<TenantDomain> UpdateTenantDomainAsync(TenantDomain updated, TenantDomain original)
         {
@@ -53,7 +53,7 @@ namespace Webfuel.Common
             if(updated.RedirectTo != original.RedirectTo) _properties.Add("RedirectTo");
             if(updated.TenantId != original.TenantId) _properties.Add("TenantId");
             if(_properties.Count == 0) return updated;
-            return await RepositoryService.ExecuteUpdateAsync("UpdateTenantDomain", updated, _properties);
+            return await RepositoryService.ExecuteUpdateAsync(updated, _properties);
         }
         public async Task<TenantDomain> UpdateTenantDomainAsync(TenantDomain updated, TenantDomain original, IEnumerable<string> properties)
         {
@@ -63,15 +63,15 @@ namespace Webfuel.Common
             if(properties.Contains("RedirectTo") && updated.RedirectTo != original.RedirectTo) _properties.Add("RedirectTo");
             if(properties.Contains("TenantId") && updated.TenantId != original.TenantId) _properties.Add("TenantId");
             if(_properties.Count == 0) return updated;
-            return await RepositoryService.ExecuteUpdateAsync("UpdateTenantDomain", updated, _properties);
+            return await RepositoryService.ExecuteUpdateAsync(updated, _properties);
         }
         public async Task DeleteTenantDomainAsync(Guid key)
         {
-            await RepositoryService.ExecuteDeleteAsync<TenantDomain>("DeleteTenantDomain", key);
+            await RepositoryService.ExecuteDeleteAsync<TenantDomain>(key);
         }
         public async Task<QueryResult<TenantDomain>> QueryTenantDomainAsync(RepositoryQuery query)
         {
-            return await RepositoryQueryService.ExecuteQueryAsync("RepositoryQueryTenantDomain", query, new TenantDomainRepositoryAccessor());
+            return await RepositoryQueryService.ExecuteQueryAsync(query, new TenantDomainRepositoryAccessor());
         }
         public async Task<TenantDomain?> GetTenantDomainAsync(Guid id)
         {
@@ -80,7 +80,7 @@ namespace Webfuel.Common
             {
                 new SqlParameter("@Id", id),
             };
-            return (await RepositoryService.ExecuteReaderAsync<TenantDomain>("GetTenantDomain", sql, parameters)).SingleOrDefault();
+            return (await RepositoryService.ExecuteReaderAsync<TenantDomain>(sql, parameters)).SingleOrDefault();
         }
         public async Task<TenantDomain> RequireTenantDomainAsync(Guid id)
         {
@@ -89,12 +89,12 @@ namespace Webfuel.Common
         public async Task<int> CountTenantDomainAsync()
         {
             var sql = @"SELECT COUNT(Id) FROM [next].[TenantDomain]";
-            return (int)((await RepositoryService.ExecuteScalarAsync("CountTenantDomain", sql))!);
+            return (int)((await RepositoryService.ExecuteScalarAsync(sql))!);
         }
         public async Task<List<TenantDomain>> SelectTenantDomainAsync()
         {
             var sql = @"SELECT * FROM [next].[TenantDomain] ORDER BY Id ASC";
-            return await RepositoryService.ExecuteReaderAsync<TenantDomain>("SelectTenantDomain", sql);
+            return await RepositoryService.ExecuteReaderAsync<TenantDomain>(sql);
         }
         public async Task<List<TenantDomain>> SelectTenantDomainWithPageAsync(int skip, int take)
         {
@@ -104,7 +104,7 @@ namespace Webfuel.Common
                 new SqlParameter("@Skip", skip),
                 new SqlParameter("@Take", take),
             };
-            return await RepositoryService.ExecuteReaderAsync<TenantDomain>("SelectTenantDomainWithPage", sql, parameters);
+            return await RepositoryService.ExecuteReaderAsync<TenantDomain>(sql, parameters);
         }
         public async Task<List<TenantDomain>> SelectTenantDomainByTenantIdAsync(Guid tenantId)
         {
@@ -113,7 +113,7 @@ namespace Webfuel.Common
             {
                 new SqlParameter("@TenantId", tenantId),
             };
-            return await RepositoryService.ExecuteReaderAsync<TenantDomain>("SelectTenantDomainByTenantId", sql, parameters);
+            return await RepositoryService.ExecuteReaderAsync<TenantDomain>(sql, parameters);
         }
         public async Task<TenantDomain?> GetTenantDomainByDomainAsync(string domain)
         {
@@ -122,7 +122,7 @@ namespace Webfuel.Common
             {
                 new SqlParameter("@Domain", domain),
             };
-            return (await RepositoryService.ExecuteReaderAsync<TenantDomain>("GetTenantDomainByDomain", sql, parameters)).SingleOrDefault();
+            return (await RepositoryService.ExecuteReaderAsync<TenantDomain>(sql, parameters)).SingleOrDefault();
         }
         public async Task<TenantDomain> RequireTenantDomainByDomainAsync(string domain)
         {

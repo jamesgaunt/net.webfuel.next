@@ -3,17 +3,16 @@ using MediatR;
 
 namespace Webfuel
 {
-    public class UpdateWidgetCommandValidator : AbstractValidator<CreateWidgetCommand>
+    [CommandValidator]
+    public class UpdateWidgetCommandValidator : AbstractValidator<UpdateWidgetCommand>
     {
         public UpdateWidgetCommandValidator()
         {
             RuleFor(x => x.Name)
-                .MaximumLength(64)
-                .NotEmpty();
+                .Use(WidgetRepositoryValidationRules.Name);
 
             RuleFor(x => x.Age)
-                .GreaterThanOrEqualTo(0)
-                .LessThanOrEqualTo(100);
+                .Use(WidgetRepositoryValidationRules.Age);
         }
     }
 }

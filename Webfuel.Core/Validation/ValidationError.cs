@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Webfuel
 {
-    [TypefuelInterface]
+    [ApiType]
     public class ValidationError: Error
     {
         public ValidationError()
@@ -29,7 +29,7 @@ namespace Webfuel
         public override string ErrorType => "Validation Error";
     }
 
-    [TypefuelInterface]
+    [ApiType]
 
     public class ValidationErrorProperty
     {
@@ -49,6 +49,4 @@ namespace Webfuel
 
         public string ErrorMessage { get; }
     }
-
-
 }

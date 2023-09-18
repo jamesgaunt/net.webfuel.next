@@ -32,15 +32,15 @@ namespace Webfuel
         }
         public async Task<Widget> InsertWidgetAsync(Widget entity)
         {
-            return await RepositoryService.ExecuteInsertAsync("InsertWidget", entity);
+            return await RepositoryService.ExecuteInsertAsync(entity);
         }
         public async Task<Widget> UpdateWidgetAsync(Widget entity)
         {
-            return await RepositoryService.ExecuteUpdateAsync("UpdateWidget", entity);
+            return await RepositoryService.ExecuteUpdateAsync(entity);
         }
         public async Task<Widget> UpdateWidgetAsync(Widget entity, IEnumerable<string> properties)
         {
-            return await RepositoryService.ExecuteUpdateAsync("UpdateWidget", entity, properties);
+            return await RepositoryService.ExecuteUpdateAsync(entity, properties);
         }
         public async Task<Widget> UpdateWidgetAsync(Widget updated, Widget original)
         {
@@ -55,7 +55,7 @@ namespace Webfuel
             if(updated.CreatedAt != original.CreatedAt) _properties.Add("CreatedAt");
             if(updated.UpdatedAt != original.UpdatedAt) _properties.Add("UpdatedAt");
             if(_properties.Count == 0) return updated;
-            return await RepositoryService.ExecuteUpdateAsync("UpdateWidget", updated, _properties);
+            return await RepositoryService.ExecuteUpdateAsync(updated, _properties);
         }
         public async Task<Widget> UpdateWidgetAsync(Widget updated, Widget original, IEnumerable<string> properties)
         {
@@ -70,15 +70,15 @@ namespace Webfuel
             if(properties.Contains("CreatedAt") && updated.CreatedAt != original.CreatedAt) _properties.Add("CreatedAt");
             if(properties.Contains("UpdatedAt") && updated.UpdatedAt != original.UpdatedAt) _properties.Add("UpdatedAt");
             if(_properties.Count == 0) return updated;
-            return await RepositoryService.ExecuteUpdateAsync("UpdateWidget", updated, _properties);
+            return await RepositoryService.ExecuteUpdateAsync(updated, _properties);
         }
         public async Task DeleteWidgetAsync(Guid key)
         {
-            await RepositoryService.ExecuteDeleteAsync<Widget>("DeleteWidget", key);
+            await RepositoryService.ExecuteDeleteAsync<Widget>(key);
         }
         public async Task<QueryResult<Widget>> QueryWidgetAsync(RepositoryQuery query)
         {
-            return await RepositoryQueryService.ExecuteQueryAsync("RepositoryQueryWidget", query, new WidgetRepositoryAccessor());
+            return await RepositoryQueryService.ExecuteQueryAsync(query, new WidgetRepositoryAccessor());
         }
         public async Task<Widget?> GetWidgetAsync(Guid id)
         {
@@ -87,7 +87,7 @@ namespace Webfuel
             {
                 new SqlParameter("@Id", id),
             };
-            return (await RepositoryService.ExecuteReaderAsync<Widget>("GetWidget", sql, parameters)).SingleOrDefault();
+            return (await RepositoryService.ExecuteReaderAsync<Widget>(sql, parameters)).SingleOrDefault();
         }
         public async Task<Widget> RequireWidgetAsync(Guid id)
         {
@@ -96,12 +96,12 @@ namespace Webfuel
         public async Task<int> CountWidgetAsync()
         {
             var sql = @"SELECT COUNT(Id) FROM [next].[Widget]";
-            return (int)((await RepositoryService.ExecuteScalarAsync("CountWidget", sql))!);
+            return (int)((await RepositoryService.ExecuteScalarAsync(sql))!);
         }
         public async Task<List<Widget>> SelectWidgetAsync()
         {
             var sql = @"SELECT * FROM [next].[Widget] ORDER BY Id ASC";
-            return await RepositoryService.ExecuteReaderAsync<Widget>("SelectWidget", sql);
+            return await RepositoryService.ExecuteReaderAsync<Widget>(sql);
         }
         public async Task<List<Widget>> SelectWidgetWithPageAsync(int skip, int take)
         {
@@ -111,7 +111,7 @@ namespace Webfuel
                 new SqlParameter("@Skip", skip),
                 new SqlParameter("@Take", take),
             };
-            return await RepositoryService.ExecuteReaderAsync<Widget>("SelectWidgetWithPage", sql, parameters);
+            return await RepositoryService.ExecuteReaderAsync<Widget>(sql, parameters);
         }
     }
 }
