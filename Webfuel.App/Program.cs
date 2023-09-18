@@ -17,16 +17,10 @@ namespace Webfuel.App
             builder.Services.RegisterCoreServices();
             builder.Services.RegisterCommonServices();
 
-
-
             var app = builder.Build();
-
             app.UseMiddleware<ValidationMiddleware>();
-
             app.UseStaticFiles();
-
-            app.RegisterApiServicesFromAssemblyContaining<Program>();            
-
+            app.UseApiServices<Program>();            
             app.Run();
         }
     }

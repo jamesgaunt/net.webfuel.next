@@ -11,7 +11,7 @@ namespace Webfuel
 {
     public static class ApiBuilder
     {
-        public static void RegisterApiServicesFromAssemblyContaining<TMarker>(this IEndpointRouteBuilder app)
+        public static void UseApiServices<TMarker>(this IEndpointRouteBuilder app)
         {
             var services = GetApiServiceTypesFromAssemblyContaining<TMarker>();
 
