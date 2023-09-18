@@ -8,7 +8,11 @@ namespace Webfuel.Common
         {
             RepositoryRegistration.AddRepositoryServices(services);
 
-            services.RegisterServiceImplementationsFromAssembly(typeof(CommonRegistration).Assembly);
+            services.RegisterServicesFromAssembly(typeof(CommonRegistration).Assembly);
+
+            services.RegisterValidatorsFromAssembly(typeof(CoreRegistration).Assembly);
+
+            services.AddMediatR(c => c.RegisterServicesFromAssemblyContaining<Webfuel.BlobStorage>());
         }
     }
 }

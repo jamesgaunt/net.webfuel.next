@@ -1,17 +1,28 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 
 namespace Webfuel
 {
-    internal class UpdateWidgetCommandHandler : IRequestHandler<UpdateWidgetCommand, Widget>
+    public class UpdateWidget : IRequest<Widget>
+    {
+        public Guid Id { get; set; }
+
+        public string Name { get; set; } = String.Empty;
+
+        public int Age { get; set; }
+    }
+
+
+    internal class UpdateWidgetHandler : IRequestHandler<UpdateWidget, Widget>
     {
         private readonly IWidgetRepository _widgetRepository;
 
-        public UpdateWidgetCommandHandler(IWidgetRepository widgetRepository)
+        public UpdateWidgetHandler(IWidgetRepository widgetRepository)
         {
             _widgetRepository = widgetRepository;
         }
 
-        public async Task<Widget> Handle(UpdateWidgetCommand request, CancellationToken cancellationToken)
+        public async Task<Widget> Handle(UpdateWidget request, CancellationToken cancellationToken)
         {
             var original = await _widgetRepository.RequireWidgetAsync(request.Id);
 

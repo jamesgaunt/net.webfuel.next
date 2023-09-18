@@ -5,7 +5,7 @@ namespace Webfuel
 {
     public static class ServiceImplementationRegistration
     {
-        public static void RegisterServiceImplementationsFromAssembly(this IServiceCollection services, Assembly assembly)
+        public static void RegisterServicesFromAssembly(this IServiceCollection services, Assembly assembly)
         {
             foreach (var type in assembly.DefinedTypes)
             {

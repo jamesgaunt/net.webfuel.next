@@ -11,25 +11,16 @@ using System.Threading.Tasks;
 
 namespace Webfuel
 {
-    [AttributeUsage(AttributeTargets.Class)]
-    public class CommandValidatorAttribute: Attribute
-    {
-    }
-
     public static class ValidationRegistration
     {
-        public static void RegisterCommandValidatorsFromAssembly(this IServiceCollection services, Assembly assembly)
+        public static void RegisterValidatorsFromAssembly(this IServiceCollection services, Assembly assembly)
         {
             var registeredTypes = new Dictionary<Type, Type>();
 
             foreach (var type in assembly.DefinedTypes)
             {
-                var attribute = type.GetCustomAttribute<CommandValidatorAttribute>();
-                if (attribute == null)
-                    continue;
-
                 if (type.BaseType == null || !type.BaseType.IsGenericType || type.BaseType.GetGenericTypeDefinition() != typeof(AbstractValidator<>))
-                    throw new InvalidOperationException("Command Validator does not implement AbstractValidator<>");
+                    continue;
 
                 var validatedType = type.BaseType.GetGenericArguments()[0];
 

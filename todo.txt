@@ -10,6 +10,14 @@ Build select / multi-select logic
 
 Tenant / User / Login backbone
 
-Integrate repository/codefuel with Fluent Validation
+Serilog??
 
-Pass cancellation token down to the database
+Dapper??
+
+JsonProperties implementation review
+
+Webfuel.[Domain].Common
+
+Generated => _Generated folder
+
+Webfuel.Service.XXX?

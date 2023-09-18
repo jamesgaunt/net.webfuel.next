@@ -13,6 +13,10 @@ namespace Webfuel
             services.AddSingleton<IRepositoryAccessor<Widget>, WidgetRepositoryAccessor>();
             services.AddSingleton<IRepositoryMapper<Widget>, RepositoryDefaultMapper<Widget>>();
             
+            services.AddSingleton<IWidgetQueryViewRepository, WidgetQueryViewRepository>();
+            services.AddSingleton<IRepositoryAccessor<WidgetQueryView>, WidgetQueryViewRepositoryAccessor>();
+            services.AddSingleton<IRepositoryMapper<WidgetQueryView>, RepositoryDefaultMapper<WidgetQueryView>>();
+            
         }
     }
 }

@@ -53,9 +53,6 @@ namespace Webfuel.Tools.Datafuel
         {
             var result = String.Empty;
 
-            if (entity.Audited)
-                result += "IAudited";
-
             if (!String.IsNullOrEmpty(entity.Interface))
             {
                 if (result != String.Empty)

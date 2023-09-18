@@ -11,6 +11,10 @@
       <Member Name="Name" />
     </Index>
 
+    <Data>
+      <Row Id="ff4bffc5-658f-494f-8414-767fee33a3e0" Name="Tenant A" Live="true" />
+    </Data>
+
   </Entity>
 
 </Schema>

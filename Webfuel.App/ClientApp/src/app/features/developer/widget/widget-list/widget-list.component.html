@@ -1,11 +1,8 @@
-
 <div class="container">
   <h1 class="title">Widgets</h1>
-
   <form class="form" [formGroup]="filterForm">
     <input class="input" type="text" placeholder="Search..." formControlName="search" />
   </form>
-
   <data-grid [dataSource]="dataSource">
     <data-grid-column name="name" itemTemplate="bold"></data-grid-column>
     <data-grid-column name="age"></data-grid-column>

@@ -1,6 +1,6 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ISearchFilter, IWidget } from 'api/api.types';
+import { ISearchFilter, IWidget, IWidgetQueryView } from 'api/api.types';
 import { WidgetApi } from 'api/widget.api';
 import { DialogService } from 'core/dialog.service';
 import { DataSource } from '../../../../shared/data-source';
@@ -21,7 +21,7 @@ export class WidgetListComponent {
     search: new FormControl('')
   });
 
-  dataSource = new DataSource<IWidget, ISearchFilter>({
+  dataSource = new DataSource<IWidgetQueryView, ISearchFilter>({
     fetch: (query) => this.widgetApi.queryWidget(query),
     filterForm: this.filterForm
   });
@@ -32,14 +32,14 @@ export class WidgetListComponent {
     });
   }
 
-  edit(item: IWidget) {
+  edit(item: IWidgetQueryView) {
     this.dialogService.open(WidgetUpdateDialogComponent, {
       data: item,
       callback: () => this.dataSource.fetch()
     });
   }
 
-  delete(item: IWidget) {
+  delete(item: IWidgetQueryView) {
     this.dialogService.confirmDelete({
       title: item.name,
       confirmedCallback: () => {

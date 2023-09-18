@@ -22,22 +22,22 @@ namespace Webfuel.App
             app.MapPost("api/query-widget", QueryWidget);
         }
 
-        public static Task<Widget> CreateWidget([FromBody] CreateWidgetCommand command, IMediator mediator)
+        public static Task<Widget> CreateWidget([FromBody] CreateWidget command, IMediator mediator)
         {
             return mediator.Send(command);
         }
 
-        public static Task<Widget> UpdateWidget([FromBody] UpdateWidgetCommand command, IMediator mediator)
+        public static Task<Widget> UpdateWidget([FromBody] UpdateWidget command, IMediator mediator)
         {
             return mediator.Send(command);
         }
 
         public static Task DeleteWidget(Guid id, IMediator mediator)
         {
-            return mediator.Send(new DeleteWidgetCommand { Id = id });
+            return mediator.Send(new DeleteWidget { Id = id });
         }
 
-        public static Task<QueryResult<Widget>> QueryWidget([FromBody] QueryWidgetCommand command, IMediator mediator)
+        public static Task<QueryResult<WidgetQueryView>> QueryWidget([FromBody] QueryWidget command, IMediator mediator)
         {
             return mediator.Send(command);
         }

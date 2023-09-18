@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Identity.Client;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,8 @@ namespace Webfuel.Tools.Datafuel
             Repository = element.BooleanProperty("Repository") ?? true;
             Interface = element.StringProperty("Interface") ?? String.Empty;
             OrderBy = element.StringProperty("OrderBy") ?? String.Empty;
+            Static = element.BooleanProperty("Static") ?? false;
+            ReadOnly = element.BooleanProperty("ReadOnly") ?? false;
 
             if (element.Elements().Any(p => p.Name == "Key"))
                 Key = SchemaEntityProperty.Build(this, element.Element("Key")!);
@@ -41,10 +44,6 @@ namespace Webfuel.Tools.Datafuel
             else
                 KeyType = RepositoryKeyType.Other;
 
-            Audited = Properties.Any(p => p.Name == "UpdatedBy") && Properties.Any(p => p.Name == "UpdatedAt");
-
-            Static = element.BooleanProperty("Static") ?? false;
-
             if (element.Elements("Data").Count() == 1)
                 Data = new SchemaData(this, element.Element("Data")!);
 
@@ -59,8 +58,6 @@ namespace Webfuel.Tools.Datafuel
         // Flags
 
         public RepositoryKeyType KeyType { get; private set; }
-
-        public bool Audited { get; private set; }
 
         // Properties
 
@@ -111,6 +108,8 @@ namespace Webfuel.Tools.Datafuel
         public string OrderBy { get; private set; } = String.Empty;
 
         public bool Static { get; private set; }
+
+        public bool ReadOnly { get; private set; }
 
         public SchemaData? Data { get; private set; }
 

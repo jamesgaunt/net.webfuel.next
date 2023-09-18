@@ -22,27 +22,21 @@ export interface IError {
     errorType: string;
 }
 
-export interface IWidget {
+export interface ITenant {
     id: string;
     name: string;
-    age: number;
-    shippingDate: string;
-    nullableInt: number | null | null;
-    nullableString: string | null;
-    dayOfWeek: DayOfWeek;
-    createdAt: string;
-    updatedAt: string;
+    live: boolean;
 }
 
-export interface ICreateWidgetCommand {
+export interface ICreateTenant {
     name: string;
-    age: number;
+    live: boolean;
 }
 
-export interface IUpdateWidgetCommand {
+export interface IUpdateTenant {
     id: string;
     name: string;
-    age: number;
+    live: boolean;
 }
 
 export interface IQueryResult<TItem> {
@@ -50,7 +44,7 @@ export interface IQueryResult<TItem> {
     totalCount: number;
 }
 
-export interface IQueryWidgetCommand extends ISearchQuery {
+export interface IQueryTenant extends ISearchQuery {
     sort: Array<IQuerySort>;
     skip: number;
     take: number;
@@ -78,6 +72,68 @@ export interface IQuery<TFilter> {
     skip: number;
     take: number;
     filter: TFilter | null;
+}
+
+export interface ITenantDomain {
+    id: string;
+    domain: string;
+    redirectTo: string;
+    tenantId: string;
+}
+
+export interface ICreateTenantDomain {
+    domain: string;
+    redirectTo: string;
+}
+
+export interface IUpdateTenantDomain {
+    id: string;
+    domain: string;
+    redirectTo: string;
+}
+
+export interface IQueryTenantDomain extends ISearchQuery {
+    tenantId: string;
+    sort: Array<IQuerySort>;
+    skip: number;
+    take: number;
+    filter: ISearchFilter | null;
+}
+
+export interface IWidget {
+    id: string;
+    name: string;
+    age: number;
+    shippingDate: string;
+    nullableInt: number | null | null;
+    nullableString: string | null;
+    dayOfWeek: DayOfWeek;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface ICreateWidget {
+    name: string;
+    age: number;
+}
+
+export interface IUpdateWidget {
+    id: string;
+    name: string;
+    age: number;
+}
+
+export interface IWidgetQueryView {
+    id: string;
+    name: string;
+    age: number;
+}
+
+export interface IQueryWidget extends ISearchQuery {
+    sort: Array<IQuerySort>;
+    skip: number;
+    take: number;
+    filter: ISearchFilter | null;
 }
 
 

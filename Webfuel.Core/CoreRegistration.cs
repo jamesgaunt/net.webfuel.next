@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Webfuel.MediatR;
 
@@ -11,13 +12,15 @@ namespace Webfuel
         {
             RepositoryRegistration.AddRepositoryServices(services);
             
-            services.RegisterServiceImplementationsFromAssembly(typeof(CoreRegistration).Assembly);
+            services.RegisterServicesFromAssembly(typeof(CoreRegistration).Assembly);
 
-            services.RegisterCommandValidatorsFromAssembly(typeof(CoreRegistration).Assembly);
+            services.RegisterValidatorsFromAssembly(typeof(CoreRegistration).Assembly);
 
             services.AddMediatR(c => c.RegisterServicesFromAssemblyContaining<Webfuel.BlobStorage>());
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
     }
 }

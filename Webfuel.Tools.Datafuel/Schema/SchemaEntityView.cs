@@ -11,9 +11,8 @@ namespace Webfuel.Tools.Datafuel
             : base(entity.Schema, element)
         {
             Name = entity.Name;
-
             Sql = element.Element("Sql")!.Value;
-        }
+        } 
 
         public string Name { get; private set; }
 

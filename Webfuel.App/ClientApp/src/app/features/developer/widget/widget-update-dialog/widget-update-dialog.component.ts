@@ -1,7 +1,7 @@
 import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IWidget } from 'api/api.types';
+import { IWidget, IWidgetQueryView } from 'api/api.types';
 import { WidgetApi } from 'api/widget.api';
 import { GrowlService } from '../../../../core/growl.service';
 import { FormService } from '../../../../core/form.service';
@@ -16,7 +16,7 @@ export class WidgetUpdateDialogComponent {
     private dialogRef: DialogRef<IWidget>,
     private widgetApi: WidgetApi,
     private formService: FormService,
-    @Inject(DIALOG_DATA) widget: IWidget,
+    @Inject(DIALOG_DATA) widget: IWidgetQueryView,
   ) {
     this.formManager.patchValue(widget);
   }
