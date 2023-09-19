@@ -1,0 +1,34 @@
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
+using System.Net;
+
+namespace Webfuel
+{
+    public class ExceptionMiddleware
+    {
+        private readonly RequestDelegate _request;
+
+        public ExceptionMiddleware(RequestDelegate request)
+        {
+            _request = request;
+        }
+
+        public async Task InvokeAsync(HttpContext context)
+        {
+            try
+            {
+                await _request(context);
+            }
+            catch (ValidationException exception)
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                await context.Response.WriteAsJsonAsync(new ValidationError(exception));
+            }
+            catch(UnauthorizedAccessException exception)
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                await context.Response.WriteAsJsonAsync(new NotAuthorizedError(exception));
+            }
+        }
+    }
+}

@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Reflection.Metadata.Ecma335;
 using System.Text.Json;
 using System.Threading;
-using Webfuel.Common;
+using Webfuel.Domain.Common;
 
 namespace Webfuel.App
 {
@@ -21,6 +21,8 @@ namespace Webfuel.App
             app.MapDelete("api/delete-tenant/{id:guid}", DeleteTenant);
 
             app.MapPost("api/query-tenant", QueryTenant);
+
+            app.MapGet("api/resolve-tenant/{id:guid}", ResolveTenant);
         }
 
         public static Task<Tenant> CreateTenant([FromBody] CreateTenant command, IMediator mediator)
@@ -41,6 +43,11 @@ namespace Webfuel.App
         public static Task<QueryResult<Tenant>> QueryTenant([FromBody] QueryTenant command, IMediator mediator)
         {
             return mediator.Send(command);
+        }
+
+        public static Task<Tenant> ResolveTenant(Guid id, IMediator mediator)
+        {
+            return mediator.Send(new ResolveTenant {  Id = id });
         }
     }
 }

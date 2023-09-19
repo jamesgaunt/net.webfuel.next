@@ -2,6 +2,9 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthorizationInterceptor } from './interceptors/authorization.interceptor';
+
 import { ApiService } from './api.service';
 import { DialogService } from './dialog.service';
 import { GrowlService } from './growl.service';
@@ -22,6 +25,9 @@ import { ConfirmDeleteDialogComponent } from './dialogs/confirm-delete-dialog.co
     DialogService,
     GrowlService,
     FormService,
+    {
+      provide: HTTP_INTERCEPTORS, useClass: AuthorizationInterceptor, multi: true
+    }
   ]
 })
 export class CoreModule {

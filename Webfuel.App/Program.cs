@@ -2,7 +2,7 @@ using Webfuel;
 using FluentValidation;
 using Webfuel.MediatR;
 using MediatR;
-using Webfuel.Common;
+using Webfuel.Domain.Common;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
 
@@ -17,10 +17,19 @@ namespace Webfuel.App
             builder.Services.RegisterCoreServices();
             builder.Services.RegisterCommonServices();
 
+            builder.Services.AddMediatR(c => {
+                c.RegisterServicesFromAssemblyContaining<CoreAssemblyMarker>();
+                c.RegisterServicesFromAssemblyContaining<CommonAssemblyMarker>();
+            });
+
             var app = builder.Build();
-            app.UseMiddleware<ValidationMiddleware>();
+
+            app.UseMiddleware<ExceptionMiddleware>();
+            app.UseMiddleware<IdentityMiddleware>();
+            
             app.UseStaticFiles();
             app.UseApiServices<Program>();            
+            
             app.Run();
         }
     }

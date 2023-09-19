@@ -10,12 +10,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.Core", "Webfuel.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.Tools.Typefuel", "Webfuel.Tools.Typefuel\Webfuel.Tools.Typefuel.csproj", "{7940906B-5232-4654-AC0C-0A0C8D612856}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.Common", "Webfuel.Common\Webfuel.Common.csproj", "{5527CF3C-BDEE-44BF-9D6B-826B0AF09DDD}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{39D09A22-C764-4FAF-BD91-352CE317A602}"
 	ProjectSection(SolutionItems) = preProject
 		todo.txt = todo.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webfuel.Domain.Common", "Webfuel.Domain.Common\Webfuel.Domain.Common.csproj", "{D06AB49F-0E72-4520-AD53-B139FCC8EAC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +39,10 @@ Global
 		{7940906B-5232-4654-AC0C-0A0C8D612856}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7940906B-5232-4654-AC0C-0A0C8D612856}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7940906B-5232-4654-AC0C-0A0C8D612856}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5527CF3C-BDEE-44BF-9D6B-826B0AF09DDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5527CF3C-BDEE-44BF-9D6B-826B0AF09DDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5527CF3C-BDEE-44BF-9D6B-826B0AF09DDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5527CF3C-BDEE-44BF-9D6B-826B0AF09DDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D06AB49F-0E72-4520-AD53-B139FCC8EAC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D06AB49F-0E72-4520-AD53-B139FCC8EAC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D06AB49F-0E72-4520-AD53-B139FCC8EAC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D06AB49F-0E72-4520-AD53-B139FCC8EAC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

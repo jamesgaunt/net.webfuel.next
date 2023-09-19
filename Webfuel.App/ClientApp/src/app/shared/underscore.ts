@@ -166,6 +166,12 @@ export default class Underscore {
     return init;
   }
 
+  // Merge
+
+  static merge<T0, T1>(_0: T0, _1: T1): T0 & T1 {
+    return { ..._0, ..._1 };
+  }
+
   // String
 
   static compareInsensitive(string1: string, string2: string) {

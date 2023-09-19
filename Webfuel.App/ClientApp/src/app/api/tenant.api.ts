@@ -23,5 +23,9 @@ export class TenantApi {
     public queryTenant (body: IQueryTenant, options?: ApiOptions): Observable<IQueryResult<ITenant>> {
         return this.apiService.request("POST", "api/query-tenant", body, options);
     }
+    
+    public resolveTenant (params: { id: string }, options?: ApiOptions): Observable<ITenant> {
+        return this.apiService.request("GET", "api/resolve-tenant/" + params.id + "", undefined, options);
+    }
 }
 

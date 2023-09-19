@@ -9,5 +9,7 @@ namespace Webfuel
     public abstract class Error
     {
         public abstract string ErrorType { get; }
+
+        public string Message { get; set; } = String.Empty;
     }
 }

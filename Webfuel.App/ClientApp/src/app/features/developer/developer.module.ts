@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared/shared.module';
 import { DeveloperRoutingModule } from './developer-routing.module';
 
-import { WidgetListComponent } from './widget/widget-list/widget-list.component';
-import { WidgetCreateDialogComponent } from './widget/widget-create-dialog/widget-create-dialog.component';
-import { WidgetUpdateDialogComponent } from './widget/widget-update-dialog/widget-update-dialog.component';
-
+import { TenantListComponent } from './tenant/tenant-list/tenant-list.component';
+import { TenantItemComponent } from './tenant/tenant-item/tenant-item.component';
+import { TenantCreateDialogComponent } from './tenant/tenant-create-dialog/tenant-create-dialog.component';
+import { TenantTabsComponent } from './tenant/tenant-tabs/tenant-tabs.component';
+import { TenantDomainsComponent } from './tenant/tenant-domains/tenant-domains.component';
 
 @NgModule({
   imports: [
@@ -15,9 +16,11 @@ import { WidgetUpdateDialogComponent } from './widget/widget-update-dialog/widge
     DeveloperRoutingModule
   ],
   declarations: [
-    WidgetListComponent,
-    WidgetCreateDialogComponent,
-    WidgetUpdateDialogComponent
+    TenantListComponent,
+    TenantItemComponent,
+    TenantCreateDialogComponent,
+    TenantTabsComponent,
+    TenantDomainsComponent
   ]
 })
 export class DeveloperModule { }

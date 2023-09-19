@@ -5,19 +5,19 @@ import { FormGroup } from '@angular/forms';
 import { debounceTime, noop, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-export class DataSource<TItem, TFilter> {
+export class DataSource<TItem, TQuery extends IQuery>  {
 
   constructor(private options: {
-    fetch: (query: IQuery<TFilter>) => Observable<IQueryResult<TItem>>;
-    query?: IQuery<TFilter>;
+    fetch: (query: TQuery) => Observable<IQueryResult<TItem>>;
+    query?: TQuery;
     localStorageKey?: string;
-    filterForm?: FormGroup;
+    filterGroup?: FormGroup;
   }) {
-    if (options.query)
+    if(options.query)
       this.query = options.query;
 
-    if (options.filterForm) {
-      options.filterForm.valueChanges
+    if (options.filterGroup) {
+      options.filterGroup.valueChanges
         .pipe(
           debounceTime(200),
           tap(value => this.fetch()),
@@ -26,11 +26,11 @@ export class DataSource<TItem, TFilter> {
     }
   }
 
-  public query: IQuery<TFilter> = { skip: 0, take: 15, sort: [], filter: null };
+  public query: TQuery = <any>{ skip: 0, take: 10, sort: [] };
 
   public queryResult: IQueryResult<TItem> = { totalCount: -1, items: [] }; // totalCount == -1 indicates no results yet returned
 
-  public change: BehaviorSubject<DataSource<TItem, TFilter>> = new BehaviorSubject<DataSource<TItem, TFilter>>(this);
+  public change: BehaviorSubject<DataSource<TItem, TQuery>> = new BehaviorSubject<DataSource<TItem, TQuery>>(this);
 
   // Fetch
 
@@ -39,8 +39,8 @@ export class DataSource<TItem, TFilter> {
     //  this.loadLocalStorage();
     //}
 
-    if (this.options.filterForm)
-      this.query.filter = this.options.filterForm.value;
+    if (this.options.filterGroup)
+      this.query = _.merge(this.query, this.options.filterGroup.getRawValue());
 
     this.options.fetch(this.query).subscribe((response) => {
       if (response.totalCount > 0 && response.items.length === 0 && this.query.skip > 0) {

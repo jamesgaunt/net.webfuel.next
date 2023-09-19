@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Reflection.Metadata.Ecma335;
 using System.Text.Json;
 using System.Threading;
-using Webfuel.Common;
+using Webfuel.Domain.Common;
 
 namespace Webfuel.App
 {

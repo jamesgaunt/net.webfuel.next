@@ -1,16 +1,17 @@
-export enum DayOfWeek {
-    Sunday = 0,
-    Monday = 1,
-    Tuesday = 2,
-    Wednesday = 3,
-    Thursday = 4,
-    Friday = 5,
-    Saturday = 6,
+export interface INotAuthorizedError extends IError {
+    errorType: string;
+    message: string;
+}
+
+export interface IError {
+    errorType: string;
+    message: string;
 }
 
 export interface IValidationError extends IError {
     errors: Array<IValidationErrorProperty>;
     errorType: string;
+    message: string;
 }
 
 export interface IValidationErrorProperty {
@@ -18,8 +19,27 @@ export interface IValidationErrorProperty {
     errorMessage: string;
 }
 
-export interface IError {
-    errorType: string;
+export interface IIdentity {
+    id: string;
+    email: string;
+}
+
+export interface IIdentityClaims {
+    isDeveloper: boolean;
+    canAccessUsers: boolean;
+    someStringClaim: string;
+}
+
+export interface IIdentityToken {
+    identity: IIdentity;
+    claims: IIdentityClaims;
+    validity: IIdentityValidity;
+    signature: string;
+}
+
+export interface IIdentityValidity {
+    validUntil: any;
+    validFromIPAddress: string;
 }
 
 export interface ITenant {
@@ -30,7 +50,6 @@ export interface ITenant {
 
 export interface ICreateTenant {
     name: string;
-    live: boolean;
 }
 
 export interface IUpdateTenant {
@@ -44,11 +63,11 @@ export interface IQueryResult<TItem> {
     totalCount: number;
 }
 
-export interface IQueryTenant extends ISearchQuery {
+export interface IQueryTenant extends IQuery {
+    search: string;
     sort: Array<IQuerySort>;
     skip: number;
     take: number;
-    filter: ISearchFilter | null;
 }
 
 export interface IQuerySort {
@@ -56,22 +75,10 @@ export interface IQuerySort {
     direction: number;
 }
 
-export interface ISearchFilter {
-    search: string;
-}
-
-export interface ISearchQuery extends IQuery<ISearchFilter> {
+export interface IQuery {
     sort: Array<IQuerySort>;
     skip: number;
     take: number;
-    filter: ISearchFilter | null;
-}
-
-export interface IQuery<TFilter> {
-    sort: Array<IQuerySort>;
-    skip: number;
-    take: number;
-    filter: TFilter | null;
 }
 
 export interface ITenantDomain {
@@ -82,6 +89,7 @@ export interface ITenantDomain {
 }
 
 export interface ICreateTenantDomain {
+    tenantId: string;
     domain: string;
     redirectTo: string;
 }
@@ -92,48 +100,12 @@ export interface IUpdateTenantDomain {
     redirectTo: string;
 }
 
-export interface IQueryTenantDomain extends ISearchQuery {
+export interface IQueryTenantDomain extends IQuery {
     tenantId: string;
+    search: string;
     sort: Array<IQuerySort>;
     skip: number;
     take: number;
-    filter: ISearchFilter | null;
-}
-
-export interface IWidget {
-    id: string;
-    name: string;
-    age: number;
-    shippingDate: string;
-    nullableInt: number | null | null;
-    nullableString: string | null;
-    dayOfWeek: DayOfWeek;
-    createdAt: string;
-    updatedAt: string;
-}
-
-export interface ICreateWidget {
-    name: string;
-    age: number;
-}
-
-export interface IUpdateWidget {
-    id: string;
-    name: string;
-    age: number;
-}
-
-export interface IWidgetQueryView {
-    id: string;
-    name: string;
-    age: number;
-}
-
-export interface IQueryWidget extends ISearchQuery {
-    sort: Array<IQuerySort>;
-    skip: number;
-    take: number;
-    filter: ISearchFilter | null;
 }
 
 

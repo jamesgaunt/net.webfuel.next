@@ -20,4 +20,4 @@ Webfuel.[Domain].Common
 
 Generated => _Generated folder
 
-Webfuel.Service.XXX?
+Webfuel.[Service].XXX?

@@ -33,6 +33,8 @@
 }
 
 .buttons {
+    margin: var(--gap) 0 var(--gap) 0;
+
     .button + .button {
         margin-left: calc(var(--gap) / 2);
     }

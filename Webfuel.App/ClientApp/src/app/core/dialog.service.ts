@@ -31,7 +31,8 @@ export class DialogService {
     if (options.callback) {
       dialogRef.closed.subscribe((result) => options!.callback!(result))
     }
-   
+
+    return dialogRef;
   }
 
   confirmDelete(options?: IConfirmDeleteDialogOptions) {

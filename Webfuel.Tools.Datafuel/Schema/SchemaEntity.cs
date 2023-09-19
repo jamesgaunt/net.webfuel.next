@@ -59,6 +59,8 @@ namespace Webfuel.Tools.Datafuel
 
         public RepositoryKeyType KeyType { get; private set; }
 
+        public bool Audited { get; private set; }
+
         // Properties
 
         public string Name { get; private set; }
@@ -129,7 +131,7 @@ namespace Webfuel.Tools.Datafuel
         {
             get
             {
-                return $"{Settings.SolutionRoot}\\Webfuel.{Assembly}\\Generated";
+                return $"{Settings.SolutionRoot}\\Webfuel.{Assembly}\\_Repository";
             }
         }
 

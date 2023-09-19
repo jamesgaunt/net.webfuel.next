@@ -94,10 +94,6 @@ export class FormManager<TControl extends {
 
   handleValidationError(validationError: IValidationError) {
     _.forEach(validationError.errors, (error) => {
-
-      if (this.growlService)
-        this.growlService.growlDanger(error.errorMessage);
-
       for (const field in this.formGroup.controls) {
         if (_.compareInsensitive(field, error.propertyName)) {
           const control = this.formGroup.get(field);
@@ -107,5 +103,6 @@ export class FormManager<TControl extends {
         }
       }
     });
+    this.growlErrors();
   }
 }
