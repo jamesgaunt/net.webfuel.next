@@ -1,0 +1,30 @@
+<div class="container">
+
+  <div class="columns">
+    <div class="column">
+      <h1 class="title">User Group</h1>
+    </div>
+    <div class="column">
+      <div class="buttons is-right">
+      </div>
+    </div>
+  </div>
+
+  <user-group-tabs></user-group-tabs>
+
+  <form class="form" [formGroup]="formManager.formGroup">
+    <div class="grid">
+      <div class="field">
+        <label class="label">Name</label>
+        <input class="input" type="text" placeholder="required" formControlName="name" />
+      </div>
+    </div>
+    <div class="buttons">
+      <button class="button is-success" (click)="save()">Save</button>
+      <button class="button" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+
+  <pre>{{item|json}}</pre>
+
+</div>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,14 +12,14 @@ namespace Webfuel.Tools.Datafuel
     {
         public static void Generate(Schema schema)
         {
-            GenerateDirectory(schema);
+            DeleteDirectory(schema);
 
             foreach (var entity in schema.Entities)
                 EntityGenerator.GenerateEntity(entity);
 
-            DatabaseGenerator.GenerateDatabase(schema);
-
             GenerateRepositoryRegistration(schema);
+
+            DatabaseGenerator.GenerateDatabase(schema);
         }
         static void GenerateRepositoryRegistration(Schema schema)
         {
@@ -54,13 +55,13 @@ namespace Webfuel.Tools.Datafuel
             return sb.ToString();
         }
 
-        static void GenerateDirectory(Schema schema)
+        static void DeleteDirectory(Schema schema)
         {
             foreach (var entity in schema.Entities)
-                GenerateDirectory(entity.GeneratedDirectory);
+                DeleteDirectory(entity.GeneratedDirectory);
         }
 
-        static void GenerateDirectory(string directory)
+        static void DeleteDirectory(string directory)
         {
             if (!Directory.Exists(directory))
                 throw new InvalidOperationException("Specified directory does not exist");

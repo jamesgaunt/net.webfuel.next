@@ -26,11 +26,16 @@ namespace Webfuel
     {
         private readonly IServiceProvider ServiceProvider;
         private readonly IRepositoryConfiguration RepositoryConfiguration;
+        private readonly ITenantAccessor TenantAccessor;
 
-        public RepositoryService(IServiceProvider serviceProvider, IRepositoryConfiguration repositoryConfiguration)
+        public RepositoryService(
+            IServiceProvider serviceProvider, 
+            IRepositoryConfiguration repositoryConfiguration, 
+            ITenantAccessor tenantAccessor)
         {
             ServiceProvider = serviceProvider;
             RepositoryConfiguration = repositoryConfiguration;
+            TenantAccessor = tenantAccessor;
         }
 
         public async Task<object?> ExecuteScalarAsync(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null)
@@ -146,7 +151,9 @@ namespace Webfuel
 
         SqlConnection OpenSqlConnection()
         {
-            var connection = new SqlConnection(RepositoryConfiguration.ConnectionString);
+            var tenant = TenantAccessor.Tenant;
+            var connectionString = RepositoryConfiguration.ConnectionString + $"User ID=login_{tenant.DatabaseSchema};Password={tenant.DatabasePassword}";
+            var connection = new SqlConnection(connectionString);
             connection.Open();
             return connection;
         }

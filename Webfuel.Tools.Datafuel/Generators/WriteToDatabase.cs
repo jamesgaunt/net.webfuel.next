@@ -12,7 +12,7 @@ namespace Webfuel.Tools.Datafuel
 {
     public static class WriteToDatabase
     {
-        public static void WriteDataSetToDatabase(SchemaData data, string databaseName, string databaseServer)
+        public static void WriteDataSetToDatabase(string databaseSchema, SchemaData data, string databaseName, string databaseServer)
         {
             using (var connection = new SqlConnection(databaseServer))
             {
@@ -21,7 +21,7 @@ namespace Webfuel.Tools.Datafuel
                 {
                     using (SqlBulkCopy bulkCopy = new SqlBulkCopy(connection, SqlBulkCopyOptions.TableLock, null))
                     {
-                        bulkCopy.DestinationTableName = "[" + Settings.DatabaseSchema + "].[" + data.Entity.Name + "]";
+                        bulkCopy.DestinationTableName = "[" + databaseSchema + "].[" + data.Entity.Name + "]";
                         foreach (var member in data.Entity.Members)
                         {
                             bulkCopy.ColumnMappings.Add(new SqlBulkCopyColumnMapping(member.Name, member.Name));

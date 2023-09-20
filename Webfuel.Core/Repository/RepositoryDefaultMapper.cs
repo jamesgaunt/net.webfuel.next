@@ -66,7 +66,7 @@ namespace Webfuel
         protected virtual string InsertSQL(IEnumerable<string> properties)
         {
             var sb = new StringBuilder();
-            sb.Append($"INSERT INTO [{Accessor.DatabaseSchema}].[{Accessor.DatabaseTable}] (");
+            sb.Append($"INSERT INTO [{Accessor.DatabaseTable}] (");
             sb.Append(String.Join(", ", properties.Select(p => $"[{p}]")));
             sb.Append(") VALUES (");
             sb.Append(String.Join(", ", properties.Select(p => $"@{p}")));
@@ -93,7 +93,7 @@ namespace Webfuel
         protected virtual string UpdateSQL(IEnumerable<string> properties)
         {
             var sb = new StringBuilder();
-            sb.Append($"UPDATE [{Accessor.DatabaseSchema}].[{Accessor.DatabaseTable}] SET ");
+            sb.Append($"UPDATE [{Accessor.DatabaseTable}] SET ");
             sb.Append(String.Join(", ", properties.Where(p => p != "Id").Select(p => $"[{p}] = @{p}")));
             sb.Append($" WHERE [Id] = @Id");
             return sb.ToString();
@@ -109,7 +109,7 @@ namespace Webfuel
         protected virtual string DeleteSQL()
         {
             var sb = new StringBuilder();
-            sb.Append($"DELETE FROM [{Accessor.DatabaseSchema}].[{Accessor.DatabaseTable}] WHERE Id = @Id");
+            sb.Append($"DELETE FROM [{Accessor.DatabaseTable}] WHERE Id = @Id");
             return sb.ToString();
         }
 

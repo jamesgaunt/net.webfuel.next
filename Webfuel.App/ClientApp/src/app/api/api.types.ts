@@ -39,72 +39,6 @@ export interface IIdentityValidity {
     validFromIPAddress: string;
 }
 
-export interface ITenant {
-    id: string;
-    name: string;
-    live: boolean;
-}
-
-export interface ICreateTenant {
-    name: string;
-}
-
-export interface IUpdateTenant {
-    id: string;
-    name: string;
-    live: boolean;
-}
-
-export interface IQueryResult<TItem> {
-    items: Array<TItem>;
-    totalCount: number;
-}
-
-export interface IQueryTenant extends IQuery {
-    search: string;
-    sort: Array<IQuerySort>;
-    skip: number;
-    take: number;
-}
-
-export interface IQuerySort {
-    field: string;
-    direction: number;
-}
-
-export interface IQuery {
-    sort: Array<IQuerySort>;
-    skip: number;
-    take: number;
-}
-
-export interface ITenantDomain {
-    id: string;
-    domain: string;
-    redirectTo: string;
-    tenantId: string;
-}
-
-export interface ICreateTenantDomain {
-    tenantId: string;
-    domain: string;
-    redirectTo: string;
-}
-
-export interface IUpdateTenantDomain {
-    id: string;
-    domain: string;
-    redirectTo: string;
-}
-
-export interface IQueryTenantDomain extends IQuery {
-    tenantId: string;
-    search: string;
-    sort: Array<IQuerySort>;
-    skip: number;
-    take: number;
-}
-
 export interface IUser {
     id: string;
     email: string;
@@ -122,6 +56,11 @@ export interface IUpdateUser {
     email: string;
 }
 
+export interface IQueryResult<TItem> {
+    items: Array<TItem>;
+    totalCount: number;
+}
+
 export interface IUserListView {
     id: string;
     email: string;
@@ -134,9 +73,46 @@ export interface IQueryUserListView extends IQuery {
     take: number;
 }
 
+export interface IQuerySort {
+    field: string;
+    direction: number;
+}
+
+export interface IQuery {
+    sort: Array<IQuerySort>;
+    skip: number;
+    take: number;
+}
+
 export interface ILoginUser {
     email: string;
     password: string;
+}
+
+export interface IUserGroup {
+    id: string;
+    name: string;
+}
+
+export interface ICreateUserGroup {
+    name: string;
+}
+
+export interface IUpdateUserGroup {
+    id: string;
+    name: string;
+}
+
+export interface IUserGroupListView {
+    id: string;
+    name: string;
+}
+
+export interface IQueryUserGroupListView extends IQuery {
+    search: string;
+    sort: Array<IQuerySort>;
+    skip: number;
+    take: number;
 }
 
 

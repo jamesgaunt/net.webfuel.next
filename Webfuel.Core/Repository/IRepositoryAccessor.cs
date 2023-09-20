@@ -2,8 +2,6 @@
 {
     public interface IRepositoryAccessor<TEntity> where TEntity : class
     {
-        string DatabaseSchema { get; }
-
         string DatabaseTable { get; }
 
         string DefaultOrderBy { get; }

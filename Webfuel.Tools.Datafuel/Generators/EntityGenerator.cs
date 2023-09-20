@@ -142,7 +142,6 @@ namespace Webfuel.Tools.Datafuel
                 using (sb.OpenBrace($"internal class {entity.Name}RepositoryAccessor: IRepositoryAccessor<{entity.Name}>"))
                 {
                     sb.WriteLine($"private readonly {entity.Name}RepositoryValidator _validator = new {entity.Name}RepositoryValidator();");
-                    sb.WriteLine($"public string DatabaseSchema => \"{Settings.DatabaseSchema}\";");
                     sb.WriteLine($"public string DatabaseTable => \"{entity.Name}\";");
                     sb.WriteLine($"public string DefaultOrderBy => \"{entity.DefaultOrderBy}\";");
 

@@ -30,7 +30,7 @@ namespace Webfuel.Domain.Common
         }
         public async Task<UserListView?> GetUserListViewAsync(Guid id)
         {
-            var sql = @"SELECT * FROM [next].[UserListView] WHERE Id = @Id";
+            var sql = @"SELECT * FROM [UserListView] WHERE Id = @Id";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Id", id),
@@ -43,17 +43,17 @@ namespace Webfuel.Domain.Common
         }
         public async Task<int> CountUserListViewAsync()
         {
-            var sql = @"SELECT COUNT(Id) FROM [next].[UserListView]";
+            var sql = @"SELECT COUNT(Id) FROM [UserListView]";
             return (int)((await RepositoryService.ExecuteScalarAsync(sql))!);
         }
         public async Task<List<UserListView>> SelectUserListViewAsync()
         {
-            var sql = @"SELECT * FROM [next].[UserListView] ORDER BY Id ASC";
+            var sql = @"SELECT * FROM [UserListView] ORDER BY Id ASC";
             return await RepositoryService.ExecuteReaderAsync<UserListView>(sql);
         }
         public async Task<List<UserListView>> SelectUserListViewWithPageAsync(int skip, int take)
         {
-            var sql = @"SELECT * FROM [next].[UserListView] ORDER BY Id ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+            var sql = @"SELECT * FROM [UserListView] ORDER BY Id ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Skip", skip),

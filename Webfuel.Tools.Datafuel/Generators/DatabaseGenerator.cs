@@ -13,37 +13,43 @@ namespace Webfuel.Tools.Datafuel
         public static void GenerateDatabase(Schema schema)
         {
             CreateDatabase();
-            CreateSchema();
+            foreach (var tenant in Settings.Tenants)
+                DatabaseGenerator.GenerateDatabase(tenant.DatabaseSchema, schema);
+        }
+
+        static void GenerateDatabase(string databaseSchema, Schema schema)
+        {
+            CreateSchema(databaseSchema);
 
             // Tables
             foreach (var entity in schema.Entities.Where(p => p.Repository && p.View == null))
-                ExecuteNonQuery(TableDefinition(entity));
+                ExecuteNonQuery(databaseSchema, TableDefinition(databaseSchema, entity));
 
             // Views
             foreach (var entity in schema.Entities.Where(p => p.Repository && p.View != null))
-                ExecuteNonQuery(ViewDefinition(entity));
+                ExecuteNonQuery(databaseSchema, ViewDefinition(databaseSchema, entity));
 
             // Constraints
             foreach (var entity in schema.Entities.Where(p => p.Repository))
             {
                 // Foreign Keys
                 foreach (var reference in entity.References)
-                    ExecuteNonQuery(ForeignKeyDefinition(reference));
+                    ExecuteNonQuery(databaseSchema, ForeignKeyDefinition(databaseSchema, reference));
 
                 // Indexes
                 foreach (var index in entity.Indexes.Where(p => p.Repository))
-                    ExecuteNonQuery(IndexDefinition(index));
+                    ExecuteNonQuery(databaseSchema, IndexDefinition(databaseSchema, index));
 
                 // Other
                 foreach (var member in entity.Members)
-                    ExecuteNonQuery(ConstraintDefinition(member));
+                    ExecuteNonQuery(databaseSchema, ConstraintDefinition(member));
             }
 
             // Data
-            foreach(var entity in schema.Entities.Where(p => p.Repository))
+            foreach (var entity in schema.Entities.Where(p => p.Repository))
             {
                 if (entity.Data != null)
-                    WriteToDatabase.WriteDataSetToDatabase(entity.Data, Settings.DatabaseName, Settings.DatabaseServer);
+                    WriteToDatabase.WriteDataSetToDatabase(databaseSchema, entity.Data, Settings.DatabaseName, Settings.DatabaseServer);
             }
 
             // Check constraints following bulk data inserts (which ignore constraints & triggers)
@@ -57,10 +63,10 @@ namespace Webfuel.Tools.Datafuel
             return entity.Name;
         }
 
-        static string TableDefinition(SchemaEntity entity)
+        static string TableDefinition(string databaseSchema, SchemaEntity entity)
         {
             var sb = new StringBuilder();
-            sb.Append("CREATE TABLE [dbo].[" + TableName(entity) + "] (\n");
+            sb.Append($"CREATE TABLE [{databaseSchema}].[" + TableName(entity) + "] (\n");
 
             foreach (var member in entity.Members)
                 sb.Append(member.GenerateSqlColumnDefinition() + ",\n");
@@ -81,14 +87,14 @@ namespace Webfuel.Tools.Datafuel
             return "CONSTRAINT [PK_" + TableName(key.Entity) + "] PRIMARY KEY CLUSTERED (" + key.Name + " ASC) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]";
         }
 
-        static string ForeignKeyDefinition(SchemaEntityReference reference)
+        static string ForeignKeyDefinition(string databaseSchema, SchemaEntityReference reference)
         {
             if (reference.ReferenceEntity.Key == null)
                 throw new InvalidOperationException("Cannot reference an entity without a primary key");
 
             StringBuilder sb = new StringBuilder();
-            sb.Append("ALTER TABLE [dbo].[" + TableName(reference.Entity) + "] WITH CHECK ADD CONSTRAINT FK_" + TableName(reference.Entity) + "_" + reference.Name + "\n");
-            sb.Append("FOREIGN KEY (" + reference.Name + ") REFERENCES [dbo].[" + TableName(reference.ReferenceEntity) + "] (" + reference.ReferenceEntity.Key.Name + ")\n");
+            sb.Append($"ALTER TABLE [{databaseSchema}].[" + TableName(reference.Entity) + "] WITH CHECK ADD CONSTRAINT FK_" + TableName(reference.Entity) + "_" + reference.Name + "\n");
+            sb.Append("FOREIGN KEY (" + reference.Name + $") REFERENCES [{databaseSchema}].[" + TableName(reference.ReferenceEntity) + "] (" + reference.ReferenceEntity.Key.Name + ")\n");
 
             if (reference.CascadeDelete)
                 sb.Append("ON DELETE CASCADE\n");
@@ -96,7 +102,7 @@ namespace Webfuel.Tools.Datafuel
             sb.Append("GO\n");
             return sb.ToString();
         }
-        
+
         static string ConstraintDefinition(SchemaEntityMember member)
         {
             return String.Empty;
@@ -114,11 +120,11 @@ namespace Webfuel.Tools.Datafuel
             return sb.ToString();
         }
 
-        static string IndexDefinition(SchemaEntityIndex index)
+        static string IndexDefinition(string databaseSchema, SchemaEntityIndex index)
         {
             var sb = new StringBuilder();
             sb.Append("CREATE " + (index.Unique ? "UNIQUE " : "") + "NONCLUSTERED INDEX " + IndexName(index) + "\n");
-            sb.Append("ON [dbo].[" + TableName(index.Entity) + "] (");
+            sb.Append($"ON [{databaseSchema}].[" + TableName(index.Entity) + "] (");
             foreach (var member in index.Members)
             {
                 sb.Append("[" + member.Name + "] ASC, ");
@@ -130,10 +136,10 @@ namespace Webfuel.Tools.Datafuel
 
         // View Definition
 
-        static string ViewDefinition(SchemaEntity entity)
+        static string ViewDefinition(string databaseSchema, SchemaEntity entity)
         {
             var sb = new StringBuilder();
-            sb.Append($"CREATE VIEW [dbo].[{entity.Name}]\n");
+            sb.Append($"CREATE VIEW [{databaseSchema}].[{entity.Name}]\n");
             sb.Append($"AS {entity.View!.Sql}");
             sb.Append(";");
             return sb.ToString();
@@ -160,33 +166,56 @@ CREATE DATABASE [{0}]
             }
         }
 
-        static void CreateSchema()
+        static void CreateSchema(string databaseSchema)
         {
-            if (Settings.DatabaseSchema == "dbo")
+            if (databaseSchema == "dbo")
                 return; // nothing to do
 
-            string sql =
-@"
-CREATE SCHEMA {0}
-";
-            sql = String.Format(sql, Settings.DatabaseSchema);
             using (SqlConnection connection = new SqlConnection(Settings.DatabaseServer))
             {
                 connection.Open();
                 connection.ChangeDatabase(Settings.DatabaseName);
-                SqlCommand command = new SqlCommand(sql, connection);
-                command.ExecuteNonQuery();
+
+                // Create Logins 
+                {
+                    try
+                    {
+                        SqlCommand command = new SqlCommand($"CREATE LOGIN login_{databaseSchema} WITH PASSWORD = 'multitenantpwd'", connection);
+                        command.ExecuteNonQuery();
+                    }
+                    catch { /* already exists which is fine */ }
+                }
+
+                // Create Schemas
+                {
+                    SqlCommand command = new SqlCommand($"CREATE SCHEMA {databaseSchema}", connection);
+                    command.ExecuteNonQuery();
+                }
+
+                // Create Users
+                {
+                    SqlCommand command = new SqlCommand($"CREATE USER user_{databaseSchema} FOR LOGIN login_{databaseSchema} WITH DEFAULT_SCHEMA = {databaseSchema}", connection);
+                    command.ExecuteNonQuery();
+                }
+
+                // Grant Schema Permissions
+                {
+                    SqlCommand command = new SqlCommand($"GRANT SELECT, INSERT, UPDATE, DELETE ON SCHEMA::{databaseSchema} TO user_{databaseSchema}", connection);
+                    command.ExecuteNonQuery();
+                }
+
             }
         }
 
-        static void ExecuteNonQuery(string sql, params SqlParameter[] parameters)
+        static void ExecuteNonQuery(string databaseSchema, string sql, params SqlParameter[] parameters)
         {
+            if (sql.Contains("[dbo]"))
+                throw new InvalidOperationException("Remove [dbo] from sql");
+
             StringReader sr = new StringReader(sql);
             StringBuilder sb = new StringBuilder();
             String? line;
             String? test;
-
-            sql = sql.Replace("[dbo]", $"[{Settings.DatabaseSchema}]");
 
             line = sr.ReadLine();
             while (line != null)
@@ -198,7 +227,7 @@ CREATE SCHEMA {0}
                     // Yes - so execute this block
                     if (sb.Length > 0)
                     {
-                        ExecuteSqlBlock(sb.ToString(), parameters);
+                        ExecuteSqlBlock(databaseSchema, sb.ToString(), parameters);
                         sb.Length = 0;
                     }
                 }
@@ -212,12 +241,13 @@ CREATE SCHEMA {0}
             }
             // Do we have a block to execute
             if (sb.Length > 0)
-                ExecuteSqlBlock(sb.ToString(), parameters);
+                ExecuteSqlBlock(databaseSchema, sb.ToString(), parameters);
         }
 
-        static object ExecuteScalar(string sql, params SqlParameter[] parameters)
+        static object ExecuteScalar(string databaseSchema, string sql, params SqlParameter[] parameters)
         {
-            sql = sql.Replace("[dbo]", $"[{Settings.DatabaseSchema}]");
+            if (sql.Contains("[dbo]"))
+                throw new InvalidOperationException("Remove [dbo] from sql");
 
             using (SqlConnection connection = new SqlConnection(Settings.DatabaseServer))
             {
@@ -232,9 +262,10 @@ CREATE SCHEMA {0}
             }
         }
 
-        static void ExecuteSqlBlock(string sql, params SqlParameter[] parameters)
+        static void ExecuteSqlBlock(string databaseSchema, string sql, params SqlParameter[] parameters)
         {
-            sql = sql.Replace("[dbo]", $"[{Settings.DatabaseSchema}]");
+            if (sql.Contains("[dbo]"))
+                throw new InvalidOperationException("Remove [dbo] from sql");
 
             using (SqlConnection connection = new SqlConnection(Settings.DatabaseServer))
             {

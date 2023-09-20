@@ -9,14 +9,6 @@ namespace Webfuel.Domain.Common
             services.AddSingleton<IRepositoryAccessor<Job>, JobRepositoryAccessor>();
             services.AddSingleton<IRepositoryMapper<Job>, RepositoryDefaultMapper<Job>>();
             
-            services.AddSingleton<ITenantRepository, TenantRepository>();
-            services.AddSingleton<IRepositoryAccessor<Tenant>, TenantRepositoryAccessor>();
-            services.AddSingleton<IRepositoryMapper<Tenant>, RepositoryDefaultMapper<Tenant>>();
-            
-            services.AddSingleton<ITenantDomainRepository, TenantDomainRepository>();
-            services.AddSingleton<IRepositoryAccessor<TenantDomain>, TenantDomainRepositoryAccessor>();
-            services.AddSingleton<IRepositoryMapper<TenantDomain>, RepositoryDefaultMapper<TenantDomain>>();
-            
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<IRepositoryAccessor<User>, UserRepositoryAccessor>();
             services.AddSingleton<IRepositoryMapper<User>, RepositoryDefaultMapper<User>>();
@@ -28,6 +20,10 @@ namespace Webfuel.Domain.Common
             services.AddSingleton<IUserGroupRepository, UserGroupRepository>();
             services.AddSingleton<IRepositoryAccessor<UserGroup>, UserGroupRepositoryAccessor>();
             services.AddSingleton<IRepositoryMapper<UserGroup>, RepositoryDefaultMapper<UserGroup>>();
+            
+            services.AddSingleton<IUserGroupListViewRepository, UserGroupListViewRepository>();
+            services.AddSingleton<IRepositoryAccessor<UserGroupListView>, UserGroupListViewRepositoryAccessor>();
+            services.AddSingleton<IRepositoryMapper<UserGroupListView>, RepositoryDefaultMapper<UserGroupListView>>();
             
         }
     }

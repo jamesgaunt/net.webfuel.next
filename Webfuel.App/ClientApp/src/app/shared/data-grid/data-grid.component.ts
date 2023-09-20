@@ -10,7 +10,7 @@ import { DataGridColumnComponent } from './data-grid-column.component';
   templateUrl: './data-grid.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataGridComponent implements OnDestroy, AfterContentInit {
+export class DataGridComponent implements OnDestroy, AfterViewInit {
 
   constructor(
     private cd: ChangeDetectorRef
@@ -38,12 +38,13 @@ export class DataGridComponent implements OnDestroy, AfterContentInit {
 
   columns: DataGridColumnComponent[] = [];
 
-  ngAfterContentInit() {
+  ngAfterViewInit() {
     this.columns = this.columnQuery.toArray();
     _.forEach(this.columns, p => {
       p.grid = this;
-      setTimeout(() => p.initialise(), 0);
+      p.initialise();
     });
+    this.cd.detectChanges();
   }
 
   get columnCount() {

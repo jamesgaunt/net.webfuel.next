@@ -6,7 +6,6 @@ namespace Webfuel.Domain.Common
     internal class UserRepositoryAccessor: IRepositoryAccessor<User>
     {
         private readonly UserRepositoryValidator _validator = new UserRepositoryValidator();
-        public string DatabaseSchema => "next";
         public string DatabaseTable => "User";
         public string DefaultOrderBy => "ORDER BY Id ASC";
         public object? GetValue(User entity, string property)

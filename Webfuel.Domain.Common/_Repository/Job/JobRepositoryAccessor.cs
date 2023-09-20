@@ -6,7 +6,6 @@ namespace Webfuel.Domain.Common
     internal class JobRepositoryAccessor: IRepositoryAccessor<Job>
     {
         private readonly JobRepositoryValidator _validator = new JobRepositoryValidator();
-        public string DatabaseSchema => "next";
         public string DatabaseTable => "Job";
         public string DefaultOrderBy => "ORDER BY Id ASC";
         public object? GetValue(Job entity, string property)

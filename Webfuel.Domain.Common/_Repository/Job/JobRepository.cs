@@ -68,7 +68,7 @@ namespace Webfuel.Domain.Common
         }
         public async Task<Job?> GetJobAsync(Guid id)
         {
-            var sql = @"SELECT * FROM [next].[Job] WHERE Id = @Id";
+            var sql = @"SELECT * FROM [Job] WHERE Id = @Id";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Id", id),
@@ -81,17 +81,17 @@ namespace Webfuel.Domain.Common
         }
         public async Task<int> CountJobAsync()
         {
-            var sql = @"SELECT COUNT(Id) FROM [next].[Job]";
+            var sql = @"SELECT COUNT(Id) FROM [Job]";
             return (int)((await RepositoryService.ExecuteScalarAsync(sql))!);
         }
         public async Task<List<Job>> SelectJobAsync()
         {
-            var sql = @"SELECT * FROM [next].[Job] ORDER BY Id ASC";
+            var sql = @"SELECT * FROM [Job] ORDER BY Id ASC";
             return await RepositoryService.ExecuteReaderAsync<Job>(sql);
         }
         public async Task<List<Job>> SelectJobWithPageAsync(int skip, int take)
         {
-            var sql = @"SELECT * FROM [next].[Job] ORDER BY Id ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+            var sql = @"SELECT * FROM [Job] ORDER BY Id ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Skip", skip),

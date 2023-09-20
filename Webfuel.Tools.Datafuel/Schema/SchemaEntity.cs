@@ -192,7 +192,7 @@ namespace Webfuel.Tools.Datafuel
                 return; // A query with the same name already exists
 
             var element = new XElement("Query", new XAttribute("Name", name));
-            element.Add(new XElement("Sql", $"SELECT * FROM [dbo].[{Name}] WHERE {Key.Name} = @{Key.Name}"));
+            element.Add(new XElement("Sql", $"SELECT * FROM [{Name}] WHERE {Key.Name} = @{Key.Name}"));
             element.Add(new XElement("Parameter", new XAttribute("Name", $"@{Key.Name}"), new XAttribute("Type", $"{Name}.{Key.Name}")));
             Queries.Insert(0, new SchemaEntityQuery(this, element));
         }
@@ -204,7 +204,7 @@ namespace Webfuel.Tools.Datafuel
                 return; // A query with the same name already exists
 
             var element = new XElement("Query", new XAttribute("Name", name));
-            element.Add(new XElement("Sql", $"SELECT * FROM [dbo].[{Name}] {DefaultOrderBy}"));
+            element.Add(new XElement("Sql", $"SELECT * FROM [{Name}] {DefaultOrderBy}"));
             Queries.Insert(0, new SchemaEntityQuery(this, element));
         }
 
@@ -215,7 +215,7 @@ namespace Webfuel.Tools.Datafuel
                 return; // A query with the same name already exists
 
             var element = new XElement("Query", new XAttribute("Name", name));
-            element.Add(new XElement("Sql", $"SELECT COUNT(Id) FROM [dbo].[{Name}]"));
+            element.Add(new XElement("Sql", $"SELECT COUNT(Id) FROM [{Name}]"));
             Queries.Insert(0, new SchemaEntityQuery(this, element));
         }
 
@@ -227,7 +227,7 @@ namespace Webfuel.Tools.Datafuel
                 return; // A query with the same name already exists
 
             var element = new XElement("Query", new XAttribute("Name", name));
-            element.Add(new XElement("Sql", $"SELECT * FROM [dbo].[{Name}] {DefaultOrderBy} OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY"));
+            element.Add(new XElement("Sql", $"SELECT * FROM [{Name}] {DefaultOrderBy} OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY"));
             element.Add(new XElement("Parameter", new XAttribute("Name", "@Skip"), new XAttribute("Type", "int32")));
             element.Add(new XElement("Parameter", new XAttribute("Name", "@Take"), new XAttribute("Type", "int32")));
             Queries.Insert(0, new SchemaEntityQuery(this, element));
@@ -240,7 +240,7 @@ namespace Webfuel.Tools.Datafuel
                 return; // A query with the same name already exists
 
             var element = new XElement("Query", new XAttribute("Name", name));
-            element.Add(new XElement("Sql", $"SELECT * FROM [dbo].[{Name}] WHERE {String.Join(" AND ", index.Members.Select(p => p.GenerateSqlComparison()))} {DefaultOrderBy}"));
+            element.Add(new XElement("Sql", $"SELECT * FROM [{Name}] WHERE {String.Join(" AND ", index.Members.Select(p => p.GenerateSqlComparison()))} {DefaultOrderBy}"));
             foreach (var member in index.Members)
                 element.Add(new XElement("Parameter", new XAttribute("Name", $"@{member.Name}"), new XAttribute("Type", $"{Name}.{member.Name}")));
             Queries.Insert(0, new SchemaEntityQuery(this, element));

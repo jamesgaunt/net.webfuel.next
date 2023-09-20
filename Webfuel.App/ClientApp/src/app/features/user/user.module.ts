@@ -8,6 +8,11 @@ import { UserItemComponent } from './user/user-item/user-item.component';
 import { UserCreateDialogComponent } from './user/user-create-dialog/user-create-dialog.component';
 import { UserTabsComponent } from './user/user-tabs/user-tabs.component';
 
+import { UserGroupListComponent } from './user-group/user-group-list/user-group-list.component';
+import { UserGroupItemComponent } from './user-group/user-group-item/user-group-item.component';
+import { UserGroupCreateDialogComponent } from './user-group/user-group-create-dialog/user-group-create-dialog.component';
+import { UserGroupTabsComponent } from './user-group/user-group-tabs/user-group-tabs.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -19,6 +24,11 @@ import { UserTabsComponent } from './user/user-tabs/user-tabs.component';
     UserItemComponent,
     UserCreateDialogComponent,
     UserTabsComponent,
+
+    UserGroupListComponent,
+    UserGroupItemComponent,
+    UserGroupCreateDialogComponent,
+    UserGroupTabsComponent,
   ]
 })
 export class UserModule { }

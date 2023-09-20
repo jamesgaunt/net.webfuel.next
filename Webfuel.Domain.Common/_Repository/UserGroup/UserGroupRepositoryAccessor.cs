@@ -6,7 +6,6 @@ namespace Webfuel.Domain.Common
     internal class UserGroupRepositoryAccessor: IRepositoryAccessor<UserGroup>
     {
         private readonly UserGroupRepositoryValidator _validator = new UserGroupRepositoryValidator();
-        public string DatabaseSchema => "next";
         public string DatabaseTable => "UserGroup";
         public string DefaultOrderBy => "ORDER BY Id ASC";
         public object? GetValue(UserGroup entity, string property)

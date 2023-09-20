@@ -6,7 +6,6 @@ namespace Webfuel.Domain.Common
     internal class UserListViewRepositoryAccessor: IRepositoryAccessor<UserListView>
     {
         private readonly UserListViewRepositoryValidator _validator = new UserListViewRepositoryValidator();
-        public string DatabaseSchema => "next";
         public string DatabaseTable => "UserListView";
         public string DefaultOrderBy => "ORDER BY Id ASC";
         public object? GetValue(UserListView entity, string property)

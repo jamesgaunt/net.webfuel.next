@@ -86,7 +86,7 @@ namespace Webfuel.Domain.Common
         }
         public async Task<User?> GetUserAsync(Guid id)
         {
-            var sql = @"SELECT * FROM [next].[User] WHERE Id = @Id";
+            var sql = @"SELECT * FROM [User] WHERE Id = @Id";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Id", id),
@@ -99,17 +99,17 @@ namespace Webfuel.Domain.Common
         }
         public async Task<int> CountUserAsync()
         {
-            var sql = @"SELECT COUNT(Id) FROM [next].[User]";
+            var sql = @"SELECT COUNT(Id) FROM [User]";
             return (int)((await RepositoryService.ExecuteScalarAsync(sql))!);
         }
         public async Task<List<User>> SelectUserAsync()
         {
-            var sql = @"SELECT * FROM [next].[User] ORDER BY Id ASC";
+            var sql = @"SELECT * FROM [User] ORDER BY Id ASC";
             return await RepositoryService.ExecuteReaderAsync<User>(sql);
         }
         public async Task<List<User>> SelectUserWithPageAsync(int skip, int take)
         {
-            var sql = @"SELECT * FROM [next].[User] ORDER BY Id ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+            var sql = @"SELECT * FROM [User] ORDER BY Id ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Skip", skip),
@@ -119,7 +119,7 @@ namespace Webfuel.Domain.Common
         }
         public async Task<User?> GetUserByEmailAsync(string email)
         {
-            var sql = @"SELECT * FROM [next].[User] WHERE Email = @Email ORDER BY Id ASC";
+            var sql = @"SELECT * FROM [User] WHERE Email = @Email ORDER BY Id ASC";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Email", email),

@@ -188,9 +188,12 @@ namespace Webfuel.Tools.Datafuel
 
         static void Query(ScriptBuilder sb, SchemaEntityQuery query)
         {
+            if (query.Sql.Contains("[dbo]"))
+                throw new InvalidOperationException("Remove [dbo] from query definition: " + query.Name);
+
             using (sb.OpenBrace($"public async Task<{query.GenerateResultType()}> {query.Name}Async({query.GenerateSignature()})"))
             {
-                sb.WriteLine($"var sql = @\"{query.Sql.Trim().Replace("[dbo]", $"[{Settings.DatabaseSchema}]")}\";");
+                sb.WriteLine($"var sql = @\"{query.Sql.Trim()}\";");
                 if (query.Parameters.Count > 0)
                 {
                     using (sb.OpenBrace("var parameters = new List<SqlParameter>", trailingSemicolon: true))

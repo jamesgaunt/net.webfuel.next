@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
-import { TenantApi } from './tenant.api';
-import { TenantDomainApi } from './tenant-domain.api';
 import { UserApi } from './user.api';
+import { UserGroupApi } from './user-group.api';
 
 @NgModule({
     providers: [
-        TenantApi,
-        TenantDomainApi,
-        UserApi
+        UserApi,
+        UserGroupApi
     ]
 })
 export class ApiModule { }

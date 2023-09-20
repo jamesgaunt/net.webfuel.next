@@ -68,7 +68,7 @@ namespace Webfuel.Domain.Common
         }
         public async Task<UserGroup?> GetUserGroupAsync(Guid id)
         {
-            var sql = @"SELECT * FROM [next].[UserGroup] WHERE Id = @Id";
+            var sql = @"SELECT * FROM [UserGroup] WHERE Id = @Id";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Id", id),
@@ -81,17 +81,17 @@ namespace Webfuel.Domain.Common
         }
         public async Task<int> CountUserGroupAsync()
         {
-            var sql = @"SELECT COUNT(Id) FROM [next].[UserGroup]";
+            var sql = @"SELECT COUNT(Id) FROM [UserGroup]";
             return (int)((await RepositoryService.ExecuteScalarAsync(sql))!);
         }
         public async Task<List<UserGroup>> SelectUserGroupAsync()
         {
-            var sql = @"SELECT * FROM [next].[UserGroup] ORDER BY Id ASC";
+            var sql = @"SELECT * FROM [UserGroup] ORDER BY Id ASC";
             return await RepositoryService.ExecuteReaderAsync<UserGroup>(sql);
         }
         public async Task<List<UserGroup>> SelectUserGroupWithPageAsync(int skip, int take)
         {
-            var sql = @"SELECT * FROM [next].[UserGroup] ORDER BY Id ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+            var sql = @"SELECT * FROM [UserGroup] ORDER BY Id ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Skip", skip),

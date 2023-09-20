@@ -25,7 +25,7 @@
             var filterSql = RepositoryQueryUtility.FilterSql(query, parameters);
 
             var selectSql = RepositoryQueryUtility.SelectSql(query, fields);
-            var fromSql = $"FROM [{accessor.DatabaseSchema}].[{accessor.DatabaseTable}]";
+            var fromSql = $"FROM [{accessor.DatabaseTable}]";
             var orderSql = RepositoryQueryUtility.OrderSql(query, fields, accessor.DefaultOrderBy);
             var pageSql = RepositoryQueryUtility.PageSql(query);
 

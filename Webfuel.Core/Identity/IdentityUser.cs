@@ -9,8 +9,8 @@ namespace Webfuel
     [ApiType]
     public class IdentityUser
     {
-        public Guid Id { get; set; }
+        public required Guid Id { get; init; }
 
-        public string Email { get; set; } = String.Empty;
+        public required string Email { get; init; }
     }
 }
