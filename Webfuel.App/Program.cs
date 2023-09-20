@@ -1,10 +1,4 @@
-using Webfuel;
-using FluentValidation;
-using Webfuel.MediatR;
-using MediatR;
 using Webfuel.Domain.Common;
-using Microsoft.AspNetCore.Diagnostics;
-using System.Net;
 
 namespace Webfuel.App
 {

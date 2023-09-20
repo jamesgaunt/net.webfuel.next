@@ -4,6 +4,13 @@ using System.Text;
 
 namespace Webfuel.Tools.Datafuel
 {
+    public class Tenant
+    {
+        public required string Name { get; set; }
+
+        public required string Schema { get; set; }
+    }
+
     public static class Settings
     {
         // Database
@@ -13,6 +20,14 @@ namespace Webfuel.Tools.Datafuel
         public static string DatabaseSchema { get { return "next"; } }
 
         public static string DatabaseServer { get { return "Data Source=JAMES-RTX\\SQLEXPRESS;Integrated Security=true;TrustServerCertificate=true"; } }
+
+        // Tenants
+
+        public static List<Tenant> Tenants { get; } = new List<Tenant>
+        {
+            new Tenant { Name = "RSSLeicester", Schema = "rss-leicester" },
+            new Tenant { Name = "RSSLondon", Schema = "rss-london" }
+        };
 
         // Solution
 

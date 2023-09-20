@@ -45,12 +45,16 @@ namespace Webfuel.Tools.Datafuel
         static List<XDocument> LoadDefinitions(string definitionPath)
         {
             var result = new List<XDocument>();
-            foreach (var filename in Directory.GetFiles(definitionPath, "*.xml", SearchOption.AllDirectories))
+
+            foreach(var directory in Directory.GetDirectories(definitionPath))
             {
-                var xml = XDocument.Parse(File.ReadAllText(filename));
-                XSD.Validate(xml.Root!, Path.GetFileName(filename));
-                xml.Root!.Add(new XAttribute("filename", filename));
-                result.Add(xml);
+                foreach(var filename in Directory.GetFiles(directory, "*.xml"))
+                {
+                    var xml = XDocument.Parse(File.ReadAllText(filename));
+                    XSD.Validate(xml.Root!, Path.GetFileName(filename));
+                    xml.Root!.Add(new XAttribute("filename", filename));
+                    result.Add(xml);
+                }
             }
             return result;
         }
