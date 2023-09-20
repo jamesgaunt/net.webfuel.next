@@ -5,6 +5,10 @@
   flex-flow: row wrap;
   gap: var(--gap);
 
+  &.is-align-center {
+    align-items: center;
+  }
+
   .column {
     flex: 1;
 
@@ -14,6 +18,10 @@
 
     &.is-025 {
       width: 25%;
+    }
+
+    &.is-right {
+      text-align: right;
     }
   }
 }

@@ -56,7 +56,7 @@ namespace Webfuel
         string Stringify(IdentityToken token)
         {
             var sb = new StringBuilder();
-            sb.Append(JsonSerializer.Serialize<Identity>(token.Identity));
+            sb.Append(JsonSerializer.Serialize<IdentityUser>(token.User));
             sb.Append(JsonSerializer.Serialize<IdentityClaims>(token.Claims));
             sb.Append(JsonSerializer.Serialize<IdentityValidity>(token.Validity));
             return sb.ToString();

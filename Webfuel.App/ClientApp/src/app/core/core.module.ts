@@ -9,6 +9,7 @@ import { ApiService } from './api.service';
 import { DialogService } from './dialog.service';
 import { GrowlService } from './growl.service';
 import { FormService } from './form.service';
+import { IdentityService } from './identity.service';
 
 import { ConfirmDeleteDialogComponent } from './dialogs/confirm-delete-dialog.component';
 
@@ -22,6 +23,7 @@ import { ConfirmDeleteDialogComponent } from './dialogs/confirm-delete-dialog.co
   ],
   providers: [
     ApiService,
+    IdentityService, 
     DialogService,
     GrowlService,
     FormService,

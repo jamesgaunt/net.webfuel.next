@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Webfuel.Tools.Typefuel
@@ -98,12 +99,10 @@ namespace Webfuel.Tools.Typefuel
                     TypeDescriptor = GetTypeDescriptor(property.PropertyType)
                 };
 
-                apiTypeProperty.JsonIgnore = false;
                 apiTypeProperty.JsonPropertyName = apiTypeProperty.Name.ToCamelCase();
-
-                /*
                 apiTypeProperty.JsonIgnore = property.GetCustomAttribute<JsonIgnoreAttribute>() != null;
 
+                /*
                 var jsonProperty = property.GetCustomAttribute<JsonPropertyAttribute>();
                 if (jsonProperty != null && !String.IsNullOrEmpty(jsonProperty.PropertyName))
                     apiTypeProperty.JsonPropertyName = jsonProperty.PropertyName;

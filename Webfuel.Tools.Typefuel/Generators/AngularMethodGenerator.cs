@@ -56,6 +56,7 @@ namespace Webfuel.Tools.Typefuel
             
             sb.Write("options?: ApiOptions): Observable<");
             AngularTypesGenerator.TypeDescriptor(sb, method.ReturnTypeDescriptor);
+
             sb.Write(">");
 
             return sb.ToString();

@@ -9,12 +9,33 @@
 
     <Property Name="FirstName" Type="meta:name" />
     <Property Name="LastName" Type="meta:name" />
-    
-    <Property Name="IsDeveloper" Type="boolean" />
+
+    <Property Name="PasswordHash" Type="string[256]" JsonIgnore="true" />
+    <Property Name="PasswordSalt" Type="string[256]" JsonIgnore="true" />
+    <Property Name="PasswordResetAt" Type="Utc" JsonIgnore="true" />
+    <Property Name="PasswordResetToken" Type="guid" JsonIgnore="true" />
+    <Property Name="PasswordResetValidUntil" Type="Utc" JsonIgnore="true" />
+
+    <Property Name="Developer" Type="boolean" />
     
     <Index Unique="true">
       <Member Name="Email" />
     </Index>
+  </Entity>
+
+  <Entity Name="UserListView" ReadOnly="true">
+    <Key Name="Id" Type="guid"  />
+    <Property Name="Email" Type="meta:email" />
+
+    <View>
+      <Sql>
+        <![CDATA[
+        SELECT [Id], [Email]
+        FROM [dbo].[User]
+        ]]>
+      </Sql>
+    </View>
+
   </Entity>
 
   <Entity Name="UserGroup">

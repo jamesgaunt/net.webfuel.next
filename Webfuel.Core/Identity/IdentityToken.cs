@@ -3,7 +3,7 @@
     [ApiType]
     public class IdentityToken
     {
-        public required Identity Identity { get; set; }
+        public required IdentityUser User { get; set; }
 
         public required IdentityClaims Claims { get; set; }
 

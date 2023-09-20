@@ -3,12 +3,12 @@ using MediatR;
 
 namespace Webfuel.Domain.Common
 {
-    public class ResolveTenant : IRequest<Tenant>
+    public class GetTenant : IRequest<Tenant?>
     {
         public Guid Id { get; set; }
     }
 
-    internal class GetTenantHandler : IRequestHandler<ResolveTenant, Tenant>
+    internal class GetTenantHandler : IRequestHandler<GetTenant, Tenant?>
     {
         private readonly ITenantRepository _tenantRepository;
 
@@ -17,9 +17,9 @@ namespace Webfuel.Domain.Common
             _tenantRepository = tenantRepository;
         }
 
-        public async Task<Tenant> Handle(ResolveTenant request, CancellationToken cancellationToken)
+        public async Task<Tenant?> Handle(GetTenant request, CancellationToken cancellationToken)
         {
-            return await _tenantRepository.RequireTenantAsync(request.Id);
+            return await _tenantRepository.GetTenantAsync(request.Id);
         }
     }
 }

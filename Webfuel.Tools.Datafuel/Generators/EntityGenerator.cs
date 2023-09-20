@@ -46,6 +46,7 @@ namespace Webfuel.Tools.Datafuel
         static void Usings(ScriptBuilder sb, SchemaEntity entity)
         {
             sb.WriteLine("using FluentValidation;");
+            sb.WriteLine("using System.Text.Json.Serialization;");
             sb.WriteLine("");
         }
 

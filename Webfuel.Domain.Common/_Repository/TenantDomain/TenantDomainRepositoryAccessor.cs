@@ -1,4 +1,5 @@
 using FluentValidation;
+using System.Text.Json.Serialization;
 
 namespace Webfuel.Domain.Common
 {

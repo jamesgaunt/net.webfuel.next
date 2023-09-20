@@ -18,7 +18,8 @@ namespace Webfuel.App
 
             app.MapPut("api/update-tenant", UpdateTenant);
 
-            app.MapDelete("api/delete-tenant/{id:guid}", DeleteTenant);
+            app.MapDelete("api/delete-tenant/{id:guid}", DeleteTenant)
+                .AuthorizeClaim((c) => c.Developer);
 
             app.MapPost("api/query-tenant", QueryTenant);
 
@@ -45,9 +46,9 @@ namespace Webfuel.App
             return mediator.Send(command);
         }
 
-        public static Task<Tenant> ResolveTenant(Guid id, IMediator mediator)
+        public static async Task<Tenant> ResolveTenant(Guid id, IMediator mediator)
         {
-            return mediator.Send(new ResolveTenant {  Id = id });
+            return await mediator.Send(new GetTenant { Id = id }) ?? throw new InvalidOperationException("The specified tenant does not exist");
         }
     }
 }

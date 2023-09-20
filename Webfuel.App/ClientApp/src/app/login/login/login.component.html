@@ -1,0 +1,32 @@
+<div class="login-wrapper">
+  <div class="login-form">
+    <form class="form" [formGroup]="formManager.formGroup" autocomplete="off" spellcheck="false" novalidate>
+      <img src="https://db.rds-se.nihr.ac.uk/nihr-logo.png" alt="NIHR" />
+      <hr />
+      <h1>
+        RDS Project Database
+      </h1>
+      <hr />
+      <p>
+        Please enter your email address and password below.
+      </p>
+      <div class="grid">
+        <div class="field">
+          <input name="email" type="text" class="input" placeholder="Email Address" formControlName="email" />
+        </div>
+        <div class="field">
+          <input name="password" type="password" class="input" placeholder="Password" formControlName="password" />
+        </div>
+      </div>
+      <div class="buttons">
+        <button type="submit" class="button is-success" (click)="login()">
+          Login
+        </button>
+        &nbsp;&nbsp;
+        <a class="link">forgotten password?</a>
+      </div>
+    </form>
+  </div>
+  <a class="webfuel" href="https://www.webfuel.com" target="_blank">powered by webfuel</a>
+</div>
+

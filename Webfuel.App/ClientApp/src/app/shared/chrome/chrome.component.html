@@ -1,7 +1,14 @@
-<div class="chrome">
+<div class="chrome" [class.collapsed]="chromeCollapsed" [class.hidden]="chromeHidden">
   <div class="chrome-head">
     <div class="navbar">
-      <h3>RSS Project Database</h3>
+      <div class="columns is-align-center">
+        <div class="column">
+          <h3>RSS Project Database</h3>
+        </div>
+        <div class="column is-right">
+          {{email}}
+        </div>
+      </div>
     </div>
   </div>
   <div class="chrome-body">
@@ -10,6 +17,7 @@
         <ul class="sidebar-list">
           <li><a routerLink="/home"><i class="fas fa-envelope"></i><span>Home</span></a></li>
           <li><a routerLink="/developer/tenant-list"><i class="fas fa-envelope"></i><span>Tenants</span></a></li>
+          <li><a routerLink="/user/user-list"><i class="fas fa-envelope"></i><span>Users</span></a></li>
         </ul>
       </div>
     </div>

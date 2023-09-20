@@ -51,7 +51,12 @@ namespace Webfuel.Domain.Common
             if(updated.Email != original.Email) _properties.Add("Email");
             if(updated.FirstName != original.FirstName) _properties.Add("FirstName");
             if(updated.LastName != original.LastName) _properties.Add("LastName");
-            if(updated.IsDeveloper != original.IsDeveloper) _properties.Add("IsDeveloper");
+            if(updated.PasswordHash != original.PasswordHash) _properties.Add("PasswordHash");
+            if(updated.PasswordSalt != original.PasswordSalt) _properties.Add("PasswordSalt");
+            if(updated.PasswordResetAt != original.PasswordResetAt) _properties.Add("PasswordResetAt");
+            if(updated.PasswordResetToken != original.PasswordResetToken) _properties.Add("PasswordResetToken");
+            if(updated.PasswordResetValidUntil != original.PasswordResetValidUntil) _properties.Add("PasswordResetValidUntil");
+            if(updated.Developer != original.Developer) _properties.Add("Developer");
             if(_properties.Count == 0) return updated;
             return await RepositoryService.ExecuteUpdateAsync(updated, _properties);
         }
@@ -62,7 +67,12 @@ namespace Webfuel.Domain.Common
             if(properties.Contains("Email") && updated.Email != original.Email) _properties.Add("Email");
             if(properties.Contains("FirstName") && updated.FirstName != original.FirstName) _properties.Add("FirstName");
             if(properties.Contains("LastName") && updated.LastName != original.LastName) _properties.Add("LastName");
-            if(properties.Contains("IsDeveloper") && updated.IsDeveloper != original.IsDeveloper) _properties.Add("IsDeveloper");
+            if(properties.Contains("PasswordHash") && updated.PasswordHash != original.PasswordHash) _properties.Add("PasswordHash");
+            if(properties.Contains("PasswordSalt") && updated.PasswordSalt != original.PasswordSalt) _properties.Add("PasswordSalt");
+            if(properties.Contains("PasswordResetAt") && updated.PasswordResetAt != original.PasswordResetAt) _properties.Add("PasswordResetAt");
+            if(properties.Contains("PasswordResetToken") && updated.PasswordResetToken != original.PasswordResetToken) _properties.Add("PasswordResetToken");
+            if(properties.Contains("PasswordResetValidUntil") && updated.PasswordResetValidUntil != original.PasswordResetValidUntil) _properties.Add("PasswordResetValidUntil");
+            if(properties.Contains("Developer") && updated.Developer != original.Developer) _properties.Add("Developer");
             if(_properties.Count == 0) return updated;
             return await RepositoryService.ExecuteUpdateAsync(updated, _properties);
         }

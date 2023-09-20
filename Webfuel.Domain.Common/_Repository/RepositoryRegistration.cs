@@ -21,17 +21,13 @@ namespace Webfuel.Domain.Common
             services.AddSingleton<IRepositoryAccessor<User>, UserRepositoryAccessor>();
             services.AddSingleton<IRepositoryMapper<User>, RepositoryDefaultMapper<User>>();
             
+            services.AddSingleton<IUserListViewRepository, UserListViewRepository>();
+            services.AddSingleton<IRepositoryAccessor<UserListView>, UserListViewRepositoryAccessor>();
+            services.AddSingleton<IRepositoryMapper<UserListView>, RepositoryDefaultMapper<UserListView>>();
+            
             services.AddSingleton<IUserGroupRepository, UserGroupRepository>();
             services.AddSingleton<IRepositoryAccessor<UserGroup>, UserGroupRepositoryAccessor>();
             services.AddSingleton<IRepositoryMapper<UserGroup>, RepositoryDefaultMapper<UserGroup>>();
-            
-            services.AddSingleton<IWidgetRepository, WidgetRepository>();
-            services.AddSingleton<IRepositoryAccessor<Widget>, WidgetRepositoryAccessor>();
-            services.AddSingleton<IRepositoryMapper<Widget>, RepositoryDefaultMapper<Widget>>();
-            
-            services.AddSingleton<IWidgetQueryViewRepository, WidgetQueryViewRepository>();
-            services.AddSingleton<IRepositoryAccessor<WidgetQueryView>, WidgetQueryViewRepositoryAccessor>();
-            services.AddSingleton<IRepositoryMapper<WidgetQueryView>, RepositoryDefaultMapper<WidgetQueryView>>();
             
         }
     }

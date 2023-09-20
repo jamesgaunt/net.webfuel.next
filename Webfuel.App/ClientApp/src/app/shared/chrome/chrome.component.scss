@@ -63,3 +63,18 @@
     }
   }
 }
+
+.chrome.hidden {
+
+  background-image: url(https://www.webfuel.com/temp/login-background.jpg);
+  background-position: 50% 50%;
+  background-size: cover;
+
+  .chrome-head {
+    display: none;
+  }
+
+  .chrome-body .chrome-side {
+    display: none;
+  }
+}

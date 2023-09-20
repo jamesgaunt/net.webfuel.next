@@ -33,6 +33,11 @@
 }
 
 .buttons {
+
+    &.is-right {
+        text-align: right;
+    }
+
     margin: var(--gap) 0 var(--gap) 0;
 
     .button + .button {

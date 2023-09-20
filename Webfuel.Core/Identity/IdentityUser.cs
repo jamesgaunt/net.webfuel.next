@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Webfuel
 {
-    public abstract class Error
+    [ApiType]
+    public class IdentityUser
     {
-        public abstract string ErrorType { get; }
+        public Guid Id { get; set; }
 
-        public string Message { get; set; } = String.Empty;
+        public string Email { get; set; } = String.Empty;
     }
 }

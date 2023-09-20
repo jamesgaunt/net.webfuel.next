@@ -1,45 +1,41 @@
-export interface INotAuthorizedError extends IError {
-    errorType: string;
-    message: string;
-}
-
-export interface IError {
-    errorType: string;
-    message: string;
-}
-
-export interface IValidationError extends IError {
-    errors: Array<IValidationErrorProperty>;
-    errorType: string;
-    message: string;
-}
-
-export interface IValidationErrorProperty {
-    propertyName: string;
-    errorMessage: string;
-}
-
-export interface IIdentity {
-    id: string;
-    email: string;
+export enum ErrorType {
+    UnknownError = 0,
+    ValidationError = 1,
+    NotAuthorizedError = 2,
+    DatabaseError = 3,
 }
 
 export interface IIdentityClaims {
-    isDeveloper: boolean;
+    developer: boolean;
     canAccessUsers: boolean;
-    someStringClaim: string;
 }
 
 export interface IIdentityToken {
-    identity: IIdentity;
+    user: IIdentityUser;
     claims: IIdentityClaims;
     validity: IIdentityValidity;
     signature: string;
 }
 
+export interface IIdentityUser {
+    id: string;
+    email: string;
+}
+
 export interface IIdentityValidity {
     validUntil: any;
     validFromIPAddress: string;
+}
+
+export interface IError {
+    errorType: ErrorType;
+    message: string;
+    validationErrors: Array<IValidationError>;
+}
+
+export interface IValidationError {
+    property: string;
+    message: string;
 }
 
 export interface ITenant {
@@ -106,6 +102,40 @@ export interface IQueryTenantDomain extends IQuery {
     sort: Array<IQuerySort>;
     skip: number;
     take: number;
+}
+
+export interface IUser {
+    id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    developer: boolean;
+}
+
+export interface ICreateUser {
+    email: string;
+}
+
+export interface IUpdateUser {
+    id: string;
+    email: string;
+}
+
+export interface IUserListView {
+    id: string;
+    email: string;
+}
+
+export interface IQueryUserListView extends IQuery {
+    search: string;
+    sort: Array<IQuerySort>;
+    skip: number;
+    take: number;
+}
+
+export interface ILoginUser {
+    email: string;
+    password: string;
 }
 
 

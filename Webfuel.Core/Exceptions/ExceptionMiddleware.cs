@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Data.SqlClient;
 using System.Net;
 
 namespace Webfuel
@@ -22,13 +23,24 @@ namespace Webfuel
             catch (ValidationException exception)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                await context.Response.WriteAsJsonAsync(new ValidationError(exception));
+                await context.Response.WriteAsJsonAsync(exception.ToError());
             }
             catch(UnauthorizedAccessException exception)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                await context.Response.WriteAsJsonAsync(new NotAuthorizedError(exception));
+                await context.Response.WriteAsJsonAsync(exception.ToError());
             }
+            catch (SqlException exception)
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                await context.Response.WriteAsJsonAsync(exception.ToError());
+            }
+            catch(Exception exception)
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                await context.Response.WriteAsJsonAsync(exception.ToError());
+            }
+
         }
     }
 }

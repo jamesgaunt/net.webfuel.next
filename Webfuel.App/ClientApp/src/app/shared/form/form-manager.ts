@@ -1,6 +1,6 @@
 import _ from '../underscore';
 import { FormGroup, AbstractControl } from "@angular/forms";
-import { IValidationError, IValidationErrorProperty } from "../../api/api.types";
+import { ErrorType, IError } from "../../api/api.types";
 import { IApiErrorHandler } from '../../core/api.service';
 import { GrowlService } from '../../core/growl.service';
 
@@ -85,20 +85,20 @@ export class FormManager<TControl extends {
       return this.handleErrorWithType(err.error);
   }
 
-  handleErrorWithType(error: any): void {
+  handleErrorWithType(error: IError): void {
     switch (error.errorType) {
-      case "Validation Error":
+      case ErrorType.ValidationError:
         return this.handleValidationError(error);
     }
   }
 
-  handleValidationError(validationError: IValidationError) {
-    _.forEach(validationError.errors, (error) => {
+  handleValidationError(validationError: IError) {
+    _.forEach(validationError.validationErrors, (error) => {
       for (const field in this.formGroup.controls) {
-        if (_.compareInsensitive(field, error.propertyName)) {
+        if (_.compareInsensitive(field, error.property)) {
           const control = this.formGroup.get(field);
           var errors: { [key: string]: any } = {};
-          errors[error.errorMessage] = true;
+          errors[error.message] = true;
           control!.setErrors(errors);
         }
       }

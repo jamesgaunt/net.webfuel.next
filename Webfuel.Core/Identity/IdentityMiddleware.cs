@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Webfuel
 {
@@ -18,8 +19,9 @@ namespace Webfuel
         public async Task InvokeAsync(HttpContext context)
         {
             var token = GetIdentityToken(context);
-            if (token != null)
+            if (token != null) { 
                 context.SetState(IdentityToken.Key, token);
+            }
 
             await _request(context);
         }
@@ -30,7 +32,12 @@ namespace Webfuel
             if (String.IsNullOrEmpty(jsonToken))
                 return null;
             
-            var token = JsonSerializer.Deserialize<IdentityToken>(jsonToken);
+            var token = JsonSerializer.Deserialize<IdentityToken>(jsonToken, new JsonSerializerOptions { 
+                PropertyNameCaseInsensitive = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                NumberHandling = JsonNumberHandling.AllowReadingFromString
+            });
+
             if (token == null)
                 return null;
 

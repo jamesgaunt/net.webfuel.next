@@ -12,12 +12,8 @@ Tenant / User / Login backbone
 
 Serilog??
 
-Dapper??
-
 JsonProperties implementation review
 
-Webfuel.[Domain].Common
+Remove Http State extensions. Replace with specific Accessor services.
 
-Generated => _Generated folder
-
-Webfuel.[Service].XXX?
+Flatten all error classes to one class.
