@@ -12,6 +12,7 @@ namespace Webfuel
         UnknownError,
         ValidationError,
         NotAuthorizedError,
+        NotAuthenticatedError,
         DatabaseError,
     }
 

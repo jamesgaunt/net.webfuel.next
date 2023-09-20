@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Webfuel
 {
-    public static class IdentityFilterExtensions
+    public static class AuthorizeClaimExtensions
     {
         public static RouteHandlerBuilder AuthorizeClaim(this RouteHandlerBuilder builder, Func<IdentityClaims, bool> claim)
         {

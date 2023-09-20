@@ -27,7 +27,6 @@ namespace Webfuel.Tools.Typefuel
         Task,
         Enumerable,
         Nullable,
-        Result,
     }
 
     public static class ApiTypeAnalysis
@@ -65,8 +64,6 @@ namespace Webfuel.Tools.Typefuel
                     wrappers.Add(ApiTypeWrapper.Enumerable);
                 else if (IsTaskType(type))
                     wrappers.Add(ApiTypeWrapper.Task);
-                else if (IsResultType(type))
-                    wrappers.Add(ApiTypeWrapper.Result);
                 else
                     break;
 
@@ -119,11 +116,6 @@ namespace Webfuel.Tools.Typefuel
         public static bool IsTaskType(Type type)
         {
             return type.GetTypeInfo().IsGenericType && (type.GetGenericTypeDefinition() == typeof(Task<>));
-        }
-
-        public static bool IsResultType(Type type)
-        {
-            return type.GetTypeInfo().IsGenericType && (type.GetGenericTypeDefinition() == typeof(Result<,>));
         }
 
         public static bool IsEnumerableType(Type type)

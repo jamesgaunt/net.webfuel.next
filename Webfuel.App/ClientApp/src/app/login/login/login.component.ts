@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { IdentityApi } from '../../api/identity.api';
 import { FormService } from '../../core/form.service';
 import { FormControl, Validators } from '@angular/forms';
 import { IdentityService } from '../../core/identity.service';

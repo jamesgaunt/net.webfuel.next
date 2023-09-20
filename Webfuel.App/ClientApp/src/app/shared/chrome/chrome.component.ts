@@ -47,4 +47,8 @@ export class ChromeComponent implements OnInit, OnDestroy {
   toggleChrome() {
     this.chromeCollapsed = !this.chromeCollapsed;
   }
+
+  logout() {
+    this.identityService.logout();
+  }
 }

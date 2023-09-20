@@ -2,7 +2,19 @@ export enum ErrorType {
     UnknownError = 0,
     ValidationError = 1,
     NotAuthorizedError = 2,
-    DatabaseError = 3,
+    NotAuthenticatedError = 3,
+    DatabaseError = 4,
+}
+
+export interface IError {
+    errorType: ErrorType;
+    message: string;
+    validationErrors: Array<IValidationError>;
+}
+
+export interface IValidationError {
+    property: string;
+    message: string;
 }
 
 export interface IIdentityClaims {
@@ -25,17 +37,6 @@ export interface IIdentityUser {
 export interface IIdentityValidity {
     validUntil: any;
     validFromIPAddress: string;
-}
-
-export interface IError {
-    errorType: ErrorType;
-    message: string;
-    validationErrors: Array<IValidationError>;
-}
-
-export interface IValidationError {
-    property: string;
-    message: string;
 }
 
 export interface ITenant {

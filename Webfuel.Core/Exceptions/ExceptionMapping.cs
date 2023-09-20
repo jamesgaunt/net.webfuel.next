@@ -34,15 +34,14 @@ namespace Webfuel
             return error;
         }
 
-        public static Error ToError(this UnauthorizedAccessException exception)
+        public static Error ToError(this NotAuthorizedException exception)
         {
             return new Error { ErrorType = ErrorType.NotAuthorizedError, Message = "Not Authorized" };
         }
 
-        public static Error ToError(this Exception exception)
+        public static Error ToError(this NotAuthenticatedException exception)
         {
-            return new Error { ErrorType = ErrorType.UnknownError, Message = exception.Message };
+            return new Error { ErrorType = ErrorType.NotAuthenticatedError, Message = "Not Authenticated" };
         }
-
     }
 }

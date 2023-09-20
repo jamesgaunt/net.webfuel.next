@@ -25,7 +25,12 @@ namespace Webfuel
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 await context.Response.WriteAsJsonAsync(exception.ToError());
             }
-            catch(UnauthorizedAccessException exception)
+            catch (NotAuthorizedException exception)
+            {
+                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                await context.Response.WriteAsJsonAsync(exception.ToError());
+            }
+            catch (NotAuthenticatedException exception)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                 await context.Response.WriteAsJsonAsync(exception.ToError());
@@ -35,10 +40,10 @@ namespace Webfuel
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 await context.Response.WriteAsJsonAsync(exception.ToError());
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                await context.Response.WriteAsJsonAsync(exception.ToError());
+                await context.Response.WriteAsJsonAsync(new Error { ErrorType = ErrorType.UnknownError, Message = exception.Message });
             }
 
         }

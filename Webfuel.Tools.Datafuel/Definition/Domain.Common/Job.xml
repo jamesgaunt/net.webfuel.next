@@ -4,9 +4,7 @@
 
   <Entity Name="Job">
     <Key Name="Id" Type="guid" />
-
     <Property Name="Name" Type="meta:name" />
-    
   </Entity>
 
 
