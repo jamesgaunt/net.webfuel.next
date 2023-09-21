@@ -18,7 +18,7 @@ namespace Webfuel.Domain.Common
 
         public async Task Handle(DeleteUserGroup request, CancellationToken cancellationToken)
         {
-            await _userGroupRepository.DeleteUserGroupAsync(request.Id);
+            await _userGroupRepository.DeleteUserGroup(request.Id);
         }
     }
 }

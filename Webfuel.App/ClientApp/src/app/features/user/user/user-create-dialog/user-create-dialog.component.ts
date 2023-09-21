@@ -1,14 +1,10 @@
-import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
-import { Component, Inject } from '@angular/core';
+import { DialogRef } from '@angular/cdk/dialog';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IQueryUserGroup, IUser, IUserGroup } from 'api/api.types';
 import { UserApi } from 'api/user.api';
-import { GrowlService } from '../../../../core/growl.service';
-import { FormManager } from '../../../../shared/form/form-manager';
-import { FormService } from '../../../../core/form.service';
-import { GridDataSource } from '../../../../shared/data-source/grid-data-source';
+import { User, UserGroup } from '../../../../api/api.types';
 import { UserGroupApi } from '../../../../api/user-group.api';
-import _ from '../../../../shared/underscore';
+import { FormService } from '../../../../core/form.service';
 import { SelectDataSource } from '../../../../shared/data-source/select-data-source';
 
 @Component({
@@ -18,27 +14,27 @@ import { SelectDataSource } from '../../../../shared/data-source/select-data-sou
 export class UserCreateDialogComponent {
 
   constructor(
-    private dialogRef: DialogRef<IUser>,
+    private dialogRef: DialogRef<User>,
     private formService: FormService,
     private userApi: UserApi,
     private userGroupApi: UserGroupApi
   ) {
   }
 
-  userGroupDataSource = new SelectDataSource<IUserGroup, IQueryUserGroup>({
-    fetch: (query) => this.userGroupApi.queryUserGroup(_.merge({ search: '' }, query))
+  userGroupDataSource = new SelectDataSource<UserGroup>({
+    fetch: (query) => this.userGroupApi.queryUserGroup(query)
   })
 
-  formManager = this.formService.buildManager({
+  form = new FormGroup({
     email: new FormControl('', { validators: [Validators.required], nonNullable: true }),
     userGroupId: new FormControl('', { validators: [Validators.required], nonNullable: true }),
   });
 
   save() {
-    if (this.formManager.hasErrors())
+    if (this.formService.checkForErrors(this.form))
       return;
 
-    this.userApi.createUser(this.formManager.getRawValue(), { successGrowl: "User Created", errorHandler: this.formManager }).subscribe((result) => {
+    this.userApi.createUser(this.form.getRawValue(), { successGrowl: "User Created" }).subscribe((result) => {
       this.dialogRef.close();
     });
   }

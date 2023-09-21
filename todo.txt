@@ -6,8 +6,5 @@ Date Calendar / Picker
 
 Data Grid Pager / Sorter
 
-Build select / multi-select logic
-
 Serilog??
 
-Rework of Typefuel

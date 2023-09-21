@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavigationEnd, ResolveEnd, Router } from '@angular/router';
 import { GrowlService } from '../../core/growl.service';
 import { IdentityService } from '../../core/identity.service';
-import { IIdentityToken } from '../../api/api.types';
+import { IdentityToken } from '../../api/api.types';
 
 @Component({
   selector: 'chrome',
@@ -18,7 +18,7 @@ export class ChromeComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  identity: IIdentityToken | null = null;
+  identity: IdentityToken | null = null;
 
   get email() {
     if (this.identity)

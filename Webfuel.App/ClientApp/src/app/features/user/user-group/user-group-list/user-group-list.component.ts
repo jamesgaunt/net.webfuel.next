@@ -6,7 +6,7 @@ import { GridDataSource } from '../../../../shared/data-source/grid-data-source'
 import { UserGroupCreateDialogComponent } from '../user-group-create-dialog/user-group-create-dialog.component';
 import { Router } from '@angular/router';
 import _ from '../../../../shared/underscore';
-import { IQueryUserGroup, IUserGroup } from '../../../../api/api.types';
+import { UserGroup } from '../../../../api/api.types';
 
 @Component({
   selector: 'user-group-list',
@@ -24,7 +24,7 @@ export class UserGroupListComponent {
     search: new FormControl('', { nonNullable: true })
   });
 
-  dataSource = new GridDataSource<IUserGroup, IQueryUserGroup>({
+  dataSource = new GridDataSource<UserGroup>({
     fetch: (query) => this.userGroupApi.queryUserGroup(_.merge(query, this.filterForm.getRawValue())),
     filterGroup: this.filterForm
   });
@@ -35,11 +35,11 @@ export class UserGroupListComponent {
     });
   }
 
-  edit(item: IUserGroup) {
+  edit(item: UserGroup) {
     this.router.navigate(['user/user-group-item', item.id]);
   }
 
-  delete(item: IUserGroup) {
+  delete(item: UserGroup) {
     this.dialogService.confirmDelete({
       title: item.name,
       confirmedCallback: () => {

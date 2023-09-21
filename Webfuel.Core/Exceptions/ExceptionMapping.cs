@@ -6,7 +6,7 @@ namespace Webfuel
     internal static class ExceptionMapping
     {
 
-        public static Error ToError(this SqlException exception)
+        public static ErrorResponse ToError(this SqlException exception)
         {
             var message = exception.Message;
 
@@ -19,29 +19,29 @@ namespace Webfuel
                 message = "Cannot create this item as it would conflict with items already in the database";
             }
 
-            return new Error { ErrorType = ErrorType.DatabaseError, Message = message };
+            return new ErrorResponse { ErrorType = ErrorResonseType.DatabaseError, Message = message };
         }
 
-        public static Error ToError(this ValidationException exception)
+        public static ErrorResponse ToError(this ValidationException exception)
         {
-            var error = new Error { ErrorType = ErrorType.ValidationError, Message = exception.Message };
+            var error = new ErrorResponse { ErrorType = ErrorResonseType.ValidationError, Message = exception.Message };
 
             foreach(var item in exception.Errors)
             {
-                error.ValidationErrors.Add(new ValidationError { Property = item.PropertyName, Message = item.ErrorMessage });
+                error.ValidationErrors.Add(new ValidationError { Property = item.PropertyName, Message = item.ErrorMessage.Replace("'", "") });
             }
 
             return error;
         }
 
-        public static Error ToError(this NotAuthorizedException exception)
+        public static ErrorResponse ToError(this NotAuthorizedException exception)
         {
-            return new Error { ErrorType = ErrorType.NotAuthorizedError, Message = "Not Authorized" };
+            return new ErrorResponse { ErrorType = ErrorResonseType.NotAuthorizedError, Message = "Not Authorized" };
         }
 
-        public static Error ToError(this NotAuthenticatedException exception)
+        public static ErrorResponse ToError(this NotAuthenticatedException exception)
         {
-            return new Error { ErrorType = ErrorType.NotAuthenticatedError, Message = "Not Authenticated" };
+            return new ErrorResponse { ErrorType = ErrorResonseType.NotAuthenticatedError, Message = "Not Authenticated" };
         }
     }
 }

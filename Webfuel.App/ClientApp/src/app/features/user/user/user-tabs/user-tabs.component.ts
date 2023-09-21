@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IUser } from 'api/api.types';
+import { User } from '../../../../api/api.types';
 
 @Component({
   selector: 'user-tabs',
@@ -18,9 +18,9 @@ export class UserTabsComponent implements OnInit  {
     this.reset(this.route.snapshot.data.user);
   }
 
-  item!: IUser;
+  item!: User;
 
-  reset(item: IUser) {
+  reset(item: User) {
     this.item = item;
   }
 }

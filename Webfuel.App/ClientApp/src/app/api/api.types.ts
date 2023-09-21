@@ -1,4 +1,4 @@
-export enum ErrorType {
+export enum ErrorResonseType {
     UnknownError = 0,
     ValidationError = 1,
     NotAuthorizedError = 2,
@@ -6,40 +6,40 @@ export enum ErrorType {
     DatabaseError = 4,
 }
 
-export interface IError {
-    errorType: ErrorType;
+export interface ErrorResponse {
+    errorType: ErrorResonseType;
     message: string;
-    validationErrors: Array<IValidationError>;
+    validationErrors: Array<ValidationError>;
 }
 
-export interface IValidationError {
+export interface ValidationError {
     property: string;
     message: string;
 }
 
-export interface IIdentityClaims {
+export interface IdentityClaims {
     developer: boolean;
     canAccessUsers: boolean;
 }
 
-export interface IIdentityToken {
-    user: IIdentityUser;
-    claims: IIdentityClaims;
-    validity: IIdentityValidity;
+export interface IdentityToken {
+    user: IdentityUser;
+    claims: IdentityClaims;
+    validity: IdentityValidity;
     signature: string;
 }
 
-export interface IIdentityUser {
+export interface IdentityUser {
     id: string;
     email: string;
 }
 
-export interface IIdentityValidity {
+export interface IdentityValidity {
     validUntil: any;
     validFromIPAddress: string;
 }
 
-export interface IUser {
+export interface User {
     id: string;
     email: string;
     firstName: string;
@@ -48,77 +48,78 @@ export interface IUser {
     userGroupId: string;
 }
 
-export interface ICreateUser {
+export interface CreateUser {
     email: string;
     userGroupId: string;
 }
 
-export interface IUpdateUser {
+export interface UpdateUser {
     id: string;
     email: string;
     userGroupId: string;
 }
 
-export interface IQueryResult<TItem> {
+export interface QueryResult<TItem> {
     items: Array<TItem>;
     totalCount: number;
 }
 
-export interface IQueryUser extends IQuery {
-    search: string;
-    projection: Array<string>;
-    filters: Array<IQueryFilter>;
-    sort: Array<IQuerySort>;
-    skip: number;
-    take: number;
+export interface QueryUser extends Query {
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    skip?: number;
+    take?: number;
+    search?: string;
 }
 
-export interface IQueryFilter {
-    field: string;
+export interface QueryFilter {
+    field?: string;
     op: string;
-    value: any | null;
-    filters: Array<IQueryFilter> | null;
+    value?: any | null;
+    filters?: Array<QueryFilter> | null;
 }
 
-export interface IQuerySort {
+export interface QuerySort {
     field: string;
     direction: number;
 }
 
-export interface IQuery {
-    projection: Array<string>;
-    filters: Array<IQueryFilter>;
-    sort: Array<IQuerySort>;
-    skip: number;
-    take: number;
+export interface Query {
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    skip?: number;
+    take?: number;
+    search?: string;
 }
 
-export interface ILoginUser {
+export interface LoginUser {
     email: string;
     password: string;
 }
 
-export interface IUserGroup {
+export interface UserGroup {
     id: string;
     name: string;
 }
 
-export interface ICreateUserGroup {
+export interface CreateUserGroup {
     name: string;
 }
 
-export interface IUpdateUserGroup {
+export interface UpdateUserGroup {
     id: string;
     name: string;
 }
 
-export interface IQueryUserGroup extends IQuery {
-    search: string;
-    projection: Array<string>;
-    filters: Array<IQueryFilter>;
-    sort: Array<IQuerySort>;
-    skip: number;
-    take: number;
+export interface QueryUserGroup extends Query {
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    skip?: number;
+    take?: number;
+    search?: string;
 }
 
 

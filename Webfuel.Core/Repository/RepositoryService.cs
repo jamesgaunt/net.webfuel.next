@@ -8,17 +8,17 @@ namespace Webfuel
 {
     public interface IRepositoryService
     {
-        Task<object?> ExecuteScalarAsync(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null);
+        Task<object?> ExecuteScalar(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null);
 
-        Task<int> ExecuteNonQueryAsync(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null);
+        Task<int> ExecuteNonQuery(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null);
 
-        Task<List<TEntity>> ExecuteReaderAsync<TEntity>(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null) where TEntity : class;
+        Task<List<TEntity>> ExecuteReader<TEntity>(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null) where TEntity : class;
 
-        Task<TEntity> ExecuteInsertAsync<TEntity>(TEntity entity, IEnumerable<string>? properties = null, CancellationToken? cancellationToken = null) where TEntity : class;
+        Task<TEntity> ExecuteInsert<TEntity>(TEntity entity, IEnumerable<string>? properties = null, CancellationToken? cancellationToken = null) where TEntity : class;
 
-        Task<TEntity> ExecuteUpdateAsync<TEntity>(TEntity entity, IEnumerable<string>? properties = null, CancellationToken? cancellationToken = null) where TEntity : class;
+        Task<TEntity> ExecuteUpdate<TEntity>(TEntity entity, IEnumerable<string>? properties = null, CancellationToken? cancellationToken = null) where TEntity : class;
 
-        Task ExecuteDeleteAsync<TEntity>(object key, CancellationToken? cancellationToken = null) where TEntity : class;
+        Task ExecuteDelete<TEntity>(object key, CancellationToken? cancellationToken = null) where TEntity : class;
     }
 
     [ServiceImplementation(typeof(IRepositoryService))]
@@ -38,7 +38,7 @@ namespace Webfuel
             TenantAccessor = tenantAccessor;
         }
 
-        public async Task<object?> ExecuteScalarAsync(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null)
+        public async Task<object?> ExecuteScalar(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null)
         {
             for (int retryCount = 0; retryCount < TransientErrorRetryCount; retryCount++)
             {
@@ -59,7 +59,7 @@ namespace Webfuel
             throw new InvalidOperationException("Maximum SQL Retry Count Exceeded");
         }
 
-        public async Task<int> ExecuteNonQueryAsync(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null)
+        public async Task<int> ExecuteNonQuery(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null)
         {
             for (int retryCount = 0; retryCount < TransientErrorRetryCount; retryCount++)
             {
@@ -80,7 +80,7 @@ namespace Webfuel
             throw new InvalidOperationException("Maximum SQL Retry Count Exceeded");
         }
 
-        public async Task<List<TEntity>> ExecuteReaderAsync<TEntity>(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null) where TEntity : class
+        public async Task<List<TEntity>> ExecuteReader<TEntity>(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null) where TEntity : class
         {
 
             var mapper = GetMapper<TEntity>();
@@ -109,19 +109,19 @@ namespace Webfuel
             throw new InvalidOperationException("Maximum SQL Retry Count Exceeded");
         }
 
-        public async Task<TEntity> ExecuteInsertAsync<TEntity>(TEntity entity, IEnumerable<string>? properties = null, CancellationToken? cancellationToken = null) where TEntity : class
+        public async Task<TEntity> ExecuteInsert<TEntity>(TEntity entity, IEnumerable<string>? properties = null, CancellationToken? cancellationToken = null) where TEntity : class
         {
-            return await GetMapper<TEntity>().ExecuteInsertAsync(this, entity, properties, cancellationToken);
+            return await GetMapper<TEntity>().ExecuteInsert(this, entity, properties, cancellationToken);
         }
 
-        public async Task<TEntity> ExecuteUpdateAsync<TEntity>(TEntity entity, IEnumerable<string>? properties = null, CancellationToken? cancellationToken = null) where TEntity : class
+        public async Task<TEntity> ExecuteUpdate<TEntity>(TEntity entity, IEnumerable<string>? properties = null, CancellationToken? cancellationToken = null) where TEntity : class
         {
-            return await GetMapper<TEntity>().ExecuteUpdateAsync(this, entity, properties, cancellationToken);
+            return await GetMapper<TEntity>().ExecuteUpdate(this, entity, properties, cancellationToken);
         }
 
-        public async Task ExecuteDeleteAsync<TEntity>(object key, CancellationToken? cancellationToken = null) where TEntity : class
+        public async Task ExecuteDelete<TEntity>(object key, CancellationToken? cancellationToken = null) where TEntity : class
         {
-            await GetMapper<TEntity>().ExecuteDeleteAsync(this, key, cancellationToken);
+            await GetMapper<TEntity>().ExecuteDelete(this, key, cancellationToken);
         }
 
         // Transient Error Retry Logic

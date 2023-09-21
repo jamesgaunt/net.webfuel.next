@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { UserListComponent } from './user/user-list/user-list.component';
-import { UserItemComponent, UserResolver } from './user/user-item/user-item.component';
+import { UserItemComponent } from './user/user-item/user-item.component';
 
 import { UserGroupListComponent } from './user-group/user-group-list/user-group-list.component';
-import { UserGroupItemComponent, UserGroupResolver } from './user-group/user-group-item/user-group-item.component';
+import { UserGroupItemComponent } from './user-group/user-group-item/user-group-item.component';
 
+import { UserGroupApi } from '../../api/user-group.api';
+import { UserApi } from '../../api/user.api';
 
 const routes: Routes = [
   {
@@ -16,7 +18,7 @@ const routes: Routes = [
   {
     path: 'user-item/:id',
     component: UserItemComponent,
-    resolve: { user: UserResolver }
+    resolve: { user: UserApi.userResolver('id') }
   },
   {
     path: 'user-group-list',
@@ -25,9 +27,8 @@ const routes: Routes = [
   {
     path: 'user-group-item/:id',
     component: UserGroupItemComponent,
-    resolve: { userGroup: UserGroupResolver }
+    resolve: { userGroup: UserGroupApi.userGroupResolver('id') }
   }
-
 ];
 
 @NgModule({

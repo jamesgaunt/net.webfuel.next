@@ -20,4 +20,10 @@
     {
         public string Signature { get; set; } = String.Empty;
     }
+
+    [AttributeUsage(AttributeTargets.Property)]
+    public class ApiOptionalAttribute: Attribute
+    {
+
+    }
 }

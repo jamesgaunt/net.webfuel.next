@@ -3,12 +3,12 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserApi } from 'api/user.api';
 import { DialogService } from 'core/dialog.service';
-import { IQueryUser, IQueryUserGroup, IUser, IUserGroup } from '../../../../api/api.types';
 import { GridDataSource } from '../../../../shared/data-source/grid-data-source';
 import _ from '../../../../shared/underscore';
 import { UserCreateDialogComponent } from '../user-create-dialog/user-create-dialog.component';
 import { UserGroupApi } from '../../../../api/user-group.api';
 import { LookupDataSource } from '../../../../shared/data-source/lookup-data-source';
+import { User, UserGroup } from '../../../../api/api.types';
 
 @Component({
   selector: 'user-list',
@@ -27,13 +27,13 @@ export class UserListComponent {
     search: new FormControl('', { nonNullable: true })
   });
 
-  dataSource = new GridDataSource<IUser, IQueryUser>({
+  dataSource = new GridDataSource<User>({
     fetch: (query) => this.userApi.queryUser(_.merge(query, this.filterForm.getRawValue())),
     filterGroup: this.filterForm
   });
 
-  userGroupLookup = new LookupDataSource<IUserGroup, IQueryUserGroup>({
-    fetch: (query) => this.userGroupApi.queryUserGroup(_.merge({ search: "" }, query))
+  userGroupLookup = new LookupDataSource<UserGroup>({
+    fetch: (query) => this.userGroupApi.queryUserGroup(query)
   })
 
   add() {
@@ -42,11 +42,11 @@ export class UserListComponent {
     });
   }
 
-  edit(item: IUser) {
+  edit(item: User) {
     this.router.navigate(['user/user-item', item.id]);
   }
 
-  delete(item: IUser) {
+  delete(item: User) {
     this.dialogService.confirmDelete({
       title: item.email,
       confirmedCallback: () => {

@@ -1,11 +1,11 @@
 import { BehaviorSubject, Observable } from "rxjs";
-import { IQuery, IQueryResult } from "../../api/api.types";
 import _ from '../underscore';
+import { Query, QueryResult } from "../../api/api.types";
 
-export class LookupDataSource<TItem, TQuery extends IQuery>  {
+export class LookupDataSource<TItem>  {
 
   constructor(private options: {
-    fetch: (query: IQuery) => Observable<IQueryResult<TItem>>;
+    fetch: (query: Query) => Observable<QueryResult<TItem>>;
   }) {
   }
 
@@ -17,8 +17,8 @@ export class LookupDataSource<TItem, TQuery extends IQuery>  {
       this.cache[id] = new BehaviorSubject<TItem | null>(null);
 
       this.options.fetch({
-        skip: 0, take: 1, projection: [], sort: [], filters: [
-          { field: "id", op: "eq", value: id, filters: [] }
+        skip: 0, take: 1, filters: [
+          { field: "id", op: "eq", value: id }
         ]
       }).subscribe((result) => {
         if (result.items.length == 1)

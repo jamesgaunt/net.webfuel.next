@@ -1,13 +1,10 @@
-import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
-import { Component, Inject, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IUserGroup } from 'api/api.types';
-import { UserGroupApi } from 'api/user-group.api';
-import { GrowlService } from '../../../../core/growl.service';
-import { FormManager } from '../../../../shared/form/form-manager';
-import { FormService } from '../../../../core/form.service';
 import { ActivatedRoute, ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '@angular/router';
+import { UserGroupApi } from 'api/user-group.api';
 import { Observable } from 'rxjs';
+import { FormService } from '../../../../core/form.service';
+import { UserGroup } from '../../../../api/api.types';
 
 @Component({
   selector: 'user-group-item',
@@ -27,23 +24,23 @@ export class UserGroupItemComponent implements OnInit {
     this.reset(this.route.snapshot.data.userGroup);
   }
 
-  item!: IUserGroup;
+  item!: UserGroup;
 
-  reset(item: IUserGroup) {
+  reset(item: UserGroup) {
     this.item = item;
-    this.formManager.patchValue(item);
+    this.form.patchValue(item);
   }
 
-  formManager = this.formService.buildManager({
-    id: new FormControl('', { validators: [Validators.required], nonNullable: true }),
-    name: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+  form = new FormGroup({
+    id: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    name: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
   });
 
   save() {
-    if (this.formManager.hasErrors())
+    if (!this.form.valid)
       return;
 
-    this.userGroupApi.updateUserGroup(this.formManager.getRawValue(), { successGrowl: "User Group Updated", errorHandler: this.formManager }).subscribe((result) => {
+    this.userGroupApi.updateUserGroup(this.form.getRawValue(), { successGrowl: "User Group Updated" }).subscribe((result) => {
       this.router.navigate(['user/user-group-list']);
     });
   }
@@ -52,8 +49,3 @@ export class UserGroupItemComponent implements OnInit {
     this.router.navigate(['user/user-group-list']);
   }
 }
-
-export const UserGroupResolver: ResolveFn<IUserGroup> =
-  (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IUserGroup> => {
-    return inject(UserGroupApi).resolveUserGroup({ id: route.paramMap.get('id')! });
-  };

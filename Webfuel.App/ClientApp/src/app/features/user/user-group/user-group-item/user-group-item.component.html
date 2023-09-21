@@ -1,5 +1,9 @@
+<ul class="breadcrumbs">
+  <li><a routerLink="/home">Home</a></li>
+  <li><a routerLink="/user-group/user-group-list">User Groups</a></li>
+  <li><a routerLink="/user-group/user-group-item/{{ item.id }}">User Group</a></li>
+</ul>
 <div class="container">
-
   <div class="columns">
     <div class="column">
       <h1 class="title">User Group</h1>
@@ -9,10 +13,8 @@
       </div>
     </div>
   </div>
-
   <user-group-tabs></user-group-tabs>
-
-  <form class="form" [formGroup]="formManager.formGroup">
+  <form class="form" [formGroup]="form">
     <div class="grid">
       <div class="field">
         <label class="label">Name</label>
@@ -24,7 +26,5 @@
       <button class="button" (click)="cancel()">Cancel</button>
     </div>
   </form>
-
   <pre>{{item|json}}</pre>
-
 </div>

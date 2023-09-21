@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormService } from '../../core/form.service';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IdentityService } from '../../core/identity.service';
 import { Router } from '@angular/router';
 import { GrowlService } from '../../core/growl.service';
@@ -24,17 +24,16 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  formManager = this.formService.buildManager({
+  form = new FormGroup({
     email: new FormControl('', { validators: [Validators.required], nonNullable: true }),
     password: new FormControl('', { validators: [Validators.required], nonNullable: true }),
   });
 
   login() {
-    if (this.formManager.hasErrors())
+    if (!this.form.valid)
       return;
 
-    console.log("OK");
-    this.identityService.login(this.formManager.getRawValue()).subscribe((result) => {
+    this.identityService.login(this.form.getRawValue()).subscribe((result) => {
       console.log(result);
       if (result) {
         this.router.navigateByUrl("/home");

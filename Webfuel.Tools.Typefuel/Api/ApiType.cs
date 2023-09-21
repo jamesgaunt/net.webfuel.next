@@ -101,32 +101,22 @@ namespace Webfuel.Tools.Typefuel
 
                 apiTypeProperty.JsonPropertyName = apiTypeProperty.Name.ToCamelCase();
                 apiTypeProperty.JsonIgnore = property.GetCustomAttribute<JsonIgnoreAttribute>() != null;
-
-                /*
-                var jsonProperty = property.GetCustomAttribute<JsonPropertyAttribute>();
-                if (jsonProperty != null && !String.IsNullOrEmpty(jsonProperty.PropertyName))
-                    apiTypeProperty.JsonPropertyName = jsonProperty.PropertyName;
-                else
-                    apiTypeProperty.JsonPropertyName = apiTypeProperty.Name.ToCamelCase();
-                */
+                apiTypeProperty.Optional = property.GetCustomAttribute<ApiOptionalAttribute>() != null;
 
                 var nullableAttribute = property.GetCustomAttributes().FirstOrDefault(p => p.GetType().Name == "NullableAttribute");
-
                 if (ApiTypeAnalysis.IsNullableType(property.PropertyType))
+                {
                     apiTypeProperty.Nullable = true;
-
+                }
                 else if (nullableAttribute != null)
                 {
                     var nullableFlags = nullableAttribute.GetType().GetField("NullableFlags").GetValue(nullableAttribute) as byte[];
-
-                    //if (nullableFlags.Length != 1)
-                    //    throw new InvalidOperationException("Don't know how to interpret multiple NullableFlags");
-
                     apiTypeProperty.Nullable = nullableFlags[0] == 2;
                 }
-
                 else
+                {
                     apiTypeProperty.Nullable = false;
+                }
 
                 complexType.Properties.Add(apiTypeProperty);
             }
@@ -170,7 +160,7 @@ namespace Webfuel.Tools.Typefuel
 
             foreach (var argument in GenericTypeArguments)
             {
-                foreach(var type in argument.EnumerateTypes())
+                foreach (var type in argument.EnumerateTypes())
                 {
                     yield return type;
                 }
@@ -187,6 +177,8 @@ namespace Webfuel.Tools.Typefuel
         public bool JsonIgnore { get; set; }
 
         public bool Nullable { get; set; }
+
+        public bool Optional { get; set; }
 
         public ApiTypeDescriptor TypeDescriptor { get; set; }
     }
@@ -214,7 +206,7 @@ namespace Webfuel.Tools.Typefuel
         public ApiTypeCode TypeCode { get; } = ApiTypeCode.Unknown;
     }
 
-    public class ApiEnumType: ApiType
+    public class ApiEnumType : ApiType
     {
         public ApiEnumType(ApiTypeContext context, ApiStatic enumStatic)
             : base(context)
@@ -222,7 +214,7 @@ namespace Webfuel.Tools.Typefuel
             EnumStatic = enumStatic;
         }
 
-        public ApiStatic EnumStatic { get; } 
+        public ApiStatic EnumStatic { get; }
     }
 
     public class ApiComplexType : ApiType

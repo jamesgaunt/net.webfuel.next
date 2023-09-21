@@ -1,12 +1,11 @@
 using Azure.Core;
 using MediatR;
+using Serilog;
 
 namespace Webfuel.Domain.Common
 {
     public class QueryUserGroup : Query, IRequest<QueryResult<UserGroup>>
     {
-        public string Search { get; set; } = String.Empty;
-
         public Query ApplyCustomFilters()
         {
             this.Contains(nameof(UserGroup.Name), Search);
@@ -25,7 +24,7 @@ namespace Webfuel.Domain.Common
 
         public async Task<QueryResult<UserGroup>> Handle(QueryUserGroup request, CancellationToken cancellationToken)
         {
-            return await _userGroupRepository.QueryUserGroupAsync(request.ApplyCustomFilters());
+            return await _userGroupRepository.QueryUserGroup(request.ApplyCustomFilters());
         }
     }
 }

@@ -1,5 +1,9 @@
+<ul class="breadcrumbs">
+  <li><a routerLink="/home">Home</a></li>
+  <li><a routerLink="/user/user-list">Users</a></li>
+  <li><a routerLink="/user/user-item/{{ item.id }}">User</a></li>
+</ul>
 <div class="container">
-
   <div class="columns">
     <div class="column">
       <h1 class="title">User</h1>
@@ -10,10 +14,8 @@
       </div>
     </div>
   </div>
-
   <user-tabs></user-tabs>
-
-  <form class="form" [formGroup]="formManager.formGroup">
+  <form class="form" [formGroup]="form">
     <div class="grid has-columns-2">
       <div class="field">
         <label class="label">Email</label>
@@ -29,7 +31,4 @@
       <button class="button" (click)="cancel()">Cancel</button>
     </div>
   </form>
-
-  <pre>{{formManager.getRawValue()|json}}</pre>
-
 </div>

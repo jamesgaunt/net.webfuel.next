@@ -28,8 +28,7 @@ namespace Webfuel.Tools.Typefuel
             {
                 if (@static.IsEnum)
                 {
-                    // We now render these in api.types
-                    // StaticEnum(sb, @static);
+                     // StaticEnum(sb, @static);
                 }
                 else
                 {

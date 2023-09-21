@@ -5,8 +5,6 @@ namespace Webfuel.Domain.Common
 {
     public class QueryUser : Query, IRequest<QueryResult<User>>
     {
-        public string Search { get; set; } = String.Empty;
-
         public Query ApplyCustomFilters()
         {
             this.Contains(nameof(User.Email), Search);
@@ -25,7 +23,7 @@ namespace Webfuel.Domain.Common
 
         public async Task<QueryResult<User>> Handle(QueryUser request, CancellationToken cancellationToken)
         {
-            return await _userRepository.QueryUserAsync(request.ApplyCustomFilters());
+            return await _userRepository.QueryUser(request.ApplyCustomFilters());
         }
     }
 }

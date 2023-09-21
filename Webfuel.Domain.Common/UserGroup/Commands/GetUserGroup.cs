@@ -19,7 +19,7 @@ namespace Webfuel.Domain.Common
 
         public async Task<UserGroup?> Handle(GetUserGroup request, CancellationToken cancellationToken)
         {
-            return await _userGroupRepository.GetUserGroupAsync(request.Id);
+            return await _userGroupRepository.GetUserGroup(request.Id);
         }
     }
 }

@@ -1,5 +1,9 @@
 @import 'config.scss';
 
+.cdk-overlay-dark-backdrop {
+  background: rgba(0,0,0,0.05);
+}
+
 .form {
   margin: var(--gap) 0 var(--gap) 0;
 }

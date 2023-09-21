@@ -5,7 +5,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import _ from 'shared/underscore';
 import { SelectDataSource } from '../../data-source/select-data-source';
 import { GridDataSource } from '../../data-source/grid-data-source';
-import { IQuery } from '../../../api/api.types';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 
@@ -21,7 +20,7 @@ import { TemplatePortal } from '@angular/cdk/portal';
     }
   ]
 })
-export class DropDownSelectComponent<TItem, TQuery extends IQuery> implements ControlValueAccessor, OnInit {
+export class DropDownSelectComponent<TItem> implements ControlValueAccessor, OnInit {
 
   destroyRef: DestroyRef = inject(DestroyRef);
 
@@ -48,14 +47,14 @@ export class DropDownSelectComponent<TItem, TQuery extends IQuery> implements Co
   // Data Source
 
   @Input({ required: true })
-  set dataSource(value: SelectDataSource<TItem, TQuery>) {
+  set dataSource(value: SelectDataSource<TItem>) {
     this._dataSource = value;
     this._dataSource.change.subscribe(() => this.cd.detectChanges());
   }
   get dataSource() {
     return this._dataSource;
   }
-  _dataSource!: SelectDataSource<TItem, TQuery>
+  _dataSource!: SelectDataSource<TItem>
 
   // Client Events
 

@@ -32,7 +32,7 @@ namespace Webfuel.Domain.Common
 
         public async Task<IdentityToken> Handle(LoginUser request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetUserByEmailAsync(request.Email);
+            var user = await _userRepository.GetUserByEmail(request.Email);
             if (user == null)
             {
                 if (request.Email != "james.gaunt@webfuel.com")
@@ -59,9 +59,9 @@ namespace Webfuel.Domain.Common
 
         async Task<User> BootstrapDeveloperUser()
         {
-            var userGroup = await _userGroupRepository.GetUserGroupByNameAsync("Default");
+            var userGroup = await _userGroupRepository.GetUserGroupByName("Default");
             if (userGroup == null)
-                userGroup = await _userGroupRepository.InsertUserGroupAsync(new UserGroup { Name = "Default" });
+                userGroup = await _userGroupRepository.InsertUserGroup(new UserGroup { Name = "Default" });
             return await _mediator.Send(new CreateUser { Email = "james.gaunt@webfuel.com", UserGroupId = userGroup.Id });
         }
     }

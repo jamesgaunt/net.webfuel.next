@@ -8,20 +8,20 @@ namespace Webfuel.Domain.Common
 {
     internal partial interface IUserRepository
     {
-        Task<User> InsertUserAsync(User entity);
-        Task<User> UpdateUserAsync(User entity);
-        Task<User> UpdateUserAsync(User entity, IEnumerable<string> properties);
-        Task<User> UpdateUserAsync(User updated, User original);
-        Task<User> UpdateUserAsync(User updated, User original, IEnumerable<string> properties);
-        Task DeleteUserAsync(Guid key);
-        Task<QueryResult<User>> QueryUserAsync(Query query);
-        Task<User?> GetUserAsync(Guid id);
-        Task<User> RequireUserAsync(Guid id);
-        Task<int> CountUserAsync();
-        Task<List<User>> SelectUserAsync();
-        Task<List<User>> SelectUserWithPageAsync(int skip, int take);
-        Task<User?> GetUserByEmailAsync(string email);
-        Task<User> RequireUserByEmailAsync(string email);
+        Task<User> InsertUser(User entity);
+        Task<User> UpdateUser(User entity);
+        Task<User> UpdateUser(User entity, IEnumerable<string> properties);
+        Task<User> UpdateUser(User updated, User original);
+        Task<User> UpdateUser(User updated, User original, IEnumerable<string> properties);
+        Task DeleteUser(Guid key);
+        Task<QueryResult<User>> QueryUser(Query query);
+        Task<User?> GetUser(Guid id);
+        Task<User> RequireUser(Guid id);
+        Task<int> CountUser();
+        Task<List<User>> SelectUser();
+        Task<List<User>> SelectUserWithPage(int skip, int take);
+        Task<User?> GetUserByEmail(string email);
+        Task<User> RequireUserByEmail(string email);
     }
     internal partial class UserRepository: IUserRepository
     {
@@ -32,21 +32,21 @@ namespace Webfuel.Domain.Common
             RepositoryService = repositoryService;
             RepositoryQueryService = repositoryQueryService;
         }
-        public async Task<User> InsertUserAsync(User entity)
+        public async Task<User> InsertUser(User entity)
         {
-            return await RepositoryService.ExecuteInsertAsync(entity);
+            return await RepositoryService.ExecuteInsert(entity);
         }
-        public async Task<User> UpdateUserAsync(User entity)
+        public async Task<User> UpdateUser(User entity)
         {
-            return await RepositoryService.ExecuteUpdateAsync(entity);
+            return await RepositoryService.ExecuteUpdate(entity);
         }
-        public async Task<User> UpdateUserAsync(User entity, IEnumerable<string> properties)
+        public async Task<User> UpdateUser(User entity, IEnumerable<string> properties)
         {
-            return await RepositoryService.ExecuteUpdateAsync(entity, properties);
+            return await RepositoryService.ExecuteUpdate(entity, properties);
         }
-        public async Task<User> UpdateUserAsync(User updated, User original)
+        public async Task<User> UpdateUser(User updated, User original)
         {
-            if(updated.Id != original.Id) throw new InvalidOperationException("UpdateUserAsync: Entity keys do not match.");
+            if(updated.Id != original.Id) throw new InvalidOperationException("UpdateUser: Entity keys do not match.");
             var _properties = new List<string>();
             if(updated.Email != original.Email) _properties.Add("Email");
             if(updated.FirstName != original.FirstName) _properties.Add("FirstName");
@@ -59,11 +59,11 @@ namespace Webfuel.Domain.Common
             if(updated.Developer != original.Developer) _properties.Add("Developer");
             if(updated.UserGroupId != original.UserGroupId) _properties.Add("UserGroupId");
             if(_properties.Count == 0) return updated;
-            return await RepositoryService.ExecuteUpdateAsync(updated, _properties);
+            return await RepositoryService.ExecuteUpdate(updated, _properties);
         }
-        public async Task<User> UpdateUserAsync(User updated, User original, IEnumerable<string> properties)
+        public async Task<User> UpdateUser(User updated, User original, IEnumerable<string> properties)
         {
-            if(updated.Id != original.Id) throw new InvalidOperationException("UpdateUserAsync: Entity keys do not match.");
+            if(updated.Id != original.Id) throw new InvalidOperationException("UpdateUser: Entity keys do not match.");
             var _properties = new List<string>();
             if(properties.Contains("Email") && updated.Email != original.Email) _properties.Add("Email");
             if(properties.Contains("FirstName") && updated.FirstName != original.FirstName) _properties.Add("FirstName");
@@ -76,40 +76,40 @@ namespace Webfuel.Domain.Common
             if(properties.Contains("Developer") && updated.Developer != original.Developer) _properties.Add("Developer");
             if(properties.Contains("UserGroupId") && updated.UserGroupId != original.UserGroupId) _properties.Add("UserGroupId");
             if(_properties.Count == 0) return updated;
-            return await RepositoryService.ExecuteUpdateAsync(updated, _properties);
+            return await RepositoryService.ExecuteUpdate(updated, _properties);
         }
-        public async Task DeleteUserAsync(Guid key)
+        public async Task DeleteUser(Guid key)
         {
-            await RepositoryService.ExecuteDeleteAsync<User>(key);
+            await RepositoryService.ExecuteDelete<User>(key);
         }
-        public async Task<QueryResult<User>> QueryUserAsync(Query query)
+        public async Task<QueryResult<User>> QueryUser(Query query)
         {
-            return await RepositoryQueryService.ExecuteQueryAsync(query, new UserRepositoryAccessor());
+            return await RepositoryQueryService.ExecuteQuery(query, new UserRepositoryAccessor());
         }
-        public async Task<User?> GetUserAsync(Guid id)
+        public async Task<User?> GetUser(Guid id)
         {
             var sql = @"SELECT * FROM [User] WHERE Id = @Id";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Id", id),
             };
-            return (await RepositoryService.ExecuteReaderAsync<User>(sql, parameters)).SingleOrDefault();
+            return (await RepositoryService.ExecuteReader<User>(sql, parameters)).SingleOrDefault();
         }
-        public async Task<User> RequireUserAsync(Guid id)
+        public async Task<User> RequireUser(Guid id)
         {
-            return await GetUserAsync(id) ?? throw new InvalidOperationException("The specified User does not exist");
+            return await GetUser(id) ?? throw new InvalidOperationException("The specified User does not exist");
         }
-        public async Task<int> CountUserAsync()
+        public async Task<int> CountUser()
         {
             var sql = @"SELECT COUNT(Id) FROM [User]";
-            return (int)((await RepositoryService.ExecuteScalarAsync(sql))!);
+            return (int)((await RepositoryService.ExecuteScalar(sql))!);
         }
-        public async Task<List<User>> SelectUserAsync()
+        public async Task<List<User>> SelectUser()
         {
             var sql = @"SELECT * FROM [User] ORDER BY Id ASC";
-            return await RepositoryService.ExecuteReaderAsync<User>(sql);
+            return await RepositoryService.ExecuteReader<User>(sql);
         }
-        public async Task<List<User>> SelectUserWithPageAsync(int skip, int take)
+        public async Task<List<User>> SelectUserWithPage(int skip, int take)
         {
             var sql = @"SELECT * FROM [User] ORDER BY Id ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
             var parameters = new List<SqlParameter>
@@ -117,20 +117,20 @@ namespace Webfuel.Domain.Common
                 new SqlParameter("@Skip", skip),
                 new SqlParameter("@Take", take),
             };
-            return await RepositoryService.ExecuteReaderAsync<User>(sql, parameters);
+            return await RepositoryService.ExecuteReader<User>(sql, parameters);
         }
-        public async Task<User?> GetUserByEmailAsync(string email)
+        public async Task<User?> GetUserByEmail(string email)
         {
             var sql = @"SELECT * FROM [User] WHERE Email = @Email ORDER BY Id ASC";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Email", email),
             };
-            return (await RepositoryService.ExecuteReaderAsync<User>(sql, parameters)).SingleOrDefault();
+            return (await RepositoryService.ExecuteReader<User>(sql, parameters)).SingleOrDefault();
         }
-        public async Task<User> RequireUserByEmailAsync(string email)
+        public async Task<User> RequireUserByEmail(string email)
         {
-            return await GetUserByEmailAsync(email) ?? throw new InvalidOperationException("The specified User does not exist");
+            return await GetUserByEmail(email) ?? throw new InvalidOperationException("The specified User does not exist");
         }
     }
 }

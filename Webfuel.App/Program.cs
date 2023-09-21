@@ -1,4 +1,7 @@
+using Serilog;
+using FluentValidation;
 using Webfuel.Domain.Common;
+using Serilog.Events;
 
 namespace Webfuel.App
 {
@@ -6,25 +9,48 @@ namespace Webfuel.App
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            Log.Logger = new LoggerConfiguration()
+               .WriteTo.Console()
+               .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+               .CreateLogger();
 
-            builder.Services.RegisterCoreServices();
-            builder.Services.RegisterCommonServices();
+            try
+            {
+                Log.Information("Starting web application");
 
-            builder.Services.AddMediatR(c => {
-                c.RegisterServicesFromAssemblyContaining<CoreAssemblyMarker>();
-                c.RegisterServicesFromAssemblyContaining<CommonAssemblyMarker>();
-            });
+                var builder = WebApplication.CreateBuilder(args);
 
-            var app = builder.Build();
+                builder.Host.UseSerilog();
 
-            app.UseMiddleware<ExceptionMiddleware>();
-            app.UseMiddleware<IdentityMiddleware>();
-            
-            app.UseStaticFiles();
-            app.UseApiServices<Program>();            
-            
-            app.Run();
+                builder.Services.RegisterCoreServices();
+                builder.Services.RegisterCommonServices();
+
+                builder.Services.AddMediatR(c =>
+                {
+                    c.RegisterServicesFromAssemblyContaining<CoreAssemblyMarker>();
+                    c.RegisterServicesFromAssemblyContaining<CommonAssemblyMarker>();
+                });
+
+                var app = builder.Build();
+
+                app.UseSerilogRequestLogging();
+
+                app.UseMiddleware<ExceptionMiddleware>();
+                app.UseMiddleware<IdentityMiddleware>();
+
+                app.UseStaticFiles();
+                app.UseApiServices<Program>();
+
+                app.Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Application terminated unexpectedly");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
     }
 }

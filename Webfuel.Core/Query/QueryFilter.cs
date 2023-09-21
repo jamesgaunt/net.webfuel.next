@@ -16,12 +16,15 @@ namespace Webfuel
             Value = value;
         }
 
+        [ApiOptional]
         public string Field { get; set; } = String.Empty;
 
         public string Op { get; set; } = QueryOp.None;
 
+        [ApiOptional]
         public object? Value { get; set; }
 
+        [ApiOptional]
         public List<QueryFilter>? Filters { get; set; }
     }
 

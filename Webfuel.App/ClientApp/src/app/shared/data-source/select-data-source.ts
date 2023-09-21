@@ -1,13 +1,13 @@
 import { EventEmitter, Output } from "@angular/core";
-import { IQuery, IQueryFilter, IQueryResult } from "../../api/api.types";
 import { GridDataSource } from "./grid-data-source";
 import _ from '../underscore';
 import { Observable } from "rxjs";
+import { Query, QueryFilter, QueryResult } from "../../api/api.types";
 
-export class SelectDataSource<TItem, TQuery extends IQuery>  {
+export class SelectDataSource<TItem>  {
 
   constructor(private options: {
-    fetch: (query: IQuery) => Observable<IQueryResult<TItem>>;
+    fetch: (query: Query) => Observable<QueryResult<TItem>>;
   }) {
   }
 
@@ -38,9 +38,6 @@ export class SelectDataSource<TItem, TQuery extends IQuery>  {
     var currentCallback = this.optionItemsCallback = new Object();
 
     this.options.fetch({
-      projection: [],
-      sort: [],
-      filters: [],
       skip: flush ? 0 : this.optionItems.length,
       take: 20,
     }).subscribe((response) => {
@@ -86,9 +83,9 @@ export class SelectDataSource<TItem, TQuery extends IQuery>  {
     }
 
     // Build a filter
-    var filter: IQueryFilter = { field: "", op: "or", value: null, filters: [] };
+    var filter: QueryFilter = { op: "or", filters: [] };
     _.forEach(ids, (id) => {
-      filter.filters!.push({ field: this.id, op: "eq", value: id, filters: null });
+      filter.filters!.push({ field: this.id, op: "eq", value: id });
     });
 
     // We need to use the api

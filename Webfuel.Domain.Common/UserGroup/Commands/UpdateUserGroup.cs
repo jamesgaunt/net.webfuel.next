@@ -21,12 +21,12 @@ namespace Webfuel.Domain.Common
 
         public async Task<UserGroup> Handle(UpdateUserGroup request, CancellationToken cancellationToken)
         {
-            var original = await _userGroupRepository.RequireUserGroupAsync(request.Id);
+            var original = await _userGroupRepository.RequireUserGroup(request.Id);
 
             var updated = original.Copy();
             updated.Name = request.Name;
 
-            return await _userGroupRepository.UpdateUserGroupAsync(original: original, updated: updated); ;
+            return await _userGroupRepository.UpdateUserGroup(original: original, updated: updated); ;
         }
     }
 }

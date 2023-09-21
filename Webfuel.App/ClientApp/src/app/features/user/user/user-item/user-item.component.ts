@@ -1,13 +1,11 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '@angular/router';
-import { IQueryUserGroup, IUser, IUserGroup } from 'api/api.types';
 import { UserApi } from 'api/user.api';
 import { Observable } from 'rxjs';
+import { User, UserGroup } from '../../../../api/api.types';
 import { UserGroupApi } from '../../../../api/user-group.api';
 import { FormService } from '../../../../core/form.service';
-import { GridDataSource } from '../../../../shared/data-source/grid-data-source';
-import _ from '../../../../shared/underscore';
 import { SelectDataSource } from '../../../../shared/data-source/select-data-source';
 
 @Component({
@@ -29,28 +27,28 @@ export class UserItemComponent implements OnInit {
     this.reset(this.route.snapshot.data.user);
   }
 
-  userGroupDataSource = new SelectDataSource<IUserGroup, IQueryUserGroup>({
-    fetch: (query) => this.userGroupApi.queryUserGroup(_.merge({ search: '' }, query))
+  userGroupDataSource = new SelectDataSource<UserGroup>({
+    fetch: (query) => this.userGroupApi.queryUserGroup(query)
   })
 
-  item!: IUser;
+  item!: User;
 
-  reset(item: IUser) {
+  reset(item: User) {
     this.item = item;
-    this.formManager.patchValue(item);
+    this.form.patchValue(item);
   }
 
-  formManager = this.formService.buildManager({
-    id: new FormControl('', { validators: [Validators.required], nonNullable: true }),
-    email: new FormControl('', { validators: [Validators.required], nonNullable: true }),
-    userGroupId: new FormControl(null!, { validators: [Validators.required], nonNullable: true })
+  form = new FormGroup({
+    id: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    email: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    userGroupId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true })
   });
 
   save() {
-    if (this.formManager.hasErrors())
+    if (!this.form.valid)
       return;
 
-    this.userApi.updateUser(this.formManager.getRawValue(), { successGrowl: "User Updated", errorHandler: this.formManager }).subscribe((result) => {
+    this.userApi.updateUser(this.form.getRawValue(), { successGrowl: "User Updated"}).subscribe((result) => {
       this.router.navigate(['user/user-list']);
     });
   }
@@ -59,8 +57,3 @@ export class UserItemComponent implements OnInit {
     this.router.navigate(['user/user-list']);
   }
 }
-
-export const UserResolver: ResolveFn<IUser> =
-  (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IUser> => {
-    return inject(UserApi).resolveUser({ id: route.paramMap.get('id')! });
-  };

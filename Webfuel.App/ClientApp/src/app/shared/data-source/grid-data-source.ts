@@ -1,14 +1,14 @@
 import _ from '../underscore';
 import { BehaviorSubject, Observable, Observer } from 'rxjs';
-import { IQuery, IQueryFilter, IQueryResult, IQuerySort } from '../../api/api.types';
 import { FormGroup } from '@angular/forms';
 import { debounceTime, noop, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Query, QueryFilter, QueryResult, QuerySort } from '../../api/api.types';
 
-export class GridDataSource<TItem, TQuery extends IQuery>  {
+export class GridDataSource<TItem>  {
 
   constructor(private options: {
-    fetch: (query: IQuery) => Observable<IQueryResult<TItem>>;
+    fetch: (query: Query) => Observable<QueryResult<TItem>>;
     localStorageKey?: string;
     filterGroup?: FormGroup;
   }) {
@@ -22,13 +22,13 @@ export class GridDataSource<TItem, TQuery extends IQuery>  {
     }
   }
 
-  query: IQuery = {
-    skip: 0, take: 10, sort: [], filters: [], projection: []
+  query: Query = {
+    skip: 0, take: 10, sort: [], filters: [], projection: [], search: ''
   };
 
-  queryResult: IQueryResult<TItem> = { totalCount: -1, items: [] }; // totalCount == -1 indicates no results yet returned
+  queryResult: QueryResult<TItem> = { totalCount: -1, items: [] }; // totalCount == -1 indicates no results yet returned
 
-  change: BehaviorSubject<GridDataSource<TItem, TQuery>> = new BehaviorSubject<GridDataSource<TItem, TQuery>>(this);
+  change: BehaviorSubject<GridDataSource<TItem>> = new BehaviorSubject<GridDataSource<TItem>>(this);
 
   // Fetch
 
@@ -38,7 +38,7 @@ export class GridDataSource<TItem, TQuery extends IQuery>  {
     //}
 
     this.options.fetch(this.query).subscribe((response) => {
-      if (response.totalCount > 0 && response.items.length === 0 && this.query.skip > 0) {
+      if (response.totalCount > 0 && response.items.length === 0 && this.query.skip! > 0) {
         this.query.skip = 0;
         this.fetch();
         return;
@@ -48,15 +48,10 @@ export class GridDataSource<TItem, TQuery extends IQuery>  {
     });
   }
 
-  fetchDirect(query: { skip: number, take: number, sort?: IQuerySort[], filters?: IQueryFilter[], projection?: string[] })
-    : Observable<IQueryResult<TItem>> {
-    return this.options.fetch(_.merge({ sort: [], filters: [], projection: [] }, query));
-  }
-
   // Sort Helpers
 
   private sortDirection(field: string) {
-    if (this.query.sort.length === 0)
+    if (!this.query.sort || this.query.sort.length === 0)
       return 0;
     let result = 0;
     _.forEach(this.query.sort, (p) => {
@@ -68,6 +63,8 @@ export class GridDataSource<TItem, TQuery extends IQuery>  {
 
   private sortBy(field: string, direction: number) {
     let done = false;
+    if (!this.query.sort)
+      this.query.sort = [];
     _.forEach(this.query.sort, (p) => {
       if (p.field === field) {
         p.direction = direction;

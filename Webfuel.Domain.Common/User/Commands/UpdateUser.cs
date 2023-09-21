@@ -23,13 +23,13 @@ namespace Webfuel.Domain.Common
 
         public async Task<User> Handle(UpdateUser request, CancellationToken cancellationToken)
         {
-            var original = await _userRepository.RequireUserAsync(request.Id);
+            var original = await _userRepository.RequireUser(request.Id);
 
             var updated = original.Copy();
             updated.Email = request.Email;
             updated.UserGroupId = request.UserGroupId;
 
-            return await _userRepository.UpdateUserAsync(original: original, updated: updated); ;
+            return await _userRepository.UpdateUser(original: original, updated: updated); ;
         }
     }
 }

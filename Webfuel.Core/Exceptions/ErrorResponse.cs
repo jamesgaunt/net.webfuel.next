@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Webfuel
 {
     [ApiStatic]
-    public enum ErrorType
+    public enum ErrorResonseType
     {
         UnknownError,
         ValidationError,
@@ -17,9 +17,9 @@ namespace Webfuel
     }
 
     [ApiType]
-    public class Error
+    public class ErrorResponse
     {
-        public required ErrorType ErrorType { get; set; }
+        public required ErrorResonseType ErrorType { get; set; }
 
         public string Message { get; set; } = String.Empty;
 

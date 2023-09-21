@@ -1,9 +1,9 @@
 import _ from '../shared/underscore';
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, map } from "rxjs";
-import { IIdentityToken, ILoginUser } from "../api/api.types";
 import { UserApi } from '../api/user.api';
 import { Router } from '@angular/router';
+import { IdentityToken, LoginUser } from '../api/api.types';
 
 @Injectable()
 export class IdentityService {
@@ -21,7 +21,7 @@ export class IdentityService {
     }
   }
 
-  login(request: ILoginUser): Observable<boolean> {
+  login(request: LoginUser): Observable<boolean> {
     return this.userApi.loginUser(request).pipe(
       map((result) => {
         if (!result.signature)
@@ -43,9 +43,9 @@ export class IdentityService {
   get token() {
     return this._token;
   }
-  private _token: BehaviorSubject<IIdentityToken | null> = new BehaviorSubject<IIdentityToken | null>(null);
+  private _token: BehaviorSubject<IdentityToken | null> = new BehaviorSubject<IdentityToken | null>(null);
 
-  private _setToken(token: IIdentityToken) {
+  private _setToken(token: IdentityToken) {
     _.setLocalStorage(this.key, token);
     this._token.next(token);
   }

@@ -43,7 +43,7 @@ namespace Webfuel
             catch (Exception exception)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                await context.Response.WriteAsJsonAsync(new Error { ErrorType = ErrorType.UnknownError, Message = exception.Message });
+                await context.Response.WriteAsJsonAsync(new ErrorResponse { ErrorType = ErrorResonseType.UnknownError, Message = exception.Message });
             }
 
         }

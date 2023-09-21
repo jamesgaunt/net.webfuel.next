@@ -6,7 +6,7 @@ import { DataGridComponent } from './data-grid.component';
   selector: 'data-grid-column',
   templateUrl: './data-grid-column.component.html',
 })
-export class DataGridColumnComponent {
+export class DataGridColumnComponent<TItem> {
 
   @Input()
   name: string = "";
@@ -21,7 +21,7 @@ export class DataGridColumnComponent {
   template: string | null = null;
 
   // Not an input - set programatically
-  grid!: DataGridComponent;
+  grid!: DataGridComponent<TItem>;
 
   // Head Template
 

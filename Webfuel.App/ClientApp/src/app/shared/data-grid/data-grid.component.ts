@@ -10,7 +10,7 @@ import { DataGridColumnComponent } from './data-grid-column.component';
   templateUrl: './data-grid.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DataGridComponent implements OnDestroy, AfterViewInit {
+export class DataGridComponent<TItem> implements OnDestroy, AfterViewInit {
 
   constructor(
     private cd: ChangeDetectorRef
@@ -23,20 +23,20 @@ export class DataGridComponent implements OnDestroy, AfterViewInit {
   get dataSource() {
     return this._dataSource;
   }
-  set dataSource(value: GridDataSource<any, any>) {
+  set dataSource(value: GridDataSource<TItem>) {
     this._dataSource = value;
     this._dataSource.change.subscribe((response) => {
       this.cd.detectChanges();
     });
     this._dataSource.fetch();
   }
-  private _dataSource!: GridDataSource<any, any>;
+  private _dataSource!: GridDataSource<TItem>;
 
   // Columns
 
-  @ContentChildren(DataGridColumnComponent) columnQuery!: QueryList<DataGridColumnComponent>;
+  @ContentChildren(DataGridColumnComponent<TItem>) columnQuery!: QueryList<DataGridColumnComponent<TItem>>;
 
-  columns: DataGridColumnComponent[] = [];
+  columns: DataGridColumnComponent<TItem>[] = [];
 
   ngAfterViewInit() {
     this.columns = this.columnQuery.toArray();

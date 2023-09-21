@@ -19,7 +19,7 @@ namespace Webfuel.Domain.Common
 
         public async Task<UserGroup> Handle(CreateUserGroup request, CancellationToken cancellationToken)
         {
-            return await _userGroupRepository.InsertUserGroupAsync(new UserGroup { Name = request.Name });
+            return await _userGroupRepository.InsertUserGroup(new UserGroup { Name = request.Name });
         }
     }
 }

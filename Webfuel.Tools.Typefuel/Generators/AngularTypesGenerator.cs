@@ -35,7 +35,7 @@ namespace Webfuel.Tools.Typefuel
             if (!String.IsNullOrEmpty(type.Signature))
                 return type.Signature;
 
-            return (type.IsInterface ? "" : "I") + type.Name;
+            return /*(type.IsInterface ? "" : "I") + */type.Name;
         }
 
         static void TypeDeclaration(ScriptBuilder sb, ApiType type)
@@ -105,7 +105,10 @@ namespace Webfuel.Tools.Typefuel
                     if (property.JsonIgnore)
                         continue;
 
-                    sb.Write(property.JsonPropertyName + ": ");
+                    sb.Write(property.JsonPropertyName);
+                    if (property.Optional)
+                        sb.Write("?");
+                    sb.Write(": ");
                     TypeDescriptor(sb, property.TypeDescriptor);
                     if (property.Nullable)
                         sb.Write(" | null");

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IUserGroup } from 'api/api.types';
+import { UserGroup } from '../../../../api/api.types';
 
 @Component({
   selector: 'user-group-tabs',
@@ -18,9 +18,9 @@ export class UserGroupTabsComponent implements OnInit  {
     this.reset(this.route.snapshot.data.userGroup);
   }
 
-  item!: IUserGroup;
+  item!: UserGroup;
 
-  reset(item: IUserGroup) {
+  reset(item: UserGroup) {
     this.item = item;
   }
 }

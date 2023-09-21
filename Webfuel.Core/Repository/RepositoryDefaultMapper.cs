@@ -24,24 +24,24 @@ namespace Webfuel
             return (TEntity)t;
         }
 
-        public async virtual Task<TEntity> ExecuteInsertAsync(IRepositoryService repositoryService, TEntity entity, IEnumerable<string>? properties = null, CancellationToken? cancellationToken = null)
+        public async virtual Task<TEntity> ExecuteInsert(IRepositoryService repositoryService, TEntity entity, IEnumerable<string>? properties = null, CancellationToken? cancellationToken = null)
         {
             var command = BuildInsertCommand(entity, properties);
-            await repositoryService.ExecuteNonQueryAsync(command.sql, command.parameters, cancellationToken);
+            await repositoryService.ExecuteNonQuery(command.sql, command.parameters, cancellationToken);
             return entity;
         }
 
-        public async virtual Task<TEntity> ExecuteUpdateAsync(IRepositoryService repositoryService, TEntity entity, IEnumerable<string>? properties = null, CancellationToken? cancellationToken = null)
+        public async virtual Task<TEntity> ExecuteUpdate(IRepositoryService repositoryService, TEntity entity, IEnumerable<string>? properties = null, CancellationToken? cancellationToken = null)
         {
             var command = BuildUpdateCommand(entity, properties);
-            await repositoryService.ExecuteNonQueryAsync(command.sql, command.parameters, cancellationToken);
+            await repositoryService.ExecuteNonQuery(command.sql, command.parameters, cancellationToken);
             return entity;
         }
 
-        public async virtual Task ExecuteDeleteAsync(IRepositoryService repositoryService, object key, CancellationToken? cancellationToken = null)
+        public async virtual Task ExecuteDelete(IRepositoryService repositoryService, object key, CancellationToken? cancellationToken = null)
         {
             var command = BuildDeleteCommand(key);
-            await repositoryService.ExecuteNonQueryAsync(command.sql, command.parameters, cancellationToken);
+            await repositoryService.ExecuteNonQuery(command.sql, command.parameters, cancellationToken);
         }
 
         // Insert

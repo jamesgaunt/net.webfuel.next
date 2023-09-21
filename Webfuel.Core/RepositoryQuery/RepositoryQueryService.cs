@@ -2,7 +2,7 @@
 {
     public interface IRepositoryQueryService
     {
-        Task<QueryResult<TItem>> ExecuteQueryAsync<TItem>(Query query, IRepositoryAccessor<TItem> accessor) where TItem : class;
+        Task<QueryResult<TItem>> ExecuteQuery<TItem>(Query query, IRepositoryAccessor<TItem> accessor) where TItem : class;
     }
 
     [ServiceImplementation(typeof(IRepositoryQueryService))]
@@ -15,7 +15,7 @@
             RepositoryService = repositoryService;
         }
 
-        public async Task<QueryResult<TItem>> ExecuteQueryAsync<TItem>(Query query, IRepositoryAccessor<TItem> accessor) where TItem : class
+        public async Task<QueryResult<TItem>> ExecuteQuery<TItem>(Query query, IRepositoryAccessor<TItem> accessor) where TItem : class
         {
             var fields = accessor.InsertProperties.ToList();
 
@@ -31,14 +31,14 @@
 
             var querySql = $"{selectSql} {fromSql} {filterSql} {orderSql} {pageSql}";
 
-            var items = await RepositoryService.ExecuteReaderAsync<TItem>(querySql, RepositoryQueryUtility.SqlParameters(parameters));
+            var items = await RepositoryService.ExecuteReader<TItem>(querySql, RepositoryQueryUtility.SqlParameters(parameters));
             int? totalCount = null;
 
             if (!String.IsNullOrEmpty(pageSql))
             {
                 var countSql = RepositoryQueryUtility.CountSql(query, fields);
                 querySql = $"{countSql} {fromSql} {filterSql}";
-                totalCount = (int)(await RepositoryService.ExecuteScalarAsync(querySql, RepositoryQueryUtility.SqlParameters(parameters)))!;
+                totalCount = (int)(await RepositoryService.ExecuteScalar(querySql, RepositoryQueryUtility.SqlParameters(parameters)))!;
             }
 
             return new QueryResult<TItem>(items, totalCount);

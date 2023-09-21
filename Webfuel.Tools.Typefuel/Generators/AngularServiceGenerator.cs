@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Azure;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,10 +20,10 @@ namespace Webfuel.Tools.Typefuel
         {
             var sb = new ScriptBuilder();
 
-            sb.WriteLine("import { Injectable } from '@angular/core';");
+            sb.WriteLine("import { Injectable, inject } from '@angular/core';");
             sb.WriteLine("import { Observable } from 'rxjs';");
-            sb.WriteLine("import { map } from 'rxjs/operators';");
             sb.WriteLine("import { ApiService, ApiOptions } from '../core/api.service';");
+            sb.WriteLine("import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';");
 
             var complexTypes = EnumerateTypes(controller);
             if (complexTypes.Count > 0)
@@ -36,6 +37,8 @@ namespace Webfuel.Tools.Typefuel
                 sb.WriteLine("constructor(private apiService: ApiService) { }");
                 foreach (var action in controller.Methods)
                     Action(sb, action);
+
+                Resolvers(sb, controller);
             }
 
             return sb.ToString().FormatScript();
@@ -53,9 +56,29 @@ namespace Webfuel.Tools.Typefuel
                 else
                     sb.Write($", undefined");
 
-                sb.WriteLine(", options);"); 
+                sb.WriteLine(", options);");
             }
             sb.WriteLine("}");
+        }
+
+        static void Resolvers(ScriptBuilder sb, ApiService controller)
+        {
+            foreach (var method in controller.Methods)
+            {
+                if (method.Name.StartsWith("Resolve"))
+                {
+                    var resolveType = method.Name.Replace("Resolve", "");
+                    if (resolveType == controller.Name)
+                    {
+                        sb.WriteLine();
+                        sb.WriteLine($"static {resolveType.ToCamelCase()}Resolver(param: string): ResolveFn<{resolveType}> {{");
+                        sb.WriteLine($"return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<{resolveType}> => {{");
+                        sb.WriteLine($"return inject({resolveType}Api).resolve{resolveType}({{id: route.paramMap.get(param)! }});");
+                        sb.WriteLine("};");
+                        sb.WriteLine("}");
+                    }
+                }
+            }
         }
 
         public static string ServiceFilename(ApiService service)

@@ -1,0 +1,32 @@
+@import 'config.scss';
+
+.breadcrumbs {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: #FFF;
+  border-bottom: 1px solid var(--border-color);
+
+  & > * {
+
+    &::before {
+      font-family: "Font Awesome 5 Pro";
+      content: '\f0da';
+      font-weight: 900;
+      padding: 0 10px 0 10px;
+    }
+
+    &:first-child::before {
+      content: '\f015';
+      font-weight: 900;
+    }
+
+    list-style-type: none;
+    display: inline-block;
+    padding: 8px 0 8px 0;
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+}
