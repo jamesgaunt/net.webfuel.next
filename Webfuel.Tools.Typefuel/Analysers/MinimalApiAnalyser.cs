@@ -34,7 +34,6 @@ namespace Webfuel.Tools.Typefuel
         {
             var service = new ApiService(schema);
             service.Name = serviceType.Name.Replace("Api", "");
-            
 
             var routeBuilder = new FakeEndpointRouteBuilder();
 
@@ -46,7 +45,6 @@ namespace Webfuel.Tools.Typefuel
             register.Invoke(null, new object[] { routeBuilder });
 
             var routeEntries = GetFieldValue<IEnumerable>(routeBuilder.DataSources.First(), "_routeEntries");
-
 
             foreach (var routeEntry in routeEntries)
                 AnalyseRouteEntry(service, routeEntry);
