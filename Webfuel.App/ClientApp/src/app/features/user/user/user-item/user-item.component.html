@@ -14,10 +14,14 @@
   <user-tabs></user-tabs>
 
   <form class="form" [formGroup]="formManager.formGroup">
-    <div class="grid">
+    <div class="grid has-columns-2">
       <div class="field">
         <label class="label">Email</label>
         <input class="input" type="text" placeholder="required" formControlName="email" />
+      </div>
+      <div class="field">
+        <label class="label">User Group</label>
+        <dropdown-select [dataSource]="userGroupDataSource" placeholder="required" formControlName="userGroupId"></dropdown-select>
       </div>
     </div>
     <div class="buttons">
@@ -26,6 +30,6 @@
     </div>
   </form>
 
-  <pre>{{item|json}}</pre>
+  <pre>{{formManager.getRawValue()|json}}</pre>
 
 </div>

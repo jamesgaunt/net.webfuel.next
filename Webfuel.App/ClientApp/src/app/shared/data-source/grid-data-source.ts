@@ -1,21 +1,17 @@
-import _ from './underscore';
+import _ from '../underscore';
 import { BehaviorSubject, Observable, Observer } from 'rxjs';
-import { IQuery, IQueryResult } from '../api/api.types';
+import { IQuery, IQueryFilter, IQueryResult, IQuerySort } from '../../api/api.types';
 import { FormGroup } from '@angular/forms';
 import { debounceTime, noop, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
-export class DataSource<TItem, TQuery extends IQuery>  {
+export class GridDataSource<TItem, TQuery extends IQuery>  {
 
   constructor(private options: {
-    fetch: (query: TQuery) => Observable<IQueryResult<TItem>>;
-    query?: TQuery;
+    fetch: (query: IQuery) => Observable<IQueryResult<TItem>>;
     localStorageKey?: string;
     filterGroup?: FormGroup;
   }) {
-    if(options.query)
-      this.query = options.query;
-
     if (options.filterGroup) {
       options.filterGroup.valueChanges
         .pipe(
@@ -26,11 +22,13 @@ export class DataSource<TItem, TQuery extends IQuery>  {
     }
   }
 
-  public query: TQuery = <any>{ skip: 0, take: 10, sort: [] };
+  query: IQuery = {
+    skip: 0, take: 10, sort: [], filters: [], projection: []
+  };
 
-  public queryResult: IQueryResult<TItem> = { totalCount: -1, items: [] }; // totalCount == -1 indicates no results yet returned
+  queryResult: IQueryResult<TItem> = { totalCount: -1, items: [] }; // totalCount == -1 indicates no results yet returned
 
-  public change: BehaviorSubject<DataSource<TItem, TQuery>> = new BehaviorSubject<DataSource<TItem, TQuery>>(this);
+  change: BehaviorSubject<GridDataSource<TItem, TQuery>> = new BehaviorSubject<GridDataSource<TItem, TQuery>>(this);
 
   // Fetch
 
@@ -38,9 +36,6 @@ export class DataSource<TItem, TQuery extends IQuery>  {
     //if (!this.localStorageLoaded) {
     //  this.loadLocalStorage();
     //}
-
-    if (this.options.filterGroup)
-      this.query = _.merge(this.query, this.options.filterGroup.getRawValue());
 
     this.options.fetch(this.query).subscribe((response) => {
       if (response.totalCount > 0 && response.items.length === 0 && this.query.skip > 0) {
@@ -51,6 +46,11 @@ export class DataSource<TItem, TQuery extends IQuery>  {
       this.queryResult = response;
       this.change.next(this);
     });
+  }
+
+  fetchDirect(query: { skip: number, take: number, sort?: IQuerySort[], filters?: IQueryFilter[], projection?: string[] })
+    : Observable<IQueryResult<TItem>> {
+    return this.options.fetch(_.merge({ sort: [], filters: [], projection: [] }, query));
   }
 
   // Sort Helpers

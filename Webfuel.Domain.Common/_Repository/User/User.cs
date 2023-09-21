@@ -20,6 +20,7 @@ namespace Webfuel.Domain.Common
         [JsonIgnore]
         public DateTimeUtc PasswordResetValidUntil  { get; set; } = new DateTimeUtc(599266080000000000L);
         public bool Developer  { get; set; } = false;
+        public Guid UserGroupId { get; set; }
         public User Copy()
         {
             var entity = new User();
@@ -33,6 +34,7 @@ namespace Webfuel.Domain.Common
             entity.PasswordResetToken = PasswordResetToken;
             entity.PasswordResetValidUntil = PasswordResetValidUntil;
             entity.Developer = Developer;
+            entity.UserGroupId = UserGroupId;
             return entity;
         }
     }

@@ -1,4 +1,3 @@
-
 interface ILocalStorageItem {
   value: any;
   expiry: number | undefined;

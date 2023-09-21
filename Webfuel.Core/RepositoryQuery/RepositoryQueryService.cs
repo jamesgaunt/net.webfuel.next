@@ -2,7 +2,7 @@
 {
     public interface IRepositoryQueryService
     {
-        Task<QueryResult<TItem>> ExecuteQueryAsync<TItem>(RepositoryQuery query, IRepositoryAccessor<TItem> accessor) where TItem : class;
+        Task<QueryResult<TItem>> ExecuteQueryAsync<TItem>(Query query, IRepositoryAccessor<TItem> accessor) where TItem : class;
     }
 
     [ServiceImplementation(typeof(IRepositoryQueryService))]
@@ -15,11 +15,11 @@
             RepositoryService = repositoryService;
         }
 
-        public async Task<QueryResult<TItem>> ExecuteQueryAsync<TItem>(RepositoryQuery query, IRepositoryAccessor<TItem> accessor) where TItem : class
+        public async Task<QueryResult<TItem>> ExecuteQueryAsync<TItem>(Query query, IRepositoryAccessor<TItem> accessor) where TItem : class
         {
             var fields = accessor.InsertProperties.ToList();
 
-            RepositoryQueryUtility.PurgeFilters(query, fields);
+            RepositoryQueryUtility.ValidateFields(query, fields);
 
             var parameters = new List<RepositoryQueryParameter>();
             var filterSql = RepositoryQueryUtility.FilterSql(query, parameters);

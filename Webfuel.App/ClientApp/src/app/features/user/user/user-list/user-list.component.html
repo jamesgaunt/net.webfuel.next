@@ -5,6 +5,11 @@
   </form>
   <data-grid [dataSource]="dataSource">
     <data-grid-column name="email" itemTemplate="bold"></data-grid-column>
+    <data-grid-column name="User Group">
+      <ng-template #itemTemplate let-item>
+        {{ (userGroupLookup.lookup(item.userGroupId) | async)?.name }}
+      </ng-template>
+    </data-grid-column>
     <data-grid-column justify="right">
       <ng-template #headTemplate><a (click)="add()" class="link is-success">add</a></ng-template>
       <ng-template #itemTemplate let-item>

@@ -77,7 +77,59 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @each $p in $paletteAction {
+      &.is-#{$p} {
+        color: var(--palette-#{$p}-contrast);
+        background-color: var(--palette-#{$p});
+
+        &:hover, &:focus {
+          background-color: var(--palette-#{$p}-hover);
+        }
+      }
+    }
   }
 }
 
 
+.dropdown-popup {
+  background-color: #FFF;
+  outline: none;
+  transition: border 0.25s;
+  box-shadow: 6px 3px 12px RGBA(100, 100, 100, 0.4);
+  display: block;
+  width: 100%;
+  overflow: hidden;
+
+  .items {
+    max-height: 15em;
+    overflow: auto;
+  }
+
+  input {
+    padding: 8px 8px 8px 8px;
+    border: 0px;
+    /* border-bottom: 1px solid $form-control-border-color; */
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 8px 10px 8px 10px;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--palette-primary-contrast);
+      background-color: var(--palette-primary);
+    }
+  }
+
+  .dropdown-loading {
+    display: block;
+    width: 100%;
+    padding: 8px 10px 8px 10px;
+    cursor: pointer;
+  }
+}

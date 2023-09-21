@@ -7,6 +7,7 @@ import { AuthorizationInterceptor } from './interceptors/authorization.intercept
 
 import { ApiService } from './api.service';
 import { DialogService } from './dialog.service';
+import { OverlayService } from './overlay.service';
 import { GrowlService } from './growl.service';
 import { FormService } from './form.service';
 import { IdentityService } from './identity.service';
@@ -25,6 +26,7 @@ import { ConfirmDeleteDialogComponent } from './dialogs/confirm-delete-dialog.co
     ApiService,
     IdentityService, 
     DialogService,
+    OverlayService,
     GrowlService,
     FormService,
     {

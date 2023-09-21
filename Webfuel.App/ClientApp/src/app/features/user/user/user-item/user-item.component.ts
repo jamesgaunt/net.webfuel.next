@@ -1,13 +1,14 @@
-import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
-import { Component, Inject, OnInit, inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IUser } from 'api/api.types';
-import { UserApi } from 'api/user.api';
-import { GrowlService } from '../../../../core/growl.service';
-import { FormManager } from '../../../../shared/form/form-manager';
-import { FormService } from '../../../../core/form.service';
+import { Component, OnInit, inject } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '@angular/router';
+import { IQueryUserGroup, IUser, IUserGroup } from 'api/api.types';
+import { UserApi } from 'api/user.api';
 import { Observable } from 'rxjs';
+import { UserGroupApi } from '../../../../api/user-group.api';
+import { FormService } from '../../../../core/form.service';
+import { GridDataSource } from '../../../../shared/data-source/grid-data-source';
+import _ from '../../../../shared/underscore';
+import { SelectDataSource } from '../../../../shared/data-source/select-data-source';
 
 @Component({
   selector: 'user-item',
@@ -20,12 +21,17 @@ export class UserItemComponent implements OnInit {
     private router: Router,
     private formService: FormService,
     private userApi: UserApi,
+    private userGroupApi: UserGroupApi
   ) {
   }
 
   ngOnInit() {
     this.reset(this.route.snapshot.data.user);
   }
+
+  userGroupDataSource = new SelectDataSource<IUserGroup, IQueryUserGroup>({
+    fetch: (query) => this.userGroupApi.queryUserGroup(_.merge({ search: '' }, query))
+  })
 
   item!: IUser;
 
@@ -37,6 +43,7 @@ export class UserItemComponent implements OnInit {
   formManager = this.formService.buildManager({
     id: new FormControl('', { validators: [Validators.required], nonNullable: true }),
     email: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+    userGroupId: new FormControl(null!, { validators: [Validators.required], nonNullable: true })
   });
 
   save() {

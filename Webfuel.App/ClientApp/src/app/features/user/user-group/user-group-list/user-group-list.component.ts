@@ -1,11 +1,12 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { IQueryUserGroupListView, IUserGroupListView } from 'api/api.types';
 import { UserGroupApi } from 'api/user-group.api';
 import { DialogService } from 'core/dialog.service';
-import { DataSource } from '../../../../shared/data-source';
+import { GridDataSource } from '../../../../shared/data-source/grid-data-source';
 import { UserGroupCreateDialogComponent } from '../user-group-create-dialog/user-group-create-dialog.component';
 import { Router } from '@angular/router';
+import _ from '../../../../shared/underscore';
+import { IQueryUserGroup, IUserGroup } from '../../../../api/api.types';
 
 @Component({
   selector: 'user-group-list',
@@ -20,11 +21,11 @@ export class UserGroupListComponent {
   }
 
   filterForm = new FormGroup({
-    search: new FormControl('')
+    search: new FormControl('', { nonNullable: true })
   });
 
-  dataSource = new DataSource<IUserGroupListView, IQueryUserGroupListView>({
-    fetch: (query) => this.userGroupApi.queryUserGroupListView(query),
+  dataSource = new GridDataSource<IUserGroup, IQueryUserGroup>({
+    fetch: (query) => this.userGroupApi.queryUserGroup(_.merge(query, this.filterForm.getRawValue())),
     filterGroup: this.filterForm
   });
 
@@ -34,11 +35,11 @@ export class UserGroupListComponent {
     });
   }
 
-  edit(item: IUserGroupListView) {
+  edit(item: IUserGroup) {
     this.router.navigate(['user/user-group-item', item.id]);
   }
 
-  delete(item: IUserGroupListView) {
+  delete(item: IUserGroup) {
     this.dialogService.confirmDelete({
       title: item.name,
       confirmedCallback: () => {

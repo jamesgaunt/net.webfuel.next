@@ -32,6 +32,8 @@ namespace Webfuel.Domain.Common
                     return entity.PasswordResetValidUntil.ToDateTime();
                 case nameof(User.Developer):
                     return entity.Developer;
+                case nameof(User.UserGroupId):
+                    return entity.UserGroupId;
                     default: throw new InvalidOperationException($"Unrecognised entity property {property}");
             }
         }
@@ -69,6 +71,9 @@ namespace Webfuel.Domain.Common
                 case nameof(User.Developer):
                     entity.Developer = (bool)value!;
                     break;
+                case nameof(User.UserGroupId):
+                    entity.UserGroupId = (Guid)value!;
+                    break;
             }
         }
         public User CreateInstance()
@@ -103,6 +108,7 @@ namespace Webfuel.Domain.Common
                 yield return "PasswordResetToken";
                 yield return "PasswordResetValidUntil";
                 yield return "Developer";
+                yield return "UserGroupId";
             }
         }
         public IEnumerable<string> UpdateProperties
@@ -118,6 +124,7 @@ namespace Webfuel.Domain.Common
                 yield return "PasswordResetToken";
                 yield return "PasswordResetValidUntil";
                 yield return "Developer";
+                yield return "UserGroupId";
             }
         }
     }

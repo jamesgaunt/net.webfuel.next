@@ -10,6 +10,8 @@
     <Property Name="FirstName" Type="meta:name" />
     <Property Name="LastName" Type="meta:name" />
 
+    <Reference Name="UserGroupId" Type="UserGroup" />
+    
     <Property Name="PasswordHash" Type="string[256]" JsonIgnore="true" />
     <Property Name="PasswordSalt" Type="string[256]" JsonIgnore="true" />
     <Property Name="PasswordResetAt" Type="Utc" JsonIgnore="true" />
@@ -23,37 +25,15 @@
     </Index>
   </Entity>
 
-  <Entity Name="UserListView" ReadOnly="true">
-    <Key Name="Id" Type="guid"  />
-    <Property Name="Email" Type="meta:email" />
-    <View>
-      <Sql>
-        <![CDATA[
-        SELECT [Id], [Email]
-        FROM [User]
-        ]]>
-      </Sql>
-    </View>
-  </Entity>
-
   <Entity Name="UserGroup">
     <Key Name="Id" Type="guid" />
     <Property Name="Name" Type="meta:name" />
-    
+
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
   </Entity>
 
-  <Entity Name="UserGroupListView" ReadOnly="true">
-    <Key Name="Id" Type="guid"  />
-    <Property Name="Name" Type="meta:name" />
-    <View>
-      <Sql>
-        <![CDATA[
-        SELECT [Id], [Name]
-        FROM [UserGroup]
-        ]]>
-      </Sql>
-    </View>
-  </Entity>
 
 
 </Schema>

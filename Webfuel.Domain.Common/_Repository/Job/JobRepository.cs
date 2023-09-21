@@ -14,7 +14,7 @@ namespace Webfuel.Domain.Common
         Task<Job> UpdateJobAsync(Job updated, Job original);
         Task<Job> UpdateJobAsync(Job updated, Job original, IEnumerable<string> properties);
         Task DeleteJobAsync(Guid key);
-        Task<QueryResult<Job>> QueryJobAsync(RepositoryQuery query);
+        Task<QueryResult<Job>> QueryJobAsync(Query query);
         Task<Job?> GetJobAsync(Guid id);
         Task<Job> RequireJobAsync(Guid id);
         Task<int> CountJobAsync();
@@ -62,7 +62,7 @@ namespace Webfuel.Domain.Common
         {
             await RepositoryService.ExecuteDeleteAsync<Job>(key);
         }
-        public async Task<QueryResult<Job>> QueryJobAsync(RepositoryQuery query)
+        public async Task<QueryResult<Job>> QueryJobAsync(Query query)
         {
             return await RepositoryQueryService.ExecuteQueryAsync(query, new JobRepositoryAccessor());
         }

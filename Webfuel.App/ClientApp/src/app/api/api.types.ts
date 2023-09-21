@@ -45,15 +45,18 @@ export interface IUser {
     firstName: string;
     lastName: string;
     developer: boolean;
+    userGroupId: string;
 }
 
 export interface ICreateUser {
     email: string;
+    userGroupId: string;
 }
 
 export interface IUpdateUser {
     id: string;
     email: string;
+    userGroupId: string;
 }
 
 export interface IQueryResult<TItem> {
@@ -61,16 +64,20 @@ export interface IQueryResult<TItem> {
     totalCount: number;
 }
 
-export interface IUserListView {
-    id: string;
-    email: string;
-}
-
-export interface IQueryUserListView extends IQuery {
+export interface IQueryUser extends IQuery {
     search: string;
+    projection: Array<string>;
+    filters: Array<IQueryFilter>;
     sort: Array<IQuerySort>;
     skip: number;
     take: number;
+}
+
+export interface IQueryFilter {
+    field: string;
+    op: string;
+    value: any | null;
+    filters: Array<IQueryFilter> | null;
 }
 
 export interface IQuerySort {
@@ -79,6 +86,8 @@ export interface IQuerySort {
 }
 
 export interface IQuery {
+    projection: Array<string>;
+    filters: Array<IQueryFilter>;
     sort: Array<IQuerySort>;
     skip: number;
     take: number;
@@ -103,13 +112,10 @@ export interface IUpdateUserGroup {
     name: string;
 }
 
-export interface IUserGroupListView {
-    id: string;
-    name: string;
-}
-
-export interface IQueryUserGroupListView extends IQuery {
+export interface IQueryUserGroup extends IQuery {
     search: string;
+    projection: Array<string>;
+    filters: Array<IQueryFilter>;
     sort: Array<IQuerySort>;
     skip: number;
     take: number;

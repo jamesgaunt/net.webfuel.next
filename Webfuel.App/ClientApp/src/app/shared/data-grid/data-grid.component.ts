@@ -1,7 +1,7 @@
 import { AfterContentInit, ChangeDetectorRef, Component, ContentChildren, EventEmitter, Input, OnDestroy, Output, QueryList, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
-import { DataSource } from '../data-source';
+import { GridDataSource } from '../data-source/grid-data-source';
 import _ from '../underscore';
 import { DataGridColumnComponent } from './data-grid-column.component';
 
@@ -19,18 +19,18 @@ export class DataGridComponent implements OnDestroy, AfterViewInit {
 
   // Data Source
 
-  @Input()
+  @Input({ required: true })
   get dataSource() {
     return this._dataSource;
   }
-  set dataSource(value: DataSource<any, any>) {
+  set dataSource(value: GridDataSource<any, any>) {
     this._dataSource = value;
     this._dataSource.change.subscribe((response) => {
       this.cd.detectChanges();
     });
     this._dataSource.fetch();
   }
-  private _dataSource!: DataSource<any, any>;
+  private _dataSource!: GridDataSource<any, any>;
 
   // Columns
 

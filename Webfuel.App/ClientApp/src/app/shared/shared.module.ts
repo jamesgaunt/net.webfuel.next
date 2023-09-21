@@ -14,6 +14,7 @@ import { NumberInputComponent } from './form/number-input/number-input.component
 // Data Grid
 import { DataGridComponent } from './data-grid/data-grid.component';
 import { DataGridColumnComponent } from './data-grid/data-grid-column.component';
+import { DropDownSelectComponent } from './form/dropdown-select/dropdown-select.component';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { DataGridColumnComponent } from './data-grid/data-grid-column.component'
     // Form
     TextInputComponent,
     NumberInputComponent,
+    DropDownSelectComponent,
 
     // Data Grid
     DataGridComponent,
@@ -47,6 +49,7 @@ import { DataGridColumnComponent } from './data-grid/data-grid-column.component'
     // Form
     TextInputComponent,
     NumberInputComponent,
+    DropDownSelectComponent,
 
     // Data Grid
     DataGridComponent,

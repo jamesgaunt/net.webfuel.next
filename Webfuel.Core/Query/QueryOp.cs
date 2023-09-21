@@ -1,6 +1,6 @@
 ﻿namespace Webfuel
 {
-    public static class RepositoryQueryOp
+    public static class QueryOp
     {
         public const string None = "none";
 

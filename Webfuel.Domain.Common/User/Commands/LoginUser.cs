@@ -10,7 +10,7 @@ namespace Webfuel.Domain.Common
 {
     public class LoginUser : IRequest<IdentityToken>
     {
-        public required string Email { get; set; } 
+        public required string Email { get; set; }
 
         public required string Password { get; set; }
     }
@@ -18,14 +18,16 @@ namespace Webfuel.Domain.Common
     internal class LoginUserHandler : IRequestHandler<LoginUser, IdentityToken>
     {
         private readonly IUserRepository _userRepository;
+        private readonly IUserGroupRepository _userGroupRepository;
         private readonly IIdentityTokenService _identityTokenService;
         private readonly IMediator _mediator;
 
-        public LoginUserHandler(IUserRepository userRepository, IIdentityTokenService identityTokenService, IMediator mediator)
+        public LoginUserHandler(IUserRepository userRepository, IUserGroupRepository userGroupRepository, IIdentityTokenService identityTokenService, IMediator mediator)
         {
             _userRepository = userRepository;
             _identityTokenService = identityTokenService;
             _mediator = mediator;
+            _userGroupRepository = userGroupRepository;
         }
 
         public async Task<IdentityToken> Handle(LoginUser request, CancellationToken cancellationToken)
@@ -35,13 +37,11 @@ namespace Webfuel.Domain.Common
             {
                 if (request.Email != "james.gaunt@webfuel.com")
                     throw new InvalidOperationException("Invalid username or password");
-
-                // Bootstrap Developer User
-                user = await _mediator.Send(new CreateUser { Email = "james.gaunt@webfuel.com" });
+                user = await BootstrapDeveloperUser();
             }
 
             var validated = AuthenticationUtility.ValidatePassword(request.Password, user.PasswordHash, user.PasswordSalt);
-            if(!validated)
+            if (!validated)
                 throw new InvalidOperationException("Invalid username or password");
 
             var token = new IdentityToken
@@ -55,6 +55,14 @@ namespace Webfuel.Domain.Common
             _identityTokenService.ActivateToken(token);
 
             return token;
+        }
+
+        async Task<User> BootstrapDeveloperUser()
+        {
+            var userGroup = await _userGroupRepository.GetUserGroupByNameAsync("Default");
+            if (userGroup == null)
+                userGroup = await _userGroupRepository.InsertUserGroupAsync(new UserGroup { Name = "Default" });
+            return await _mediator.Send(new CreateUser { Email = "james.gaunt@webfuel.com", UserGroupId = userGroup.Id });
         }
     }
 }

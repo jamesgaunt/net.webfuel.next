@@ -14,12 +14,14 @@ namespace Webfuel.Domain.Common
         Task<UserGroup> UpdateUserGroupAsync(UserGroup updated, UserGroup original);
         Task<UserGroup> UpdateUserGroupAsync(UserGroup updated, UserGroup original, IEnumerable<string> properties);
         Task DeleteUserGroupAsync(Guid key);
-        Task<QueryResult<UserGroup>> QueryUserGroupAsync(RepositoryQuery query);
+        Task<QueryResult<UserGroup>> QueryUserGroupAsync(Query query);
         Task<UserGroup?> GetUserGroupAsync(Guid id);
         Task<UserGroup> RequireUserGroupAsync(Guid id);
         Task<int> CountUserGroupAsync();
         Task<List<UserGroup>> SelectUserGroupAsync();
         Task<List<UserGroup>> SelectUserGroupWithPageAsync(int skip, int take);
+        Task<UserGroup?> GetUserGroupByNameAsync(string name);
+        Task<UserGroup> RequireUserGroupByNameAsync(string name);
     }
     internal partial class UserGroupRepository: IUserGroupRepository
     {
@@ -62,7 +64,7 @@ namespace Webfuel.Domain.Common
         {
             await RepositoryService.ExecuteDeleteAsync<UserGroup>(key);
         }
-        public async Task<QueryResult<UserGroup>> QueryUserGroupAsync(RepositoryQuery query)
+        public async Task<QueryResult<UserGroup>> QueryUserGroupAsync(Query query)
         {
             return await RepositoryQueryService.ExecuteQueryAsync(query, new UserGroupRepositoryAccessor());
         }
@@ -98,6 +100,19 @@ namespace Webfuel.Domain.Common
                 new SqlParameter("@Take", take),
             };
             return await RepositoryService.ExecuteReaderAsync<UserGroup>(sql, parameters);
+        }
+        public async Task<UserGroup?> GetUserGroupByNameAsync(string name)
+        {
+            var sql = @"SELECT * FROM [UserGroup] WHERE Name = @Name ORDER BY Id ASC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@Name", name),
+            };
+            return (await RepositoryService.ExecuteReaderAsync<UserGroup>(sql, parameters)).SingleOrDefault();
+        }
+        public async Task<UserGroup> RequireUserGroupByNameAsync(string name)
+        {
+            return await GetUserGroupByNameAsync(name) ?? throw new InvalidOperationException("The specified UserGroup does not exist");
         }
     }
 }

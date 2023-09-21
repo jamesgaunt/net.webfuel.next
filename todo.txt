@@ -8,12 +8,6 @@ Data Grid Pager / Sorter
 
 Build select / multi-select logic
 
-Tenant / User / Login backbone
-
 Serilog??
 
-JsonProperties implementation review
-
-Remove Http State extensions. Replace with specific Accessor services.
-
-Flatten all error classes to one class.
+Rework of Typefuel

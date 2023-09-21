@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService, ApiOptions } from '../core/api.service';
-import { ICreateUser, IUser, IUpdateUser, IQueryUserListView, IQueryResult, IUserListView, ILoginUser, IIdentityToken } from './api.types';
+import { ICreateUser, IUser, IUpdateUser, IQueryUser, IQueryResult, ILoginUser, IIdentityToken } from './api.types';
 
 @Injectable()
 export class UserApi {
@@ -20,8 +20,8 @@ export class UserApi {
         return this.apiService.request("DELETE", "api/delete-user/" + params.id + "", undefined, options);
     }
     
-    public queryUserListView (body: IQueryUserListView, options?: ApiOptions): Observable<IQueryResult<IUserListView>> {
-        return this.apiService.request("POST", "api/query-user-list-view", body, options);
+    public queryUser (body: IQueryUser, options?: ApiOptions): Observable<IQueryResult<IUser>> {
+        return this.apiService.request("POST", "api/query-user", body, options);
     }
     
     public resolveUser (params: { id: string }, options?: ApiOptions): Observable<IUser> {

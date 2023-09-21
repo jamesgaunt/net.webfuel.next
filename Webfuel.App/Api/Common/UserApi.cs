@@ -21,7 +21,7 @@ namespace Webfuel.App
             app.MapDelete("api/delete-user/{id:guid}", DeleteUser)
                 .AuthorizeClaim((c) => c.Developer);
 
-            app.MapPost("api/query-user-list-view", QueryUserListView);
+            app.MapPost("api/query-user", QueryUser);
 
             app.MapGet("api/resolve-user/{id:guid}", ResolveUser);
 
@@ -43,7 +43,7 @@ namespace Webfuel.App
             return mediator.Send(new DeleteUser { Id = id });
         }
 
-        public static Task<QueryResult<UserListView>> QueryUserListView([FromBody] QueryUserListView command, IMediator mediator)
+        public static Task<QueryResult<User>> QueryUser([FromBody] QueryUser command, IMediator mediator)
         {
             return mediator.Send(command);
         }

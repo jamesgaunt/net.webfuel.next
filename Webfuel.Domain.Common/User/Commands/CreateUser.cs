@@ -6,6 +6,8 @@ namespace Webfuel.Domain.Common
     public class CreateUser : IRequest<User>
     {
         public required string Email { get; set; }
+
+        public required Guid UserGroupId { get; set; }
     }
 
     internal class CreateUserHandler : IRequestHandler<CreateUser, User>
@@ -19,7 +21,10 @@ namespace Webfuel.Domain.Common
 
         public async Task<User> Handle(CreateUser request, CancellationToken cancellationToken)
         {
-            return await _userRepository.InsertUserAsync(new User { Email = request.Email });
+            return await _userRepository.InsertUserAsync(new User { 
+                Email = request.Email,
+                UserGroupId = request.UserGroupId
+            });
         }
     }
 }

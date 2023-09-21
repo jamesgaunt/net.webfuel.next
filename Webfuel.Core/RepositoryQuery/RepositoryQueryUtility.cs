@@ -4,30 +4,30 @@ namespace Webfuel
 {
     public static class RepositoryQueryUtility
     {
-        public static string SelectSql(RepositoryQuery query, List<string> fields)
+        public static string SelectSql(Query query, List<string> fields)
         {
-            if (query.Projection.Count == 0 || query.Projection.All(p => !ValidField(fields, p)))
+            if (query.Projection.Count == 0)
                 return "SELECT " + String.Join(", ", fields.Select(p => Field(p)));
-            return "SELECT " + String.Join(", ", query.Projection.Where(p => ValidField(fields, p)).Select(p => Field(p)));
+            return "SELECT " + String.Join(", ", query.Projection.Select(p => Field(p)));
         }
 
-        public static string CountSql(RepositoryQuery query, List<string> fields)
+        public static string CountSql(Query query, List<string> fields)
         {
             return $"SELECT COUNT({Field(fields[0])})";
         }
 
-        public static string OrderSql(RepositoryQuery query, List<string> fields, string defaultOrderBy)
+        public static string OrderSql(Query query, List<string> fields, string defaultOrderBy)
         {
-            if (query.Sort.Count == 0 || query.Sort.All(p => !ValidField(fields, p.Field)))
+            if (query.Sort.Count == 0)
             {
                 if (!String.IsNullOrEmpty(defaultOrderBy))
                     return defaultOrderBy;
                 return $"ORDER BY {Field(fields[0])} ASC";
             }
-            return "ORDER BY " + String.Join(", ", query.Sort.Where(p => ValidField(fields, p.Field)).Select(p => $"{Field(p.Field)} {(p.Direction > 0 ? "ASC" : "DESC")}"));
+            return "ORDER BY " + String.Join(", ", query.Sort.Select(p => $"{Field(p.Field)} {(p.Direction > 0 ? "ASC" : "DESC")}"));
         }
 
-        public static string PageSql(RepositoryQuery query)
+        public static string PageSql(Query query)
         {
             if (query.Skip == 0 && query.Take == 0)
                 return String.Empty;
@@ -37,16 +37,6 @@ namespace Webfuel
         public static string Field(string field)
         {
             return "[" + field + "]";
-        }
-
-        public static bool ValidField(IEnumerable<string> fields, string field)
-        {
-            foreach (var f in fields)
-            {
-                if (String.Compare(f, field, true) == 0)
-                    return true;
-            }
-            return false;
         }
 
         public static List<SqlParameter>? SqlParameters(List<RepositoryQueryParameter> parameters)
@@ -65,7 +55,7 @@ namespace Webfuel
             return sqlParameters;
         }
 
-        public static string FilterSql(RepositoryQuery query, List<RepositoryQueryParameter> parameters)
+        public static string FilterSql(Query query, List<RepositoryQueryParameter> parameters)
         {
             if (query.Filters.Count == 0)
                 return String.Empty;
@@ -73,49 +63,49 @@ namespace Webfuel
             return "WHERE " + String.Join(" AND ", query.Filters.Select(p => FilterSql(p, parameters)));
         }
 
-        public static string FilterSql(RepositoryQueryFilter filter, List<RepositoryQueryParameter> parameters)
+        public static string FilterSql(QueryFilter filter, List<RepositoryQueryParameter> parameters)
         {
             switch (filter.Op)
             {
-                case RepositoryQueryOp.Equal:
+                case QueryOp.Equal:
                     if (filter.Value == null)
                         return $"{Field(filter.Field)} IS NULL";
                     return $"{Field(filter.Field)} = {PushParameter(filter.Value, parameters)}";
 
-                case RepositoryQueryOp.NotEqual:
+                case QueryOp.NotEqual:
                     if (filter.Value == null)
                         return $"{Field(filter.Field)} IS NOT NULL";
                     return $"{Field(filter.Field)} != {PushParameter(filter.Value, parameters)}";
 
-                case RepositoryQueryOp.Contains:
+                case QueryOp.Contains:
                     return $"{Field(filter.Field)} LIKE ('%' + {PushParameter(filter.Value, parameters)} + '%')";
 
-                case RepositoryQueryOp.StartsWith:
+                case QueryOp.StartsWith:
                     return $"{Field(filter.Field)} LIKE ({PushParameter(filter.Value, parameters)} + '%')";
 
-                case RepositoryQueryOp.EndsWith:
+                case QueryOp.EndsWith:
                     return $"{Field(filter.Field)} LIKE ('%' + {PushParameter(filter.Value, parameters)})";
 
-                case RepositoryQueryOp.And:
+                case QueryOp.And:
                     if (filter.Filters == null || filter.Filters.Count == 0)
                         return "(TRUE)";
                     return "(" + String.Join(" AND ", filter.Filters.Select(p => FilterSql(p, parameters))) + ")";
 
-                case RepositoryQueryOp.Or:
+                case QueryOp.Or:
                     if (filter.Filters == null || filter.Filters.Count == 0)
                         return "(TRUE)";
                     return "(" + String.Join(" OR ", filter.Filters.Select(p => FilterSql(p, parameters))) + ")";
 
-                case RepositoryQueryOp.LessThan:
+                case QueryOp.LessThan:
                     return $"{Field(filter.Field)} < {PushParameter(filter.Value, parameters)}";
 
-                case RepositoryQueryOp.GreaterThan:
+                case QueryOp.GreaterThan:
                     return $"{Field(filter.Field)} > {PushParameter(filter.Value, parameters)}";
 
-                case RepositoryQueryOp.LessThanOrEqual:
+                case QueryOp.LessThanOrEqual:
                     return $"{Field(filter.Field)} <= {PushParameter(filter.Value, parameters)}";
 
-                case RepositoryQueryOp.GreaterThanOrEqual:
+                case QueryOp.GreaterThanOrEqual:
                     return $"{Field(filter.Field)} >= {PushParameter(filter.Value, parameters)}";
 
             }
@@ -129,14 +119,36 @@ namespace Webfuel
             return name;
         }
 
-        public static void PurgeFilters(RepositoryQuery query, IEnumerable<string> fields)
+        public static void ValidateFields(Query query, IEnumerable<string> fields)
         {
-            query.Transform((filter) =>
+            ValidateFields(query.Filters, fields);
+            foreach (var field in query.Projection)
+                ValidateField(field, fields);
+            foreach (var sort in query.Sort)
+                ValidateField(sort.Field, fields);
+        }
+
+        public static void ValidateFields(List<QueryFilter> filters, IEnumerable<string> fields)
+        {
+            foreach (var filter in filters)
             {
-                if (!ValidField(fields, filter.Field))
-                    return null;
-                return filter;
-            });
+                if(filter.Op == QueryOp.And || filter.Op == QueryOp.Or)
+                {
+                    if (filter.Filters == null || filter.Filters.Count == 0)
+                        throw new InvalidOperationException("Empty filter clause found in query");
+                    ValidateFields(filter.Filters, fields);
+                }
+                else
+                {
+                    ValidateField(filter.Field, fields);
+                }
+            }
+        }
+
+        public static void ValidateField(string field, IEnumerable<string> fields)
+        {
+            if (!fields.Contains(field, StringComparer.OrdinalIgnoreCase))
+                throw new InvalidOperationException("Invalid field found in query");
         }
     }
 }

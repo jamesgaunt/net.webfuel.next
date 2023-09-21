@@ -1,11 +1,14 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { IQueryUserListView, IUserListView } from 'api/api.types';
+import { Router } from '@angular/router';
 import { UserApi } from 'api/user.api';
 import { DialogService } from 'core/dialog.service';
-import { DataSource } from '../../../../shared/data-source';
+import { IQueryUser, IQueryUserGroup, IUser, IUserGroup } from '../../../../api/api.types';
+import { GridDataSource } from '../../../../shared/data-source/grid-data-source';
+import _ from '../../../../shared/underscore';
 import { UserCreateDialogComponent } from '../user-create-dialog/user-create-dialog.component';
-import { Router } from '@angular/router';
+import { UserGroupApi } from '../../../../api/user-group.api';
+import { LookupDataSource } from '../../../../shared/data-source/lookup-data-source';
 
 @Component({
   selector: 'user-list',
@@ -16,17 +19,22 @@ export class UserListComponent {
     private router: Router,
     private dialogService: DialogService,
     private userApi: UserApi,
+    private userGroupApi: UserGroupApi
   ) {
   }
 
   filterForm = new FormGroup({
-    search: new FormControl('')
+    search: new FormControl('', { nonNullable: true })
   });
 
-  dataSource = new DataSource<IUserListView, IQueryUserListView>({
-    fetch: (query) => this.userApi.queryUserListView(query),
+  dataSource = new GridDataSource<IUser, IQueryUser>({
+    fetch: (query) => this.userApi.queryUser(_.merge(query, this.filterForm.getRawValue())),
     filterGroup: this.filterForm
   });
+
+  userGroupLookup = new LookupDataSource<IUserGroup, IQueryUserGroup>({
+    fetch: (query) => this.userGroupApi.queryUserGroup(_.merge({ search: "" }, query))
+  })
 
   add() {
     this.dialogService.open(UserCreateDialogComponent, {
@@ -34,11 +42,11 @@ export class UserListComponent {
     });
   }
 
-  edit(item: IUserListView) {
+  edit(item: IUser) {
     this.router.navigate(['user/user-item', item.id]);
   }
 
-  delete(item: IUserListView) {
+  delete(item: IUser) {
     this.dialogService.confirmDelete({
       title: item.email,
       confirmedCallback: () => {

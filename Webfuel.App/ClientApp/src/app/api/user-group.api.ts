@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiService, ApiOptions } from '../core/api.service';
-import { ICreateUserGroup, IUserGroup, IUpdateUserGroup, IQueryUserGroupListView, IQueryResult, IUserGroupListView } from './api.types';
+import { ICreateUserGroup, IUserGroup, IUpdateUserGroup, IQueryUserGroup, IQueryResult } from './api.types';
 
 @Injectable()
 export class UserGroupApi {
@@ -20,8 +20,8 @@ export class UserGroupApi {
         return this.apiService.request("DELETE", "api/delete-user-group/" + params.id + "", undefined, options);
     }
     
-    public queryUserGroupListView (body: IQueryUserGroupListView, options?: ApiOptions): Observable<IQueryResult<IUserGroupListView>> {
-        return this.apiService.request("POST", "api/query-user-group-list-view", body, options);
+    public queryUserGroup (body: IQueryUserGroup, options?: ApiOptions): Observable<IQueryResult<IUserGroup>> {
+        return this.apiService.request("POST", "api/query-user-group", body, options);
     }
     
     public resolveUserGroup (params: { id: string }, options?: ApiOptions): Observable<IUserGroup> {

@@ -14,7 +14,7 @@ namespace Webfuel.Domain.Common
         Task<User> UpdateUserAsync(User updated, User original);
         Task<User> UpdateUserAsync(User updated, User original, IEnumerable<string> properties);
         Task DeleteUserAsync(Guid key);
-        Task<QueryResult<User>> QueryUserAsync(RepositoryQuery query);
+        Task<QueryResult<User>> QueryUserAsync(Query query);
         Task<User?> GetUserAsync(Guid id);
         Task<User> RequireUserAsync(Guid id);
         Task<int> CountUserAsync();
@@ -57,6 +57,7 @@ namespace Webfuel.Domain.Common
             if(updated.PasswordResetToken != original.PasswordResetToken) _properties.Add("PasswordResetToken");
             if(updated.PasswordResetValidUntil != original.PasswordResetValidUntil) _properties.Add("PasswordResetValidUntil");
             if(updated.Developer != original.Developer) _properties.Add("Developer");
+            if(updated.UserGroupId != original.UserGroupId) _properties.Add("UserGroupId");
             if(_properties.Count == 0) return updated;
             return await RepositoryService.ExecuteUpdateAsync(updated, _properties);
         }
@@ -73,6 +74,7 @@ namespace Webfuel.Domain.Common
             if(properties.Contains("PasswordResetToken") && updated.PasswordResetToken != original.PasswordResetToken) _properties.Add("PasswordResetToken");
             if(properties.Contains("PasswordResetValidUntil") && updated.PasswordResetValidUntil != original.PasswordResetValidUntil) _properties.Add("PasswordResetValidUntil");
             if(properties.Contains("Developer") && updated.Developer != original.Developer) _properties.Add("Developer");
+            if(properties.Contains("UserGroupId") && updated.UserGroupId != original.UserGroupId) _properties.Add("UserGroupId");
             if(_properties.Count == 0) return updated;
             return await RepositoryService.ExecuteUpdateAsync(updated, _properties);
         }
@@ -80,7 +82,7 @@ namespace Webfuel.Domain.Common
         {
             await RepositoryService.ExecuteDeleteAsync<User>(key);
         }
-        public async Task<QueryResult<User>> QueryUserAsync(RepositoryQuery query)
+        public async Task<QueryResult<User>> QueryUserAsync(Query query)
         {
             return await RepositoryQueryService.ExecuteQueryAsync(query, new UserRepositoryAccessor());
         }

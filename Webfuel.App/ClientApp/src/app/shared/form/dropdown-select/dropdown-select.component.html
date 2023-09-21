@@ -1,0 +1,42 @@
+<div #popupAnchor class="control">
+  <div class="input" (click)="togglePopup($event)">
+    <span *ngIf="dataSource.pickedItems.length === 0">
+      {{ placeholder || "&nbsp;" }}
+    </span>
+    <span *ngIf="dataSource.pickedItems.length !== 0">
+      <ng-container *ngTemplateOutlet="_pickedTemplate;context: { $implicit: dataSource.pickedItems[0] }"></ng-container>
+    </span>
+  </div>
+  <!-- Clear Icon -->
+  <div *ngIf="enableClear && dataSource.pickedItems.length !== 0" class="icon is-primary" (click)="clear($event)">
+    <i class="fas fa-times"></i>
+  </div>
+  <!-- Open Icon -->
+  <div class="icon is-primary" (click)="togglePopup($event)">
+    <i class="fas fa-chevron-down"></i>
+  </div>
+</div>
+
+<ng-template #defaultOptionTemplate let-item>
+  {{ item.name }}
+</ng-template>
+
+<ng-template #defaultPickedTemplate let-item>
+  {{ item.name }}
+</ng-template>
+
+<ng-template #popupTemplate>
+  <div class="dropdown-popup">
+    <div class="items" (scroll)="onDropDownScroll($event)">
+      <div *ngFor="let item of dataSource.optionItems" class="dropdown-item" (click)="pickItem(item)">
+        <ng-container *ngTemplateOutlet="_optionTemplate;context: { $implicit: item }"></ng-container>
+      </div>
+      <div *ngIf="dataSource.optionItemsCallback && dataSource.optionItems.length == 0" class="dropdown-loading">
+        Loading...
+      </div>
+      <div *ngIf="!dataSource.optionItemsCallback && dataSource.optionItems.length == 0" class="dropdown-loading">
+        <i>No items available</i>
+      </div>
+    </div>
+  </div>
+</ng-template>

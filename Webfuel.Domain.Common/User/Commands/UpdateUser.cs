@@ -8,6 +8,8 @@ namespace Webfuel.Domain.Common
         public Guid Id { get; set; }
 
         public string Email { get; set; } = String.Empty;
+
+        public Guid UserGroupId { get; set; }
     }
 
     internal class UpdateUserHandler : IRequestHandler<UpdateUser, User>
@@ -25,6 +27,7 @@ namespace Webfuel.Domain.Common
 
             var updated = original.Copy();
             updated.Email = request.Email;
+            updated.UserGroupId = request.UserGroupId;
 
             return await _userRepository.UpdateUserAsync(original: original, updated: updated); ;
         }

@@ -21,7 +21,7 @@ namespace Webfuel.App
             app.MapDelete("api/delete-user-group/{id:guid}", DeleteUserGroup)
                 .AuthorizeClaim((c) => c.Developer);
 
-            app.MapPost("api/query-user-group-list-view", QueryUserGroupListView);
+            app.MapPost("api/query-user-group", QueryUserGroup);
 
             app.MapGet("api/resolve-user-group/{id:guid}", ResolveUserGroup);
         }
@@ -41,7 +41,7 @@ namespace Webfuel.App
             return mediator.Send(new DeleteUserGroup { Id = id });
         }
 
-        public static Task<QueryResult<UserGroupListView>> QueryUserGroupListView([FromBody] QueryUserGroupListView command, IMediator mediator)
+        public static Task<QueryResult<UserGroup>> QueryUserGroup([FromBody] QueryUserGroup command, IMediator mediator)
         {
             return mediator.Send(command);
         }
