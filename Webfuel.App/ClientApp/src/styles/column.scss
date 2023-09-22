@@ -2,8 +2,12 @@
 
 .columns {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   gap: var(--gap);
+
+  &.is-gapless {
+      gap: 0;
+  }
 
   &.is-align-center {
     align-items: center;

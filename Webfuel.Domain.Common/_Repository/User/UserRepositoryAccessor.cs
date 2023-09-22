@@ -25,13 +25,15 @@ namespace Webfuel.Domain.Common
                 case nameof(User.PasswordSalt):
                     return entity.PasswordSalt;
                 case nameof(User.PasswordResetAt):
-                    return entity.PasswordResetAt.ToDateTime();
+                    return entity.PasswordResetAt;
                 case nameof(User.PasswordResetToken):
                     return entity.PasswordResetToken;
                 case nameof(User.PasswordResetValidUntil):
-                    return entity.PasswordResetValidUntil.ToDateTime();
+                    return entity.PasswordResetValidUntil;
                 case nameof(User.Developer):
                     return entity.Developer;
+                case nameof(User.CreatedAt):
+                    return entity.CreatedAt;
                 case nameof(User.UserGroupId):
                     return entity.UserGroupId;
                     default: throw new InvalidOperationException($"Unrecognised entity property {property}");
@@ -60,16 +62,19 @@ namespace Webfuel.Domain.Common
                     entity.PasswordSalt = (string)value!;
                     break;
                 case nameof(User.PasswordResetAt):
-                    entity.PasswordResetAt = new DateTimeUtc((DateTime)value!);
+                    entity.PasswordResetAt = (DateTimeOffset)value!;
                     break;
                 case nameof(User.PasswordResetToken):
                     entity.PasswordResetToken = (Guid)value!;
                     break;
                 case nameof(User.PasswordResetValidUntil):
-                    entity.PasswordResetValidUntil = new DateTimeUtc((DateTime)value!);
+                    entity.PasswordResetValidUntil = (DateTimeOffset)value!;
                     break;
                 case nameof(User.Developer):
                     entity.Developer = (bool)value!;
+                    break;
+                case nameof(User.CreatedAt):
+                    entity.CreatedAt = (DateTimeOffset)value!;
                     break;
                 case nameof(User.UserGroupId):
                     entity.UserGroupId = (Guid)value!;
@@ -108,6 +113,7 @@ namespace Webfuel.Domain.Common
                 yield return "PasswordResetToken";
                 yield return "PasswordResetValidUntil";
                 yield return "Developer";
+                yield return "CreatedAt";
                 yield return "UserGroupId";
             }
         }
@@ -124,6 +130,7 @@ namespace Webfuel.Domain.Common
                 yield return "PasswordResetToken";
                 yield return "PasswordResetValidUntil";
                 yield return "Developer";
+                yield return "CreatedAt";
                 yield return "UserGroupId";
             }
         }

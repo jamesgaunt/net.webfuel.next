@@ -5,14 +5,16 @@ import { SharedModule } from '../shared/shared.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthorizationInterceptor } from './interceptors/authorization.interceptor';
 
+import { ConfirmDeleteDialogComponent } from './dialogs/confirm-delete-dialog.component';
+import { ConfirmDeactivateDialogComponent } from './dialogs/confirm-deactivate-dialog.component';
+
 import { ApiService } from './api.service';
 import { DialogService } from './dialog.service';
 import { GrowlService } from './growl.service';
 import { FormService } from './form.service';
 import { IdentityService } from './identity.service';
-
-import { ConfirmDeleteDialogComponent } from './dialogs/confirm-delete-dialog.component';
 import { ErrorService } from './error.service';
+import { DeactivateService } from './deactivate.service';
 
 @NgModule({
   imports: [
@@ -20,7 +22,8 @@ import { ErrorService } from './error.service';
     SharedModule,
   ],
   declarations: [
-    ConfirmDeleteDialogComponent
+    ConfirmDeleteDialogComponent,
+    ConfirmDeactivateDialogComponent
   ],
   providers: [
     ApiService,
@@ -29,6 +32,7 @@ import { ErrorService } from './error.service';
     GrowlService,
     FormService,
     ErrorService,
+    DeactivateService,
     {
       provide: HTTP_INTERCEPTORS, useClass: AuthorizationInterceptor, multi: true
     }

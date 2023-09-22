@@ -1,0 +1,72 @@
+@import '../../../../styles/config.scss';
+
+.date-calendar {
+  display: inline-block;
+  width: 17rem;
+  max-width: 100% !important;
+  text-align: center;
+  border: 0.1em solid #DCE4EC;
+  user-select: none;
+  background-color: #FFf;
+  white-space: nowrap;
+}
+
+.date-calendar .day-title {
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+  font-weight: bold;
+}
+
+.date-calendar .day-control, .date-calendar .month-control {
+  background-color: #DCE4EC;
+}
+
+.date-calendar .day-control a, .date-calendar .month-control a {
+  font-weight: bold;
+  display: block;
+  padding-top: 0.4em;
+  padding-bottom: 0.4em;
+}
+
+.date-calendar .day-control i, .date-calendar .month-control i {
+}
+
+.date-calendar .day a {
+  display: block;
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+  transition: background-color 0.25s ease;
+}
+
+.date-calendar .day a:hover {
+  background-color: #eee;
+}
+
+.date-calendar .day.inactive a {
+  color: #aaaaaa;
+}
+
+.date-calendar .day.selected a {
+  font-weight: bold;
+  background-color: var(--palette-primary);
+  color: var(--palette-primary-contrast);
+}
+
+.date-calendar .month a {
+  display: block;
+  padding-top: 1.62em;
+  padding-bottom: 1.62em;
+  transition: background-color 0.25s ease;
+}
+
+.date-calendar .month a:hover {
+  background-color: #eee;
+}
+
+.date-calendar .columns {
+  margin: 0 !important;
+
+  & > * {
+      flex: 1;
+  }
+}

@@ -21,9 +21,11 @@ namespace Webfuel.Domain.Common
 
         public async Task<User> Handle(CreateUser request, CancellationToken cancellationToken)
         {
-            return await _userRepository.InsertUser(new User { 
+            return await _userRepository.InsertUser(new User
+            {
                 Email = request.Email,
-                UserGroupId = request.UserGroupId
+                UserGroupId = request.UserGroupId,
+                CreatedAt = DateTimeOffset.UtcNow
             });
         }
     }

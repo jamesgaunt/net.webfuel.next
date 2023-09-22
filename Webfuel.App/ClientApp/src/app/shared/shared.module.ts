@@ -10,11 +10,14 @@ import { ChromeComponent } from './chrome/chrome.component';
 // Form
 import { TextInputComponent } from './form/text-input/text-input.component';
 import { NumberInputComponent } from './form/number-input/number-input.component';
+import { DropDownSelectComponent } from './form/dropdown-select/dropdown-select.component';
+import { DateCalendarComponent } from './form/date-calendar/date-calendar.component';
 
 // Data Grid
 import { DataGridComponent } from './data-grid/data-grid.component';
 import { DataGridColumnComponent } from './data-grid/data-grid-column.component';
-import { DropDownSelectComponent } from './form/dropdown-select/dropdown-select.component';
+import { DataPagerComponent } from './data-pager/data-pager.component';
+import { DataSorterComponent } from './data-sorter/data-sorter.component';
 
 @NgModule({
   imports: [
@@ -32,10 +35,15 @@ import { DropDownSelectComponent } from './form/dropdown-select/dropdown-select.
     TextInputComponent,
     NumberInputComponent,
     DropDownSelectComponent,
+    DateCalendarComponent,
 
     // Data Grid
     DataGridComponent,
     DataGridColumnComponent,
+    DataPagerComponent,
+    DataSorterComponent,
+
+    // Pipes
   ],
   exports: [
     CommonModule,
@@ -50,10 +58,15 @@ import { DropDownSelectComponent } from './form/dropdown-select/dropdown-select.
     TextInputComponent,
     NumberInputComponent,
     DropDownSelectComponent,
+    DateCalendarComponent,
 
     // Data Grid
     DataGridComponent,
     DataGridColumnComponent,
+    DataPagerComponent,
+    DataSorterComponent,
+
+    // Pipes
   ]
 })
 export class SharedModule { }

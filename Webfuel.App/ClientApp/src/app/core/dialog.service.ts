@@ -3,6 +3,7 @@ import { ComponentType } from "@angular/cdk/portal";
 import { Injectable, TemplateRef } from "@angular/core";
 import { noop } from "rxjs";
 import { ConfirmDeleteDialogComponent, IConfirmDeleteDialogOptions } from "./dialogs/confirm-delete-dialog.component";
+import { ConfirmDeactivateDialogComponent, IConfirmDeactivateDialogOptions } from "./dialogs/confirm-deactivate-dialog.component";
 
 export interface IDialogOptions<TResult, TData> {
   data?: TData;
@@ -41,6 +42,17 @@ export class DialogService {
       callback: (result) => {
         if (result === true && options && options.confirmedCallback)
           options.confirmedCallback();
+      },
+      width: '500px'
+    })
+  }
+
+  confirmDeactivate(options?: IConfirmDeactivateDialogOptions) {
+    this.open(ConfirmDeactivateDialogComponent, {
+      data: options,
+      callback: (result) => {
+        if (options && options.callback)
+          options.callback(!!result);
       },
       width: '500px'
     })

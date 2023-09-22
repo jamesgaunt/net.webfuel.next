@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { CreateUser, User, UpdateUser, QueryUser, QueryResult, LoginUser, IdentityToken } from './api.types';
-import { FormControl, Validators } from '@angular/forms';
 
 @Injectable()
 export class UserApi {

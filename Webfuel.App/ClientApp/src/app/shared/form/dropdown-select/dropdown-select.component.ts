@@ -56,11 +56,21 @@ export class DropDownSelectComponent<TItem> implements ControlValueAccessor, OnI
   }
   _dataSource!: SelectDataSource<TItem>
 
+  getId(item: TItem) {
+    return this.dataSource.getId(item);
+  }
+
   // Client Events
 
   pickItem(item: TItem) {
+    var id = this.getId(item);
+    if (this.dataSource.pickedItems.length == 1 && id == this.getId(this.dataSource.pickedItems[0])) {
+      this.closePopup();
+      return; // No change
+    }
+
     this.dataSource.clear();
-    this.dataSource.pick([(<any>item)[this.dataSource.id]], false);
+    this.dataSource.pick([id], false);
     this.closePopup();
     this.doChangeCallback();
   }

@@ -9,6 +9,7 @@ import { UserGroupItemComponent } from './user-group/user-group-item/user-group-
 
 import { UserGroupApi } from '../../api/user-group.api';
 import { UserApi } from '../../api/user.api';
+import { DeactivateService } from '../../core/deactivate.service';
 
 const routes: Routes = [
   {
@@ -18,7 +19,8 @@ const routes: Routes = [
   {
     path: 'user-item/:id',
     component: UserItemComponent,
-    resolve: { user: UserApi.userResolver('id') }
+    resolve: { user: UserApi.userResolver('id') },
+    canDeactivate: [DeactivateService.isPristine<UserItemComponent>()]
   },
   {
     path: 'user-group-list',
@@ -27,7 +29,8 @@ const routes: Routes = [
   {
     path: 'user-group-item/:id',
     component: UserGroupItemComponent,
-    resolve: { userGroup: UserGroupApi.userGroupResolver('id') }
+    resolve: { userGroup: UserGroupApi.userGroupResolver('id') },
+    canDeactivate: [DeactivateService.isPristine<UserGroupItemComponent>()]
   }
 ];
 

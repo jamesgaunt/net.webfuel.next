@@ -1,10 +1,7 @@
 <!-- Head Templates -->
 
 <ng-template #sortHeadTemplate let-dataSource="dataSource">
-  <!--
-  <ez-grid-sorter [column]="name" [label]="label" [dataSource]="dataSource"></ez-grid-sorter>
-    -->
-  {{ label }}
+  <data-sorter [column]="name" [label]="label" [dataSource]="dataSource"></data-sorter>
 </ng-template>
 
 <ng-template #textHeadTemplate>

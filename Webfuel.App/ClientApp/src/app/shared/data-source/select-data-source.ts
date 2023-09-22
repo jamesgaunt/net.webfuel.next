@@ -13,6 +13,10 @@ export class SelectDataSource<TItem>  {
 
   id = "id";
 
+  getId(item: TItem) {
+    return (<any>item)[this.id]
+  }
+
   // Events
 
   change = new EventEmitter<any>();
@@ -69,7 +73,7 @@ export class SelectDataSource<TItem>  {
     {
       var items: any[] = [];
       _.forEach(ids, (id) => {
-        var item = _.find(this.optionItems, (p) => (<any>p)[this.id] === id)
+        var item = _.find(this.optionItems, (p) => this.getId(p) === id)
         if (item)
           items.push(item);
       });
@@ -104,12 +108,12 @@ export class SelectDataSource<TItem>  {
   }
 
   remove(id: string) {
-    this.pickedItems = _.remove(this.pickedItems, p => (<any>p)[this.id] === id);
+    this.pickedItems = _.remove(this.pickedItems, p => this.getId(p) === id);
   }
 
   push(items: TItem[]) {
     _.forEach(items, (item) => {
-      if (item && !_.some(this.pickedItems, p => (<any>p)[this.id] === (<any>item)[this.id]))
+      if (item && !_.some(this.pickedItems, p => this.getId(p) === this.getId(item)))
         this.pickedItems.push(item);
     });
   }

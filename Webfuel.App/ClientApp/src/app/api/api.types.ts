@@ -35,7 +35,7 @@ export interface IdentityUser {
 }
 
 export interface IdentityValidity {
-    validUntil: any;
+    validUntil: string;
     validFromIPAddress: string;
 }
 
@@ -45,6 +45,7 @@ export interface User {
     firstName: string;
     lastName: string;
     developer: boolean;
+    createdAt: string;
     userGroupId: string;
 }
 
@@ -65,11 +66,11 @@ export interface QueryResult<TItem> {
 }
 
 export interface QueryUser extends Query {
+    skip: number;
+    take: number;
     projection?: Array<string>;
     filters?: Array<QueryFilter>;
     sort?: Array<QuerySort>;
-    skip?: number;
-    take?: number;
     search?: string;
 }
 
@@ -86,11 +87,11 @@ export interface QuerySort {
 }
 
 export interface Query {
+    skip: number;
+    take: number;
     projection?: Array<string>;
     filters?: Array<QueryFilter>;
     sort?: Array<QuerySort>;
-    skip?: number;
-    take?: number;
     search?: string;
 }
 
@@ -114,11 +115,11 @@ export interface UpdateUserGroup {
 }
 
 export interface QueryUserGroup extends Query {
+    skip: number;
+    take: number;
     projection?: Array<string>;
     filters?: Array<QueryFilter>;
     sort?: Array<QuerySort>;
-    skip?: number;
-    take?: number;
     search?: string;
 }
 

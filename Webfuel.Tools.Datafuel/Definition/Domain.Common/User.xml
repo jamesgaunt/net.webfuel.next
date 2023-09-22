@@ -14,11 +14,13 @@
     
     <Property Name="PasswordHash" Type="string[256]" JsonIgnore="true" />
     <Property Name="PasswordSalt" Type="string[256]" JsonIgnore="true" />
-    <Property Name="PasswordResetAt" Type="Utc" JsonIgnore="true" />
+    <Property Name="PasswordResetAt" Type="DateTime" JsonIgnore="true" />
     <Property Name="PasswordResetToken" Type="guid" JsonIgnore="true" />
-    <Property Name="PasswordResetValidUntil" Type="Utc" JsonIgnore="true" />
+    <Property Name="PasswordResetValidUntil" Type="DateTime" JsonIgnore="true" />
 
     <Property Name="Developer" Type="boolean" />
+
+    <Property Name="CreatedAt" Type="DateTime" />
     
     <Index Unique="true">
       <Member Name="Email" />

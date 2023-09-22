@@ -298,6 +298,25 @@ export default class Underscore {
     return forceZero ? 0 : null;
   }
 
+  // Miscellaneous 
+
+  static lastName(name: string) {
+    if (!name)
+      return "";
+    var parts = name.split(' ');
+    if (parts.length == 0)
+      return "";
+    return parts[parts.length - 1];
+  }
+
+  static range(size: number): Array<number> {
+    if (size <= 0)
+      return [];
+    var result = Array(size);
+    for (var i = 0; i < size; i++)
+      result[i] = i;
+    return result;
+  }
 
   // Local Storage
 

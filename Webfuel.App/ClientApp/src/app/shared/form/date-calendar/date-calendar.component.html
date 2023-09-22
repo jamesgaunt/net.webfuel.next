@@ -1,0 +1,59 @@
+<div class="date-calendar">
+  <div *ngIf="mode == 'day'">
+    <div class="day-control">
+      <div class="columns is-gapless">
+        <div style="flex-basis: 14.29%"><a (click)="priorYear()"><i class="fas fa-fw fa-angle-double-left"></i></a></div>
+        <div style="flex-basis: 14.29%"><a (click)="priorMonth()"><i class="fas fa-fw fa-angle-left"></i></a></div>
+        <div style="flex-basis: 42.86%"><a (click)="setMode('month')">{{ dayTitle() }}</a></div>
+        <div style="flex-basis: 14.29%"><a (click)="nextMonth()"><i class="fas fa-fw fa-angle-right"></i></a></div>
+        <div style="flex-basis: 14.29%"><a (click)="nextYear()"><i class="fas fa-fw fa-angle-double-right"></i></a></div>
+      </div>
+    </div>
+    <div class="day-title">
+      <div class="columns is-gapless">
+        <div style="flex-basis: 14.29%">Su</div>
+        <div style="flex-basis: 14.29%">Mo</div>
+        <div style="flex-basis: 14.29%">Tu</div>
+        <div style="flex-basis: 14.29%">We</div>
+        <div style="flex-basis: 14.29%">Th</div>
+        <div style="flex-basis: 14.29%">Fr</div>
+        <div style="flex-basis: 14.29%">Sa</div>
+      </div>
+    </div>
+    <div *ngFor="let row of days" class="columns is-gapless">
+      <div *ngFor="let col of row" style="flex-basis: 14.29%" [class]="col.class">
+        <a (click)="pickDay(col)">{{ col.text }}</a>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="mode == 'month'">
+    <div class="month-control">
+      <div class="columns is-gapless">
+        <div style="flex-basis: 14.29%"><a (click)="priorDecade()"><i class="fas fa-fw fa-angle-double-left"></i></a></div>
+        <div style="flex-basis: 14.29%"><a (click)="priorYear()"><i class="fas fa-fw fa-angle-left"></i></a></div>
+        <div style="flex-basis: 42.86%"><a>{{ monthTitle() }}</a></div>
+        <div style="flex-basis: 14.29%"><a (click)="nextYear()"><i class="fas fa-fw fa-angle-right"></i></a></div>
+        <div style="flex-basis: 14.29%"><a (click)="nextDecade()"><i class="fas fa-fw fa-angle-double-right"></i></a></div>
+      </div>
+    </div>
+    <div class="columns is-gapless">
+      <div class="column month"><a (click)="pickMonth(00)">Jan</a></div>
+      <div class="column month"><a (click)="pickMonth(01)">Feb</a></div>
+      <div class="column month"><a (click)="pickMonth(02)">Mar</a></div>
+      <div class="column month"><a (click)="pickMonth(03)">Apr</a></div>
+    </div>
+    <div class="columns is-gapless">
+      <div class="column month"><a (click)="pickMonth(04)">May</a></div>
+      <div class="column month"><a (click)="pickMonth(05)">Jun</a></div>
+      <div class="column month"><a (click)="pickMonth(06)">Jul</a></div>
+      <div class="column month"><a (click)="pickMonth(07)">Aug</a></div>
+    </div>
+    <div class="columns is-gapless">
+      <div class="column month"><a (click)="pickMonth(08)">Sep</a></div>
+      <div class="column month"><a (click)="pickMonth(09)">Oct</a></div>
+      <div class="column month"><a (click)="pickMonth(10)">Nov</a></div>
+      <div class="column month"><a (click)="pickMonth(11)">Dec</a></div>
+    </div>
+  </div>
+</div>
+

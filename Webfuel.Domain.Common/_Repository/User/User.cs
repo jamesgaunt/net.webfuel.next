@@ -14,12 +14,13 @@ namespace Webfuel.Domain.Common
         [JsonIgnore]
         public string PasswordSalt  { get; set; } = String.Empty;
         [JsonIgnore]
-        public DateTimeUtc PasswordResetAt  { get; set; } = new DateTimeUtc(599266080000000000L);
+        public DateTimeOffset PasswordResetAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         [JsonIgnore]
         public Guid PasswordResetToken  { get; set; } = Guid.Empty;
         [JsonIgnore]
-        public DateTimeUtc PasswordResetValidUntil  { get; set; } = new DateTimeUtc(599266080000000000L);
+        public DateTimeOffset PasswordResetValidUntil  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public bool Developer  { get; set; } = false;
+        public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid UserGroupId { get; set; }
         public User Copy()
         {
@@ -34,6 +35,7 @@ namespace Webfuel.Domain.Common
             entity.PasswordResetToken = PasswordResetToken;
             entity.PasswordResetValidUntil = PasswordResetValidUntil;
             entity.Developer = Developer;
+            entity.CreatedAt = CreatedAt;
             entity.UserGroupId = UserGroupId;
             return entity;
         }

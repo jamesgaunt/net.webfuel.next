@@ -174,7 +174,7 @@ namespace Webfuel.Tools.Typefuel
 
         public static bool IsDateTimeType(Type type)
         {
-            if (type == typeof(DateTime) || type == typeof(DateTimeUtc))
+            if (type == typeof(DateTimeOffset))
                 return true;
             return false;
         }

@@ -29,6 +29,7 @@ export class UserGroupItemComponent implements OnInit {
   reset(item: UserGroup) {
     this.item = item;
     this.form.patchValue(item);
+    this.form.markAsPristine();
   }
 
   form = new FormGroup({
@@ -41,11 +42,13 @@ export class UserGroupItemComponent implements OnInit {
       return;
 
     this.userGroupApi.updateUserGroup(this.form.getRawValue(), { successGrowl: "User Group Updated" }).subscribe((result) => {
+      this.reset(result);
       this.router.navigate(['user/user-group-list']);
     });
   }
 
   cancel() {
+    this.reset(this.item);
     this.router.navigate(['user/user-group-list']);
   }
 }

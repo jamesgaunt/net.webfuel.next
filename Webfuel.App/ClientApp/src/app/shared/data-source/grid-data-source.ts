@@ -4,6 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { debounceTime, noop, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Query, QueryFilter, QueryResult, QuerySort } from '../../api/api.types';
+import { EventEmitter } from '@angular/core';
 
 export class GridDataSource<TItem>  {
 
@@ -22,13 +23,17 @@ export class GridDataSource<TItem>  {
     }
   }
 
+  // Events
+
+  change = new EventEmitter<any>();
+
+  // Query
+
   query: Query = {
     skip: 0, take: 10, sort: [], filters: [], projection: [], search: ''
   };
 
   queryResult: QueryResult<TItem> = { totalCount: -1, items: [] }; // totalCount == -1 indicates no results yet returned
-
-  change: BehaviorSubject<GridDataSource<TItem>> = new BehaviorSubject<GridDataSource<TItem>>(this);
 
   // Fetch
 
@@ -50,7 +55,7 @@ export class GridDataSource<TItem>  {
 
   // Sort Helpers
 
-  private sortDirection(field: string) {
+  sortDirection(field: string) {
     if (!this.query.sort || this.query.sort.length === 0)
       return 0;
     let result = 0;
@@ -61,7 +66,7 @@ export class GridDataSource<TItem>  {
     return result;
   }
 
-  private sortBy(field: string, direction: number) {
+  sortBy(field: string, direction: number) {
     let done = false;
     if (!this.query.sort)
       this.query.sort = [];
@@ -77,7 +82,7 @@ export class GridDataSource<TItem>  {
       this.query.sort = [];
   }
 
-  private sortToggle(field: string, reverse?: boolean) {
+  sortToggle(field: string, reverse?: boolean) {
     let direction = this.sortDirection(field);
     if (reverse === true) {
       if (direction < 0)

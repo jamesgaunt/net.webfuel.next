@@ -4,7 +4,5 @@ DateTimeUTC to use DateTimeOffset internally
 
 Date Calendar / Picker
 
-Data Grid Pager / Sorter
 
-Serilog??
 
