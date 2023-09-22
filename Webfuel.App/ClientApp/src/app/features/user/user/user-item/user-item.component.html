@@ -25,6 +25,10 @@
         <label class="label">User Group</label>
         <dropdown-select [dataSource]="userGroupDataSource" placeholder="required" formControlName="userGroupId"></dropdown-select>
       </div>
+      <div class="field">
+        <label class="label">Birthday</label>
+        <date-picker formControlName="birthday"></date-picker>
+      </div>
     </div>
     <div class="buttons">
       <button class="button is-success" (click)="save()">Save</button>
@@ -32,5 +36,5 @@
     </div>
   </form>
   <p>Created {{ item.createdAt | date: 'dd MMM yy HH:mm'}}</p>
-  <pre>{{item|json}}</pre>
+  <pre>{{form.getRawValue()|json}}</pre>
 </div>

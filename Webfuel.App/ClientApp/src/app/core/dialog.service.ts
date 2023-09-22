@@ -4,6 +4,7 @@ import { Injectable, TemplateRef } from "@angular/core";
 import { noop } from "rxjs";
 import { ConfirmDeleteDialogComponent, IConfirmDeleteDialogOptions } from "./dialogs/confirm-delete-dialog.component";
 import { ConfirmDeactivateDialogComponent, IConfirmDeactivateDialogOptions } from "./dialogs/confirm-deactivate-dialog.component";
+import { DatePickerDialogComponent, IDatePickerDialogOptions } from "./dialogs/date-picker-dialog.component";
 
 export interface IDialogOptions<TResult, TData> {
   data?: TData;
@@ -55,6 +56,17 @@ export class DialogService {
           options.callback(!!result);
       },
       width: '500px'
+    })
+  }
+
+  pickDate(options?: IDatePickerDialogOptions) {
+    this.open(DatePickerDialogComponent, {
+      data: options,
+      callback: (result) => {
+        if (options && options.callback)
+          options.callback(<any>result);
+      },
+      width: 'auto'
     })
   }
 }

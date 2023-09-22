@@ -45,6 +45,7 @@ export interface User {
     firstName: string;
     lastName: string;
     developer: boolean;
+    birthday: string;
     createdAt: string;
     userGroupId: string;
 }

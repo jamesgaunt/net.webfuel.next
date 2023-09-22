@@ -32,6 +32,8 @@ namespace Webfuel.Domain.Common
                     return entity.PasswordResetValidUntil;
                 case nameof(User.Developer):
                     return entity.Developer;
+                case nameof(User.Birthday):
+                    return entity.Birthday;
                 case nameof(User.CreatedAt):
                     return entity.CreatedAt;
                 case nameof(User.UserGroupId):
@@ -73,6 +75,9 @@ namespace Webfuel.Domain.Common
                 case nameof(User.Developer):
                     entity.Developer = (bool)value!;
                     break;
+                case nameof(User.Birthday):
+                    entity.Birthday = DateOnly.FromDateTime((DateTime)value!);
+                    break;
                 case nameof(User.CreatedAt):
                     entity.CreatedAt = (DateTimeOffset)value!;
                     break;
@@ -113,6 +118,7 @@ namespace Webfuel.Domain.Common
                 yield return "PasswordResetToken";
                 yield return "PasswordResetValidUntil";
                 yield return "Developer";
+                yield return "Birthday";
                 yield return "CreatedAt";
                 yield return "UserGroupId";
             }
@@ -130,6 +136,7 @@ namespace Webfuel.Domain.Common
                 yield return "PasswordResetToken";
                 yield return "PasswordResetValidUntil";
                 yield return "Developer";
+                yield return "Birthday";
                 yield return "CreatedAt";
                 yield return "UserGroupId";
             }

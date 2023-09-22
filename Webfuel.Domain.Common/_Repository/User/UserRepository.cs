@@ -57,6 +57,7 @@ namespace Webfuel.Domain.Common
             if(updated.PasswordResetToken != original.PasswordResetToken) _properties.Add("PasswordResetToken");
             if(updated.PasswordResetValidUntil != original.PasswordResetValidUntil) _properties.Add("PasswordResetValidUntil");
             if(updated.Developer != original.Developer) _properties.Add("Developer");
+            if(updated.Birthday != original.Birthday) _properties.Add("Birthday");
             if(updated.CreatedAt != original.CreatedAt) _properties.Add("CreatedAt");
             if(updated.UserGroupId != original.UserGroupId) _properties.Add("UserGroupId");
             if(_properties.Count == 0) return updated;
@@ -75,6 +76,7 @@ namespace Webfuel.Domain.Common
             if(properties.Contains("PasswordResetToken") && updated.PasswordResetToken != original.PasswordResetToken) _properties.Add("PasswordResetToken");
             if(properties.Contains("PasswordResetValidUntil") && updated.PasswordResetValidUntil != original.PasswordResetValidUntil) _properties.Add("PasswordResetValidUntil");
             if(properties.Contains("Developer") && updated.Developer != original.Developer) _properties.Add("Developer");
+            if(properties.Contains("Birthday") && updated.Birthday != original.Birthday) _properties.Add("Birthday");
             if(properties.Contains("CreatedAt") && updated.CreatedAt != original.CreatedAt) _properties.Add("CreatedAt");
             if(properties.Contains("UserGroupId") && updated.UserGroupId != original.UserGroupId) _properties.Add("UserGroupId");
             if(_properties.Count == 0) return updated;

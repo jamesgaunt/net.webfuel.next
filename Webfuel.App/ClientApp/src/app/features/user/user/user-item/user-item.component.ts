@@ -41,7 +41,8 @@ export class UserItemComponent implements OnInit {
   form = new FormGroup({
     id: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     email: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
-    userGroupId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true })
+    userGroupId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
+    birthday: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
   });
 
   save() {

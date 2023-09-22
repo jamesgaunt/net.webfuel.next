@@ -1,11 +1,12 @@
 import { formatDate } from "@angular/common";
+import _ from '../../underscore';
 
 export class Day {
 
   private constructor(year: number, month: number, day: number) {
     this._year = year;
     this._month = month;
-    this._day = day;
+    this._dayOfMonth = day;
   }
 
   get year() {
@@ -18,31 +19,27 @@ export class Day {
   }
   private _month: number;
 
-  get day() {
-    return this._day;
+  get dayOfMonth() {
+    return this._dayOfMonth;
   }
-  private _day: number;
+  private _dayOfMonth: number;
 
-  get weekDay() {
+  get dayOfWeek() {
     return this.toDate().getDay();
   }
 
   isSame(day: Day | null | undefined) {
-    if (!day)
+    if (!_.isObject(day))
       return false;
-    return day.day === this.day && day.month === this.month && day.year === this.year;
+    return day!.dayOfMonth === this.dayOfMonth && day!.month === this.month && day!.year === this.year;
   }
 
   format(pattern: string) {
     return formatDate(this.toDate(), pattern, "en-GB");
   }
 
-  toISOString() {
-    return "!!!";
-  }
-
   toDate() {
-    return new Date(this.year, this.month - 1, this.day);
+    return new Date(this.year, this.month - 1, this.dayOfMonth);
   }
 
   clone() {
@@ -80,7 +77,8 @@ export class Day {
   }
 
   withMonth(month: number) {
-    return this.addMonths(this.month - month);
+    var offset = month - this.month;
+    return this.addMonths(offset);
   }
 
   // Constructors
@@ -93,7 +91,32 @@ export class Day {
     return new Day(date.getFullYear(), date.getMonth() + 1, date.getDate());
   }
 
-  static fromObj(obj: any) {
-    return this.today();
+  static parse(obj?: any): Day | null {
+    if (!obj)
+      return null;
+
+    if (obj instanceof Date)
+      return this.fromDate(obj);
+
+    if (!_.isString(obj))
+      return null;
+
+    var text = "" + obj;
+
+    if (text.indexOf('T') > 0)
+      text = text.split('T')[0];
+
+    var parts = text.split("-");
+    if (parts.length != 3)
+      return null;
+
+    var y = _.parseNumber(parts[0], false);
+    var m = _.parseNumber(parts[1], false);
+    var d = _.parseNumber(parts[2], false);
+
+    if (y === null || m === null || d === null)
+      return null;
+
+    return new Day(y, m, d);
   }
 }

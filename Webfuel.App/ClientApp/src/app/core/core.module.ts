@@ -15,6 +15,7 @@ import { FormService } from './form.service';
 import { IdentityService } from './identity.service';
 import { ErrorService } from './error.service';
 import { DeactivateService } from './deactivate.service';
+import { DatePickerDialogComponent } from './dialogs/date-picker-dialog.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { DeactivateService } from './deactivate.service';
   ],
   declarations: [
     ConfirmDeleteDialogComponent,
-    ConfirmDeactivateDialogComponent
+    ConfirmDeactivateDialogComponent,
+    DatePickerDialogComponent
   ],
   providers: [
     ApiService,

@@ -1,7 +1,5 @@
 
 
-DateTimeUTC to use DateTimeOffset internally
-
 Date Calendar / Picker
 
 

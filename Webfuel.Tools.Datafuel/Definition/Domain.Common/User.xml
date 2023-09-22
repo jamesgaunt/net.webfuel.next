@@ -20,6 +20,8 @@
 
     <Property Name="Developer" Type="boolean" />
 
+    <Property Name="Birthday" Type="Date" />
+    
     <Property Name="CreatedAt" Type="DateTime" />
     
     <Index Unique="true">

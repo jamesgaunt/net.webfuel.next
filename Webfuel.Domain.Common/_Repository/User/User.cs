@@ -20,6 +20,7 @@ namespace Webfuel.Domain.Common
         [JsonIgnore]
         public DateTimeOffset PasswordResetValidUntil  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public bool Developer  { get; set; } = false;
+        public DateOnly Birthday  { get; set; } = new DateOnly(1900, 1, 1);
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid UserGroupId { get; set; }
         public User Copy()
@@ -35,6 +36,7 @@ namespace Webfuel.Domain.Common
             entity.PasswordResetToken = PasswordResetToken;
             entity.PasswordResetValidUntil = PasswordResetValidUntil;
             entity.Developer = Developer;
+            entity.Birthday = Birthday;
             entity.CreatedAt = CreatedAt;
             entity.UserGroupId = UserGroupId;
             return entity;

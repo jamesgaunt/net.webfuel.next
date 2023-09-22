@@ -12,6 +12,7 @@ import { TextInputComponent } from './form/text-input/text-input.component';
 import { NumberInputComponent } from './form/number-input/number-input.component';
 import { DropDownSelectComponent } from './form/dropdown-select/dropdown-select.component';
 import { DateCalendarComponent } from './form/date-calendar/date-calendar.component';
+import { DatePickerComponent } from './form/date-picker/date-picker.component';
 
 // Data Grid
 import { DataGridComponent } from './data-grid/data-grid.component';
@@ -36,6 +37,7 @@ import { DataSorterComponent } from './data-sorter/data-sorter.component';
     NumberInputComponent,
     DropDownSelectComponent,
     DateCalendarComponent,
+    DatePickerComponent,
 
     // Data Grid
     DataGridComponent,
@@ -59,6 +61,7 @@ import { DataSorterComponent } from './data-sorter/data-sorter.component';
     NumberInputComponent,
     DropDownSelectComponent,
     DateCalendarComponent,
+    DatePickerComponent,
 
     // Data Grid
     DataGridComponent,

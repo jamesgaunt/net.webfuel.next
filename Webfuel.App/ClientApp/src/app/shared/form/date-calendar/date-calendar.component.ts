@@ -1,7 +1,7 @@
 import { Input, Output, Component, EventEmitter, HostListener, ChangeDetectorRef, Self, Optional, OnChanges, SimpleChanges, OnInit, forwardRef, ChangeDetectionStrategy } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, NgControl } from '@angular/forms';
 import { Day } from './Day';
-import { first } from 'rxjs';
+import { first, noop } from 'rxjs';
 
 interface IDay {
   text: string;
@@ -26,6 +26,7 @@ interface IDay {
 export class DateCalendarComponent implements ControlValueAccessor, OnInit {
 
   constructor(
+    private cd: ChangeDetectorRef
   ) {
   }
 
@@ -51,16 +52,16 @@ export class DateCalendarComponent implements ControlValueAccessor, OnInit {
     this.days = [[]];
     var firstDayOfMonth = this.period.startOfMonth();
 
-    var date = firstDayOfMonth.addDays(-firstDayOfMonth.weekDay);
+    var date = firstDayOfMonth.addDays(-firstDayOfMonth.dayOfWeek);
     for (var i = 0; i < 42; i++) {
       if (this.days[this.days.length - 1].length == 7)
         this.days.push([]);
       this.days[this.days.length - 1].push({
         value: date.clone(),
-        selected: this.value !== null && date.isSame(this.value),
-        text: "" + date.day,
+        selected: date.isSame(this.value),
+        text: "" + date.dayOfMonth,
         class: "day"
-          + (this.value !== null && date.isSame(this.value) ? " selected" : "")
+          + (date.isSame(this.value) ? " selected" : "")
           + (date.month == this.period.month ? " active" : " inactive")
       });
       date = date.addDays(1);
@@ -122,36 +123,35 @@ export class DateCalendarComponent implements ControlValueAccessor, OnInit {
   pickDay(day: IDay) {
     this.value = day.value;
     this.populateDays();
-
-    var value = this.value ? this.value.toISOString() : null;
+    var value = this.value ? this.value.format("YYYY-MM-dd") : null;
     this.onChange(value);
   }
 
   // ControlValueAccessor
 
   writeValue(obj: any): void {
-    if (!obj) {
-      this.value = null;
+    this.value = Day.parse(obj);
+    if (this.value == null) {
       this.period = Day.today().startOfMonth();
     } else {
-      this.value = Day.fromObj(obj);
       this.period = this.value.startOfMonth();
     }
+    this.populateDays();
   }
 
-  registerOnChange(fn: any): void {
+  public registerOnChange(fn: (value: string | null) => void): void {
     this.onChange = fn;
   }
-  private onChange: (_: any) => void = () => { };
+  onChange: (value: string | null) => void = noop;
 
-  registerOnTouched(fn: any): void {
+  public registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
-  private onTouched: () => void = () => { };
+  onTouched: () => void = noop;
 
-  setDisabledState(isDisabled: boolean): void {
-    this.isDisabled = isDisabled;
+  public setDisabledState?(isDisabled: boolean): void {
+    this._isDisabled = isDisabled;
   }
-  isDisabled: boolean = false;
+  private _isDisabled = false;
 }
 
