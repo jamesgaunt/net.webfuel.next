@@ -23,11 +23,11 @@
 </ng-template>
 
 <ng-template #dateItemTemplate let-item>
-  {{ item[name] | date: 'dd/MM/yy' }}
+  {{ item[name] | date: 'dd MMM yyyy' }}
 </ng-template>
 
-<ng-template #utcItemTemplate let-item>
-  {{ item[name] | date: 'dd/MM/yy HH:mm' }}
+<ng-template #dateTimeItemTemplate let-item>
+  {{ item[name] | date: 'dd MMM yyyy HH:mm' }}
 </ng-template>
 
 

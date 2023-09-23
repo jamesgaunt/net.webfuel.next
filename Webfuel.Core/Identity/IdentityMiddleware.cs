@@ -22,33 +22,19 @@ namespace Webfuel
             if (token != null) { 
                 context.SetState(IdentityToken.Key, token);
             }
-
             await _request(context);
         }
 
         IdentityToken? GetIdentityToken(HttpContext context)
         {
-            var jsonToken = ReadHeaderJson(context);
-            if (String.IsNullOrEmpty(jsonToken))
-                return null;
-            
-            var token = JsonSerializer.Deserialize<IdentityToken>(jsonToken, new JsonSerializerOptions { 
-                PropertyNameCaseInsensitive = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                NumberHandling = JsonNumberHandling.AllowReadingFromString
-            });
-
-            if (token == null)
+            var tokenString = ReadHeaderJson(context);
+            if (String.IsNullOrEmpty(tokenString))
                 return null;
 
-            if (!_identityTokenService.ValidateToken(token))
-                return null;
-
-            return token;
+            return _identityTokenService.ValidateToken(tokenString);
         }
 
         string? ReadHeaderJson(HttpContext httpContext)
-            
         {
             if (!httpContext.Request.Headers.ContainsKey(IdentityToken.Key))
                 return null;

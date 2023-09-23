@@ -1,15 +1,16 @@
-export enum ErrorResonseType {
-    UnknownError = 0,
-    ValidationError = 1,
-    NotAuthorizedError = 2,
-    NotAuthenticatedError = 3,
-    DatabaseError = 4,
+export interface ProblemDetails {
+    type: string;
+    title: string;
+    detail: string;
+    status: number;
 }
 
-export interface ErrorResponse {
-    errorType: ErrorResonseType;
-    message: string;
+export interface ValidationProblemDetails extends ProblemDetails {
     validationErrors: Array<ValidationError>;
+    type: string;
+    title: string;
+    detail: string;
+    status: number;
 }
 
 export interface ValidationError {
@@ -17,26 +18,8 @@ export interface ValidationError {
     message: string;
 }
 
-export interface IdentityClaims {
-    developer: boolean;
-    canAccessUsers: boolean;
-}
-
-export interface IdentityToken {
-    user: IdentityUser;
-    claims: IdentityClaims;
-    validity: IdentityValidity;
-    signature: string;
-}
-
-export interface IdentityUser {
-    id: string;
+export interface ClientConfiguration {
     email: string;
-}
-
-export interface IdentityValidity {
-    validUntil: string;
-    validFromIPAddress: string;
 }
 
 export interface User {
@@ -94,6 +77,10 @@ export interface Query {
     filters?: Array<QueryFilter>;
     sort?: Array<QuerySort>;
     search?: string;
+}
+
+export interface StringResult {
+    value: string;
 }
 
 export interface LoginUser {

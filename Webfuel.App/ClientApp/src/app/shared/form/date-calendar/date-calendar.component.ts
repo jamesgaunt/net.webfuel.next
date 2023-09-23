@@ -66,6 +66,7 @@ export class DateCalendarComponent implements ControlValueAccessor, OnInit {
       });
       date = date.addDays(1);
     }
+    this.cd.detectChanges();
   }
 
   // Month Mode

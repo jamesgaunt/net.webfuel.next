@@ -16,6 +16,8 @@ import { IdentityService } from './identity.service';
 import { ErrorService } from './error.service';
 import { DeactivateService } from './deactivate.service';
 import { DatePickerDialogComponent } from './dialogs/date-picker-dialog.component';
+import { ConfigurationService } from './configuration.service';
+import { EventService } from './event.service';
 
 @NgModule({
   imports: [
@@ -29,11 +31,13 @@ import { DatePickerDialogComponent } from './dialogs/date-picker-dialog.componen
   ],
   providers: [
     ApiService,
-    IdentityService, 
+    IdentityService,
+    ConfigurationService,
     DialogService,
     GrowlService,
     FormService,
     ErrorService,
+    EventService,
     DeactivateService,
     {
       provide: HTTP_INTERCEPTORS, useClass: AuthorizationInterceptor, multi: true

@@ -22,30 +22,30 @@ namespace Webfuel
             }
             catch (ValidationException exception)
             {
-                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                await context.Response.WriteAsJsonAsync(exception.ToError());
+                await exception.ToProblemDetails().ApplyTo(context);
             }
             catch (NotAuthorizedException exception)
             {
-                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                await context.Response.WriteAsJsonAsync(exception.ToError());
+                await exception.ToProblemDetails().ApplyTo(context);
             }
             catch (NotAuthenticatedException exception)
             {
-                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                await context.Response.WriteAsJsonAsync(exception.ToError());
+                await exception.ToProblemDetails().ApplyTo(context);
             }
             catch (SqlException exception)
             {
-                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                await context.Response.WriteAsJsonAsync(exception.ToError());
+                await exception.ToProblemDetails().ApplyTo(context);
             }
-            catch (Exception exception)
+            catch 
             {
-                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                await context.Response.WriteAsJsonAsync(new ErrorResponse { ErrorType = ErrorResonseType.UnknownError, Message = exception.Message });
+                await new ProblemDetails
+                {
+                    Type = "/internal-server-error",
+                    Title = "Interal Server Error",
+                    Status = (int)HttpStatusCode.InternalServerError,
+                }
+                .ApplyTo(context);
             }
-
         }
     }
 }

@@ -39,6 +39,7 @@ namespace Webfuel.App
                 app.UseMiddleware<IdentityMiddleware>();
 
                 app.UseStaticFiles();
+
                 app.UseApiServices<Program>();
 
                 app.Run();

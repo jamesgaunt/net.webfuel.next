@@ -25,17 +25,16 @@ export class ApiService {
     options = options || {};
 
     var observable = <Observable<TResponse>>this.httpClient.request(
-      method,
-      url + "?r=" + Math.random(), {
+      method, url, {
         body: body,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        params: { 'r': Math.random() }
       });
 
     return observable.pipe(
       map(result => {
         if (options?.successGrowl)
           this.growlService.growlSuccess(options.successGrowl);
-
         return result;
       }),
       catchError(err => {

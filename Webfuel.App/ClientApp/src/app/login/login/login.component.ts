@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit {
       return;
 
     this.identityService.login(this.form.getRawValue()).subscribe((result) => {
-      console.log(result);
       if (result) {
         this.router.navigateByUrl("/home");
       } else {

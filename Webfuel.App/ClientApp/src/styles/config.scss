@@ -20,9 +20,12 @@
   --palette-danger: hsl(351, 52%, 43%);
   --palette-danger-hover: hsl(351, 52%, 38%);
   --palette-danger-contrast: #FFF;
+  --palette-control: hsl(210, 30%, 89%);
+  --palette-control-hover: hsl(210, 30%, 86%);
+  --palette-control-contrast: #000;
 }
 
-$paletteAction: 'primary', 'success', 'warning', 'danger';
+$paletteAction: 'primary', 'success', 'warning', 'danger', 'control';
 
 :root {
   --font-family: "Poppins", sans-serif;

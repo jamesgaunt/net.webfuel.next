@@ -1,0 +1,45 @@
+@import 'config.scss';
+
+.icon-menu {
+  display: flex;
+  gap: 1rem;
+
+  a {
+    color: #000;
+    text-align: center;
+    display: inline-block;
+    padding: 0.5rem;
+    cursor: pointer;
+    width: 8rem;
+    vertical-align: top;
+    background-color: #fff;
+    border: 1px solid #eee;
+    transition: box-shadow 0.25s ease;
+
+    i {
+      font-size: 2.5rem;
+      transition: color 0.25s ease;
+      cursor: pointer;
+      padding: 0.3rem;
+      color: #555;
+    }
+
+    &:hover {
+      box-shadow: 0 0 10px RGBA(0, 0, 0, 0.4);
+
+      i {
+        color: var(--palette-primary);
+      }
+    }
+
+
+    label {
+      display: block;
+      margin-top: 0.2rem;
+      font-size: 0.8rem;
+      line-height: 1.2rem;
+      min-height: 2.4rem;
+      cursor: pointer;
+    }
+  }
+}

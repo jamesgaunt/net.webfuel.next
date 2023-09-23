@@ -36,6 +36,7 @@ export class UserItemComponent implements OnInit {
   reset(item: User) {
     this.item = item;
     this.form.patchValue(item);
+    this.form.markAsPristine();
   }
 
   form = new FormGroup({

@@ -1,6 +1,6 @@
 ﻿namespace Webfuel
 {
-    [ApiType]
+    [ApiIgnore]
     public class IdentityToken
     {
         public required IdentityUser User { get; set; }

@@ -14,18 +14,26 @@ namespace Webfuel.App
     {
         public static void RegisterEndpoints(IEndpointRouteBuilder app)
         {
-            app.MapPost("api/create-user", CreateUser);
+            // Commands
 
-            app.MapPut("api/update-user", UpdateUser);
+            app.MapPost("api/user", CreateUser)
+                .RequireClaim(c => c.CanEditUsers);
 
-            app.MapDelete("api/delete-user/{id:guid}", DeleteUser)
-                .AuthorizeClaim((c) => c.Developer);
+            app.MapPut("api/user", UpdateUser)
+                .RequireClaim(c => c.CanEditUsers);
 
-            app.MapPost("api/query-user", QueryUser);
+            app.MapDelete("api/user/{id:guid}", DeleteUser)
+                .RequireClaim(c => c.CanEditUsers);
 
-            app.MapGet("api/resolve-user/{id:guid}", ResolveUser);
+            // Querys
 
-            app.MapPost("api/login-user", LoginUser);
+            app.MapPost("api/user/query", QueryUser)
+                .RequireIdentity();
+
+            app.MapGet("api/user/{id:guid}", ResolveUser)
+                .RequireIdentity();
+
+            app.MapPost("api/user/login", LoginUser);
         }
 
         public static Task<User> CreateUser([FromBody] CreateUser command, IMediator mediator)
@@ -53,7 +61,7 @@ namespace Webfuel.App
             return await mediator.Send(new GetUser { Id = id }) ?? throw new InvalidOperationException("The specified user does not exist");
         }
 
-        public static Task<IdentityToken> LoginUser([FromBody] LoginUser command, IMediator mediator)
+        public static Task<StringResult> LoginUser([FromBody] LoginUser command, IMediator mediator)
         {
             return mediator.Send(command);
         }

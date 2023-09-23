@@ -41,19 +41,37 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   @Input()
   enableClear: boolean = false;
 
+  @Input()
+  format: string = "dd MMM yyyy";
+
   public onBlur(): void {
     this.onTouched();
   }
 
   value: string | null = null;
 
+  get formattedValue() {
+    var day = Day.parse(this.value);
+    if (day == null)
+      return null;
+    return day.format(this.format);
+  }
+
   // Client Events
+
+  clear($event: Event) {
+    this.value = null;
+    this.onChange(null);
+    this.cd.detectChanges();
+  }
 
   togglePopup($event: Event) {
     this.dialogService.pickDate({
+      value: this.value,
       callback: (result) => {
         this.value = result;
         this.onChange(result);
+        this.cd.detectChanges();
       }
     })
   }
@@ -70,6 +88,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
 
   public writeValue(value: string | null): void {
     this.value = value;
+    this.cd.detectChanges();
   }
 
   public registerOnChange(fn: (value: string | null) => void): void {

@@ -1,10 +1,10 @@
 ﻿namespace Webfuel
 {
-    [ApiType]
+    [ApiIgnore]
     public class IdentityClaims
     {
         public bool Developer { get; set; }
 
-        public bool CanAccessUsers { get; set; }
+        public bool CanEditUsers { get; set; } = true;
     }
 }

@@ -2,7 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavigationEnd, ResolveEnd, Router } from '@angular/router';
 import { GrowlService } from '../../core/growl.service';
 import { IdentityService } from '../../core/identity.service';
-import { IdentityToken } from '../../api/api.types';
+import { ClientConfiguration } from '../../api/api.types';
+import { ConfigurationService } from '../../core/configuration.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'chrome',
@@ -14,26 +16,19 @@ export class ChromeComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     public growlService: GrowlService,
-    public identityService: IdentityService,
+    public configurationService: ConfigurationService,
+    public identityService: IdentityService
   ) {
+    this.configuration = configurationService.configuration;
   }
 
-  identity: IdentityToken | null = null;
-
-  get email() {
-    if (this.identity)
-      return this.identity.user.email;
-    return "";
-  }
+  configuration: BehaviorSubject<ClientConfiguration | null>;
 
   ngOnInit(): void {
     this.router.events.forEach((event) => {
       if (event instanceof ResolveEnd) {
         this.chromeHidden = event.state.root.firstChild?.data.chrome === false;
       }
-    });
-    this.identityService.token.subscribe((result) => {
-      this.identity = result;
     });
   }
 

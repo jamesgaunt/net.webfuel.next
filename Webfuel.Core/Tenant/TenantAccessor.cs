@@ -29,10 +29,5 @@ namespace Webfuel
                 return TenantStatic.Tenants[0];
             }
         }
-
-        //Tenant ResolveTenant(HttpContext context)
-        //{
-        //
-        //}
     }
 }

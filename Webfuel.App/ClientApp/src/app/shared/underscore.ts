@@ -365,5 +365,4 @@ export default class Underscore {
       localStorage.setItem(this._generateLocalStorageKey(key), jsonValue);
     }
   }
-
 }

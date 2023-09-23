@@ -44,7 +44,7 @@ export class DataGridColumnComponent<TItem> {
   @ViewChild('boldItemTemplate', { static: true }) boldItemTemplate!: TemplateRef<any>;
   @ViewChild('flagItemTemplate', { static: true }) flagItemTemplate!: TemplateRef<any>;
   @ViewChild('dateItemTemplate', { static: true }) dateItemTemplate!: TemplateRef<any>;
-  @ViewChild('utcItemTemplate', { static: true }) utcItemTemplate!: TemplateRef<any>;
+  @ViewChild('dateTimeItemTemplate', { static: true }) dateTimeItemTemplate!: TemplateRef<any>;
   
   itemTemplateRef!: TemplateRef<any>;
 
@@ -80,7 +80,7 @@ export class DataGridColumnComponent<TItem> {
       case "flag": return this.flagItemTemplate;
       case "bold": return this.boldItemTemplate;
       case "date": return this.dateItemTemplate;
-      case "utc": return this.utcItemTemplate;
+      case "datetime": return this.dateTimeItemTemplate;
       default:
       case "text": return this.textItemTemplate;
     }

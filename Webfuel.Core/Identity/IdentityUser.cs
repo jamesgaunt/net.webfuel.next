@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Webfuel
 {
-    [ApiType]
+    [ApiIgnore]
     public class IdentityUser
     {
         public required Guid Id { get; init; }

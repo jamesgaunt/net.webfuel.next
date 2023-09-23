@@ -14,16 +14,24 @@ namespace Webfuel.App
     {
         public static void RegisterEndpoints(IEndpointRouteBuilder app)
         {
-            app.MapPost("api/create-user-group", CreateUserGroup);
+            // Commands
 
-            app.MapPut("api/update-user-group", UpdateUserGroup);
+            app.MapPost("api/user-group", CreateUserGroup)
+                .RequireClaim(c => c.CanEditUsers);
 
-            app.MapDelete("api/delete-user-group/{id:guid}", DeleteUserGroup)
-                .AuthorizeClaim((c) => c.Developer);
+            app.MapPut("api/user-group", UpdateUserGroup)
+                .RequireClaim(c => c.CanEditUsers);
 
-            app.MapPost("api/query-user-group", QueryUserGroup);
+            app.MapDelete("api/user-group/{id:guid}", DeleteUserGroup)
+                .RequireClaim(c => c.CanEditUsers);
 
-            app.MapGet("api/resolve-user-group/{id:guid}", ResolveUserGroup);
+            // Querys
+
+            app.MapPost("api/user-group/query", QueryUserGroup)
+                .RequireIdentity();
+
+            app.MapGet("api/user-group/{id:guid}", ResolveUserGroup)
+                .RequireIdentity();
         }
 
         public static Task<UserGroup> CreateUserGroup([FromBody] CreateUserGroup command, IMediator mediator)

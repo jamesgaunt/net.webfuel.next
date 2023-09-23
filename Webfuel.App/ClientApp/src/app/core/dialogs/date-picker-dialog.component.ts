@@ -1,10 +1,11 @@
 import { DialogRef, DIALOG_DATA } from '@angular/cdk/dialog';
 import { Component, Inject } from '@angular/core';
 import { Day } from '../../shared/form/date-calendar/Day';
+import { FormControl } from '@angular/forms';
 
 export interface IDatePickerDialogOptions {
   title?: string;
-  value?: string;
+  value?: string | null;
   callback?: (value: string | null) => void;
 }
 
@@ -13,13 +14,16 @@ export interface IDatePickerDialogOptions {
 })
 export class DatePickerDialogComponent {
 
+  formControl = new FormControl<string | null>(null);
+
   constructor(
-    private dialogRef: DialogRef<Day | null>,
+    private dialogRef: DialogRef<string | null>,
     @Inject(DIALOG_DATA) public data: IDatePickerDialogOptions | undefined,
   ) {
-  }
+    this.formControl.setValue(data?.value || null);
 
-  pick() {
-    this.dialogRef.close(null);
+    this.formControl.valueChanges.subscribe((value) => {
+      this.dialogRef.close(value);
+    });
   }
 }

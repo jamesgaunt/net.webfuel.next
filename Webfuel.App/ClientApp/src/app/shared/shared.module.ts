@@ -45,7 +45,7 @@ import { DataSorterComponent } from './data-sorter/data-sorter.component';
     DataPagerComponent,
     DataSorterComponent,
 
-    // Pipes
+
   ],
   exports: [
     CommonModule,
@@ -68,8 +68,6 @@ import { DataSorterComponent } from './data-sorter/data-sorter.component';
     DataGridColumnComponent,
     DataPagerComponent,
     DataSorterComponent,
-
-    // Pipes
   ]
 })
 export class SharedModule { }

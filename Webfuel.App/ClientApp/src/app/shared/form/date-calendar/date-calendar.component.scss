@@ -2,30 +2,31 @@
 
 .date-calendar {
   display: inline-block;
-  width: 17rem;
+  width: 17em;
   max-width: 100% !important;
   text-align: center;
-  border: 0.1em solid #DCE4EC;
+  border: 1px solid var(--border-color);
   user-select: none;
   background-color: #FFf;
   white-space: nowrap;
+  font-size: 20px;
 }
 
 .date-calendar .day-title {
-  padding-top: 0.3em;
-  padding-bottom: 0.3em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
   font-weight: bold;
 }
 
 .date-calendar .day-control, .date-calendar .month-control {
-  background-color: #DCE4EC;
+  background-color: var(--palette-control);
 }
 
 .date-calendar .day-control a, .date-calendar .month-control a {
   font-weight: bold;
   display: block;
-  padding-top: 0.4em;
-  padding-bottom: 0.4em;
+  padding-top: 0.5em;
+  padding-bottom: 0.54em;
 }
 
 .date-calendar .day-control i, .date-calendar .month-control i {
@@ -33,8 +34,8 @@
 
 .date-calendar .day a {
   display: block;
-  padding-top: 0.3em;
-  padding-bottom: 0.3em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
   transition: background-color 0.25s ease;
 }
 

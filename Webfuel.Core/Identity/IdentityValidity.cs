@@ -1,6 +1,6 @@
 ﻿namespace Webfuel
 {
-    [ApiType]
+    [ApiIgnore]
     public class IdentityValidity
     {
         public DateTimeOffset ValidUntil { get; set; }

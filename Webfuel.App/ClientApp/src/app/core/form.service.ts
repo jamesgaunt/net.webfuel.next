@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GrowlService } from './growl.service';
 import { FormGroup, AbstractControl } from "@angular/forms";
-import { ErrorResponse, ValidationError } from '../api/api.types';
 import _ from '../shared/underscore';
 
 @Injectable()
@@ -49,7 +48,7 @@ export class FormService {
       }
     }
   }
-
+  /*
   applyValidationError(form: FormGroup, validationError: ErrorResponse) {
     _.forEach(validationError.validationErrors, (error: ValidationError) => {
       for (const field in form.controls) {
@@ -63,4 +62,5 @@ export class FormService {
     });
     this.growlErrors(form);
   }
+  */
 }

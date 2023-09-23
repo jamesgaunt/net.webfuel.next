@@ -18,7 +18,9 @@ namespace Webfuel.Domain.Common
 
         public Task ProvideIdentityClaims(IdentityUser user, IdentityClaims claims)
         {
-            throw new NotImplementedException();
+            claims.Developer = true;
+
+            return Task.FromResult<object?>(null);
         }
     }
 }

@@ -1,47 +1,69 @@
 ﻿using FluentValidation;
 using Microsoft.Data.SqlClient;
+using System.Net;
 
 namespace Webfuel
 {
     internal static class ExceptionMapping
     {
-
-        public static ErrorResponse ToError(this SqlException exception)
+        public static ProblemDetails ToProblemDetails(this SqlException exception)
         {
-            var message = exception.Message;
+            var title = exception.Message;
 
-            if (message.Contains("The DELETE statement conflicted with the REFERENCE constraint"))
+            if (title.Contains("The DELETE statement conflicted with the REFERENCE constraint"))
             {
-                message = "Cannot delete this item as it is being used by other items in the database";
+                title = "Cannot delete this item as it is being used by other items in the database";
             }
-            else if (message.Contains("Cannot insert duplicate key row in object"))
+            else if (title.Contains("Cannot insert duplicate key row in object"))
             {
-                message = "Cannot create this item as it would conflict with items already in the database";
+                title = "Cannot create this item as it would conflict with items already in the database";
             }
 
-            return new ErrorResponse { ErrorType = ErrorResonseType.DatabaseError, Message = message };
+            return new ProblemDetails
+            {
+                Type = "/invalid-operation",
+                Title = title,
+                Status = (int)HttpStatusCode.BadRequest,
+            };
         }
 
-        public static ErrorResponse ToError(this ValidationException exception)
+        public static ValidationProblemDetails ToProblemDetails(this ValidationException exception)
         {
-            var error = new ErrorResponse { ErrorType = ErrorResonseType.ValidationError, Message = exception.Message };
+            var problemDetails = new ValidationProblemDetails
+            {
+                Type = "/validation-errors",
+                Title = "Please review and correct validation errors",
+                Status = (int)HttpStatusCode.BadRequest
+            };
 
             foreach(var item in exception.Errors)
             {
-                error.ValidationErrors.Add(new ValidationError { Property = item.PropertyName, Message = item.ErrorMessage.Replace("'", "") });
+                problemDetails.AddValidationError(item.PropertyName, item.ErrorMessage.Replace("'", ""));
             }
 
-            return error;
+            return problemDetails;
         }
 
-        public static ErrorResponse ToError(this NotAuthorizedException exception)
+        public static ProblemDetails ToProblemDetails(this NotAuthorizedException exception)
         {
-            return new ErrorResponse { ErrorType = ErrorResonseType.NotAuthorizedError, Message = "Not Authorized" };
+            return new ProblemDetails
+            {
+                Type = "/not-authorized",
+                Title = "Not Authorised",
+                Status = (int)HttpStatusCode.Unauthorized,
+            };
         }
 
-        public static ErrorResponse ToError(this NotAuthenticatedException exception)
+        public static ProblemDetails ToProblemDetails(this NotAuthenticatedException exception)
         {
-            return new ErrorResponse { ErrorType = ErrorResonseType.NotAuthenticatedError, Message = "Not Authenticated" };
+            return new ProblemDetails
+            {
+                Type = "/not-authenticated",
+                Title = "Not Authenticated",
+                Status = (int)HttpStatusCode.Unauthorized,
+            };
         }
+
+
     }
 }

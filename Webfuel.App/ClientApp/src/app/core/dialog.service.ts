@@ -63,7 +63,7 @@ export class DialogService {
     this.open(DatePickerDialogComponent, {
       data: options,
       callback: (result) => {
-        if (options && options.callback)
+        if (result !== undefined && options && options.callback)
           options.callback(<any>result);
       },
       width: 'auto'

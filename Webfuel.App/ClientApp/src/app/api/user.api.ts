@@ -2,34 +2,34 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
-import { CreateUser, User, UpdateUser, QueryUser, QueryResult, LoginUser, IdentityToken } from './api.types';
+import { CreateUser, User, UpdateUser, QueryUser, QueryResult, LoginUser, StringResult } from './api.types';
 
 @Injectable()
 export class UserApi {
     constructor(private apiService: ApiService) { }
     
     public createUser (body: CreateUser, options?: ApiOptions): Observable<User> {
-        return this.apiService.request("POST", "api/create-user", body, options);
+        return this.apiService.request("POST", "api/user", body, options);
     }
     
     public updateUser (body: UpdateUser, options?: ApiOptions): Observable<User> {
-        return this.apiService.request("PUT", "api/update-user", body, options);
+        return this.apiService.request("PUT", "api/user", body, options);
     }
     
     public deleteUser (params: { id: string }, options?: ApiOptions): Observable<any> {
-        return this.apiService.request("DELETE", "api/delete-user/" + params.id + "", undefined, options);
+        return this.apiService.request("DELETE", "api/user/" + params.id + "", undefined, options);
     }
     
     public queryUser (body: QueryUser, options?: ApiOptions): Observable<QueryResult<User>> {
-        return this.apiService.request("POST", "api/query-user", body, options);
+        return this.apiService.request("POST", "api/user/query", body, options);
     }
     
     public resolveUser (params: { id: string }, options?: ApiOptions): Observable<User> {
-        return this.apiService.request("GET", "api/resolve-user/" + params.id + "", undefined, options);
+        return this.apiService.request("GET", "api/user/" + params.id + "", undefined, options);
     }
     
-    public loginUser (body: LoginUser, options?: ApiOptions): Observable<IdentityToken> {
-        return this.apiService.request("POST", "api/login-user", body, options);
+    public loginUser (body: LoginUser, options?: ApiOptions): Observable<StringResult> {
+        return this.apiService.request("POST", "api/user/login", body, options);
     }
     
     static userResolver(param: string): ResolveFn<User> {

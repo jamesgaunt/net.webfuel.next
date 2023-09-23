@@ -1,11 +1,14 @@
 <div class="control">
   <div class="input" (click)="togglePopup($event)">
-    
+    <span *ngIf="value !== null">{{ this.formattedValue }}</span>
+    <span *ngIf="value === null">{{ placeholder || "&nbsp;" }}</span>
   </div>
   <!-- Clear Icon -->
-  <!--
-  <div *ngIf="enableClear"" class="icon is-primary" (click)="clear($event)">
+  <div *ngIf="enableClear" class="icon is-control" (click)="clear($event)">
     <i class="fas fa-times"></i>
   </div>
-    -->
+  <!-- Calendar Icon -->
+  <div class="icon is-control" (click)="togglePopup($event)">
+    <i class="far fa-calendar"></i>
+  </div>
 </div>

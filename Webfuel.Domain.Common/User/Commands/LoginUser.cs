@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Azure.Core;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace Webfuel.Domain.Common
 {
-    public class LoginUser : IRequest<IdentityToken>
+    public class LoginUser : IRequest<StringResult>
     {
         public required string Email { get; set; }
 
         public required string Password { get; set; }
     }
 
-    internal class LoginUserHandler : IRequestHandler<LoginUser, IdentityToken>
+    internal class LoginUserHandler : IRequestHandler<LoginUser, StringResult>
     {
         private readonly IUserRepository _userRepository;
         private readonly IUserGroupRepository _userGroupRepository;
@@ -30,39 +31,35 @@ namespace Webfuel.Domain.Common
             _userGroupRepository = userGroupRepository;
         }
 
-        public async Task<IdentityToken> Handle(LoginUser request, CancellationToken cancellationToken)
+        public async Task<StringResult> Handle(LoginUser request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetUserByEmail(request.Email);
             if (user == null)
             {
                 if (request.Email != "james.gaunt@webfuel.com")
                     throw new InvalidOperationException("Invalid username or password");
-                user = await BootstrapDeveloperUser();
+                user = await BootstrapDeveloperUser("james.gaunt@webfuel.com");
             }
 
             var validated = AuthenticationUtility.ValidatePassword(request.Password, user.PasswordHash, user.PasswordSalt);
             if (!validated)
                 throw new InvalidOperationException("Invalid username or password");
 
-            var token = new IdentityToken
-            {
-                User = new IdentityUser { Id = user.Id, Email = user.Email },
-                Claims = new IdentityClaims(),
-                Validity = new IdentityValidity(),
-                Signature = string.Empty
-            };
-
-            _identityTokenService.ActivateToken(token);
-
-            return token;
+            return new StringResult(await _identityTokenService.GenerateToken(new IdentityUser { Id = user.Id, Email = user.Email }));
         }
 
-        async Task<User> BootstrapDeveloperUser()
+        async Task<User> BootstrapDeveloperUser(string email)
         {
             var userGroup = await _userGroupRepository.GetUserGroupByName("Default");
             if (userGroup == null)
                 userGroup = await _userGroupRepository.InsertUserGroup(new UserGroup { Name = "Default" });
-            return await _mediator.Send(new CreateUser { Email = "james.gaunt@webfuel.com", UserGroupId = userGroup.Id });
+
+            return await _userRepository.InsertUser(new User
+            {
+                Email = email,
+                UserGroupId = userGroup.Id,
+                Developer = true
+            });
         }
     }
 }
