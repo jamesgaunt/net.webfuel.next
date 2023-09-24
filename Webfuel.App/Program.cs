@@ -31,6 +31,9 @@ namespace Webfuel.App
                     c.RegisterServicesFromAssemblyContaining<CommonAssemblyMarker>();
                 });
 
+
+
+
                 var app = builder.Build();
 
                 app.UseSerilogRequestLogging();
@@ -39,6 +42,8 @@ namespace Webfuel.App
                 app.UseMiddleware<IdentityMiddleware>();
 
                 app.UseStaticFiles();
+
+                CachingApi.RegisterCachingProvider(app);
 
                 app.UseApiServices<Program>();
 

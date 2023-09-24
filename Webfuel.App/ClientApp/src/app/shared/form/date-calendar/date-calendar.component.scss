@@ -5,7 +5,6 @@
   width: 17em;
   max-width: 100% !important;
   text-align: center;
-  border: 1px solid var(--border-color);
   user-select: none;
   background-color: #FFf;
   white-space: nowrap;
@@ -19,7 +18,8 @@
 }
 
 .date-calendar .day-control, .date-calendar .month-control {
-  background-color: var(--palette-control);
+  background-color: var(--palette-primary);
+  color: var(--palette-primary-contrast);
 }
 
 .date-calendar .day-control a, .date-calendar .month-control a {
@@ -49,8 +49,8 @@
 
 .date-calendar .day.selected a {
   font-weight: bold;
-  background-color: var(--palette-primary);
-  color: var(--palette-primary-contrast);
+  background-color: var(--palette-control);
+  color: var(--palette-control-contrast);
 }
 
 .date-calendar .month a {

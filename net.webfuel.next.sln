@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		todo.txt = todo.txt
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.Domain.Common", "Webfuel.Domain.Common\Webfuel.Domain.Common.csproj", "{D06AB49F-0E72-4520-AD53-B139FCC8EAC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.Domain", "Webfuel.Domain.Common\Webfuel.Domain.csproj", "{D06AB49F-0E72-4520-AD53-B139FCC8EAC2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

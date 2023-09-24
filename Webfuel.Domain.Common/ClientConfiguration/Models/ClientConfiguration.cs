@@ -15,5 +15,7 @@ namespace Webfuel.Domain.Common
         }
 
         public string Email { get; init; }
+
+        public List<ClientConfigurationMenuItem> SideMenu { get; set; } = new List<ClientConfigurationMenuItem>();
     }
 }

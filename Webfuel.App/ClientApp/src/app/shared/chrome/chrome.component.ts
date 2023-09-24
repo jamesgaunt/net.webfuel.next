@@ -26,14 +26,27 @@ export class ChromeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.router.events.forEach((event) => {
+
       if (event instanceof ResolveEnd) {
-        this.chromeHidden = event.state.root.firstChild?.data.chrome === false;
+
+        {
+          this.activeSideMenu = "";
+          var node = event.state.root;
+          while (node.children.length > 0) {
+            node = node.children[0];
+            this.activeSideMenu = node.data.activeSideMenu || this.activeSideMenu;
+          }
+        }
+
+        this.chromeHidden = event.state.root.firstChild!.data.chrome === false;
       }
     });
   }
 
   ngOnDestroy() {
   }
+
+  activeSideMenu: any;
 
   chromeCollapsed = false;
 

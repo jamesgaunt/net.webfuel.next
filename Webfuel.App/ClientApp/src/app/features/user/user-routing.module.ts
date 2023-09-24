@@ -14,23 +14,27 @@ import { DeactivateService } from '../../core/deactivate.service';
 const routes: Routes = [
   {
     path: 'user-list',
-    component: UserListComponent
+    component: UserListComponent,
+    data: { activeSideMenu: 'Users' }
   },
   {
     path: 'user-item/:id',
     component: UserItemComponent,
     resolve: { user: UserApi.userResolver('id') },
-    canDeactivate: [DeactivateService.isPristine<UserItemComponent>()]
+    canDeactivate: [DeactivateService.isPristine<UserItemComponent>()],
+    data: { activeSideMenu: 'Users' }
   },
   {
     path: 'user-group-list',
-    component: UserGroupListComponent
+    component: UserGroupListComponent,
+    data: { activeSideMenu: 'UserGroups' }
   },
   {
     path: 'user-group-item/:id',
     component: UserGroupItemComponent,
     resolve: { userGroup: UserGroupApi.userGroupResolver('id') },
-    canDeactivate: [DeactivateService.isPristine<UserGroupItemComponent>()]
+    canDeactivate: [DeactivateService.isPristine<UserGroupItemComponent>()],
+    data: { activeSideMenu: 'UserGroups' }
   }
 ];
 
