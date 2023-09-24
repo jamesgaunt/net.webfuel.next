@@ -1,10 +1,5 @@
 
 
-Encrypt Identity Token
-
-New ClientConfiguration API 
-
-Investigate ProblemDetails / Built in ExceptionMiddleware
 
 Solution for TimeAgo
 

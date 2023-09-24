@@ -1,6 +1,6 @@
 using Serilog;
 using FluentValidation;
-using Webfuel.Domain.Common;
+using Webfuel.Domain;
 using Serilog.Events;
 
 namespace Webfuel.App
@@ -31,9 +31,6 @@ namespace Webfuel.App
                     c.RegisterServicesFromAssemblyContaining<CommonAssemblyMarker>();
                 });
 
-
-
-
                 var app = builder.Build();
 
                 app.UseSerilogRequestLogging();
@@ -42,8 +39,6 @@ namespace Webfuel.App
                 app.UseMiddleware<IdentityMiddleware>();
 
                 app.UseStaticFiles();
-
-                CachingApi.RegisterCachingProvider(app);
 
                 app.UseApiServices<Program>();
 
