@@ -48,7 +48,7 @@ namespace Webfuel.Tools.Datafuel
 
             foreach(var directory in Directory.GetDirectories(definitionPath))
             {
-                foreach(var filename in Directory.GetFiles(directory, "*.xml"))
+                foreach(var filename in Directory.GetFiles(directory, "*.xml", SearchOption.AllDirectories))
                 {
                     var xml = XDocument.Parse(File.ReadAllText(filename));
                     XSD.Validate(xml.Root!, Path.GetFileName(filename));

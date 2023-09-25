@@ -17,6 +17,10 @@ namespace Webfuel.Domain
             services.AddSingleton<IRepositoryAccessor<UserGroup>, UserGroupRepositoryAccessor>();
             services.AddSingleton<IRepositoryMapper<UserGroup>, RepositoryDefaultMapper<UserGroup>>();
             
+            services.AddSingleton<IFundingStreamRepository, FundingStreamRepository>();
+            services.AddSingleton<IRepositoryAccessor<FundingStream>, FundingStreamRepositoryAccessor>();
+            services.AddSingleton<IRepositoryMapper<FundingStream>, RepositoryDefaultMapper<FundingStream>>();
+            
         }
     }
 }
