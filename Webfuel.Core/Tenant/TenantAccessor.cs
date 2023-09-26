@@ -9,7 +9,7 @@ namespace Webfuel
 {
     public interface ITenantAccessor
     {
-        Tenant Tenant { get; }
+        TenantData Tenant { get; }
     }
 
     [ServiceImplementation(typeof(ITenantAccessor))]
@@ -22,7 +22,7 @@ namespace Webfuel
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public Tenant Tenant
+        public TenantData Tenant
         {
             get
             {

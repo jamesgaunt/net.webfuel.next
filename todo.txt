@@ -4,3 +4,9 @@
 Solution for TimeAgo
 
 
+StaticData Solution
+  > Seperate Assembly
+  > Internal Setters (so immutable)
+  > StaticDataModel available to client with auto-update
+  > Service Based CRUD and auto-generated API 
+  > Client static data service

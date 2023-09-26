@@ -14,8 +14,8 @@ namespace Webfuel.Tools.Datafuel
             Entity = entity;
             Name = element.StringProperty("Name") ?? throw new InvalidOperationException();
             Default = element.StringProperty("Default");
-            JsonIgnore = element.BooleanProperty("JsonIgnore") ?? false;
             Access = element.StringProperty("Access") ?? "public";
+            Tags.AddRange((element.StringProperty("Tags") ?? String.Empty).Split('|').Select(p => p.Trim()));
         }
 
         public SchemaEntity Entity { get; private set; }
@@ -26,11 +26,18 @@ namespace Webfuel.Tools.Datafuel
 
         public string? Default { get; private set; }
 
-        public bool JsonIgnore { get; private set; }
-
         public string Access { get; private set; }
 
         public bool IsKey { get { return Element.Name == "Key"; } }
+
+        // Tags
+
+        List<string> Tags { get; } = new List<string>();
+
+        bool HasTag(string tag) => Tags.Contains(tag);
+
+        public bool JsonIgnore => HasTag("JsonIgnore");
+
 
         // Type
 

@@ -22,6 +22,7 @@ namespace Webfuel.Tools.Datafuel
                     {
                         new XSDAttribute { Name = "Name", Required = true },
                         new XSDAttribute { Name = "Interface" },
+                        new XSDAttribute { Name = "Tags" },
                         new XSDAttribute { Name = "OrderBy" },
                         new XSDAttribute { Name = "Static", Values = { "true", "false" } },
                         new XSDAttribute { Name="ReadOnly", Values = { "true", "false" } },
@@ -39,6 +40,7 @@ namespace Webfuel.Tools.Datafuel
                                 new XSDAttribute { Name = "Type", Required = true },
                                 new XSDAttribute { Name = "JsonIgnore" },
                                 new XSDAttribute { Name = "Access" },
+                                new XSDAttribute { Name = "Tags" },
                             }
                         },
                         new XSDElement
@@ -53,6 +55,7 @@ namespace Webfuel.Tools.Datafuel
                                 new XSDAttribute { Name = "Default" },
                                 new XSDAttribute { Name = "JsonIgnore" },
                                 new XSDAttribute { Name = "Access" },
+                                new XSDAttribute { Name = "Tags" },
                             }
                         },
                         new XSDElement
@@ -64,8 +67,8 @@ namespace Webfuel.Tools.Datafuel
                                 new XSDAttribute { Name = "Type", Required = true },
                                 new XSDAttribute { Name = "CascadeDelete", Values = { "true", "false" } },
                                 new XSDAttribute { Name = "Default" },
-                                new XSDAttribute { Name = "JsonIgnore" },
                                 new XSDAttribute { Name = "Access" },
+                                new XSDAttribute { Name = "Tags" },
                             }
                         },
                         new XSDElement

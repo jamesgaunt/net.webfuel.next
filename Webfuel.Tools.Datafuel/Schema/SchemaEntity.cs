@@ -19,6 +19,7 @@ namespace Webfuel.Tools.Datafuel
             OrderBy = element.StringProperty("OrderBy") ?? String.Empty;
             Static = element.BooleanProperty("Static") ?? false;
             ReadOnly = element.BooleanProperty("ReadOnly") ?? false;
+            Tags.AddRange((element.StringProperty("Tags") ?? String.Empty).Split('|').Select(p => p.Trim()));
 
             if (element.Elements().Any(p => p.Name == "Key"))
                 Key = SchemaEntityProperty.Build(this, element.Element("Key")!);
@@ -55,11 +56,7 @@ namespace Webfuel.Tools.Datafuel
             }
         }
 
-        // Flags
-
         public RepositoryKeyType KeyType { get; private set; }
-
-        public bool Audited { get; private set; }
 
         // Properties
 
@@ -158,6 +155,15 @@ namespace Webfuel.Tools.Datafuel
                 return $"ORDER BY {orderBy}{(descending ? " DESC" : " ASC")}";
             }
         }
+
+        // Tags
+
+        List<string> Tags { get; } = new List<string>();
+
+        bool HasTag(string tag) => Tags.Contains(tag);
+
+        public bool JsonIgnore => HasTag("JsonIgnore");
+
 
         // Methods
 

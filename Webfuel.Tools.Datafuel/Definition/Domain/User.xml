@@ -4,26 +4,26 @@
 
   <Entity Name="User">
     <Key Name="Id" Type="guid" />
-    
+
     <Property Name="Email" Type="meta:email" />
 
     <Property Name="FirstName" Type="meta:name" />
     <Property Name="LastName" Type="meta:name" />
 
     <Reference Name="UserGroupId" Type="UserGroup" />
-    
-    <Property Name="PasswordHash" Type="string[256]" JsonIgnore="true" />
-    <Property Name="PasswordSalt" Type="string[256]" JsonIgnore="true" />
-    <Property Name="PasswordResetAt" Type="DateTime" JsonIgnore="true" />
-    <Property Name="PasswordResetToken" Type="guid" JsonIgnore="true" />
-    <Property Name="PasswordResetValidUntil" Type="DateTime" JsonIgnore="true" />
+
+    <Property Name="PasswordHash" Type="string[256]" Tags="JsonIgnore" />
+    <Property Name="PasswordSalt" Type="string[256]" Tags="JsonIgnore" />
+    <Property Name="PasswordResetAt" Type="DateTime" Tags="JsonIgnore" />
+    <Property Name="PasswordResetToken" Type="guid" Tags="JsonIgnore" />
+    <Property Name="PasswordResetValidUntil" Type="DateTime" Tags="JsonIgnore" />
 
     <Property Name="Developer" Type="boolean" />
 
     <Property Name="Birthday" Type="Date" />
-    
+
     <Property Name="CreatedAt" Type="DateTime" />
-    
+
     <Index Unique="true">
       <Member Name="Email" />
     </Index>

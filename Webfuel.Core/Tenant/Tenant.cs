@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Webfuel
 {
-    public class Tenant
+    public static class Tenant
     {
-        public required string Name { get; init; }
-
-        public required string DatabaseSchema { get; init; }
-
-        public required string DatabasePassword { get; init; }
+        public static string RSS_Development => "rss_development";
+        public static string RSS_London => "rss_london";
+        public static string RSS_Leicester => "rss_leicester";
+        public static string RSS_Birmingham => "rss_birmingham";
+        public static string RSS_Southampton => "rss_southampton";
     }
 }
