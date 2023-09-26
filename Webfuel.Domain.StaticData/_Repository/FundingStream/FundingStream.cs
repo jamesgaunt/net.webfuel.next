@@ -1,7 +1,7 @@
 using FluentValidation;
 using System.Text.Json.Serialization;
 
-namespace Webfuel.Domain
+namespace Webfuel.Domain.StaticData
 {
     public partial class FundingStream
     {

@@ -1,8 +1,6 @@
 
 
-
 Solution for TimeAgo
-
 
 StaticData Solution
   > Seperate Assembly
@@ -10,3 +8,17 @@ StaticData Solution
   > StaticDataModel available to client with auto-update
   > Service Based CRUD and auto-generated API 
   > Client static data service
+
+ItemSelectDataSource - for in memory item collections
+
+DataSource interfaces generally
+
+Grid sorting / multi-select functionality
+
+Grid table mode (i.e. non-pageable)
+
+Datafuel/Typefuel
+
+[JsonOptional] -- done?
+[JsonReadOnly] 
+Interfaces (with readonly properties)
