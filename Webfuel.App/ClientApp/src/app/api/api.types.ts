@@ -20,6 +20,14 @@ export interface ValidationError {
 
 export interface ClientConfiguration {
     email: string;
+    sideMenu: Array<ClientConfigurationMenuItem>;
+}
+
+export interface ClientConfigurationMenuItem {
+    icon: string;
+    name: string;
+    action: string;
+    children: Array<ClientConfigurationMenuItem> | null;
 }
 
 export interface User {
