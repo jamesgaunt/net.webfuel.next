@@ -95,32 +95,4 @@ namespace Webfuel.Repository.New
             MaxTimeInterval = TimeSpan.FromSeconds(20),
         });
     }
-
-    internal class RepositoryCommand
-    {
-        public required string Sql { get; init; }
-
-        public IEnumerable<SqlParameter>? Parameters { get; init; }
-    }
-
-    public class RepositoryTransaction
-    {
-        private readonly RepositoryConnection _connection;
-        internal readonly List<RepositoryCommand> _commands = new List<RepositoryCommand>();
-
-        internal RepositoryTransaction(RepositoryConnection connection)
-        {
-            _connection = connection;
-        }
-
-        public void AddCommand(string sql, IEnumerable<SqlParameter>? parameters = null)
-        {
-            _commands.Add(new RepositoryCommand { Sql = sql, Parameters = parameters });
-        }
-
-        public Task Execute()
-        {
-            return _connection.ExecuteCommands(_commands);
-        }
-    }
 }

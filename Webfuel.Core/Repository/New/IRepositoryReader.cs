@@ -12,9 +12,4 @@ namespace Webfuel.Repository.New
         TEntity Read(SqlDataReader dr);
     }
 
-    public interface IRepositoryWriter<TEntity>
-    {
-        List<SqlParameter> Write(TEntity entity, IEnumerable<string> properties);
-    }
-
 }
