@@ -10,6 +10,7 @@ export class GridDataSource<TItem>  {
 
   constructor(private options: {
     fetch: (query: Query) => Observable<QueryResult<TItem>>;
+    reorder?: (items: TItem[]) => Observable<TItem[]>;
     localStorageKey?: string;
     filterGroup?: FormGroup;
   }) {
@@ -21,6 +22,8 @@ export class GridDataSource<TItem>  {
         )
         .subscribe();
     }
+
+    this.reorderable = !!options.reorder;
   }
 
   // Events
@@ -49,6 +52,25 @@ export class GridDataSource<TItem>  {
         return;
       }
       this.queryResult = response;
+      this.change.next(this);
+    });
+  }
+
+  // Reorder
+
+  reorderable = false;
+
+  reorder(previousIndex: number, currentIndex: number) {
+    if (!this.options.reorder)
+      return;
+
+    // Client Side
+    const item = this.queryResult.items.splice(previousIndex, 1);
+    this.queryResult.items.splice(currentIndex, 0, item[0]);
+
+    // Server Side
+    this.options.reorder(this.queryResult.items).subscribe((response) => {
+      this.queryResult.items = response;
       this.change.next(this);
     });
   }

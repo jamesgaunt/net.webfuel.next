@@ -2,13 +2,18 @@
   <table>
     <thead>
       <tr>
+        <th class="is-narrow" *ngIf="dataSource.reorderable"></th>
         <th *ngFor="let column of columns" [style.text-align]="column.justify">
           <ng-container *ngTemplateOutlet="column.headTemplateRef; context: { dataSource: dataSource }"></ng-container>
         </th>
       </tr>
     </thead>
-    <tbody *ngIf="dataSource.queryResult.totalCount > 0">
-      <tr *ngFor="let item of dataSource.queryResult.items">
+    <tbody *ngIf="dataSource.queryResult.totalCount > 0" cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="drop($event)" [cdkDropListDisabled]="!dataSource.reorderable">
+      <tr *ngFor="let item of dataSource.queryResult.items" cdkDrag>
+        <td *ngIf="dataSource.reorderable" class="drag-handle is-narrow" cdkDragHandle>
+          <i *ngIf="!reordering" class="fas fa-fw fa-bars" ></i>
+          <i *ngIf="reordering" class="fas fa-fw fa-spin fa-sync"></i>
+        </td>
         <td *ngFor="let column of columns" [style.text-align]="column.justify">
           <ng-container *ngTemplateOutlet="column.itemTemplateRef; context: { $implicit: item }"></ng-container>
         </td>

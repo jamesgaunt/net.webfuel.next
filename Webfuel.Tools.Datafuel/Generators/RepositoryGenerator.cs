@@ -103,8 +103,7 @@ namespace Webfuel.Tools.Datafuel
         {
             using (sb.OpenBrace($"public async Task<{entity.Name}> Insert{entity.Name}({entity.Name} entity)"))
             {
-                sb.WriteLine($"if (entity.Id == Guid.Empty)");
-                sb.WriteLine($"entity.Id = GuidGenerator.NewComb();");
+                sb.WriteLine($"if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();");
                 sb.WriteLine($"var sql = {entity.Name}Metadata.InsertSQL();");
                 sb.WriteLine($"var parameters = {entity.Name}Metadata.ExtractParameters(entity, {entity.Name}Metadata.InsertProperties);");
                 sb.WriteLine($"await _connection.ExecuteNonQuery(sql, parameters);");

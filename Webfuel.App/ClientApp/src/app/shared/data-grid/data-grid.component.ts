@@ -4,6 +4,7 @@ import { debounceTime } from 'rxjs/operators';
 import { GridDataSource } from '../data-source/grid-data-source';
 import _ from '../underscore';
 import { DataGridColumnComponent } from './data-grid-column.component';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'data-grid',
@@ -26,6 +27,7 @@ export class DataGridComponent<TItem> implements OnDestroy, AfterViewInit {
   set dataSource(value: GridDataSource<TItem>) {
     this._dataSource = value;
     this._dataSource.change.subscribe((response) => {
+      this.reordering = false;
       this.cd.detectChanges();
     });
     this._dataSource.fetch();
@@ -48,7 +50,18 @@ export class DataGridComponent<TItem> implements OnDestroy, AfterViewInit {
   }
 
   get columnCount() {
-    return this.columns.length; // + (this.dataSource.selectable ? 1 : 0);
+    return this.columns.length + (this.dataSource.reorderable ? 1 : 0);
+  }
+
+  // Reorder
+
+  reordering = false;
+
+  drop(event: any) {
+    if (this.reordering)
+      return;
+    this.reordering = true;
+    this.dataSource.reorder(event.previousIndex, event.currentIndex);
   }
 
   // Destroy

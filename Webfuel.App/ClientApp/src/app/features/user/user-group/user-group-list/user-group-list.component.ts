@@ -7,6 +7,7 @@ import { UserGroupCreateDialogComponent } from '../user-group-create-dialog/user
 import { Router } from '@angular/router';
 import _ from '../../../../shared/underscore';
 import { UserGroup } from '../../../../api/api.types';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'user-group-list',
@@ -21,11 +22,12 @@ export class UserGroupListComponent {
   }
 
   filterForm = new FormGroup({
-    search: new FormControl('', { nonNullable: true })
+    search: new FormControl('', { nonNullable: true }),
   });
 
   dataSource = new GridDataSource<UserGroup>({
     fetch: (query) => this.userGroupApi.queryUserGroup(_.merge(query, this.filterForm.getRawValue())),
+    reorder: (items) => new BehaviorSubject<UserGroup[]>(items),
     filterGroup: this.filterForm
   });
 

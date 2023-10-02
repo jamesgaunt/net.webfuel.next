@@ -30,8 +30,7 @@ namespace Webfuel.Domain
         }
         public async Task<Job> InsertJob(Job entity)
         {
-            if (entity.Id == Guid.Empty)
-            entity.Id = GuidGenerator.NewComb();
+            if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
             var sql = JobMetadata.InsertSQL();
             var parameters = JobMetadata.ExtractParameters(entity, JobMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters);

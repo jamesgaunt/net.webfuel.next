@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { DialogModule } from '@angular/cdk/dialog';
+import { DragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 
 import { ChromeComponent } from './chrome/chrome.component';
 
@@ -27,6 +28,7 @@ import { DataSorterComponent } from './data-sorter/data-sorter.component';
     RouterModule,
     OverlayModule,
     DialogModule,
+    DragDropModule,
   ],
   declarations: [
 
