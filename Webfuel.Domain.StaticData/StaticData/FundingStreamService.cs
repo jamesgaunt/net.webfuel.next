@@ -18,24 +18,22 @@ namespace Webfuel.Domain.StaticData
 
         public async Task<FundingStream> InsertFundingStream(FundingStream fundingStream)
         {
-            await _fundingStreamRepository.InsertFundingStream(fundingStream);
-            return fundingStream;
+            return await _fundingStreamRepository.InsertFundingStream(fundingStream);
         }
 
         public async Task<FundingStream> UpdateFundingStream(FundingStream fundingStream)
         {
-            await _fundingStreamRepository.UpdateFundingStream(fundingStream);
-            return fundingStream;
+            return await _fundingStreamRepository.UpdateFundingStream(fundingStream);
         }
 
-        public Task DeleteFundingStream(Guid id)
+        public async Task DeleteFundingStream(Guid id)
         {
-            return _fundingStreamRepository.DeleteFundingStream(id);
+            await _fundingStreamRepository.DeleteFundingStream(id);
         }
 
-        public Task<QueryResult<FundingStream>> QueryFundingStream(Query query)
+        public async Task<QueryResult<FundingStream>> QueryFundingStream(Query query)
         {
-            return _fundingStreamRepository.QueryFundingStream(query);
+            return await _fundingStreamRepository.QueryFundingStream(query);
         }
     }
 }

@@ -18,7 +18,6 @@ namespace Webfuel.Tools.Datafuel
             Interface = element.StringProperty("Interface") ?? String.Empty;
             OrderBy = element.StringProperty("OrderBy") ?? String.Empty;
             Static = element.BooleanProperty("Static") ?? false;
-            ReadOnly = element.BooleanProperty("ReadOnly") ?? false;
             Tags.AddRange((element.StringProperty("Tags") ?? String.Empty).Split('|').Select(p => p.Trim()));
 
             if (element.Elements().Any(p => p.Name == "Key"))
@@ -108,8 +107,6 @@ namespace Webfuel.Tools.Datafuel
 
         public bool Static { get; private set; }
 
-        public bool ReadOnly { get; private set; }
-
         public SchemaData? Data { get; private set; }
 
         public string Assembly { get; private set; } = String.Empty;
@@ -164,6 +161,7 @@ namespace Webfuel.Tools.Datafuel
 
         public bool JsonIgnore => HasTag("JsonIgnore");
 
+        // public bool ReadOnly => HasTag("ReadOnly");
 
         // Methods
 

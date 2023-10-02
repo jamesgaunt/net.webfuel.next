@@ -44,7 +44,7 @@ namespace Webfuel.Tools.Datafuel
         {
             using (sb.OpenBrace($"internal partial interface I{entity.Name}Repository"))
             {
-                if (!entity.Static && !entity.ReadOnly)
+                if (!entity.Static)
                 {
                     sb.WriteLine($"Task<{entity.Name}> Insert{entity.Name}({entity.Name} entity);");
 
@@ -74,7 +74,7 @@ namespace Webfuel.Tools.Datafuel
             {
                 Constructor(sb, entity);
 
-                if (!entity.Static && !entity.ReadOnly)
+                if (!entity.Static)
                 {
                     Insert(sb, entity);
                     Update(sb, entity);

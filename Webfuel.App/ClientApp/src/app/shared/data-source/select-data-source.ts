@@ -4,11 +4,36 @@ import _ from '../underscore';
 import { Observable } from "rxjs";
 import { Query, QueryFilter, QueryResult } from "../../api/api.types";
 
-export class SelectDataSource<TItem>  {
+export interface ISelectDataSource<TItem> {
+  getId(item: TItem): string;
+
+  change: EventEmitter<any>;
+
+  pickedItems: TItem[];
+
+  optionItems: TItem[];
+
+  clear(): void;
+
+  pick(ids: string[], clear: boolean): void;
+
+  remove(id: string): void;
+
+  fetch(flush: boolean): void;
+
+  optionItemsCallback: Object | null; // TODO: Expose this in a more meaningful way (to the template - e.g. loading)
+}
+
+export class SelectDataSource<TItem> implements ISelectDataSource<TItem>  {
 
   constructor(private options: {
     fetch: (query: Query) => Observable<QueryResult<TItem>>;
+    items?: TItem[]
   }) {
+    if (options.items) {
+      this.optionItems = options.items;
+      this.optionItemsComplete = true;
+    }
   }
 
   id = "id";

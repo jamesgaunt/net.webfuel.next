@@ -3,24 +3,24 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
 import { debounceTime, noop, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import _ from 'shared/underscore';
-import { ISelectDataSource, SelectDataSource } from '../../data-source/select-data-source';
+import { SelectDataSource } from '../../data-source/select-data-source';
 import { GridDataSource } from '../../data-source/grid-data-source';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 
 @Component({
-  selector: 'dropdown-select',
-  templateUrl: './dropdown-select.component.html',
+  selector: 'dropdown-text-input',
+  templateUrl: './dropdown-text-input.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DropDownSelectComponent),
+      useExisting: forwardRef(() => DropDownTextInputComponent),
       multi: true
     }
   ]
 })
-export class DropDownSelectComponent<TItem> implements ControlValueAccessor, OnInit {
+export class DropDownTextInputComponent<TItem> implements ControlValueAccessor, OnInit {
 
   destroyRef: DestroyRef = inject(DestroyRef);
 
@@ -47,14 +47,14 @@ export class DropDownSelectComponent<TItem> implements ControlValueAccessor, OnI
   // Data Source
 
   @Input({ required: true })
-  set dataSource(value: ISelectDataSource<TItem>) {
+  set dataSource(value: SelectDataSource<TItem>) {
     this._dataSource = value;
     this._dataSource.change.subscribe(() => this.cd.detectChanges());
   }
   get dataSource() {
     return this._dataSource;
   }
-  _dataSource!: ISelectDataSource<TItem>
+  _dataSource!: SelectDataSource<TItem>
 
   getId(item: TItem) {
     return this.dataSource.getId(item);
@@ -80,7 +80,7 @@ export class DropDownSelectComponent<TItem> implements ControlValueAccessor, OnI
       $event.preventDefault();
       $event.stopPropagation();
     }
-    this.dataSource.remove(this.dataSource.getId(item));
+    this.dataSource.remove((<any>item)[this.dataSource.id]);
     this.doChangeCallback();
   }
 
@@ -191,7 +191,7 @@ export class DropDownSelectComponent<TItem> implements ControlValueAccessor, OnI
   doChangeCallback() {
     if (this.dataSource.pickedItems.length === 0)
       this.onChange(null);
-    this.onChange(this.dataSource.getId(this.dataSource.pickedItems[0]));
+    this.onChange((<any>this.dataSource.pickedItems[0])[this.dataSource.id])
   }
 
   onChange: (value: string | null) => void = noop;

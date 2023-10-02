@@ -1,7 +1,7 @@
 import { AfterContentInit, ChangeDetectorRef, Component, ContentChildren, EventEmitter, Input, OnDestroy, Output, QueryList, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
-import { GridDataSource } from '../data-source/grid-data-source';
+import { GridDataSource, IGridDataSource } from '../data-source/grid-data-source';
 import _ from '../underscore';
 import { DataGridColumnComponent } from './data-grid-column.component';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
@@ -24,7 +24,7 @@ export class DataGridComponent<TItem> implements OnDestroy, AfterViewInit {
   get dataSource() {
     return this._dataSource;
   }
-  set dataSource(value: GridDataSource<TItem>) {
+  set dataSource(value: IGridDataSource<TItem>) {
     this._dataSource = value;
     this._dataSource.change.subscribe((response) => {
       this.reordering = false;
@@ -32,7 +32,7 @@ export class DataGridComponent<TItem> implements OnDestroy, AfterViewInit {
     });
     this._dataSource.fetch();
   }
-  private _dataSource!: GridDataSource<TItem>;
+  private _dataSource!: IGridDataSource<TItem>;
 
   // Columns
 

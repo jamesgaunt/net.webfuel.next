@@ -6,6 +6,19 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Query, QueryFilter, QueryResult, QuerySort } from '../../api/api.types';
 import { EventEmitter } from '@angular/core';
 
+export interface IGridDataSource<TItem> {
+
+  change: EventEmitter<any>;
+
+  queryResult: QueryResult<TItem>;
+
+  fetch(): void;
+
+  reorderable: boolean;
+
+  reorder(previousIndex: number, currentIndex: number): void;
+}
+
 export class GridDataSource<TItem>  {
 
   constructor(private options: {

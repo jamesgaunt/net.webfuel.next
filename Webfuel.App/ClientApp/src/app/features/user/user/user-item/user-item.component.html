@@ -29,6 +29,10 @@
         <label class="label">Birthday</label>
         <date-picker placeholder="required" formControlName="birthday"></date-picker>
       </div>
+      <div class="field">
+        <label class="label">Title</label>
+        <dropdown-text-input [dataSource]="titleDataSource" placeholder="required" formControlName="title"></dropdown-text-input>
+      </div>
     </div>
     <div class="buttons">
       <button class="button is-success" (click)="save()">Save</button>
