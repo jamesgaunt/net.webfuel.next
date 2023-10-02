@@ -1,6 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 
-namespace Webfuel.Repository.New
+namespace Webfuel
 {
     public class RepositoryCommandBuffer
     {

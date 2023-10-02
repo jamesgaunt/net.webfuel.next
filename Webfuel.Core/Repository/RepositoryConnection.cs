@@ -9,8 +9,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 
-namespace Webfuel.Repository.New
+namespace Webfuel
 {
     public interface IRepositoryConnection
     {
@@ -18,37 +19,47 @@ namespace Webfuel.Repository.New
 
         Task<int> ExecuteNonQuery(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null);
 
-        Task<List<TEntity>> ExecuteReader<TEntity>(Func<SqlDataReader, TEntity> activator, string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null);
+        Task<List<TEntity>> ExecuteReader<TEntity, TEntityMetadata>(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null)
+            where TEntity : class
+            where TEntityMetadata : IRepositoryMetadata<TEntity>;
+
+        Task<QueryResult<TEntity>> ExecuteQuery<TEntity, TEntityMetadata>(Query query)
+            where TEntity : class
+            where TEntityMetadata : IRepositoryMetadata<TEntity>;
     }
 
+    [Service(typeof(IRepositoryConnection))]
     internal class RepositoryConnection: IRepositoryConnection
     {
         private readonly string _connectionString;
 
-        internal RepositoryConnection(string connectionString)
+        public RepositoryConnection(ITenantAccessor tenantAccessor, IRepositoryConfiguration repositoryConfiguration)
         {
-            _connectionString = connectionString;
+            var tenant = tenantAccessor.Tenant;
+            _connectionString = repositoryConfiguration.ConnectionString + $"User ID=login_{tenant.DatabaseSchema};Password={tenant.DatabasePassword}";
         }
 
-        public Task<object> ExecuteScalar(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null)
-        {
-            using (var connection = OpenConnection())
-            using (var command = BuildCommand(connection, sql, parameters))
-            {
-                return command.ExecuteScalarAsync(cancellationToken ?? CancellationToken.None);
-            }
-        }
-
-        public Task<int> ExecuteNonQuery(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null)
+        public async Task<object> ExecuteScalar(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null)
         {
             using (var connection = OpenConnection())
             using (var command = BuildCommand(connection, sql, parameters))
             {
-                return command.ExecuteNonQueryAsync(cancellationToken ?? CancellationToken.None);
+                return await command.ExecuteScalarAsync(cancellationToken ?? CancellationToken.None);
             }
         }
 
-        public async Task<List<TEntity>> ExecuteReader<TEntity>(Func<SqlDataReader, TEntity> activator, string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null)
+        public async Task<int> ExecuteNonQuery(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null)
+        {
+            using (var connection = OpenConnection())
+            using (var command = BuildCommand(connection, sql, parameters))
+            {
+                return await command.ExecuteNonQueryAsync(cancellationToken ?? CancellationToken.None);
+            }
+        }
+
+        public async Task<List<TEntity>> ExecuteReader<TEntity, TEntityMetadata>(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null)
+            where TEntity : class
+            where TEntityMetadata : IRepositoryMetadata<TEntity>
         {
             using (var connection = OpenConnection())
             using (var command = BuildCommand(connection, sql, parameters))
@@ -56,9 +67,40 @@ namespace Webfuel.Repository.New
             {
                 List<TEntity> result = new List<TEntity>();
                 while (await dr.ReadAsync())
-                    result.Add(activator(dr));
+                    result.Add(TEntityMetadata.DataReader(dr));
                 return result;
             }
+        }
+
+        public async Task<QueryResult<TEntity>> ExecuteQuery<TEntity, TEntityMetadata>(Query query)
+            where TEntity : class
+            where TEntityMetadata : IRepositoryMetadata<TEntity>
+        {
+            var fields = TEntityMetadata.SelectProperties;
+
+            RepositoryQueryUtility.ValidateFields(query, fields);
+
+            var parameters = new List<RepositoryQueryParameter>();
+            var filterSql = RepositoryQueryUtility.FilterSql(query, parameters);
+
+            var selectSql = RepositoryQueryUtility.SelectSql(query, fields);
+            var fromSql = $"FROM [{TEntityMetadata.DatabaseTable}]";
+            var orderSql = RepositoryQueryUtility.OrderSql(query, fields, TEntityMetadata.DefaultOrderBy);
+            var pageSql = RepositoryQueryUtility.PageSql(query);
+
+            var querySql = $"{selectSql} {fromSql} {filterSql} {orderSql} {pageSql}";
+
+            var items = await ExecuteReader<TEntity, TEntityMetadata>(querySql, RepositoryQueryUtility.SqlParameters(parameters));
+            int? totalCount = null;
+
+            if (!String.IsNullOrEmpty(pageSql))
+            {
+                var countSql = RepositoryQueryUtility.CountSql(query, fields);
+                querySql = $"{countSql} {fromSql} {filterSql}";
+                totalCount = (int)(await ExecuteScalar(querySql, RepositoryQueryUtility.SqlParameters(parameters)))!;
+            }
+
+            return new QueryResult<TEntity>(items, totalCount);
         }
 
         internal async Task ExecuteCommands(IEnumerable<RepositoryCommand> commands, CancellationToken? cancellationToken = null)
@@ -87,6 +129,7 @@ namespace Webfuel.Repository.New
         {
             var connection = new SqlConnection(_connectionString);
             connection.RetryLogicProvider = RetryLogicProvider;
+            connection.Open();
             return connection;
         }
 

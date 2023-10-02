@@ -32,12 +32,12 @@ namespace Webfuel
             {
                 await exception.ToProblemDetails().ApplyTo(context);
             }
-            catch 
+            catch (Exception exception) 
             {
                 await new ProblemDetails
                 {
                     Type = "/internal-server-error",
-                    Title = "Interal Server Error",
+                    Title = "Interal Server Error: " + exception.Message,
                     Status = (int)HttpStatusCode.InternalServerError,
                 }
                 .ApplyTo(context);

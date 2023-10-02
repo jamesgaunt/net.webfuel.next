@@ -9,19 +9,19 @@ namespace Webfuel.Domain.StaticData
         // Data Access
         
         public static string DatabaseTable => "FundingStream";
+        
         public static string DefaultOrderBy => "ORDER BY Id ASC";
         
         public static FundingStream DataReader(SqlDataReader dr) => new FundingStream(dr);
         
-        public static  IEnumerable<SqlParameter> DataWriter(FundingStream entity, IEnumerable<string> properties)
+        public static List<SqlParameter> ExtractParameters(FundingStream entity, IEnumerable<string> properties)
         {
-            var result = new List<SqlParameter>();
+            var result = new List<SqlParameter> { new SqlParameter(nameof(FundingStream.Id), entity.Id) };
             foreach(var property in properties)
             {
                 switch (property)
                 {
                     case nameof(FundingStream.Id):
-                        result.Add(new SqlParameter(nameof(FundingStream.Id), entity.Id));
                         break;
                     case nameof(FundingStream.Name):
                         result.Add(new SqlParameter(nameof(FundingStream.Name), entity.Name));
@@ -41,6 +41,23 @@ namespace Webfuel.Domain.StaticData
                 }
             }
             return result;
+        }
+        
+        public static string InsertSQL(IEnumerable<string>? properties = null)
+        {
+            properties = properties ?? InsertProperties;
+            return RepositoryMetadataDefaults.InsertSQL<FundingStream, FundingStreamMetadata>(properties);
+        }
+        
+        public static string UpdateSQL(IEnumerable<string>? properties = null)
+        {
+            properties = properties ?? UpdateProperties;
+            return RepositoryMetadataDefaults.UpdateSQL<FundingStream, FundingStreamMetadata>(properties);
+        }
+        
+        public static string DeleteSQL()
+        {
+            return RepositoryMetadataDefaults.DeleteSQL<FundingStream, FundingStreamMetadata>();
         }
         
         public static IEnumerable<string> SelectProperties
@@ -97,14 +114,14 @@ namespace Webfuel.Domain.StaticData
         public const int Name_MaxLength = 64;
         public const int Code_MaxLength = 64;
         
-        public static void Name<T>(IRuleBuilder<T, string> ruleBuilder)
+        public static void Name_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull()
                 .MaximumLength(Name_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
-        public static void Code<T>(IRuleBuilder<T, string> ruleBuilder)
+        public static void Code_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull()
@@ -115,8 +132,8 @@ namespace Webfuel.Domain.StaticData
         {
             public FundingStreamRepositoryValidator()
             {
-                RuleFor(x => x.Name).Use(FundingStreamRepositoryValidationRules.Name);
-                RuleFor(x => x.Code).Use(FundingStreamRepositoryValidationRules.Code);
+                RuleFor(x => x.Name).Use(Name_ValidationRules);
+                RuleFor(x => x.Code).Use(Code_ValidationRules);
             }
         }
     }

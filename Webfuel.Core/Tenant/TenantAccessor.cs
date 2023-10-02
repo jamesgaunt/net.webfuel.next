@@ -12,7 +12,7 @@ namespace Webfuel
         TenantData Tenant { get; }
     }
 
-    [ServiceImplementation(typeof(ITenantAccessor))]
+    [Service(typeof(ITenantAccessor))]
     internal class TenantAccessor: ITenantAccessor
     {
         private readonly IHttpContextAccessor _httpContextAccessor;

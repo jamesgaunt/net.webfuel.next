@@ -10,9 +10,7 @@ namespace Webfuel.Domain
     {
         Task<UserGroup> InsertUserGroup(UserGroup entity);
         Task<UserGroup> UpdateUserGroup(UserGroup entity);
-        Task<UserGroup> UpdateUserGroup(UserGroup entity, IEnumerable<string> properties);
         Task<UserGroup> UpdateUserGroup(UserGroup updated, UserGroup original);
-        Task<UserGroup> UpdateUserGroup(UserGroup updated, UserGroup original, IEnumerable<string> properties);
         Task DeleteUserGroup(Guid key);
         Task<QueryResult<UserGroup>> QueryUserGroup(Query query);
         Task<UserGroup?> GetUserGroup(Guid id);
@@ -23,50 +21,45 @@ namespace Webfuel.Domain
         Task<UserGroup?> GetUserGroupByName(string name);
         Task<UserGroup> RequireUserGroupByName(string name);
     }
+    [Service(typeof(IUserGroupRepository))]
     internal partial class UserGroupRepository: IUserGroupRepository
     {
-        private readonly IRepositoryService RepositoryService;
-        private readonly IRepositoryQueryService RepositoryQueryService;
-        public UserGroupRepository(IRepositoryService repositoryService, IRepositoryQueryService repositoryQueryService)
+        private readonly IRepositoryConnection _connection;
+        
+        public UserGroupRepository(IRepositoryConnection connection)
         {
-            RepositoryService = repositoryService;
-            RepositoryQueryService = repositoryQueryService;
+            _connection = connection;
         }
         public async Task<UserGroup> InsertUserGroup(UserGroup entity)
         {
-            return await RepositoryService.ExecuteInsert(entity);
+            if (entity.Id == Guid.Empty)
+            entity.Id = GuidGenerator.NewComb();
+            var sql = UserGroupMetadata.InsertSQL();
+            var parameters = UserGroupMetadata.ExtractParameters(entity, UserGroupMetadata.InsertProperties);
+            await _connection.ExecuteNonQuery(sql, parameters);
+            return entity;
         }
         public async Task<UserGroup> UpdateUserGroup(UserGroup entity)
         {
-            return await RepositoryService.ExecuteUpdate(entity);
-        }
-        public async Task<UserGroup> UpdateUserGroup(UserGroup entity, IEnumerable<string> properties)
-        {
-            return await RepositoryService.ExecuteUpdate(entity, properties);
+            var sql = UserGroupMetadata.UpdateSQL();
+            var parameters = UserGroupMetadata.ExtractParameters(entity, UserGroupMetadata.UpdateProperties);
+            await _connection.ExecuteNonQuery(sql, parameters);
+            return entity;
         }
         public async Task<UserGroup> UpdateUserGroup(UserGroup updated, UserGroup original)
         {
-            if(updated.Id != original.Id) throw new InvalidOperationException("UpdateUserGroup: Entity keys do not match.");
-            var _properties = new List<string>();
-            if(updated.Name != original.Name) _properties.Add("Name");
-            if(_properties.Count == 0) return updated;
-            return await RepositoryService.ExecuteUpdate(updated, _properties);
+            await UpdateUserGroup(updated);
+            return updated;
         }
-        public async Task<UserGroup> UpdateUserGroup(UserGroup updated, UserGroup original, IEnumerable<string> properties)
+        public async Task DeleteUserGroup(Guid id)
         {
-            if(updated.Id != original.Id) throw new InvalidOperationException("UpdateUserGroup: Entity keys do not match.");
-            var _properties = new List<string>();
-            if(properties.Contains("Name") && updated.Name != original.Name) _properties.Add("Name");
-            if(_properties.Count == 0) return updated;
-            return await RepositoryService.ExecuteUpdate(updated, _properties);
-        }
-        public async Task DeleteUserGroup(Guid key)
-        {
-            await RepositoryService.ExecuteDelete<UserGroup>(key);
+            var sql = UserGroupMetadata.DeleteSQL();
+            var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
+            await _connection.ExecuteNonQuery(sql, parameters);
         }
         public async Task<QueryResult<UserGroup>> QueryUserGroup(Query query)
         {
-            return await RepositoryQueryService.ExecuteQuery(query, new UserGroupRepositoryAccessor());
+            return await _connection.ExecuteQuery<UserGroup, UserGroupMetadata>(query);
         }
         public async Task<UserGroup?> GetUserGroup(Guid id)
         {
@@ -75,7 +68,7 @@ namespace Webfuel.Domain
             {
                 new SqlParameter("@Id", id),
             };
-            return (await RepositoryService.ExecuteReader<UserGroup>(sql, parameters)).SingleOrDefault();
+            return (await _connection.ExecuteReader<UserGroup, UserGroupMetadata>(sql, parameters)).SingleOrDefault();
         }
         public async Task<UserGroup> RequireUserGroup(Guid id)
         {
@@ -84,12 +77,12 @@ namespace Webfuel.Domain
         public async Task<int> CountUserGroup()
         {
             var sql = @"SELECT COUNT(Id) FROM [UserGroup]";
-            return (int)((await RepositoryService.ExecuteScalar(sql))!);
+            return (int)((await _connection.ExecuteScalar(sql))!);
         }
         public async Task<List<UserGroup>> SelectUserGroup()
         {
             var sql = @"SELECT * FROM [UserGroup] ORDER BY Id ASC";
-            return await RepositoryService.ExecuteReader<UserGroup>(sql);
+            return await _connection.ExecuteReader<UserGroup, UserGroupMetadata>(sql);
         }
         public async Task<List<UserGroup>> SelectUserGroupWithPage(int skip, int take)
         {
@@ -99,7 +92,7 @@ namespace Webfuel.Domain
                 new SqlParameter("@Skip", skip),
                 new SqlParameter("@Take", take),
             };
-            return await RepositoryService.ExecuteReader<UserGroup>(sql, parameters);
+            return await _connection.ExecuteReader<UserGroup, UserGroupMetadata>(sql, parameters);
         }
         public async Task<UserGroup?> GetUserGroupByName(string name)
         {
@@ -108,7 +101,7 @@ namespace Webfuel.Domain
             {
                 new SqlParameter("@Name", name),
             };
-            return (await RepositoryService.ExecuteReader<UserGroup>(sql, parameters)).SingleOrDefault();
+            return (await _connection.ExecuteReader<UserGroup, UserGroupMetadata>(sql, parameters)).SingleOrDefault();
         }
         public async Task<UserGroup> RequireUserGroupByName(string name)
         {

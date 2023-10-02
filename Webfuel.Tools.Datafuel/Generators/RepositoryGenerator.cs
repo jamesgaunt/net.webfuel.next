@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -50,10 +51,10 @@ namespace Webfuel.Tools.Datafuel
                     if (entity.Key != null)
                     {
                         sb.WriteLine($"Task<{entity.Name}> Update{entity.Name}({entity.Name} entity);");
-                        sb.WriteLine($"Task<{entity.Name}> Update{entity.Name}({entity.Name} entity, IEnumerable<string> properties);");
-
                         sb.WriteLine($"Task<{entity.Name}> Update{entity.Name}({entity.Name} updated, {entity.Name} original);");
-                        sb.WriteLine($"Task<{entity.Name}> Update{entity.Name}({entity.Name} updated, {entity.Name} original, IEnumerable<string> properties);");
+
+                        //sb.WriteLine($"Task Update{entity.Name}({entity.Name} entity, IEnumerable<string> properties);");
+                        //sb.WriteLine($"Task Update{entity.Name}({entity.Name} updated, {entity.Name} original, IEnumerable<string> properties);");
 
                         sb.WriteLine($"Task Delete{entity.Name}({entity.Key.CLRType} key);");
                     }
@@ -68,6 +69,7 @@ namespace Webfuel.Tools.Datafuel
 
         static void Implementation(ScriptBuilder sb, SchemaEntity entity)
         {
+            sb.WriteLine($"[Service(typeof(I{entity.Name}Repository))]");
             using (sb.OpenBrace($"internal partial class {entity.Name}Repository: I{entity.Name}Repository"))
             {
                 Constructor(sb, entity);
@@ -88,12 +90,12 @@ namespace Webfuel.Tools.Datafuel
 
         static void Constructor(ScriptBuilder sb, SchemaEntity entity)
         {
-            sb.WriteLine($"private readonly IRepositoryService RepositoryService;");
-            sb.WriteLine($"private readonly IRepositoryQueryService RepositoryQueryService;");
-            using (sb.OpenBrace($"public {entity.Name}Repository(IRepositoryService repositoryService, IRepositoryQueryService repositoryQueryService)"))
+            sb.WriteLine($"private readonly IRepositoryConnection _connection;");
+            sb.WriteLine();
+
+            using (sb.OpenBrace($"public {entity.Name}Repository(IRepositoryConnection connection)"))
             {
-                sb.WriteLine("RepositoryService = repositoryService;");
-                sb.WriteLine("RepositoryQueryService = repositoryQueryService;");
+                sb.WriteLine("_connection = connection;");
             }
         }
 
@@ -101,45 +103,35 @@ namespace Webfuel.Tools.Datafuel
         {
             using (sb.OpenBrace($"public async Task<{entity.Name}> Insert{entity.Name}({entity.Name} entity)"))
             {
-                sb.WriteLine($"return await RepositoryService.ExecuteInsert(entity);");
+                sb.WriteLine($"if (entity.Id == Guid.Empty)");
+                sb.WriteLine($"entity.Id = GuidGenerator.NewComb();");
+                sb.WriteLine($"var sql = {entity.Name}Metadata.InsertSQL();");
+                sb.WriteLine($"var parameters = {entity.Name}Metadata.ExtractParameters(entity, {entity.Name}Metadata.InsertProperties);");
+                sb.WriteLine($"await _connection.ExecuteNonQuery(sql, parameters);");
+                sb.WriteLine($"return entity;");
             }
         }
 
         static void Update(ScriptBuilder sb, SchemaEntity entity)
         {
-            if (entity.Key == null)
-                return;
-
             using (sb.OpenBrace($"public async Task<{entity.Name}> Update{entity.Name}({entity.Name} entity)"))
             {
-                sb.WriteLine($"return await RepositoryService.ExecuteUpdate(entity);");
-            }
-            using (sb.OpenBrace($"public async Task<{entity.Name}> Update{entity.Name}({entity.Name} entity, IEnumerable<string> properties)"))
-            {
-                sb.WriteLine($"return await RepositoryService.ExecuteUpdate(entity, properties);");
+                sb.WriteLine($"var sql = {entity.Name}Metadata.UpdateSQL();");
+                sb.WriteLine($"var parameters = {entity.Name}Metadata.ExtractParameters(entity, {entity.Name}Metadata.UpdateProperties);");
+                sb.WriteLine($"await _connection.ExecuteNonQuery(sql, parameters);");
+                sb.WriteLine($"return entity;");
             }
         }
 
         static void UpdateWithCompare(ScriptBuilder sb, SchemaEntity entity)
         {
-            if (entity.Key == null)
-                return;
-
             using (sb.OpenBrace($"public async Task<{entity.Name}> Update{entity.Name}({entity.Name} updated, {entity.Name} original)"))
             {
-                sb.WriteLine($"if(updated.{entity.Key.Name} != original.{entity.Key.Name}) throw new InvalidOperationException(\"Update{entity.Name}: Entity keys do not match.\");");
-                sb.WriteLine("var _properties = new List<string>();");
-                foreach (var member in entity.Members)
-                {
-                    if (member == entity.Key)
-                        continue;
-                    sb.WriteLine($"if({member.GenerateComparisonGetter("updated")} != {member.GenerateComparisonGetter("original")}) _properties.Add(\"{member.Name}\");");
-                }
-
-                sb.WriteLine("if(_properties.Count == 0) return updated;");
-                sb.WriteLine($"return await RepositoryService.ExecuteUpdate(updated, _properties);");
+                sb.WriteLine($"await Update{entity.Name}(updated);");
+                sb.WriteLine($"return updated;");
             }
 
+            /*
             using (sb.OpenBrace($"public async Task<{entity.Name}> Update{entity.Name}({entity.Name} updated, {entity.Name} original, IEnumerable<string> properties)"))
             {
                 sb.WriteLine($"if(updated.{entity.Key.Name} != original.{entity.Key.Name}) throw new InvalidOperationException(\"Update{entity.Name}: Entity keys do not match.\");");
@@ -154,16 +146,16 @@ namespace Webfuel.Tools.Datafuel
                 sb.WriteLine("if(_properties.Count == 0) return updated;");
                 sb.WriteLine($"return await RepositoryService.ExecuteUpdate(updated, _properties);");
             }
+            */
         }
 
         static void Delete(ScriptBuilder sb, SchemaEntity entity)
         {
-            if (entity.Key == null)
-                return;
-
-            using (sb.OpenBrace($"public async Task Delete{entity.Name}({entity.Key.CLRType} key)"))
+            using (sb.OpenBrace($"public async Task Delete{entity.Name}(Guid id)"))
             {
-                sb.WriteLine($"await RepositoryService.ExecuteDelete<{entity.Name}>(key);");
+                sb.WriteLine($"var sql = {entity.Name}Metadata.DeleteSQL();");
+                sb.WriteLine($"var parameters = new List<SqlParameter> {{ new SqlParameter {{ ParameterName = \"@Id\", Value = id }} }};");
+                sb.WriteLine($"await _connection.ExecuteNonQuery(sql, parameters);");
             }
         }
 
@@ -182,7 +174,7 @@ namespace Webfuel.Tools.Datafuel
         {
             using (sb.OpenBrace($"public async Task<QueryResult<{entity.Name}>> Query{entity.Name}(Query query)"))
             {
-                sb.WriteLine($"return await RepositoryQueryService.ExecuteQuery(query, new {entity.Name}RepositoryAccessor());");
+                sb.WriteLine($"return await _connection.ExecuteQuery<{entity.Name}, {entity.Name}Metadata>(query);");
             }
         }
 
@@ -208,16 +200,16 @@ namespace Webfuel.Tools.Datafuel
                 switch (query.Shape)
                 {
                     case QueryShape.Get:
-                        sb.WriteLine($"return (await RepositoryService.ExecuteReader<{query.Entity.Name}>(sql{(query.Parameters.Count > 0 ? ", parameters" : "")})).SingleOrDefault();");
+                        sb.WriteLine($"return (await _connection.ExecuteReader<{query.Entity.Name}, {query.Entity.Name}Metadata>(sql{(query.Parameters.Count > 0 ? ", parameters" : "")})).SingleOrDefault();");
                         break;
                     case QueryShape.Select:
-                        sb.WriteLine($"return await RepositoryService.ExecuteReader<{query.Entity.Name}>(sql{(query.Parameters.Count > 0 ? ", parameters" : "")});");
+                        sb.WriteLine($"return await _connection.ExecuteReader<{query.Entity.Name}, {query.Entity.Name}Metadata>(sql{(query.Parameters.Count > 0 ? ", parameters" : "")});");
                         break;
                     case QueryShape.Count:
-                        sb.WriteLine($"return (int)((await RepositoryService.ExecuteScalar(sql{(query.Parameters.Count > 0 ? ", parameters" : "")}))!);");
+                        sb.WriteLine($"return (int)((await _connection.ExecuteScalar(sql{(query.Parameters.Count > 0 ? ", parameters" : "")}))!);");
                         break;
                     case QueryShape.Unknown:
-                        sb.WriteLine($"return await RepositoryService.ExecuteScalar(sql{(query.Parameters.Count > 0 ? ", parameters" : "")});");
+                        sb.WriteLine($"return await _connection.ExecuteScalar(sql{(query.Parameters.Count > 0 ? ", parameters" : "")});");
                         break;
                 }
             }

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Identity.Client;
 
-namespace Webfuel.Repository.New
+namespace Webfuel
 {
     internal class RepositoryCommand
     {

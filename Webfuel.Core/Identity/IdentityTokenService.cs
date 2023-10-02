@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,16 +18,14 @@ namespace Webfuel
         IdentityToken? ValidateToken(string tokenString);
     }
 
-    [ServiceImplementation(typeof(IIdentityTokenService))]
+    [Service(typeof(IIdentityTokenService))]
     internal class IdentityTokenService: IIdentityTokenService
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly IEnumerable<IIdentityClaimsProvider> _identityClaimsProviders;
+        private readonly IServiceProvider _serviceProvider;
 
-        public IdentityTokenService(IHttpContextAccessor httpContextAccessor, IEnumerable<IIdentityClaimsProvider> identityClaimsProviders)
+        public IdentityTokenService(IServiceProvider serviceProvider)
         {
-            _httpContextAccessor = httpContextAccessor;
-            _identityClaimsProviders = identityClaimsProviders;
+            _serviceProvider = serviceProvider;
         }
 
         public async Task<string> GenerateToken(IdentityUser user)
@@ -76,7 +75,7 @@ namespace Webfuel
             token.Validity.ValidUntil = DateTimeOffset.UtcNow.Add(validFor.Value);
             token.Validity.ValidFromIPAddress = RemoteIpAddress;
 
-            foreach (var identityClaimsProvider in _identityClaimsProviders)
+            foreach (var identityClaimsProvider in _serviceProvider.GetServices<IIdentityClaimsProvider>())
                 await identityClaimsProvider.ProvideIdentityClaims(token.User, token.Claims);
 
             token.Signature = Signature(token);
@@ -113,7 +112,7 @@ namespace Webfuel
         {
             get
             {
-                return _httpContextAccessor.HttpContext?.Connection.RemoteIpAddress?.ToString() ?? "::1";
+                return "::1";
             }
         }
 

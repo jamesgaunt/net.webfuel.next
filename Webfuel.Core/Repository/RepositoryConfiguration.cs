@@ -7,7 +7,7 @@ namespace Webfuel
         string ConnectionString { get; }
     }
 
-    [ServiceImplementation(typeof(IRepositoryConfiguration))]
+    [Service(typeof(IRepositoryConfiguration))]
     internal class RepositoryConfiguration : IRepositoryConfiguration
     {
         public RepositoryConfiguration(IConfiguration configuration)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -48,6 +49,7 @@ namespace Webfuel.Tools.Datafuel
             sb.WriteLine();
 
             sb.WriteLine($"public static string DatabaseTable => \"{entity.Name}\";");
+            sb.WriteLine();
 
             sb.WriteLine($"public static string DefaultOrderBy => \"{entity.DefaultOrderBy}\";");
             sb.WriteLine();
@@ -55,9 +57,10 @@ namespace Webfuel.Tools.Datafuel
             sb.WriteLine($"public static {entity.Name} DataReader(SqlDataReader dr) => new {entity.Name}(dr);");
             sb.WriteLine();
 
-            using (sb.OpenBrace($"public static  IEnumerable<SqlParameter> DataWriter({entity.Name} entity, IEnumerable<string> properties)"))
+            using (sb.OpenBrace($"public static List<SqlParameter> ExtractParameters({entity.Name} entity, IEnumerable<string> properties)"))
             {
-                sb.WriteLine("var result = new List<SqlParameter>();");
+                sb.WriteLine($"var result = new List<SqlParameter> {{ new SqlParameter(nameof({entity.Name}.Id), entity.Id) }};");
+                
                 using (sb.OpenBrace($"foreach(var property in properties)"))
                 {
                     using (sb.OpenBrace($"switch (property)"))
@@ -65,12 +68,33 @@ namespace Webfuel.Tools.Datafuel
                         foreach (var member in entity.Members)
                         {
                             sb.WriteLine($"case nameof({entity.Name}.{member.Name}):");
-                            sb.WriteLine($"result.Add(new SqlParameter(nameof({entity.Name}.{member.Name}), {member.GenerateRepositoryGetter("entity.")}));");
+                            if(member.Name != "Id")
+                                sb.WriteLine($"result.Add(new SqlParameter(nameof({entity.Name}.{member.Name}), {member.GenerateRepositoryGetter("entity.")}));");
                             sb.WriteLine("break;");
                         }
                     }
                 }
                 sb.WriteLine("return result;");
+            }
+            sb.WriteLine();
+
+            using(sb.OpenBrace("public static string InsertSQL(IEnumerable<string>? properties = null)"))
+            {
+                sb.WriteLine("properties = properties ?? InsertProperties;");
+                sb.WriteLine($"return RepositoryMetadataDefaults.InsertSQL<{entity.Name}, {entity.Name}Metadata>(properties);");
+            }
+            sb.WriteLine();
+
+            using (sb.OpenBrace("public static string UpdateSQL(IEnumerable<string>? properties = null)"))
+            {
+                sb.WriteLine("properties = properties ?? UpdateProperties;");
+                sb.WriteLine($"return RepositoryMetadataDefaults.UpdateSQL<{entity.Name}, {entity.Name}Metadata>(properties);");
+            }
+            sb.WriteLine();
+
+            using (sb.OpenBrace("public static string DeleteSQL()"))
+            {
+                sb.WriteLine($"return RepositoryMetadataDefaults.DeleteSQL<{entity.Name}, {entity.Name}Metadata>();");
             }
             sb.WriteLine();
 
@@ -140,7 +164,7 @@ namespace Webfuel.Tools.Datafuel
                 if (rules.Count > 0)
                 {
                     sb.WriteLine();
-                    using (sb.OpenBrace($"public static void {member.Name}<T>(IRuleBuilder<T, {member.CLRTypeWithNullable}> ruleBuilder)"))
+                    using (sb.OpenBrace($"public static void {member.Name}_ValidationRules<T>(IRuleBuilder<T, {member.CLRTypeWithNullable}> ruleBuilder)"))
                     {
                         sb.WriteLine("ruleBuilder");
 
@@ -163,7 +187,7 @@ namespace Webfuel.Tools.Datafuel
                         if (member.GenerateValidationRules().Count() == 0)
                             continue;
 
-                        sb.WriteLine($"RuleFor(x => x.{member.Name}).Use({entity.Name}RepositoryValidationRules.{member.Name});");
+                        sb.WriteLine($"RuleFor(x => x.{member.Name}).Use({member.Name}_ValidationRules);");
                     }
                 }
             }

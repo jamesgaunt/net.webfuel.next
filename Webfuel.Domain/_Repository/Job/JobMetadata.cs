@@ -9,19 +9,19 @@ namespace Webfuel.Domain
         // Data Access
         
         public static string DatabaseTable => "Job";
+        
         public static string DefaultOrderBy => "ORDER BY Id ASC";
         
         public static Job DataReader(SqlDataReader dr) => new Job(dr);
         
-        public static  IEnumerable<SqlParameter> DataWriter(Job entity, IEnumerable<string> properties)
+        public static List<SqlParameter> ExtractParameters(Job entity, IEnumerable<string> properties)
         {
-            var result = new List<SqlParameter>();
+            var result = new List<SqlParameter> { new SqlParameter(nameof(Job.Id), entity.Id) };
             foreach(var property in properties)
             {
                 switch (property)
                 {
                     case nameof(Job.Id):
-                        result.Add(new SqlParameter(nameof(Job.Id), entity.Id));
                         break;
                     case nameof(Job.Name):
                         result.Add(new SqlParameter(nameof(Job.Name), entity.Name));
@@ -29,6 +29,23 @@ namespace Webfuel.Domain
                 }
             }
             return result;
+        }
+        
+        public static string InsertSQL(IEnumerable<string>? properties = null)
+        {
+            properties = properties ?? InsertProperties;
+            return RepositoryMetadataDefaults.InsertSQL<Job, JobMetadata>(properties);
+        }
+        
+        public static string UpdateSQL(IEnumerable<string>? properties = null)
+        {
+            properties = properties ?? UpdateProperties;
+            return RepositoryMetadataDefaults.UpdateSQL<Job, JobMetadata>(properties);
+        }
+        
+        public static string DeleteSQL()
+        {
+            return RepositoryMetadataDefaults.DeleteSQL<Job, JobMetadata>();
         }
         
         public static IEnumerable<string> SelectProperties
@@ -70,7 +87,7 @@ namespace Webfuel.Domain
         
         public const int Name_MaxLength = 64;
         
-        public static void Name<T>(IRuleBuilder<T, string> ruleBuilder)
+        public static void Name_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull()
@@ -81,7 +98,7 @@ namespace Webfuel.Domain
         {
             public JobRepositoryValidator()
             {
-                RuleFor(x => x.Name).Use(JobRepositoryValidationRules.Name);
+                RuleFor(x => x.Name).Use(Name_ValidationRules);
             }
         }
     }

@@ -9,19 +9,19 @@ namespace Webfuel.Domain
         // Data Access
         
         public static string DatabaseTable => "User";
+        
         public static string DefaultOrderBy => "ORDER BY Id ASC";
         
         public static User DataReader(SqlDataReader dr) => new User(dr);
         
-        public static  IEnumerable<SqlParameter> DataWriter(User entity, IEnumerable<string> properties)
+        public static List<SqlParameter> ExtractParameters(User entity, IEnumerable<string> properties)
         {
-            var result = new List<SqlParameter>();
+            var result = new List<SqlParameter> { new SqlParameter(nameof(User.Id), entity.Id) };
             foreach(var property in properties)
             {
                 switch (property)
                 {
                     case nameof(User.Id):
-                        result.Add(new SqlParameter(nameof(User.Id), entity.Id));
                         break;
                     case nameof(User.Email):
                         result.Add(new SqlParameter(nameof(User.Email), entity.Email));
@@ -62,6 +62,23 @@ namespace Webfuel.Domain
                 }
             }
             return result;
+        }
+        
+        public static string InsertSQL(IEnumerable<string>? properties = null)
+        {
+            properties = properties ?? InsertProperties;
+            return RepositoryMetadataDefaults.InsertSQL<User, UserMetadata>(properties);
+        }
+        
+        public static string UpdateSQL(IEnumerable<string>? properties = null)
+        {
+            properties = properties ?? UpdateProperties;
+            return RepositoryMetadataDefaults.UpdateSQL<User, UserMetadata>(properties);
+        }
+        
+        public static string DeleteSQL()
+        {
+            return RepositoryMetadataDefaults.DeleteSQL<User, UserMetadata>();
         }
         
         public static IEnumerable<string> SelectProperties
@@ -148,35 +165,35 @@ namespace Webfuel.Domain
         public const int PasswordHash_MaxLength = 256;
         public const int PasswordSalt_MaxLength = 256;
         
-        public static void Email<T>(IRuleBuilder<T, string> ruleBuilder)
+        public static void Email_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull()
                 .MaximumLength(Email_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
-        public static void FirstName<T>(IRuleBuilder<T, string> ruleBuilder)
+        public static void FirstName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull()
                 .MaximumLength(FirstName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
-        public static void LastName<T>(IRuleBuilder<T, string> ruleBuilder)
+        public static void LastName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull()
                 .MaximumLength(LastName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
-        public static void PasswordHash<T>(IRuleBuilder<T, string> ruleBuilder)
+        public static void PasswordHash_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull()
                 .MaximumLength(PasswordHash_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
-        public static void PasswordSalt<T>(IRuleBuilder<T, string> ruleBuilder)
+        public static void PasswordSalt_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull()
@@ -187,11 +204,11 @@ namespace Webfuel.Domain
         {
             public UserRepositoryValidator()
             {
-                RuleFor(x => x.Email).Use(UserRepositoryValidationRules.Email);
-                RuleFor(x => x.FirstName).Use(UserRepositoryValidationRules.FirstName);
-                RuleFor(x => x.LastName).Use(UserRepositoryValidationRules.LastName);
-                RuleFor(x => x.PasswordHash).Use(UserRepositoryValidationRules.PasswordHash);
-                RuleFor(x => x.PasswordSalt).Use(UserRepositoryValidationRules.PasswordSalt);
+                RuleFor(x => x.Email).Use(Email_ValidationRules);
+                RuleFor(x => x.FirstName).Use(FirstName_ValidationRules);
+                RuleFor(x => x.LastName).Use(LastName_ValidationRules);
+                RuleFor(x => x.PasswordHash).Use(PasswordHash_ValidationRules);
+                RuleFor(x => x.PasswordSalt).Use(PasswordSalt_ValidationRules);
             }
         }
     }

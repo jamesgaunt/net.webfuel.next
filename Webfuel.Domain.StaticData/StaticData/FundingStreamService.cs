@@ -16,14 +16,16 @@ namespace Webfuel.Domain.StaticData
             _fundingStreamRepository = fundingStreamRepository;
         }
 
-        public Task<FundingStream> InsertFundingStream(FundingStream fundingStream)
+        public async Task<FundingStream> InsertFundingStream(FundingStream fundingStream)
         {
-            return _fundingStreamRepository.InsertFundingStream(fundingStream);
+            await _fundingStreamRepository.InsertFundingStream(fundingStream);
+            return fundingStream;
         }
 
-        public Task<FundingStream> UpdateFundingStream(FundingStream fundingStream)
+        public async Task<FundingStream> UpdateFundingStream(FundingStream fundingStream)
         {
-            return _fundingStreamRepository.UpdateFundingStream(fundingStream);
+            await _fundingStreamRepository.UpdateFundingStream(fundingStream);
+            return fundingStream;
         }
 
         public Task DeleteFundingStream(Guid id)

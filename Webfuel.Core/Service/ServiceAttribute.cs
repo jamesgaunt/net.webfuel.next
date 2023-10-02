@@ -1,9 +1,9 @@
 ﻿namespace Webfuel
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
-    public class ServiceImplementationAttribute : Attribute
+    public class ServiceAttribute : Attribute
     {
-        public ServiceImplementationAttribute(Type implements, params Type[] interfaces)
+        public ServiceAttribute(Type implements, params Type[] interfaces)
         {
             Implements = implements;
             Interfaces.AddRange(interfaces);

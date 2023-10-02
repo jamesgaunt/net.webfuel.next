@@ -2,27 +2,27 @@
 
 namespace Webfuel
 {
-    public static class RepositoryQueryUtility
+    internal static class RepositoryQueryUtility
     {
-        public static string SelectSql(Query query, List<string> fields)
+        public static string SelectSql(Query query, IEnumerable<string> fields)
         {
             if (query.Projection.Count == 0)
                 return "SELECT " + String.Join(", ", fields.Select(p => Field(p)));
             return "SELECT " + String.Join(", ", query.Projection.Select(p => Field(p)));
         }
 
-        public static string CountSql(Query query, List<string> fields)
+        public static string CountSql(Query query, IEnumerable<string> fields)
         {
-            return $"SELECT COUNT({Field(fields[0])})";
+            return $"SELECT COUNT({Field(fields.First())})";
         }
 
-        public static string OrderSql(Query query, List<string> fields, string defaultOrderBy)
+        public static string OrderSql(Query query, IEnumerable<string> fields, string defaultOrderBy)
         {
             if (query.Sort.Count == 0)
             {
                 if (!String.IsNullOrEmpty(defaultOrderBy))
                     return defaultOrderBy;
-                return $"ORDER BY {Field(fields[0])} ASC";
+                return $"ORDER BY {Field(fields.First())} ASC";
             }
             return "ORDER BY " + String.Join(", ", query.Sort.Select(p => $"{Field(p.Field)} {(p.Direction > 0 ? "ASC" : "DESC")}"));
         }

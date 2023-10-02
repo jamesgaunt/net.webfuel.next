@@ -10,9 +10,7 @@ namespace Webfuel.Domain.StaticData
     {
         Task<FundingStream> InsertFundingStream(FundingStream entity);
         Task<FundingStream> UpdateFundingStream(FundingStream entity);
-        Task<FundingStream> UpdateFundingStream(FundingStream entity, IEnumerable<string> properties);
         Task<FundingStream> UpdateFundingStream(FundingStream updated, FundingStream original);
-        Task<FundingStream> UpdateFundingStream(FundingStream updated, FundingStream original, IEnumerable<string> properties);
         Task DeleteFundingStream(Guid key);
         Task<QueryResult<FundingStream>> QueryFundingStream(Query query);
         Task<FundingStream?> GetFundingStream(Guid id);
@@ -23,58 +21,45 @@ namespace Webfuel.Domain.StaticData
         Task<FundingStream?> GetFundingStreamByCode(string code);
         Task<FundingStream> RequireFundingStreamByCode(string code);
     }
+    [Service(typeof(IFundingStreamRepository))]
     internal partial class FundingStreamRepository: IFundingStreamRepository
     {
-        private readonly IRepositoryService RepositoryService;
-        private readonly IRepositoryQueryService RepositoryQueryService;
-        public FundingStreamRepository(IRepositoryService repositoryService, IRepositoryQueryService repositoryQueryService)
+        private readonly IRepositoryConnection _connection;
+        
+        public FundingStreamRepository(IRepositoryConnection connection)
         {
-            RepositoryService = repositoryService;
-            RepositoryQueryService = repositoryQueryService;
+            _connection = connection;
         }
         public async Task<FundingStream> InsertFundingStream(FundingStream entity)
         {
-            return await RepositoryService.ExecuteInsert(entity);
+            if (entity.Id == Guid.Empty)
+            entity.Id = GuidGenerator.NewComb();
+            var sql = FundingStreamMetadata.InsertSQL();
+            var parameters = FundingStreamMetadata.ExtractParameters(entity, FundingStreamMetadata.InsertProperties);
+            await _connection.ExecuteNonQuery(sql, parameters);
+            return entity;
         }
         public async Task<FundingStream> UpdateFundingStream(FundingStream entity)
         {
-            return await RepositoryService.ExecuteUpdate(entity);
-        }
-        public async Task<FundingStream> UpdateFundingStream(FundingStream entity, IEnumerable<string> properties)
-        {
-            return await RepositoryService.ExecuteUpdate(entity, properties);
+            var sql = FundingStreamMetadata.UpdateSQL();
+            var parameters = FundingStreamMetadata.ExtractParameters(entity, FundingStreamMetadata.UpdateProperties);
+            await _connection.ExecuteNonQuery(sql, parameters);
+            return entity;
         }
         public async Task<FundingStream> UpdateFundingStream(FundingStream updated, FundingStream original)
         {
-            if(updated.Id != original.Id) throw new InvalidOperationException("UpdateFundingStream: Entity keys do not match.");
-            var _properties = new List<string>();
-            if(updated.Name != original.Name) _properties.Add("Name");
-            if(updated.Code != original.Code) _properties.Add("Code");
-            if(updated.SortOrder != original.SortOrder) _properties.Add("SortOrder");
-            if(updated.Default != original.Default) _properties.Add("Default");
-            if(updated.Hidden != original.Hidden) _properties.Add("Hidden");
-            if(_properties.Count == 0) return updated;
-            return await RepositoryService.ExecuteUpdate(updated, _properties);
+            await UpdateFundingStream(updated);
+            return updated;
         }
-        public async Task<FundingStream> UpdateFundingStream(FundingStream updated, FundingStream original, IEnumerable<string> properties)
+        public async Task DeleteFundingStream(Guid id)
         {
-            if(updated.Id != original.Id) throw new InvalidOperationException("UpdateFundingStream: Entity keys do not match.");
-            var _properties = new List<string>();
-            if(properties.Contains("Name") && updated.Name != original.Name) _properties.Add("Name");
-            if(properties.Contains("Code") && updated.Code != original.Code) _properties.Add("Code");
-            if(properties.Contains("SortOrder") && updated.SortOrder != original.SortOrder) _properties.Add("SortOrder");
-            if(properties.Contains("Default") && updated.Default != original.Default) _properties.Add("Default");
-            if(properties.Contains("Hidden") && updated.Hidden != original.Hidden) _properties.Add("Hidden");
-            if(_properties.Count == 0) return updated;
-            return await RepositoryService.ExecuteUpdate(updated, _properties);
-        }
-        public async Task DeleteFundingStream(Guid key)
-        {
-            await RepositoryService.ExecuteDelete<FundingStream>(key);
+            var sql = FundingStreamMetadata.DeleteSQL();
+            var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
+            await _connection.ExecuteNonQuery(sql, parameters);
         }
         public async Task<QueryResult<FundingStream>> QueryFundingStream(Query query)
         {
-            return await RepositoryQueryService.ExecuteQuery(query, new FundingStreamRepositoryAccessor());
+            return await _connection.ExecuteQuery<FundingStream, FundingStreamMetadata>(query);
         }
         public async Task<FundingStream?> GetFundingStream(Guid id)
         {
@@ -83,7 +68,7 @@ namespace Webfuel.Domain.StaticData
             {
                 new SqlParameter("@Id", id),
             };
-            return (await RepositoryService.ExecuteReader<FundingStream>(sql, parameters)).SingleOrDefault();
+            return (await _connection.ExecuteReader<FundingStream, FundingStreamMetadata>(sql, parameters)).SingleOrDefault();
         }
         public async Task<FundingStream> RequireFundingStream(Guid id)
         {
@@ -92,12 +77,12 @@ namespace Webfuel.Domain.StaticData
         public async Task<int> CountFundingStream()
         {
             var sql = @"SELECT COUNT(Id) FROM [FundingStream]";
-            return (int)((await RepositoryService.ExecuteScalar(sql))!);
+            return (int)((await _connection.ExecuteScalar(sql))!);
         }
         public async Task<List<FundingStream>> SelectFundingStream()
         {
             var sql = @"SELECT * FROM [FundingStream] ORDER BY Id ASC";
-            return await RepositoryService.ExecuteReader<FundingStream>(sql);
+            return await _connection.ExecuteReader<FundingStream, FundingStreamMetadata>(sql);
         }
         public async Task<List<FundingStream>> SelectFundingStreamWithPage(int skip, int take)
         {
@@ -107,7 +92,7 @@ namespace Webfuel.Domain.StaticData
                 new SqlParameter("@Skip", skip),
                 new SqlParameter("@Take", take),
             };
-            return await RepositoryService.ExecuteReader<FundingStream>(sql, parameters);
+            return await _connection.ExecuteReader<FundingStream, FundingStreamMetadata>(sql, parameters);
         }
         public async Task<FundingStream?> GetFundingStreamByCode(string code)
         {
@@ -116,7 +101,7 @@ namespace Webfuel.Domain.StaticData
             {
                 new SqlParameter("@Code", code),
             };
-            return (await RepositoryService.ExecuteReader<FundingStream>(sql, parameters)).SingleOrDefault();
+            return (await _connection.ExecuteReader<FundingStream, FundingStreamMetadata>(sql, parameters)).SingleOrDefault();
         }
         public async Task<FundingStream> RequireFundingStreamByCode(string code)
         {

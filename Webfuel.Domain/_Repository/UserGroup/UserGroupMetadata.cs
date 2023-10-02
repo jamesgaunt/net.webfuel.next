@@ -9,19 +9,19 @@ namespace Webfuel.Domain
         // Data Access
         
         public static string DatabaseTable => "UserGroup";
+        
         public static string DefaultOrderBy => "ORDER BY Id ASC";
         
         public static UserGroup DataReader(SqlDataReader dr) => new UserGroup(dr);
         
-        public static  IEnumerable<SqlParameter> DataWriter(UserGroup entity, IEnumerable<string> properties)
+        public static List<SqlParameter> ExtractParameters(UserGroup entity, IEnumerable<string> properties)
         {
-            var result = new List<SqlParameter>();
+            var result = new List<SqlParameter> { new SqlParameter(nameof(UserGroup.Id), entity.Id) };
             foreach(var property in properties)
             {
                 switch (property)
                 {
                     case nameof(UserGroup.Id):
-                        result.Add(new SqlParameter(nameof(UserGroup.Id), entity.Id));
                         break;
                     case nameof(UserGroup.Name):
                         result.Add(new SqlParameter(nameof(UserGroup.Name), entity.Name));
@@ -29,6 +29,23 @@ namespace Webfuel.Domain
                 }
             }
             return result;
+        }
+        
+        public static string InsertSQL(IEnumerable<string>? properties = null)
+        {
+            properties = properties ?? InsertProperties;
+            return RepositoryMetadataDefaults.InsertSQL<UserGroup, UserGroupMetadata>(properties);
+        }
+        
+        public static string UpdateSQL(IEnumerable<string>? properties = null)
+        {
+            properties = properties ?? UpdateProperties;
+            return RepositoryMetadataDefaults.UpdateSQL<UserGroup, UserGroupMetadata>(properties);
+        }
+        
+        public static string DeleteSQL()
+        {
+            return RepositoryMetadataDefaults.DeleteSQL<UserGroup, UserGroupMetadata>();
         }
         
         public static IEnumerable<string> SelectProperties
@@ -70,7 +87,7 @@ namespace Webfuel.Domain
         
         public const int Name_MaxLength = 64;
         
-        public static void Name<T>(IRuleBuilder<T, string> ruleBuilder)
+        public static void Name_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull()
@@ -81,7 +98,7 @@ namespace Webfuel.Domain
         {
             public UserGroupRepositoryValidator()
             {
-                RuleFor(x => x.Name).Use(UserGroupRepositoryValidationRules.Name);
+                RuleFor(x => x.Name).Use(Name_ValidationRules);
             }
         }
     }

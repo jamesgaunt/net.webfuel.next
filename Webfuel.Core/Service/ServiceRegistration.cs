@@ -3,13 +3,13 @@ using System.Reflection;
 
 namespace Webfuel
 {
-    public static class ServiceImplementationRegistration
+    public static class ServiceRegistration
     {
         public static void RegisterServicesFromAssembly(this IServiceCollection services, Assembly assembly)
         {
             foreach (var type in assembly.DefinedTypes)
             {
-                var attribute = type.GetCustomAttribute<ServiceImplementationAttribute>();
+                var attribute = type.GetCustomAttribute<ServiceAttribute>();
                 if (attribute == null)
                     continue;
 

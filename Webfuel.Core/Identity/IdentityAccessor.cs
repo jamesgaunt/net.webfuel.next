@@ -9,7 +9,7 @@ namespace Webfuel
         IdentityClaims? Claims { get; }
     }
 
-    [ServiceImplementation(typeof(IIdentityAccessor))]
+    [Service(typeof(IIdentityAccessor))]
     internal class IdentityAccessor : IIdentityAccessor
     {
         private readonly IHttpContextAccessor _httpContextAccessor;

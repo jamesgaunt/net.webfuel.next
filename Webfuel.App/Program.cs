@@ -23,12 +23,12 @@ namespace Webfuel.App
                 builder.Host.UseSerilog();
 
                 builder.Services.RegisterCoreServices();
-                builder.Services.RegisterCommonServices();
+                builder.Services.RegisterDomainServices();
 
                 builder.Services.AddMediatR(c =>
                 {
                     c.RegisterServicesFromAssemblyContaining<CoreAssemblyMarker>();
-                    c.RegisterServicesFromAssemblyContaining<CommonAssemblyMarker>();
+                    c.RegisterServicesFromAssemblyContaining<DomainAssemblyMarker>();
                 });
 
                 var app = builder.Build();

@@ -19,42 +19,7 @@ namespace Webfuel.Tools.Datafuel
                 MetadataGenerator.GenerateMetadata(entity);
             }
 
-            GenerateRepositoryRegistration(schema);
-
             DatabaseGenerator.GenerateDatabase(schema);
-        }
-        static void GenerateRepositoryRegistration(Schema schema)
-        {
-            var done = new List<String>();
-            foreach (var entity in schema.Entities)
-            {
-                if (done.Contains(entity.Assembly))
-                    continue;
-
-                File.WriteAllText(entity.GeneratedDirectory + $@"\RepositoryRegistration.cs", RepositoryRegistration(schema, entity.Assembly));
-            }
-        }
-
-        static string RepositoryRegistration(Schema schema, string assembly)
-        {
-            var sb = new ScriptBuilder();
-
-            sb.WriteLine("using Microsoft.Extensions.DependencyInjection;");
-            using (sb.OpenBrace($"namespace Webfuel{(assembly == "Core" ? String.Empty : "." + assembly)}"))
-            {
-                using (sb.OpenBrace("internal static class RepositoryRegistration"))
-                using (sb.OpenBrace("public static void AddRepositoryServices(this IServiceCollection services)"))
-                {
-                    foreach (var entity in schema.Entities.Where(p => p.Repository && p.Assembly == assembly))
-                    {
-                        sb.WriteLine($"services.AddSingleton<I{entity.Name}Repository, {entity.Name}Repository>();");
-                        sb.WriteLine($"services.AddSingleton<IRepositoryAccessor<{entity.Name}>, {entity.Name}RepositoryAccessor>();");
-                        sb.WriteLine($"services.AddSingleton<IRepositoryMapper<{entity.Name}>, RepositoryDefaultMapper<{entity.Name}>>();");
-                        sb.WriteLine();
-                    }
-                }
-            }
-            return sb.ToString();
         }
 
         static void DeleteDirectory(Schema schema)

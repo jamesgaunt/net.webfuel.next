@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Webfuel.Domain
 {
-    [ServiceImplementation(typeof(IIdentityClaimsProvider))]
+    [Service(typeof(IIdentityClaimsProvider))]
     internal class UserClaimsProvider : IIdentityClaimsProvider
     {
         private readonly IUserRepository _userRepository;
