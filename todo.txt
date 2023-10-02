@@ -17,22 +17,22 @@ Grid sorting / multi-select functionality
 
 Grid table mode (i.e. non-pageable)
 
+dropdown-textinput : dropdown + free edit -> Factor our dropdown logic - prelude to multiselect
+
 Datafuel/Typefuel
 
 [JsonOptional] -- done?
 [JsonReadOnly] 
 Interfaces (with readonly properties)
 
-Repository Pattern Investigation
-	- Lifecycle (currently singleton!)
-	- Reduce DI calls
-	- Support Transactions
-	- Generate new DB Context which collects Updates & Inserts for bulk operation?
-	- RepositoryConnection / RepositoryCommand / RepositoryQuery - use built in retry functionality
-	- RepositoryTransaction += add multiple commands then fire to a RepositoryConnection
-
 User = _userRepository.Insert(User, Transaction); 
 UserGroup = _userGroupRepository.Update(UserGroup, Transaction);
 Transaction.Execute(); <-- No scope required  - runs all commands 
 
 
+
+[Service<T>()]
+
+[TenantService<T>()]
+[TenantService<T>("RSS London")] => IProjectValidationService (specialsed for each region)
+ -> Lamba construction - always transient

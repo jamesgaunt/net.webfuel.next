@@ -12,7 +12,16 @@ using System.Threading.Tasks;
 
 namespace Webfuel.Repository.New
 {
-    public class RepositoryConnection
+    public interface IRepositoryConnection
+    {
+        Task<object> ExecuteScalar(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null);
+
+        Task<int> ExecuteNonQuery(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null);
+
+        Task<List<TEntity>> ExecuteReader<TEntity>(Func<SqlDataReader, TEntity> activator, string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null);
+    }
+
+    internal class RepositoryConnection: IRepositoryConnection
     {
         private readonly string _connectionString;
 
@@ -39,7 +48,7 @@ namespace Webfuel.Repository.New
             }
         }
 
-        public async Task<List<TEntity>> ExecuteReader<TEntity>(IRepositoryReader<TEntity> reader, string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null)
+        public async Task<List<TEntity>> ExecuteReader<TEntity>(Func<SqlDataReader, TEntity> activator, string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null)
         {
             using (var connection = OpenConnection())
             using (var command = BuildCommand(connection, sql, parameters))
@@ -47,7 +56,7 @@ namespace Webfuel.Repository.New
             {
                 List<TEntity> result = new List<TEntity>();
                 while (await dr.ReadAsync())
-                    result.Add(reader.Read(dr));
+                    result.Add(activator(dr));
                 return result;
             }
         }
@@ -64,8 +73,13 @@ namespace Webfuel.Repository.New
                         sqlCommand.Transaction = transaction;
                         await sqlCommand.ExecuteNonQueryAsync(cancellationToken ?? CancellationToken.None);
                     }
+                    if(cancellationToken.HasValue && cancellationToken.Value.IsCancellationRequested)
+                    {
+                        await transaction.RollbackAsync();
+                        return;
+                    }
                 }
-                transaction.Commit();
+                await transaction.CommitAsync();
             }
         }
 

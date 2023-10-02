@@ -14,8 +14,10 @@ namespace Webfuel.Tools.Datafuel
         {
             DeleteDirectory(schema);
 
-            foreach (var entity in schema.Entities)
+            foreach (var entity in schema.Entities) { 
                 EntityGenerator.GenerateEntity(entity);
+                MetadataGenerator.GenerateMetadata(entity);
+            }
 
             GenerateRepositoryRegistration(schema);
 

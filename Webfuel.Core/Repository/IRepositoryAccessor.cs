@@ -2,9 +2,9 @@
 {
     public interface IRepositoryAccessor<TEntity> where TEntity : class
     {
-        string DatabaseTable { get; }
+        string DatabaseTable { get; } // Static Metadata
 
-        string DefaultOrderBy { get; }
+        string DefaultOrderBy { get; } // Static Metadata
 
         object? GetValue(TEntity entity, string property);
 
@@ -12,10 +12,10 @@
 
         TEntity CreateInstance();
 
-        void Validate(TEntity entity);
+        void Validate(TEntity entity);  // Static Metadata
 
-        IEnumerable<string> InsertProperties { get; }
+        IEnumerable<string> InsertProperties { get; } // Static Metadata
 
-        IEnumerable<string> UpdateProperties { get; }
+        IEnumerable<string> UpdateProperties { get; } // Static Metadata
     }
 }

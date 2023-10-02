@@ -79,17 +79,17 @@ namespace Webfuel.Tools.Datafuel
             sb.WriteLine($"entity.{Name} = {Name};");
         }
 
-        public virtual void GenerateRepositoryGetter(ScriptBuilder sb)
+        public virtual string GenerateRepositoryGetter(string prefix = "entity.")
         {
-            sb.WriteLine($"return entity.{Name};");
+            return $"{prefix}{Name}";
         }
 
-        public virtual void GenerateRepositorySetter(ScriptBuilder sb)
+        public virtual string GenerateRepositorySetter(string prefix = "entity.")
         {
             if (Nullable)
-                sb.WriteLine($"entity.{Name} = value == DBNull.Value ? ({CLRTypeWithNullable})null : ({CLRTypeWithNullable})value;");
+                return $"{prefix}{Name} = value == DBNull.Value ? ({CLRTypeWithNullable})null : ({CLRTypeWithNullable})value;";
             else
-                sb.WriteLine($"entity.{Name} = ({CLRType})value!;");
+                return $"{prefix}{Name} = ({CLRType})value!;";
         }
 
         public virtual string GenerateComparisonGetter(string entity)

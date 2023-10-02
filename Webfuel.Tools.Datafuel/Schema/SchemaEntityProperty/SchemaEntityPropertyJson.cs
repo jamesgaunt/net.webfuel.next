@@ -55,14 +55,14 @@ namespace Webfuel.Tools.Datafuel
             sb.WriteLine($"string _{Name}Json = String.Empty;");
         }
 
-        public override void GenerateRepositoryGetter(ScriptBuilder sb)
+        public override string GenerateRepositoryGetter(string prefix = "entity.")
         {
-            sb.WriteLine($"return entity.{Name}Json;");
+            return $"{prefix}{Name}Json";
         }
 
-        public override void GenerateRepositorySetter(ScriptBuilder sb)
+        public override string GenerateRepositorySetter(string prefix = "entity.")
         {
-            sb.WriteLine($"entity.{Name}Json = (string)value{(Nullable ? String.Empty : "!")};");
+            return $"{prefix}{Name}Json = (string)value{(Nullable ? String.Empty : "!")};";
         }
 
         public override string GenerateComparisonGetter(string entity)

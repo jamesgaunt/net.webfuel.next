@@ -12,12 +12,12 @@ namespace Webfuel.Tools.Datafuel
 
         // Generators
 
-        public override void GenerateRepositorySetter(ScriptBuilder sb)
+        public override string GenerateRepositorySetter(string prefix = "entity.")
         {
             if(Nullable)
-                sb.WriteLine($"entity.{Name} = value == DBNull.Value ? (DateOnly?)null : DateOnly.FromDateTime((DateTime)value!);");
-            else
-                sb.WriteLine($"entity.{Name} = DateOnly.FromDateTime((DateTime)value!);");
+                return $"{prefix}{Name} = value == DBNull.Value ? (DateOnly?)null : DateOnly.FromDateTime((DateTime)value!);";
+
+            return $"{prefix}{Name} = DateOnly.FromDateTime((DateTime)value!);";
         }
     }
 }

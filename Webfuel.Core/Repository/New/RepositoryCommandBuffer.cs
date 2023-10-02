@@ -2,12 +2,12 @@
 
 namespace Webfuel.Repository.New
 {
-    public class RepositoryTransaction
+    public class RepositoryCommandBuffer
     {
         private readonly RepositoryConnection _connection;
         internal readonly List<RepositoryCommand> _commands = new List<RepositoryCommand>();
 
-        internal RepositoryTransaction(RepositoryConnection connection)
+        internal RepositoryCommandBuffer(RepositoryConnection connection)
         {
             _connection = connection;
         }
@@ -17,7 +17,7 @@ namespace Webfuel.Repository.New
             _commands.Add(new RepositoryCommand { Sql = sql, Parameters = parameters });
         }
 
-        public Task Execute()
+        public Task ExecuteCommands()
         {
             return _connection.ExecuteCommands(_commands);
         }
