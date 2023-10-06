@@ -29,11 +29,15 @@ export class UserItemComponent implements OnInit {
 
   userGroupDataSource = new SelectDataSource<UserGroup>({
     fetch: (query) => this.userGroupApi.queryUserGroup(query)
-  })
+  });
 
   titleDataSource = new SelectDataSource<UserGroup>({
     fetch: (query) => this.userGroupApi.queryUserGroup(query)
-  })
+  });
+
+  multiDataSource = new SelectDataSource<UserGroup>({
+    fetch: (query) => this.userGroupApi.queryUserGroup(query)
+  });
 
   item!: User;
 
@@ -49,6 +53,7 @@ export class UserItemComponent implements OnInit {
     userGroupId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     birthday: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     title: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
+    multi: new FormControl<string[]>([], { validators: [Validators.required], nonNullable: true }),
   });
 
   save() {

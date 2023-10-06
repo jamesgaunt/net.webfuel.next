@@ -3,26 +3,24 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
 import { debounceTime, noop, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import _ from 'shared/underscore';
-import { SelectDataSource } from '../../data-source/select-data-source';
+import { ISelectDataSource, SelectDataSource } from '../../data-source/select-data-source';
 import { GridDataSource } from '../../data-source/grid-data-source';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 
 @Component({
-  selector: 'dropdown-text-input',
-  templateUrl: './dropdown-text-input.component.html',
+  selector: 'dropdown-multi-select',
+  templateUrl: './dropdown-multi-select.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DropDownTextInputComponent),
+      useExisting: forwardRef(() => DropDownMultiSelectComponent),
       multi: true
     }
   ]
 })
-export class DropDownTextInputComponent<TItem> implements ControlValueAccessor, OnInit {
-
-  formControl: FormControl = new FormControl<string>('');
+export class DropDownMultiSelectComponent<TItem> implements ControlValueAccessor, OnInit {
 
   destroyRef: DestroyRef = inject(DestroyRef);
 
@@ -34,13 +32,6 @@ export class DropDownTextInputComponent<TItem> implements ControlValueAccessor, 
   }
 
   ngOnInit(): void {
-    this.formControl.valueChanges
-      .pipe(
-        debounceTime(200),
-        tap(value => this.onChange(value)),
-        takeUntilDestroyed(this.destroyRef),
-      )
-      .subscribe();
   }
 
   @Input()
@@ -56,14 +47,14 @@ export class DropDownTextInputComponent<TItem> implements ControlValueAccessor, 
   // Data Source
 
   @Input({ required: true })
-  set dataSource(value: SelectDataSource<TItem>) {
+  set dataSource(value: ISelectDataSource<TItem>) {
     this._dataSource = value;
     this._dataSource.change.subscribe(() => this.cd.detectChanges());
   }
   get dataSource() {
     return this._dataSource;
   }
-  _dataSource!: SelectDataSource<TItem>
+  _dataSource!: ISelectDataSource<TItem>
 
   getId(item: TItem) {
     return this.dataSource.getId(item);
@@ -71,20 +62,28 @@ export class DropDownTextInputComponent<TItem> implements ControlValueAccessor, 
 
   // Client Events
 
-  pickItem(item: TItem, $event: Event) {
-    $event.preventDefault();
-    $event.stopPropagation();
+  pickItem(item: TItem) {
+    var id = this.getId(item);
+    this.dataSource.pick([id], false);
     this.closePopup();
-    this.formControl.setValue((<any>item).name);
-    this.cd.detectChanges();
+    this.doChangeCallback();
+  }
+
+  removeItem(item: any, $event: Event) {
+    if ($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+    }
+    this.dataSource.remove(this.dataSource.getId(item));
+    this.doChangeCallback();
   }
 
   clear($event: Event) {
     $event.preventDefault();
     $event.stopPropagation();
+    this.dataSource.clear();
     this.closePopup();
-    this.formControl.setValue('');
-    this.cd.detectChanges();
+    this.doChangeCallback();
   }
 
   togglePopup($event: Event) {
@@ -118,7 +117,7 @@ export class DropDownTextInputComponent<TItem> implements ControlValueAccessor, 
         { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top' },
         { originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'bottom' },
       ]).withFlexibleDimensions(true).withPush(false),
-      hasBackdrop: false,
+      hasBackdrop: true,
     });
     this.popupRef.backdropClick().subscribe(() => this.closePopup());
     const portal = new TemplatePortal(this.popupTemplate, this.viewContainerRef);
@@ -132,10 +131,6 @@ export class DropDownTextInputComponent<TItem> implements ControlValueAccessor, 
       return;
     this.popupRef!.detach();
     this.popupRef = null;
-  }
-
-  delayedClosePopup() {
-    setTimeout(() => this.closePopup(), 200);
   }
 
   @HostListener('window:resize')
@@ -187,15 +182,21 @@ export class DropDownTextInputComponent<TItem> implements ControlValueAccessor, 
 
   // ControlValueAccessor API
 
-  onChange: (value: string | null) => void = noop;
+  doChangeCallback() {
+    if (this.dataSource.pickedItems.length === 0)
+      this.onChange(null);
+    this.onChange(_.map(this.dataSource.pickedItems, (p) => this.dataSource.getId(p)));
+  }
+
+  onChange: (value: string[] | null) => void = noop;
 
   onTouched: () => void = noop;
 
-  public writeValue(value: string | null): void {
-    this.dataSource.pick(!value ? [] : [value], true);
+  public writeValue(value: string[] | null): void {
+    this.dataSource.pick(!value ? [] : value, true);
   }
 
-  public registerOnChange(fn: (value: string | null) => void): void {
+  public registerOnChange(fn: (value: string[] | null) => void): void {
     this.onChange = fn;
   }
 

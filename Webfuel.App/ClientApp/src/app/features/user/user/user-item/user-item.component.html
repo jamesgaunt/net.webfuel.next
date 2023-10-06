@@ -33,6 +33,10 @@
         <label class="label">Title</label>
         <dropdown-text-input [dataSource]="titleDataSource" placeholder="required" formControlName="title"></dropdown-text-input>
       </div>
+      <div class="field">
+        <label class="label">Multi Select</label>
+        <dropdown-multi-select [dataSource]="multiDataSource" placeholder="required" formControlName="multi" [enableClear]="true"></dropdown-multi-select>
+      </div>
     </div>
     <div class="buttons">
       <button class="button is-success" (click)="save()">Save</button>

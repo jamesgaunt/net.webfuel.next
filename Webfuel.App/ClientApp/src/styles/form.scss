@@ -21,17 +21,19 @@
   }
 }
 
-.input, .select, .textarea, .checkbox, .radio-group {
+// TODO: Factor out key styling into mixin
+
+.input, .select, .textarea, .checkbox, .radio-group, .tag-input {
   background-color: #fff;
   border: 1px solid var(--border-color);
   color: #363636;
   box-shadow: none;
   outline: none;
-  display: inline-flex;
   font-size: 1rem;
   min-height: 2.5em;
   justify-content: flex-start;
   line-height: 1.5;
+  display: inline-flex;
   padding-bottom: calc(0.5em - 1px);
   padding-left: calc(0.75em - 1px);
   padding-right: calc(0.75em - 1px);
@@ -95,7 +97,6 @@
   }
 }
 
-
 .dropdown-popup {
   background-color: #FFF;
   outline: none;
@@ -141,4 +142,3 @@
 .date-picker-popup {
   box-shadow: 1px 1px 10px #000;
 }
-

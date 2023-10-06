@@ -1,5 +1,12 @@
 <div #popupAnchor class="control">
-  <input class="input" [placeholder]="placeholder" [formControl]="formControl" (focus)="openPopup()" (blur)="delayedClosePopup()" />
+  <div class="input" *ngIf="dataSource.pickedItems.length === 0" (click)="togglePopup($event)">
+    {{ placeholder || "&nbsp;" }}
+  </div>
+  <div class="tag-input" *ngIf="dataSource.pickedItems.length !== 0">
+    <span class="tag" *ngFor="let item of dataSource.pickedItems">
+      <ng-container *ngTemplateOutlet="_pickedTemplate;context: { $implicit: item }"></ng-container> <span (click)="removeItem(item, $event)" class="closer"><i class="fas fa-times"></i></span>
+    </span>
+  </div>
   <!-- Clear Icon -->
   <div *ngIf="enableClear && dataSource.pickedItems.length !== 0" class="icon is-control" (click)="clear($event)">
     <i class="fas fa-times"></i>
@@ -21,7 +28,7 @@
 <ng-template #popupTemplate>
   <div class="dropdown-popup">
     <div class="items" (scroll)="onDropDownScroll($event)">
-      <div *ngFor="let item of dataSource.optionItems" class="dropdown-item" (click)="pickItem(item, $event)">
+      <div *ngFor="let item of dataSource.optionItems" class="dropdown-item" (click)="pickItem(item)">
         <ng-container *ngTemplateOutlet="_optionTemplate;context: { $implicit: item }"></ng-container>
       </div>
       <div *ngIf="dataSource.optionItemsCallback && dataSource.optionItems.length == 0" class="dropdown-loading">

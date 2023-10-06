@@ -12,6 +12,7 @@ import { ChromeComponent } from './chrome/chrome.component';
 import { TextInputComponent } from './form/text-input/text-input.component';
 import { NumberInputComponent } from './form/number-input/number-input.component';
 import { DropDownSelectComponent } from './form/dropdown-select/dropdown-select.component';
+import { DropDownMultiSelectComponent } from './form/dropdown-multi-select/dropdown-multi-select.component';
 import { DateCalendarComponent } from './form/date-calendar/date-calendar.component';
 import { DatePickerComponent } from './form/date-picker/date-picker.component';
 import { DropDownTextInputComponent } from './form/dropdown-text-input/dropdown-text-input.component';
@@ -39,6 +40,7 @@ import { DataSorterComponent } from './data-sorter/data-sorter.component';
     TextInputComponent,
     NumberInputComponent,
     DropDownSelectComponent,
+    DropDownMultiSelectComponent,
     DropDownTextInputComponent,
     DateCalendarComponent,
     DatePickerComponent,
@@ -64,6 +66,7 @@ import { DataSorterComponent } from './data-sorter/data-sorter.component';
     TextInputComponent,
     NumberInputComponent,
     DropDownSelectComponent,
+    DropDownMultiSelectComponent,
     DropDownTextInputComponent,
     DateCalendarComponent,
     DatePickerComponent,
