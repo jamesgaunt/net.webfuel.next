@@ -7,26 +7,36 @@ import { Query, QueryFilter, QueryResult, QuerySort } from '../../api/api.types'
 import { EventEmitter } from '@angular/core';
 
 export interface IGridDataSource<TItem> {
-
   change: EventEmitter<any>;
-
   queryResult: QueryResult<TItem>;
-
   fetch(): void;
-
   reorderable: boolean;
-
   reorder(previousIndex: number, currentIndex: number): void;
 }
 
+export interface IGridDataSourceOptions<TItem> {
+  fetch: (query: Query) => Observable<QueryResult<TItem>>;
+  reorder?: (items: TItem[]) => Observable<TItem[]>;
+  localStorageKey?: string;
+  filterGroup?: FormGroup;
+  maxTake?: number;
+  mode?: 'grid' | 'table';
+}
+
+const MAX_TAKE = 50;
 export class GridDataSource<TItem>  {
 
-  constructor(private options: {
-    fetch: (query: Query) => Observable<QueryResult<TItem>>;
-    reorder?: (items: TItem[]) => Observable<TItem[]>;
-    localStorageKey?: string;
-    filterGroup?: FormGroup;
-  }) {
+  constructor(private options: IGridDataSourceOptions<TItem>) {
+
+    this.maxTake = this.options.maxTake || this.maxTake;
+
+    this.reorderable = !!options.reorder;
+
+    if (this.reorderable)
+      this.mode = 'table';
+    else
+      this.mode = this.options.mode || this.mode;
+
     if (options.filterGroup) {
       options.filterGroup.valueChanges
         .pipe(
@@ -35,15 +45,13 @@ export class GridDataSource<TItem>  {
         )
         .subscribe();
     }
-
-    this.reorderable = !!options.reorder;
   }
 
   // Events
 
   change = new EventEmitter<any>();
 
-  // Query
+  // Properties
 
   query: Query = {
     skip: 0, take: 10, sort: [], filters: [], projection: [], search: ''
@@ -51,9 +59,21 @@ export class GridDataSource<TItem>  {
 
   queryResult: QueryResult<TItem> = { totalCount: -1, items: [] }; // totalCount == -1 indicates no results yet returned
 
+  reorderable = false;
+
+  maxTake = MAX_TAKE;
+
+  mode: 'grid' | 'table' = 'grid';
+
   // Fetch
 
   fetch() {
+
+    if (this.mode == 'table')
+      this.query.take = MAX_TAKE;
+    else if (this.query.take > this.maxTake)
+      this.query.take = this.maxTake;
+
     //if (!this.localStorageLoaded) {
     //  this.loadLocalStorage();
     //}
@@ -71,7 +91,7 @@ export class GridDataSource<TItem>  {
 
   // Reorder
 
-  reorderable = false;
+
 
   reorder(previousIndex: number, currentIndex: number) {
     if (!this.options.reorder)

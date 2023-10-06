@@ -17,8 +17,6 @@ Grid sorting / multi-select functionality
 
 Grid table mode (i.e. non-pageable)
 
-dropdown-textinput : dropdown + free edit -> Factor our dropdown logic - prelude to multiselect
-
 Datafuel/Typefuel
 
 [JsonOptional] -- done?
@@ -28,8 +26,6 @@ Interfaces (with readonly properties)
 User = _userRepository.Insert(User, Transaction); 
 UserGroup = _userGroupRepository.Update(UserGroup, Transaction);
 Transaction.Execute(); <-- No scope required  - runs all commands 
-
-
 
 [Service<T>()]
 

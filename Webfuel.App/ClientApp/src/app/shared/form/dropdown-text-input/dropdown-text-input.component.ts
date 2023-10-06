@@ -107,6 +107,7 @@ export class DropDownTextInputComponent<TItem> implements ControlValueAccessor, 
     return this.popupRef !== null;
   }
 
+  // TODO: Force focus
   openPopup() {
     if (this.popupRef)
       return;
