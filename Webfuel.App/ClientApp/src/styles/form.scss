@@ -112,9 +112,9 @@
   }
 
   input {
-    padding: 8px 8px 8px 8px;
-    border: 0px;
-    /* border-bottom: 1px solid $form-control-border-color; */
+    padding: 8px 10px 8px 10px;
+    border: 0;
+    border-bottom: 1px solid var(--border-color);
     width: 100%;
     border-radius: 0;
   }

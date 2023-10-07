@@ -1,4 +1,19 @@
 
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+Front Loading Week
+
+> Static Data Solution
+> Responsiveness
+> Deploy To Azure
+> User Interface Cleanup
+> CSS Cleanup
+> Rework Validation / Errors
+> Resolve Identity Service Circular Dependency Issue
+> Dual Login Solution? Multiple Domains
+> Typefuel Interface Extends Fix
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 Solution for TimeAgo
 
@@ -11,24 +26,22 @@ StaticData Solution
 
 ItemSelectDataSource - for in memory item collections
 
-DataSource interfaces generally
-
-Grid sorting / multi-select functionality
-
-Grid table mode (i.e. non-pageable)
-
-Datafuel/Typefuel
+DropDowns 
+	> Search Field : Templated : Standard Template = Standard Form Group
+	> dropdown-service
 
 [JsonOptional] -- done?
 [JsonReadOnly] 
 Interfaces (with readonly properties)
 
-User = _userRepository.Insert(User, Transaction); 
-UserGroup = _userGroupRepository.Update(UserGroup, Transaction);
-Transaction.Execute(); <-- No scope required  - runs all commands 
+>> User = _userRepository.Insert(User, Transaction); 
+>> UserGroup = _userGroupRepository.Update(UserGroup, Transaction);
+>> Transaction.Execute(); <-- No scope required  - runs all commands 
 
 [Service<T>()]
 
 [TenantService<T>()]
 [TenantService<T>("RSS London")] => IProjectValidationService (specialsed for each region)
  -> Lamba construction - always transient
+
+ -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

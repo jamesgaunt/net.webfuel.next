@@ -27,6 +27,7 @@
 
 <ng-template #popupTemplate>
   <div class="dropdown-popup">
+    <input placeholder="search" />
     <div class="items" (scroll)="onDropDownScroll($event)">
       <div *ngFor="let item of dataSource.optionItems" class="dropdown-item" (click)="pickItem(item)">
         <ng-container *ngTemplateOutlet="_optionTemplate;context: { $implicit: item }"></ng-container>
@@ -40,3 +41,4 @@
     </div>
   </div>
 </ng-template>
+

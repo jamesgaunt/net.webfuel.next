@@ -11,6 +11,7 @@ namespace Webfuel
     {
         public override ProblemDetails ToProblemDetails()
         {
+            // To the client this looks not different to Not Authorized
             return new ProblemDetails
             {
                 Type = "/not-authorized",

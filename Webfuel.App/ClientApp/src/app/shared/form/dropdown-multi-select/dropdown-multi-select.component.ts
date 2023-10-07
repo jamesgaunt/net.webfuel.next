@@ -40,6 +40,9 @@ export class DropDownMultiSelectComponent<TItem> implements ControlValueAccessor
   @Input()
   enableClear: boolean = false;
 
+  @Input()
+  enableSearch: boolean = true;
+
   public onBlur(): void {
     this.onTouched();
   }
