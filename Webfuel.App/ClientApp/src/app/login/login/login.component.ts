@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IdentityService } from '../../core/identity.service';
 import { Router } from '@angular/router';
 import { GrowlService } from '../../core/growl.service';
+import { LoginService } from '../../core/login.service';
 
 @Component({
   selector: 'login',
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private identityService: IdentityService,
+    private loginService: LoginService,
     private formService: FormService,
     private growlService: GrowlService,
   ) {
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit {
     if (!this.form.valid)
       return;
 
-    this.identityService.login(this.form.getRawValue()).subscribe((result) => {
+    this.loginService.login(this.form.getRawValue()).subscribe((result) => {
       if (result) {
         this.router.navigateByUrl("/home");
       } else {

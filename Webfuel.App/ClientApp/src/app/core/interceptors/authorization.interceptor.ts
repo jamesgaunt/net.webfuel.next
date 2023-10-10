@@ -1,45 +1,25 @@
-import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpEvent, HttpRequest, HttpHandler, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
-import { GrowlService } from '../growl.service';
-import _ from '../../shared/underscore';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { Observable } from 'rxjs';
 import { IdentityService } from '../identity.service';
-import { ErrorService } from '../error.service';
 
 @Injectable()
 export class AuthorizationInterceptor implements HttpInterceptor {
-  constructor(
-    private errorService: ErrorService) {
+  constructor() {
   }
-
-  LOGGING = true;
 
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    httpRequest = IdentityService.applyTokenToRequest(httpRequest);
+    const identityService = inject(IdentityService);
 
-    if (this.LOGGING) {
-      var log = httpRequest.method + ":" + httpRequest.url;
-      if (httpRequest.headers.has(IdentityService.key))
-        log += " [anonymous]";
-      console.log(log);
-    }
+    const token = identityService.token;
+    if (token == null)
+      return next.handle(httpRequest);
 
-    return next.handle(httpRequest).pipe(
-      tap({
-        next: (event) => {
+    const authRequest = httpRequest.clone({
+      headers: httpRequest.headers.set('IDENTITY_TOKEN', token)
+    });
 
-          if (this.LOGGING) {
-            if (event && event.type != 0)
-              console.log(event);
-          }
-
-          return event;
-        },
-        error: (err: HttpErrorResponse) => {
-          console.log(err.error);
-          this.errorService.interceptError(err.error);
-        }
-      }));
+    return next.handle(authRequest);
   }
 }

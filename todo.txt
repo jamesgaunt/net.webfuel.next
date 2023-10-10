@@ -3,17 +3,25 @@
 
 Front Loading Week
 
+> Rework Interceptors and Front End Static Solution + Interceptor
+> Hidden / Default Toggle Input
+
 > Static Data Solution
 > Responsiveness
 > Deploy To Azure
 > User Interface Review
 > CSS Review
 > Rework Validation / Errors
-> Resolve Identity Service Circular Dependency Issue
 > Dual Login Solution? Multiple Domains
-> Typefuel Interface Extends Fix
 
 Q: What side should Save/Cancel be on??
+
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+Prototyping Week
+
+> Researcher / User Data
+> Project Data
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 

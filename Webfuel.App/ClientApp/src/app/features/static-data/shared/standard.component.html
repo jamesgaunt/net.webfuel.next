@@ -10,6 +10,8 @@
   <data-grid [dataSource]="dataSource">
     <data-grid-column name="name" itemTemplate="bold"></data-grid-column>
     <data-grid-column name="code"></data-grid-column>
+    <data-grid-column name="hidden" itemTemplate="flag"></data-grid-column>
+    <data-grid-column name="default" itemTemplate="flag"></data-grid-column>
     <data-grid-column justify="right">
       <ng-template #headTemplate><a (click)="add()" class="link is-success">add</a></ng-template>
       <ng-template #itemTemplate let-item>
@@ -19,5 +21,4 @@
       </ng-template>
     </data-grid-column>
   </data-grid>
-  <data-pager [dataSource]="dataSource"></data-pager>
 </div>

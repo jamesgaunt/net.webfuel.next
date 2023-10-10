@@ -2,16 +2,17 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { ClientConfiguration } from '../api/api.types';
 import { ConfigurationApi } from '../api/configuration.api';
-import { EventService } from "./event.service";
+import { IdentityService } from "./identity.service";
 
 @Injectable()
 export class ConfigurationService {
 
   constructor(
     private configurationApi: ConfigurationApi,
-    private eventService: EventService
+    private identityService: IdentityService
   ) {
-    this.eventService.identityChanged.subscribe(() => this.reloadConfiguration());
+    this.identityService.identityChanged.subscribe(() => this.reloadConfiguration());
+    this.reloadConfiguration();
   }
 
   get configuration() {
@@ -25,6 +26,12 @@ export class ConfigurationService {
   }
 
   reloadConfiguration() {
+
+    if (!this.identityService.isAuthenticated) {
+      this.clearConfiguration();
+      return;
+    }
+
     this.configurationApi.getConfiguration().subscribe((result) => {
       this._configuration.next(result);
       console.log("Loaded Configuration");

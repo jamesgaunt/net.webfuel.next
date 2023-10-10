@@ -4,6 +4,7 @@ import { SharedModule } from '../shared/shared.module';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthorizationInterceptor } from './interceptors/authorization.interceptor';
+import { LoggingInterceptor } from './interceptors/logging.interceptor';
 
 import { ConfirmDeleteDialogComponent } from './dialogs/confirm-delete-dialog.component';
 import { ConfirmDeactivateDialogComponent } from './dialogs/confirm-deactivate-dialog.component';
@@ -18,7 +19,7 @@ import { ErrorService } from './error.service';
 import { DeactivateService } from './deactivate.service';
 import { StaticDataService } from './static-data.service';
 import { ConfigurationService } from './configuration.service';
-import { EventService } from './event.service';
+import { LoginService } from './login.service';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { EventService } from './event.service';
   ],
   providers: [
     ApiService,
+    LoginService,
     IdentityService,
     StaticDataService,
     ConfigurationService,
@@ -39,11 +41,17 @@ import { EventService } from './event.service';
     GrowlService,
     FormService,
     ErrorService,
-    EventService,
     DeactivateService,
     {
-      provide: HTTP_INTERCEPTORS, useClass: AuthorizationInterceptor, multi: true
-    }
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthorizationInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoggingInterceptor,
+      multi: true
+    },
   ]
 })
 export class CoreModule {
