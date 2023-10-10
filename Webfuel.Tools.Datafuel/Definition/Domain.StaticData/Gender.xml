@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Schema>
-  <Entity Name="Title" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
+  <Entity Name="Gender" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
     <Key Name="Id" Type="guid" />
     <Property Name="Name" Type="meta:name" />
     <Property Name="Code" Type="meta:name" />
@@ -12,5 +12,10 @@
     <Index Unique="true">
       <Member Name="Code" />
     </Index>
+    <Data>
+      <Row Id="f9bffc3d-d732-404f-a5ef-b8f79f9d6e02" Name="Male" Code="Male" />
+      <Row Id="71ae8512-c6e5-4b9c-8a4c-7249e8e721bb" Name="Female" Code="Female" />
+      <Row Id="dac6a434-46d4-409f-875b-ebe632290106" Name="Non-Binary" Code="Non-Binary" />
+    </Data>
   </Entity>
 </Schema>

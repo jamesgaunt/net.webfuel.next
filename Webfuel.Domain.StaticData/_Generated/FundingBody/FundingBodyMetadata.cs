@@ -4,42 +4,42 @@ using System.Text.Json.Serialization;
 
 namespace Webfuel.Domain.StaticData
 {
-    public partial class FundingStreamMetadata: IRepositoryMetadata<FundingStream>
+    public partial class FundingBodyMetadata: IRepositoryMetadata<FundingBody>
     {
         // Data Access
         
-        public static string DatabaseTable => "FundingStream";
+        public static string DatabaseTable => "FundingBody";
         
         public static string DefaultOrderBy => "ORDER BY SortOrder ASC";
         
-        public static FundingStream DataReader(SqlDataReader dr) => new FundingStream(dr);
+        public static FundingBody DataReader(SqlDataReader dr) => new FundingBody(dr);
         
-        public static List<SqlParameter> ExtractParameters(FundingStream entity, IEnumerable<string> properties)
+        public static List<SqlParameter> ExtractParameters(FundingBody entity, IEnumerable<string> properties)
         {
-            var result = new List<SqlParameter> { new SqlParameter(nameof(FundingStream.Id), entity.Id) };
+            var result = new List<SqlParameter> { new SqlParameter(nameof(FundingBody.Id), entity.Id) };
             foreach(var property in properties)
             {
                 switch (property)
                 {
-                    case nameof(FundingStream.Id):
+                    case nameof(FundingBody.Id):
                         break;
-                    case nameof(FundingStream.Name):
-                        result.Add(new SqlParameter(nameof(FundingStream.Name), entity.Name));
+                    case nameof(FundingBody.Name):
+                        result.Add(new SqlParameter(nameof(FundingBody.Name), entity.Name));
                         break;
-                    case nameof(FundingStream.Code):
-                        result.Add(new SqlParameter(nameof(FundingStream.Code), entity.Code));
+                    case nameof(FundingBody.Code):
+                        result.Add(new SqlParameter(nameof(FundingBody.Code), entity.Code));
                         break;
-                    case nameof(FundingStream.SortOrder):
-                        result.Add(new SqlParameter(nameof(FundingStream.SortOrder), entity.SortOrder));
+                    case nameof(FundingBody.SortOrder):
+                        result.Add(new SqlParameter(nameof(FundingBody.SortOrder), entity.SortOrder));
                         break;
-                    case nameof(FundingStream.Default):
-                        result.Add(new SqlParameter(nameof(FundingStream.Default), entity.Default));
+                    case nameof(FundingBody.Default):
+                        result.Add(new SqlParameter(nameof(FundingBody.Default), entity.Default));
                         break;
-                    case nameof(FundingStream.Hidden):
-                        result.Add(new SqlParameter(nameof(FundingStream.Hidden), entity.Hidden));
+                    case nameof(FundingBody.Hidden):
+                        result.Add(new SqlParameter(nameof(FundingBody.Hidden), entity.Hidden));
                         break;
-                    case nameof(FundingStream.Hint):
-                        result.Add(new SqlParameter(nameof(FundingStream.Hint), entity.Hint));
+                    case nameof(FundingBody.Hint):
+                        result.Add(new SqlParameter(nameof(FundingBody.Hint), entity.Hint));
                         break;
                 }
             }
@@ -49,18 +49,18 @@ namespace Webfuel.Domain.StaticData
         public static string InsertSQL(IEnumerable<string>? properties = null)
         {
             properties = properties ?? InsertProperties;
-            return RepositoryMetadataDefaults.InsertSQL<FundingStream, FundingStreamMetadata>(properties);
+            return RepositoryMetadataDefaults.InsertSQL<FundingBody, FundingBodyMetadata>(properties);
         }
         
         public static string UpdateSQL(IEnumerable<string>? properties = null)
         {
             properties = properties ?? UpdateProperties;
-            return RepositoryMetadataDefaults.UpdateSQL<FundingStream, FundingStreamMetadata>(properties);
+            return RepositoryMetadataDefaults.UpdateSQL<FundingBody, FundingBodyMetadata>(properties);
         }
         
         public static string DeleteSQL()
         {
-            return RepositoryMetadataDefaults.DeleteSQL<FundingStream, FundingStreamMetadata>();
+            return RepositoryMetadataDefaults.DeleteSQL<FundingBody, FundingBodyMetadata>();
         }
         
         public static IEnumerable<string> SelectProperties
@@ -106,7 +106,7 @@ namespace Webfuel.Domain.StaticData
         
         // Validation
         
-        public static void Validate(FundingStream entity)
+        public static void Validate(FundingBody entity)
         {
             entity.Name = entity.Name ?? String.Empty;
             entity.Name = entity.Name.Trim();
@@ -117,7 +117,7 @@ namespace Webfuel.Domain.StaticData
             Validator.ValidateAndThrow(entity);
         }
         
-        public static FundingStreamRepositoryValidator Validator { get; } = new FundingStreamRepositoryValidator();
+        public static FundingBodyRepositoryValidator Validator { get; } = new FundingBodyRepositoryValidator();
         
         public const int Name_MaxLength = 64;
         public const int Code_MaxLength = 64;
@@ -144,9 +144,9 @@ namespace Webfuel.Domain.StaticData
                 .MaximumLength(Hint_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
-        public class FundingStreamRepositoryValidator: AbstractValidator<FundingStream>
+        public class FundingBodyRepositoryValidator: AbstractValidator<FundingBody>
         {
-            public FundingStreamRepositoryValidator()
+            public FundingBodyRepositoryValidator()
             {
                 RuleFor(x => x.Name).Use(Name_ValidationRules);
                 RuleFor(x => x.Code).Use(Code_ValidationRules);

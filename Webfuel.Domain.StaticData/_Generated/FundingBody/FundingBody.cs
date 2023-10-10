@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace Webfuel.Domain.StaticData
 {
-    public partial class Title: IStaticData
+    public partial class FundingBody: IStaticData
     {
-        public Title() { }
+        public FundingBody() { }
         
-        public Title(SqlDataReader dr)
+        public FundingBody(SqlDataReader dr)
         {
             for (var i = 0; i < dr.FieldCount; i++)
             {
@@ -17,25 +17,25 @@ namespace Webfuel.Domain.StaticData
                 
                 switch (property)
                 {
-                    case nameof(Title.Id):
+                    case nameof(FundingBody.Id):
                         Id = (Guid)value!;
                         break;
-                    case nameof(Title.Name):
+                    case nameof(FundingBody.Name):
                         Name = (string)value!;
                         break;
-                    case nameof(Title.Code):
+                    case nameof(FundingBody.Code):
                         Code = (string)value!;
                         break;
-                    case nameof(Title.SortOrder):
+                    case nameof(FundingBody.SortOrder):
                         SortOrder = (int)value!;
                         break;
-                    case nameof(Title.Default):
+                    case nameof(FundingBody.Default):
                         Default = (bool)value!;
                         break;
-                    case nameof(Title.Hidden):
+                    case nameof(FundingBody.Hidden):
                         Hidden = (bool)value!;
                         break;
-                    case nameof(Title.Hint):
+                    case nameof(FundingBody.Hint):
                         Hint = (string)value!;
                         break;
                 }
@@ -48,9 +48,9 @@ namespace Webfuel.Domain.StaticData
         public bool Default  { get; internal set; } = false;
         public bool Hidden  { get; internal set; } = false;
         public string Hint  { get; internal set; } = String.Empty;
-        public Title Copy()
+        public FundingBody Copy()
         {
-            var entity = new Title();
+            var entity = new FundingBody();
             entity.Id = Id;
             entity.Name = Name;
             entity.Code = Code;

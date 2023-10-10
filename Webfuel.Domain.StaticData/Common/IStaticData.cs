@@ -19,5 +19,7 @@ namespace Webfuel.Domain.StaticData
         bool Hidden { get; }
 
         bool Default { get; }
+
+        string Hint { get; }
     }
 }

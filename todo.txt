@@ -5,7 +5,7 @@ Front Loading Week
 
 > Rework Interceptors and Front End Static Solution + Interceptor
 > Hidden / Default Toggle Input
-> Configuration / Automatic Menus
+> Developer Configuration / Automatic Menus
 
 > Static Data Solution
 > Responsiveness

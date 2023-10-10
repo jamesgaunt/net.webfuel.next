@@ -35,6 +35,9 @@ namespace Webfuel.Domain.StaticData
                     case nameof(FundingStream.Hidden):
                         Hidden = (bool)value!;
                         break;
+                    case nameof(FundingStream.Hint):
+                        Hint = (string)value!;
+                        break;
                 }
             }
         }
@@ -44,6 +47,7 @@ namespace Webfuel.Domain.StaticData
         public int SortOrder  { get; internal set; } = 0;
         public bool Default  { get; internal set; } = false;
         public bool Hidden  { get; internal set; } = false;
+        public string Hint  { get; internal set; } = String.Empty;
         public FundingStream Copy()
         {
             var entity = new FundingStream();
@@ -53,6 +57,7 @@ namespace Webfuel.Domain.StaticData
             entity.SortOrder = SortOrder;
             entity.Default = Default;
             entity.Hidden = Hidden;
+            entity.Hint = Hint;
             return entity;
         }
     }

@@ -1,3 +1,16 @@
+export interface ClientConfiguration {
+    email: string;
+    sideMenu: ClientConfigurationMenu;
+    staticDataMenu: ClientConfigurationMenu;
+}
+
+export interface ClientConfigurationMenu {
+    icon: string;
+    name: string;
+    action: string;
+    children: Array<ClientConfigurationMenu> | null;
+}
+
 export interface ProblemDetails {
     type: string;
     title: string;
@@ -18,31 +31,22 @@ export interface ValidationError {
     message: string;
 }
 
-export interface ClientConfiguration {
-    email: string;
-    sideMenu: Array<ClientConfigurationMenuItem>;
-}
-
-export interface ClientConfigurationMenuItem {
-    icon: string;
-    name: string;
-    action: string;
-    children: Array<ClientConfigurationMenuItem> | null;
-}
-
 export interface IStaticDataModel {
-    title: any;
+    fundingBody: any;
     fundingStream: any;
+    gender: any;
+    title: any;
     loadedAt: string;
 }
 
-export interface Title extends IStaticData {
+export interface FundingBody extends IStaticData {
     id: string;
     name: string;
     code: string;
     sortOrder: number;
     default: boolean;
     hidden: boolean;
+    hint: string;
 }
 
 export interface IStaticData {
@@ -52,6 +56,7 @@ export interface IStaticData {
     sortOrder: number;
     hidden: boolean;
     default: boolean;
+    hint: string;
 }
 
 export interface FundingStream extends IStaticData {
@@ -61,6 +66,27 @@ export interface FundingStream extends IStaticData {
     sortOrder: number;
     default: boolean;
     hidden: boolean;
+    hint: string;
+}
+
+export interface Gender extends IStaticData {
+    id: string;
+    name: string;
+    code: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+    hint: string;
+}
+
+export interface Title extends IStaticData {
+    id: string;
+    name: string;
+    code: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+    hint: string;
 }
 
 export interface User {
@@ -152,6 +178,30 @@ export interface QueryUserGroup extends Query {
     search?: string;
 }
 
+export interface CreateFundingBody {
+    name: string;
+    code: string;
+}
+
+export interface UpdateFundingBody {
+    id: string;
+    name: string;
+    code: string;
+}
+
+export interface SortFundingBody {
+    ids: Array<string>;
+}
+
+export interface QueryFundingBody extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
 export interface CreateFundingStream {
     name: string;
     code: string;
@@ -168,6 +218,30 @@ export interface SortFundingStream {
 }
 
 export interface QueryFundingStream extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface CreateGender {
+    name: string;
+    code: string;
+}
+
+export interface UpdateGender {
+    id: string;
+    name: string;
+    code: string;
+}
+
+export interface SortGender {
+    ids: Array<string>;
+}
+
+export interface QueryGender extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;

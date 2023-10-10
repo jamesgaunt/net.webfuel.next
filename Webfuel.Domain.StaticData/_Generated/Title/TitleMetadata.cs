@@ -38,6 +38,9 @@ namespace Webfuel.Domain.StaticData
                     case nameof(Title.Hidden):
                         result.Add(new SqlParameter(nameof(Title.Hidden), entity.Hidden));
                         break;
+                    case nameof(Title.Hint):
+                        result.Add(new SqlParameter(nameof(Title.Hint), entity.Hint));
+                        break;
                 }
             }
             return result;
@@ -70,6 +73,7 @@ namespace Webfuel.Domain.StaticData
                 yield return "SortOrder";
                 yield return "Default";
                 yield return "Hidden";
+                yield return "Hint";
             }
         }
         
@@ -83,6 +87,7 @@ namespace Webfuel.Domain.StaticData
                 yield return "SortOrder";
                 yield return "Default";
                 yield return "Hidden";
+                yield return "Hint";
             }
         }
         
@@ -95,6 +100,7 @@ namespace Webfuel.Domain.StaticData
                 yield return "SortOrder";
                 yield return "Default";
                 yield return "Hidden";
+                yield return "Hint";
             }
         }
         
@@ -106,6 +112,8 @@ namespace Webfuel.Domain.StaticData
             entity.Name = entity.Name.Trim();
             entity.Code = entity.Code ?? String.Empty;
             entity.Code = entity.Code.Trim();
+            entity.Hint = entity.Hint ?? String.Empty;
+            entity.Hint = entity.Hint.Trim();
             Validator.ValidateAndThrow(entity);
         }
         
@@ -113,6 +121,7 @@ namespace Webfuel.Domain.StaticData
         
         public const int Name_MaxLength = 64;
         public const int Code_MaxLength = 64;
+        public const int Hint_MaxLength = 64;
         
         public static void Name_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
@@ -128,12 +137,20 @@ namespace Webfuel.Domain.StaticData
                 .MaximumLength(Code_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
+        public static void Hint_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(Hint_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
         public class TitleRepositoryValidator: AbstractValidator<Title>
         {
             public TitleRepositoryValidator()
             {
                 RuleFor(x => x.Name).Use(Name_ValidationRules);
                 RuleFor(x => x.Code).Use(Code_ValidationRules);
+                RuleFor(x => x.Hint).Use(Hint_ValidationRules);
             }
         }
     }

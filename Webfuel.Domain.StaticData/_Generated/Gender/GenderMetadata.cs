@@ -4,42 +4,42 @@ using System.Text.Json.Serialization;
 
 namespace Webfuel.Domain.StaticData
 {
-    public partial class FundingStreamMetadata: IRepositoryMetadata<FundingStream>
+    public partial class GenderMetadata: IRepositoryMetadata<Gender>
     {
         // Data Access
         
-        public static string DatabaseTable => "FundingStream";
+        public static string DatabaseTable => "Gender";
         
         public static string DefaultOrderBy => "ORDER BY SortOrder ASC";
         
-        public static FundingStream DataReader(SqlDataReader dr) => new FundingStream(dr);
+        public static Gender DataReader(SqlDataReader dr) => new Gender(dr);
         
-        public static List<SqlParameter> ExtractParameters(FundingStream entity, IEnumerable<string> properties)
+        public static List<SqlParameter> ExtractParameters(Gender entity, IEnumerable<string> properties)
         {
-            var result = new List<SqlParameter> { new SqlParameter(nameof(FundingStream.Id), entity.Id) };
+            var result = new List<SqlParameter> { new SqlParameter(nameof(Gender.Id), entity.Id) };
             foreach(var property in properties)
             {
                 switch (property)
                 {
-                    case nameof(FundingStream.Id):
+                    case nameof(Gender.Id):
                         break;
-                    case nameof(FundingStream.Name):
-                        result.Add(new SqlParameter(nameof(FundingStream.Name), entity.Name));
+                    case nameof(Gender.Name):
+                        result.Add(new SqlParameter(nameof(Gender.Name), entity.Name));
                         break;
-                    case nameof(FundingStream.Code):
-                        result.Add(new SqlParameter(nameof(FundingStream.Code), entity.Code));
+                    case nameof(Gender.Code):
+                        result.Add(new SqlParameter(nameof(Gender.Code), entity.Code));
                         break;
-                    case nameof(FundingStream.SortOrder):
-                        result.Add(new SqlParameter(nameof(FundingStream.SortOrder), entity.SortOrder));
+                    case nameof(Gender.SortOrder):
+                        result.Add(new SqlParameter(nameof(Gender.SortOrder), entity.SortOrder));
                         break;
-                    case nameof(FundingStream.Default):
-                        result.Add(new SqlParameter(nameof(FundingStream.Default), entity.Default));
+                    case nameof(Gender.Default):
+                        result.Add(new SqlParameter(nameof(Gender.Default), entity.Default));
                         break;
-                    case nameof(FundingStream.Hidden):
-                        result.Add(new SqlParameter(nameof(FundingStream.Hidden), entity.Hidden));
+                    case nameof(Gender.Hidden):
+                        result.Add(new SqlParameter(nameof(Gender.Hidden), entity.Hidden));
                         break;
-                    case nameof(FundingStream.Hint):
-                        result.Add(new SqlParameter(nameof(FundingStream.Hint), entity.Hint));
+                    case nameof(Gender.Hint):
+                        result.Add(new SqlParameter(nameof(Gender.Hint), entity.Hint));
                         break;
                 }
             }
@@ -49,18 +49,18 @@ namespace Webfuel.Domain.StaticData
         public static string InsertSQL(IEnumerable<string>? properties = null)
         {
             properties = properties ?? InsertProperties;
-            return RepositoryMetadataDefaults.InsertSQL<FundingStream, FundingStreamMetadata>(properties);
+            return RepositoryMetadataDefaults.InsertSQL<Gender, GenderMetadata>(properties);
         }
         
         public static string UpdateSQL(IEnumerable<string>? properties = null)
         {
             properties = properties ?? UpdateProperties;
-            return RepositoryMetadataDefaults.UpdateSQL<FundingStream, FundingStreamMetadata>(properties);
+            return RepositoryMetadataDefaults.UpdateSQL<Gender, GenderMetadata>(properties);
         }
         
         public static string DeleteSQL()
         {
-            return RepositoryMetadataDefaults.DeleteSQL<FundingStream, FundingStreamMetadata>();
+            return RepositoryMetadataDefaults.DeleteSQL<Gender, GenderMetadata>();
         }
         
         public static IEnumerable<string> SelectProperties
@@ -106,7 +106,7 @@ namespace Webfuel.Domain.StaticData
         
         // Validation
         
-        public static void Validate(FundingStream entity)
+        public static void Validate(Gender entity)
         {
             entity.Name = entity.Name ?? String.Empty;
             entity.Name = entity.Name.Trim();
@@ -117,7 +117,7 @@ namespace Webfuel.Domain.StaticData
             Validator.ValidateAndThrow(entity);
         }
         
-        public static FundingStreamRepositoryValidator Validator { get; } = new FundingStreamRepositoryValidator();
+        public static GenderRepositoryValidator Validator { get; } = new GenderRepositoryValidator();
         
         public const int Name_MaxLength = 64;
         public const int Code_MaxLength = 64;
@@ -144,9 +144,9 @@ namespace Webfuel.Domain.StaticData
                 .MaximumLength(Hint_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
-        public class FundingStreamRepositoryValidator: AbstractValidator<FundingStream>
+        public class GenderRepositoryValidator: AbstractValidator<Gender>
         {
-            public FundingStreamRepositoryValidator()
+            public GenderRepositoryValidator()
             {
                 RuleFor(x => x.Name).Use(Name_ValidationRules);
                 RuleFor(x => x.Code).Use(Code_ValidationRules);
