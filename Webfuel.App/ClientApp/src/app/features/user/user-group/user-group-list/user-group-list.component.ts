@@ -27,7 +27,6 @@ export class UserGroupListComponent {
 
   dataSource = new GridDataSource<UserGroup>({
     fetch: (query) => this.userGroupApi.queryUserGroup(_.merge(query, this.filterForm.getRawValue())),
-    reorder: (items) => new BehaviorSubject<UserGroup[]>(items),
     filterGroup: this.filterForm
   });
 

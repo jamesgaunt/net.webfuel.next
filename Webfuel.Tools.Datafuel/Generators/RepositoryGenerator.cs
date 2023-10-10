@@ -46,17 +46,17 @@ namespace Webfuel.Tools.Datafuel
             {
                 if (!entity.Static)
                 {
-                    sb.WriteLine($"Task<{entity.Name}> Insert{entity.Name}({entity.Name} entity);");
+                    sb.WriteLine($"Task<{entity.Name}> Insert{entity.Name}({entity.Name} entity, RepositoryCommandBuffer? commandBuffer = null);");
 
                     if (entity.Key != null)
                     {
-                        sb.WriteLine($"Task<{entity.Name}> Update{entity.Name}({entity.Name} entity);");
-                        sb.WriteLine($"Task<{entity.Name}> Update{entity.Name}({entity.Name} updated, {entity.Name} original);");
+                        sb.WriteLine($"Task<{entity.Name}> Update{entity.Name}({entity.Name} entity, RepositoryCommandBuffer? commandBuffer = null);");
+                        sb.WriteLine($"Task<{entity.Name}> Update{entity.Name}({entity.Name} updated, {entity.Name} original, RepositoryCommandBuffer? commandBuffer = null);");
 
                         //sb.WriteLine($"Task Update{entity.Name}({entity.Name} entity, IEnumerable<string> properties);");
                         //sb.WriteLine($"Task Update{entity.Name}({entity.Name} updated, {entity.Name} original, IEnumerable<string> properties);");
 
-                        sb.WriteLine($"Task Delete{entity.Name}({entity.Key.CLRType} key);");
+                        sb.WriteLine($"Task Delete{entity.Name}({entity.Key.CLRType} key, RepositoryCommandBuffer? commandBuffer = null);");
                     }
                 }
 
@@ -101,32 +101,32 @@ namespace Webfuel.Tools.Datafuel
 
         static void Insert(ScriptBuilder sb, SchemaEntity entity)
         {
-            using (sb.OpenBrace($"public async Task<{entity.Name}> Insert{entity.Name}({entity.Name} entity)"))
+            using (sb.OpenBrace($"public async Task<{entity.Name}> Insert{entity.Name}({entity.Name} entity, RepositoryCommandBuffer? commandBuffer = null)"))
             {
                 sb.WriteLine($"if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();");
                 sb.WriteLine($"var sql = {entity.Name}Metadata.InsertSQL();");
                 sb.WriteLine($"var parameters = {entity.Name}Metadata.ExtractParameters(entity, {entity.Name}Metadata.InsertProperties);");
-                sb.WriteLine($"await _connection.ExecuteNonQuery(sql, parameters);");
+                sb.WriteLine($"await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);");
                 sb.WriteLine($"return entity;");
             }
         }
 
         static void Update(ScriptBuilder sb, SchemaEntity entity)
         {
-            using (sb.OpenBrace($"public async Task<{entity.Name}> Update{entity.Name}({entity.Name} entity)"))
+            using (sb.OpenBrace($"public async Task<{entity.Name}> Update{entity.Name}({entity.Name} entity, RepositoryCommandBuffer? commandBuffer = null)"))
             {
                 sb.WriteLine($"var sql = {entity.Name}Metadata.UpdateSQL();");
                 sb.WriteLine($"var parameters = {entity.Name}Metadata.ExtractParameters(entity, {entity.Name}Metadata.UpdateProperties);");
-                sb.WriteLine($"await _connection.ExecuteNonQuery(sql, parameters);");
+                sb.WriteLine($"await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);");
                 sb.WriteLine($"return entity;");
             }
         }
 
         static void UpdateWithCompare(ScriptBuilder sb, SchemaEntity entity)
         {
-            using (sb.OpenBrace($"public async Task<{entity.Name}> Update{entity.Name}({entity.Name} updated, {entity.Name} original)"))
+            using (sb.OpenBrace($"public async Task<{entity.Name}> Update{entity.Name}({entity.Name} updated, {entity.Name} original, RepositoryCommandBuffer? commandBuffer = null)"))
             {
-                sb.WriteLine($"await Update{entity.Name}(updated);");
+                sb.WriteLine($"await Update{entity.Name}(updated, commandBuffer);");
                 sb.WriteLine($"return updated;");
             }
 
@@ -150,11 +150,11 @@ namespace Webfuel.Tools.Datafuel
 
         static void Delete(ScriptBuilder sb, SchemaEntity entity)
         {
-            using (sb.OpenBrace($"public async Task Delete{entity.Name}(Guid id)"))
+            using (sb.OpenBrace($"public async Task Delete{entity.Name}(Guid id, RepositoryCommandBuffer? commandBuffer = null)"))
             {
                 sb.WriteLine($"var sql = {entity.Name}Metadata.DeleteSQL();");
                 sb.WriteLine($"var parameters = new List<SqlParameter> {{ new SqlParameter {{ ParameterName = \"@Id\", Value = id }} }};");
-                sb.WriteLine($"await _connection.ExecuteNonQuery(sql, parameters);");
+                sb.WriteLine($"await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);");
             }
         }
 

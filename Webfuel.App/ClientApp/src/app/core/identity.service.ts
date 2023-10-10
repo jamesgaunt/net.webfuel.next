@@ -32,7 +32,7 @@ export class IdentityService {
       return httpRequest;
 
     return httpRequest.clone({
-      setHeaders: { key: IdentityService._token }
+      setHeaders: { 'IDENTITY_TOKEN': IdentityService._token }
     });
   }
 

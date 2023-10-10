@@ -29,6 +29,11 @@ const routes: Routes = [
     path: 'user',
     loadChildren: () => import('./features/user/user.module').then(m => m.UserModule),
     canActivate: [isAuthenticated]
+  },
+  {
+    path: 'static-data',
+    loadChildren: () => import('./features/static-data/static-data.module').then(m => m.StaticDataModule),
+    canActivate: [isAuthenticated]
   }
 ];
 

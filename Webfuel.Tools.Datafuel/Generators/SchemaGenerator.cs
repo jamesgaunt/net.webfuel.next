@@ -12,20 +12,27 @@ namespace Webfuel.Tools.Datafuel
     {
         public static void Generate(Schema schema)
         {
-            DeleteDirectory(schema);
+            foreach (var entity in schema.Entities)
+                DeleteDirectory(entity.GeneratedDirectory);
 
-            foreach (var entity in schema.Entities) { 
+            DeleteDirectory(Settings.AppGeneratedRoot);
+
+            foreach (var entity in schema.Entities)
+            {
                 EntityGenerator.GenerateEntity(entity);
                 MetadataGenerator.GenerateMetadata(entity);
             }
 
-            DatabaseGenerator.GenerateDatabase(schema);
-        }
+            // Static Data Features
+            {
+                StaticDataApiGenerator.GenerateStaticDataApi(schema);
+                StaticDataCommandGenerator.GenerateStaticDataCommands(schema);
 
-        static void DeleteDirectory(Schema schema)
-        {
-            foreach (var entity in schema.Entities)
-                DeleteDirectory(entity.GeneratedDirectory);
+                StaticDataModelGenerator.GenerateStaticDataModel(schema);
+                //StaticDataCacheGenerator.GenerateStaticDataCache(schema);
+            }
+
+            DatabaseGenerator.GenerateDatabase(schema);
         }
 
         static void DeleteDirectory(string directory)

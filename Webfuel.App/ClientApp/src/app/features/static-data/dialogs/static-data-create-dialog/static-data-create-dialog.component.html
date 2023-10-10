@@ -1,0 +1,22 @@
+<form class="form dialog" [formGroup]="form">
+  <div class="dialog-head">
+    Create {{options.typeName}}
+  </div>
+  <div class="dialog-body">
+    <div class="grid">
+      <div class="field">
+        <label class="label">Name</label>
+        <input class="input" type="text" placeholder="required" formControlName="name" />
+      </div>
+      <div class="field">
+        <label class="label">Code</label>
+        <input class="input" type="text" placeholder="required" formControlName="code" autocomplete-code />
+      </div>
+    </div>
+  </div>
+  <div class="dialog-buttons">
+    <button type="submit" class="is-success" (click)="save()">Add</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+  </div>
+</form>
+

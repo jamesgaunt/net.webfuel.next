@@ -43,7 +43,7 @@ namespace Webfuel.Tools.Datafuel
             using (sb.OpenBrace($"public {CLRType} {Name}"))
             {
                 sb.WriteLine($"get {{ return _{Name} ?? (_{Name} = JSON.Deserialize<{CLRType}>(_{Name}Json)); }}");
-                sb.WriteLine($"set {{ _{Name} = value; }}");
+                sb.WriteLine($"{(InternalSet ? "internal " : "")}set {{ _{Name} = value; }}");
             }
             sb.WriteLine($"{CLRType}? _{Name} = null;");
 

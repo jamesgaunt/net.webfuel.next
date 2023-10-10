@@ -1,4 +1,6 @@
-﻿namespace Webfuel
+﻿using Microsoft.Identity.Client;
+
+namespace Webfuel
 {
     [ApiIgnore]
     public class IdentityClaims
@@ -6,5 +8,7 @@
         public bool Developer { get; set; }
 
         public bool CanEditUsers { get; set; } = true;
+
+        public bool CanEditStaticData { get; set; } = true;
     }
 }

@@ -125,7 +125,7 @@ namespace Webfuel.Tools.Datafuel
         {
             get
             {
-                return $"{Settings.SolutionRoot}\\Webfuel.{Assembly}\\_Repository";
+                return $"{Settings.SolutionRoot}\\Webfuel.{Assembly}\\_Generated";
             }
         }
 
@@ -160,6 +160,8 @@ namespace Webfuel.Tools.Datafuel
         bool HasTag(string tag) => Tags.Contains(tag);
 
         public bool JsonIgnore => HasTag("JsonIgnore");
+
+        public bool StaticData => HasTag("StaticData");
 
         // public bool ReadOnly => HasTag("ReadOnly");
 

@@ -28,7 +28,7 @@ namespace Webfuel.Tools.Datafuel
         {
             if (JsonIgnore)
                 sb.WriteLine("[JsonIgnore]");
-            sb.Write($"{Access} {CLRTypeWithNullable} {Name}  {{ get; set; }}");
+            sb.Write($"{Access} {CLRTypeWithNullable} {Name}  {{ get; {(InternalSet?"internal " : "")}set; }}");
             sb.Write($" = {CLRLiteral(ParseValue(Default))};");
             sb.WriteLine();
         }

@@ -4,22 +4,35 @@ namespace Webfuel
 {
     public class RepositoryCommandBuffer
     {
-        private readonly RepositoryConnection _connection;
         internal readonly List<RepositoryCommand> _commands = new List<RepositoryCommand>();
 
-        internal RepositoryCommandBuffer(RepositoryConnection connection)
+        internal RepositoryConnection? Connection
         {
-            _connection = connection;
+            get
+            {
+                return this._connection;
+            }
+            set
+            {
+                this._connection = value;
+            }
         }
+        RepositoryConnection? _connection = null;
 
-        public void AddCommand(string sql, IEnumerable<SqlParameter>? parameters = null)
+        internal void AddCommand(string sql, IEnumerable<SqlParameter>? parameters = null)
         {
             _commands.Add(new RepositoryCommand { Sql = sql, Parameters = parameters });
         }
 
-        public Task ExecuteCommands()
+        public async Task Execute()
         {
-            return _connection.ExecuteCommands(_commands);
+            if (_commands.Count == 0)
+                return;
+
+            if (Connection == null)
+                throw new InvalidOperationException("RepositoryCommandBuffer: No connection has been set");
+
+            await Connection.ExecuteCommands(_commands);
         }
     }
 }

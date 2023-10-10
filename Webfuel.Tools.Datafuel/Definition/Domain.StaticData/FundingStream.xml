@@ -2,11 +2,11 @@
 
 <Schema>
 
-  <Entity Name="FundingStream" Tags="StaticData">
+  <Entity Name="Title" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
     <Key Name="Id" Type="guid" />
     <Property Name="Name" Type="meta:name" />
     <Property Name="Code" Type="meta:name" />
-    <Property Name="SortOrder" Type="Double" Default="1" />
+    <Property Name="SortOrder" Type="Int32" />
     <Property Name="Default" Type="boolean" />
     <Property Name="Hidden" Type="boolean" />
     <Index Unique="true">

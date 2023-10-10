@@ -22,6 +22,7 @@ import { DataGridComponent } from './data-grid/data-grid.component';
 import { DataGridColumnComponent } from './data-grid/data-grid-column.component';
 import { DataPagerComponent } from './data-pager/data-pager.component';
 import { DataSorterComponent } from './data-sorter/data-sorter.component';
+import { AutocompleteCodeDirective } from './directives/autocomplete-code.directive';
 
 @NgModule({
   imports: [
@@ -51,7 +52,8 @@ import { DataSorterComponent } from './data-sorter/data-sorter.component';
     DataPagerComponent,
     DataSorterComponent,
 
-
+    // Directives
+    AutocompleteCodeDirective,
   ],
   exports: [
     CommonModule,
@@ -76,6 +78,9 @@ import { DataSorterComponent } from './data-sorter/data-sorter.component';
     DataGridColumnComponent,
     DataPagerComponent,
     DataSorterComponent,
+
+    // Directives
+    AutocompleteCodeDirective,
   ]
 })
 export class SharedModule { }

@@ -15,11 +15,21 @@ namespace Webfuel
 {
     public interface IRepositoryConnection
     {
-        Task<object> ExecuteScalar(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null);
+        Task ExecuteNonQuery(
+            string sql,
+            IEnumerable<SqlParameter>? parameters = null,
+            RepositoryCommandBuffer? commandBuffer = null,
+            CancellationToken? cancellationToken = null);
 
-        Task<int> ExecuteNonQuery(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null);
+        Task<object> ExecuteScalar(
+            string sql,
+            IEnumerable<SqlParameter>? parameters = null,
+            CancellationToken? cancellationToken = null);
 
-        Task<List<TEntity>> ExecuteReader<TEntity, TEntityMetadata>(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null)
+        Task<List<TEntity>> ExecuteReader<TEntity, TEntityMetadata>(
+            string sql,
+            IEnumerable<SqlParameter>? parameters = null,
+            CancellationToken? cancellationToken = null)
             where TEntity : class
             where TEntityMetadata : IRepositoryMetadata<TEntity>;
 
@@ -29,7 +39,7 @@ namespace Webfuel
     }
 
     [Service(typeof(IRepositoryConnection))]
-    internal class RepositoryConnection: IRepositoryConnection
+    internal class RepositoryConnection : IRepositoryConnection
     {
         private readonly string _connectionString;
 
@@ -39,21 +49,33 @@ namespace Webfuel
             _connectionString = repositoryConfiguration.ConnectionString + $"User ID=login_{tenant.DatabaseSchema};Password={tenant.DatabasePassword}";
         }
 
+        public async Task ExecuteNonQuery(
+            string sql,
+            IEnumerable<SqlParameter>? parameters = null,
+            RepositoryCommandBuffer? commandBuffer = null,
+            CancellationToken? cancellationToken = null)
+        {
+            if (commandBuffer != null)
+            {
+                commandBuffer.Connection = this;
+                commandBuffer.AddCommand(sql, parameters);
+            }
+            else
+            {
+                using (var connection = OpenConnection())
+                using (var command = BuildCommand(connection, sql, parameters))
+                {
+                    await command.ExecuteNonQueryAsync(cancellationToken ?? CancellationToken.None);
+                }
+            }
+        }
+
         public async Task<object> ExecuteScalar(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null)
         {
             using (var connection = OpenConnection())
             using (var command = BuildCommand(connection, sql, parameters))
             {
                 return await command.ExecuteScalarAsync(cancellationToken ?? CancellationToken.None);
-            }
-        }
-
-        public async Task<int> ExecuteNonQuery(string sql, IEnumerable<SqlParameter>? parameters = null, CancellationToken? cancellationToken = null)
-        {
-            using (var connection = OpenConnection())
-            using (var command = BuildCommand(connection, sql, parameters))
-            {
-                return await command.ExecuteNonQueryAsync(cancellationToken ?? CancellationToken.None);
             }
         }
 
@@ -108,14 +130,14 @@ namespace Webfuel
             using (var connection = OpenConnection())
             using (var transaction = connection.BeginTransaction())
             {
-                foreach(var command in commands)
+                foreach (var command in commands)
                 {
                     using (var sqlCommand = BuildCommand(connection, command.Sql, command.Parameters))
                     {
                         sqlCommand.Transaction = transaction;
                         await sqlCommand.ExecuteNonQueryAsync(cancellationToken ?? CancellationToken.None);
                     }
-                    if(cancellationToken.HasValue && cancellationToken.Value.IsCancellationRequested)
+                    if (cancellationToken.HasValue && cancellationToken.Value.IsCancellationRequested)
                     {
                         await transaction.RollbackAsync();
                         return;

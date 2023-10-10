@@ -1,10 +1,5 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
-using System.Reflection.Metadata.Ecma335;
-using System.Text.Json;
-using System.Threading;
 using Webfuel.Domain;
 
 namespace Webfuel.App

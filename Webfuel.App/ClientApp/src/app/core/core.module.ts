@@ -7,6 +7,7 @@ import { AuthorizationInterceptor } from './interceptors/authorization.intercept
 
 import { ConfirmDeleteDialogComponent } from './dialogs/confirm-delete-dialog.component';
 import { ConfirmDeactivateDialogComponent } from './dialogs/confirm-deactivate-dialog.component';
+import { DatePickerDialogComponent } from './dialogs/date-picker-dialog.component';
 
 import { ApiService } from './api.service';
 import { DialogService } from './dialog.service';
@@ -15,7 +16,7 @@ import { FormService } from './form.service';
 import { IdentityService } from './identity.service';
 import { ErrorService } from './error.service';
 import { DeactivateService } from './deactivate.service';
-import { DatePickerDialogComponent } from './dialogs/date-picker-dialog.component';
+import { StaticDataService } from './static-data.service';
 import { ConfigurationService } from './configuration.service';
 import { EventService } from './event.service';
 
@@ -32,6 +33,7 @@ import { EventService } from './event.service';
   providers: [
     ApiService,
     IdentityService,
+    StaticDataService,
     ConfigurationService,
     DialogService,
     GrowlService,

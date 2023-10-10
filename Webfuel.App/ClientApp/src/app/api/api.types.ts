@@ -30,6 +30,39 @@ export interface ClientConfigurationMenuItem {
     children: Array<ClientConfigurationMenuItem> | null;
 }
 
+export interface IStaticDataModel {
+    title: any;
+    fundingStream: any;
+    loadedAt: string;
+}
+
+export interface Title extends IStaticData {
+    id: string;
+    name: string;
+    code: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+}
+
+export interface IStaticData {
+    id: string;
+    name: string;
+    code: string;
+    sortOrder: number;
+    hidden: boolean;
+    default: boolean;
+}
+
+export interface FundingStream extends IStaticData {
+    id: string;
+    name: string;
+    code: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+}
+
 export interface User {
     id: string;
     email: string;
@@ -111,6 +144,54 @@ export interface UpdateUserGroup {
 }
 
 export interface QueryUserGroup extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface CreateFundingStream {
+    name: string;
+    code: string;
+}
+
+export interface UpdateFundingStream {
+    id: string;
+    name: string;
+    code: string;
+}
+
+export interface SortFundingStream {
+    ids: Array<string>;
+}
+
+export interface QueryFundingStream extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface CreateTitle {
+    name: string;
+    code: string;
+}
+
+export interface UpdateTitle {
+    id: string;
+    name: string;
+    code: string;
+}
+
+export interface SortTitle {
+    ids: Array<string>;
+}
+
+export interface QueryTitle extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;

@@ -6,12 +6,14 @@ Front Loading Week
 > Static Data Solution
 > Responsiveness
 > Deploy To Azure
-> User Interface Cleanup
-> CSS Cleanup
+> User Interface Review
+> CSS Review
 > Rework Validation / Errors
 > Resolve Identity Service Circular Dependency Issue
 > Dual Login Solution? Multiple Domains
 > Typefuel Interface Extends Fix
+
+Q: What side should Save/Cancel be on??
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 

@@ -26,7 +26,7 @@ namespace Webfuel.Domain
             var updated = original.Copy();
             updated.Name = request.Name;
 
-            return await _userGroupRepository.UpdateUserGroup(original: original, updated: updated); ;
+            return await _userGroupRepository.UpdateUserGroup(original: original, updated: updated); 
         }
     }
 }

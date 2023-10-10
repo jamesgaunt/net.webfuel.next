@@ -50,7 +50,7 @@ namespace Webfuel.Tools.Datafuel
             {
                 var trim = line.Trim();
 
-                if (trim.StartsWith("}") || trim.StartsWith("]"))
+                if (trim.StartsWith("}") || trim.StartsWith("]") || trim.StartsWith(")"))
                 {
                     indent--;
                     if (inCase)
@@ -78,14 +78,16 @@ namespace Webfuel.Tools.Datafuel
                     inCase = true;
                 }
 
-                if (trim.StartsWith("}") || trim.StartsWith("]"))
+                if (trim.StartsWith("}") || trim.StartsWith("]") || trim.StartsWith(")"))
                     indent++;
 
                 if (trim.StartsWith("."))
                     indent--;
 
                 // Determine the impact on indent
-                indent += line.Count(p => p == '{') - line.Count(p => p == '}') + line.Count(p => p == '[') - line.Count(p => p == ']');
+                indent += line.Count(p => p == '{') - line.Count(p => p == '}')
+                    + line.Count(p => p == '[') - line.Count(p => p == ']')
+                    + line.Count(p => p == '(') - line.Count(p => p == ')');
             }
             return output.ToString();
         }

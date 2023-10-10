@@ -207,7 +207,7 @@ export default class Underscore {
     return output.join("");
   }
 
-  static nameToUniqueId(name: string) {
+  static nameToCode(name: string) {
     if (!name)
       return name;
     var uniqueId = "";

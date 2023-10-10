@@ -38,6 +38,7 @@ namespace Webfuel.Tools.Datafuel
 
         public bool JsonIgnore => HasTag("JsonIgnore");
 
+        public bool InternalSet => HasTag("InternalSet") || Entity.StaticData;
 
         // Type
 

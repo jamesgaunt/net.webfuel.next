@@ -2,6 +2,7 @@ using Serilog;
 using FluentValidation;
 using Webfuel.Domain;
 using Serilog.Events;
+using Webfuel.Domain.StaticData;
 
 namespace Webfuel.App
 {
@@ -24,11 +25,13 @@ namespace Webfuel.App
 
                 builder.Services.RegisterCoreServices();
                 builder.Services.RegisterDomainServices();
+                builder.Services.RegisterStaticDataServices();
 
                 builder.Services.AddMediatR(c =>
                 {
                     c.RegisterServicesFromAssemblyContaining<CoreAssemblyMarker>();
                     c.RegisterServicesFromAssemblyContaining<DomainAssemblyMarker>();
+                    c.RegisterServicesFromAssemblyContaining<StaticDataAssemblyMarker>();
                 });
 
                 var app = builder.Build();
@@ -37,6 +40,7 @@ namespace Webfuel.App
 
                 app.UseMiddleware<ExceptionMiddleware>();
                 app.UseMiddleware<IdentityMiddleware>();
+                app.UseMiddleware<StaticDataMiddleware>();
 
                 app.UseStaticFiles();
 

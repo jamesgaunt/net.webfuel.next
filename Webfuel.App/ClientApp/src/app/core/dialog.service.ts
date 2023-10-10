@@ -8,7 +8,11 @@ import { DatePickerDialogComponent, IDatePickerDialogOptions } from "./dialogs/d
 
 export interface IDialogOptions<TResult, TData> {
   data?: TData;
+
   callback?: (result: TResult | undefined) => void;
+  successCallback?: (result: TResult) => void;
+  cancelledCallback?: () => void;
+
   width?: string;
 }
 
@@ -30,9 +34,16 @@ export class DialogService {
       width: options.width
     });
 
-    if (options.callback) {
-      dialogRef.closed.subscribe((result) => options!.callback!(result))
-    }
+    dialogRef.closed.subscribe((result) => {
+      if (options!.callback)
+        options!.callback(result)
+
+      if (result !== undefined && options!.successCallback)
+        options!.successCallback(result);
+
+      if (result === undefined && options!.cancelledCallback)
+        options!.cancelledCallback();
+    });
 
     return dialogRef;
   }

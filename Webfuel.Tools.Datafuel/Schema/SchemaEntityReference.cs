@@ -41,7 +41,7 @@ namespace Webfuel.Tools.Datafuel
         {
             if (JsonIgnore)
                 sb.WriteLine("[JsonIgnore]");
-            sb.WriteLine($"{Access} {CLRTypeWithNullable} {Name} {{ get; set; }}");
+            sb.WriteLine($"{Access} {CLRTypeWithNullable} {Name} {{ get; {(InternalSet ? "internal " : "")}set; }}");
         }
 
         public override string GenerateSqlColumnDefinition()

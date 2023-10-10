@@ -16,7 +16,7 @@ export interface IGridDataSource<TItem> {
 
 export interface IGridDataSourceOptions<TItem> {
   fetch: (query: Query) => Observable<QueryResult<TItem>>;
-  reorder?: (items: TItem[]) => Observable<TItem[]>;
+  reorder?: (items: TItem[]) => Observable<void>;
   localStorageKey?: string;
   filterGroup?: FormGroup;
   maxTake?: number;
@@ -103,8 +103,7 @@ export class GridDataSource<TItem>  {
 
     // Server Side
     this.options.reorder(this.queryResult.items).subscribe((response) => {
-      this.queryResult.items = response;
-      this.change.next(this);
+      this.fetch();
     });
   }
 
