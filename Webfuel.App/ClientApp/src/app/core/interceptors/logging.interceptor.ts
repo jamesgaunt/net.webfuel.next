@@ -9,30 +9,26 @@ export class LoggingInterceptor implements HttpInterceptor {
     private errorService: ErrorService) {
   }
 
-  LOGGING = true;
-
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if (this.LOGGING) {
-      var log = httpRequest.method + ":" + httpRequest.url;
-      if (!httpRequest.headers.has('IDENTITY_TOKEN'))
-        log += " [anonymous]";
-      console.log(log);
-    }
+    var requestTitle = httpRequest.method + ":" + httpRequest.url;
+    if (!httpRequest.headers.has('IDENTITY_TOKEN'))
+      requestTitle += " [anonymous]";
+
+    // console.debug(requestTitle); // enable this to track when the request starts
 
     return next.handle(httpRequest).pipe(
       tap({
         next: (event) => {
 
-          if (this.LOGGING) {
-            if (event && event.type != 0)
-              console.log(event);
+          if (event && event.type != 0) {
+            console.log(requestTitle, event);
           }
 
           return event;
         },
         error: (err: HttpErrorResponse) => {
-          console.log(err.error);
+          console.warn(requestTitle, err.error);
           this.errorService.interceptError(err.error);
         }
       }));

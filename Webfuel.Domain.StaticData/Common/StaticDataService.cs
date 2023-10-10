@@ -7,7 +7,7 @@ namespace Webfuel.Domain.StaticData
         Task<IStaticDataModel> GetStaticData();
     }
 
-    [Service(typeof(IStaticDataService))]
+    [Service(typeof(IStaticDataService), typeof(IClientConfigurationProvider))]
     internal partial class StaticDataService : IStaticDataService
     {
         private readonly IStaticDataCache _staticDataCache;
@@ -26,6 +26,8 @@ namespace Webfuel.Domain.StaticData
 
         public Task ProvideClientConfiguration(ClientConfiguration clientConfiguration)
         {
+            clientConfiguration.StaticDataMenu.AddChild(name: "Title", action: "/static-data/title");
+            clientConfiguration.StaticDataMenu.AddChild(name: "FundingStream", action: "/static-data/funding-stream");
             return Task.CompletedTask;
         }
     }

@@ -21,7 +21,7 @@ namespace Webfuel.Domain.StaticData
         }
         public static T RequireDefault<T>(this IReadOnlyList<T> items) where T : class, IStaticData
         {
-            return items.GetDefault() ?? throw new InvalidOperationException("No default item available");
+            return items.GetDefault() ?? throw new InvalidOperationException($"No static data defined for {nameof(T)}");
         }
     }
 }

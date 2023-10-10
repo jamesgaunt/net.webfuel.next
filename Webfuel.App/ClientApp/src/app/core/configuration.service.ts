@@ -32,10 +32,9 @@ export class ConfigurationService {
       return;
     }
 
-    this.configurationApi.getConfiguration().subscribe((result) => {
-      this._configuration.next(result);
-      console.log("Loaded Configuration");
-      console.log(result);
+    this.configurationApi.getConfiguration().subscribe((configuration) => {
+      this._configuration.next(configuration);
+      console.log("Loaded Configuration: ", { configuration });
     });
   }
 }

@@ -22,6 +22,7 @@ namespace Webfuel.Domain.StaticData
 
         public async Task InvokeAsync(HttpContext context)
         {
+            // We push the timestamp of the currently loaded static data onto each response so the client knows when it needs to reload the data
             var staticData = await _staticDataService.GetStaticData();
             context.Response.Headers.Add("Static-Data-Timestamp", staticData.LoadedAt.ToString());
 

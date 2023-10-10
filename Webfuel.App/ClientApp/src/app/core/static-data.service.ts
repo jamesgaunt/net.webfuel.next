@@ -33,10 +33,9 @@ export class StaticDataService {
       return;
     }
 
-    this.staticDataApi.getStaticData().subscribe((result) => {
-      this._staticData.next(result);
-      console.log("Loaded Static Data");
-      console.log(result);
+    this.staticDataApi.getStaticData().subscribe((staticData) => {
+      this._staticData.next(staticData);
+      console.log("Loaded Static Data: ", { staticData });
     });
   }
 }

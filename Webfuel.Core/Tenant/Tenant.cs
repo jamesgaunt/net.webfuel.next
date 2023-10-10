@@ -13,5 +13,7 @@ namespace Webfuel
         public static string RSS_Leicester => "rss_leicester";
         public static string RSS_Birmingham => "rss_birmingham";
         public static string RSS_Southampton => "rss_southampton";
+
+        public static string RSS_Imperial => "rss_imperial";
     }
 }
