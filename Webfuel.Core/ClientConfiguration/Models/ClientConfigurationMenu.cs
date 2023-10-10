@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Webfuel.Domain
+namespace Webfuel
 {
-    public class ClientConfigurationMenuItem
+    public class ClientConfigurationMenu
     {
         public string Icon { get; set; } = string.Empty;
 
@@ -14,6 +14,6 @@ namespace Webfuel.Domain
 
         public string Action { get; set; } = string.Empty;
 
-        public List<ClientConfigurationMenuItem>? Children { get; set; }
+        public List<ClientConfigurationMenu>? Children { get; set; }
     }
 }

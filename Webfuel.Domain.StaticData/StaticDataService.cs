@@ -2,13 +2,13 @@
 
 namespace Webfuel.Domain.StaticData
 {
-    public interface IStaticDataService
+    public partial interface IStaticDataService: IClientConfigurationProvider
     {
         Task<IStaticDataModel> GetStaticData();
     }
 
     [Service(typeof(IStaticDataService))]
-    internal class StaticDataService: IStaticDataService
+    internal partial class StaticDataService : IStaticDataService
     {
         private readonly IStaticDataCache _staticDataCache;
         
@@ -20,7 +20,13 @@ namespace Webfuel.Domain.StaticData
 
         public async Task<IStaticDataModel> GetStaticData()
         {
-            return await _staticDataCache.GetStaticData();
+            var model = await _staticDataCache.GetStaticData();
+            return model;
+        }
+
+        public Task ProvideClientConfiguration(ClientConfiguration clientConfiguration)
+        {
+            return Task.CompletedTask;
         }
     }
 }

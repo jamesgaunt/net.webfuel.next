@@ -18,8 +18,6 @@ namespace Webfuel.Domain
 
         public Task ProvideIdentityClaims(IdentityUser user, IdentityClaims claims)
         {
-            claims.Developer = true;
-
             return Task.FromResult<object?>(null);
         }
     }
