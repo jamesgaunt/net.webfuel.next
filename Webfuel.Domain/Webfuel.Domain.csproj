@@ -8,12 +8,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Webfuel.Core\Webfuel.Core.csproj" />
+    <ProjectReference Include="..\Webfuel.Domain.StaticData\Webfuel.Domain.StaticData.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Application\" />
     <Folder Include="Researcher\" />
-    <Folder Include="Project\" />
   </ItemGroup>
 
 </Project>

@@ -6,7 +6,7 @@ namespace Webfuel
     {
         IdentityUser? User { get; }
 
-        IdentityClaims? Claims { get; }
+        IdentityClaims Claims { get; }
     }
 
     [Service(typeof(IIdentityAccessor))]
@@ -30,13 +30,13 @@ namespace Webfuel
             }
         }
 
-        public IdentityClaims? Claims
+        public IdentityClaims Claims
         {
             get
             {
                 var token = _httpContextAccessor.HttpContext?.GetState<IdentityToken>(IdentityToken.Key);
                 if (token == null)
-                    return null;
+                    return new IdentityClaims();
                 return token.Claims;
             }
         }

@@ -6,6 +6,8 @@ namespace Webfuel.Domain.StaticData
     {
         public required string Name { get; set; }
         public required string Code { get; set; }
+        public bool Hidden { get; set; }
+        public bool Default { get; set; }
     }
     internal class CreateFundingBodyHandler : IRequestHandler<CreateFundingBody, FundingBody>
     {
@@ -22,6 +24,8 @@ namespace Webfuel.Domain.StaticData
             return await _fundingBodyRepository.InsertFundingBody(new FundingBody {
                     Name = request.Name,
                     Code = request.Code,
+                    Hidden = request.Hidden,
+                    Default = request.Default,
                     SortOrder = await _fundingBodyRepository.CountFundingBody()
                 });
         }

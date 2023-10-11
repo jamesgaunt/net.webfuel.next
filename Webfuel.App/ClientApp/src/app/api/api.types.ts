@@ -35,6 +35,7 @@ export interface IStaticDataModel {
     fundingBody: any;
     fundingStream: any;
     gender: any;
+    researchMethodology: any;
     title: any;
     loadedAt: string;
 }
@@ -79,6 +80,16 @@ export interface Gender extends IStaticData {
     hint: string;
 }
 
+export interface ResearchMethodology extends IStaticData {
+    id: string;
+    name: string;
+    code: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+    hint: string;
+}
+
 export interface Title extends IStaticData {
     id: string;
     name: string;
@@ -87,6 +98,57 @@ export interface Title extends IStaticData {
     default: boolean;
     hidden: boolean;
     hint: string;
+}
+
+export interface Project {
+    id: string;
+    title: string;
+    fundingBodyId: string | null | null;
+    researchMethodologyId: string | null | null;
+}
+
+export interface CreateProject {
+    title: string;
+}
+
+export interface UpdateProject {
+    id: string;
+    title: string;
+}
+
+export interface QueryResult<TItem> {
+    items: Array<TItem>;
+    totalCount: number;
+}
+
+export interface QueryProject extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface QueryFilter {
+    field?: string;
+    op: string;
+    value?: any | null;
+    filters?: Array<QueryFilter> | null;
+}
+
+export interface QuerySort {
+    field: string;
+    direction: number;
+}
+
+export interface Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
 }
 
 export interface User {
@@ -111,33 +173,7 @@ export interface UpdateUser {
     userGroupId: string;
 }
 
-export interface QueryResult<TItem> {
-    items: Array<TItem>;
-    totalCount: number;
-}
-
 export interface QueryUser extends Query {
-    skip: number;
-    take: number;
-    projection?: Array<string>;
-    filters?: Array<QueryFilter>;
-    sort?: Array<QuerySort>;
-    search?: string;
-}
-
-export interface QueryFilter {
-    field?: string;
-    op: string;
-    value?: any | null;
-    filters?: Array<QueryFilter> | null;
-}
-
-export interface QuerySort {
-    field: string;
-    direction: number;
-}
-
-export interface Query {
     skip: number;
     take: number;
     projection?: Array<string>;
@@ -181,12 +217,16 @@ export interface QueryUserGroup extends Query {
 export interface CreateFundingBody {
     name: string;
     code: string;
+    hidden: boolean;
+    default: boolean;
 }
 
 export interface UpdateFundingBody {
     id: string;
     name: string;
     code: string;
+    hidden: boolean;
+    default: boolean;
 }
 
 export interface SortFundingBody {
@@ -205,12 +245,16 @@ export interface QueryFundingBody extends Query {
 export interface CreateFundingStream {
     name: string;
     code: string;
+    hidden: boolean;
+    default: boolean;
 }
 
 export interface UpdateFundingStream {
     id: string;
     name: string;
     code: string;
+    hidden: boolean;
+    default: boolean;
 }
 
 export interface SortFundingStream {
@@ -229,12 +273,16 @@ export interface QueryFundingStream extends Query {
 export interface CreateGender {
     name: string;
     code: string;
+    hidden: boolean;
+    default: boolean;
 }
 
 export interface UpdateGender {
     id: string;
     name: string;
     code: string;
+    hidden: boolean;
+    default: boolean;
 }
 
 export interface SortGender {
@@ -250,15 +298,47 @@ export interface QueryGender extends Query {
     search?: string;
 }
 
+export interface CreateResearchMethodology {
+    name: string;
+    code: string;
+    hidden: boolean;
+    default: boolean;
+}
+
+export interface UpdateResearchMethodology {
+    id: string;
+    name: string;
+    code: string;
+    hidden: boolean;
+    default: boolean;
+}
+
+export interface SortResearchMethodology {
+    ids: Array<string>;
+}
+
+export interface QueryResearchMethodology extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
 export interface CreateTitle {
     name: string;
     code: string;
+    hidden: boolean;
+    default: boolean;
 }
 
 export interface UpdateTitle {
     id: string;
     name: string;
     code: string;
+    hidden: boolean;
+    default: boolean;
 }
 
 export interface SortTitle {

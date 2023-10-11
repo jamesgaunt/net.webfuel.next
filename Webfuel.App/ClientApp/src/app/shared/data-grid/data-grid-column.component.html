@@ -19,7 +19,8 @@
 </ng-template>
 
 <ng-template #flagItemTemplate let-item>
-  <span class="fas fa-{{ item[name] ? 'check': 'times' }}"></span>
+  <span *ngIf="item[name]"  class="fas fa-check"></span>
+  <span *ngIf="!item[name]" class="fas fa-times" style="opacity: 0.2;"></span>
 </ng-template>
 
 <ng-template #dateItemTemplate let-item>

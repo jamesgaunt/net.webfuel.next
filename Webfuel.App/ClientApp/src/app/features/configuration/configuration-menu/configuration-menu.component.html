@@ -1,0 +1,16 @@
+<ul class="breadcrumbs">
+  <li><a routerLink="/home">Home</a></li>
+  <li><a routerLink="/configuration/configuration-menu">Configuration</a></li>
+</ul>
+<div class="container">
+  <h1>Configuration</h1>
+
+  <h2>Static Data</h2>
+  <div class="icon-menu" *ngIf="(configuration | async) !== null">
+    <a *ngFor="let item of (configuration | async)!.staticDataMenu.children" [routerLink]="item.action">
+      <i [class]="item.icon || 'fas fa-database'"></i>
+      <label>{{ item.name }}</label>
+    </a>
+  </div>
+
+</div>

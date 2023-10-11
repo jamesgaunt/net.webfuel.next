@@ -11,6 +11,7 @@ import { StaticDataUpdateOptions, StaticDataUpdateDialogComponent } from '../dia
 import { CreateTitle, UpdateTitle, Title } from '../../../api/api.types';
 
 @Component({
+  selector: 'title-list',
   templateUrl: '../shared/standard.component.html'
 })
 export class TitleComponent {

@@ -5,6 +5,7 @@ import { noop } from "rxjs";
 import { ConfirmDeleteDialogComponent, IConfirmDeleteDialogOptions } from "./dialogs/confirm-delete-dialog.component";
 import { ConfirmDeactivateDialogComponent, IConfirmDeactivateDialogOptions } from "./dialogs/confirm-deactivate-dialog.component";
 import { DatePickerDialogComponent, IDatePickerDialogOptions } from "./dialogs/date-picker-dialog.component";
+import { ConfirmDialogComponent, IConfirmDialogOptions } from "./dialogs/confirm-dialog.component";
 
 export interface IDialogOptions<TResult, TData> {
   data?: TData;
@@ -46,6 +47,19 @@ export class DialogService {
     });
 
     return dialogRef;
+  }
+
+  confirm(options?: IConfirmDialogOptions) {
+    this.open(ConfirmDialogComponent, {
+      data: options,
+      callback: (result) => {
+        if (options && options.callback)
+          options.callback(!!result);
+        if (result === true && options && options.confirmedCallback)
+          options.confirmedCallback();
+      },
+      width: '500px'
+    })
   }
 
   confirmDelete(options?: IConfirmDeleteDialogOptions) {

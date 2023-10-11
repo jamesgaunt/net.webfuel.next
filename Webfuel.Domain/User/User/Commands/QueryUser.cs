@@ -1,4 +1,3 @@
-using Azure.Core;
 using MediatR;
 
 namespace Webfuel.Domain

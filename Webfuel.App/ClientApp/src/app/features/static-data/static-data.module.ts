@@ -8,6 +8,9 @@ import { StaticDataUpdateDialogComponent } from './dialogs/static-data-update-di
 
 import { TitleComponent } from './types/title.component';
 import { FundingStreamComponent } from './types/funding-stream.component';
+import { FundingBodyComponent } from './types/funding-body.component';
+import { GenderComponent } from './types/gender.component';
+import { ResearchMethodologyComponent } from './types/research-methodology.component';
 
 @NgModule({
   imports: [
@@ -18,9 +21,13 @@ import { FundingStreamComponent } from './types/funding-stream.component';
   declarations: [
     TitleComponent,
     FundingStreamComponent,
+    FundingBodyComponent,
+    GenderComponent,
+    ResearchMethodologyComponent,
 
     StaticDataCreateDialogComponent,
     StaticDataUpdateDialogComponent,
+
   ]
 })
 export class StaticDataModule { }

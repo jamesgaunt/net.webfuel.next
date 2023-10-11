@@ -6,6 +6,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthorizationInterceptor } from './interceptors/authorization.interceptor';
 import { LoggingInterceptor } from './interceptors/logging.interceptor';
 
+import { ConfirmDialogComponent } from './dialogs/confirm-dialog.component';
 import { ConfirmDeleteDialogComponent } from './dialogs/confirm-delete-dialog.component';
 import { ConfirmDeactivateDialogComponent } from './dialogs/confirm-deactivate-dialog.component';
 import { DatePickerDialogComponent } from './dialogs/date-picker-dialog.component';
@@ -27,6 +28,7 @@ import { LoginService } from './login.service';
     SharedModule,
   ],
   declarations: [
+    ConfirmDialogComponent,
     ConfirmDeleteDialogComponent,
     ConfirmDeactivateDialogComponent,
     DatePickerDialogComponent

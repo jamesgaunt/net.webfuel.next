@@ -26,10 +26,6 @@ namespace Webfuel
             if (identityUser == null)
                 throw new NotAuthenticatedException();
 
-            var identityClaims = _identityAccessor.Claims;
-            if (identityClaims == null)
-                throw new NotAuthenticatedException();
-
             clientConfiguration.Email = identityUser.Email;
 
             return Task.CompletedTask;

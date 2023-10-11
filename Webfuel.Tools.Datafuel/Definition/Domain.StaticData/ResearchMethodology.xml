@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="ResearchMethodology" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="Code" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Property Name="Hidden" Type="boolean" />
+    <Property Name="Hint" Type="meta:name" />
+    <Index Unique="true">
+      <Member Name="Code" />
+    </Index>
+    <Data>
+      <Row Id="c1df0e41-f6b4-4665-9d9c-caf917f0ae0c" Name="Epidemiology" Code="Epidemiology" />
+      <Row Id="fef8d599-7da8-4078-b183-4d522ba04020" Name="SR" Code="SR" />
+      <Row Id="2fe98137-3b53-40c1-b97f-63ede30c4b0c" Name="Clinical Trial" Code="Clinical_Trial" />
+      <Row Id="3eaa2fb8-7525-484f-b4a4-7d59f0a8e52a" Name="Qualitative" Code="Qualitative" />
+      <Row Id="9237e61f-bc5e-4a2a-8414-99dfd1462449" Name="Mixed Methods" Code="Mixed_Methods" />
+      <Row Id="dd127680-f596-4895-8aab-1d3dd8f714b7" Name="Quasi-Experimental" Code="Quasi_Experimental" />
+      <Row Id="7fbecc8a-1bd6-43e4-9d11-62d899c07eae" Name="Survey" Code="Survey" />
+    </Data>
+  </Entity>
+</Schema>

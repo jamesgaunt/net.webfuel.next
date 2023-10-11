@@ -38,16 +38,19 @@ namespace Webfuel.Tools.Datafuel
             if (member == null)
                 throw new InvalidOperationException("The specified member does not exist");
 
-            return member.ParseValue(GetAttribute(member, name))!;
+            var attribute = GetAttribute(member, name);
+
+            // Automatically set an unspecified sort order to the index of the row
+            if (name == "SortOrder" && String.IsNullOrEmpty(attribute))
+                return Data.Rows.IndexOf(this);
+
+            return member.ParseValue(attribute)!;
         }
 
         string? GetAttribute(SchemaEntityMember member, string name)
         {
             if (Element.Attributes().Any(p => p.Name == name))
                 return Element.Attribute(name)!.Value;
-
-            if (name == "TemplateId")
-                name = "TemplateId";
 
             return member.Default;
         }

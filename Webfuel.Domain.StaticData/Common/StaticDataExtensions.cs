@@ -23,5 +23,15 @@ namespace Webfuel.Domain.StaticData
         {
             return items.GetDefault() ?? throw new InvalidOperationException($"No static data defined for {nameof(T)}");
         }
+
+        public static T? First<T>(this IReadOnlyList<T> items, Guid? id) where T : class, IStaticData
+        {
+            return items.FirstOrDefault(p => p.Id == id);
+        }
+
+        public static T GetOrDefault<T>(this IReadOnlyList<T> items, Guid? id) where T : class, IStaticData
+        {
+            return items.FirstOrDefault(p => p.Id == id) ?? RequireDefault(items);
+        }
     }
 }

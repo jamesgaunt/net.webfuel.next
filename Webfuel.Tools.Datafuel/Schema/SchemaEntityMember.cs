@@ -82,7 +82,10 @@ namespace Webfuel.Tools.Datafuel
 
         public virtual string GenerateRepositoryGetter(string prefix = "entity.")
         {
-            return $"{prefix}{Name}";
+            if (Nullable)
+                return $"{prefix}{Name} ?? (object?)DBNull.Value";
+            else
+                return $"{prefix}{Name}";
         }
 
         public virtual string GenerateRepositorySetter(string prefix = "entity.")

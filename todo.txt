@@ -7,6 +7,8 @@ Front Loading Week
 > Hidden / Default Toggle Input
 > Developer Configuration / Automatic Menus
 
+> Look at subscription disposal logic
+
 > Static Data Solution
 > Responsiveness
 > Deploy To Azure
@@ -16,6 +18,8 @@ Front Loading Week
 > Dual Login Solution? Multiple Domains
 
 Q: What side should Save/Cancel be on??
+
+> Datafuel Data Insert automatically sets SortOrder
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 

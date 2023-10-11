@@ -210,29 +210,28 @@ export default class Underscore {
   static nameToCode(name: string) {
     if (!name)
       return name;
-    var uniqueId = "";
-    var valid = false;
-    var inTag = false;
+
+    var code = "";
+    var inWord = false;
+
     for (var i = 0; i < name.length; i++) {
       var c = name[i];
-      if (inTag) {
-        if (c == '>') {
-          inTag = false;
+
+      if (c.match(/[a-zA-Z0-9]/)) {
+        if (!inWord) {
+          c = c.toUpperCase();
+          if (code.length > 0)
+            code += "_";
         }
+
+        code += c;
+        inWord = true;
+
       } else {
-        if (c == '<') {
-          inTag = true;
-        } else if (c.match(/[a-zA-Z0-9]/)) {
-          if (!valid)
-            c = c.toUpperCase();
-          uniqueId += c;
-          valid = true;
-        } else if (valid) {
-          valid = false;
-        }
+        inWord = false;
       }
     }
-    return uniqueId;
+    return code;
   }
 
   static nameToPath(name: string) {

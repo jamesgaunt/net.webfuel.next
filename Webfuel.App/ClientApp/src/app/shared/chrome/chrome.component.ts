@@ -7,6 +7,7 @@ import { ConfigurationService } from '../../core/configuration.service';
 import { BehaviorSubject } from 'rxjs';
 import { LoginService } from '../../core/login.service';
 import { StaticDataService } from '../../core/static-data.service';
+import { DialogService } from '../../core/dialog.service';
 
 @Component({
   selector: 'chrome',
@@ -20,7 +21,8 @@ export class ChromeComponent implements OnInit, OnDestroy {
     public growlService: GrowlService,
     public configurationService: ConfigurationService,
     public staticDataService: StaticDataService,
-    public loginService: LoginService
+    public loginService: LoginService,
+    public dialogService: DialogService,
   ) {
     this.configuration = configurationService.configuration;
     this.staticData = staticDataService.staticData;
@@ -52,7 +54,13 @@ export class ChromeComponent implements OnInit, OnDestroy {
   }
 
   logout() {
-    this.loginService.logout();
+    this.dialogService.confirm({
+      title: "Logout",
+      message: "Are you sure you want to logout?",
+      confirmedCallback: () => {
+        this.loginService.logout();
+      }
+    });
   }
 
   activeSideMenu: any;

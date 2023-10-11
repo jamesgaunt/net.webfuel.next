@@ -7,6 +7,7 @@ namespace Webfuel.Domain.StaticData
         IReadOnlyList<FundingBody> FundingBody { get; }
         IReadOnlyList<FundingStream> FundingStream { get; }
         IReadOnlyList<Gender> Gender { get; }
+        IReadOnlyList<ResearchMethodology> ResearchMethodology { get; }
         IReadOnlyList<Title> Title { get; }
         DateTimeOffset LoadedAt { get; }
     }
@@ -15,6 +16,7 @@ namespace Webfuel.Domain.StaticData
         public required IReadOnlyList<FundingBody> FundingBody { get; init; }
         public required IReadOnlyList<FundingStream> FundingStream { get; init; }
         public required IReadOnlyList<Gender> Gender { get; init; }
+        public required IReadOnlyList<ResearchMethodology> ResearchMethodology { get; init; }
         public required IReadOnlyList<Title> Title { get; init; }
         public DateTimeOffset LoadedAt { get; init; }
         
@@ -25,6 +27,7 @@ namespace Webfuel.Domain.StaticData
                 FundingBody = await serviceProvider.GetRequiredService<IFundingBodyRepository>().SelectFundingBody(),
                 FundingStream = await serviceProvider.GetRequiredService<IFundingStreamRepository>().SelectFundingStream(),
                 Gender = await serviceProvider.GetRequiredService<IGenderRepository>().SelectGender(),
+                ResearchMethodology = await serviceProvider.GetRequiredService<IResearchMethodologyRepository>().SelectResearchMethodology(),
                 Title = await serviceProvider.GetRequiredService<ITitleRepository>().SelectTitle(),
                 LoadedAt = DateTimeOffset.Now
             };

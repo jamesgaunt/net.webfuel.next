@@ -142,3 +142,51 @@
 .date-picker-popup {
   box-shadow: 1px 1px 10px #000;
 }
+
+.toggle-input {
+  padding: 0.4em 0 0.4em 0;
+
+  .wrap {
+    width: 3em;
+    height: 1.2em;
+    border-radius: 0.6em;
+    background-color: #ddd;
+    position: relative;
+    transition: background-color 0.25s ease;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .disc {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 0%;
+    height: 1.6em;
+    width: 1.6em;
+    border-radius: 0.8em;
+    background-color: #ccc;
+    box-shadow: 0 0 2px #666;
+    transition: left 0.25s ease, background-color 0.25s ease;
+  }
+
+  &.on {
+    .wrap {
+      background-color: color-mix(in hsl, var(--palette-success) 40%, transparent);
+    }
+
+    .disc {
+      left: calc(100% - 1.6em);
+      background-color: var(--palette-success);
+    }
+  }
+
+  span {
+    display: inline-block;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+    font-weight: bold;
+    position: relative;
+    top: -1px;
+  }
+}

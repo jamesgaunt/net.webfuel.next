@@ -26,8 +26,18 @@ const routes: Routes = [
     canActivate: [isAuthenticated]
   },
   {
+    path: 'configuration',
+    loadChildren: () => import('./features/configuration/configuration.module').then(m => m.ConfigurationModule),
+    canActivate: [isAuthenticated]
+  },
+  {
     path: 'user',
     loadChildren: () => import('./features/user/user.module').then(m => m.UserModule),
+    canActivate: [isAuthenticated]
+  },
+  {
+    path: 'project',
+    loadChildren: () => import('./features/project/project.module').then(m => m.ProjectModule),
     canActivate: [isAuthenticated]
   },
   {

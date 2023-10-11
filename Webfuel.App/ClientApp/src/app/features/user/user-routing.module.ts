@@ -27,14 +27,14 @@ const routes: Routes = [
   {
     path: 'user-group-list',
     component: UserGroupListComponent,
-    data: { activeSideMenu: 'UserGroups' }
+    data: { activeSideMenu: 'User Groups' }
   },
   {
     path: 'user-group-item/:id',
     component: UserGroupItemComponent,
     resolve: { userGroup: UserGroupApi.userGroupResolver('id') },
     canDeactivate: [DeactivateService.isPristine<UserGroupItemComponent>()],
-    data: { activeSideMenu: 'UserGroups' }
+    data: { activeSideMenu: 'User Groups' }
   }
 ];
 

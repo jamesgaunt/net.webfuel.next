@@ -27,8 +27,13 @@ namespace Webfuel.Domain.StaticData
         public Task ProvideClientConfiguration(ClientConfiguration clientConfiguration)
         {
             clientConfiguration.StaticDataMenu.AddChild(name: "Title", action: "/static-data/title");
-            clientConfiguration.StaticDataMenu.AddChild(name: "FundingStream", action: "/static-data/funding-stream");
+            clientConfiguration.StaticDataMenu.AddChild(name: "Funding Stream", action: "/static-data/funding-stream");
+            clientConfiguration.StaticDataMenu.AddChild(name: "Funding Body", action: "/static-data/funding-body");
+            clientConfiguration.StaticDataMenu.AddChild(name: "Gender", action: "/static-data/gender");
+            clientConfiguration.StaticDataMenu.AddChild(name: "Research Methodology", action: "/static-data/research-methodology");
+
             return Task.CompletedTask;
+
         }
     }
 }

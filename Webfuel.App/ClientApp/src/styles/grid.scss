@@ -1,10 +1,18 @@
 @import 'config.scss';
 
 .grid {
-    display: grid;
-    gap: var(--gap);
+  display: grid;
+  gap: var(--gap);
 
-    &.has-columns-2 {
-        grid-template-columns: 1fr 1fr;
-    }
+  &.has-columns-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  &.has-columns-3 {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  > .column-span-2 {
+      grid-column-end: span 2;
+  }
 }

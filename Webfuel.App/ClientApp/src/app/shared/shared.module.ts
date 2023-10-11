@@ -16,12 +16,15 @@ import { DropDownMultiSelectComponent } from './form/dropdown-multi-select/dropd
 import { DateCalendarComponent } from './form/date-calendar/date-calendar.component';
 import { DatePickerComponent } from './form/date-picker/date-picker.component';
 import { DropDownTextInputComponent } from './form/dropdown-text-input/dropdown-text-input.component';
+import { ToggleInputComponent } from './form/toggle-input/toggle-input.component';
 
 // Data Grid
 import { DataGridComponent } from './data-grid/data-grid.component';
 import { DataGridColumnComponent } from './data-grid/data-grid-column.component';
 import { DataPagerComponent } from './data-pager/data-pager.component';
 import { DataSorterComponent } from './data-sorter/data-sorter.component';
+
+// Directives
 import { AutocompleteCodeDirective } from './directives/autocomplete-code.directive';
 
 @NgModule({
@@ -45,6 +48,7 @@ import { AutocompleteCodeDirective } from './directives/autocomplete-code.direct
     DropDownTextInputComponent,
     DateCalendarComponent,
     DatePickerComponent,
+    ToggleInputComponent,
 
     // Data Grid
     DataGridComponent,
@@ -72,6 +76,7 @@ import { AutocompleteCodeDirective } from './directives/autocomplete-code.direct
     DropDownTextInputComponent,
     DateCalendarComponent,
     DatePickerComponent,
+    ToggleInputComponent,
 
     // Data Grid
     DataGridComponent,

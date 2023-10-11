@@ -1,9 +1,10 @@
 <ul class="breadcrumbs">
   <li><a routerLink="/home">Home</a></li>
-  <li><a routerLink="/static-data/title-list">{{typeName}} Static Data</a></li>
+  <li><a routerLink="/configuration/configuration-menu">Configuration</a></li>
+  <li>{{typeName}}</li>
 </ul>
 <div class="container">
-  <h1 class="title">{{typeName}} Static Data</h1>
+  <h1 class="title">{{typeName}}</h1>
   <form class="form" [formGroup]="filterForm">
     <input class="input" type="text" placeholder="Search..." formControlName="search" />
   </form>

@@ -45,6 +45,8 @@ namespace Webfuel.Tools.Datafuel
                 {
                     sb.WriteLine("public required string Name { get; set; }");
                     sb.WriteLine("public required string Code { get; set; }");
+                    sb.WriteLine("public bool Hidden { get; set; }");
+                    sb.WriteLine("public bool Default { get; set; }");
                 }
 
                 using(sb.OpenBrace($"internal class Create{entity.Name}Handler : IRequestHandler<Create{entity.Name}, {entity.Name}>"))
@@ -65,6 +67,8 @@ namespace Webfuel.Tools.Datafuel
                             return await _{entity.Name.ToCamelCase()}Repository.Insert{entity.Name}(new {entity.Name} {{ 
                                 Name = request.Name,
                                 Code = request.Code,
+                                Hidden = request.Hidden,
+                                Default = request.Default,
                                 SortOrder = await _{entity.Name.ToCamelCase()}Repository.Count{entity.Name}()
                             }});
                         }}
@@ -88,6 +92,8 @@ namespace Webfuel.Tools.Datafuel
                     sb.WriteLine("public required Guid Id { get; set; }");
                     sb.WriteLine("public required string Name { get; set; }");
                     sb.WriteLine("public required string Code { get; set; }");
+                    sb.WriteLine("public bool Hidden { get; set; }");
+                    sb.WriteLine("public bool Default { get; set; }");
                 }
 
                 using (sb.OpenBrace($"internal class Update{entity.Name}Handler : IRequestHandler<Update{entity.Name}, {entity.Name}>"))
@@ -110,6 +116,8 @@ namespace Webfuel.Tools.Datafuel
                             var updated = original.Copy();
                             updated.Name = request.Name;
                             updated.Code = request.Code;
+                            updated.Hidden = request.Hidden;
+                            updated.Default = request.Default;
 
                             return await _{entity.Name.ToCamelCase()}Repository.Update{entity.Name}(original: original, updated: updated); 
                         }}

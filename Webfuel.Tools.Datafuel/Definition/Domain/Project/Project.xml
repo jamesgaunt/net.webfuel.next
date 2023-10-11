@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="Project">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Title" Type="string[1000]" />
+    <Reference Name="FundingBodyId" Type="FundingBody?" />
+    <Reference Name="ResearchMethodologyId" Type="ResearchMethodology?" />
+  </Entity>
+</Schema>

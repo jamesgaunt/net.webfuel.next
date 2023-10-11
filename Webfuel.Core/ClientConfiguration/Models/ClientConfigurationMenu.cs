@@ -22,7 +22,7 @@ namespace Webfuel
             {
                 Icon = icon ?? String.Empty,
                 Name = name ?? String.Empty,
-                Action = action ?? String.Empty
+                Action = action ?? String.Empty,
             };
 
             if(Children == null)

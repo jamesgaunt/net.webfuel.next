@@ -12,6 +12,7 @@ import { CreateFundingStream, UpdateFundingStream, FundingStream } from '../../.
 import { FundingStreamApi } from '../../../api/funding-stream.api';
 
 @Component({
+  selector: 'funding-stream',
   templateUrl: '../shared/standard.component.html'
 })
 export class FundingStreamComponent {
