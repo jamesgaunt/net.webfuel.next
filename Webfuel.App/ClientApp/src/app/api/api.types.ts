@@ -114,6 +114,8 @@ export interface CreateProject {
 export interface UpdateProject {
     id: string;
     title: string;
+    fundingBodyId: string | null | null;
+    researchMethodologyId: string | null | null;
 }
 
 export interface QueryResult<TItem> {

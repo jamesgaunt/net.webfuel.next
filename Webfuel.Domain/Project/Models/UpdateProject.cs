@@ -12,5 +12,10 @@ namespace Webfuel.Domain
         public required Guid Id { get; set; }
 
         public required string Title { get; set; }
+
+        public Guid? FundingBodyId { get; set; }
+
+        public Guid? ResearchMethodologyId { get; set; }
+
     }
 }

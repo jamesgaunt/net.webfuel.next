@@ -26,7 +26,10 @@ namespace Webfuel.Domain
             var original = await _projectRepository.RequireProject(request.Id);
 
             var updated = original.Copy();
+
             updated.Title = request.Title;
+            updated.FundingBodyId = request.FundingBodyId;
+            updated.ResearchMethodologyId = request.ResearchMethodologyId;
 
             return await _projectRepository.UpdateProject(original: original, updated: updated);
         }

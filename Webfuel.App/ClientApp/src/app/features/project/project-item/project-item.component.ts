@@ -5,8 +5,9 @@ import { UserApi } from 'api/user.api';
 import { Observable } from 'rxjs';
 import { FormService } from '../../../core/form.service';
 import { SelectDataSource } from '../../../shared/data-source/select-data-source';
-import { Project } from '../../../api/api.types';
+import { FundingBody, Project } from '../../../api/api.types';
 import { ProjectApi } from '../../../api/project.api';
+import { FundingBodyApi } from '../../../api/funding-body.api';
 
 @Component({
   selector: 'project-item',
@@ -19,6 +20,7 @@ export class ProjectItemComponent implements OnInit {
     private router: Router,
     private projectApi: ProjectApi,
     private formService: FormService,
+    private fundingBodyApi: FundingBodyApi
   ) {
   }
 
@@ -37,6 +39,9 @@ export class ProjectItemComponent implements OnInit {
   form = new FormGroup({
     id: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     title: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+
+    fundingBodyId: new FormControl<string | null>(null),
+    researchMethodologyId: new FormControl<string | null>(null),
   });
 
   save() {
@@ -53,4 +58,11 @@ export class ProjectItemComponent implements OnInit {
     this.reset(this.item);
     this.router.navigate(['project/project-list']);
   }
+
+  // Data Sources
+
+  fundingBodyDataSource = new SelectDataSource<FundingBody>({
+    fetch: (query) => this.fundingBodyApi.queryFundingBody(query)
+  });
+
 }

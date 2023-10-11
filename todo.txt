@@ -4,8 +4,6 @@
 Front Loading Week
 
 > Rework Interceptors and Front End Static Solution + Interceptor
-> Hidden / Default Toggle Input
-> Developer Configuration / Automatic Menus
 
 > Look at subscription disposal logic
 
@@ -20,6 +18,9 @@ Front Loading Week
 Q: What side should Save/Cancel be on??
 
 > Datafuel Data Insert automatically sets SortOrder
+
+> ProjectInitialiserService
+> ProjectActivityLogService
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
