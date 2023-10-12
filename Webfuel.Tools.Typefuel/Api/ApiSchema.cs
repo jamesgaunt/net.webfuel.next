@@ -41,13 +41,18 @@ namespace Webfuel.Tools.Typefuel
                 });
             }
 
+            if(apiStatic.Rows.Count > 0)
+            {
+                apiStatic.ValueType = TypeContext.GetTypeDescriptor(apiStatic.Rows[0].Value.GetType());
+            }
+
             // Value Array
             var values = typeInfo.GetFields(BindingFlags.Public | BindingFlags.Static).FirstOrDefault(p => p.Name == "Values");
             var valueArray = values?.GetValue(null);
             if (valueArray != null && valueArray.GetType().IsArray)
             {
                 apiStatic.ValueArray = valueArray as object[];
-                apiStatic.ValueType = TypeContext.GetTypeDescriptor(valueArray.GetType().GetElementType());
+                //apiStatic.ValueType = TypeContext.GetTypeDescriptor(valueArray.GetType().GetElementType());
                 if (!(apiStatic.ValueType.Type is ApiComplexType))
                     throw new InvalidOperationException("Static Values must be Complex Types");
             }

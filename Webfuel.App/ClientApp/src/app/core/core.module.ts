@@ -21,6 +21,7 @@ import { DeactivateService } from './deactivate.service';
 import { StaticDataService } from './static-data.service';
 import { ConfigurationService } from './configuration.service';
 import { LoginService } from './login.service';
+import { QueryService } from './query.service';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { LoginService } from './login.service';
     GrowlService,
     FormService,
     ErrorService,
+    QueryService,
     DeactivateService,
     {
       provide: HTTP_INTERCEPTORS,

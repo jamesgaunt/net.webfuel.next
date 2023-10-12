@@ -28,7 +28,7 @@ namespace Webfuel.Tools.Typefuel
             {
                 if (@static.IsEnum)
                 {
-                     // StaticEnum(sb, @static);
+                     StaticEnum(sb, @static);
                 }
                 else
                 {

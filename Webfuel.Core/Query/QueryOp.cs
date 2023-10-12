@@ -1,5 +1,6 @@
 ﻿namespace Webfuel
 {
+    [ApiStatic]
     public static class QueryOp
     {
         public const string None = "none";
