@@ -1,0 +1,5 @@
+
+<ng-template #itemTemplate let-item>
+  {{ format(lookup(item[name]) | async) }}
+</ng-template>
+

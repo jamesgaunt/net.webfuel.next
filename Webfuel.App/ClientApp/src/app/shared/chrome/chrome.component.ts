@@ -20,17 +20,14 @@ export class ChromeComponent implements OnInit, OnDestroy {
     private router: Router,
     public growlService: GrowlService,
     public configurationService: ConfigurationService,
-    public staticDataService: StaticDataService,
     public loginService: LoginService,
     public dialogService: DialogService,
   ) {
     this.configuration = configurationService.configuration;
-    this.staticData = staticDataService.staticData;
   }
 
   configuration: BehaviorSubject<ClientConfiguration | null>;
 
-  staticData: BehaviorSubject<IStaticDataModel | null>
 
   ngOnInit(): void {
     this.router.events.forEach((event) => {

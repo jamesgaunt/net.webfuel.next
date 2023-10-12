@@ -43,6 +43,8 @@ export class StaticDataService {
       return;
     this._loadingStaticData = true;
 
+    // TODO: Handle error case?
+
     this.staticDataApi.getStaticData().subscribe((staticData) => {
       this._loadingStaticData = false;
       this._staticData.next(staticData);
@@ -51,8 +53,10 @@ export class StaticDataService {
   }
 
   private _fetch<TItem>(query: Query, selector: (staticData: IStaticDataModel) => TItem[]) {
+
     if (this._staticData.value === null)
       this._loadStaticData();
+
     return this._staticData.pipe(
       filter(p => p !== null),
       take(1),

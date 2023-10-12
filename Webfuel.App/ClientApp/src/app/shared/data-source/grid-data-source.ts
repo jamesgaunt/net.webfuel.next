@@ -6,7 +6,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Query, QueryFilter, QueryResult, QuerySort } from '../../api/api.types';
 import { EventEmitter } from '@angular/core';
 
-/*
+
 export interface IGridDataSource<TItem> {
   change: EventEmitter<any>;
   queryResult: QueryResult<TItem>;
@@ -14,7 +14,6 @@ export interface IGridDataSource<TItem> {
   reorderable: boolean;
   reorder(previousIndex: number, currentIndex: number): void;
 }
-*/
 
 export interface IGridDataSourceOptions<TItem> {
   fetch: (query: Query) => Observable<QueryResult<TItem>>;

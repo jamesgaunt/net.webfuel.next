@@ -24,6 +24,14 @@ import { DataGridColumnComponent } from './data-grid/data-grid-column.component'
 import { DataPagerComponent } from './data-pager/data-pager.component';
 import { DataSorterComponent } from './data-sorter/data-sorter.component';
 
+// Grid
+import { GridComponent } from './grid/grid.component';
+import { GridColumnComponent } from './grid/columns/grid-column.component';
+import { GridDateColumnComponent } from './grid/columns/grid-date-column.component';
+import { GridBooleanColumnComponent } from './grid/columns/grid-boolean-column.component';
+import { GridDateTimeColumnComponent } from './grid/columns/grid-datetime-column.component';
+import { GridReferenceColumnComponent } from './grid/columns/grid-reference-column.component';
+
 // Directives
 import { AutocompleteCodeDirective } from './directives/autocomplete-code.directive';
 
@@ -56,6 +64,14 @@ import { AutocompleteCodeDirective } from './directives/autocomplete-code.direct
     DataPagerComponent,
     DataSorterComponent,
 
+    // Grid
+    GridComponent,
+    GridColumnComponent,
+    GridDateColumnComponent,
+    GridBooleanColumnComponent,
+    GridDateTimeColumnComponent,
+    GridReferenceColumnComponent,
+
     // Directives
     AutocompleteCodeDirective,
   ],
@@ -83,6 +99,14 @@ import { AutocompleteCodeDirective } from './directives/autocomplete-code.direct
     DataGridColumnComponent,
     DataPagerComponent,
     DataSorterComponent,
+
+    // Grid
+    GridComponent,
+    GridColumnComponent,
+    GridDateColumnComponent,
+    GridBooleanColumnComponent,
+    GridDateTimeColumnComponent,
+    GridReferenceColumnComponent,
 
     // Directives
     AutocompleteCodeDirective,

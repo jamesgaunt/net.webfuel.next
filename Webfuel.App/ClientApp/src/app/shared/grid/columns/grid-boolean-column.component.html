@@ -1,0 +1,6 @@
+
+<ng-template #itemTemplate let-item>
+  <span *ngIf="item[name]" class="fas fa-check"></span>
+  <span *ngIf="!item[name]" class="fas fa-times" style="opacity: 0.2;"></span>
+</ng-template>
+

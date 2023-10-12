@@ -9,6 +9,7 @@ import { UserCreateDialogComponent } from '../user-create-dialog/user-create-dia
 import { UserGroupApi } from '../../../../api/user-group.api';
 import { LookupDataSource } from '../../../../shared/data-source/lookup-data-source';
 import { User, UserGroup } from '../../../../api/api.types';
+import { IDataSource } from '../../../../shared/data-source/data-source';
 
 @Component({
   selector: 'user-list',
@@ -21,6 +22,14 @@ export class UserListComponent {
     private userApi: UserApi,
     private userGroupApi: UserGroupApi
   ) {
+  }
+
+  userDataSource: IDataSource<User> = {
+    fetch: (query) => this.userApi.queryUser(query)
+  }
+
+  userGroupDataSource: IDataSource<UserGroup> = {
+    fetch: (query) => this.userGroupApi.queryUserGroup(query)
   }
 
   filterForm = new FormGroup({

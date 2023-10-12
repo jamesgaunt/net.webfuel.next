@@ -2,12 +2,64 @@ import { Injectable } from "@angular/core";
 import { Query, QueryFilter, QueryResult, QuerySort } from "../api/api.types";
 import { QueryOp } from "../api/api.static";
 import { Observable } from "rxjs";
+import _ from '../shared/underscore';
 
 @Injectable()
 export class QueryService {
   constructor(
   ) {
   }
+
+  // Sort Helpers
+
+  sortDirection(query: Query, field: string) {
+    if (!query.sort || query.sort.length === 0)
+      return 0;
+    let result = 0;
+    _.forEach(query.sort, (p) => {
+      if (p.field === field)
+        result = p.direction;
+    });
+    return result;
+  }
+
+  sortBy(query: Query, field: string, direction: number) {
+    let done = false;
+    if (!query.sort)
+      query.sort = [];
+    _.forEach(query.sort, (p) => {
+      if (p.field === field) {
+        p.direction = direction;
+        done = true;
+      }
+    });
+    if (!done)
+      query.sort.push({ field: field, direction: direction });
+    if (_.all(query.sort, (p) => p.direction === 0))
+      query.sort = [];
+  }
+
+  sortToggle(query: Query, field: string, reverse?: boolean) {
+    let direction = this.sortDirection(query, field);
+    if (reverse === true) {
+      if (direction < 0)
+        direction = 1;
+      else if (direction > 0)
+        direction = 0;
+      else
+        direction = -1;
+    } else {
+      if (direction > 0)
+        direction = -1;
+      else if (direction < 0)
+        direction = 0;
+      else
+        direction = 1;
+    }
+    this.sortBy(query, field, direction);
+  }
+
+  // In-memory fetch
 
   fetch<TItem>(query: Query, items: TItem[]): Observable<QueryResult<TItem>> {
 

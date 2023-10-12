@@ -7,6 +7,7 @@
   <form class="form" [formGroup]="filterForm">
     <input class="input" type="text" placeholder="Search..." formControlName="search" />
   </form>
+
   <data-grid [dataSource]="dataSource">
     <data-grid-column name="email" itemTemplate="bold"></data-grid-column>
     <data-grid-column name="User Group">
@@ -24,6 +25,25 @@
       </ng-template>
     </data-grid-column>
   </data-grid>
+
+  <hr/>
+
+  <grid [dataSource]="userDataSource">
+    <grid-column name="email" />
+    <grid-reference-column name="userGroupId" [dataSource]="userGroupDataSource" />
+
+    <grid-date-column name="birthday" />
+    <grid-column justify="right">
+      <ng-template #headTemplate><a (click)="add()" class="link is-success">add</a></ng-template>
+      <ng-template #itemTemplate let-item>
+        <a (click)="edit(item)" class="link is-primary">edit</a>
+        &nbsp;
+        <a (click)="delete(item)" class="link is-danger">delete</a>
+      </ng-template>
+    </grid-column>
+  </grid>
+
+
 </div>
 
 
