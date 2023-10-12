@@ -120,7 +120,14 @@ namespace Webfuel.Tools.Typefuel
 
         public static bool IsEnumerableType(Type type)
         {
-            return type.GetTypeInfo().IsGenericType && (type.GetGenericTypeDefinition() == typeof(IEnumerable<>) || type.GetGenericTypeDefinition() == typeof(List<>) || type.GetGenericTypeDefinition() == typeof(IList<>));
+            if (!type.GetTypeInfo().IsGenericType)
+                return false;
+
+            return 
+                type.GetGenericTypeDefinition() == typeof(IEnumerable<>) || 
+                type.GetGenericTypeDefinition() == typeof(List<>) || 
+                type.GetGenericTypeDefinition() == typeof(IList<>) ||
+                type.GetGenericTypeDefinition() == typeof(IReadOnlyList<>);
         }
 
         public static bool IsNullableType(Type type)

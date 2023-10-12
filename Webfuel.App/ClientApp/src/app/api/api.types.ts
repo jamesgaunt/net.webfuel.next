@@ -32,11 +32,11 @@ export interface ValidationError {
 }
 
 export interface IStaticDataModel {
-    fundingBody: any;
-    fundingStream: any;
-    gender: any;
-    researchMethodology: any;
-    title: any;
+    fundingBody: Array<FundingBody>;
+    fundingStream: Array<FundingStream>;
+    gender: Array<Gender>;
+    researchMethodology: Array<ResearchMethodology>;
+    title: Array<Title>;
     loadedAt: string;
 }
 
