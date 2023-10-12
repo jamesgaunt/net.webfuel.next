@@ -92,8 +92,6 @@ export class GridDataSource<TItem>  {
 
   // Reorder
 
-
-
   reorder(previousIndex: number, currentIndex: number) {
     if (!this.options.reorder)
       return;

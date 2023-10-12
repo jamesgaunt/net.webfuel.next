@@ -67,3 +67,18 @@ tr.cdk-drag-animating {
     }
   }
 }
+
+.table-pager {
+  margin: 8px 0 8px 0;
+}
+
+.table-pager button:disabled {
+  background-color: #999 !important;
+  cursor: default !important;
+}
+
+.table-pager .button {
+  margin: 4px;
+  min-width: 26px;
+}
+

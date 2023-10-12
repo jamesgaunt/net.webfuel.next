@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, ContentChildren, Input, On
 import { IDataSource } from '../data-source/data-source';
 import { GridColumnComponent } from './columns/grid-column.component';
 import { Query } from '../../api/api.types';
+import _ from '../underscore'
 
 @Component({
   selector: 'grid',
@@ -69,6 +70,37 @@ export class GridComponent<TItem> implements OnDestroy, AfterViewInit {
 
   get columnCount() {
     return this.columns.length;
+  }
+
+  // Page
+
+  pageIndex: number = 0;
+
+  pageCount: number = 0;
+
+  range(pageCount: number) {
+    return _.range(pageCount);
+  }
+
+  calculate() {
+    if (this.query.take <= 0) {
+      this.pageIndex = 0;
+      this.pageCount = 1;
+    } else {
+      this.pageIndex = Math.floor(this.query.skip / this.query.take);
+      this.pageCount = Math.ceil(this.totalCount / this.query.take);
+    }
+  }
+
+  repage(pageIndex: number) {
+    this.query.skip = this.query.take * pageIndex;
+    this.fetch();
+  }
+
+  retake($event: any) {
+    this.query.skip = 0;
+    this.query.take = parseInt($event.target.value, 10);
+    this.fetch();
   }
 }
 
