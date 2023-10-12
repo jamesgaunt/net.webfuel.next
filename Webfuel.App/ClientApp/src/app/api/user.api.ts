@@ -1,7 +1,8 @@
-import { Injectable, inject } from '@angular/core';
+import { EventEmitter, Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
+import { IDataSource } from '../shared/data-source/data-source';
 import { CreateUser, User, UpdateUser, QueryUser, QueryResult, LoginUser, StringResult } from './api.types';
 
 @Injectable()
@@ -32,10 +33,19 @@ export class UserApi {
         return this.apiService.request("POST", "api/user/login", body, options);
     }
     
+    // Resolvers
+    
     static userResolver(param: string): ResolveFn<User> {
         return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User> => {
             return inject(UserApi).resolveUser({id: route.paramMap.get(param)! });
         };
+    }
+    
+    // Data Sources
+    
+    userDataSource: IDataSource<User> = {
+        fetch: (query) => this.queryUser(query),
+        changed: new EventEmitter()
     }
 }
 

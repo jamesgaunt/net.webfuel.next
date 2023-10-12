@@ -1,7 +1,8 @@
-import { Injectable, inject } from '@angular/core';
+import { EventEmitter, Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
+import { IDataSource } from '../shared/data-source/data-source';
 import { CreateProject, Project, UpdateProject, QueryProject, QueryResult } from './api.types';
 
 @Injectable()
@@ -28,10 +29,19 @@ export class ProjectApi {
         return this.apiService.request("GET", "api/project/" + params.id + "", undefined, options);
     }
     
+    // Resolvers
+    
     static projectResolver(param: string): ResolveFn<Project> {
         return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Project> => {
             return inject(ProjectApi).resolveProject({id: route.paramMap.get(param)! });
         };
+    }
+    
+    // Data Sources
+    
+    projectDataSource: IDataSource<Project> = {
+        fetch: (query) => this.queryProject(query),
+        changed: new EventEmitter()
     }
 }
 

@@ -27,6 +27,7 @@ import { DataSorterComponent } from './data-sorter/data-sorter.component';
 // Grid
 import { GridComponent } from './grid/grid.component';
 import { GridColumnComponent } from './grid/columns/grid-column.component';
+import { GridCrudColumnComponent } from './grid/columns/grid-crud-column.component';
 import { GridDateColumnComponent } from './grid/columns/grid-date-column.component';
 import { GridBooleanColumnComponent } from './grid/columns/grid-boolean-column.component';
 import { GridDateTimeColumnComponent } from './grid/columns/grid-datetime-column.component';
@@ -67,6 +68,7 @@ import { AutocompleteCodeDirective } from './directives/autocomplete-code.direct
     // Grid
     GridComponent,
     GridColumnComponent,
+    GridCrudColumnComponent,
     GridDateColumnComponent,
     GridBooleanColumnComponent,
     GridDateTimeColumnComponent,
@@ -103,6 +105,7 @@ import { AutocompleteCodeDirective } from './directives/autocomplete-code.direct
     // Grid
     GridComponent,
     GridColumnComponent,
+    GridCrudColumnComponent,
     GridDateColumnComponent,
     GridBooleanColumnComponent,
     GridDateTimeColumnComponent,

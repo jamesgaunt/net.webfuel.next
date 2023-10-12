@@ -22,7 +22,7 @@ export class LoggingInterceptor implements HttpInterceptor {
         next: (event) => {
 
           if (event && event.type != 0) {
-            console.log(requestTitle, event);
+            console.log(requestTitle, httpRequest.body, event);
           }
 
           return event;

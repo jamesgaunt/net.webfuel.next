@@ -20,10 +20,11 @@ namespace Webfuel.Tools.Typefuel
         {
             var sb = new ScriptBuilder();
 
-            sb.WriteLine("import { Injectable, inject } from '@angular/core';");
+            sb.WriteLine("import { EventEmitter, Injectable, inject } from '@angular/core';");
             sb.WriteLine("import { Observable } from 'rxjs';");
             sb.WriteLine("import { ApiService, ApiOptions } from '../core/api.service';");
             sb.WriteLine("import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';");
+            sb.WriteLine("import { IDataSource } from '../shared/data-source/data-source';");
 
             var complexTypes = EnumerateTypes(controller);
             if (complexTypes.Count > 0)
@@ -39,6 +40,7 @@ namespace Webfuel.Tools.Typefuel
                     Action(sb, action);
 
                 Resolvers(sb, controller);
+                DataSources(sb, controller);
             }
 
             return sb.ToString().FormatScript();
@@ -61,20 +63,43 @@ namespace Webfuel.Tools.Typefuel
             sb.WriteLine("}");
         }
 
-        static void Resolvers(ScriptBuilder sb, ApiService controller)
+        static void Resolvers(ScriptBuilder sb, ApiService service)
         {
-            foreach (var method in controller.Methods)
+            foreach (var method in service.Methods)
             {
                 if (method.Name.StartsWith("Resolve"))
                 {
                     var resolveType = method.Name.Replace("Resolve", "");
-                    if (resolveType == controller.Name)
+                    if (resolveType == service.Name)
                     {
+                        sb.WriteLine();
+                        sb.WriteLine("// Resolvers");
                         sb.WriteLine();
                         sb.WriteLine($"static {resolveType.ToCamelCase()}Resolver(param: string): ResolveFn<{resolveType}> {{");
                         sb.WriteLine($"return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<{resolveType}> => {{");
                         sb.WriteLine($"return inject({resolveType}Api).resolve{resolveType}({{id: route.paramMap.get(param)! }});");
                         sb.WriteLine("};");
+                        sb.WriteLine("}");
+                    }
+                }
+            }
+        }
+
+        static void DataSources(ScriptBuilder sb, ApiService service)
+        {
+            foreach (var method in service.Methods)
+            {
+                if (method.Name.StartsWith("Query"))
+                {
+                    var dataSourceType = method.Name.Replace("Query", "");
+                    if (dataSourceType == service.Name)
+                    {
+                        sb.WriteLine();
+                        sb.WriteLine("// Data Sources");
+                        sb.WriteLine();
+                        sb.WriteLine($"{dataSourceType.ToCamelCase()}DataSource: IDataSource<{dataSourceType}> = {{");
+                        sb.WriteLine($"fetch: (query) => this.query{dataSourceType}(query),");
+                        sb.WriteLine($"changed: new EventEmitter()");
                         sb.WriteLine("}");
                     }
                 }

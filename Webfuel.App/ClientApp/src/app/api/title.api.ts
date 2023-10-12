@@ -1,7 +1,8 @@
-import { Injectable, inject } from '@angular/core';
+import { EventEmitter, Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
+import { IDataSource } from '../shared/data-source/data-source';
 import { CreateTitle, Title, UpdateTitle, SortTitle, QueryTitle, QueryResult } from './api.types';
 
 @Injectable()
@@ -26,6 +27,13 @@ export class TitleApi {
     
     public queryTitle (body: QueryTitle, options?: ApiOptions): Observable<QueryResult<Title>> {
         return this.apiService.request("POST", "api/title/query", body, options);
+    }
+    
+    // Data Sources
+    
+    titleDataSource: IDataSource<Title> = {
+        fetch: (query) => this.queryTitle(query),
+        changed: new EventEmitter()
     }
 }
 

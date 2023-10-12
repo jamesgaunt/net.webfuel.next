@@ -1,7 +1,8 @@
-import { Injectable, inject } from '@angular/core';
+import { EventEmitter, Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
+import { IDataSource } from '../shared/data-source/data-source';
 import { CreateUserGroup, UserGroup, UpdateUserGroup, QueryUserGroup, QueryResult } from './api.types';
 
 @Injectable()
@@ -28,10 +29,19 @@ export class UserGroupApi {
         return this.apiService.request("GET", "api/user-group/" + params.id + "", undefined, options);
     }
     
+    // Resolvers
+    
     static userGroupResolver(param: string): ResolveFn<UserGroup> {
         return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<UserGroup> => {
             return inject(UserGroupApi).resolveUserGroup({id: route.paramMap.get(param)! });
         };
+    }
+    
+    // Data Sources
+    
+    userGroupDataSource: IDataSource<UserGroup> = {
+        fetch: (query) => this.queryUserGroup(query),
+        changed: new EventEmitter()
     }
 }
 

@@ -21,7 +21,10 @@ export class StaticDataService {
 
   // TODO: Check for memory leaks
 
-  fundingBody: IDataSource<FundingBody> = { fetch: (query) => this._fetch(query, s => s.fundingBody) }
+  fundingBody: IDataSource<FundingBody> = {
+    fetch: (query) => this._fetch(query, s => s.fundingBody),
+    changed: new EventEmitter()
+  }
 
   // Implementation
 

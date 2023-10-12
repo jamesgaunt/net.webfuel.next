@@ -1,7 +1,8 @@
-import { Injectable, inject } from '@angular/core';
+import { EventEmitter, Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
+import { IDataSource } from '../shared/data-source/data-source';
 import { CreateFundingBody, FundingBody, UpdateFundingBody, SortFundingBody, QueryFundingBody, QueryResult } from './api.types';
 
 @Injectable()
@@ -26,6 +27,13 @@ export class FundingBodyApi {
     
     public queryFundingBody (body: QueryFundingBody, options?: ApiOptions): Observable<QueryResult<FundingBody>> {
         return this.apiService.request("POST", "api/funding-body/query", body, options);
+    }
+    
+    // Data Sources
+    
+    fundingBodyDataSource: IDataSource<FundingBody> = {
+        fetch: (query) => this.queryFundingBody(query),
+        changed: new EventEmitter()
     }
 }
 

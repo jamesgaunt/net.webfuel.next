@@ -1,3 +1,7 @@
+<form *ngIf="search" class="form" [formGroup]="searchForm">
+  <input class="input" type="text" placeholder="Search..." formControlName="search" />
+</form>
+
 <div class="table">
   <table>
     <thead>
@@ -20,7 +24,7 @@
   </table>
 </div>
 
-<div class="table-pager" *ngIf="totalCount >= 0">
+<div class="table-pager" *ngIf="totalCount < items.length">
   <div class="columns is-mobile">
     <div class="column">
       <div *ngIf="pageCount <= 1">
@@ -39,15 +43,15 @@
     <div class="column is-right">
       <select style="text-align: right; background-color: transparent; border: 0;" (change)="retake($event)">
         <option style="display: none"></option>
-        <option [selected]="dataSource.query.take == 5">5</option>
-        <option [selected]="dataSource.query.take == 10">10</option>
-        <option [selected]="dataSource.query.take == 15">15</option>
-        <option [selected]="dataSource.query.take == 20">20</option>
-        <option [selected]="dataSource.query.take == 25">25</option>
-        <option [selected]="dataSource.query.take == 30">30</option>
-        <option [selected]="dataSource.query.take == 40">40</option>
-        <option [selected]="dataSource.query.take == 50">50</option>
-        <option [selected]="dataSource.query.take == 100">100</option>
+        <option [selected]="query.take == 5">5</option>
+        <option [selected]="query.take == 10">10</option>
+        <option [selected]="query.take == 15">15</option>
+        <option [selected]="query.take == 20">20</option>
+        <option [selected]="query.take == 25">25</option>
+        <option [selected]="query.take == 30">30</option>
+        <option [selected]="query.take == 40">40</option>
+        <option [selected]="query.take == 50">50</option>
+        <option [selected]="query.take == 100">100</option>
       </select>
       /
       {{ totalCount }}

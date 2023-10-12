@@ -3,6 +3,8 @@ import { IDataSource } from '../data-source/data-source';
 import { GridColumnComponent } from './columns/grid-column.component';
 import { Query } from '../../api/api.types';
 import _ from '../underscore'
+import { FormControl, FormGroup } from '@angular/forms';
+import { debounceTime, tap } from 'rxjs';
 
 @Component({
   selector: 'grid',
@@ -17,22 +19,25 @@ export class GridComponent<TItem> implements OnDestroy, AfterViewInit {
   }
 
   @Input()
-  get dataSource() {
-    return this._dataSource;
-  }
-  set dataSource(value) {
-    this._dataSource = value;
-    this.fetch();
-  }
-  _dataSource: IDataSource<TItem> | undefined;
+  dataSource: IDataSource<TItem> | undefined;
+
+  @Input()
+  filterForm: FormGroup | null = null;
+
+  @Input()
+  search = false;
 
   // Query
+
+  searchForm = new FormGroup({
+    search: new FormControl('', { nonNullable: true })
+  });
 
   fetch() {
     if (!this.dataSource)
       return;
 
-    this.dataSource.fetch(this.query).subscribe((response) => {
+    this.dataSource.fetch(this.buildQuery()).subscribe((response) => {
       if (response.totalCount > 0 && response.items.length === 0 && this.query.skip! > 0) {
         this.query.skip = 0;
         this.fetch();
@@ -42,6 +47,19 @@ export class GridComponent<TItem> implements OnDestroy, AfterViewInit {
       this.totalCount = response.totalCount;
       this.cd.detectChanges();
     });
+  }
+
+  buildQuery() {
+
+    var query:any = this.query;
+
+    if (this.filterForm)
+      query = _.merge(query, this.filterForm.getRawValue());
+
+    if (this.search)
+      query = _.merge(query, this.searchForm.getRawValue());
+
+    return query;
   }
 
   query: Query = {
@@ -62,6 +80,34 @@ export class GridComponent<TItem> implements OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     this.columns = this.columnQuery.toArray();
+
+    if (this.dataSource) {
+      this.dataSource.changed.pipe(
+        debounceTime(200),
+        tap(value => this.fetch()),
+      )
+      .subscribe();
+    }
+
+    if (this.filterForm) {
+      this.filterForm.valueChanges
+        .pipe(
+          debounceTime(200),
+          tap(value => this.fetch()),
+        )
+        .subscribe();
+    }
+
+    if (this.search) {
+      this.searchForm.valueChanges
+        .pipe(
+          debounceTime(200),
+          tap(value => this.fetch()),
+        )
+        .subscribe();
+    }
+
+    this.fetch();
     this.cd.detectChanges();
   }
 

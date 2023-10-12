@@ -1,0 +1,8 @@
+
+<ng-template #headTemplate><a (click)="onAdd()" class="link is-success">add</a></ng-template>
+
+<ng-template #itemTemplate let-item>
+  <a (click)="onEdit(item)" class="link is-primary">edit</a>
+  &nbsp;
+  <a (click)="onDelete(item)" class="link is-danger">delete</a>
+</ng-template>

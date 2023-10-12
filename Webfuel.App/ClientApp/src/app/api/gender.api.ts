@@ -1,7 +1,8 @@
-import { Injectable, inject } from '@angular/core';
+import { EventEmitter, Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
+import { IDataSource } from '../shared/data-source/data-source';
 import { CreateGender, Gender, UpdateGender, SortGender, QueryGender, QueryResult } from './api.types';
 
 @Injectable()
@@ -26,6 +27,13 @@ export class GenderApi {
     
     public queryGender (body: QueryGender, options?: ApiOptions): Observable<QueryResult<Gender>> {
         return this.apiService.request("POST", "api/gender/query", body, options);
+    }
+    
+    // Data Sources
+    
+    genderDataSource: IDataSource<Gender> = {
+        fetch: (query) => this.queryGender(query),
+        changed: new EventEmitter()
     }
 }
 

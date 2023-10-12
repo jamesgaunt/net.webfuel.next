@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, TemplateRef, ViewChild } from '@angular/core';
 import { FundingBodyApi } from '../../../api/funding-body.api';
 import { IDataSource } from '../../../shared/data-source/data-source';
 import { FundingBody } from '../../../api/api.types';
@@ -14,7 +14,8 @@ export class HomeComponent {
   }
 
   dataSource: IDataSource<FundingBody> = {
-    fetch: (query) => this.fundingBodyApi.queryFundingBody(query)
+    fetch: (query) => this.fundingBodyApi.queryFundingBody(query),
+    changed: new EventEmitter()
   }
 
   isOpen = false;
