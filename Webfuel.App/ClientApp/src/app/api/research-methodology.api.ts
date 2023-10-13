@@ -2,7 +2,7 @@ import { EventEmitter, Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
-import { IDataSource } from '../shared/data-source/data-source';
+import { IDataSource } from 'shared/common/data-source';
 import { CreateResearchMethodology, ResearchMethodology, UpdateResearchMethodology, SortResearchMethodology, QueryResearchMethodology, QueryResult } from './api.types';
 
 @Injectable()

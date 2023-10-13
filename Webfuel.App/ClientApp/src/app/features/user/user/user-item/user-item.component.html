@@ -23,7 +23,7 @@
       </div>
       <div class="field">
         <label class="label">User Group</label>
-        <dropdown-select [dataSource]="userGroupDataSource" placeholder="required" formControlName="userGroupId"></dropdown-select>
+        <dropdown-select [dataSource]="userGroupApi.userGroupDataSource" placeholder="required" formControlName="userGroupId"></dropdown-select>
       </div>
       <div class="field">
         <label class="label">Birthday</label>
@@ -31,11 +31,11 @@
       </div>
       <div class="field">
         <label class="label">Title</label>
-        <dropdown-text-input [dataSource]="titleDataSource" placeholder="required" formControlName="title"></dropdown-text-input>
+        <dropdown-text-input [dataSource]="titleApi.titleDataSource" placeholder="required" formControlName="title"></dropdown-text-input>
       </div>
       <div class="field">
         <label class="label">Multi Select</label>
-        <dropdown-multi-select [dataSource]="multiDataSource" placeholder="required" formControlName="multi" [enableClear]="true"></dropdown-multi-select>
+        <dropdown-multi-select [dataSource]="titleApi.titleDataSource" placeholder="required" formControlName="multi" [enableClear]="true"></dropdown-multi-select>
       </div>
     </div>
     <div class="buttons">

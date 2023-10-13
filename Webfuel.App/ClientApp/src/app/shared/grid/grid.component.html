@@ -6,18 +6,42 @@
   <table>
     <thead>
       <tr>
+        <th class="is-narrow" *ngIf="sortable"></th>
         <th *ngFor="let column of columns" [style.text-align]="column.justify">
           <ng-container *ngTemplateOutlet="column.headTemplateRef;"></ng-container>
           <div *ngIf="!column.headTemplateRef">
-            {{ column.label }}
+            <a *ngIf="column.sortable" class="data-sorter" href="javascript:;" (click)="columnSort(column)">
+              {{ column.label }}
+              <span *ngIf="column.direction > 0"><i class="fas fa-sort-amount-down-alt"></i></span>
+              <span *ngIf="column.direction < 0"><i class="fas fa-sort-amount-down"></i></span>
+            </a>
+            <span *ngIf="!column.sortable">{{ column.label }}</span>
           </div>
         </th>
       </tr>
     </thead>
-    <tbody>
-      <tr *ngFor="let item of items">
+    <tbody *ngIf="totalCount > 0" cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="drop($event)" [cdkDropListDisabled]="!sortable">
+      <tr *ngFor="let item of items" cdkDrag>
+        <td *ngIf="sortable" class="drag-handle is-narrow" cdkDragHandle>
+          <i *ngIf="!sorting" class="fas fa-fw fa-bars"></i>
+          <i *ngIf="sorting" class="fas fa-fw fa-spin fa-sync"></i>
+        </td>
         <td *ngFor="let column of columns" [style.text-align]="column.justify">
           <ng-container *ngTemplateOutlet="column.itemTemplateRef; context: { $implicit: item }"></ng-container>
+        </td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="totalCount == 0">
+      <tr>
+        <td [attr.colspan]="columnCount">
+          <i>No items to display</i>
+        </td>
+      </tr>
+    </tbody>
+    <tbody *ngIf="totalCount < 0">
+      <tr>
+        <td [attr.colspan]="columnCount">
+          Loading...
         </td>
       </tr>
     </tbody>

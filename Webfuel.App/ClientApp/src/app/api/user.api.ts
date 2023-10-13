@@ -2,7 +2,7 @@ import { EventEmitter, Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
-import { IDataSource } from '../shared/data-source/data-source';
+import { IDataSource } from 'shared/common/data-source';
 import { CreateUser, User, UpdateUser, QueryUser, QueryResult, LoginUser, StringResult } from './api.types';
 
 @Injectable()

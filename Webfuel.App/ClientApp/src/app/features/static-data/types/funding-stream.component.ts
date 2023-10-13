@@ -1,15 +1,11 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { TitleApi } from 'api/title.api';
-import { DialogService } from 'core/dialog.service';
-import { GridDataSource } from '../../../shared/data-source/grid-data-source';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import _ from '../../../shared/underscore';
-import { BehaviorSubject } from 'rxjs';
+import { DialogService } from 'core/dialog.service';
+import { CreateFundingStream, FundingStream, UpdateFundingStream } from '../../../api/api.types';
+import { FundingStreamApi } from '../../../api/funding-stream.api';
+import _ from '../../../shared/common/underscore';
 import { StaticDataCreateDialogComponent, StaticDataCreateOptions } from '../dialogs/static-data-create-dialog/static-data-create-dialog.component';
 import { StaticDataUpdateDialogComponent, StaticDataUpdateOptions } from '../dialogs/static-data-update-dialog/static-data-update-dialog.component';
-import { CreateFundingStream, UpdateFundingStream, FundingStream } from '../../../api/api.types';
-import { FundingStreamApi } from '../../../api/funding-stream.api';
 
 @Component({
   selector: 'funding-stream',
@@ -25,15 +21,7 @@ export class FundingStreamComponent {
 
   typeName = "Funding Stream";
 
-  filterForm = new FormGroup({
-    search: new FormControl('', { nonNullable: true }),
-  });
-
-  dataSource = new GridDataSource<FundingStream>({
-    fetch: (query) => this.fundingStreamApi.queryFundingStream(_.merge(query, this.filterForm.getRawValue())),
-    reorder: (items) => this.fundingStreamApi.sortFundingStream({ ids: _.map(items, p => p.id) }),
-    filterGroup: this.filterForm
-  });
+  staticDataSource = this.fundingStreamApi.fundingStreamDataSource;
 
   add() {
     this.dialogService.open<CreateFundingStream, StaticDataCreateOptions>(StaticDataCreateDialogComponent, {
@@ -42,7 +30,7 @@ export class FundingStreamComponent {
       },
       successCallback: (command) => {
         this.fundingStreamApi.createFundingStream(command).subscribe((result) => {
-          this.dataSource.fetch();
+          this.staticDataSource.changed.emit();
         });
       }
     });
@@ -56,7 +44,7 @@ export class FundingStreamComponent {
       },
       successCallback: (command) => {
         this.fundingStreamApi.updateFundingStream(command).subscribe((result) => {
-          this.dataSource.fetch();
+          this.staticDataSource.changed.emit();
         });
       }
     });
@@ -66,9 +54,15 @@ export class FundingStreamComponent {
     this.dialogService.confirmDelete({
       confirmedCallback: () => {
         this.fundingStreamApi.deleteFundingStream({ id: item.id }).subscribe((result) => {
-          this.dataSource.fetch();
+          this.staticDataSource.changed.emit();
         });
       }
+    })
+  }
+
+  sort(items: FundingStream[]) {
+    this.fundingStreamApi.sortFundingStream({ ids: _.map(items, p => p.id) }).subscribe((result) => {
+      this.staticDataSource.changed.emit();
     })
   }
 }

@@ -1,14 +1,11 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { TitleApi } from 'api/title.api';
 import { DialogService } from 'core/dialog.service';
-import { GridDataSource } from '../../../shared/data-source/grid-data-source';
-import { Router } from '@angular/router';
-import _ from '../../../shared/underscore';
-import { BehaviorSubject } from 'rxjs';
+import { CreateTitle, Title, UpdateTitle } from '../../../api/api.types';
+import _ from '../../../shared/common/underscore';
 import { StaticDataCreateDialogComponent, StaticDataCreateOptions } from '../dialogs/static-data-create-dialog/static-data-create-dialog.component';
-import { StaticDataUpdateOptions, StaticDataUpdateDialogComponent } from '../dialogs/static-data-update-dialog/static-data-update-dialog.component';
-import { CreateTitle, UpdateTitle, Title } from '../../../api/api.types';
+import { StaticDataUpdateDialogComponent, StaticDataUpdateOptions } from '../dialogs/static-data-update-dialog/static-data-update-dialog.component';
 
 @Component({
   selector: 'title-list',
@@ -24,15 +21,7 @@ export class TitleComponent {
 
   typeName = "Title";
 
-  filterForm = new FormGroup({
-    search: new FormControl('', { nonNullable: true }),
-  });
-
-  dataSource = new GridDataSource<Title>({
-    fetch: (query) => this.titleApi.queryTitle(_.merge(query, this.filterForm.getRawValue())),
-    reorder: (items) => this.titleApi.sortTitle({ ids: _.map(items, p => p.id) }),
-    filterGroup: this.filterForm
-  });
+  staticDataSource = this.titleApi.titleDataSource;
 
   add() {
     this.dialogService.open<CreateTitle, StaticDataCreateOptions>(StaticDataCreateDialogComponent, {
@@ -41,7 +30,7 @@ export class TitleComponent {
       },
       successCallback: (command) => {
         this.titleApi.createTitle(command).subscribe((result) => {
-          this.dataSource.fetch();
+          this.staticDataSource.changed.emit();
         });
       }
     });
@@ -55,7 +44,7 @@ export class TitleComponent {
       },
       successCallback: (command) => {
         this.titleApi.updateTitle(command).subscribe((result) => {
-          this.dataSource.fetch();
+          this.staticDataSource.changed.emit();
         });
       }
     });
@@ -65,9 +54,15 @@ export class TitleComponent {
     this.dialogService.confirmDelete({
       confirmedCallback: () => {
         this.titleApi.deleteTitle({ id: item.id }).subscribe((result) => {
-          this.dataSource.fetch();
+          this.staticDataSource.changed.emit();
         });
       }
+    })
+  }
+
+  sort(items: Title[]) {
+    this.titleApi.sortTitle({ ids: _.map(items, p => p.id) }).subscribe((result) => {
+      this.staticDataSource.changed.emit();
     })
   }
 }

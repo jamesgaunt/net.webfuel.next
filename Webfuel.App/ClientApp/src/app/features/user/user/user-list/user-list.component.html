@@ -7,8 +7,7 @@
   <grid [dataSource]="userApi.userDataSource" [search]="true">
     <grid-column name="email" />
     <grid-reference-column name="userGroupId" [dataSource]="userGroupApi.userGroupDataSource" />
-    <grid-date-column name="birthday" />
-    <grid-crud-column (add)="add()" (edit)="edit($event)" (delete)="delete($event)" />
+    <grid-action-column (add)="add()" (edit)="edit($event)" (delete)="delete($event)" />
   </grid>
 </div>
 

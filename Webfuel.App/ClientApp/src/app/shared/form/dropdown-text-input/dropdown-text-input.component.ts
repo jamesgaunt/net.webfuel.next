@@ -1,12 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, DestroyRef, ElementRef, forwardRef, HostListener, inject, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { debounceTime, noop, tap } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import _ from 'shared/underscore';
-import { SelectDataSource } from '../../data-source/select-data-source';
-import { GridDataSource } from '../../data-source/grid-data-source';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, DestroyRef, ElementRef, forwardRef, HostListener, inject, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { debounceTime, noop, tap } from 'rxjs';
+import _ from 'shared/common/underscore';
+import { DropDownBase } from '../../common/dropdown-base';
 
 @Component({
   selector: 'dropdown-text-input',
@@ -20,17 +19,18 @@ import { TemplatePortal } from '@angular/cdk/portal';
     }
   ]
 })
-export class DropDownTextInputComponent<TItem> implements ControlValueAccessor, OnInit {
+export class DropDownTextInputComponent<TItem> extends DropDownBase<TItem> implements ControlValueAccessor, OnInit {
 
   formControl: FormControl = new FormControl<string>('');
 
   destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
-    private overlay: Overlay,
-    private viewContainerRef: ViewContainerRef,
-    private cd: ChangeDetectorRef
+    overlay: Overlay,
+    viewContainerRef: ViewContainerRef,
+    cd: ChangeDetectorRef
   ) {
+    super(overlay, viewContainerRef, cd);
   }
 
   ngOnInit(): void {
@@ -44,29 +44,10 @@ export class DropDownTextInputComponent<TItem> implements ControlValueAccessor, 
   }
 
   @Input()
-  placeholder = "";
-
-  @Input()
   enableClear: boolean = false;
 
   public onBlur(): void {
     this.onTouched();
-  }
-
-  // Data Source
-
-  @Input({ required: true })
-  set dataSource(value: SelectDataSource<TItem>) {
-    this._dataSource = value;
-    this._dataSource.change.subscribe(() => this.cd.detectChanges());
-  }
-  get dataSource() {
-    return this._dataSource;
-  }
-  _dataSource!: SelectDataSource<TItem>
-
-  getId(item: TItem) {
-    return this.dataSource.getId(item);
   }
 
   // Client Events
@@ -125,7 +106,7 @@ export class DropDownTextInputComponent<TItem> implements ControlValueAccessor, 
     const portal = new TemplatePortal(this.popupTemplate, this.viewContainerRef);
     this.popupRef.attach(portal);
     this.syncPopupWidth();
-    this.dataSource.fetch(true);
+    this.fetch(true);
   }
 
   closePopup() {
@@ -183,7 +164,7 @@ export class DropDownTextInputComponent<TItem> implements ControlValueAccessor, 
       this.scrollPosition = n / d;
 
     if (this.scrollPosition > 0.8)
-      this.dataSource.fetch(false);
+      this.fetch(false);
   }
 
   // ControlValueAccessor API
@@ -193,7 +174,7 @@ export class DropDownTextInputComponent<TItem> implements ControlValueAccessor, 
   onTouched: () => void = noop;
 
   public writeValue(value: string | null): void {
-    this.dataSource.pick(!value ? [] : [value], true);
+    this.pickItems(!value ? [] : [value], true);
   }
 
   public registerOnChange(fn: (value: string | null) => void): void {

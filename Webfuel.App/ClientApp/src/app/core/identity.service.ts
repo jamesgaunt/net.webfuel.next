@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from "@angular/core";
-import _ from '../shared/underscore';
+import _ from 'shared/common/underscore';
 
 @Injectable()
 export class IdentityService {

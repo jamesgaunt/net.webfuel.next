@@ -1,15 +1,11 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { TitleApi } from 'api/title.api';
-import { DialogService } from 'core/dialog.service';
-import { GridDataSource } from '../../../shared/data-source/grid-data-source';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import _ from '../../../shared/underscore';
-import { BehaviorSubject } from 'rxjs';
+import { DialogService } from 'core/dialog.service';
+import { CreateFundingBody, FundingBody, UpdateFundingBody } from '../../../api/api.types';
+import { FundingBodyApi } from '../../../api/funding-body.api';
+import _ from '../../../shared/common/underscore';
 import { StaticDataCreateDialogComponent, StaticDataCreateOptions } from '../dialogs/static-data-create-dialog/static-data-create-dialog.component';
 import { StaticDataUpdateDialogComponent, StaticDataUpdateOptions } from '../dialogs/static-data-update-dialog/static-data-update-dialog.component';
-import { CreateFundingBody, UpdateFundingBody, FundingBody } from '../../../api/api.types';
-import { FundingBodyApi } from '../../../api/funding-body.api';
 
 @Component({
   selector: 'funding-body',
@@ -25,15 +21,7 @@ export class FundingBodyComponent {
 
   typeName = "Funding Body";
 
-  filterForm = new FormGroup({
-    search: new FormControl('', { nonNullable: true }),
-  });
-
-  dataSource = new GridDataSource<FundingBody>({
-    fetch: (query) => this.fundingBodyApi.queryFundingBody(_.merge(query, this.filterForm.getRawValue())),
-    reorder: (items) => this.fundingBodyApi.sortFundingBody({ ids: _.map(items, p => p.id) }),
-    filterGroup: this.filterForm
-  });
+  staticDataSource = this.fundingBodyApi.fundingBodyDataSource;
 
   add() {
     this.dialogService.open<CreateFundingBody, StaticDataCreateOptions>(StaticDataCreateDialogComponent, {
@@ -42,7 +30,7 @@ export class FundingBodyComponent {
       },
       successCallback: (command) => {
         this.fundingBodyApi.createFundingBody(command).subscribe((result) => {
-          this.dataSource.fetch();
+          this.staticDataSource.changed.emit();
         });
       }
     });
@@ -56,7 +44,7 @@ export class FundingBodyComponent {
       },
       successCallback: (command) => {
         this.fundingBodyApi.updateFundingBody(command).subscribe((result) => {
-          this.dataSource.fetch();
+          this.staticDataSource.changed.emit();
         });
       }
     });
@@ -66,9 +54,15 @@ export class FundingBodyComponent {
     this.dialogService.confirmDelete({
       confirmedCallback: () => {
         this.fundingBodyApi.deleteFundingBody({ id: item.id }).subscribe((result) => {
-          this.dataSource.fetch();
+          this.staticDataSource.changed.emit();
         });
       }
+    })
+  }
+
+  sort(items: FundingBody[]) {
+    this.fundingBodyApi.sortFundingBody({ ids: _.map(items, p => p.id) }).subscribe((result) => {
+      this.staticDataSource.changed.emit();
     })
   }
 }

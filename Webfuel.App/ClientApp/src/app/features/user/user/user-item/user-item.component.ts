@@ -1,12 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserApi } from 'api/user.api';
-import { Observable } from 'rxjs';
-import { User, UserGroup } from '../../../../api/api.types';
+import { User } from '../../../../api/api.types';
 import { UserGroupApi } from '../../../../api/user-group.api';
 import { FormService } from '../../../../core/form.service';
-import { SelectDataSource } from '../../../../shared/data-source/select-data-source';
+import { TitleApi } from '../../../../api/title.api';
 
 @Component({
   selector: 'user-item',
@@ -18,26 +17,15 @@ export class UserItemComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formService: FormService,
-    private userApi: UserApi,
-    private userGroupApi: UserGroupApi
+    public userApi: UserApi,
+    public userGroupApi: UserGroupApi,
+    public titleApi: TitleApi,
   ) {
   }
 
   ngOnInit() {
     this.reset(this.route.snapshot.data.user);
   }
-
-  userGroupDataSource = new SelectDataSource<UserGroup>({
-    fetch: (query) => this.userGroupApi.queryUserGroup(query)
-  });
-
-  titleDataSource = new SelectDataSource<UserGroup>({
-    fetch: (query) => this.userGroupApi.queryUserGroup(query)
-  });
-
-  multiDataSource = new SelectDataSource<UserGroup>({
-    fetch: (query) => this.userGroupApi.queryUserGroup(query)
-  });
 
   item!: User;
 

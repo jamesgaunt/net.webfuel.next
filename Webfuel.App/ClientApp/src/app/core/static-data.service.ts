@@ -1,10 +1,10 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import _ from '../shared/underscore';
+import _ from 'shared/common/underscore';
 import { StaticDataApi } from '../api/static-data.api';
 import { FundingBody, IStaticDataModel, Query } from '../api/api.types';
 import { BehaviorSubject, filter, switchMap, take } from 'rxjs';
 import { IdentityService } from './identity.service';
-import { IDataSource } from '../shared/data-source/data-source';
+import { IDataSource } from 'shared/common/data-source';
 import { QueryService } from './query.service';
 
 @Injectable()
@@ -19,9 +19,7 @@ export class StaticDataService {
     this._loadStaticData();
   }
 
-  // TODO: Check for memory leaks
-
-  fundingBody: IDataSource<FundingBody> = {
+  fundingBodyDataSource: IDataSource<FundingBody> = {
     fetch: (query) => this._fetch(query, s => s.fundingBody),
     changed: new EventEmitter()
   }

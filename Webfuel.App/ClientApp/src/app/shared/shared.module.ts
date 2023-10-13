@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { DialogModule } from '@angular/cdk/dialog';
-import { DragDrop, DragDropModule } from '@angular/cdk/drag-drop';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { ChromeComponent } from './chrome/chrome.component';
 
@@ -18,16 +18,10 @@ import { DatePickerComponent } from './form/date-picker/date-picker.component';
 import { DropDownTextInputComponent } from './form/dropdown-text-input/dropdown-text-input.component';
 import { ToggleInputComponent } from './form/toggle-input/toggle-input.component';
 
-// Data Grid
-import { DataGridComponent } from './data-grid/data-grid.component';
-import { DataGridColumnComponent } from './data-grid/data-grid-column.component';
-import { DataPagerComponent } from './data-pager/data-pager.component';
-import { DataSorterComponent } from './data-sorter/data-sorter.component';
-
 // Grid
 import { GridComponent } from './grid/grid.component';
 import { GridColumnComponent } from './grid/columns/grid-column.component';
-import { GridCrudColumnComponent } from './grid/columns/grid-crud-column.component';
+import { GridActionColumnComponent } from './grid/columns/grid-action-column.component';
 import { GridDateColumnComponent } from './grid/columns/grid-date-column.component';
 import { GridBooleanColumnComponent } from './grid/columns/grid-boolean-column.component';
 import { GridDateTimeColumnComponent } from './grid/columns/grid-datetime-column.component';
@@ -59,16 +53,10 @@ import { AutocompleteCodeDirective } from './directives/autocomplete-code.direct
     DatePickerComponent,
     ToggleInputComponent,
 
-    // Data Grid
-    DataGridComponent,
-    DataGridColumnComponent,
-    DataPagerComponent,
-    DataSorterComponent,
-
     // Grid
     GridComponent,
     GridColumnComponent,
-    GridCrudColumnComponent,
+    GridActionColumnComponent,
     GridDateColumnComponent,
     GridBooleanColumnComponent,
     GridDateTimeColumnComponent,
@@ -96,16 +84,10 @@ import { AutocompleteCodeDirective } from './directives/autocomplete-code.direct
     DatePickerComponent,
     ToggleInputComponent,
 
-    // Data Grid
-    DataGridComponent,
-    DataGridColumnComponent,
-    DataPagerComponent,
-    DataSorterComponent,
-
     // Grid
     GridComponent,
     GridColumnComponent,
-    GridCrudColumnComponent,
+    GridActionColumnComponent,
     GridDateColumnComponent,
     GridBooleanColumnComponent,
     GridDateTimeColumnComponent,

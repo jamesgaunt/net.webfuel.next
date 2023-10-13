@@ -1,39 +1,20 @@
-import { EventEmitter, Output } from "@angular/core";
-import { GridDataSource } from "./grid-data-source";
-import _ from '../underscore';
-import { Observable } from "rxjs";
-import { Query, QueryFilter, QueryResult } from "../../api/api.types";
+import { Observable } from 'rxjs';
+import { Query, QueryFilter, QueryResult } from '../../api/api.types';
+import { ChangeDetectorRef, Component, EventEmitter, Input, ViewContainerRef } from '@angular/core';
+import { IDataSource } from './data-source';
+import _ from 'shared/common/underscore';
+import { Overlay } from '@angular/cdk/overlay';
 
-export interface ISelectDataSource<TItem> {
-  getId(item: TItem): string;
+@Component({
+  template: ''
+})
+export class DropDownBase<TItem> {
 
-  change: EventEmitter<any>;
-
-  pickedItems: TItem[];
-
-  optionItems: TItem[];
-
-  clear(): void;
-
-  pick(ids: string[], clear: boolean): void;
-
-  remove(id: string): void;
-
-  fetch(flush: boolean): void;
-
-  optionItemsCallback: Object | null; // TODO: Expose this in a more meaningful way (to the template - e.g. loading)
-}
-
-export class SelectDataSource<TItem> implements ISelectDataSource<TItem>  {
-
-  constructor(private options: {
-    fetch: (query: Query) => Observable<QueryResult<TItem>>;
-    items?: TItem[]
-  }) {
-    if (options.items) {
-      this.optionItems = options.items;
-      this.optionItemsComplete = true;
-    }
+  constructor(
+    protected overlay: Overlay,
+    protected viewContainerRef: ViewContainerRef,
+    protected cd: ChangeDetectorRef
+  ) {
   }
 
   id = "id";
@@ -42,9 +23,14 @@ export class SelectDataSource<TItem> implements ISelectDataSource<TItem>  {
     return (<any>item)[this.id]
   }
 
-  // Events
+  @Input()
+  placeholder = "";
 
-  change = new EventEmitter<any>();
+
+  // Data Source
+
+  @Input({ required: true })
+  dataSource: IDataSource<TItem> | undefined;
 
   // Option Items
 
@@ -55,6 +41,10 @@ export class SelectDataSource<TItem> implements ISelectDataSource<TItem>  {
   optionItemsComplete: boolean = false; // Indicates there are no more select items to be loaded
 
   fetch(flush: boolean) {
+
+    if (!this.dataSource)
+      return;
+
     if (flush) {
       this.optionItemsCallback = null;
       this.optionItemsComplete = false;
@@ -66,7 +56,7 @@ export class SelectDataSource<TItem> implements ISelectDataSource<TItem>  {
     // Unique token to represent the current callback
     var currentCallback = this.optionItemsCallback = new Object();
 
-    this.options.fetch({
+    this.dataSource.fetch({
       skip: flush ? 0 : this.optionItems.length,
       take: 20,
     }).subscribe((response) => {
@@ -80,7 +70,7 @@ export class SelectDataSource<TItem> implements ISelectDataSource<TItem>  {
       } else {
         this.optionItems = this.optionItems.concat(response.items);
       }
-      this.change.emit();
+      this.cd.detectChanges();
     })
   }
 
@@ -88,12 +78,16 @@ export class SelectDataSource<TItem> implements ISelectDataSource<TItem>  {
 
   public pickedItems: TItem[] = [];
 
-  clear() {
+  clearPickedItems() {
     this.pickedItems = [];
-    this.change.emit();
+    this.cd.detectChanges();
   }
 
-  pick(ids: string[], clear: boolean) {
+  pickItems(ids: string[], clear: boolean) {
+
+    if (!this.dataSource)
+      return;
+
     // Can we 'cheat' and load these items from the option items
     {
       var items: any[] = [];
@@ -105,8 +99,8 @@ export class SelectDataSource<TItem> implements ISelectDataSource<TItem>  {
       if (items.length == ids.length) {
         if (clear)
           this.pickedItems = [];
-        this.push(items);
-        this.change.emit();
+        this.pushPickedItems(items);
+        this.cd.detectChanges();
         return;
       }
     }
@@ -118,7 +112,7 @@ export class SelectDataSource<TItem> implements ISelectDataSource<TItem>  {
     });
 
     // We need to use the api
-    this.options.fetch({
+    this.dataSource.fetch({
       projection: [],
       sort: [],
       skip: 0,
@@ -127,16 +121,16 @@ export class SelectDataSource<TItem> implements ISelectDataSource<TItem>  {
     }).subscribe((response) => {
       if (clear)
         this.pickedItems = [];
-      this.push(response.items);
-      this.change.emit();
+      this.pushPickedItems(response.items);
+      this.cd.detectChanges();
     });
   }
 
-  remove(id: string) {
+  removePickedItem(id: string) {
     this.pickedItems = _.remove(this.pickedItems, p => this.getId(p) === id);
   }
 
-  push(items: TItem[]) {
+  pushPickedItems(items: TItem[]) {
     _.forEach(items, (item) => {
       if (item && !_.some(this.pickedItems, p => this.getId(p) === this.getId(item)))
         this.pickedItems.push(item);

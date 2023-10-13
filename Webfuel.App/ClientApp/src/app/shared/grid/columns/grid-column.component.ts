@@ -1,5 +1,6 @@
-import _ from '../../underscore'
+import _ from '../../common/underscore'
 import { Component, Input, OnInit, ContentChildren, TemplateRef, QueryList, ContentChild, ViewChild, AfterContentInit, AfterViewInit } from '@angular/core';
+import { GridComponent } from '../grid.component';
 
 @Component({
   selector: 'grid-column',
@@ -12,8 +13,11 @@ export class GridColumnComponent<TItem> {
 
   @Input()
   get label() {
-    if (this._label == undefined)
+    if (this._label == undefined) {
       this._label = _.splitCamelCase(this.name);
+      if (this._label.endsWith(" Id"))
+        this._label = this._label.substring(0, this._label.length - 3);
+    }
     return this._label;
   }
   set label(value: string) {
@@ -23,6 +27,21 @@ export class GridColumnComponent<TItem> {
 
   @Input()
   justify: "left" | "right" | "center" = "left";
+
+  @Input()
+  get sortable() {
+    if (!this.grid || this.grid.sortable)
+      return false; // We can't enable sorting on both the grid and individual columns
+    return this._sortable;
+  }
+  set sortable(value) {
+    this._sortable = value;
+  }
+  _sortable = true;
+
+  // Injected Grid Reference
+
+  grid: GridComponent<TItem> | null = null;
 
   // Head Template
 
@@ -44,5 +63,13 @@ export class GridColumnComponent<TItem> {
     if (this.customItemTemplate)
       return this.customItemTemplate;
     return this.textItemTemplate;
+  }
+
+  // Column Sort
+
+  get direction() {
+    if (!this.grid)
+      return 0;
+    return this.grid.columnDirection(this);
   }
 }

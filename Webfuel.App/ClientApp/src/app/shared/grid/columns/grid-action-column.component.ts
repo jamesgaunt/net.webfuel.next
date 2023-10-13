@@ -2,11 +2,11 @@ import { Component, Input, OnInit, ContentChildren, TemplateRef, QueryList, Cont
 import { GridColumnComponent } from './grid-column.component';
 
 @Component({
-  selector: 'grid-crud-column',
-  templateUrl: './grid-crud-column.component.html',
-  providers: [{ provide: GridColumnComponent, useExisting: GridCrudColumnComponent }]
+  selector: 'grid-action-column',
+  templateUrl: './grid-action-column.component.html',
+  providers: [{ provide: GridColumnComponent, useExisting: GridActionColumnComponent }]
 })
-export class GridCrudColumnComponent<TItem> extends GridColumnComponent<TItem> {
+export class GridActionColumnComponent<TItem> extends GridColumnComponent<TItem> {
 
   constructor() {
     super();

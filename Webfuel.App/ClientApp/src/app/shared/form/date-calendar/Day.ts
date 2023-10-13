@@ -1,5 +1,5 @@
 import { formatDate } from "@angular/common";
-import _ from '../../underscore';
+import _ from 'shared/common/underscore';
 
 export class Day {
 

@@ -1,7 +1,6 @@
-import _ from '../underscore';
+import _ from 'shared/common/underscore';
 import { Directive, ElementRef, HostListener, OnInit, OnDestroy } from "@angular/core";
 import { NgControl, FormGroup, FormControl, AbstractControl } from "@angular/forms";
-import { pairwise } from 'rxjs/operators';
 
 @Directive({
   selector: '[autocomplete-code]'

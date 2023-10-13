@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GrowlService } from './growl.service';
 import { FormGroup, AbstractControl } from "@angular/forms";
-import _ from '../shared/underscore';
+import _ from 'shared/common/underscore';
 
 @Injectable()
 export class FormService {

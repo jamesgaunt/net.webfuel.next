@@ -1,20 +1,22 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ContentChildren, Input, OnDestroy, QueryList } from '@angular/core';
-import { IDataSource } from '../data-source/data-source';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, EventEmitter, Input, OnDestroy, Output, QueryList } from '@angular/core';
+import { IDataSource } from '../common/data-source';
 import { GridColumnComponent } from './columns/grid-column.component';
 import { Query } from '../../api/api.types';
-import _ from '../underscore'
+import _ from '../common/underscore'
 import { FormControl, FormGroup } from '@angular/forms';
-import { debounceTime, tap } from 'rxjs';
+import { Observable, debounceTime, tap } from 'rxjs';
+import { QueryService } from '../../core/query.service';
 
 @Component({
   selector: 'grid',
   templateUrl: './grid.component.html',
-  //changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GridComponent<TItem> implements OnDestroy, AfterViewInit {
 
   constructor(
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private queryService: QueryService
   ) {
   }
 
@@ -26,6 +28,9 @@ export class GridComponent<TItem> implements OnDestroy, AfterViewInit {
 
   @Input()
   search = false;
+
+  @Output()
+  sort = new EventEmitter<TItem[]>();
 
   // Query
 
@@ -43,6 +48,7 @@ export class GridComponent<TItem> implements OnDestroy, AfterViewInit {
         this.fetch();
         return;
       }
+      this.sorting = false;
       this.items = response.items;
       this.totalCount = response.totalCount;
       this.cd.detectChanges();
@@ -51,7 +57,7 @@ export class GridComponent<TItem> implements OnDestroy, AfterViewInit {
 
   buildQuery() {
 
-    var query:any = this.query;
+    var query: any = this.query;
 
     if (this.filterForm)
       query = _.merge(query, this.filterForm.getRawValue());
@@ -70,7 +76,7 @@ export class GridComponent<TItem> implements OnDestroy, AfterViewInit {
 
   items: TItem[] = [];
 
-  totalCount = 0;
+  totalCount = -1; // -1 => Loading
 
   // Columns
 
@@ -78,44 +84,8 @@ export class GridComponent<TItem> implements OnDestroy, AfterViewInit {
 
   columns: GridColumnComponent<TItem>[] = [];
 
-  ngAfterViewInit() {
-    this.columns = this.columnQuery.toArray();
-
-    if (this.dataSource) {
-      this.dataSource.changed.pipe(
-        debounceTime(200),
-        tap(value => this.fetch()),
-      )
-      .subscribe();
-    }
-
-    if (this.filterForm) {
-      this.filterForm.valueChanges
-        .pipe(
-          debounceTime(200),
-          tap(value => this.fetch()),
-        )
-        .subscribe();
-    }
-
-    if (this.search) {
-      this.searchForm.valueChanges
-        .pipe(
-          debounceTime(200),
-          tap(value => this.fetch()),
-        )
-        .subscribe();
-    }
-
-    this.fetch();
-    this.cd.detectChanges();
-  }
-
-  ngOnDestroy(): void {
-  }
-
   get columnCount() {
-    return this.columns.length;
+    return this.columns.length + (this.sortable ? 1 : 0);
   }
 
   // Page
@@ -147,6 +117,78 @@ export class GridComponent<TItem> implements OnDestroy, AfterViewInit {
     this.query.skip = 0;
     this.query.take = parseInt($event.target.value, 10);
     this.fetch();
+  }
+
+  // Drag & Drop Sort
+
+  get sortable() { return this.sort.observed; }
+
+  sorting = false;
+
+  drop($event: any) {
+    if (!this.sortable || this.sorting)
+      return;
+    this.sorting = true;
+
+    var currentIndex = <number>$event.currentIndex;
+    var previousIndex = <number>$event.previousIndex;
+
+    // Client Side
+    const item = this.items.splice(previousIndex, 1);
+    this.items.splice(currentIndex, 0, item[0]);
+
+    // Server Side
+    this.sort.emit(this.items);
+  }
+
+  // Column Sort
+
+  columnSort(column: GridColumnComponent<TItem>) {
+    this.queryService.sortToggle(this.query, column.name);
+    this.fetch();
+  }
+
+  columnDirection(column: GridColumnComponent<TItem>) {
+    return this.queryService.sortDirection(this.query, column.name);
+  }
+
+  // Lifecycle
+
+  ngAfterViewInit() {
+    this.columns = this.columnQuery.toArray();
+
+    _.forEach(this.columns, p => {
+      p.grid = this;
+    });
+
+    if (this.dataSource) {
+      this.dataSource.changed.pipe(
+        debounceTime(200),
+      )
+      .subscribe(() => this.fetch());
+    }
+
+    if (this.filterForm) {
+      this.filterForm.valueChanges
+        .pipe(
+          debounceTime(200),
+        )
+        .subscribe(() => this.fetch());
+    }
+
+    if (this.search) {
+      this.searchForm.valueChanges
+        .pipe(
+          debounceTime(200),
+        )
+        .subscribe(() => this.fetch());
+    }
+
+    this.fetch();
+    this.cd.detectChanges();
+  }
+
+  ngOnDestroy(): void {
   }
 }
 

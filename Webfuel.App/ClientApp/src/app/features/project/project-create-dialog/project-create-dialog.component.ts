@@ -1,10 +1,9 @@
 import { DialogRef } from '@angular/cdk/dialog';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { FormService } from '../../../core/form.service';
-import { SelectDataSource } from '../../../shared/data-source/select-data-source';
-import { ProjectApi } from '../../../api/project.api';
 import { Project } from '../../../api/api.types';
+import { ProjectApi } from '../../../api/project.api';
+import { FormService } from '../../../core/form.service';
 
 @Component({
   templateUrl: './project-create-dialog.component.html'

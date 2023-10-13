@@ -4,20 +4,11 @@
 </ul>
 <div class="container">
   <h1 class="title">Projects</h1>
-  <form class="form" [formGroup]="filterForm">
-    <input class="input" type="text" placeholder="Search..." formControlName="search" />
-  </form>
-  <data-grid [dataSource]="dataSource">
-    <data-grid-column name="title" itemTemplate="bold"></data-grid-column>
-    <data-grid-column justify="right">
-      <ng-template #headTemplate><a (click)="add()" class="link is-success">add</a></ng-template>
-      <ng-template #itemTemplate let-item>
-        <a (click)="edit(item)" class="link is-primary">edit</a>
-        &nbsp;
-        <a (click)="delete(item)" class="link is-danger">delete</a>
-      </ng-template>
-    </data-grid-column>
-  </data-grid>
+  <grid [dataSource]="projectApi.projectDataSource" [search]="true">
+    <grid-column name="title" />
+    <grid-reference-column [dataSource]="staticDataService.fundingBodyDataSource" name="fundingBodyId" />
+    <grid-action-column (add)="add()" (edit)="edit($event)" (delete)="delete($event)" />
+  </grid>
 </div>
 
 

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Query, QueryFilter, QueryResult, QuerySort } from "../api/api.types";
 import { QueryOp } from "../api/api.static";
 import { Observable } from "rxjs";
-import _ from '../shared/underscore';
+import _ from 'shared/common/underscore';
 
 @Injectable()
 export class QueryService {
@@ -65,15 +65,15 @@ export class QueryService {
 
     var result = items;
 
-    result = this._applyQueryFiltersToItemArray(query.filters, items);
+    result = this._applyQueryFiltersToItemArray(query.filters, result);
 
-    result = this._applySearchToItemArray(query.search, items);
+    result = this._applySearchToItemArray(query.search, result);
 
-    result = this._applyQuerySortToItemArray(query.sort, items);
+    result = this._applyQuerySortToItemArray(query.sort, result);
 
     var totalCount = result.length;
 
-    result = this._applyPageToItemArray(query.skip, query.take, items);
+    result = this._applyPageToItemArray(query.skip, query.take, result);
 
     return new Observable<QueryResult<TItem>>((subscriber) => {
       subscriber.next({ items: result, totalCount: totalCount });

@@ -1,13 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '@angular/router';
-import { UserApi } from 'api/user.api';
-import { Observable } from 'rxjs';
-import { FormService } from '../../../core/form.service';
-import { SelectDataSource } from '../../../shared/data-source/select-data-source';
-import { FundingBody, Project } from '../../../api/api.types';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Project } from '../../../api/api.types';
 import { ProjectApi } from '../../../api/project.api';
-import { FundingBodyApi } from '../../../api/funding-body.api';
+import { FormService } from '../../../core/form.service';
+import { StaticDataService } from '../../../core/static-data.service';
 
 @Component({
   selector: 'project-item',
@@ -18,9 +15,9 @@ export class ProjectItemComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private projectApi: ProjectApi,
+    public projectApi: ProjectApi,
     private formService: FormService,
-    private fundingBodyApi: FundingBodyApi
+    public staticDataService: StaticDataService
   ) {
   }
 
@@ -58,11 +55,4 @@ export class ProjectItemComponent implements OnInit {
     this.reset(this.item);
     this.router.navigate(['project/project-list']);
   }
-
-  // Data Sources
-
-  fundingBodyDataSource = new SelectDataSource<FundingBody>({
-    fetch: (query) => this.fundingBodyApi.queryFundingBody(query)
-  });
-
 }

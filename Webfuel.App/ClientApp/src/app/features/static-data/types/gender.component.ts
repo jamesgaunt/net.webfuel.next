@@ -1,14 +1,11 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { GenderApi } from 'api/gender.api';
 import { DialogService } from 'core/dialog.service';
-import { GridDataSource } from '../../../shared/data-source/grid-data-source';
-import { Router } from '@angular/router';
-import _ from '../../../shared/underscore';
-import { BehaviorSubject } from 'rxjs';
+import { CreateGender, Gender, UpdateGender } from '../../../api/api.types';
+import _ from '../../../shared/common/underscore';
 import { StaticDataCreateDialogComponent, StaticDataCreateOptions } from '../dialogs/static-data-create-dialog/static-data-create-dialog.component';
-import { StaticDataUpdateOptions, StaticDataUpdateDialogComponent } from '../dialogs/static-data-update-dialog/static-data-update-dialog.component';
-import { CreateGender, UpdateGender, Gender } from '../../../api/api.types';
+import { StaticDataUpdateDialogComponent, StaticDataUpdateOptions } from '../dialogs/static-data-update-dialog/static-data-update-dialog.component';
 
 @Component({
   selector: 'gender',
@@ -24,15 +21,7 @@ export class GenderComponent {
 
   typeName = "Gender";
 
-  filterForm = new FormGroup({
-    search: new FormControl('', { nonNullable: true }),
-  });
-
-  dataSource = new GridDataSource<Gender>({
-    fetch: (query) => this.genderApi.queryGender(_.merge(query, this.filterForm.getRawValue())),
-    reorder: (items) => this.genderApi.sortGender({ ids: _.map(items, p => p.id) }),
-    filterGroup: this.filterForm
-  });
+  staticDataSource = this.genderApi.genderDataSource;
 
   add() {
     this.dialogService.open<CreateGender, StaticDataCreateOptions>(StaticDataCreateDialogComponent, {
@@ -41,7 +30,7 @@ export class GenderComponent {
       },
       successCallback: (command) => {
         this.genderApi.createGender(command).subscribe((result) => {
-          this.dataSource.fetch();
+          this.staticDataSource.changed.emit();
         });
       }
     });
@@ -55,7 +44,7 @@ export class GenderComponent {
       },
       successCallback: (command) => {
         this.genderApi.updateGender(command).subscribe((result) => {
-          this.dataSource.fetch();
+          this.staticDataSource.changed.emit();
         });
       }
     });
@@ -65,9 +54,15 @@ export class GenderComponent {
     this.dialogService.confirmDelete({
       confirmedCallback: () => {
         this.genderApi.deleteGender({ id: item.id }).subscribe((result) => {
-          this.dataSource.fetch();
+          this.staticDataSource.changed.emit();
         });
       }
+    })
+  }
+
+  sort(items: Gender[]) {
+    this.genderApi.sortGender({ ids: _.map(items, p => p.id) }).subscribe((result) => {
+      this.staticDataSource.changed.emit();
     })
   }
 }

@@ -1,15 +1,11 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { TitleApi } from 'api/title.api';
-import { DialogService } from 'core/dialog.service';
-import { GridDataSource } from '../../../shared/data-source/grid-data-source';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import _ from '../../../shared/underscore';
-import { BehaviorSubject } from 'rxjs';
+import { DialogService } from 'core/dialog.service';
+import { CreateResearchMethodology, ResearchMethodology, UpdateResearchMethodology } from '../../../api/api.types';
+import { ResearchMethodologyApi } from '../../../api/research-methodology.api';
+import _ from '../../../shared/common/underscore';
 import { StaticDataCreateDialogComponent, StaticDataCreateOptions } from '../dialogs/static-data-create-dialog/static-data-create-dialog.component';
 import { StaticDataUpdateDialogComponent, StaticDataUpdateOptions } from '../dialogs/static-data-update-dialog/static-data-update-dialog.component';
-import { CreateResearchMethodology, UpdateResearchMethodology, ResearchMethodology } from '../../../api/api.types';
-import { ResearchMethodologyApi } from '../../../api/research-methodology.api';
 
 @Component({
   selector: 'research-methodology',
@@ -25,15 +21,7 @@ export class ResearchMethodologyComponent {
 
   typeName = "Research Methodology";
 
-  filterForm = new FormGroup({
-    search: new FormControl('', { nonNullable: true }),
-  });
-
-  dataSource = new GridDataSource<ResearchMethodology>({
-    fetch: (query) => this.researchMethodologyApi.queryResearchMethodology(_.merge(query, this.filterForm.getRawValue())),
-    reorder: (items) => this.researchMethodologyApi.sortResearchMethodology({ ids: _.map(items, p => p.id) }),
-    filterGroup: this.filterForm
-  });
+  staticDataSource = this.researchMethodologyApi.researchMethodologyDataSource;
 
   add() {
     this.dialogService.open<CreateResearchMethodology, StaticDataCreateOptions>(StaticDataCreateDialogComponent, {
@@ -42,7 +30,7 @@ export class ResearchMethodologyComponent {
       },
       successCallback: (command) => {
         this.researchMethodologyApi.createResearchMethodology(command).subscribe((result) => {
-          this.dataSource.fetch();
+          this.staticDataSource.changed.emit();
         });
       }
     });
@@ -56,7 +44,7 @@ export class ResearchMethodologyComponent {
       },
       successCallback: (command) => {
         this.researchMethodologyApi.updateResearchMethodology(command).subscribe((result) => {
-          this.dataSource.fetch();
+          this.staticDataSource.changed.emit();
         });
       }
     });
@@ -66,9 +54,15 @@ export class ResearchMethodologyComponent {
     this.dialogService.confirmDelete({
       confirmedCallback: () => {
         this.researchMethodologyApi.deleteResearchMethodology({ id: item.id }).subscribe((result) => {
-          this.dataSource.fetch();
+          this.staticDataSource.changed.emit();
         });
       }
+    })
+  }
+
+  sort(items: ResearchMethodology[]) {
+    this.researchMethodologyApi.sortResearchMethodology({ ids: _.map(items, p => p.id) }).subscribe((result) => {
+      this.staticDataSource.changed.emit();
     })
   }
 }

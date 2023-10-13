@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ContentChildren, TemplateRef, QueryList, ContentChild, ViewChild, AfterContentInit, AfterViewInit } from '@angular/core';
 import { GridColumnComponent } from './grid-column.component';
-import { IDataSource } from '../../data-source/data-source';
 import { BehaviorSubject } from 'rxjs';
+import { IDataSource } from 'shared/common/data-source';
 
 @Component({
   selector: 'grid-reference-column',

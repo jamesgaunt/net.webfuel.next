@@ -16,7 +16,7 @@ export class UserGroupItemComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formService: FormService,
-    private userGroupApi: UserGroupApi,
+    public userGroupApi: UserGroupApi,
   ) {
   }
 

@@ -1,4 +1,4 @@
-import _ from '../shared/underscore';
+import _ from 'shared/common/underscore';
 import { Injectable, Injector } from '@angular/core';
 import { BehaviorSubject, timer } from 'rxjs';
 

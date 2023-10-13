@@ -5,7 +5,6 @@ import { UserApi } from 'api/user.api';
 import { User, UserGroup } from '../../../../api/api.types';
 import { UserGroupApi } from '../../../../api/user-group.api';
 import { FormService } from '../../../../core/form.service';
-import { SelectDataSource } from '../../../../shared/data-source/select-data-source';
 
 @Component({
   selector: 'user-create-dialog-component',
@@ -17,13 +16,9 @@ export class UserCreateDialogComponent {
     private dialogRef: DialogRef<User>,
     private formService: FormService,
     private userApi: UserApi,
-    private userGroupApi: UserGroupApi
+    public userGroupApi: UserGroupApi
   ) {
   }
-
-  userGroupDataSource = new SelectDataSource<UserGroup>({
-    fetch: (query) => this.userGroupApi.queryUserGroup(query)
-  })
 
   form = new FormGroup({
     email: new FormControl('', { validators: [Validators.required], nonNullable: true }),

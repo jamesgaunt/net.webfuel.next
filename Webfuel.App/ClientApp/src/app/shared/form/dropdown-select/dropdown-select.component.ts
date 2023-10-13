@@ -1,17 +1,15 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, DestroyRef, ElementRef, forwardRef, HostListener, inject, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { debounceTime, noop, tap } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import _ from 'shared/underscore';
-import { ISelectDataSource, SelectDataSource } from '../../data-source/select-data-source';
-import { GridDataSource } from '../../data-source/grid-data-source';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, DestroyRef, ElementRef, forwardRef, HostListener, inject, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { noop } from 'rxjs';
+import _ from 'shared/common/underscore';
+import { DropDownBase } from '../../common/dropdown-base';
 
 @Component({
   selector: 'dropdown-select',
   templateUrl: './dropdown-select.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  //changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -20,22 +18,21 @@ import { TemplatePortal } from '@angular/cdk/portal';
     }
   ]
 })
-export class DropDownSelectComponent<TItem> implements ControlValueAccessor, OnInit {
+export class DropDownSelectComponent<TItem> extends DropDownBase<TItem> implements ControlValueAccessor, OnInit {
 
   destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
-    private overlay: Overlay,
-    private viewContainerRef: ViewContainerRef,
-    private cd: ChangeDetectorRef
+    overlay: Overlay,
+    viewContainerRef: ViewContainerRef,
+    cd: ChangeDetectorRef
   ) {
+    super(overlay, viewContainerRef, cd);
   }
 
   ngOnInit(): void {
-  }
 
-  @Input()
-  placeholder = "";
+  }
 
   @Input()
   enableClear: boolean = false;
@@ -44,33 +41,17 @@ export class DropDownSelectComponent<TItem> implements ControlValueAccessor, OnI
     this.onTouched();
   }
 
-  // Data Source
-
-  @Input({ required: true })
-  set dataSource(value: ISelectDataSource<TItem>) {
-    this._dataSource = value;
-    this._dataSource.change.subscribe(() => this.cd.detectChanges());
-  }
-  get dataSource() {
-    return this._dataSource;
-  }
-  _dataSource!: ISelectDataSource<TItem>
-
-  getId(item: TItem) {
-    return this.dataSource.getId(item);
-  }
-
   // Client Events
 
   pickItem(item: TItem) {
     var id = this.getId(item);
-    if (this.dataSource.pickedItems.length == 1 && id == this.getId(this.dataSource.pickedItems[0])) {
+    if (this.pickedItems.length == 1 && id == this.getId(this.pickedItems[0])) {
       this.closePopup();
       return; // No change
     }
 
-    this.dataSource.clear();
-    this.dataSource.pick([id], false);
+    this.clearPickedItems();
+    this.pickItems([id], false);
     this.closePopup();
     this.doChangeCallback();
   }
@@ -80,14 +61,14 @@ export class DropDownSelectComponent<TItem> implements ControlValueAccessor, OnI
       $event.preventDefault();
       $event.stopPropagation();
     }
-    this.dataSource.remove(this.dataSource.getId(item));
+    this.removePickedItem(this.getId(item));
     this.doChangeCallback();
   }
 
   clear($event: Event) {
     $event.preventDefault();
     $event.stopPropagation();
-    this.dataSource.clear();
+    this.clearPickedItems();
     this.closePopup();
     this.doChangeCallback();
   }
@@ -129,7 +110,7 @@ export class DropDownSelectComponent<TItem> implements ControlValueAccessor, OnI
     const portal = new TemplatePortal(this.popupTemplate, this.viewContainerRef);
     this.popupRef.attach(portal);
     this.syncPopupWidth();
-    this.dataSource.fetch(true);
+    this.fetch(true);
   }
 
   closePopup() {
@@ -183,15 +164,15 @@ export class DropDownSelectComponent<TItem> implements ControlValueAccessor, OnI
       this.scrollPosition = n / d;
 
     if (this.scrollPosition > 0.8)
-      this.dataSource.fetch(false);
+      this.fetch(false);
   }
 
   // ControlValueAccessor API
 
   doChangeCallback() {
-    if (this.dataSource.pickedItems.length === 0)
+    if (this.pickedItems.length === 0)
       this.onChange(null);
-    this.onChange(this.dataSource.getId(this.dataSource.pickedItems[0]));
+    this.onChange(this.getId(this.pickedItems[0]));
   }
 
   onChange: (value: string | null) => void = noop;
@@ -199,7 +180,7 @@ export class DropDownSelectComponent<TItem> implements ControlValueAccessor, OnI
   onTouched: () => void = noop;
 
   public writeValue(value: string | null): void {
-    this.dataSource.pick(!value ? [] : [value], true);
+    this.pickItems(!value ? [] : [value], true);
   }
 
   public registerOnChange(fn: (value: string | null) => void): void {
