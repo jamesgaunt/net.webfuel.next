@@ -1,58 +1,41 @@
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-Front Loading Week
+W0
 
-> Rework Interceptors and Front End Static Solution + Interceptor
+> CSS (style + responsiveness) + rework dropdown logic + subscription disposal
 
-> Look at subscription disposal logic
+> Deploy to Azure / Validation / Errors / Login / Logout / Redirection
 
-> Static Data Solution
+> Researcher Scaffold / Project Support Scaffold / Support Request Scaffold / Project Activity Scaffold
+
+> Project Initialiser / Project Activity
+
+> External Tools: Scribble / Excel etc
+
+W1
+
+> Static Data Setup
+
+> Primary Domain Editors
+
+> Controls / Inputs Review
+
 > Responsiveness
-> Deploy To Azure
-> User Interface Review
-> CSS Review
-> Rework Validation / Errors
-> Dual Login Solution? Multiple Domains
 
-Q: What side should Save/Cancel be on??
+W2
 
-> Datafuel Data Insert automatically sets SortOrder
+> Secondary Domain Editors
 
-> ProjectInitialiserService
-> ProjectActivityLogService
+> Support Request Form (angular -> iframe)
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-Prototyping Week
-
-> Researcher / User Data
-> Project Data
-
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-
-Solution for TimeAgo
-
-StaticData Solution
-  > Seperate Assembly
-  > Internal Setters (so immutable)
-  > StaticDataModel available to client with auto-update
-  > Service Based CRUD and auto-generated API 
-  > Client static data service
-
-ItemSelectDataSource - for in memory item collections
-
-DropDowns 
-	> Search Field : Templated : Standard Template = Standard Form Group
-	> dropdown-service
+TimeAgo roll your own pipe
 
 [JsonOptional] -- done?
 [JsonReadOnly] 
 Interfaces (with readonly properties)
-
->> User = _userRepository.Insert(User, Transaction); 
->> UserGroup = _userGroupRepository.Update(UserGroup, Transaction);
->> Transaction.Execute(); <-- No scope required  - runs all commands 
 
 [Service<T>()]
 

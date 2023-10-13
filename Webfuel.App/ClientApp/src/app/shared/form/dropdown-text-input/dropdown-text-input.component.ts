@@ -68,10 +68,16 @@ export class DropDownTextInputComponent<TItem> extends DropDownBase<TItem> imple
     this.cd.detectChanges();
   }
 
-  togglePopup($event: Event) {
+  togglePopup($event: Event, $textInput: HTMLElement) {
     $event.preventDefault();
     $event.stopPropagation();
-    this.popupOpen ? this.closePopup() : this.openPopup();
+    if (this.popupOpen) {
+      this.closePopup()
+    }
+    else {
+      this.openPopup();
+      $textInput.focus();
+    }
   }
 
   // Popup

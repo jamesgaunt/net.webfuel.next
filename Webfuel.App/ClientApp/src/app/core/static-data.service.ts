@@ -1,8 +1,8 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import _ from 'shared/common/underscore';
 import { StaticDataApi } from '../api/static-data.api';
-import { FundingBody, IStaticDataModel, Query } from '../api/api.types';
-import { BehaviorSubject, filter, switchMap, take } from 'rxjs';
+import { FundingBody, FundingStream, Gender, IStaticDataModel, Query, ResearchMethodology, Title } from '../api/api.types';
+import { BehaviorSubject, filter, first, switchMap, take } from 'rxjs';
 import { IdentityService } from './identity.service';
 import { IDataSource } from 'shared/common/data-source';
 import { QueryService } from './query.service';
@@ -19,10 +19,15 @@ export class StaticDataService {
     this._loadStaticData();
   }
 
-  fundingBodyDataSource: IDataSource<FundingBody> = {
-    fetch: (query) => this._fetch(query, s => s.fundingBody),
-    changed: new EventEmitter()
-  }
+  titleDataSource: IDataSource<Title> = { fetch: (query) => this._fetchFactory(query, s => s.title) };
+
+  genderDataSource: IDataSource<Gender> = { fetch: (query) => this._fetchFactory(query, s => s.gender) };
+
+  fundingBodyDataSource: IDataSource<FundingBody> = { fetch: (query) => this._fetchFactory(query, s => s.fundingBody) };
+
+  fundingStreamDataSource: IDataSource<FundingStream> = { fetch: (query) => this._fetchFactory(query, s => s.fundingStream) };
+
+  researchMethodologyDataSource: IDataSource<ResearchMethodology> = { fetch: (query) => this._fetchFactory(query, s => s.researchMethodology) };
 
   // Implementation
 
@@ -44,23 +49,27 @@ export class StaticDataService {
       return;
     this._loadingStaticData = true;
 
-    // TODO: Handle error case?
-
-    this.staticDataApi.getStaticData().subscribe((staticData) => {
-      this._loadingStaticData = false;
-      this._staticData.next(staticData);
-      console.log("Loaded Static Data: ", { staticData });
+    this.staticDataApi.getStaticData().subscribe({
+      next: (staticData) => {
+        this._loadingStaticData = false;
+        this._staticData.next(staticData);
+        console.log("Loaded Static Data: ", { staticData });
+      },
+      error: (err) => {
+        this._loadingStaticData = false;
+        console.log("Error Loading Static Data: ", { err });
+      }
     });
   }
 
-  private _fetch<TItem>(query: Query, selector: (staticData: IStaticDataModel) => TItem[]) {
+  private _fetchFactory<TItem>(query: Query, selector: (staticData: IStaticDataModel) => TItem[]) {
 
-    if (this._staticData.value === null)
+    if (this._staticData.value === null) {
       this._loadStaticData();
+    }
 
     return this._staticData.pipe(
-      filter(p => p !== null),
-      take(1),
+      first(p => p !== null),
       switchMap((p) => this.queryService.fetch(query, selector(p!))));
   }
 }

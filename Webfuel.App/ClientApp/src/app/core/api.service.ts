@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { GrowlService } from './growl.service';
 
 export interface IApiErrorHandler {
@@ -26,16 +26,15 @@ export class ApiService {
 
     var observable = <Observable<TResponse>>this.httpClient.request(
       method, url, {
-        body: body,
-        headers: { 'Content-Type': 'application/json' },
-        params: { 'r': Math.random() }
-      });
+      body: body,
+      headers: { 'Content-Type': 'application/json' },
+      params: { 'r': Math.random() }
+    });
 
     return observable.pipe(
-      map(result => {
-        if (options?.successGrowl)
-          this.growlService.growlSuccess(options.successGrowl);
-        return result;
+      tap(() => {
+          if (options?.successGrowl)
+            this.growlService.growlSuccess(options.successGrowl);
       }),
       catchError(err => {
         if (options?.errorHandler)

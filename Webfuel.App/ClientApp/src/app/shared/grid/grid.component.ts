@@ -161,7 +161,7 @@ export class GridComponent<TItem> implements OnDestroy, AfterViewInit {
       p.grid = this;
     });
 
-    if (this.dataSource) {
+    if (this.dataSource && this.dataSource.changed) {
       this.dataSource.changed.pipe(
         debounceTime(200),
       )
