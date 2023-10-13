@@ -30,7 +30,7 @@ export class ResearchMethodologyComponent {
       },
       successCallback: (command) => {
         this.researchMethodologyApi.createResearchMethodology(command).subscribe((result) => {
-          this.staticDataSource.changed.emit();
+          this.staticDataSource.changed?.emit();
         });
       }
     });
@@ -44,7 +44,7 @@ export class ResearchMethodologyComponent {
       },
       successCallback: (command) => {
         this.researchMethodologyApi.updateResearchMethodology(command).subscribe((result) => {
-          this.staticDataSource.changed.emit();
+          this.staticDataSource.changed?.emit();
         });
       }
     });
@@ -54,7 +54,7 @@ export class ResearchMethodologyComponent {
     this.dialogService.confirmDelete({
       confirmedCallback: () => {
         this.researchMethodologyApi.deleteResearchMethodology({ id: item.id }).subscribe((result) => {
-          this.staticDataSource.changed.emit();
+          this.staticDataSource.changed?.emit();
         });
       }
     })
@@ -62,7 +62,7 @@ export class ResearchMethodologyComponent {
 
   sort(items: ResearchMethodology[]) {
     this.researchMethodologyApi.sortResearchMethodology({ ids: _.map(items, p => p.id) }).subscribe((result) => {
-      this.staticDataSource.changed.emit();
+      this.staticDataSource.changed?.emit();
     })
   }
 }

@@ -30,7 +30,7 @@ export class GenderComponent {
       },
       successCallback: (command) => {
         this.genderApi.createGender(command).subscribe((result) => {
-          this.staticDataSource.changed.emit();
+          this.staticDataSource.changed?.emit();
         });
       }
     });
@@ -44,7 +44,7 @@ export class GenderComponent {
       },
       successCallback: (command) => {
         this.genderApi.updateGender(command).subscribe((result) => {
-          this.staticDataSource.changed.emit();
+          this.staticDataSource.changed?.emit();
         });
       }
     });
@@ -54,7 +54,7 @@ export class GenderComponent {
     this.dialogService.confirmDelete({
       confirmedCallback: () => {
         this.genderApi.deleteGender({ id: item.id }).subscribe((result) => {
-          this.staticDataSource.changed.emit();
+          this.staticDataSource.changed?.emit();
         });
       }
     })
@@ -62,7 +62,7 @@ export class GenderComponent {
 
   sort(items: Gender[]) {
     this.genderApi.sortGender({ ids: _.map(items, p => p.id) }).subscribe((result) => {
-      this.staticDataSource.changed.emit();
+      this.staticDataSource.changed?.emit();
     })
   }
 }

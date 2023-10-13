@@ -21,7 +21,7 @@ namespace Webfuel.Tools.Datafuel
 
             using (sb.OpenBrace($"namespace {entity.Namespace}"))
             {
-                sb.WriteLine("[TypefuelStatic]");
+                sb.WriteLine("[ApiStatic]");
                 using (sb.OpenBrace($"public static class {entity.Name}Static"))
                 {
                     if (entity.Data != null)

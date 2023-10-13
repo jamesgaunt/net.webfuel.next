@@ -26,11 +26,26 @@ namespace Webfuel.Domain
                     case nameof(User.Email):
                         result.Add(new SqlParameter(nameof(User.Email), entity.Email));
                         break;
+                    case nameof(User.Developer):
+                        result.Add(new SqlParameter(nameof(User.Developer), entity.Developer));
+                        break;
                     case nameof(User.FirstName):
                         result.Add(new SqlParameter(nameof(User.FirstName), entity.FirstName));
                         break;
                     case nameof(User.LastName):
                         result.Add(new SqlParameter(nameof(User.LastName), entity.LastName));
+                        break;
+                    case nameof(User.Phone):
+                        result.Add(new SqlParameter(nameof(User.Phone), entity.Phone));
+                        break;
+                    case nameof(User.Hidden):
+                        result.Add(new SqlParameter(nameof(User.Hidden), entity.Hidden));
+                        break;
+                    case nameof(User.Disabled):
+                        result.Add(new SqlParameter(nameof(User.Disabled), entity.Disabled));
+                        break;
+                    case nameof(User.LastLoginAt):
+                        result.Add(new SqlParameter(nameof(User.LastLoginAt), entity.LastLoginAt ?? (object?)DBNull.Value));
                         break;
                     case nameof(User.PasswordHash):
                         result.Add(new SqlParameter(nameof(User.PasswordHash), entity.PasswordHash));
@@ -47,14 +62,11 @@ namespace Webfuel.Domain
                     case nameof(User.PasswordResetValidUntil):
                         result.Add(new SqlParameter(nameof(User.PasswordResetValidUntil), entity.PasswordResetValidUntil));
                         break;
-                    case nameof(User.Developer):
-                        result.Add(new SqlParameter(nameof(User.Developer), entity.Developer));
-                        break;
-                    case nameof(User.Birthday):
-                        result.Add(new SqlParameter(nameof(User.Birthday), entity.Birthday));
-                        break;
                     case nameof(User.CreatedAt):
                         result.Add(new SqlParameter(nameof(User.CreatedAt), entity.CreatedAt));
+                        break;
+                    case nameof(User.UpdatedAt):
+                        result.Add(new SqlParameter(nameof(User.UpdatedAt), entity.UpdatedAt));
                         break;
                     case nameof(User.UserGroupId):
                         result.Add(new SqlParameter(nameof(User.UserGroupId), entity.UserGroupId));
@@ -87,16 +99,20 @@ namespace Webfuel.Domain
             {
                 yield return "Id";
                 yield return "Email";
+                yield return "Developer";
                 yield return "FirstName";
                 yield return "LastName";
+                yield return "Phone";
+                yield return "Hidden";
+                yield return "Disabled";
+                yield return "LastLoginAt";
                 yield return "PasswordHash";
                 yield return "PasswordSalt";
                 yield return "PasswordResetAt";
                 yield return "PasswordResetToken";
                 yield return "PasswordResetValidUntil";
-                yield return "Developer";
-                yield return "Birthday";
                 yield return "CreatedAt";
+                yield return "UpdatedAt";
                 yield return "UserGroupId";
             }
         }
@@ -107,16 +123,20 @@ namespace Webfuel.Domain
             {
                 yield return "Id";
                 yield return "Email";
+                yield return "Developer";
                 yield return "FirstName";
                 yield return "LastName";
+                yield return "Phone";
+                yield return "Hidden";
+                yield return "Disabled";
+                yield return "LastLoginAt";
                 yield return "PasswordHash";
                 yield return "PasswordSalt";
                 yield return "PasswordResetAt";
                 yield return "PasswordResetToken";
                 yield return "PasswordResetValidUntil";
-                yield return "Developer";
-                yield return "Birthday";
                 yield return "CreatedAt";
+                yield return "UpdatedAt";
                 yield return "UserGroupId";
             }
         }
@@ -126,16 +146,20 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Email";
+                yield return "Developer";
                 yield return "FirstName";
                 yield return "LastName";
+                yield return "Phone";
+                yield return "Hidden";
+                yield return "Disabled";
+                yield return "LastLoginAt";
                 yield return "PasswordHash";
                 yield return "PasswordSalt";
                 yield return "PasswordResetAt";
                 yield return "PasswordResetToken";
                 yield return "PasswordResetValidUntil";
-                yield return "Developer";
-                yield return "Birthday";
                 yield return "CreatedAt";
+                yield return "UpdatedAt";
                 yield return "UserGroupId";
             }
         }
@@ -150,6 +174,8 @@ namespace Webfuel.Domain
             entity.FirstName = entity.FirstName.Trim();
             entity.LastName = entity.LastName ?? String.Empty;
             entity.LastName = entity.LastName.Trim();
+            entity.Phone = entity.Phone ?? String.Empty;
+            entity.Phone = entity.Phone.Trim();
             entity.PasswordHash = entity.PasswordHash ?? String.Empty;
             entity.PasswordHash = entity.PasswordHash.Trim();
             entity.PasswordSalt = entity.PasswordSalt ?? String.Empty;
@@ -162,6 +188,7 @@ namespace Webfuel.Domain
         public const int Email_MaxLength = 64;
         public const int FirstName_MaxLength = 64;
         public const int LastName_MaxLength = 64;
+        public const int Phone_MaxLength = 64;
         public const int PasswordHash_MaxLength = 256;
         public const int PasswordSalt_MaxLength = 256;
         
@@ -186,6 +213,13 @@ namespace Webfuel.Domain
                 .MaximumLength(LastName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
+        public static void Phone_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(Phone_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
         public static void PasswordHash_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
@@ -207,6 +241,7 @@ namespace Webfuel.Domain
                 RuleFor(x => x.Email).Use(Email_ValidationRules);
                 RuleFor(x => x.FirstName).Use(FirstName_ValidationRules);
                 RuleFor(x => x.LastName).Use(LastName_ValidationRules);
+                RuleFor(x => x.Phone).Use(Phone_ValidationRules);
                 RuleFor(x => x.PasswordHash).Use(PasswordHash_ValidationRules);
                 RuleFor(x => x.PasswordSalt).Use(PasswordSalt_ValidationRules);
             }

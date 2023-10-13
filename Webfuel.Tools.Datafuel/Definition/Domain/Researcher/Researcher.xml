@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="Researcher">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Email" Type="meta:email" />
+    <Index Unique="true">
+      <Member Name="Email" />
+    </Index>
+  </Entity>
+</Schema>

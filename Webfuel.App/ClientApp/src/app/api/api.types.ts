@@ -153,14 +153,41 @@ export interface Query {
     search?: string;
 }
 
+export interface Researcher {
+    id: string;
+    email: string;
+}
+
+export interface CreateResearcher {
+    email: string;
+}
+
+export interface UpdateResearcher {
+    id: string;
+    email: string;
+}
+
+export interface QueryResearcher extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
 export interface User {
     id: string;
     email: string;
+    developer: boolean;
     firstName: string;
     lastName: string;
-    developer: boolean;
-    birthday: string;
+    phone: string;
+    hidden: boolean;
+    disabled: boolean;
+    lastLoginAt: string | null | null;
     createdAt: string;
+    updatedAt: string;
     userGroupId: string;
 }
 

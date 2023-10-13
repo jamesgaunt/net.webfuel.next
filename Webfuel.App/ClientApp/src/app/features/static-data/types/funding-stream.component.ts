@@ -30,7 +30,7 @@ export class FundingStreamComponent {
       },
       successCallback: (command) => {
         this.fundingStreamApi.createFundingStream(command).subscribe((result) => {
-          this.staticDataSource.changed.emit();
+          this.staticDataSource.changed?.emit();
         });
       }
     });
@@ -44,7 +44,7 @@ export class FundingStreamComponent {
       },
       successCallback: (command) => {
         this.fundingStreamApi.updateFundingStream(command).subscribe((result) => {
-          this.staticDataSource.changed.emit();
+          this.staticDataSource.changed?.emit();
         });
       }
     });
@@ -54,7 +54,7 @@ export class FundingStreamComponent {
     this.dialogService.confirmDelete({
       confirmedCallback: () => {
         this.fundingStreamApi.deleteFundingStream({ id: item.id }).subscribe((result) => {
-          this.staticDataSource.changed.emit();
+          this.staticDataSource.changed?.emit();
         });
       }
     })
@@ -62,7 +62,7 @@ export class FundingStreamComponent {
 
   sort(items: FundingStream[]) {
     this.fundingStreamApi.sortFundingStream({ ids: _.map(items, p => p.id) }).subscribe((result) => {
-      this.staticDataSource.changed.emit();
+      this.staticDataSource.changed?.emit();
     })
   }
 }

@@ -30,7 +30,7 @@ export class FundingBodyComponent {
       },
       successCallback: (command) => {
         this.fundingBodyApi.createFundingBody(command).subscribe((result) => {
-          this.staticDataSource.changed.emit();
+          this.staticDataSource.changed?.emit();
         });
       }
     });
@@ -44,7 +44,7 @@ export class FundingBodyComponent {
       },
       successCallback: (command) => {
         this.fundingBodyApi.updateFundingBody(command).subscribe((result) => {
-          this.staticDataSource.changed.emit();
+          this.staticDataSource.changed?.emit();
         });
       }
     });
@@ -54,7 +54,7 @@ export class FundingBodyComponent {
     this.dialogService.confirmDelete({
       confirmedCallback: () => {
         this.fundingBodyApi.deleteFundingBody({ id: item.id }).subscribe((result) => {
-          this.staticDataSource.changed.emit();
+          this.staticDataSource.changed?.emit();
         });
       }
     })
@@ -62,7 +62,7 @@ export class FundingBodyComponent {
 
   sort(items: FundingBody[]) {
     this.fundingBodyApi.sortFundingBody({ ids: _.map(items, p => p.id) }).subscribe((result) => {
-      this.staticDataSource.changed.emit();
+      this.staticDataSource.changed?.emit();
     })
   }
 }

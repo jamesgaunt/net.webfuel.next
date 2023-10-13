@@ -24,7 +24,7 @@ namespace Webfuel.Tools.Typefuel
             sb.WriteLine("import { Observable } from 'rxjs';");
             sb.WriteLine("import { ApiService, ApiOptions } from '../core/api.service';");
             sb.WriteLine("import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';");
-            sb.WriteLine("import { IDataSource } from '../shared/data-source/data-source';");
+            sb.WriteLine("import { IDataSource } from 'shared/common/data-source';");
 
             var complexTypes = EnumerateTypes(controller);
             if (complexTypes.Count > 0)

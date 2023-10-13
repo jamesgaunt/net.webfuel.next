@@ -21,7 +21,7 @@ export class UserListComponent {
 
   add() {
     this.dialogService.open(UserCreateDialogComponent, {
-      callback: () => this.userApi.userDataSource.changed.emit()
+      callback: () => this.userApi.userDataSource.changed?.emit()
     });
   }
 
@@ -34,7 +34,7 @@ export class UserListComponent {
       title: item.email,
       confirmedCallback: () => {
         this.userApi.deleteUser({ id: item.id }, { successGrowl: "User Deleted" }).subscribe((result) => {
-          this.userApi.userDataSource.changed.emit();
+          this.userApi.userDataSource.changed?.emit();
         })
       }
     });

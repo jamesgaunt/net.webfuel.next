@@ -13,7 +13,11 @@
 
   <ItemGroup>
     <Folder Include="Application\" />
-    <Folder Include="Researcher\" />
+    <Folder Include="Project\ProjectFile\" />
+    <Folder Include="Project\ProjectDiagnostic\" />
+    <Folder Include="Project\ProjectActivity\" />
+    <Folder Include="Project\ProjectSupport\" />
+    <Folder Include="Researcher\Researcher\Services\" />
   </ItemGroup>
 
 </Project>

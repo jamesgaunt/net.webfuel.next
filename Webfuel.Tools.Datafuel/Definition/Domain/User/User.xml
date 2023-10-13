@@ -4,17 +4,26 @@
   <Entity Name="User">
     <Key Name="Id" Type="guid" />
     <Property Name="Email" Type="meta:email" />
+    <Reference Name="UserGroupId" Type="UserGroup" />
+    <Property Name="Developer" Type="boolean" />
+
     <Property Name="FirstName" Type="meta:name" />
     <Property Name="LastName" Type="meta:name" />
-    <Reference Name="UserGroupId" Type="UserGroup" />
+    <Property Name="Phone" Type="meta:name" />
+
+    <Property Name="Hidden" Type="boolean" />
+    <Property Name="Disabled" Type="boolean" />
+    <Property Name="LastLoginAt" Type="DateTime?" />
+    
     <Property Name="PasswordHash" Type="string[256]" Tags="JsonIgnore" />
     <Property Name="PasswordSalt" Type="string[256]" Tags="JsonIgnore" />
     <Property Name="PasswordResetAt" Type="DateTime" Tags="JsonIgnore" />
     <Property Name="PasswordResetToken" Type="guid" Tags="JsonIgnore" />
     <Property Name="PasswordResetValidUntil" Type="DateTime" Tags="JsonIgnore" />
-    <Property Name="Developer" Type="boolean" />
-    <Property Name="Birthday" Type="Date" />
+    
     <Property Name="CreatedAt" Type="DateTime" />
+    <Property Name="UpdatedAt" Type="DateTime" />
+    
     <Index Unique="true">
       <Member Name="Email" />
     </Index>

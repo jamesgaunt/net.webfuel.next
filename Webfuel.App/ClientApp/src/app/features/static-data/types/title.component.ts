@@ -30,7 +30,7 @@ export class TitleComponent {
       },
       successCallback: (command) => {
         this.titleApi.createTitle(command).subscribe((result) => {
-          this.staticDataSource.changed.emit();
+          this.staticDataSource.changed?.emit();
         });
       }
     });
@@ -44,7 +44,7 @@ export class TitleComponent {
       },
       successCallback: (command) => {
         this.titleApi.updateTitle(command).subscribe((result) => {
-          this.staticDataSource.changed.emit();
+          this.staticDataSource.changed?.emit();
         });
       }
     });
@@ -54,7 +54,7 @@ export class TitleComponent {
     this.dialogService.confirmDelete({
       confirmedCallback: () => {
         this.titleApi.deleteTitle({ id: item.id }).subscribe((result) => {
-          this.staticDataSource.changed.emit();
+          this.staticDataSource.changed?.emit();
         });
       }
     })
@@ -62,7 +62,7 @@ export class TitleComponent {
 
   sort(items: Title[]) {
     this.titleApi.sortTitle({ ids: _.map(items, p => p.id) }).subscribe((result) => {
-      this.staticDataSource.changed.emit();
+      this.staticDataSource.changed?.emit();
     })
   }
 }

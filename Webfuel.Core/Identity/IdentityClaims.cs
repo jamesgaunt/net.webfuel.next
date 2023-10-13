@@ -9,6 +9,8 @@ namespace Webfuel
 
         public bool CanEditUsers { get; set; } = true;
 
+        public bool CanEditResearchers { get; set; } = true;
+
         public bool CanEditStaticData { get; set; } = true;
     }
 }

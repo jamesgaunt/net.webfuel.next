@@ -3,15 +3,19 @@
 
 W0
 
-> CSS (style + responsiveness) + rework dropdown logic + subscription disposal
+> CSS style/structure + rework dropdown logic + subscription disposal
 
-> Deploy to Azure / Validation / Errors / Login / Logout / Redirection
+> Deploy to Azure / Tenants / Connection Strings
+
+> Validation / Errors 
+
+> Login / Logout / Redirection
 
 > Researcher Scaffold / Project Support Scaffold / Support Request Scaffold / Project Activity Scaffold
 
-> Project Initialiser / Project Activity
-
 > External Tools: Scribble / Excel etc
+
+> ApiStatic vs StaticData - i.e. how to use ApiStatic more effectively
 
 W1
 
@@ -21,13 +25,26 @@ W1
 
 > Controls / Inputs Review
 
-> Responsiveness
+> Responsiveness / Structural CSS
+
+> DropDownBase account for Hidden options 
 
 W2
 
 > Secondary Domain Editors
 
 > Support Request Form (angular -> iframe)
+
+> Long Running Processes (e.g. Reporting/Exporting)
+
+> Chrome Navigation / Functionality Improvements
+
+> Heuristic Search (VM based)
+
+-----
+
+> Mailing List (email addresses)
+
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 

@@ -22,7 +22,7 @@ export class ProjectListComponent {
 
   add() {
     this.dialogService.open(ProjectCreateDialogComponent, {
-      callback: () => this.projectApi.projectDataSource.changed.emit()
+      callback: () => this.projectApi.projectDataSource.changed?.emit()
     });
   }
 
@@ -34,7 +34,7 @@ export class ProjectListComponent {
     this.dialogService.confirmDelete({
       confirmedCallback: () => {
         this.projectApi.deleteProject({ id: item.id }, { successGrowl: "Project Deleted" }).subscribe((result) => {
-          this.projectApi.projectDataSource.changed.emit()
+          this.projectApi.projectDataSource.changed?.emit()
         })
       }
     });

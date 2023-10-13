@@ -12,5 +12,13 @@
     <Index Unique="true">
       <Member Name="Code" />
     </Index>
+    <Data>
+      <Row Id="ba7af78e-4c40-4d42-a436-30bcdb59aa5e" Name="Mr" Code="Mr" />
+      <Row Id="7a9b4dc0-57ff-48b8-973f-a45bae43c543" Name="Mrs" Code="Mrs" />
+      <Row Id="1ccc5144-3c11-4471-9c4c-3ebed72ee21b" Name="Miss" Code="Miss" />
+      <Row Id="f2f0e4c8-88bb-4989-aff2-bea81f8923a5" Name="Ms" Code="Ms" />
+      <Row Id="25d07520-ad7d-41b1-97e8-bd5fb569bcc2" Name="Prof" Code="Prof" />
+      <Row Id="06c6d786-f1cf-4fbe-9d12-d2a37f365353" Name="Dr" Code="Dr" />
+    </Data>
   </Entity>
 </Schema>
