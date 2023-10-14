@@ -4,7 +4,7 @@
 </ul>
 <div class="container">
   <h1 class="title">User Groups</h1>
-  <grid [dataSource]="userGroupApi.userGroupDataSource" [search]="true">
+  <grid [dataSource]="userGroupApi" [search]="true">
     <grid-column name="name" />
     <grid-action-column (add)="add()" (edit)="edit($event)" (delete)="delete($event)" />
   </grid>

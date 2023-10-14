@@ -5,6 +5,7 @@ using Webfuel.Domain.StaticData;
 namespace Webfuel.App
 {
     [ApiService]
+    [ApiDataSource]
     public static class FundingBodyApi
     {
         public static void RegisterEndpoints(IEndpointRouteBuilder app)
@@ -12,45 +13,45 @@ namespace Webfuel.App
             
             // Commands
             
-            app.MapPost("api/funding-body", CreateFundingBody)
+            app.MapPost("api/funding-body", Create)
                 .RequireClaim(c => c.CanEditStaticData);
             
-            app.MapPut("api/funding-body", UpdateFundingBody)
+            app.MapPut("api/funding-body", Update)
                 .RequireClaim(c => c.CanEditStaticData);
             
-            app.MapPut("api/funding-body/sort", SortFundingBody)
+            app.MapPut("api/funding-body/sort", Sort)
                 .RequireClaim(c => c.CanEditStaticData);
             
-            app.MapDelete("api/funding-body/{id:guid}", DeleteFundingBody)
+            app.MapDelete("api/funding-body/{id:guid}", Delete)
                 .RequireClaim(c => c.CanEditStaticData);
             
             // Querys
             
-            app.MapPost("api/funding-body/query", QueryFundingBody)
+            app.MapPost("api/funding-body/query", Query)
                 .RequireIdentity();
         }
         
-        public static Task<FundingBody> CreateFundingBody([FromBody] CreateFundingBody command, IMediator mediator)
+        public static Task<FundingBody> Create([FromBody] CreateFundingBody command, IMediator mediator)
         {
             return mediator.Send(command);
         }
         
-        public static Task<FundingBody> UpdateFundingBody([FromBody] UpdateFundingBody command, IMediator mediator)
+        public static Task<FundingBody> Update([FromBody] UpdateFundingBody command, IMediator mediator)
         {
             return mediator.Send(command);
         }
         
-        public static Task SortFundingBody([FromBody] SortFundingBody command, IMediator mediator)
+        public static Task Sort([FromBody] SortFundingBody command, IMediator mediator)
         {
             return mediator.Send(command);
         }
         
-        public static Task DeleteFundingBody(Guid id, IMediator mediator)
+        public static Task Delete(Guid id, IMediator mediator)
         {
             return mediator.Send(new DeleteFundingBody { Id = id });
         }
         
-        public static Task<QueryResult<FundingBody>> QueryFundingBody([FromBody] QueryFundingBody command, IMediator mediator)
+        public static Task<QueryResult<FundingBody>> Query([FromBody] QueryFundingBody command, IMediator mediator)
         {
             return mediator.Send(command);
         }

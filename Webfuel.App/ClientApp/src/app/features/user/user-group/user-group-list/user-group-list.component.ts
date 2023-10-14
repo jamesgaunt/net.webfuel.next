@@ -19,7 +19,6 @@ export class UserGroupListComponent {
 
   add() {
     this.dialogService.open(UserGroupCreateDialogComponent, {
-      callback: () => this.userGroupApi.userGroupDataSource.changed?.emit()
     });
   }
 
@@ -31,8 +30,7 @@ export class UserGroupListComponent {
     this.dialogService.confirmDelete({
       title: item.name,
       confirmedCallback: () => {
-        this.userGroupApi.deleteUserGroup({ id: item.id }, { successGrowl: "User Group Deleted" }).subscribe((result) => {
-          this.userGroupApi.userGroupDataSource.changed?.emit();
+        this.userGroupApi.delete({ id: item.id }, { successGrowl: "User Group Deleted" }).subscribe((result) => {
         })
       }
     });

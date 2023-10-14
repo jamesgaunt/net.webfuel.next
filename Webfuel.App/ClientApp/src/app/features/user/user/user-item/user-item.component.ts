@@ -48,7 +48,7 @@ export class UserItemComponent implements OnInit {
     if (!this.form.valid)
       return;
 
-    this.userApi.updateUser(this.form.getRawValue(), { successGrowl: "User Updated" }).subscribe((result) => {
+    this.userApi.update(this.form.getRawValue(), { successGrowl: "User Updated" }).subscribe((result) => {
       this.reset(result);
       this.router.navigate(['user/user-list']);
     });

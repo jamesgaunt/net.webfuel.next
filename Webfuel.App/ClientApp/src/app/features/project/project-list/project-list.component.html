@@ -4,7 +4,7 @@
 </ul>
 <div class="container">
   <h1 class="title">Projects</h1>
-  <grid [dataSource]="projectApi.projectDataSource" [search]="true">
+  <grid [dataSource]="projectApi" [search]="true">
     <grid-column name="title" />
     <grid-reference-column [dataSource]="staticDataService.fundingBodyDataSource" name="fundingBodyId" />
     <grid-action-column (add)="add()" (edit)="edit($event)" (delete)="delete($event)" />

@@ -29,7 +29,7 @@ export class UserCreateDialogComponent {
     if (this.formService.checkForErrors(this.form))
       return;
 
-    this.userApi.createUser(this.form.getRawValue(), { successGrowl: "User Created" }).subscribe((result) => {
+    this.userApi.create(this.form.getRawValue(), { successGrowl: "User Created" }).subscribe((result) => {
       this.dialogRef.close();
     });
   }

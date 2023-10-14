@@ -41,7 +41,7 @@ export class UserGroupItemComponent implements OnInit {
     if (!this.form.valid)
       return;
 
-    this.userGroupApi.updateUserGroup(this.form.getRawValue(), { successGrowl: "User Group Updated" }).subscribe((result) => {
+    this.userGroupApi.update(this.form.getRawValue(), { successGrowl: "User Group Updated" }).subscribe((result) => {
       this.reset(result);
       this.router.navigate(['user/user-group-list']);
     });

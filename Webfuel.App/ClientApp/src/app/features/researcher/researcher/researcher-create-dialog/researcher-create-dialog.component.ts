@@ -26,7 +26,7 @@ export class ResearcherCreateDialogComponent {
     if (this.formService.checkForErrors(this.form))
       return;
 
-    this.researcherApi.createResearcher(this.form.getRawValue(), { successGrowl: "Researcher Created" }).subscribe((result) => {
+    this.researcherApi.create(this.form.getRawValue(), { successGrowl: "Researcher Created" }).subscribe((result) => {
       this.dialogRef.close();
     });
   }

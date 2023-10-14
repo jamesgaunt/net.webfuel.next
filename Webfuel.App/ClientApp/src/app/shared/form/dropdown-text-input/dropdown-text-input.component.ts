@@ -19,7 +19,8 @@ import { DropDownBase } from '../../common/dropdown-base';
     }
   ]
 })
-export class DropDownTextInputComponent<TItem> extends DropDownBase<TItem> implements ControlValueAccessor, OnInit {
+export class DropDownTextInputComponent<TItem>
+  extends DropDownBase<TItem> implements ControlValueAccessor, OnInit {
 
   formControl: FormControl = new FormControl<string>('');
 

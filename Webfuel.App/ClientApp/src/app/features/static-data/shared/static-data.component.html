@@ -1,0 +1,15 @@
+<ul class="breadcrumbs">
+  <li><a routerLink="/home">Home</a></li>
+  <li><a routerLink="/configuration/configuration-menu">Configuration</a></li>
+  <li>{{typeName}}</li>
+</ul>
+<div class="container">
+  <h1 class="title">{{typeName}}</h1>
+  <grid [dataSource]="dataSource" [search]="true" (sort)="sort($event)">
+    <grid-column name="name" />
+    <grid-column name="code" />
+    <grid-boolean-column name="hidden" />
+    <grid-boolean-column name="default" />
+    <grid-action-column (add)="add()" (edit)="edit($event)" (delete)="delete($event)" />
+  </grid>
+</div>

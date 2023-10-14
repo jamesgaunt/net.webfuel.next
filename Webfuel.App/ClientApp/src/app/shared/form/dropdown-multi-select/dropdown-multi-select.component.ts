@@ -5,6 +5,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { noop } from 'rxjs';
 import _ from 'shared/common/underscore';
 import { DropDownBase } from '../../common/dropdown-base';
+import { Query } from '../../../api/api.types';
 
 @Component({
   selector: 'dropdown-multi-select',
@@ -18,7 +19,8 @@ import { DropDownBase } from '../../common/dropdown-base';
     }
   ]
 })
-export class DropDownMultiSelectComponent<TItem> extends DropDownBase<TItem> implements ControlValueAccessor, OnInit {
+export class DropDownMultiSelectComponent<TItem>
+  extends DropDownBase<TItem> implements ControlValueAccessor, OnInit {
 
   destroyRef: DestroyRef = inject(DestroyRef);
 

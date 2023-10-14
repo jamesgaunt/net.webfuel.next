@@ -45,6 +45,7 @@ namespace Webfuel.Tools.Datafuel
         static void ApiService(ScriptBuilder sb, SchemaEntity entity)
         {
             sb.WriteLine($"[ApiService]");
+            sb.WriteLine($"[ApiDataSource]");
             using (sb.OpenBrace($"public static class {entity.Name}Api"))
             {
                 RegisterEndpoints(sb, entity);
@@ -63,21 +64,21 @@ namespace Webfuel.Tools.Datafuel
                 sb.Write(@$"
             // Commands
 
-            app.MapPost(""api/{entity.Name.ToSnakeCase('-')}"", Create{entity.Name})
+            app.MapPost(""api/{entity.Name.ToSnakeCase('-')}"", Create)
                 .RequireClaim(c => c.CanEditStaticData);
 
-            app.MapPut(""api/{entity.Name.ToSnakeCase('-')}"", Update{entity.Name})
+            app.MapPut(""api/{entity.Name.ToSnakeCase('-')}"", Update)
                 .RequireClaim(c => c.CanEditStaticData);
 
-            app.MapPut(""api/{entity.Name.ToSnakeCase('-')}/sort"", Sort{entity.Name})
+            app.MapPut(""api/{entity.Name.ToSnakeCase('-')}/sort"", Sort)
                 .RequireClaim(c => c.CanEditStaticData);
 
-            app.MapDelete(""api/{entity.Name.ToSnakeCase('-')}/{{id:guid}}"", Delete{entity.Name})
+            app.MapDelete(""api/{entity.Name.ToSnakeCase('-')}/{{id:guid}}"", Delete)
                 .RequireClaim(c => c.CanEditStaticData);
 
             // Querys
 
-            app.MapPost(""api/{entity.Name.ToSnakeCase('-')}/query"", Query{entity.Name})
+            app.MapPost(""api/{entity.Name.ToSnakeCase('-')}/query"", Query)
                 .RequireIdentity();
 ");
             }
@@ -86,7 +87,7 @@ namespace Webfuel.Tools.Datafuel
         static void Create(ScriptBuilder sb, SchemaEntity entity)
         {
             sb.Write(@$"
-        public static Task<{entity.Name}> Create{entity.Name}([FromBody] Create{entity.Name} command, IMediator mediator)
+        public static Task<{entity.Name}> Create([FromBody] Create{entity.Name} command, IMediator mediator)
         {{
             return mediator.Send(command);
         }}
@@ -96,7 +97,7 @@ namespace Webfuel.Tools.Datafuel
         static void Update(ScriptBuilder sb, SchemaEntity entity)
         {
             sb.Write(@$"
-        public static Task<{entity.Name}> Update{entity.Name}([FromBody] Update{entity.Name} command, IMediator mediator)
+        public static Task<{entity.Name}> Update([FromBody] Update{entity.Name} command, IMediator mediator)
         {{
             return mediator.Send(command);
         }}
@@ -106,7 +107,7 @@ namespace Webfuel.Tools.Datafuel
         static void Sort(ScriptBuilder sb, SchemaEntity entity)
         {
             sb.Write(@$"
-        public static Task Sort{entity.Name}([FromBody] Sort{entity.Name} command, IMediator mediator)
+        public static Task Sort([FromBody] Sort{entity.Name} command, IMediator mediator)
         {{
             return mediator.Send(command);
         }}
@@ -116,7 +117,7 @@ namespace Webfuel.Tools.Datafuel
         static void Delete(ScriptBuilder sb, SchemaEntity entity)
         {
             sb.Write(@$"
-        public static Task Delete{entity.Name}(Guid id, IMediator mediator)
+        public static Task Delete(Guid id, IMediator mediator)
         {{
             return mediator.Send(new Delete{entity.Name} {{ Id = id }});
         }}
@@ -126,7 +127,7 @@ namespace Webfuel.Tools.Datafuel
         static void Query(ScriptBuilder sb, SchemaEntity entity)
         {
             sb.Write(@$"
-        public static Task<QueryResult<{entity.Name}>> Query{entity.Name}([FromBody] Query{entity.Name} command, IMediator mediator)
+        public static Task<QueryResult<{entity.Name}>> Query([FromBody] Query{entity.Name} command, IMediator mediator)
         {{
             return mediator.Send(command);
         }}

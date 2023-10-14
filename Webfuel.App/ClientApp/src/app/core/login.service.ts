@@ -15,7 +15,7 @@ export class LoginService {
   }
   
   login(request: LoginUser): Observable<boolean> {
-    return this.userApi.loginUser(request).pipe(
+    return this.userApi.login(request).pipe(
       map((result) => {
         this.identityService.token = result.value;
         return true;

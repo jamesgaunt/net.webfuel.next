@@ -5,6 +5,7 @@ using Webfuel.Domain.StaticData;
 namespace Webfuel.App
 {
     [ApiService]
+    [ApiDataSource]
     public static class GenderApi
     {
         public static void RegisterEndpoints(IEndpointRouteBuilder app)
@@ -12,45 +13,45 @@ namespace Webfuel.App
             
             // Commands
             
-            app.MapPost("api/gender", CreateGender)
+            app.MapPost("api/gender", Create)
                 .RequireClaim(c => c.CanEditStaticData);
             
-            app.MapPut("api/gender", UpdateGender)
+            app.MapPut("api/gender", Update)
                 .RequireClaim(c => c.CanEditStaticData);
             
-            app.MapPut("api/gender/sort", SortGender)
+            app.MapPut("api/gender/sort", Sort)
                 .RequireClaim(c => c.CanEditStaticData);
             
-            app.MapDelete("api/gender/{id:guid}", DeleteGender)
+            app.MapDelete("api/gender/{id:guid}", Delete)
                 .RequireClaim(c => c.CanEditStaticData);
             
             // Querys
             
-            app.MapPost("api/gender/query", QueryGender)
+            app.MapPost("api/gender/query", Query)
                 .RequireIdentity();
         }
         
-        public static Task<Gender> CreateGender([FromBody] CreateGender command, IMediator mediator)
+        public static Task<Gender> Create([FromBody] CreateGender command, IMediator mediator)
         {
             return mediator.Send(command);
         }
         
-        public static Task<Gender> UpdateGender([FromBody] UpdateGender command, IMediator mediator)
+        public static Task<Gender> Update([FromBody] UpdateGender command, IMediator mediator)
         {
             return mediator.Send(command);
         }
         
-        public static Task SortGender([FromBody] SortGender command, IMediator mediator)
+        public static Task Sort([FromBody] SortGender command, IMediator mediator)
         {
             return mediator.Send(command);
         }
         
-        public static Task DeleteGender(Guid id, IMediator mediator)
+        public static Task Delete(Guid id, IMediator mediator)
         {
             return mediator.Send(new DeleteGender { Id = id });
         }
         
-        public static Task<QueryResult<Gender>> QueryGender([FromBody] QueryGender command, IMediator mediator)
+        public static Task<QueryResult<Gender>> Query([FromBody] QueryGender command, IMediator mediator)
         {
             return mediator.Send(command);
         }

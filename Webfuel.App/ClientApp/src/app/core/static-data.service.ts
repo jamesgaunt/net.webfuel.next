@@ -19,15 +19,15 @@ export class StaticDataService {
     this._loadStaticData();
   }
 
-  titleDataSource: IDataSource<Title> = { fetch: (query) => this._fetchFactory(query, s => s.title) };
+  titleDataSource: IDataSource<Title> = { query: (query) => this._queryFactory(query, s => s.title) };
 
-  genderDataSource: IDataSource<Gender> = { fetch: (query) => this._fetchFactory(query, s => s.gender) };
+  genderDataSource: IDataSource<Gender> = { query: (query) => this._queryFactory(query, s => s.gender) };
 
-  fundingBodyDataSource: IDataSource<FundingBody> = { fetch: (query) => this._fetchFactory(query, s => s.fundingBody) };
+  fundingBodyDataSource: IDataSource<FundingBody> = { query: (query) => this._queryFactory(query, s => s.fundingBody) };
 
-  fundingStreamDataSource: IDataSource<FundingStream> = { fetch: (query) => this._fetchFactory(query, s => s.fundingStream) };
+  fundingStreamDataSource: IDataSource<FundingStream> = { query: (query) => this._queryFactory(query, s => s.fundingStream) };
 
-  researchMethodologyDataSource: IDataSource<ResearchMethodology> = { fetch: (query) => this._fetchFactory(query, s => s.researchMethodology) };
+  researchMethodologyDataSource: IDataSource<ResearchMethodology> = { query: (query) => this._queryFactory(query, s => s.researchMethodology) };
 
   // Implementation
 
@@ -62,7 +62,7 @@ export class StaticDataService {
     });
   }
 
-  private _fetchFactory<TItem>(query: Query, selector: (staticData: IStaticDataModel) => TItem[]) {
+  private _queryFactory<TItem>(query: Query, selector: (staticData: IStaticDataModel) => TItem[]) {
 
     if (this._staticData.value === null) {
       this._loadStaticData();

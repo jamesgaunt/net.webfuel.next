@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Azure;
+using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,54 +12,76 @@ namespace Webfuel.Tools.Typefuel
 {
     public static class AngularServiceGenerator
     {
-        public static void GenerateService(ApiService controller)
+        public static void GenerateService(ApiService service)
         {
-            File.WriteAllText(Settings.ApiRoot + $@"\{ServiceFilename(controller)}.ts", Controller(controller));
+            File.WriteAllText(Settings.ApiRoot + $@"\{ServiceFilename(service)}.ts", Controller(service));
         }
 
-        static string Controller(ApiService controller)
+        static string Controller(ApiService service)
         {
             var sb = new ScriptBuilder();
 
             sb.WriteLine("import { EventEmitter, Injectable, inject } from '@angular/core';");
-            sb.WriteLine("import { Observable } from 'rxjs';");
+            sb.WriteLine("import { Observable, tap } from 'rxjs';");
             sb.WriteLine("import { ApiService, ApiOptions } from '../core/api.service';");
             sb.WriteLine("import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';");
             sb.WriteLine("import { IDataSource } from 'shared/common/data-source';");
 
-            var complexTypes = EnumerateTypes(controller);
+            var complexTypes = EnumerateTypes(service);
             if (complexTypes.Count > 0)
                 sb.WriteLine($"import {{ {String.Join(", ", complexTypes.Select(p => AngularTypesGenerator.TypeName(p)))} }} from './api.types';");
 
             sb.WriteLine();
             sb.WriteLine("@Injectable()");
+            sb.Write($"export class {service.Name}Api");
 
-            using (sb.OpenBrace("export class " + controller.Name + "Api"))
+            if (service.DataSource)
+            {
+                sb.Write($" implements IDataSource<{service.Name}, Query{service.Name}, Create{service.Name}, Update{service.Name}>");
+            }
+
+            using (sb.OpenBrace(""))
             {
                 sb.WriteLine("constructor(private apiService: ApiService) { }");
-                foreach (var action in controller.Methods)
+                foreach (var action in service.Methods)
                     Action(sb, action);
 
-                Resolvers(sb, controller);
-                DataSources(sb, controller);
+                if (service.DataSource)
+                    sb.WriteLine("\nchanged = new EventEmitter<any>();");
+
+                Resolvers(sb, service);
             }
 
             return sb.ToString().FormatScript();
         }
 
-        static void Action(ScriptBuilder sb, ApiMethod action)
+        static void Action(ScriptBuilder sb, ApiMethod method)
         {
             sb.WriteLine();
-            sb.WriteLine($"public " + action.Name.ToCamelCase() + $" {AngularMethodGenerator.Signature(action)} {{");
+            sb.WriteLine($"public " + method.Name.ToCamelCase() + $" {AngularMethodGenerator.Signature(method)} {{");
             {
-                sb.Write($"return this.apiService.request(\"{action.Verb}\", \"{AngularMethodGenerator.RouteUrl(action)}\"");
+                sb.Write($"return this.apiService.request<");
 
-                if (action.BodyParameter != null)
+                if (method.BodyParameter != null)
+                    AngularTypesGenerator.TypeDescriptor(sb, method.BodyParameter.TypeDescriptor);
+                else
+                    sb.Write($"undefined");
+                sb.Write(", ");
+                AngularTypesGenerator.TypeDescriptor(sb, method.ReturnTypeDescriptor);
+
+                sb.Write($">(\"{method.Verb}\", \"{AngularMethodGenerator.RouteUrl(method)}\"");
+
+                if (method.BodyParameter != null)
                     sb.Write($", body");
                 else
                     sb.Write($", undefined");
 
-                sb.WriteLine(", options);");
+                sb.Write(", options)");
+
+                if (method.Service.DataSource && (method.Name == "Update" || method.Name == "Create" || method.Name == "Delete" || method.Name == "Sort"))
+                    sb.Write(".pipe(tap(_ => this.changed.emit()))");
+
+                sb.WriteLine(";");
             }
             sb.WriteLine("}");
         }
@@ -67,42 +90,17 @@ namespace Webfuel.Tools.Typefuel
         {
             foreach (var method in service.Methods)
             {
-                if (method.Name.StartsWith("Resolve"))
-                {
-                    var resolveType = method.Name.Replace("Resolve", "");
-                    if (resolveType == service.Name)
-                    {
-                        sb.WriteLine();
-                        sb.WriteLine("// Resolvers");
-                        sb.WriteLine();
-                        sb.WriteLine($"static {resolveType.ToCamelCase()}Resolver(param: string): ResolveFn<{resolveType}> {{");
-                        sb.WriteLine($"return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<{resolveType}> => {{");
-                        sb.WriteLine($"return inject({resolveType}Api).resolve{resolveType}({{id: route.paramMap.get(param)! }});");
-                        sb.WriteLine("};");
-                        sb.WriteLine("}");
-                    }
-                }
-            }
-        }
+                if (method.Name != "Resolve")
+                    continue;
 
-        static void DataSources(ScriptBuilder sb, ApiService service)
-        {
-            foreach (var method in service.Methods)
-            {
-                if (method.Name.StartsWith("Query"))
-                {
-                    var dataSourceType = method.Name.Replace("Query", "");
-                    if (dataSourceType == service.Name)
-                    {
-                        sb.WriteLine();
-                        sb.WriteLine("// Data Sources");
-                        sb.WriteLine();
-                        sb.WriteLine($"{dataSourceType.ToCamelCase()}DataSource: IDataSource<{dataSourceType}> = {{");
-                        sb.WriteLine($"fetch: (query) => this.query{dataSourceType}(query),");
-                        sb.WriteLine($"changed: new EventEmitter()");
-                        sb.WriteLine("}");
-                    }
-                }
+                sb.WriteLine();
+                sb.WriteLine("// Resolvers");
+                sb.WriteLine();
+                sb.WriteLine($"static {service.Name.ToCamelCase()}Resolver(param: string): ResolveFn<{service.Name}> {{");
+                sb.WriteLine($"return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<{service.Name}> => {{");
+                sb.WriteLine($"return inject({service.Name}Api).resolve({{id: route.paramMap.get(param)! }});");
+                sb.WriteLine("};");
+                sb.WriteLine("}");
             }
         }
 

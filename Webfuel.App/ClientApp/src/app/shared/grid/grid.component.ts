@@ -12,7 +12,7 @@ import { QueryService } from '../../core/query.service';
   templateUrl: './grid.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GridComponent<TItem> implements OnDestroy, AfterViewInit {
+export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, TUpdate = any> implements OnDestroy, AfterViewInit {
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -21,7 +21,7 @@ export class GridComponent<TItem> implements OnDestroy, AfterViewInit {
   }
 
   @Input()
-  dataSource: IDataSource<TItem> | undefined;
+  dataSource: IDataSource<TItem, TQuery, TCreate, TUpdate> | undefined;
 
   @Input()
   filterForm: FormGroup | null = null;
@@ -42,7 +42,7 @@ export class GridComponent<TItem> implements OnDestroy, AfterViewInit {
     if (!this.dataSource)
       return;
 
-    this.dataSource.fetch(this.buildQuery()).subscribe((response) => {
+    this.dataSource.query(this.buildQuery()).subscribe((response) => {
       if (response.totalCount > 0 && response.items.length === 0 && this.query.skip! > 0) {
         this.query.skip = 0;
         this.fetch();

@@ -5,6 +5,7 @@ using Webfuel.Domain.StaticData;
 namespace Webfuel.App
 {
     [ApiService]
+    [ApiDataSource]
     public static class ResearchMethodologyApi
     {
         public static void RegisterEndpoints(IEndpointRouteBuilder app)
@@ -12,45 +13,45 @@ namespace Webfuel.App
             
             // Commands
             
-            app.MapPost("api/research-methodology", CreateResearchMethodology)
+            app.MapPost("api/research-methodology", Create)
                 .RequireClaim(c => c.CanEditStaticData);
             
-            app.MapPut("api/research-methodology", UpdateResearchMethodology)
+            app.MapPut("api/research-methodology", Update)
                 .RequireClaim(c => c.CanEditStaticData);
             
-            app.MapPut("api/research-methodology/sort", SortResearchMethodology)
+            app.MapPut("api/research-methodology/sort", Sort)
                 .RequireClaim(c => c.CanEditStaticData);
             
-            app.MapDelete("api/research-methodology/{id:guid}", DeleteResearchMethodology)
+            app.MapDelete("api/research-methodology/{id:guid}", Delete)
                 .RequireClaim(c => c.CanEditStaticData);
             
             // Querys
             
-            app.MapPost("api/research-methodology/query", QueryResearchMethodology)
+            app.MapPost("api/research-methodology/query", Query)
                 .RequireIdentity();
         }
         
-        public static Task<ResearchMethodology> CreateResearchMethodology([FromBody] CreateResearchMethodology command, IMediator mediator)
+        public static Task<ResearchMethodology> Create([FromBody] CreateResearchMethodology command, IMediator mediator)
         {
             return mediator.Send(command);
         }
         
-        public static Task<ResearchMethodology> UpdateResearchMethodology([FromBody] UpdateResearchMethodology command, IMediator mediator)
+        public static Task<ResearchMethodology> Update([FromBody] UpdateResearchMethodology command, IMediator mediator)
         {
             return mediator.Send(command);
         }
         
-        public static Task SortResearchMethodology([FromBody] SortResearchMethodology command, IMediator mediator)
+        public static Task Sort([FromBody] SortResearchMethodology command, IMediator mediator)
         {
             return mediator.Send(command);
         }
         
-        public static Task DeleteResearchMethodology(Guid id, IMediator mediator)
+        public static Task Delete(Guid id, IMediator mediator)
         {
             return mediator.Send(new DeleteResearchMethodology { Id = id });
         }
         
-        public static Task<QueryResult<ResearchMethodology>> QueryResearchMethodology([FromBody] QueryResearchMethodology command, IMediator mediator)
+        public static Task<QueryResult<ResearchMethodology>> Query([FromBody] QueryResearchMethodology command, IMediator mediator)
         {
             return mediator.Send(command);
         }

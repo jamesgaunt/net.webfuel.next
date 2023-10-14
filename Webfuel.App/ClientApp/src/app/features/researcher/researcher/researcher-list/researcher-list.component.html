@@ -4,7 +4,7 @@
 </ul>
 <div class="container">
   <h1 class="title">Researchers</h1>
-  <grid [dataSource]="researcherApi.researcherDataSource" [search]="true">
+  <grid [dataSource]="researcherApi" [search]="true">
     <grid-column name="email" />
     <grid-action-column (add)="add()" (edit)="edit($event)" (delete)="delete($event)" />
   </grid>

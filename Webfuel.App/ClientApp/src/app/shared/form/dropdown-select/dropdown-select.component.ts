@@ -18,7 +18,8 @@ import { DropDownBase } from '../../common/dropdown-base';
     }
   ]
 })
-export class DropDownSelectComponent<TItem> extends DropDownBase<TItem> implements ControlValueAccessor, OnInit {
+export class DropDownSelectComponent<TItem>
+  extends DropDownBase<TItem> implements ControlValueAccessor, OnInit {
 
   destroyRef: DestroyRef = inject(DestroyRef);
 

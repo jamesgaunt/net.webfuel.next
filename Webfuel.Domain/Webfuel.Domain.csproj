@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\" />
     <Folder Include="Project\ProjectFile\" />
     <Folder Include="Project\ProjectDiagnostic\" />
     <Folder Include="Project\ProjectActivity\" />

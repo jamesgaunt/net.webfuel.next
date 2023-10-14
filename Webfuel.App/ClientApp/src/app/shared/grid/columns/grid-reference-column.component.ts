@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ContentChildren, TemplateRef, QueryList, Cont
 import { GridColumnComponent } from './grid-column.component';
 import { BehaviorSubject } from 'rxjs';
 import { IDataSource } from 'shared/common/data-source';
+import { Query } from '../../../api/api.types';
 
 @Component({
   selector: 'grid-reference-column',
@@ -11,7 +12,7 @@ import { IDataSource } from 'shared/common/data-source';
 export class GridReferenceColumnComponent<TItem> extends GridColumnComponent<TItem> {
 
   @Input()
-  dataSource: IDataSource<TItem> | undefined;
+  dataSource: IDataSource<TItem, Query, any, any> | undefined;
 
   cache: { [key: string]: BehaviorSubject<TItem | null> } = {};
 
@@ -23,7 +24,7 @@ export class GridReferenceColumnComponent<TItem> extends GridColumnComponent<TIt
       if (!this.dataSource)
         return new BehaviorSubject<TItem | null>(null);
 
-      this.dataSource.fetch({
+      this.dataSource.query({
         skip: 0, take: 1, filters: [
           { field: "id", op: "eq", value: id }
         ]

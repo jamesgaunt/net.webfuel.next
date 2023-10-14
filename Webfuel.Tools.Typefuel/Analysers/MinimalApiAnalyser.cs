@@ -33,7 +33,9 @@ namespace Webfuel.Tools.Typefuel
         public void AnalyseApi(ApiSchema schema, Type serviceType)
         {
             var service = new ApiService(schema);
+
             service.Name = serviceType.Name.Replace("Api", "");
+            service.DataSource = serviceType.GetCustomAttribute<ApiDataSource>() != null;
 
             var routeBuilder = new FakeEndpointRouteBuilder();
 

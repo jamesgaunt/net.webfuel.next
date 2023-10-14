@@ -56,7 +56,7 @@ export class DropDownBase<TItem> {
     // Unique token to represent the current callback
     var currentCallback = this.optionItemsCallback = new Object();
 
-    this.dataSource.fetch({
+    this.dataSource.query({
       skip: flush ? 0 : this.optionItems.length,
       take: 20,
     }).subscribe((response) => {
@@ -112,7 +112,7 @@ export class DropDownBase<TItem> {
     });
 
     // We need to use the api
-    this.dataSource.fetch({
+    this.dataSource.query({
       projection: [],
       sort: [],
       skip: 0,

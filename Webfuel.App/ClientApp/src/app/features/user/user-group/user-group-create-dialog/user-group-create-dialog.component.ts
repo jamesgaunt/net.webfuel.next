@@ -25,7 +25,7 @@ export class UserGroupCreateDialogComponent {
     if (!this.form.valid)
       return;
 
-    this.userGroupApi.createUserGroup(this.form.getRawValue(), { successGrowl: "User Group Created" }).subscribe((result) => {
+    this.userGroupApi.create(this.form.getRawValue(), { successGrowl: "User Group Created" }).subscribe((result) => {
       this.dialogRef.close();
     });
   }

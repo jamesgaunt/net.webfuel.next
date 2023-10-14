@@ -5,6 +5,11 @@
     {
     }
 
+    [AttributeUsage(AttributeTargets.Class)]
+    public class ApiDataSource: Attribute
+    {
+    }
+
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Property | AttributeTargets.Interface)]
     public class ApiIgnoreAttribute : Attribute
     {

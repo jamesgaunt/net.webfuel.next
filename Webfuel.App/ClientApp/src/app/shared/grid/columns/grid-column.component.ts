@@ -41,7 +41,7 @@ export class GridColumnComponent<TItem> {
 
   // Injected Grid Reference
 
-  grid: GridComponent<TItem> | null = null;
+  grid: GridComponent<TItem, any, any, any> | null = null;
 
   // Head Template
 

@@ -42,7 +42,7 @@ export class ResearcherItemComponent implements OnInit {
     if (!this.form.valid)
       return;
 
-    this.researcherApi.updateResearcher(this.form.getRawValue(), { successGrowl: "Researcher Updated" }).subscribe((result) => {
+    this.researcherApi.update(this.form.getRawValue(), { successGrowl: "Researcher Updated" }).subscribe((result) => {
       this.reset(result);
       this.router.navigate(['researcher/researcher-list']);
     });

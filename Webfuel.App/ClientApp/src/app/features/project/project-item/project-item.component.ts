@@ -45,7 +45,7 @@ export class ProjectItemComponent implements OnInit {
     if (!this.form.valid)
       return;
 
-    this.projectApi.updateProject(this.form.getRawValue(), { successGrowl: "Project Updated" }).subscribe((result) => {
+    this.projectApi.update(this.form.getRawValue(), { successGrowl: "Project Updated" }).subscribe((result) => {
       this.reset(result);
       this.router.navigate(['project/project-list']);
     });

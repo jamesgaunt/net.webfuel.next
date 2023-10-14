@@ -25,7 +25,7 @@ export class ProjectCreateDialogComponent {
     if (this.formService.checkForErrors(this.form))
       return;
 
-    this.projectApi.createProject(this.form.getRawValue(), { successGrowl: "Project Created" }).subscribe((result) => {
+    this.projectApi.create(this.form.getRawValue(), { successGrowl: "Project Created" }).subscribe((result) => {
       this.dialogRef.close();
     });
   }

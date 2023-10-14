@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Webfuel
 {
-    public class ReportingContext<TContext> where TContext: class
+    public interface IReportingContext<TContext> where TContext : class
     {
-        public required Guid Id { get; init; }
+        Guid Id { get; }
 
-        public required string Name { get; init; }
+        string Name { get; }
 
-        public required string Description { get; init; }
+        string Description { get; }
 
-        public required IReadOnlyList<ReportingField<TContext>> Fields { get; init; }
+        IEnumerable<ReportingField<TContext>> Fields { get; }
     }
 }

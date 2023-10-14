@@ -27,7 +27,6 @@ import { ResearchMethodologyComponent } from './types/research-methodology.compo
 
     StaticDataCreateDialogComponent,
     StaticDataUpdateDialogComponent,
-
   ]
 })
 export class StaticDataModule { }

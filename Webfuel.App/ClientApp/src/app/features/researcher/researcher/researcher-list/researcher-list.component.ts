@@ -19,7 +19,6 @@ export class ResearcherListComponent {
 
   add() {
     this.dialogService.open(ResearcherCreateDialogComponent, {
-      callback: () => this.researcherApi.researcherDataSource.changed?.emit()
     });
   }
 
@@ -31,8 +30,7 @@ export class ResearcherListComponent {
     this.dialogService.confirmDelete({
       title: item.email,
       confirmedCallback: () => {
-        this.researcherApi.deleteResearcher({ id: item.id }, { successGrowl: "Researcher Deleted" }).subscribe((result) => {
-          this.researcherApi.researcherDataSource.changed?.emit();
+        this.researcherApi.delete({ id: item.id }, { successGrowl: "Researcher Deleted" }).subscribe((result) => {
         })
       }
     });
