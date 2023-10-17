@@ -36,6 +36,7 @@ namespace Webfuel.Tools.Typefuel
 
             service.Name = serviceType.Name.Replace("Api", "");
             service.DataSource = serviceType.GetCustomAttribute<ApiDataSource>() != null;
+            service.StaticData = serviceType.GetCustomAttribute<ApiStaticData>() != null;
 
             var routeBuilder = new FakeEndpointRouteBuilder();
 

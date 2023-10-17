@@ -5,7 +5,7 @@ import { FundingBodyApi } from '../../../api/funding-body.api';
 import { StaticDataComponent } from '../shared/static-data.component';
 
 @Component({
-  selector: 'funding-body',
+  selector: 'funding-body-list',
   templateUrl: '../shared/static-data.component.html'
 })
 export class FundingBodyComponent extends StaticDataComponent<FundingBody, QueryFundingBody, CreateFundingBody, UpdateFundingBody> {

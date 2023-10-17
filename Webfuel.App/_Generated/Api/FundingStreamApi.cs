@@ -6,6 +6,7 @@ namespace Webfuel.App
 {
     [ApiService]
     [ApiDataSource]
+    [ApiStaticData]
     public static class FundingStreamApi
     {
         public static void RegisterEndpoints(IEndpointRouteBuilder app)

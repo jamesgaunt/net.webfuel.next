@@ -49,9 +49,4 @@ export class StaticDataComponent<TItem, TQuery extends Query = Query, TCreate = 
       }
     })
   }
-
-  sort(items: TItem[]) {
-    this.dataSource.sort!({ ids: _.map(items, p => (<any>p).id) }).subscribe((result) => {
-    })
-  }
 }

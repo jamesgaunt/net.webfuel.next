@@ -19,7 +19,7 @@ namespace Webfuel.Domain
             updated.Email = request.Email;
             updated.UserGroupId = request.UserGroupId;
 
-            return await _userRepository.UpdateUser(original: original, updated: updated); ;
+            return await _userRepository.UpdateUser(original: original, updated: updated);
         }
     }
 }

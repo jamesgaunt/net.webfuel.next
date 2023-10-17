@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, EventEmitter, Input, OnDestroy, Output, QueryList } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, DestroyRef, EventEmitter, Input, OnDestroy, Output, QueryList, inject } from '@angular/core';
 import { IDataSource } from '../common/data-source';
 import { GridColumnComponent } from './columns/grid-column.component';
 import { Query } from '../../api/api.types';
@@ -6,13 +6,16 @@ import _ from '../common/underscore'
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, debounceTime, tap } from 'rxjs';
 import { QueryService } from '../../core/query.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'grid',
   templateUrl: './grid.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, TUpdate = any> implements OnDestroy, AfterViewInit {
+export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, TUpdate = any> implements AfterViewInit {
+
+  destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -28,9 +31,6 @@ export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, T
 
   @Input()
   search = false;
-
-  @Output()
-  sort = new EventEmitter<TItem[]>();
 
   // Query
 
@@ -121,7 +121,7 @@ export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, T
 
   // Drag & Drop Sort
 
-  get sortable() { return this.sort.observed; }
+  get sortable() { return this.dataSource && this.dataSource.sort; }
 
   sorting = false;
 
@@ -138,7 +138,7 @@ export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, T
     this.items.splice(currentIndex, 0, item[0]);
 
     // Server Side
-    this.sort.emit(this.items);
+    this.dataSource!.sort!({ ids: _.map(this.items, p => (<any>p).id) }).subscribe();
   }
 
   // Column Sort
@@ -164,6 +164,7 @@ export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, T
     if (this.dataSource && this.dataSource.changed) {
       this.dataSource.changed.pipe(
         debounceTime(200),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(() => this.fetch());
     }
@@ -172,6 +173,7 @@ export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, T
       this.filterForm.valueChanges
         .pipe(
           debounceTime(200),
+          takeUntilDestroyed(this.destroyRef)
         )
         .subscribe(() => this.fetch());
     }
@@ -180,15 +182,13 @@ export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, T
       this.searchForm.valueChanges
         .pipe(
           debounceTime(200),
+          takeUntilDestroyed(this.destroyRef)
         )
         .subscribe(() => this.fetch());
     }
 
     this.fetch();
     this.cd.detectChanges();
-  }
-
-  ngOnDestroy(): void {
   }
 }
 

@@ -9,7 +9,7 @@ namespace Webfuel
 
     public class ReportingField<TContext> where TContext : class
     {
-        public required Guid Id { get; init; }
+        
 
         public required string Name { get; init; }
 

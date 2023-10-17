@@ -5,7 +5,7 @@
 </ul>
 <div class="container">
   <h1 class="title">{{typeName}}</h1>
-  <grid [dataSource]="dataSource" [search]="true" (sort)="sort($event)">
+  <grid [dataSource]="dataSource" [search]="true">
     <grid-column name="name" />
     <grid-column name="code" />
     <grid-boolean-column name="hidden" />

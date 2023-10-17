@@ -46,6 +46,7 @@ namespace Webfuel.Tools.Datafuel
         {
             sb.WriteLine($"[ApiService]");
             sb.WriteLine($"[ApiDataSource]");
+            sb.WriteLine($"[ApiStaticData]");
             using (sb.OpenBrace($"public static class {entity.Name}Api"))
             {
                 RegisterEndpoints(sb, entity);

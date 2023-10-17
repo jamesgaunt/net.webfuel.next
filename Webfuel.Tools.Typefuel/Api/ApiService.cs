@@ -17,6 +17,8 @@ namespace Webfuel.Tools.Typefuel
 
         public bool DataSource { get; set; }
 
+        public bool StaticData { get; set; }
+
         public List<ApiMethod> Methods { get; } = new List<ApiMethod>();
     }
 }

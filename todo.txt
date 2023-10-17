@@ -17,6 +17,8 @@ W0
 
 > ApiStatic vs StaticData - i.e. how to use ApiStatic more effectively
 
+> Additional UI elements, tags, messages, chome menus, 
+
 W1
 
 > Static Data Setup

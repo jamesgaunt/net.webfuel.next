@@ -19,15 +19,15 @@ export class StaticDataService {
     this._loadStaticData();
   }
 
-  titleDataSource: IDataSource<Title> = { query: (query) => this._queryFactory(query, s => s.title) };
+  load<TItem>(query: Query, selector: (staticData: IStaticDataModel) => TItem[]) {
 
-  genderDataSource: IDataSource<Gender> = { query: (query) => this._queryFactory(query, s => s.gender) };
+    if (this._staticData.value === null)
+      this._loadStaticData();
 
-  fundingBodyDataSource: IDataSource<FundingBody> = { query: (query) => this._queryFactory(query, s => s.fundingBody) };
-
-  fundingStreamDataSource: IDataSource<FundingStream> = { query: (query) => this._queryFactory(query, s => s.fundingStream) };
-
-  researchMethodologyDataSource: IDataSource<ResearchMethodology> = { query: (query) => this._queryFactory(query, s => s.researchMethodology) };
+    return this._staticData.pipe(
+      first(p => p !== null), // This is a one-shot subscription
+      switchMap((p) => this.queryService.fetch(query, selector(p!))));
+  }
 
   // Implementation
 
@@ -62,14 +62,4 @@ export class StaticDataService {
     });
   }
 
-  private _queryFactory<TItem>(query: Query, selector: (staticData: IStaticDataModel) => TItem[]) {
-
-    if (this._staticData.value === null) {
-      this._loadStaticData();
-    }
-
-    return this._staticData.pipe(
-      first(p => p !== null),
-      switchMap((p) => this.queryService.fetch(query, selector(p!))));
-  }
 }

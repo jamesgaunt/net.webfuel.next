@@ -5,7 +5,7 @@ import { ResearchMethodologyApi } from '../../../api/research-methodology.api';
 import { StaticDataComponent } from '../shared/static-data.component';
 
 @Component({
-  selector: 'research-methodology',
+  selector: 'research-methodology-list',
   templateUrl: '../shared/static-data.component.html'
 })
 export class ResearchMethodologyComponent extends StaticDataComponent<ResearchMethodology, QueryResearchMethodology, CreateResearchMethodology, UpdateResearchMethodology> {

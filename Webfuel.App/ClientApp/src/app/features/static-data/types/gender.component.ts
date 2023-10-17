@@ -5,7 +5,7 @@ import { GenderApi } from '../../../api/gender.api';
 import { StaticDataComponent } from '../shared/static-data.component';
 
 @Component({
-  selector: 'gender',
+  selector: 'gender-list',
   templateUrl: '../shared/static-data.component.html'
 })
 export class GenderComponent extends StaticDataComponent<Gender, QueryGender, CreateGender, UpdateGender> {

@@ -10,6 +10,11 @@
     {
     }
 
+    [AttributeUsage(AttributeTargets.Class)]
+    public class ApiStaticData : Attribute
+    {
+    }
+
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Property | AttributeTargets.Interface)]
     public class ApiIgnoreAttribute : Attribute
     {

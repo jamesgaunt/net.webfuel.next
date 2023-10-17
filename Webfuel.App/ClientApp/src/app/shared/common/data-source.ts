@@ -4,7 +4,7 @@ import { EventEmitter } from '@angular/core';
 
 export interface IDataSource<TItem, TQuery extends Query = Query, TCreate = any, TUpdate = any> {
 
-  query: (query: Query) => Observable<QueryResult<TItem>>;
+  query: (query: TQuery) => Observable<QueryResult<TItem>>;
 
   create?: (command: TCreate) => Observable<TItem>;
 

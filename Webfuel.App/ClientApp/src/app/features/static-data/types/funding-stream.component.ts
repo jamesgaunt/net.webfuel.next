@@ -5,7 +5,7 @@ import { FundingStreamApi } from '../../../api/funding-stream.api';
 import { StaticDataComponent } from '../shared/static-data.component';
 
 @Component({
-  selector: 'funding-stream',
+  selector: 'funding-stream-list',
   templateUrl: '../shared/static-data.component.html'
 })
 export class FundingStreamComponent extends StaticDataComponent<FundingStream, QueryFundingStream, CreateFundingStream, UpdateFundingStream> {
