@@ -15,11 +15,13 @@ W0
 
 > Additional UI elements, tags, messages, chrome menus, 
 
+> Scaffolding Setup / Static Data Setup
+
+> Field label popup info ??
+
+
+
 W1
-
-> Static Data Setup
-
-> Primary Domain Editors
 
 > Controls / Inputs Review
 

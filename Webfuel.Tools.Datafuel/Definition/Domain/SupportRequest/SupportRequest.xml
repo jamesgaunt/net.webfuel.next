@@ -16,11 +16,10 @@
     <Property Name="ExperienceOfResearchAwards" Type="string[1000]" />
     <Property Name="TeamMembersConsulted" Type="boolean" />
     <Property Name="Resubmission" Type="boolean" />
-
-    <Property Name="Description" Type="string[5000]" />
+    <Property Name="BriefDescription" Type="string[5000]" />
     <Property Name="SupportRequested" Type="string[2000]" />
-
     <Property Name="LeadApplicantNHS" Type="boolean" />
+    <Reference Name="StatusId" Type="SupportRequestStatus" />
     
   </Entity>
 </Schema>
