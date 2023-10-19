@@ -4,13 +4,34 @@
   <Entity Name="FundingStream" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
     <Key Name="Id" Type="guid" />
     <Property Name="Name" Type="meta:name" />
-    <Property Name="Code" Type="meta:name" />
     <Property Name="SortOrder" Type="Int32" />
     <Property Name="Default" Type="boolean" />
     <Property Name="Hidden" Type="boolean" />
-    <Property Name="Hint" Type="meta:name" />
+    <Property Name="FreeText" Type="boolean" />
     <Index Unique="true">
-      <Member Name="Code" />
+      <Member Name="Name" />
     </Index>
+    <Data>
+      <Row Id="9829d13c-19d4-4c85-af0f-53d6c9c5118d" Name="Not Known" Default="true" />
+      <Row Id="f19f0a23-356d-46fc-9177-a590c6ae2f38" Name="NIHR RfPB" />
+      <Row Id="0dd4143b-dd8c-4149-903e-c5abc3987018" Name="NIHR PDG" />
+      <Row Id="b4bc6a8a-0672-4e34-af59-4a93248c5231" Name="NIHR PGfAR" />
+      <Row Id="356a62c9-55dc-4d98-9e02-51cc48cbbc6f" Name="NIHR HTA" />
+      <Row Id="2e5a3005-8039-4dfd-b497-a18ce8b78ec0" Name="NIHR PHR" />
+      <Row Id="6c470572-1258-42d6-8335-4068a0e95f91" Name="NIHR HSDR" />
+      <Row Id="135f9541-2084-4173-89bd-346dfba7c803" Name="NIHR EME" />
+      <Row Id="ff649ca3-3c3f-4382-ae20-7b1eafb23a2d" Name="NIHR i4i" />
+      <Row Id="562f96a1-a30d-4f3e-b009-a241f6247815" Name="NIHR Training Programmes" />
+      <Row Id="39ef7a18-1105-4e08-a611-8b24012c41ba" Name="NIHR Global Health" />
+      <Row Id="a3926e09-ff75-47f5-b979-edb5ba27a2a6" Name="NIHR Joint Funded" />
+      <Row Id="a5c9cc85-00a5-4c67-a3bc-e91e97ccf8c0" Name="NIHR (other)" FreeText="true" />
+      <Row Id="bae6aa89-078e-49a9-bb3c-158f475815cf" Name="DHSC" />
+      <Row Id="4ab624f7-1fc0-4374-b12e-0032b4ee7bae" Name="Wellcome" />
+      <Row Id="d81f3cba-d162-4846-a43b-304c6ac8fb2b" Name="MRC" />
+      <Row Id="54ba19b7-93a4-4327-bdfb-a703ac2cda92" Name="Other Research Councils" />
+      <Row Id="bddc8f95-4433-41db-b76e-ad912886edd2" Name="UKRI" />
+      <Row Id="b4ff8755-05f9-4479-b612-6ee2ad98a758" Name="Charities" />
+      <Row Id="168280b8-acae-42bb-a222-ec59864cd3be" Name="Other" FreeText="true" />
+    </Data>
   </Entity>
 </Schema>

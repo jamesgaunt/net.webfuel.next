@@ -18,10 +18,10 @@ namespace Webfuel.Tools.Typefuel
         {
             var sb = new ScriptBuilder();
 
-            foreach (var @static in schema.Static.Values)
+            foreach (var @static in schema.Enums.Values)
             {
                 if (@static.IsEnum)
-                    AngularStaticGenerator.StaticEnum(sb, @static);
+                    AngularEnumGenerator.StaticEnum(sb, @static);
             }
 
             foreach (var type in schema.TypeContext.TypeMapping.Values)

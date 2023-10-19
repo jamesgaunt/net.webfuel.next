@@ -6,7 +6,13 @@
           <h1>RSS Project Database</h1>
         </div>
         <div class="column is-right">
-          {{ (configuration | async)?.email }}
+          <span (click)="toggleDarkMode()" style="cursor: pointer">
+            <i *ngIf="!darkMode" class="fas fa-house-day"></i>
+            <i *ngIf="darkMode" class="fas fa-house-night"></i>
+          </span>
+          &nbsp;
+
+          <span>{{ (configuration | async)?.email }}</span>
         </div>
       </div>
     </div>

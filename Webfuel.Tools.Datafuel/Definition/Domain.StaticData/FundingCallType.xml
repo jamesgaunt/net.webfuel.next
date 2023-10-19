@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="FundingCallType" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Property Name="Hidden" Type="boolean" />
+    <Property Name="FreeText" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="65b51950-aa98-4d0b-be69-849939ed56be" Name="Researcher Led" />
+      <Row Id="00a578b6-5e4f-4b98-8b80-0d411ca89598" Name="Commissioned Call" />
+    </Data>
+  </Entity>
+</Schema>

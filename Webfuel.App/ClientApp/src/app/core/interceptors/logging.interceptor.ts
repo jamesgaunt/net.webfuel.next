@@ -5,8 +5,7 @@ import { ErrorService } from '../error.service';
 
 @Injectable()
 export class LoggingInterceptor implements HttpInterceptor {
-  constructor(
-    private errorService: ErrorService) {
+  constructor() {
   }
 
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -29,7 +28,6 @@ export class LoggingInterceptor implements HttpInterceptor {
         },
         error: (err: HttpErrorResponse) => {
           console.warn(requestTitle, err.error);
-          this.errorService.interceptError(err.error);
         }
       }));
   }

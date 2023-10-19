@@ -35,7 +35,10 @@ export interface IStaticDataModel {
     fundingBody: Array<FundingBody>;
     fundingStream: Array<FundingStream>;
     gender: Array<Gender>;
+    projectStatus: Array<ProjectStatus>;
     researchMethodology: Array<ResearchMethodology>;
+    submissionStage: Array<SubmissionStage>;
+    suportRequestStatus: Array<SuportRequestStatus>;
     title: Array<Title>;
     loadedAt: string;
 }
@@ -43,61 +46,82 @@ export interface IStaticDataModel {
 export interface FundingBody extends IStaticData {
     id: string;
     name: string;
-    code: string;
     sortOrder: number;
     default: boolean;
     hidden: boolean;
-    hint: string;
+    freeText: boolean;
 }
 
 export interface IStaticData {
     id: string;
     name: string;
-    code: string;
     sortOrder: number;
     hidden: boolean;
     default: boolean;
-    hint: string;
+    freeText: boolean;
 }
 
 export interface FundingStream extends IStaticData {
     id: string;
     name: string;
-    code: string;
     sortOrder: number;
     default: boolean;
     hidden: boolean;
-    hint: string;
+    freeText: boolean;
 }
 
 export interface Gender extends IStaticData {
     id: string;
     name: string;
-    code: string;
     sortOrder: number;
     default: boolean;
     hidden: boolean;
-    hint: string;
+    freeText: boolean;
+}
+
+export interface ProjectStatus extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
 }
 
 export interface ResearchMethodology extends IStaticData {
     id: string;
     name: string;
-    code: string;
     sortOrder: number;
     default: boolean;
     hidden: boolean;
-    hint: string;
+    freeText: boolean;
+}
+
+export interface SubmissionStage extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface SuportRequestStatus extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
 }
 
 export interface Title extends IStaticData {
     id: string;
     name: string;
-    code: string;
     sortOrder: number;
     default: boolean;
     hidden: boolean;
-    hint: string;
+    freeText: boolean;
 }
 
 export interface Project {
@@ -245,17 +269,17 @@ export interface QueryUserGroup extends Query {
 
 export interface CreateFundingBody {
     name: string;
-    code: string;
     hidden: boolean;
     default: boolean;
+    freeText: boolean;
 }
 
 export interface UpdateFundingBody {
     id: string;
     name: string;
-    code: string;
     hidden: boolean;
     default: boolean;
+    freeText: boolean;
 }
 
 export interface SortFundingBody {
@@ -273,17 +297,17 @@ export interface QueryFundingBody extends Query {
 
 export interface CreateFundingStream {
     name: string;
-    code: string;
     hidden: boolean;
     default: boolean;
+    freeText: boolean;
 }
 
 export interface UpdateFundingStream {
     id: string;
     name: string;
-    code: string;
     hidden: boolean;
     default: boolean;
+    freeText: boolean;
 }
 
 export interface SortFundingStream {
@@ -301,17 +325,17 @@ export interface QueryFundingStream extends Query {
 
 export interface CreateGender {
     name: string;
-    code: string;
     hidden: boolean;
     default: boolean;
+    freeText: boolean;
 }
 
 export interface UpdateGender {
     id: string;
     name: string;
-    code: string;
     hidden: boolean;
     default: boolean;
+    freeText: boolean;
 }
 
 export interface SortGender {
@@ -327,19 +351,28 @@ export interface QueryGender extends Query {
     search?: string;
 }
 
+export interface QueryProjectStatus extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
 export interface CreateResearchMethodology {
     name: string;
-    code: string;
     hidden: boolean;
     default: boolean;
+    freeText: boolean;
 }
 
 export interface UpdateResearchMethodology {
     id: string;
     name: string;
-    code: string;
     hidden: boolean;
     default: boolean;
+    freeText: boolean;
 }
 
 export interface SortResearchMethodology {
@@ -355,19 +388,37 @@ export interface QueryResearchMethodology extends Query {
     search?: string;
 }
 
+export interface QuerySubmissionStage extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface QuerySuportRequestStatus extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
 export interface CreateTitle {
     name: string;
-    code: string;
     hidden: boolean;
     default: boolean;
+    freeText: boolean;
 }
 
 export interface UpdateTitle {
     id: string;
     name: string;
-    code: string;
     hidden: boolean;
     default: boolean;
+    freeText: boolean;
 }
 
 export interface SortTitle {

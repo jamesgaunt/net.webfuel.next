@@ -5,14 +5,47 @@
   gap: var(--gap);
 
   &.has-columns-2 {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   &.has-columns-3 {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
   }
 
   > .column-span-2 {
+    grid-column-end: span 2;
+  }
+
+  > .column-span-3 {
+    grid-column-end: span 3;
+  }
+
+  > .column-span-4 {
+    grid-column-end: span 4;
+  }
+}
+
+@media (max-width: $breakpoint-sm - 1) {
+  .grid {
+
+    &.has-columns-1-sm {
+      grid-template-columns: 1fr;
+    }
+
+    &.has-columns-2-sm {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    &.has-columns-3-sm {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    > .column-span-1-sm {
+      grid-column-end: span 1;
+    }
+
+    > .column-span-2-sm {
       grid-column-end: span 2;
+    }
   }
 }

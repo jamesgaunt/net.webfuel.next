@@ -11,6 +11,7 @@ import { FundingStreamComponent } from './types/funding-stream.component';
 import { FundingBodyComponent } from './types/funding-body.component';
 import { GenderComponent } from './types/gender.component';
 import { ResearchMethodologyComponent } from './types/research-methodology.component';
+import { ProjectStatusComponent } from './types/project-status.component';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { ResearchMethodologyComponent } from './types/research-methodology.compo
     FundingBodyComponent,
     GenderComponent,
     ResearchMethodologyComponent,
+    ProjectStatusComponent,
 
     StaticDataCreateDialogComponent,
     StaticDataUpdateDialogComponent,

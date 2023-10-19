@@ -18,8 +18,8 @@ namespace Webfuel.Domain.StaticData
         Task<int> CountFundingBody();
         Task<List<FundingBody>> SelectFundingBody();
         Task<List<FundingBody>> SelectFundingBodyWithPage(int skip, int take);
-        Task<FundingBody?> GetFundingBodyByCode(string code);
-        Task<FundingBody> RequireFundingBodyByCode(string code);
+        Task<FundingBody?> GetFundingBodyByName(string name);
+        Task<FundingBody> RequireFundingBodyByName(string name);
     }
     [Service(typeof(IFundingBodyRepository))]
     internal partial class FundingBodyRepository: IFundingBodyRepository
@@ -93,18 +93,18 @@ namespace Webfuel.Domain.StaticData
             };
             return await _connection.ExecuteReader<FundingBody, FundingBodyMetadata>(sql, parameters);
         }
-        public async Task<FundingBody?> GetFundingBodyByCode(string code)
+        public async Task<FundingBody?> GetFundingBodyByName(string name)
         {
-            var sql = @"SELECT * FROM [FundingBody] WHERE Code = @Code ORDER BY SortOrder ASC";
+            var sql = @"SELECT * FROM [FundingBody] WHERE Name = @Name ORDER BY SortOrder ASC";
             var parameters = new List<SqlParameter>
             {
-                new SqlParameter("@Code", code),
+                new SqlParameter("@Name", name),
             };
             return (await _connection.ExecuteReader<FundingBody, FundingBodyMetadata>(sql, parameters)).SingleOrDefault();
         }
-        public async Task<FundingBody> RequireFundingBodyByCode(string code)
+        public async Task<FundingBody> RequireFundingBodyByName(string name)
         {
-            return await GetFundingBodyByCode(code) ?? throw new InvalidOperationException("The specified FundingBody does not exist");
+            return await GetFundingBodyByName(name) ?? throw new InvalidOperationException("The specified FundingBody does not exist");
         }
     }
 }

@@ -12,14 +12,12 @@ namespace Webfuel.Domain.StaticData
 
         string Name { get; }
 
-        string Code { get; }
-
         int SortOrder { get; }
 
         bool Hidden { get; }
 
         bool Default { get; }
 
-        string Hint { get; }
+        bool FreeText { get; }
     }
 }

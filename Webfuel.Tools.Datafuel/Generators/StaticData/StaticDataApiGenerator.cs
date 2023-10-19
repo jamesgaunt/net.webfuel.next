@@ -50,19 +50,25 @@ namespace Webfuel.Tools.Datafuel
             using (sb.OpenBrace($"public static class {entity.Name}Api"))
             {
                 RegisterEndpoints(sb, entity);
-                Create(sb, entity);
-                Update(sb, entity);
-                Sort(sb, entity);
-                Delete(sb, entity);
+                if (!entity.ReadOnly)
+                {
+                    Create(sb, entity);
+                    Update(sb, entity);
+                    Sort(sb, entity);
+                    Delete(sb, entity);
+                }
                 Query(sb, entity);
             }
         }
 
         static void RegisterEndpoints(ScriptBuilder sb, SchemaEntity entity)
         {
-            using(sb.OpenBrace($"public static void RegisterEndpoints(IEndpointRouteBuilder app)"))
+            using (sb.OpenBrace($"public static void RegisterEndpoints(IEndpointRouteBuilder app)"))
             {
-                sb.Write(@$"
+                if (!entity.ReadOnly)
+                {
+
+                    sb.Write(@$"
             // Commands
 
             app.MapPost(""api/{entity.Name.ToSnakeCase('-')}"", Create)
@@ -76,7 +82,10 @@ namespace Webfuel.Tools.Datafuel
 
             app.MapDelete(""api/{entity.Name.ToSnakeCase('-')}/{{id:guid}}"", Delete)
                 .RequireClaim(c => c.CanEditStaticData);
+            ");
+                }
 
+                sb.Write(@$"
             // Querys
 
             app.MapPost(""api/{entity.Name.ToSnakeCase('-')}/query"", Query)

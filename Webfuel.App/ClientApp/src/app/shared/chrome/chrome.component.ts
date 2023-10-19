@@ -1,18 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NavigationEnd, ResolveEnd, Router } from '@angular/router';
-import { GrowlService } from '../../core/growl.service';
-import { IdentityService } from '../../core/identity.service';
-import { ClientConfiguration, IStaticDataModel } from '../../api/api.types';
-import { ConfigurationService } from '../../core/configuration.service';
+import { DOCUMENT } from '@angular/common';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { ResolveEnd, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { LoginService } from '../../core/login.service';
-import { StaticDataService } from '../../core/static-data.service';
+import { ClientConfiguration } from '../../api/api.types';
+import { ConfigurationService } from '../../core/configuration.service';
 import { DialogService } from '../../core/dialog.service';
+import { GrowlService } from '../../core/growl.service';
+import { LoginService } from '../../core/login.service';
 
 @Component({
   selector: 'chrome',
-  templateUrl: './chrome.component.html',
-  styleUrls: ['./chrome.component.scss']
+  templateUrl: './chrome.component.html'
 })
 export class ChromeComponent implements OnInit, OnDestroy {
 
@@ -22,10 +20,10 @@ export class ChromeComponent implements OnInit, OnDestroy {
     public configurationService: ConfigurationService,
     public loginService: LoginService,
     public dialogService: DialogService,
+    @Inject(DOCUMENT) public document: Document
   ) {
     this.configuration = configurationService.configuration;
   }
-
   configuration: BehaviorSubject<ClientConfiguration | null>;
 
 
@@ -69,5 +67,19 @@ export class ChromeComponent implements OnInit, OnDestroy {
       node = node.children[0];
       this.activeSideMenu = node.data.activeSideMenu || this.activeSideMenu;
     }
+  }
+
+  toggleDarkMode() {
+    this.darkMode = !this.darkMode;
+  }
+
+  get darkMode(): boolean {
+    return this.document.body.classList.contains('dark-mode');
+  }
+  set darkMode(value) {
+    if (value)
+      this.document.body.classList.add('dark-mode');
+    else
+      this.document.body.classList.remove('dark-mode');
   }
 }

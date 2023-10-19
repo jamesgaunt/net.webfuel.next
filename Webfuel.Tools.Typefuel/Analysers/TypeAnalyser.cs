@@ -17,13 +17,13 @@ namespace Webfuel.Tools.Typefuel
             {
                 var typeInfo = type.GetTypeInfo();
 
-                // Detect Static Classes
-                if (typeInfo.IsClass && typeInfo.GetCustomAttribute<ApiStaticAttribute>() != null)
-                    schema.AnalyseStatic(type);
+                // Detect Enums
+                if (typeInfo.IsEnum && typeInfo.GetCustomAttribute<ApiEnumAttribute>() != null)
+                    schema.AnalyseEnum(type);
 
-                // Detect Static Enums
-                if (typeInfo.IsEnum && typeInfo.GetCustomAttribute<ApiStaticAttribute>() != null)
-                    schema.AnalyseStatic(type);
+                // Detect Enum Classes
+                if (typeInfo.IsClass && typeInfo.GetCustomAttribute<ApiEnumAttribute>() != null)
+                    schema.AnalyseEnum(type);
 
                 // Detect Interfaces
                 if (typeInfo.IsClass && typeInfo.GetCustomAttribute<ApiTypeAttribute>() != null)

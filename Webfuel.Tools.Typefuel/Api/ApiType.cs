@@ -58,7 +58,7 @@ namespace Webfuel.Tools.Typefuel
 
             // Enums are mapped against their matching static type
             if (ApiTypeAnalysis.IsEnumType(clrType))
-                return TypeMapping[clrType] = new ApiEnumType(this, Schema.AnalyseStatic(clrType));
+                return TypeMapping[clrType] = new ApiEnumType(this, Schema.AnalyseEnum(clrType));
 
             // We only analyse certain types (i.e. not system/microsoft types)
             if (!ApiTypeAnalysis.IsApiType(clrType))
@@ -208,13 +208,13 @@ namespace Webfuel.Tools.Typefuel
 
     public class ApiEnumType : ApiType
     {
-        public ApiEnumType(ApiTypeContext context, ApiStatic enumStatic)
+        public ApiEnumType(ApiTypeContext context, ApiEnum enumStatic)
             : base(context)
         {
             EnumStatic = enumStatic;
         }
 
-        public ApiStatic EnumStatic { get; }
+        public ApiEnum EnumStatic { get; }
     }
 
     public class ApiComplexType : ApiType

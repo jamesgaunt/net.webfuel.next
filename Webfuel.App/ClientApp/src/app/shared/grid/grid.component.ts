@@ -42,6 +42,11 @@ export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, T
     if (!this.dataSource)
       return;
 
+    if (this.sortable) {
+      this.query.skip = 0;
+      this.query.take = 100;
+    }
+
     this.dataSource.query(this.buildQuery()).subscribe((response) => {
       if (response.totalCount > 0 && response.items.length === 0 && this.query.skip! > 0) {
         this.query.skip = 0;

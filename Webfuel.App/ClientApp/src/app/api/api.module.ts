@@ -8,8 +8,12 @@ import { UserGroupApi } from './user-group.api';
 import { FundingBodyApi } from './funding-body.api';
 import { FundingStreamApi } from './funding-stream.api';
 import { GenderApi } from './gender.api';
+import { ProjectStatusApi } from './project-status.api';
 import { ResearchMethodologyApi } from './research-methodology.api';
+import { SubmissionStageApi } from './submission-stage.api';
+import { SuportRequestStatusApi } from './suport-request-status.api';
 import { TitleApi } from './title.api';
+import { StaticDataCache } from './static-data.cache';
 
 @NgModule({
     providers: [
@@ -22,8 +26,12 @@ import { TitleApi } from './title.api';
         FundingBodyApi,
         FundingStreamApi,
         GenderApi,
+        ProjectStatusApi,
         ResearchMethodologyApi,
-        TitleApi
+        SubmissionStageApi,
+        SuportRequestStatusApi,
+        TitleApi,
+        StaticDataCache,
     ]
 })
 export class ApiModule { }

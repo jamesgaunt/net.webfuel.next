@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Query, QueryFilter, QueryResult, QuerySort } from "../api/api.types";
-import { QueryOp } from "../api/api.static";
+import { QueryOp } from "../api/api.enums";
 import { Observable } from "rxjs";
 import _ from 'shared/common/underscore';
 

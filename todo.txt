@@ -3,21 +3,17 @@
 
 W0
 
+> Static Data able to dynamically deal with different fields on the data (Optional: Hidden, FreeText, Description)
+
 > CSS style/structure + rework dropdown logic + subscription disposal
 
 > Deploy to Azure / Tenants / Connection Strings
 
 > Validation / Errors 
 
-> Login / Logout / Redirection
-
-> Researcher Scaffold / Project Support Scaffold / Support Request Scaffold / Project Activity Scaffold
-
 > External Tools: Scribble / Excel etc
 
-> ApiStatic vs StaticData - i.e. how to use ApiStatic more effectively
-
-> Additional UI elements, tags, messages, chome menus, 
+> Additional UI elements, tags, messages, chrome menus, 
 
 W1
 
@@ -47,6 +43,15 @@ W2
 
 > Mailing List (email addresses)
 
+[DONE]
+
+> Do away with StaticData.Code - we can use magic strings in Scribble and business logic sensitive data should use an enum or specific flags/hints (its a code smell) [DONE]
+
+> Static Data which is also Static (rename Static to Enum / can put less in Static now we have Static Data)  [DONE]
+
+> Login / Logout / Redirection [DONE]
+
+> ApiStatic vs StaticData - i.e. how to use ApiStatic more effectively [DONE]
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 

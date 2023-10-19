@@ -18,8 +18,8 @@ namespace Webfuel.Domain.StaticData
         Task<int> CountGender();
         Task<List<Gender>> SelectGender();
         Task<List<Gender>> SelectGenderWithPage(int skip, int take);
-        Task<Gender?> GetGenderByCode(string code);
-        Task<Gender> RequireGenderByCode(string code);
+        Task<Gender?> GetGenderByName(string name);
+        Task<Gender> RequireGenderByName(string name);
     }
     [Service(typeof(IGenderRepository))]
     internal partial class GenderRepository: IGenderRepository
@@ -93,18 +93,18 @@ namespace Webfuel.Domain.StaticData
             };
             return await _connection.ExecuteReader<Gender, GenderMetadata>(sql, parameters);
         }
-        public async Task<Gender?> GetGenderByCode(string code)
+        public async Task<Gender?> GetGenderByName(string name)
         {
-            var sql = @"SELECT * FROM [Gender] WHERE Code = @Code ORDER BY SortOrder ASC";
+            var sql = @"SELECT * FROM [Gender] WHERE Name = @Name ORDER BY SortOrder ASC";
             var parameters = new List<SqlParameter>
             {
-                new SqlParameter("@Code", code),
+                new SqlParameter("@Name", name),
             };
             return (await _connection.ExecuteReader<Gender, GenderMetadata>(sql, parameters)).SingleOrDefault();
         }
-        public async Task<Gender> RequireGenderByCode(string code)
+        public async Task<Gender> RequireGenderByName(string name)
         {
-            return await GetGenderByCode(code) ?? throw new InvalidOperationException("The specified Gender does not exist");
+            return await GetGenderByName(name) ?? throw new InvalidOperationException("The specified Gender does not exist");
         }
     }
 }

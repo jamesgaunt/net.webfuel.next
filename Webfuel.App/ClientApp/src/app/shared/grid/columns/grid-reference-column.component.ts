@@ -14,12 +14,10 @@ export class GridReferenceColumnComponent<TItem> extends GridColumnComponent<TIt
   @Input()
   dataSource: IDataSource<TItem, Query, any, any> | undefined;
 
-  cache: { [key: string]: BehaviorSubject<TItem | null> } = {};
-
   lookup(id: string): BehaviorSubject<TItem | null> {
 
-    if (this.cache[id] == undefined) {
-      this.cache[id] = new BehaviorSubject<TItem | null>(null);
+    if (this._cache[id] == undefined) {
+      this._cache[id] = new BehaviorSubject<TItem | null>(null);
 
       if (!this.dataSource)
         return new BehaviorSubject<TItem | null>(null);
@@ -30,10 +28,10 @@ export class GridReferenceColumnComponent<TItem> extends GridColumnComponent<TIt
         ]
       }).subscribe((result) => {
         if (result.items.length == 1)
-          this.cache[id].next(result.items[0]);
+          this._cache[id].next(result.items[0]);
       });
     }
-    return this.cache[id];
+    return this._cache[id];
   }
 
   format(item: any) {
@@ -41,4 +39,6 @@ export class GridReferenceColumnComponent<TItem> extends GridColumnComponent<TIt
       return "";
     return item['name'];
   }
+
+  private _cache: { [key: string]: BehaviorSubject<TItem | null> } = {};
 }

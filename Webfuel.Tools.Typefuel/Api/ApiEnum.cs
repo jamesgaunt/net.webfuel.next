@@ -4,33 +4,33 @@ using System.Text;
 
 namespace Webfuel.Tools.Typefuel
 {
-    public class ApiStatic
+    public class ApiEnum
     {
         public ApiSchema Schema;
 
-        public ApiStatic(ApiSchema schema)
+        public ApiEnum(ApiSchema schema)
         {
             Schema = schema;
         }
 
-        public bool IsEnum { get; set; }
+        public bool IsEnum { get; set; } // If it's not an enum then it's a static class
 
         public string Name { get; set; }
 
-        public List<ApiStaticRow> Rows { get; } = new List<ApiStaticRow>();
+        public List<ApiEnumRow> Rows { get; } = new List<ApiEnumRow>();
 
         public object[] ValueArray { get; set; }
 
         public ApiTypeDescriptor ValueType { get; set; }
     }
 
-    public class ApiStaticRow
+    public class ApiEnumRow
     {
-        public ApiStatic StaticData;
+        public ApiEnum Enum;
 
-        public ApiStaticRow(ApiStatic staticData)
+        public ApiEnumRow(ApiEnum @enum)
         {
-            StaticData = staticData;
+            Enum = @enum;
         }
 
         public string Name { get; set; }

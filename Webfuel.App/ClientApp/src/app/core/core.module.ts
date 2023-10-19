@@ -5,6 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthorizationInterceptor } from './interceptors/authorization.interceptor';
 import { LoggingInterceptor } from './interceptors/logging.interceptor';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 
 import { ConfirmDialogComponent } from './dialogs/confirm-dialog.component';
 import { ConfirmDeleteDialogComponent } from './dialogs/confirm-delete-dialog.component';
@@ -54,6 +55,11 @@ import { QueryService } from './query.service';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoggingInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
       multi: true
     },
   ]

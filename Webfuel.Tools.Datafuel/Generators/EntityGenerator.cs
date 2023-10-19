@@ -18,8 +18,8 @@ namespace Webfuel.Tools.Datafuel
             if (entity.Repository)
                 RepositoryGenerator.GenerateRepository(entity);
 
-            if (entity.Static)
-                StaticGenerator.GenerateStatic(entity);
+            if (entity.Enum)
+                EnumGenerator.GenerateEnum(entity);
         }
 
         static void Usings(ScriptBuilder sb, SchemaEntity entity)

@@ -19,10 +19,14 @@ namespace Webfuel.Tools.Datafuel
                 if (!Directory.Exists(entity.GeneratedDirectory + $@"\{entity.Name}\Commands"))
                     Directory.CreateDirectory(entity.GeneratedDirectory + $@"\{entity.Name}\Commands");
 
-                File.WriteAllText(entity.GeneratedDirectory + $@"\{entity.Name}\Commands\Create{entity.Name}.cs", Create(entity));
-                File.WriteAllText(entity.GeneratedDirectory + $@"\{entity.Name}\Commands\Update{entity.Name}.cs", Update(entity));
-                File.WriteAllText(entity.GeneratedDirectory + $@"\{entity.Name}\Commands\Delete{entity.Name}.cs", Delete(entity));
-                File.WriteAllText(entity.GeneratedDirectory + $@"\{entity.Name}\Commands\Sort{entity.Name}.cs", Sort(entity));
+                if (!entity.ReadOnly)
+                {
+                    File.WriteAllText(entity.GeneratedDirectory + $@"\{entity.Name}\Commands\Create{entity.Name}.cs", Create(entity));
+                    File.WriteAllText(entity.GeneratedDirectory + $@"\{entity.Name}\Commands\Update{entity.Name}.cs", Update(entity));
+                    File.WriteAllText(entity.GeneratedDirectory + $@"\{entity.Name}\Commands\Delete{entity.Name}.cs", Delete(entity));
+                    File.WriteAllText(entity.GeneratedDirectory + $@"\{entity.Name}\Commands\Sort{entity.Name}.cs", Sort(entity));
+                }
+
                 File.WriteAllText(entity.GeneratedDirectory + $@"\{entity.Name}\Commands\Query{entity.Name}.cs", Query(entity));
             }
         }
@@ -44,12 +48,12 @@ namespace Webfuel.Tools.Datafuel
                 using (sb.OpenBrace($"public class Create{entity.Name}: IRequest<{entity.Name}>"))
                 {
                     sb.WriteLine("public required string Name { get; set; }");
-                    sb.WriteLine("public required string Code { get; set; }");
                     sb.WriteLine("public bool Hidden { get; set; }");
                     sb.WriteLine("public bool Default { get; set; }");
+                    sb.WriteLine("public bool FreeText { get; set; }");
                 }
 
-                using(sb.OpenBrace($"internal class Create{entity.Name}Handler : IRequestHandler<Create{entity.Name}, {entity.Name}>"))
+                using (sb.OpenBrace($"internal class Create{entity.Name}Handler : IRequestHandler<Create{entity.Name}, {entity.Name}>"))
                 {
                     sb.WriteLine($"private readonly I{entity.Name}Repository _{entity.Name.ToCamelCase()}Repository;");
                     sb.WriteLine();
@@ -66,9 +70,9 @@ namespace Webfuel.Tools.Datafuel
                         {{
                             return await _{entity.Name.ToCamelCase()}Repository.Insert{entity.Name}(new {entity.Name} {{ 
                                 Name = request.Name,
-                                Code = request.Code,
                                 Hidden = request.Hidden,
                                 Default = request.Default,
+                                FreeText = request.FreeText,
                                 SortOrder = await _{entity.Name.ToCamelCase()}Repository.Count{entity.Name}()
                             }});
                         }}
@@ -91,9 +95,10 @@ namespace Webfuel.Tools.Datafuel
                 {
                     sb.WriteLine("public required Guid Id { get; set; }");
                     sb.WriteLine("public required string Name { get; set; }");
-                    sb.WriteLine("public required string Code { get; set; }");
                     sb.WriteLine("public bool Hidden { get; set; }");
                     sb.WriteLine("public bool Default { get; set; }");
+                    sb.WriteLine("public bool FreeText { get; set; }");
+
                 }
 
                 using (sb.OpenBrace($"internal class Update{entity.Name}Handler : IRequestHandler<Update{entity.Name}, {entity.Name}>"))
@@ -115,9 +120,9 @@ namespace Webfuel.Tools.Datafuel
 
                             var updated = original.Copy();
                             updated.Name = request.Name;
-                            updated.Code = request.Code;
                             updated.Hidden = request.Hidden;
                             updated.Default = request.Default;
+                            updated.FreeText = request.FreeText;
 
                             return await _{entity.Name.ToCamelCase()}Repository.Update{entity.Name}(original: original, updated: updated); 
                         }}

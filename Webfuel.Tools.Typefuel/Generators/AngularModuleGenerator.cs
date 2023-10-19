@@ -24,13 +24,17 @@ namespace Webfuel.Tools.Typefuel
             {
                 sb.WriteLine($"import {{ {service.Name}Api }} from './{AngularServiceGenerator.ServiceFilename(service)}';");
             }
+            sb.WriteLine("import { StaticDataCache } from './static-data.cache';");
+
             sb.WriteLine();
+            
             sb.WriteLine("@NgModule({");
             sb.WriteLine("\tproviders: [");
             for (var i = 0; i < schema.Services.Count; i++)
             {
-                sb.WriteLine(schema.Services[i].Name + "Api" + (i < schema.Services.Count - 1 ? "," : ""));
+                sb.WriteLine(schema.Services[i].Name + "Api,");
             }
+            sb.WriteLine("StaticDataCache,");
             sb.WriteLine("\t]");
             sb.WriteLine("})");
             sb.WriteLine("export class ApiModule { }");

@@ -4,20 +4,19 @@
   <Entity Name="Gender" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
     <Key Name="Id" Type="guid" />
     <Property Name="Name" Type="meta:name" />
-    <Property Name="Code" Type="meta:name" />
     <Property Name="SortOrder" Type="Int32" />
     <Property Name="Default" Type="boolean" />
     <Property Name="Hidden" Type="boolean" />
-    <Property Name="Hint" Type="meta:name" />
+    <Property Name="FreeText" Type="boolean" />
     <Index Unique="true">
-      <Member Name="Code" />
+      <Member Name="Name" />
     </Index>
     <Data>
-      <Row Id="f9bffc3d-d732-404f-a5ef-b8f79f9d6e02" Name="Male" Code="Male" />
-      <Row Id="71ae8512-c6e5-4b9c-8a4c-7249e8e721bb" Name="Female" Code="Female" />
-      <Row Id="dac6a434-46d4-409f-875b-ebe632290106" Name="Non-Binary" Code="Non_Binary" />
-      <Row Id="f3ad5759-7f11-4715-b49f-0623080af938" Name="Trans" Code="Trans" />
-      <Row Id="516cae1e-5f6f-4a91-b746-7cd7b76a27b7" Name="Prefer not to say" Code="Prefer_Not_To_Say" />
+      <Row Id="f9bffc3d-d732-404f-a5ef-b8f79f9d6e02" Name="Male" />
+      <Row Id="71ae8512-c6e5-4b9c-8a4c-7249e8e721bb" Name="Female" />
+      <Row Id="dac6a434-46d4-409f-875b-ebe632290106" Name="Non-Binary" />
+      <Row Id="f3ad5759-7f11-4715-b49f-0623080af938" Name="Trans" />
+      <Row Id="516cae1e-5f6f-4a91-b746-7cd7b76a27b7" Name="Prefer not to say" />
     </Data>
   </Entity>
 </Schema>

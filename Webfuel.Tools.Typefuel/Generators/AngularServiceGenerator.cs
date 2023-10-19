@@ -37,7 +37,17 @@ namespace Webfuel.Tools.Typefuel
 
             if (service.DataSource)
             {
-                sb.Write($" implements IDataSource<{service.Name}, Query{service.Name}, Create{service.Name}, Update{service.Name}>");
+                sb.Write($" implements IDataSource<{service.Name}, Query{service.Name},");
+
+                if (service.Methods.Any(p => p.Name == "Create"))
+                    sb.Write($" Create{service.Name},");
+                else
+                    sb.Write($" any,");
+
+                if (service.Methods.Any(p => p.Name == "Update"))
+                    sb.Write($" Update{service.Name}>");
+                else
+                    sb.Write($" any>");
             }
 
             using (sb.OpenBrace(""))

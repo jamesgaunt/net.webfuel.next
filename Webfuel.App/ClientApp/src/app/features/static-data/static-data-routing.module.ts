@@ -5,6 +5,7 @@ import { FundingStreamComponent } from './types/funding-stream.component';
 import { FundingBodyComponent } from './types/funding-body.component';
 import { GenderComponent } from './types/gender.component';
 import { ResearchMethodologyComponent } from './types/research-methodology.component';
+import { ProjectStatusComponent } from './types/project-status.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,11 @@ const routes: Routes = [
   {
     path: 'research-methodology',
     component: ResearchMethodologyComponent,
+    data: { activeSideMenu: 'Configuration' }
+  },
+  {
+    path: 'project-status',
+    component: ProjectStatusComponent,
     data: { activeSideMenu: 'Configuration' }
   },
 ];

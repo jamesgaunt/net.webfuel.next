@@ -26,9 +26,6 @@ namespace Webfuel.Domain.StaticData
                     case nameof(FundingStream.Name):
                         result.Add(new SqlParameter(nameof(FundingStream.Name), entity.Name));
                         break;
-                    case nameof(FundingStream.Code):
-                        result.Add(new SqlParameter(nameof(FundingStream.Code), entity.Code));
-                        break;
                     case nameof(FundingStream.SortOrder):
                         result.Add(new SqlParameter(nameof(FundingStream.SortOrder), entity.SortOrder));
                         break;
@@ -38,8 +35,8 @@ namespace Webfuel.Domain.StaticData
                     case nameof(FundingStream.Hidden):
                         result.Add(new SqlParameter(nameof(FundingStream.Hidden), entity.Hidden));
                         break;
-                    case nameof(FundingStream.Hint):
-                        result.Add(new SqlParameter(nameof(FundingStream.Hint), entity.Hint));
+                    case nameof(FundingStream.FreeText):
+                        result.Add(new SqlParameter(nameof(FundingStream.FreeText), entity.FreeText));
                         break;
                 }
             }
@@ -69,11 +66,10 @@ namespace Webfuel.Domain.StaticData
             {
                 yield return "Id";
                 yield return "Name";
-                yield return "Code";
                 yield return "SortOrder";
                 yield return "Default";
                 yield return "Hidden";
-                yield return "Hint";
+                yield return "FreeText";
             }
         }
         
@@ -83,11 +79,10 @@ namespace Webfuel.Domain.StaticData
             {
                 yield return "Id";
                 yield return "Name";
-                yield return "Code";
                 yield return "SortOrder";
                 yield return "Default";
                 yield return "Hidden";
-                yield return "Hint";
+                yield return "FreeText";
             }
         }
         
@@ -96,11 +91,10 @@ namespace Webfuel.Domain.StaticData
             get
             {
                 yield return "Name";
-                yield return "Code";
                 yield return "SortOrder";
                 yield return "Default";
                 yield return "Hidden";
-                yield return "Hint";
+                yield return "FreeText";
             }
         }
         
@@ -110,18 +104,12 @@ namespace Webfuel.Domain.StaticData
         {
             entity.Name = entity.Name ?? String.Empty;
             entity.Name = entity.Name.Trim();
-            entity.Code = entity.Code ?? String.Empty;
-            entity.Code = entity.Code.Trim();
-            entity.Hint = entity.Hint ?? String.Empty;
-            entity.Hint = entity.Hint.Trim();
             Validator.ValidateAndThrow(entity);
         }
         
         public static FundingStreamRepositoryValidator Validator { get; } = new FundingStreamRepositoryValidator();
         
         public const int Name_MaxLength = 64;
-        public const int Code_MaxLength = 64;
-        public const int Hint_MaxLength = 64;
         
         public static void Name_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
@@ -130,27 +118,11 @@ namespace Webfuel.Domain.StaticData
                 .MaximumLength(Name_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
-        public static void Code_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
-        {
-            ruleBuilder
-                .NotNull()
-                .MaximumLength(Code_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
-        }
-        
-        public static void Hint_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
-        {
-            ruleBuilder
-                .NotNull()
-                .MaximumLength(Hint_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
-        }
-        
         public class FundingStreamRepositoryValidator: AbstractValidator<FundingStream>
         {
             public FundingStreamRepositoryValidator()
             {
                 RuleFor(x => x.Name).Use(Name_ValidationRules);
-                RuleFor(x => x.Code).Use(Code_ValidationRules);
-                RuleFor(x => x.Hint).Use(Hint_ValidationRules);
             }
         }
     }

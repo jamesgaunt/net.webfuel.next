@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="ApplicationStage" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Property Name="Hidden" Type="boolean" />
+    <Property Name="FreeText" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="18174faf-8787-480e-b0b4-5698a5e59d93" Name="Outline Stage (Stage 1)" />
+      <Row Id="deecb94c-8284-45c8-b499-1c0c099215b0" Name="Stage 2" />
+      <Row Id="aa13a2ae-f1dd-4b8b-959e-15bdff000fee" Name="One Stage Application" />
+      <Row Id="3e658c3b-11fc-464b-9296-7bf369866bce" Name="Accelerator Award" />
+      <Row Id="8792acf3-32b2-44bc-8470-647466fd16f6" Name="Not Applicable" />
+      <Row Id="50079088-e851-4f27-a0be-92a90c60b230" Name="Not Known" />
+      <Row Id="ee740f61-3a5f-4ed5-8aa6-2b19f8e3e956" Name="Other" FreeText="true" />
+    </Data>
+  </Entity>
+</Schema>

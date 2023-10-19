@@ -16,9 +16,9 @@
         <label class="label">Title</label>
         <input class="input" type="text" placeholder="required" formControlName="title" />
       </div>
-      <div class="field">
+      <div class="field column-span-2-sm">
         <label class="label">Funding Body</label>
-        <dropdown-select [dataSource]="staticDataService.fundingBodyDataSource" placeholder="required" formControlName="fundingBodyId"></dropdown-select>
+        <dropdown-select [dataSource]="staticDataCache.fundingBody" placeholder="required" formControlName="fundingBodyId"></dropdown-select>
       </div>
     </div>
     <div class="buttons">

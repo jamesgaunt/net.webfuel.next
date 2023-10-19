@@ -21,7 +21,7 @@
     }
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum)]
-    public class ApiStaticAttribute : Attribute
+    public class ApiEnumAttribute : Attribute
     {
     }
 

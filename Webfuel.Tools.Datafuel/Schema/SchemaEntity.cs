@@ -17,7 +17,6 @@ namespace Webfuel.Tools.Datafuel
             Repository = element.BooleanProperty("Repository") ?? true;
             Interface = element.StringProperty("Interface") ?? String.Empty;
             OrderBy = element.StringProperty("OrderBy") ?? String.Empty;
-            Static = element.BooleanProperty("Static") ?? false;
             Tags.AddRange((element.StringProperty("Tags") ?? String.Empty).Split('|').Select(p => p.Trim()));
 
             if (element.Elements().Any(p => p.Name == "Key"))
@@ -105,8 +104,6 @@ namespace Webfuel.Tools.Datafuel
 
         public string OrderBy { get; private set; } = String.Empty;
 
-        public bool Static { get; private set; }
-
         public SchemaData? Data { get; private set; }
 
         public string Assembly { get; private set; } = String.Empty;
@@ -159,9 +156,13 @@ namespace Webfuel.Tools.Datafuel
 
         bool HasTag(string tag) => Tags.Contains(tag);
 
+        public bool Enum => HasTag("Enum");
+
         public bool JsonIgnore => HasTag("JsonIgnore");
 
         public bool StaticData => HasTag("StaticData");
+
+        public bool ReadOnly => HasTag("ReadOnly") || Enum;
 
         // public bool ReadOnly => HasTag("ReadOnly");
 

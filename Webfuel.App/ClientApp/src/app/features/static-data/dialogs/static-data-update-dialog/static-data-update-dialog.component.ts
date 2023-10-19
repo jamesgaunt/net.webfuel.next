@@ -26,9 +26,9 @@ export class StaticDataUpdateDialogComponent {
   form = new FormGroup({
     id: new FormControl('', { validators: [Validators.required], nonNullable: true }),
     name: new FormControl('', { validators: [Validators.required], nonNullable: true }),
-    code: new FormControl('', { validators: [Validators.required], nonNullable: true }),
     hidden: new FormControl(false),
     default: new FormControl(false),
+    freeText: new FormControl(false),
   });
 
   save() {

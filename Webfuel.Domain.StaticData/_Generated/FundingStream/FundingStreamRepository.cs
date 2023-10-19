@@ -18,8 +18,8 @@ namespace Webfuel.Domain.StaticData
         Task<int> CountFundingStream();
         Task<List<FundingStream>> SelectFundingStream();
         Task<List<FundingStream>> SelectFundingStreamWithPage(int skip, int take);
-        Task<FundingStream?> GetFundingStreamByCode(string code);
-        Task<FundingStream> RequireFundingStreamByCode(string code);
+        Task<FundingStream?> GetFundingStreamByName(string name);
+        Task<FundingStream> RequireFundingStreamByName(string name);
     }
     [Service(typeof(IFundingStreamRepository))]
     internal partial class FundingStreamRepository: IFundingStreamRepository
@@ -93,18 +93,18 @@ namespace Webfuel.Domain.StaticData
             };
             return await _connection.ExecuteReader<FundingStream, FundingStreamMetadata>(sql, parameters);
         }
-        public async Task<FundingStream?> GetFundingStreamByCode(string code)
+        public async Task<FundingStream?> GetFundingStreamByName(string name)
         {
-            var sql = @"SELECT * FROM [FundingStream] WHERE Code = @Code ORDER BY SortOrder ASC";
+            var sql = @"SELECT * FROM [FundingStream] WHERE Name = @Name ORDER BY SortOrder ASC";
             var parameters = new List<SqlParameter>
             {
-                new SqlParameter("@Code", code),
+                new SqlParameter("@Name", name),
             };
             return (await _connection.ExecuteReader<FundingStream, FundingStreamMetadata>(sql, parameters)).SingleOrDefault();
         }
-        public async Task<FundingStream> RequireFundingStreamByCode(string code)
+        public async Task<FundingStream> RequireFundingStreamByName(string name)
         {
-            return await GetFundingStreamByCode(code) ?? throw new InvalidOperationException("The specified FundingStream does not exist");
+            return await GetFundingStreamByName(name) ?? throw new InvalidOperationException("The specified FundingStream does not exist");
         }
     }
 }

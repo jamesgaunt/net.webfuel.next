@@ -17,33 +17,33 @@ namespace Webfuel.Tools.Typefuel
 
         public List<ApiService> Services { get; } = new List<ApiService>();
 
-        public Dictionary<Type, ApiStatic> Static { get; } = new Dictionary<Type, ApiStatic>();
+        public Dictionary<Type, ApiEnum> Enums { get; } = new Dictionary<Type, ApiEnum>();
 
-        public ApiStatic AnalyseStatic(Type staticType)
+        public ApiEnum AnalyseEnum(Type enumType)
         {
-            if (Static.ContainsKey(staticType))
-                return Static[staticType];
+            if (Enums.ContainsKey(enumType))
+                return Enums[enumType];
 
-            var typeInfo = staticType.GetTypeInfo();
+            var typeInfo = enumType.GetTypeInfo();
 
-            var apiStatic = new ApiStatic(this);
+            var apiEnum = new ApiEnum(this);
 
-            apiStatic.Name = staticType.Name;
-            apiStatic.IsEnum = typeInfo.IsEnum;
+            apiEnum.Name = enumType.Name;
+            apiEnum.IsEnum = typeInfo.IsEnum;
 
             // Keys
             foreach (var field in typeInfo.GetFields(BindingFlags.Public | BindingFlags.Static).Where(p => p.Name != "Values"))
             {
-                apiStatic.Rows.Add(new ApiStaticRow(apiStatic)
+                apiEnum.Rows.Add(new ApiEnumRow(apiEnum)
                 {
                     Name = field.Name.ToIdentifier(),
                     Value = field.IsLiteral ? field.GetRawConstantValue() : field.GetValue(null)
                 });
             }
 
-            if(apiStatic.Rows.Count > 0)
+            if(apiEnum.Rows.Count > 0)
             {
-                apiStatic.ValueType = TypeContext.GetTypeDescriptor(apiStatic.Rows[0].Value.GetType());
+                apiEnum.ValueType = TypeContext.GetTypeDescriptor(apiEnum.Rows[0].Value.GetType());
             }
 
             // Value Array
@@ -51,13 +51,13 @@ namespace Webfuel.Tools.Typefuel
             var valueArray = values?.GetValue(null);
             if (valueArray != null && valueArray.GetType().IsArray)
             {
-                apiStatic.ValueArray = valueArray as object[];
-                //apiStatic.ValueType = TypeContext.GetTypeDescriptor(valueArray.GetType().GetElementType());
-                if (!(apiStatic.ValueType.Type is ApiComplexType))
-                    throw new InvalidOperationException("Static Values must be Complex Types");
+                apiEnum.ValueArray = valueArray as object[];
+                // apiStatic.ValueType = TypeContext.GetTypeDescriptor(valueArray.GetType().GetElementType());
+                //if (!(apiEnum.ValueType.Type is ApiComplexType))
+                //    throw new InvalidOperationException("Static Values must be Complex Types");
             }
 
-            return Static[staticType] = apiStatic;
+            return Enums[enumType] = apiEnum;
         }
     }
 }

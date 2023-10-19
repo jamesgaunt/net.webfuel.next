@@ -3,8 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Project } from '../../../api/api.types';
 import { ProjectApi } from '../../../api/project.api';
+import { StaticDataCache } from '../../../api/static-data.cache';
 import { FormService } from '../../../core/form.service';
-import { StaticDataService } from '../../../core/static-data.service';
 
 @Component({
   selector: 'project-item',
@@ -17,7 +17,7 @@ export class ProjectItemComponent implements OnInit {
     private router: Router,
     public projectApi: ProjectApi,
     private formService: FormService,
-    public staticDataService: StaticDataService
+    public staticDataCache: StaticDataCache
   ) {
   }
 

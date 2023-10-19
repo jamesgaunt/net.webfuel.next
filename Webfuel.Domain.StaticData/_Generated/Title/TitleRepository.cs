@@ -18,8 +18,8 @@ namespace Webfuel.Domain.StaticData
         Task<int> CountTitle();
         Task<List<Title>> SelectTitle();
         Task<List<Title>> SelectTitleWithPage(int skip, int take);
-        Task<Title?> GetTitleByCode(string code);
-        Task<Title> RequireTitleByCode(string code);
+        Task<Title?> GetTitleByName(string name);
+        Task<Title> RequireTitleByName(string name);
     }
     [Service(typeof(ITitleRepository))]
     internal partial class TitleRepository: ITitleRepository
@@ -93,18 +93,18 @@ namespace Webfuel.Domain.StaticData
             };
             return await _connection.ExecuteReader<Title, TitleMetadata>(sql, parameters);
         }
-        public async Task<Title?> GetTitleByCode(string code)
+        public async Task<Title?> GetTitleByName(string name)
         {
-            var sql = @"SELECT * FROM [Title] WHERE Code = @Code ORDER BY SortOrder ASC";
+            var sql = @"SELECT * FROM [Title] WHERE Name = @Name ORDER BY SortOrder ASC";
             var parameters = new List<SqlParameter>
             {
-                new SqlParameter("@Code", code),
+                new SqlParameter("@Name", name),
             };
             return (await _connection.ExecuteReader<Title, TitleMetadata>(sql, parameters)).SingleOrDefault();
         }
-        public async Task<Title> RequireTitleByCode(string code)
+        public async Task<Title> RequireTitleByName(string name)
         {
-            return await GetTitleByCode(code) ?? throw new InvalidOperationException("The specified Title does not exist");
+            return await GetTitleByName(name) ?? throw new InvalidOperationException("The specified Title does not exist");
         }
     }
 }

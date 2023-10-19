@@ -4,22 +4,21 @@
   <Entity Name="FundingBody" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
     <Key Name="Id" Type="guid" />
     <Property Name="Name" Type="meta:name" />
-    <Property Name="Code" Type="meta:name" />
     <Property Name="SortOrder" Type="Int32" />
     <Property Name="Default" Type="boolean" />
     <Property Name="Hidden" Type="boolean" />
-    <Property Name="Hint" Type="meta:name" />
+    <Property Name="FreeText" Type="boolean" />
     <Index Unique="true">
-      <Member Name="Code" />
+      <Member Name="Name" />
     </Index>
     <Data>
-      <Row Id="a6eab5cf-8b32-4c25-a827-f9818d8c443e" Name="Don't know yet" Code="Dont_Know" />
-      <Row Id="e452166e-46f2-4a7a-acd0-306e7f35cd4a" Name="NIHR Research" Code="NIHR_Research" />
-      <Row Id="817eba55-b774-4917-864f-cf1082501512" Name="NIHR Training" Code="NIHR_Training" />
-      <Row Id="6d53a2ea-c59d-4bac-a645-95cbb713f842" Name="Charity" Code="Charity" />
-      <Row Id="e8fce042-c85c-416a-96a6-46435f4f32b8" Name="MRC or Research Council" Code="MRC_Or_Research_Council" />
-      <Row Id="66898e6b-fdb1-4677-b759-3152c6b25a41" Name="Wellcome" Code="Wellcome" />
-      <Row Id="ae93888d-1273-40ff-afd1-3fc07cb9b93d" Name="Other" Code="Other" Hint="Other" />
+      <Row Id="a6eab5cf-8b32-4c25-a827-f9818d8c443e" Name="Not Known" Default="true" />
+      <Row Id="e452166e-46f2-4a7a-acd0-306e7f35cd4a" Name="NIHR Research" />
+      <Row Id="817eba55-b774-4917-864f-cf1082501512" Name="NIHR Training" />
+      <Row Id="6d53a2ea-c59d-4bac-a645-95cbb713f842" Name="Charity" />
+      <Row Id="e8fce042-c85c-416a-96a6-46435f4f32b8" Name="MRC or Research Council" />
+      <Row Id="66898e6b-fdb1-4677-b759-3152c6b25a41" Name="Wellcome" />
+      <Row Id="ae93888d-1273-40ff-afd1-3fc07cb9b93d" Name="Other" FreeText="true" />
     </Data>
   </Entity>
 </Schema>

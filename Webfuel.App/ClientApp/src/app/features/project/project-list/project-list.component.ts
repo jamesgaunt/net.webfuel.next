@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { DialogService } from 'core/dialog.service';
 import { Project } from '../../../api/api.types';
 import { ProjectApi } from '../../../api/project.api';
+import { StaticDataCache } from '../../../api/static-data.cache';
 import { ProjectCreateDialogComponent } from '../project-create-dialog/project-create-dialog.component';
-import { StaticDataService } from '../../../core/static-data.service';
 
 
 @Component({
@@ -16,7 +16,7 @@ export class ProjectListComponent {
     private router: Router,
     private dialogService: DialogService,
     public projectApi: ProjectApi,
-    public staticDataService: StaticDataService
+    public staticDataCache: StaticDataCache
   ) {
   }
 

@@ -16,7 +16,11 @@ export class StaticDataComponent<TItem, TQuery extends Query = Query, TCreate = 
 
   dialogService = inject(DialogService);
 
-  add() {
+  get canAdd() {
+    return this.dataSource.create !== undefined;
+  }
+
+  onAdd() {
     this.dialogService.open<TCreate, StaticDataCreateOptions>(StaticDataCreateDialogComponent, {
       data: {
         typeName: this.typeName
@@ -28,7 +32,11 @@ export class StaticDataComponent<TItem, TQuery extends Query = Query, TCreate = 
     });
   }
 
-  edit(item: TItem) {
+  get canEdit() {
+    return this.dataSource.update !== undefined;
+  }
+
+  onEdit(item: TItem) {
     this.dialogService.open<TUpdate, StaticDataUpdateOptions>(StaticDataUpdateDialogComponent, {
       data: {
         data: item,
@@ -41,7 +49,11 @@ export class StaticDataComponent<TItem, TQuery extends Query = Query, TCreate = 
     });
   }
 
-  delete(item: TItem) {
+  get canDelete() {
+    return this.dataSource.delete !== undefined;
+  }
+
+  onDelete(item: TItem) {
     this.dialogService.confirmDelete({
       confirmedCallback: () => {
         this.dataSource.delete!({ id: (<any>item)['id'] }).subscribe((result) => {

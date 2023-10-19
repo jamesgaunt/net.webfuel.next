@@ -24,7 +24,6 @@ namespace Webfuel.Tools.Datafuel
                         new XSDAttribute { Name = "Interface" },
                         new XSDAttribute { Name = "Tags" },
                         new XSDAttribute { Name = "OrderBy" },
-                        new XSDAttribute { Name = "Static", Values = { "true", "false" } },
                         new XSDAttribute { Name = "Repository", Values = { "true", "false" } },
                     },
                     Elements =

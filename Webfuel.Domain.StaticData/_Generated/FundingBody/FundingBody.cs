@@ -23,9 +23,6 @@ namespace Webfuel.Domain.StaticData
                     case nameof(FundingBody.Name):
                         Name = (string)value!;
                         break;
-                    case nameof(FundingBody.Code):
-                        Code = (string)value!;
-                        break;
                     case nameof(FundingBody.SortOrder):
                         SortOrder = (int)value!;
                         break;
@@ -35,29 +32,27 @@ namespace Webfuel.Domain.StaticData
                     case nameof(FundingBody.Hidden):
                         Hidden = (bool)value!;
                         break;
-                    case nameof(FundingBody.Hint):
-                        Hint = (string)value!;
+                    case nameof(FundingBody.FreeText):
+                        FreeText = (bool)value!;
                         break;
                 }
             }
         }
         public Guid Id  { get; internal set; } = Guid.Empty;
         public string Name  { get; internal set; } = String.Empty;
-        public string Code  { get; internal set; } = String.Empty;
         public int SortOrder  { get; internal set; } = 0;
         public bool Default  { get; internal set; } = false;
         public bool Hidden  { get; internal set; } = false;
-        public string Hint  { get; internal set; } = String.Empty;
+        public bool FreeText  { get; internal set; } = false;
         public FundingBody Copy()
         {
             var entity = new FundingBody();
             entity.Id = Id;
             entity.Name = Name;
-            entity.Code = Code;
             entity.SortOrder = SortOrder;
             entity.Default = Default;
             entity.Hidden = Hidden;
-            entity.Hint = Hint;
+            entity.FreeText = FreeText;
             return entity;
         }
     }

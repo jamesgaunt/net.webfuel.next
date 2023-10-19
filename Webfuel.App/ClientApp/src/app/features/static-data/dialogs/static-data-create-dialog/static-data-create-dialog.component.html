@@ -3,14 +3,10 @@
     Create {{options.typeName}}
   </div>
   <div class="dialog-body">
-    <div class="grid has-columns-2">
-      <div class="field column-span-2">
+    <div class="grid has-columns-3">
+      <div class="field column-span-3">
         <label class="label">Name</label>
         <input class="input" type="text" placeholder="required" formControlName="name" />
-      </div>
-      <div class="field column-span-2">
-        <label class="label">Code</label>
-        <input class="input" type="text" placeholder="required" formControlName="code" autocomplete-code />
       </div>
       <div class="field">
         <label class="label">Hidden</label>
@@ -19,6 +15,10 @@
       <div class="field">
         <label class="label">Default</label>
         <toggle-input formControlName="default" />
+      </div>
+      <div class="field">
+        <label class="label">Free Text</label>
+        <toggle-input formControlName="freeText" />
       </div>
     </div>
   </div>

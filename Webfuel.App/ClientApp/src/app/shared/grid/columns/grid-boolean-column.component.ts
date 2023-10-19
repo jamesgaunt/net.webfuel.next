@@ -7,4 +7,10 @@ import { GridColumnComponent } from './grid-column.component';
   providers: [{ provide: GridColumnComponent, useExisting: GridBooleanColumnComponent }]
 })
 export class GridBooleanColumnComponent<TItem> extends GridColumnComponent<TItem> {
+
+  constructor() {
+    super();
+    this.justify = "center";
+  }
+
 }

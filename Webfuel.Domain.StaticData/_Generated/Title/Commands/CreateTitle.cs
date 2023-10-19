@@ -5,9 +5,9 @@ namespace Webfuel.Domain.StaticData
     public class CreateTitle: IRequest<Title>
     {
         public required string Name { get; set; }
-        public required string Code { get; set; }
         public bool Hidden { get; set; }
         public bool Default { get; set; }
+        public bool FreeText { get; set; }
     }
     internal class CreateTitleHandler : IRequestHandler<CreateTitle, Title>
     {
@@ -23,9 +23,9 @@ namespace Webfuel.Domain.StaticData
         {
             return await _titleRepository.InsertTitle(new Title {
                     Name = request.Name,
-                    Code = request.Code,
                     Hidden = request.Hidden,
                     Default = request.Default,
+                    FreeText = request.FreeText,
                     SortOrder = await _titleRepository.CountTitle()
                 });
         }

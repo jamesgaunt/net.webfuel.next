@@ -13,24 +13,39 @@ export class GridActionColumnComponent<TItem> extends GridColumnComponent<TItem>
     this.justify = "right";
   }
 
+  // Add
+
+  @Input()
+  canAdd = true;
+
+  @Output()
+  add = new EventEmitter();
+
   onAdd() {
     this.add.emit();
   }
 
+  // Edit
+
+  @Input()
+  canEdit = true;
+
   @Output()
-  add = new EventEmitter();
+  edit = new EventEmitter<TItem>();
 
   onEdit(item: TItem) {
     this.edit.emit(item);
   }
 
+  // Delete
+
+  @Input()
+  canDelete = true;
+
   @Output()
-  edit = new EventEmitter<TItem>();
+  delete = new EventEmitter<TItem>();
 
   onDelete(item: TItem) {
     this.delete.emit(item);
   }
-
-  @Output()
-  delete = new EventEmitter<TItem>();
 }

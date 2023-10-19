@@ -14,7 +14,7 @@ namespace Webfuel.Tools.Typefuel
             Directory.CreateDirectory(Settings.ApiRoot);
 
             AngularTypesGenerator.GenerateTypes(schema);
-            AngularStaticGenerator.GenerateStatic(schema);
+            AngularEnumGenerator.GenerateEnum(schema);
             AngularStaticDataGenerator.GenerateStaticData(schema);
             AngularModuleGenerator.GenerateModule(schema);
 

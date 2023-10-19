@@ -18,8 +18,8 @@ namespace Webfuel.Domain.StaticData
         Task<int> CountResearchMethodology();
         Task<List<ResearchMethodology>> SelectResearchMethodology();
         Task<List<ResearchMethodology>> SelectResearchMethodologyWithPage(int skip, int take);
-        Task<ResearchMethodology?> GetResearchMethodologyByCode(string code);
-        Task<ResearchMethodology> RequireResearchMethodologyByCode(string code);
+        Task<ResearchMethodology?> GetResearchMethodologyByName(string name);
+        Task<ResearchMethodology> RequireResearchMethodologyByName(string name);
     }
     [Service(typeof(IResearchMethodologyRepository))]
     internal partial class ResearchMethodologyRepository: IResearchMethodologyRepository
@@ -93,18 +93,18 @@ namespace Webfuel.Domain.StaticData
             };
             return await _connection.ExecuteReader<ResearchMethodology, ResearchMethodologyMetadata>(sql, parameters);
         }
-        public async Task<ResearchMethodology?> GetResearchMethodologyByCode(string code)
+        public async Task<ResearchMethodology?> GetResearchMethodologyByName(string name)
         {
-            var sql = @"SELECT * FROM [ResearchMethodology] WHERE Code = @Code ORDER BY SortOrder ASC";
+            var sql = @"SELECT * FROM [ResearchMethodology] WHERE Name = @Name ORDER BY SortOrder ASC";
             var parameters = new List<SqlParameter>
             {
-                new SqlParameter("@Code", code),
+                new SqlParameter("@Name", name),
             };
             return (await _connection.ExecuteReader<ResearchMethodology, ResearchMethodologyMetadata>(sql, parameters)).SingleOrDefault();
         }
-        public async Task<ResearchMethodology> RequireResearchMethodologyByCode(string code)
+        public async Task<ResearchMethodology> RequireResearchMethodologyByName(string name)
         {
-            return await GetResearchMethodologyByCode(code) ?? throw new InvalidOperationException("The specified ResearchMethodology does not exist");
+            return await GetResearchMethodologyByName(name) ?? throw new InvalidOperationException("The specified ResearchMethodology does not exist");
         }
     }
 }

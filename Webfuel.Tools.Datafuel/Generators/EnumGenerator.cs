@@ -6,14 +6,14 @@ using System.Text;
 
 namespace Webfuel.Tools.Datafuel
 {
-    public static class StaticGenerator
+    public static class EnumGenerator
     {
-        public static void GenerateStatic(SchemaEntity entity)
+        public static void GenerateEnum(SchemaEntity entity)
         {
-            File.WriteAllText(entity.GeneratedDirectory + $@"\{entity.Name}\{entity.Name}Static.cs", Static(entity));
+            File.WriteAllText(entity.GeneratedDirectory + $@"\{entity.Name}\{entity.Name}Enum.cs", Enum(entity));
         }
 
-        static string Static(SchemaEntity entity)
+        static string Enum(SchemaEntity entity)
         {
             var sb = new ScriptBuilder();
 
@@ -21,8 +21,8 @@ namespace Webfuel.Tools.Datafuel
 
             using (sb.OpenBrace($"namespace {entity.Namespace}"))
             {
-                sb.WriteLine("[ApiStatic]");
-                using (sb.OpenBrace($"public static class {entity.Name}Static"))
+                sb.WriteLine("[ApiEnum]");
+                using (sb.OpenBrace($"public static class {entity.Name}Enum"))
                 {
                     if (entity.Data != null)
                     {
