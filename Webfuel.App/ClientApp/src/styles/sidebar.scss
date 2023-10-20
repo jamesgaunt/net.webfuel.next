@@ -1,0 +1,73 @@
+@import 'config.scss';
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--sidebar-width);
+  background: var(--chrome-sidebar-background);
+  color: #FFf;
+
+  .sidebar-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      height: 3rem;
+      display: flex;
+      justify-items: center;
+
+      a {
+        flex-grow: 1;
+        display: block;
+        padding: 1rem;
+        transition: background-color 0.25s ease;
+
+        i {
+          margin-right: 0.75rem;
+        }
+      }
+
+      a.active {
+        background-color: var(--chrome-sidebar-active-background);
+        border-right: 8px solid var(--chrome-sidebar-highlight);
+
+        i {
+          color: var(--chrome-sidebar-highlight);
+        }
+      }
+
+      a:hover {
+        background-color: var(--chrome-sidebar-active-background);
+      }
+    }
+  }
+}
+
+.chrome.collapsed {
+  .sidebar {
+    z-index: 1000;
+    width: 3.5rem;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: width 0.25s ease;
+
+    span {
+      display: none;
+    }
+
+    &:hover {
+      width: var(--sidebar-width);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+
+      span {
+        display: inline-block;
+      }
+    }
+  }
+}

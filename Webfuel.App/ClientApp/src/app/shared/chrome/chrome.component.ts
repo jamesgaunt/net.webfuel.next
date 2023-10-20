@@ -25,6 +25,7 @@ export class ChromeComponent implements OnInit, OnDestroy {
     public overlay: Overlay,
     public viewContainerRef: ViewContainerRef,
     @Inject(DOCUMENT) public document: Document
+
   ) {
     this.configuration = configurationService.configuration;
   }

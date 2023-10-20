@@ -17,6 +17,8 @@ W3: Feedback
 
 > Field label popup info ??
 
+> Split out Chrome Sub Elements and have stand along side menu
+
 -----
 
 > Support Request Form (angular -> iframe)

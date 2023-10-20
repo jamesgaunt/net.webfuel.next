@@ -11,6 +11,7 @@ $breakpoint-lg: 1600px;
   --control-background: #FFFFFF;
   --body-background: #F4F6F6;
   --dialog-background: #F2F2F2;
+  --sidebar-width: 200px;
 }
 
 :root {
@@ -68,7 +69,7 @@ body.dark-mode {
   --dialog-background: #333333;
   --border-color: #525252;
   --chrome-sidebar-highlight: #09949E;
-  --chrome-sidebar-background: hsl(198, 34%, 10%);
+  --chrome-sidebar-background: #101019;
   --chrome-sidebar-active-background: RGBA(10, 10, 10, 0.5);
   --chrome-sidebar-hover-background: RGBA(10, 10, 10, 0.7);
 }
