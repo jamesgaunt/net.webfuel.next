@@ -9,8 +9,8 @@
   padding: 0 1em 0 1em;
   transition: background-color 0.25s ease;
   color: var(--palette-text);
-  background-color: #FFF;
-  border: 1px solid #dbdbdb;
+  background-color: var(--control-background);
+  border: 1px solid var(--border-color);
   white-space: nowrap;
 
   @each $p in $paletteAction {

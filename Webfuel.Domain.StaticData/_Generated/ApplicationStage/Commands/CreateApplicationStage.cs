@@ -5,9 +5,9 @@ namespace Webfuel.Domain.StaticData
     public class CreateApplicationStage: IRequest<ApplicationStage>
     {
         public required string Name { get; set; }
-        public bool Hidden { get; set; }
-        public bool Default { get; set; }
-        public bool FreeText { get; set; }
+        public bool Default { get; set; } = false;
+        public bool Hidden { get; set; } = false;
+        public bool FreeText { get; set; } = false;
     }
     internal class CreateApplicationStageHandler : IRequestHandler<CreateApplicationStage, ApplicationStage>
     {
@@ -23,10 +23,10 @@ namespace Webfuel.Domain.StaticData
         {
             return await _applicationStageRepository.InsertApplicationStage(new ApplicationStage {
                     Name = request.Name,
-                    Hidden = request.Hidden,
                     Default = request.Default,
+                    Hidden = request.Hidden,
                     FreeText = request.FreeText,
-                    SortOrder = await _applicationStageRepository.CountApplicationStage()
+                    SortOrder = await _applicationStageRepository.CountApplicationStage(),
                 });
         }
     }

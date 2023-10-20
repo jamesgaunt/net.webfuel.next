@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace Webfuel.Domain.StaticData
 {
-    public partial class SuportRequestStatus: IStaticData
+    public partial class FundingCallType: IStaticData
     {
-        public SuportRequestStatus() { }
+        public FundingCallType() { }
         
-        public SuportRequestStatus(SqlDataReader dr)
+        public FundingCallType(SqlDataReader dr)
         {
             for (var i = 0; i < dr.FieldCount; i++)
             {
@@ -17,22 +17,22 @@ namespace Webfuel.Domain.StaticData
                 
                 switch (property)
                 {
-                    case nameof(SuportRequestStatus.Id):
+                    case nameof(FundingCallType.Id):
                         Id = (Guid)value!;
                         break;
-                    case nameof(SuportRequestStatus.Name):
+                    case nameof(FundingCallType.Name):
                         Name = (string)value!;
                         break;
-                    case nameof(SuportRequestStatus.SortOrder):
+                    case nameof(FundingCallType.SortOrder):
                         SortOrder = (int)value!;
                         break;
-                    case nameof(SuportRequestStatus.Default):
+                    case nameof(FundingCallType.Default):
                         Default = (bool)value!;
                         break;
-                    case nameof(SuportRequestStatus.Hidden):
+                    case nameof(FundingCallType.Hidden):
                         Hidden = (bool)value!;
                         break;
-                    case nameof(SuportRequestStatus.FreeText):
+                    case nameof(FundingCallType.FreeText):
                         FreeText = (bool)value!;
                         break;
                 }
@@ -44,9 +44,9 @@ namespace Webfuel.Domain.StaticData
         public bool Default  { get; internal set; } = false;
         public bool Hidden  { get; internal set; } = false;
         public bool FreeText  { get; internal set; } = false;
-        public SuportRequestStatus Copy()
+        public FundingCallType Copy()
         {
-            var entity = new SuportRequestStatus();
+            var entity = new FundingCallType();
             entity.Id = Id;
             entity.Name = Name;
             entity.SortOrder = SortOrder;

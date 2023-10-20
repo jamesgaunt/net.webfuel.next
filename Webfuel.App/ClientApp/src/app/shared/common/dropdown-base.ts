@@ -1,21 +1,21 @@
 import { Observable } from 'rxjs';
 import { Query, QueryFilter, QueryResult } from '../../api/api.types';
-import { ChangeDetectorRef, Component, EventEmitter, Input, ViewContainerRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ContentChild, DestroyRef, ElementRef, EventEmitter, HostListener, Input, TemplateRef, ViewChild, ViewContainerRef, inject } from '@angular/core';
 import { IDataSource } from './data-source';
 import _ from 'shared/common/underscore';
-import { Overlay } from '@angular/cdk/overlay';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
+import { QueryOp } from '../../api/api.enums';
 
 @Component({
   template: ''
 })
 export class DropDownBase<TItem> {
 
-  constructor(
-    protected overlay: Overlay,
-    protected viewContainerRef: ViewContainerRef,
-    protected cd: ChangeDetectorRef
-  ) {
-  }
+  destroyRef: DestroyRef = inject(DestroyRef);
+  overlay: Overlay = inject(Overlay);
+  viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
+  cd: ChangeDetectorRef = inject(ChangeDetectorRef);
 
   id = "id";
 
@@ -26,6 +26,8 @@ export class DropDownBase<TItem> {
   @Input()
   placeholder = "";
 
+  @Input()
+  filterHidden = false;
 
   // Data Source
 
@@ -56,10 +58,17 @@ export class DropDownBase<TItem> {
     // Unique token to represent the current callback
     var currentCallback = this.optionItemsCallback = new Object();
 
-    this.dataSource.query({
+    var q: Query = {
       skip: flush ? 0 : this.optionItems.length,
       take: 20,
-    }).subscribe((response) => {
+      filters: []
+    };
+
+    if (this.filterHidden) {
+      q.filters!.push({ field: 'hidden', op: QueryOp.NotEqual, value: true });
+    }
+
+    this.dataSource.query(q).subscribe((response) => {
       if (currentCallback !== this.optionItemsCallback)
         return; // We have forced a reload while waiting for these items to come back
       this.optionItemsCallback = null;
@@ -85,9 +94,6 @@ export class DropDownBase<TItem> {
 
   pickItems(ids: string[], clear: boolean) {
 
-    if (!this.dataSource)
-      return;
-
     // Can we 'cheat' and load these items from the option items
     {
       var items: any[] = [];
@@ -100,7 +106,6 @@ export class DropDownBase<TItem> {
         if (clear)
           this.pickedItems = [];
         this.pushPickedItems(items);
-        this.cd.detectChanges();
         return;
       }
     }
@@ -112,7 +117,7 @@ export class DropDownBase<TItem> {
     });
 
     // We need to use the api
-    this.dataSource.query({
+    this.dataSource!.query({
       projection: [],
       sort: [],
       skip: 0,
@@ -122,12 +127,14 @@ export class DropDownBase<TItem> {
       if (clear)
         this.pickedItems = [];
       this.pushPickedItems(response.items);
-      this.cd.detectChanges();
     });
+
+    this.cd.detectChanges();
   }
 
   removePickedItem(id: string) {
     this.pickedItems = _.remove(this.pickedItems, p => this.getId(p) === id);
+    this.cd.detectChanges();
   }
 
   pushPickedItems(items: TItem[]) {
@@ -135,5 +142,98 @@ export class DropDownBase<TItem> {
       if (item && !_.some(this.pickedItems, p => this.getId(p) === this.getId(item)))
         this.pickedItems.push(item);
     });
+    this.cd.detectChanges();
+  }
+
+  // Popup
+
+  @ViewChild('popupTemplate', { static: false })
+  private popupTemplate!: TemplateRef<any>;
+
+  @ViewChild('popupAnchor', { static: false })
+  private popupAnchor!: ElementRef<any>;
+
+  popupRef: OverlayRef | null = null;
+
+  get popupOpen() {
+    return this.popupRef !== null;
+  }
+
+  openPopup() {
+    if (this.popupRef)
+      return;
+
+    this.popupRef = this.overlay.create({
+      positionStrategy: this.overlay.position().flexibleConnectedTo(this.popupAnchor).withPositions([
+        { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
+        { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
+        { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top' },
+        { originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'bottom' },
+      ]).withFlexibleDimensions(true).withPush(false),
+      hasBackdrop: true,
+    });
+    this.popupRef.backdropClick().subscribe(() => this.closePopup());
+    const portal = new TemplatePortal(this.popupTemplate, this.viewContainerRef);
+    this.popupRef.attach(portal);
+    this.syncPopupWidth();
+    this.fetch(true);
+  }
+
+  closePopup() {
+    if (!this.popupOpen)
+      return;
+    this.popupRef!.detach();
+    this.popupRef = null;
+  }
+
+  delayedClosePopup() {
+    setTimeout(() => this.closePopup(), 200);
+  }
+
+  @HostListener('window:resize')
+  private syncPopupWidth() {
+    if (!this.popupOpen)
+      return;
+    const refRect = this.popupAnchor!.nativeElement.getBoundingClientRect();
+    this.popupRef!.updateSize({ width: refRect.width });
+  }
+
+  // Drop Down Scroll Handler
+
+  scrollPosition: number = 0;
+  scrollTrigger: number = 0.8;
+
+  onDropDownScroll($event: Event) {
+
+    var targetElement = <Element>$event.target;
+    if (!targetElement)
+      return;
+
+    var n = targetElement.scrollTop;
+    var d = targetElement.scrollHeight - targetElement.clientHeight;
+
+    if (!_.isNumber(n) || !_.isNumber(d) || d <= 0)
+      this.scrollPosition = 1;
+    else
+      this.scrollPosition = n / d;
+
+    if (this.scrollPosition > 0.8)
+      this.fetch(false);
+  }
+
+  // Templates
+
+  @ViewChild('defaultOptionTemplate', { static: false }) private defaultOptionTemplate!: TemplateRef<any>;
+  @ContentChild('optionTemplate', { static: false }) private optionTemplate: TemplateRef<any> | undefined;
+
+  @ViewChild('defaultPickedTemplate', { static: false }) private defaultPickedTemplate!: TemplateRef<any>;
+  @ContentChild('pickedTemplate', { static: false }) private pickedTemplate: TemplateRef<any> | undefined;
+
+  get _optionTemplate() {
+    return this.optionTemplate || this.defaultOptionTemplate;
+  }
+
+  get _pickedTemplate() {
+    return this.pickedTemplate || this.defaultPickedTemplate;
   }
 }

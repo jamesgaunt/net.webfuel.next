@@ -1,41 +1,43 @@
-<div class="chrome" [class.collapsed]="chromeCollapsed" [class.hidden]="chromeHidden">
+<div class="chrome" [class.collapsed]="collapsed" [class.hidden]="hidden">
   <div class="chrome-head">
     <div class="navbar">
-      <div class="columns is-align-center">
-        <div class="column">
-          <h1>RSS Project Database</h1>
-        </div>
-        <div class="column is-right">
-          <span (click)="toggleDarkMode()" style="cursor: pointer">
-            <i *ngIf="!darkMode" class="fas fa-house-day"></i>
-            <i *ngIf="darkMode" class="fas fa-house-night"></i>
-          </span>
-          &nbsp;
-
-          <span>{{ (configuration | async)?.email }}</span>
-        </div>
+      <div class="left">
+        <h1>
+          NIHR RSS Imperial College
+        </h1>
+      </div>
+      <div class="right">
+        <span class="icon" (click)="toggleCollapsed()">
+          <i *ngIf="!collapsed" class="fas fa-expand"></i>
+          <i *ngIf="collapsed" class="fas fa-compress"></i>
+        </span>
+        <span class="icon" (click)="toggleDarkMode()">
+          <i *ngIf="!darkMode" class="fas fa-house-day"></i>
+          <i *ngIf="darkMode" class="fas fa-house-night"></i>
+        </span>
+        <a class="menu" #userMenuAnchor (click)="openUserMenu()">
+          {{ (configuration | async)?.email }}&nbsp;&nbsp;<i class="fas fa-bars"></i>
+        </a>
       </div>
     </div>
   </div>
-  <div class="chrome-body">
-    <div class="chrome-side">
-      <div class="sidebar" *ngIf="(configuration | async) !== null">
-        <ul class="sidebar-list">
-          <li><a [class.active]="activeSideMenu=='Home'" routerLink="/home"><i class="fas fa-home"></i><span>Home</span></a></li>
-          <li *ngFor="let item of (configuration | async)!.sideMenu.children">
-            <a [class.active]="activeSideMenu == item.name"
-               [routerLink]="item.action">
-              <i [class]="item.icon || 'fas fa-envelope'"></i>
-              <span>{{ item.name }}</span>
-            </a>
-          </li>
-          <li><a (click)="logout()"><i class="fas fa-sign-out"></i><span>Logout</span></a></li>
-        </ul>
-      </div>
+  <div class="chrome-side">
+    <div class="sidebar" *ngIf="(configuration | async) !== null">
+      <ul class="sidebar-list">
+        <li><a [class.active]="activeSideMenu=='Home'" routerLink="/home"><i class="fas fa-home"></i><span>Home</span></a></li>
+        <li *ngFor="let item of (configuration | async)!.sideMenu.children">
+          <a [class.active]="activeSideMenu == item.name"
+             [routerLink]="item.action">
+            <i [class]="item.icon || 'fas fa-envelope'"></i>
+            <span>{{ item.name }}</span>
+          </a>
+        </li>
+        <li><a (click)="logout()"><i class="fas fa-sign-out"></i><span>Logout</span></a></li>
+      </ul>
     </div>
-    <div class="chrome-main">
-      <ng-content></ng-content>
-    </div>
+  </div>
+  <div class="chrome-main">
+    <ng-content></ng-content>
   </div>
 </div>
 <div class="growl-container">
@@ -43,3 +45,12 @@
     <div>{{ growl.message }}</div>
   </div>
 </div>
+
+<ng-template #userMenuTemplate>
+  <div class="chrome-menu">
+    <ul>
+      <li><a (click)="changePassword()"><i class="fa fa-key"></i>Change Password</a></li>
+      <li><a (click)="logout()"><i class="fa fa-sign-out"></i>Logout</a></li>
+    </ul>
+  </div>
+</ng-template>

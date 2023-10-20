@@ -7,18 +7,18 @@ namespace Webfuel.App
     [ApiService]
     [ApiDataSource]
     [ApiStaticData]
-    public static class SuportRequestStatusApi
+    public static class SupportRequestStatusApi
     {
         public static void RegisterEndpoints(IEndpointRouteBuilder app)
         {
             
             // Querys
             
-            app.MapPost("api/suport-request-status/query", Query)
+            app.MapPost("api/support-request-status/query", Query)
                 .RequireIdentity();
         }
         
-        public static Task<QueryResult<SuportRequestStatus>> Query([FromBody] QuerySuportRequestStatus command, IMediator mediator)
+        public static Task<QueryResult<SupportRequestStatus>> Query([FromBody] QuerySupportRequestStatus command, IMediator mediator)
         {
             return mediator.Send(command);
         }

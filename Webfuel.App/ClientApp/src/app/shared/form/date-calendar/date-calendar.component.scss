@@ -6,7 +6,8 @@
   max-width: 100% !important;
   text-align: center;
   user-select: none;
-  background-color: #FFf;
+  background-color: var(--table-background);
+  color: var(---palette-text);
   white-space: nowrap;
   font-size: 20px;
 }
@@ -40,7 +41,7 @@
 }
 
 .date-calendar .day a:hover {
-  background-color: #eee;
+  background-color: var(--table-background-alt);
 }
 
 .date-calendar .day.inactive a {

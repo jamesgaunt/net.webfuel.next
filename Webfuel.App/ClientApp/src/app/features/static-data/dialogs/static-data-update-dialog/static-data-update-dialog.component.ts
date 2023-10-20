@@ -7,6 +7,8 @@ import { FormService } from '../../../../core/form.service';
 export interface StaticDataUpdateOptions {
   data: any;
   typeName: string;
+  enableHidden: boolean;
+  enableFreeText: boolean;
 }
 
 @Component({

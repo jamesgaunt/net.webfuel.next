@@ -7,9 +7,9 @@
   <h1 class="title">{{typeName}}</h1>
   <grid [dataSource]="dataSource" [search]="true">
     <grid-column name="name" />
-    <grid-boolean-column name="hidden" />
     <grid-boolean-column name="default" />
-    <grid-boolean-column name="freeText" />
+    <grid-boolean-column name="hidden" *ngIf="enableHidden" />
+    <grid-boolean-column name="freeText" *ngIf="enableFreeText" />
     <grid-action-column (add)="onAdd()" [canAdd]="canAdd" (edit)="onEdit($event)" [canEdit]="canEdit" (delete)="onDelete($event)" [canDelete]="canDelete" />
   </grid>
 </div>

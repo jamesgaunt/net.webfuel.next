@@ -7,6 +7,8 @@ import { StaticDataUpdateOptions } from '../static-data-update-dialog/static-dat
 
 export interface StaticDataCreateOptions {
   typeName: string;
+  enableHidden: boolean;
+  enableFreeText: boolean;
 }
 
 @Component({

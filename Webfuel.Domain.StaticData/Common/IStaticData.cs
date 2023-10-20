@@ -14,10 +14,6 @@ namespace Webfuel.Domain.StaticData
 
         int SortOrder { get; }
 
-        bool Hidden { get; }
-
         bool Default { get; }
-
-        bool FreeText { get; }
     }
 }

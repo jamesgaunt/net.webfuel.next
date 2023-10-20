@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, Inject, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { ResolveEnd, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { ClientConfiguration } from '../../api/api.types';
@@ -7,6 +7,8 @@ import { ConfigurationService } from '../../core/configuration.service';
 import { DialogService } from '../../core/dialog.service';
 import { GrowlService } from '../../core/growl.service';
 import { LoginService } from '../../core/login.service';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
 
 @Component({
   selector: 'chrome',
@@ -20,6 +22,8 @@ export class ChromeComponent implements OnInit, OnDestroy {
     public configurationService: ConfigurationService,
     public loginService: LoginService,
     public dialogService: DialogService,
+    public overlay: Overlay,
+    public viewContainerRef: ViewContainerRef,
     @Inject(DOCUMENT) public document: Document
   ) {
     this.configuration = configurationService.configuration;
@@ -32,7 +36,7 @@ export class ChromeComponent implements OnInit, OnDestroy {
       if (event instanceof ResolveEnd) {
 
         this.resolveActiveSideMenu(event);
-        this.chromeHidden = event.state.root.firstChild!.data.chrome === false;
+        this.hidden = event.state.root.firstChild!.data.chrome === false;
       }
     });
   }
@@ -40,15 +44,8 @@ export class ChromeComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
-  chromeCollapsed = false;
-
-  chromeHidden = true;
-
-  toggleChrome() {
-    this.chromeCollapsed = !this.chromeCollapsed;
-  }
-
   logout() {
+    this.closeUserMenu();
     this.dialogService.confirm({
       title: "Logout",
       message: "Are you sure you want to logout?",
@@ -69,6 +66,20 @@ export class ChromeComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Hidden
+
+  hidden = true;
+
+  // Collapsed
+
+  collapsed = false;
+
+  toggleCollapsed() {
+    this.collapsed = !this.collapsed;
+  }
+
+  // Dark Mode
+
   toggleDarkMode() {
     this.darkMode = !this.darkMode;
   }
@@ -81,5 +92,38 @@ export class ChromeComponent implements OnInit, OnDestroy {
       this.document.body.classList.add('dark-mode');
     else
       this.document.body.classList.remove('dark-mode');
+  }
+
+  // User Menu
+
+  @ViewChild('userMenuTemplate', { static: false })
+  private userMenuTemplate!: TemplateRef<any>;
+
+  @ViewChild('userMenuAnchor', { static: false })
+  private userMenuAnchor!: ElementRef<any>;
+
+  userMenuRef: OverlayRef | null = null;
+
+  openUserMenu() {
+    this.userMenuRef = this.overlay.create({
+      positionStrategy: this.overlay.position().flexibleConnectedTo(this.userMenuAnchor).withPositions([
+        { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top' },
+      ]).withFlexibleDimensions(true).withPush(false),
+      hasBackdrop: true,
+    });
+    this.userMenuRef.backdropClick().subscribe(() => this.closeUserMenu());
+    const portal = new TemplatePortal(this.userMenuTemplate, this.viewContainerRef);
+    this.userMenuRef.attach(portal);
+  }
+
+  closeUserMenu() {
+    if (!this.userMenuRef)
+      return;
+    this.userMenuRef!.detach();
+    this.userMenuRef = null;
+  }
+
+  changePassword() {
+    this.closeUserMenu();
   }
 }

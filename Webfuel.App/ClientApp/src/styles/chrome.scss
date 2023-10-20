@@ -3,42 +3,81 @@
 .chrome {
   height: 100vh;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 300px 1fr;
   grid-template-rows: auto 1fr;
+  grid-template-areas: "side head" "side main";
 
   .chrome-head {
-    h1 {
-      font-size: 1.4rem;
-      margin: 0.5rem 0.5rem 0.5rem 0.5rem;
-    }
+    grid-area: head;
   }
 
-  .chrome-body {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    overflow: hidden;
-
-    .chrome-side {
-      overflow-y: auto;
-      display: flex;
-    }
-
-    .chrome-main {
-      overflow-y: auto;
-    }
+  .chrome-side {
+    grid-area: side;
+    overflow-y: auto;
+    overflow-x: auto;
+    display: flex;
   }
 
+  .chrome-main {
+    grid-area: main;
+    overflow-y: auto;
+  }
 
   .navbar {
-    background: #363636;
-    color: #FFf;
+
+    h1, h2, h3 {
+      padding: 0.5rem;
+      margin: 0;
+      font-size: 1.4rem;
+    }
+
+    background: var(--chrome-sidebar-background);
+    color: #FFF;
     padding: 0.3rem 1rem 0.3rem 1rem;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-bottom: 1px solid #999;
+
+    .left {
+      flex-grow: 1;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .right {
+      flex-grow: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .icon {
+      padding: 0.5rem;
+      cursor: pointer;
+      font-size: 1.2em;
+    }
+
+    .text {
+      padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+    }
+
+    .menu {
+      padding: 0.5rem 0 0.5rem 1.5rem;
+      cursor: pointer;
+    }
+
+    .end {
+      align-self: flex-end;
+    }
   }
 
   .sidebar {
     background: var(--chrome-sidebar-background);
     color: #FFf;
-    width: 300px;
+    width: 100%;
 
     .sidebar-list {
       list-style-type: none;
@@ -78,6 +117,42 @@
   }
 }
 
+
+.chrome-menu {
+  background-color: var(--control-background);
+  border: 1px solid var(--border-color);
+  color: var(--palette-text);
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+    li {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+
+      a {
+          display: block;
+          padding: 1rem;
+          min-width: 240px;
+
+          background-color: var(--table-background);
+          color:  var(--text);
+
+          &:hover {
+              background-color: var(--table-background-alt);
+          }
+
+          i {
+              margin-right: 0.8rem;
+          }
+      }
+    }
+  }
+}
+
 .chrome.hidden {
   background-image: url(https://www.webfuel.com/temp/login-background.jpg);
   background-position: 50% 50%;
@@ -89,5 +164,27 @@
 
   .chrome-body .chrome-side {
     display: none;
+  }
+}
+
+.chrome.collapsed {
+  grid-template-columns: 50px 1fr;
+
+  .chrome-side {
+
+    .sidebar {
+      z-index: 1000;
+
+      .sidebar-list {
+
+        a.active {
+          border: none;
+        }
+
+        span {
+          display: none;
+        }
+      }
+    }
   }
 }

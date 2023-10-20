@@ -71,7 +71,8 @@
 }
 
 .dropdown-popup {
-  background-color: #FFF;
+  background-color: var(--control-background);
+  color: var(--palette-text);
   outline: none;
   transition: border 0.25s;
   box-shadow: 6px 3px 12px RGBA(100, 100, 100, 0.4);
@@ -161,5 +162,23 @@
     font-weight: bold;
     position: relative;
     top: -1px;
+  }
+}
+
+.floating-buttons {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 3em 1rem 3rem;
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: var(---dialog-background);
+  box-shadow: 0 0 6px #444;
+  border: 1px solid var(--border-color);
+  border-radius: 1000px;
+
+  .button {
+    box-shadow: 0 0 4px #444;
   }
 }

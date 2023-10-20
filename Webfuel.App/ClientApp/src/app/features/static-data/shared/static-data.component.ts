@@ -23,7 +23,9 @@ export class StaticDataComponent<TItem, TQuery extends Query = Query, TCreate = 
   onAdd() {
     this.dialogService.open<TCreate, StaticDataCreateOptions>(StaticDataCreateDialogComponent, {
       data: {
-        typeName: this.typeName
+        typeName: this.typeName,
+        enableHidden: this.enableHidden,
+        enableFreeText: this.enableFreeText,
       },
       successCallback: (command) => {
         this.dataSource.create!(command).subscribe((result) => {
@@ -40,7 +42,9 @@ export class StaticDataComponent<TItem, TQuery extends Query = Query, TCreate = 
     this.dialogService.open<TUpdate, StaticDataUpdateOptions>(StaticDataUpdateDialogComponent, {
       data: {
         data: item,
-        typeName: this.typeName
+        typeName: this.typeName,
+        enableHidden: this.enableHidden,
+        enableFreeText: this.enableFreeText,
       },
       successCallback: (command) => {
         this.dataSource.update!(command).subscribe((result) => {
@@ -61,4 +65,10 @@ export class StaticDataComponent<TItem, TQuery extends Query = Query, TCreate = 
       }
     })
   }
+
+  // Flexible Fields
+
+  enableHidden = false;
+
+  enableFreeText = false;
 }

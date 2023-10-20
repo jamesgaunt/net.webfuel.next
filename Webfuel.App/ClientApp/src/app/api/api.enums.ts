@@ -22,14 +22,17 @@ export enum ProjectStatusEnum {
 }
 
 export enum SubmissionStageEnum {
-    OutlinestageStage1 = "18174faf-8787-480e-b0b4-5698a5e59d93",
+    OutlineStageStage1 = "18174faf-8787-480e-b0b4-5698a5e59d93",
     Stage2 = "deecb94c-8284-45c8-b499-1c0c099215b0",
     OneStageApplication = "aa13a2ae-f1dd-4b8b-959e-15bdff000fee",
     AcceleratorAward = "3e658c3b-11fc-464b-9296-7bf369866bce",
 }
 
-export enum SuportRequestStatusEnum {
-    Triaged = "206b6f9d-feee-4b28-9795-1e1a2b7b887f",
+export enum SupportRequestStatusEnum {
+    Tobetriaged = "206b6f9d-feee-4b28-9795-1e1a2b7b887f",
+    ClosedasnoteligiblefromNIHRRSS = "1fa7ae4c-8bb7-49da-9efc-f9aa96de4c1d",
+    ClosedasreferredtoanotherNIHRRSS = "3d344c3c-9964-4079-877e-bc3b6864f52d",
+    ReferredtoNIHRRSSexpertteams = "c22df21d-30ed-49d5-bee0-0f304b74a365",
 }
 
 

@@ -5,9 +5,9 @@ namespace Webfuel.Domain.StaticData
     public class CreateResearchMethodology: IRequest<ResearchMethodology>
     {
         public required string Name { get; set; }
-        public bool Hidden { get; set; }
-        public bool Default { get; set; }
-        public bool FreeText { get; set; }
+        public bool Default { get; set; } = false;
+        public bool Hidden { get; set; } = false;
+        public bool FreeText { get; set; } = false;
     }
     internal class CreateResearchMethodologyHandler : IRequestHandler<CreateResearchMethodology, ResearchMethodology>
     {
@@ -23,10 +23,10 @@ namespace Webfuel.Domain.StaticData
         {
             return await _researchMethodologyRepository.InsertResearchMethodology(new ResearchMethodology {
                     Name = request.Name,
-                    Hidden = request.Hidden,
                     Default = request.Default,
+                    Hidden = request.Hidden,
                     FreeText = request.FreeText,
-                    SortOrder = await _researchMethodologyRepository.CountResearchMethodology()
+                    SortOrder = await _researchMethodologyRepository.CountResearchMethodology(),
                 });
         }
     }

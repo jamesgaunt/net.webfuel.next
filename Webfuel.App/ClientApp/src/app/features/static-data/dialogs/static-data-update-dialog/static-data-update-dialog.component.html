@@ -9,14 +9,14 @@
         <input class="input" type="text" placeholder="required" formControlName="name" />
       </div>
       <div class="field">
-        <label class="label">Hidden</label>
-        <toggle-input formControlName="hidden" />
-      </div>
-      <div class="field">
         <label class="label">Default</label>
         <toggle-input formControlName="default" />
       </div>
-      <div class="field">
+      <div class="field" *ngIf="options.enableHidden">
+        <label class="label">Hidden</label>
+        <toggle-input formControlName="hidden" />
+      </div>
+      <div class="field" *ngIf="options.enableFreeText">
         <label class="label">Free Text</label>
         <toggle-input formControlName="freeText" />
       </div>

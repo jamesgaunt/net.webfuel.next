@@ -1,11 +1,9 @@
 
+W1: Scaffolding & UI / Tenants & Connection Strings / Deploy to Azure
+W2: Files / Support Request Form
+W3: Feedback
+
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-
-W0
-
-> Static Data able to dynamically deal with different fields on the data (Optional: Hidden, FreeText, Description)
-
-> CSS style/structure + rework dropdown logic + subscription disposal
 
 > Deploy to Azure / Tenants / Connection Strings
 
@@ -19,19 +17,7 @@ W0
 
 > Field label popup info ??
 
-
-
-W1
-
-> Controls / Inputs Review
-
-> Responsiveness / Structural CSS
-
-> DropDownBase account for Hidden options 
-
-W2
-
-> Secondary Domain Editors
+-----
 
 > Support Request Form (angular -> iframe)
 
@@ -43,9 +29,11 @@ W2
 
 -----
 
-> Mailing List (email addresses)
-
 [DONE]
+
+> Static Data able to dynamically deal with different fields on the data (Optional: Hidden, FreeText, Description) [DONE]
+
+> Drop Down Rework, Hidden Fields [DONE]
 
 > Do away with StaticData.Code - we can use magic strings in Scribble and business logic sensitive data should use an enum or specific flags/hints (its a code smell) [DONE]
 

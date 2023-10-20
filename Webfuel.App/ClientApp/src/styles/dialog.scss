@@ -35,7 +35,7 @@
 
   .dialog-buttons {
     width: 100%;
-    border: 1px solid #DADADA;
+    border: 1px solid var(--border-color);
     border-right: none;
     display: flex;
 
@@ -47,7 +47,7 @@
       text-decoration: none;
       color: var(--palette-text);
       border: none;
-      border-right: 1px solid #DADADA;
+      border-right: 1px solid var(--border-color);
       transition: color 0.25s ease, background-color 0.25s ease;
       background-color: var(--dialog-background);
 

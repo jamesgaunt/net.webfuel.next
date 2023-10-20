@@ -14,5 +14,7 @@ export class FundingStreamComponent extends StaticDataComponent<FundingStream, Q
   ) {
     super(dataSource);
     this.typeName = "Funding Stream";
+    this.enableHidden = true;
+    this.enableFreeText = true;
   }
 }

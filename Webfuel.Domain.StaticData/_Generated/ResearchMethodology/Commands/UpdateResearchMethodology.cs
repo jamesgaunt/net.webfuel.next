@@ -6,9 +6,9 @@ namespace Webfuel.Domain.StaticData
     {
         public required Guid Id { get; set; }
         public required string Name { get; set; }
-        public bool Hidden { get; set; }
-        public bool Default { get; set; }
-        public bool FreeText { get; set; }
+        public bool Default { get; set; } = false;
+        public bool Hidden { get; set; } = false;
+        public bool FreeText { get; set; } = false;
     }
     internal class UpdateResearchMethodologyHandler : IRequestHandler<UpdateResearchMethodology, ResearchMethodology>
     {
@@ -26,8 +26,8 @@ namespace Webfuel.Domain.StaticData
             
             var updated = original.Copy();
             updated.Name = request.Name;
-            updated.Hidden = request.Hidden;
             updated.Default = request.Default;
+            updated.Hidden = request.Hidden;
             updated.FreeText = request.FreeText;
             
             return await _researchMethodologyRepository.UpdateResearchMethodology(original: original, updated: updated);

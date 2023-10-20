@@ -20,6 +20,9 @@ namespace Webfuel.Domain
                     case nameof(Project.Id):
                         Id = (Guid)value!;
                         break;
+                    case nameof(Project.LinkId):
+                        LinkId = (Guid)value!;
+                        break;
                     case nameof(Project.Title):
                         Title = (string)value!;
                         break;
@@ -33,6 +36,7 @@ namespace Webfuel.Domain
             }
         }
         public Guid Id  { get; set; } = Guid.Empty;
+        public Guid LinkId  { get; set; } = Guid.Empty;
         public string Title  { get; set; } = String.Empty;
         public Guid? FundingBodyId { get; set; }
         public Guid? ResearchMethodologyId { get; set; }
@@ -40,6 +44,7 @@ namespace Webfuel.Domain
         {
             var entity = new Project();
             entity.Id = Id;
+            entity.LinkId = LinkId;
             entity.Title = Title;
             entity.FundingBodyId = FundingBodyId;
             entity.ResearchMethodologyId = ResearchMethodologyId;

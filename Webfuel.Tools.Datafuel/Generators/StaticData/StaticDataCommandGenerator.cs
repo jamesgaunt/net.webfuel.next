@@ -48,9 +48,13 @@ namespace Webfuel.Tools.Datafuel
                 using (sb.OpenBrace($"public class Create{entity.Name}: IRequest<{entity.Name}>"))
                 {
                     sb.WriteLine("public required string Name { get; set; }");
-                    sb.WriteLine("public bool Hidden { get; set; }");
-                    sb.WriteLine("public bool Default { get; set; }");
-                    sb.WriteLine("public bool FreeText { get; set; }");
+                    foreach (var property in entity.Properties)
+                    {
+                        if (property.Name == "Name" || property.Name == "SortOrder")
+                            continue;
+
+                        sb.WriteLine($"public {property.CLRTypeWithNullable} {property.Name} {{ get; set; }} = {property.CLRLiteral(property.ParseValue(property.Default))};");
+                    }
                 }
 
                 using (sb.OpenBrace($"internal class Create{entity.Name}Handler : IRequestHandler<Create{entity.Name}, {entity.Name}>"))
@@ -70,10 +74,16 @@ namespace Webfuel.Tools.Datafuel
                         {{
                             return await _{entity.Name.ToCamelCase()}Repository.Insert{entity.Name}(new {entity.Name} {{ 
                                 Name = request.Name,
-                                Hidden = request.Hidden,
-                                Default = request.Default,
-                                FreeText = request.FreeText,
-                                SortOrder = await _{entity.Name.ToCamelCase()}Repository.Count{entity.Name}()
+                    ");
+
+                    foreach (var property in entity.Properties)
+                    {
+                        if (property.Name == "Name" || property.Name == "SortOrder")
+                            continue;
+
+                        sb.WriteLine($"{property.Name} = request.{property.Name},");
+                    }
+                    sb.Write($@"SortOrder = await _{entity.Name.ToCamelCase()}Repository.Count{entity.Name}(),
                             }});
                         }}
 ");
@@ -95,10 +105,13 @@ namespace Webfuel.Tools.Datafuel
                 {
                     sb.WriteLine("public required Guid Id { get; set; }");
                     sb.WriteLine("public required string Name { get; set; }");
-                    sb.WriteLine("public bool Hidden { get; set; }");
-                    sb.WriteLine("public bool Default { get; set; }");
-                    sb.WriteLine("public bool FreeText { get; set; }");
+                    foreach (var property in entity.Properties)
+                    {
+                        if (property.Name == "Name" || property.Name == "SortOrder")
+                            continue;
 
+                        sb.WriteLine($"public {property.CLRTypeWithNullable} {property.Name} {{ get; set; }} = {property.CLRLiteral(property.ParseValue(property.Default))};");
+                    }
                 }
 
                 using (sb.OpenBrace($"internal class Update{entity.Name}Handler : IRequestHandler<Update{entity.Name}, {entity.Name}>"))
@@ -120,10 +133,18 @@ namespace Webfuel.Tools.Datafuel
 
                             var updated = original.Copy();
                             updated.Name = request.Name;
-                            updated.Hidden = request.Hidden;
-                            updated.Default = request.Default;
-                            updated.FreeText = request.FreeText;
+                     ");
 
+
+                    foreach (var property in entity.Properties)
+                    {
+                        if (property.Name == "Name" || property.Name == "SortOrder")
+                            continue;
+
+                        sb.WriteLine($"updated.{property.Name} = request.{property.Name};");
+                    }
+
+                    sb.Write($@"
                             return await _{entity.Name.ToCamelCase()}Repository.Update{entity.Name}(original: original, updated: updated); 
                         }}
 ");

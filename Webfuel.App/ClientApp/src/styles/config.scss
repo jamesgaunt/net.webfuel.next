@@ -58,15 +58,22 @@ $paletteAction: 'primary', 'success', 'warning', 'danger', 'control';
 // Dark Mode
 
 body.dark-mode {
-  --palette-text: #FFF;
-  --table-background: #222222;
-  --table-background-alt: #333333;
-  --control-background: #222222;
+  --palette-text: #eee;
+  --palette-control: #555;
+  --palette-control-contrast: #FFF;
+  --table-background: #2c2c2c;
+  --table-background-alt: #363636;
+  --control-background: #2c2c2c;
   --body-background: #333333;
-  --dialog-background: #444444;
-  --chrome-sidebar-background: hsl(198, 34%, 19%);
+  --dialog-background: #333333;
+  --border-color: #525252;
+  --chrome-sidebar-highlight: #09949E;
+  --chrome-sidebar-background: hsl(198, 34%, 10%);
   --chrome-sidebar-active-background: RGBA(10, 10, 10, 0.5);
   --chrome-sidebar-hover-background: RGBA(10, 10, 10, 0.7);
+}
+
+body.dark-mode {
 }
 
 // Mixins

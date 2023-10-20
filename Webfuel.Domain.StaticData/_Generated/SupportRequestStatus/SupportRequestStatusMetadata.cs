@@ -4,39 +4,39 @@ using System.Text.Json.Serialization;
 
 namespace Webfuel.Domain.StaticData
 {
-    public partial class SuportRequestStatusMetadata: IRepositoryMetadata<SuportRequestStatus>
+    public partial class SupportRequestStatusMetadata: IRepositoryMetadata<SupportRequestStatus>
     {
         // Data Access
         
-        public static string DatabaseTable => "SuportRequestStatus";
+        public static string DatabaseTable => "SupportRequestStatus";
         
         public static string DefaultOrderBy => "ORDER BY SortOrder ASC";
         
-        public static SuportRequestStatus DataReader(SqlDataReader dr) => new SuportRequestStatus(dr);
+        public static SupportRequestStatus DataReader(SqlDataReader dr) => new SupportRequestStatus(dr);
         
-        public static List<SqlParameter> ExtractParameters(SuportRequestStatus entity, IEnumerable<string> properties)
+        public static List<SqlParameter> ExtractParameters(SupportRequestStatus entity, IEnumerable<string> properties)
         {
-            var result = new List<SqlParameter> { new SqlParameter(nameof(SuportRequestStatus.Id), entity.Id) };
+            var result = new List<SqlParameter> { new SqlParameter(nameof(SupportRequestStatus.Id), entity.Id) };
             foreach(var property in properties)
             {
                 switch (property)
                 {
-                    case nameof(SuportRequestStatus.Id):
+                    case nameof(SupportRequestStatus.Id):
                         break;
-                    case nameof(SuportRequestStatus.Name):
-                        result.Add(new SqlParameter(nameof(SuportRequestStatus.Name), entity.Name));
+                    case nameof(SupportRequestStatus.Name):
+                        result.Add(new SqlParameter(nameof(SupportRequestStatus.Name), entity.Name));
                         break;
-                    case nameof(SuportRequestStatus.SortOrder):
-                        result.Add(new SqlParameter(nameof(SuportRequestStatus.SortOrder), entity.SortOrder));
+                    case nameof(SupportRequestStatus.SortOrder):
+                        result.Add(new SqlParameter(nameof(SupportRequestStatus.SortOrder), entity.SortOrder));
                         break;
-                    case nameof(SuportRequestStatus.Default):
-                        result.Add(new SqlParameter(nameof(SuportRequestStatus.Default), entity.Default));
+                    case nameof(SupportRequestStatus.Default):
+                        result.Add(new SqlParameter(nameof(SupportRequestStatus.Default), entity.Default));
                         break;
-                    case nameof(SuportRequestStatus.Hidden):
-                        result.Add(new SqlParameter(nameof(SuportRequestStatus.Hidden), entity.Hidden));
+                    case nameof(SupportRequestStatus.Hidden):
+                        result.Add(new SqlParameter(nameof(SupportRequestStatus.Hidden), entity.Hidden));
                         break;
-                    case nameof(SuportRequestStatus.FreeText):
-                        result.Add(new SqlParameter(nameof(SuportRequestStatus.FreeText), entity.FreeText));
+                    case nameof(SupportRequestStatus.FreeText):
+                        result.Add(new SqlParameter(nameof(SupportRequestStatus.FreeText), entity.FreeText));
                         break;
                 }
             }
@@ -46,18 +46,18 @@ namespace Webfuel.Domain.StaticData
         public static string InsertSQL(IEnumerable<string>? properties = null)
         {
             properties = properties ?? InsertProperties;
-            return RepositoryMetadataDefaults.InsertSQL<SuportRequestStatus, SuportRequestStatusMetadata>(properties);
+            return RepositoryMetadataDefaults.InsertSQL<SupportRequestStatus, SupportRequestStatusMetadata>(properties);
         }
         
         public static string UpdateSQL(IEnumerable<string>? properties = null)
         {
             properties = properties ?? UpdateProperties;
-            return RepositoryMetadataDefaults.UpdateSQL<SuportRequestStatus, SuportRequestStatusMetadata>(properties);
+            return RepositoryMetadataDefaults.UpdateSQL<SupportRequestStatus, SupportRequestStatusMetadata>(properties);
         }
         
         public static string DeleteSQL()
         {
-            return RepositoryMetadataDefaults.DeleteSQL<SuportRequestStatus, SuportRequestStatusMetadata>();
+            return RepositoryMetadataDefaults.DeleteSQL<SupportRequestStatus, SupportRequestStatusMetadata>();
         }
         
         public static IEnumerable<string> SelectProperties
@@ -100,14 +100,14 @@ namespace Webfuel.Domain.StaticData
         
         // Validation
         
-        public static void Validate(SuportRequestStatus entity)
+        public static void Validate(SupportRequestStatus entity)
         {
             entity.Name = entity.Name ?? String.Empty;
             entity.Name = entity.Name.Trim();
             Validator.ValidateAndThrow(entity);
         }
         
-        public static SuportRequestStatusRepositoryValidator Validator { get; } = new SuportRequestStatusRepositoryValidator();
+        public static SupportRequestStatusRepositoryValidator Validator { get; } = new SupportRequestStatusRepositoryValidator();
         
         public const int Name_MaxLength = 64;
         
@@ -118,9 +118,9 @@ namespace Webfuel.Domain.StaticData
                 .MaximumLength(Name_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
-        public class SuportRequestStatusRepositoryValidator: AbstractValidator<SuportRequestStatus>
+        public class SupportRequestStatusRepositoryValidator: AbstractValidator<SupportRequestStatus>
         {
-            public SuportRequestStatusRepositoryValidator()
+            public SupportRequestStatusRepositoryValidator()
             {
                 RuleFor(x => x.Name).Use(Name_ValidationRules);
             }

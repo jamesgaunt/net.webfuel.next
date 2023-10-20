@@ -72,6 +72,14 @@ namespace Webfuel
                             else
                                 filter.Value = reader.GetString();
                         }
+                        else if(reader.TokenType == JsonTokenType.True)
+                        {
+                            filter.Value = true;
+                        }
+                        else if(reader.TokenType == JsonTokenType.False)
+                        {
+                            filter.Value = false;
+                        }
                         else
                         {
                             throw new JsonException("QueryFilterConverter: Invalid Value");

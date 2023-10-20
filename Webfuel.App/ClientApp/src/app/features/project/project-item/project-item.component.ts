@@ -41,13 +41,14 @@ export class ProjectItemComponent implements OnInit {
     researchMethodologyId: new FormControl<string | null>(null),
   });
 
-  save() {
+  save(close: boolean) {
     if (!this.form.valid)
       return;
 
     this.projectApi.update(this.form.getRawValue(), { successGrowl: "Project Updated" }).subscribe((result) => {
       this.reset(result);
-      this.router.navigate(['project/project-list']);
+      if(close)
+        this.router.navigate(['project/project-list']);
     });
   }
 

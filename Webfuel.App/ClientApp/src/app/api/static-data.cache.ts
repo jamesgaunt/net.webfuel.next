@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IDataSource } from 'shared/common/data-source';
 import { StaticDataService } from '../core/static-data.service';
-import { FundingBody, FundingStream, Gender, ProjectStatus, ResearchMethodology, SubmissionStage, SuportRequestStatus, Title } from './api.types';
+import { ApplicationStage, FundingBody, FundingCallType, FundingStream, Gender, ProjectStatus, ResearchMethodology, SubmissionStage, SupportRequestStatus, Title } from './api.types';
 
 @Injectable()
 export class StaticDataCache {
@@ -9,7 +9,11 @@ export class StaticDataCache {
     constructor(private staticDataService: StaticDataService) {
     }
     
+    applicationStage: IDataSource<ApplicationStage> = { query: (query) => this.staticDataService.load(query, s => s.applicationStage) };
+    
     fundingBody: IDataSource<FundingBody> = { query: (query) => this.staticDataService.load(query, s => s.fundingBody) };
+    
+    fundingCallType: IDataSource<FundingCallType> = { query: (query) => this.staticDataService.load(query, s => s.fundingCallType) };
     
     fundingStream: IDataSource<FundingStream> = { query: (query) => this.staticDataService.load(query, s => s.fundingStream) };
     
@@ -21,7 +25,7 @@ export class StaticDataCache {
     
     submissionStage: IDataSource<SubmissionStage> = { query: (query) => this.staticDataService.load(query, s => s.submissionStage) };
     
-    suportRequestStatus: IDataSource<SuportRequestStatus> = { query: (query) => this.staticDataService.load(query, s => s.suportRequestStatus) };
+    supportRequestStatus: IDataSource<SupportRequestStatus> = { query: (query) => this.staticDataService.load(query, s => s.supportRequestStatus) };
     
     title: IDataSource<Title> = { query: (query) => this.staticDataService.load(query, s => s.title) };
 }

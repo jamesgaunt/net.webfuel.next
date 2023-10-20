@@ -32,9 +32,6 @@ namespace Webfuel.Domain.StaticData
                     case nameof(Title.Hidden):
                         Hidden = (bool)value!;
                         break;
-                    case nameof(Title.FreeText):
-                        FreeText = (bool)value!;
-                        break;
                 }
             }
         }
@@ -43,7 +40,6 @@ namespace Webfuel.Domain.StaticData
         public int SortOrder  { get; internal set; } = 0;
         public bool Default  { get; internal set; } = false;
         public bool Hidden  { get; internal set; } = false;
-        public bool FreeText  { get; internal set; } = false;
         public Title Copy()
         {
             var entity = new Title();
@@ -52,7 +48,6 @@ namespace Webfuel.Domain.StaticData
             entity.SortOrder = SortOrder;
             entity.Default = Default;
             entity.Hidden = Hidden;
-            entity.FreeText = FreeText;
             return entity;
         }
     }
