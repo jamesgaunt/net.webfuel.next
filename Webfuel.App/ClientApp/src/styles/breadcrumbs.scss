@@ -4,8 +4,9 @@
   list-style-type: none;
   margin: 0;
   padding: 0 1rem 0 1rem;
-  background-color: var(--control-background);
-  border-bottom: 1px solid var(--border-color);
+  background-color: var(--palette-control-background);
+  border-bottom: 1px solid var(--palette-control-border);
+  color: var(--palette-control-text);
 
   & > * {
 

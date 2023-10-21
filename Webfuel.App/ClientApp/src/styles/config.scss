@@ -1,39 +1,8 @@
-
-// Variables
-
 $breakpoint-sm: 800px;
 $breakpoint-md: 1200px;
 $breakpoint-lg: 1600px;
 
-:root {
-  --table-background: #FFFFFF;
-  --table-background-alt: #FAFAFA;
-  --control-background: #FFFFFF;
-  --body-background: #F4F6F6;
-  --dialog-background: #F2F2F2;
-  --sidebar-width: 200px;
-}
-
-:root {
-  --palette-text: #333;
-  --palette-primary: hsl(208, 56%, 46%);
-  --palette-primary-hover: hsl(208, 56%, 41%);
-  --palette-primary-contrast: #FFF;
-  --palette-success: hsl(173, 70%, 35%);
-  --palette-success-hover: hsl(173, 70%, 30%);
-  --palette-success-contrast: #FFF;
-  --palette-warning: hsl(25, 100%, 40%);
-  --palette-warning-hover: hsl(25, 100%, 35%);
-  --palette-warning-contrast: #FFF;
-  --palette-danger: hsl(351, 52%, 43%);
-  --palette-danger-hover: hsl(351, 52%, 38%);
-  --palette-danger-contrast: #FFF;
-  --palette-control: hsl(210, 30%, 89%);
-  --palette-control-hover: hsl(210, 30%, 86%);
-  --palette-control-contrast: #000;
-}
-
-$paletteAction: 'primary', 'success', 'warning', 'danger', 'control';
+@import 'config.palette.scss';
 
 :root {
   --font-family: "Poppins", sans-serif;
@@ -44,45 +13,28 @@ $paletteAction: 'primary', 'success', 'warning', 'danger', 'control';
 }
 
 :root {
-  --border-color: #dbdbdb;
-  --border-color-hover: #ababab;
-  --border-color-focus: hsl(208, 10%, 41%);
+  --sidebar-background: hsl(198, 34%, 29%);
+  --sidebar-background-hover: RGBA(51, 51, 51, 0.7);
+  --sidebar-background-active: RGBA(51, 51, 51, 0.5);
+  --sidebar-highlight: #0de3f6;
+  --sidebar-width: 200px;
 }
 
 :root {
-  --chrome-sidebar-background: hsl(198, 34%, 29%);
-  --chrome-sidebar-highlight: #0de3f6;
-  --chrome-sidebar-active-background: RGBA(51, 51, 51, 0.5);
-  --chrome-sidebar-hover-background: RGBA(51, 51, 51, 0.7);
+  --navbar-background: hsl(198, 34%, 29%);
+  --navbar-background-hover: RGBA(51, 51, 51, 0.7);
+  --navbar-background-active: RGBA(51, 51, 51, 0.5);
+  --navbar-highlight: #0de3f6;
+  --navbar-height: 3rem;
 }
 
-// Dark Mode
-
-body.dark-mode {
-  --palette-text: #eee;
-  --palette-control: #555;
-  --palette-control-contrast: #FFF;
-  --table-background: #2c2c2c;
-  --table-background-alt: #363636;
-  --control-background: #2c2c2c;
-  --body-background: #333333;
-  --dialog-background: #333333;
-  --border-color: #525252;
-  --chrome-sidebar-highlight: #09949E;
-  --chrome-sidebar-background: #101019;
-  --chrome-sidebar-active-background: RGBA(10, 10, 10, 0.5);
-  --chrome-sidebar-hover-background: RGBA(10, 10, 10, 0.7);
-}
-
-body.dark-mode {
-}
 
 // Mixins
 
 @mixin form-input {
-  background-color: var(--control-background);
-  border: 1px solid var(--border-color);
-  color: var(--palette-text);
+  background-color: var(--palette-control-background);
+  border: 1px solid var(--palette-control-border);
+  color: var(--palette-control-text);
   box-shadow: none;
   outline: none;
   font-size: 1rem;
@@ -100,12 +52,18 @@ body.dark-mode {
   flex-shrink: 1;
 
   &:hover {
-    border: 1px solid var(--border-color-hover);
-    box-shadow: inset 0 0 2px var(--border-color-hover);
+    border: 1px solid var(--palette-control-border-hover);
+    box-shadow: inset 0 0 2px var(--palette-control-border-hover);
   }
 
   &:focus, &:focus-within {
-    border-color: var(--border-color-focus);
-    box-shadow: inset 0 0 2px var(--border-color-focus);
+    border-color: var(--palette-control-border-focus);
+    box-shadow: inset 0 0 2px var(--palette-control-border-focus);
+  }
+
+
+  &.ng-invalid.ng-touched {
+    border-color: var(--palette-control-border-error);
+    box-shadow: inset 0 0 2px var(--palette-control-border-error);
   }
 }

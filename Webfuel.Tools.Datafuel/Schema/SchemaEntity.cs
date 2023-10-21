@@ -22,9 +22,6 @@ namespace Webfuel.Tools.Datafuel
             if (element.Elements().Any(p => p.Name == "Key"))
                 Key = SchemaEntityProperty.Build(this, element.Element("Key")!);
 
-            foreach (var reference in element.Elements("Reference"))
-                References.Add(new SchemaEntityReference(this, reference));
-
             foreach (var index in element.Elements("Index"))
                 Indexes.Add(new SchemaEntityIndex(this, index));
 
@@ -67,17 +64,47 @@ namespace Webfuel.Tools.Datafuel
             get
             {
                 if (_properties == null)
-                {
-                    _properties = new List<SchemaEntityProperty>();
-                    foreach (var property in Element.Elements("Property"))
-                        _properties.Add(SchemaEntityProperty.Build(this, property));
-                }
-                return _properties;
+                    BuildMembers();
+                return _properties!;
             }
         }
         List<SchemaEntityProperty>? _properties = null;
 
-        public List<SchemaEntityReference> References { get; } = new List<SchemaEntityReference>();
+        public List<SchemaEntityReference> References
+        {
+            get
+            {
+                if (_references == null)
+                    BuildMembers();
+                return _references!;
+            }
+        }
+        List<SchemaEntityReference>? _references = null;
+
+        void BuildMembers()
+        {
+            _properties = new List<SchemaEntityProperty>();
+            _references = new List<SchemaEntityReference>();
+
+            foreach (var property in Element.Elements("Property"))
+            {
+                var p = SchemaEntityProperty.Build(this, property);
+                if (p != null)
+                {
+                    _properties.Add(p);
+                }
+                else
+                {
+                    // Its not a property so it had better be a reference
+                    _references.Add(new SchemaEntityReference(this, property));
+                }
+            }
+
+            foreach (var reference in Element.Elements("Reference"))
+            {
+                _references.Add(new SchemaEntityReference(this, reference));
+            }
+        }
 
         public SchemaEntityView? View { get; private set; }
 

@@ -8,19 +8,19 @@
   height: 2.5em;
   padding: 0 1em 0 1em;
   transition: background-color 0.25s ease;
-  color: var(--palette-text);
-  background-color: var(--control-background);
-  border: 1px solid var(--border-color);
+  color: var(--palette-control-text);
+  background-color: var(--palette-control-background);
+  border: 1px solid var(--palette-control-border);
   white-space: nowrap;
 
   @each $p in $paletteAction {
     &.is-#{$p} {
-      color: var(--palette-#{$p}-contrast);
-      background-color: var(--palette-#{$p});
-      border-color: var(--palette-#{$p});
+      color: var(--palette-#{$p}-foreground);
+      background-color: var(--palette-#{$p}-background);
+      border-color: var(--palette-#{$p}-background);
 
       &:hover, &:focus {
-        background-color: var(--palette-#{$p}-hover);
+        background-color: var(--palette-#{$p}-background-hover);
       }
     }
   }

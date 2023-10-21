@@ -1,11 +1,11 @@
 <div #popupAnchor class="control">
   <input #textInput class="input" [placeholder]="placeholder" [formControl]="formControl" (focus)="openPopup()" (blur)="delayedClosePopup()" />
   <!-- Clear Icon -->
-  <div *ngIf="enableClear && pickedItems.length !== 0" class="icon is-control" (click)="clear($event)">
+  <div *ngIf="enableClear && pickedItems.length !== 0" class="icon is-secondary" (click)="clear($event)">
     <i class="fas fa-times"></i>
   </div>
   <!-- Open Icon -->
-  <div class="icon is-control" (click)="togglePopup($event, textInput)">
+  <div class="icon is-secondary" (click)="togglePopup($event, textInput)">
     <i class="fas fa-chevron-down"></i>
   </div>
 </div>

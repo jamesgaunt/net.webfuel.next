@@ -8,11 +8,6 @@
   margin: var(--gap) 0 var(--gap) 0;
 }
 
-.input.ng-invalid.ng-touched {
-  border-color: var(--palette-danger);
-  box-shadow: inset 0 0 2px var(--palette-danger);
-}
-
 .field {
   .label {
     display: block;
@@ -20,8 +15,6 @@
     margin-bottom: 0.4rem;
   }
 }
-
-// TODO: Factor out key styling into mixin
 
 .input, .select, .textarea, .checkbox, .radio-group, .tag-input {
     @include form-input;
@@ -59,11 +52,11 @@
 
     @each $p in $paletteAction {
       &.is-#{$p} {
-        color: var(--palette-#{$p}-contrast);
-        background-color: var(--palette-#{$p});
+        color: var(--palette-#{$p}-foreground);
+        background-color: var(--palette-#{$p}-background);
 
         &:hover, &:focus {
-          background-color: var(--palette-#{$p}-hover);
+          background-color: var(--palette-#{$p}-background-hover);
         }
       }
     }
@@ -71,11 +64,11 @@
 }
 
 .dropdown-popup {
-  background-color: var(--control-background);
-  color: var(--palette-text);
+  background-color: var(--palette-control-background);
+  color: var(--palette-control-text);
   outline: none;
   transition: border 0.25s;
-  box-shadow: 6px 3px 12px RGBA(100, 100, 100, 0.4);
+  box-shadow: 3px 3px 3px var(--palette-control-shadow);
   display: block;
   width: 100%;
   overflow: hidden;
@@ -88,7 +81,7 @@
   input {
     padding: 8px 10px 8px 10px;
     border: 0;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--palette-control-border);
     width: 100%;
     border-radius: 0;
   }
@@ -100,8 +93,8 @@
     cursor: pointer;
 
     &:hover {
-      color: var(--palette-primary-contrast);
-      background-color: var(--palette-primary);
+      color: var(--palette-primary-foreground);
+      background-color: var(--palette-primary-background);
     }
   }
 
@@ -146,12 +139,12 @@
 
   &.on {
     .wrap {
-      background-color: color-mix(in hsl, var(--palette-success) 40%, transparent);
+      background-color: color-mix(in hsl, var(--palette-success-background) 40%, transparent);
     }
 
     .disc {
       left: calc(100% - 1.6em);
-      background-color: var(--palette-success);
+      background-color: var(--palette-success-background);
     }
   }
 
@@ -173,9 +166,9 @@
   bottom: 2rem;
   left: 50%;
   transform: translate(-50%, 0);
-  background-color: var(---dialog-background);
+  background-color: var(--palette-body-background-alt);
   box-shadow: 0 0 6px #444;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--palette-body-border);
   border-radius: 1000px;
 
   .button {

@@ -29,9 +29,6 @@ namespace Webfuel.Domain.StaticData
                     case nameof(Title.Default):
                         Default = (bool)value!;
                         break;
-                    case nameof(Title.Hidden):
-                        Hidden = (bool)value!;
-                        break;
                 }
             }
         }
@@ -39,7 +36,6 @@ namespace Webfuel.Domain.StaticData
         public string Name  { get; internal set; } = String.Empty;
         public int SortOrder  { get; internal set; } = 0;
         public bool Default  { get; internal set; } = false;
-        public bool Hidden  { get; internal set; } = false;
         public Title Copy()
         {
             var entity = new Title();
@@ -47,7 +43,6 @@ namespace Webfuel.Domain.StaticData
             entity.Name = Name;
             entity.SortOrder = SortOrder;
             entity.Default = Default;
-            entity.Hidden = Hidden;
             return entity;
         }
     }

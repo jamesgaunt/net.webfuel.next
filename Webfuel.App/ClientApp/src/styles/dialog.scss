@@ -2,7 +2,7 @@
 
 
 .dialog {
-  background-color: var(--dialog-background);
+  background-color: var(--palette-body-background-alt);
   display: block;
   position: relative;
   box-shadow: 1px 1px 10px #000;
@@ -15,13 +15,13 @@
     padding: 0 1rem 0 1rem;
     border-bottom: 1px solid #DADADA;
     font-weight: bold;
-    color: var(--palette-success-contrast);
-    background-color: var(--palette-success);
+    color: var(--palette-success-foreground);
+    background-color: var(--palette-success-background);
 
     @each $p in $paletteAction {
       &.is-#{$p} {
-        background-color: var(--palette-#{$p});
-        color: var(--palette-#{$p}-contrast);
+        color: var(--palette-#{$p}-foreground);
+        background-color: var(--palette-#{$p}-background);
       }
     }
   }
@@ -35,7 +35,7 @@
 
   .dialog-buttons {
     width: 100%;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--palette-control-border);
     border-right: none;
     display: flex;
 
@@ -45,11 +45,11 @@
       line-height: 3.5rem;
       text-align: center;
       text-decoration: none;
-      color: var(--palette-text);
+      color: var(--palette-body-text);
       border: none;
-      border-right: 1px solid var(--border-color);
+      border-right: 1px solid var(--palette-control-border);
       transition: color 0.25s ease, background-color 0.25s ease;
-      background-color: var(--dialog-background);
+      background-color: var(--palette-body-background-alt);
 
       &:hover {
         background-color: #D2D2D2;
@@ -57,8 +57,8 @@
 
       @each $p in $paletteAction {
         &.is-#{$p}:hover {
-          background-color: var(--palette-#{$p});
-          color: var(--palette-#{$p}-contrast);
+          background-color: var(--palette-#{$p}-background);
+          color: var(--palette-#{$p}-foreground);
         }
       }
     }

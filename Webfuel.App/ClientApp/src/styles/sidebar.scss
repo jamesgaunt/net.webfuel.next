@@ -6,7 +6,7 @@
   left: 0;
   bottom: 0;
   width: var(--sidebar-width);
-  background: var(--chrome-sidebar-background);
+  background: var(--sidebar-background);
   color: #FFf;
 
   .sidebar-list {
@@ -34,16 +34,16 @@
       }
 
       a.active {
-        background-color: var(--chrome-sidebar-active-background);
-        border-right: 8px solid var(--chrome-sidebar-highlight);
+        background-color: var(--sidebar-background-active);
+        border-right: 8px solid var(--sidebar-highlight);
 
         i {
-          color: var(--chrome-sidebar-highlight);
+          color: var(--sidebar-highlight);
         }
       }
 
       a:hover {
-        background-color: var(--chrome-sidebar-active-background);
+        background-color: var(--sidebar-background-hover);
       }
     }
   }

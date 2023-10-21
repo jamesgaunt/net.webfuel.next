@@ -9,6 +9,7 @@ import { GrowlService } from '../../core/growl.service';
 import { LoginService } from '../../core/login.service';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
+import _ from 'shared/common/underscore';
 
 @Component({
   selector: 'chrome',
@@ -28,6 +29,9 @@ export class ChromeComponent implements OnInit, OnDestroy {
 
   ) {
     this.configuration = configurationService.configuration;
+
+    this.darkMode = _.getLocalStorage("chrome.darkMode") || false;
+    this.collapsed = _.getLocalStorage("chrome.collapsed") || false;
   }
   configuration: BehaviorSubject<ClientConfiguration | null>;
 
@@ -77,12 +81,14 @@ export class ChromeComponent implements OnInit, OnDestroy {
 
   toggleCollapsed() {
     this.collapsed = !this.collapsed;
+    _.setLocalStorage("chrome.collapsed", this.collapsed);
   }
 
   // Dark Mode
 
   toggleDarkMode() {
     this.darkMode = !this.darkMode;
+    _.setLocalStorage("chrome.darkMode", this.darkMode);
   }
 
   get darkMode(): boolean {

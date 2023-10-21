@@ -7,7 +7,6 @@ namespace Webfuel.Domain.StaticData
         public required Guid Id { get; set; }
         public required string Name { get; set; }
         public bool Default { get; set; } = false;
-        public bool Hidden { get; set; } = false;
     }
     internal class UpdateTitleHandler : IRequestHandler<UpdateTitle, Title>
     {
@@ -26,7 +25,6 @@ namespace Webfuel.Domain.StaticData
             var updated = original.Copy();
             updated.Name = request.Name;
             updated.Default = request.Default;
-            updated.Hidden = request.Hidden;
             
             return await _titleRepository.UpdateTitle(original: original, updated: updated);
         }

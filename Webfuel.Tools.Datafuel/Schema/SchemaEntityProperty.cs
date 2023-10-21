@@ -46,7 +46,7 @@ namespace Webfuel.Tools.Datafuel
 
         // Static Factory
 
-        public static SchemaEntityProperty Build(SchemaEntity entity, XElement element)
+        public static SchemaEntityProperty? Build(SchemaEntity entity, XElement element)
         {
             var tag = String.Empty;
             var type = element.StringProperty("Type") ?? String.Empty;
@@ -138,7 +138,7 @@ namespace Webfuel.Tools.Datafuel
                     return new SchemaEntityPropertyString(entity, element, nullable, "1024");
 
                 default:
-                    throw new InvalidOperationException($"Invalid type code {type}");
+                    return null;
             }
         }
 

@@ -21,14 +21,14 @@
   margin-bottom: 16px;
   margin-right: 16px;
   margin-left: auto;
-  color: var(--palette-primary-contrast);
-  background-color: var(--palette-primary);
+  color: var(--palette-primary-foreground);
+  background-color: var(--palette-primary-background);
   box-shadow: 1px 1px 10px #000000;
 
   @each $p in $paletteAction {
     &.is-#{$p} {
-      color: var(--palette-#{$p}-contrast);
-      background-color: var(--palette-#{$p});
+      color: var(--palette-#{$p}-foreground);
+      background-color: var(--palette-#{$p}-background);
     }
   }
 }

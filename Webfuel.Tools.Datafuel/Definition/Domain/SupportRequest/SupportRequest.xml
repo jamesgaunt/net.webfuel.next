@@ -6,10 +6,10 @@
     <Property Name="LinkId" Type="guid" />
     <Property Name="Title" Type="string[1000]" />
     <Property Name="Fellowship" Type="boolean" />
-    <Reference Name="ApplicationStageId" Type="ApplicationStage?" />
+    <Property Name="ApplicationStageId" Type="ApplicationStage?" />
     <Property Name="DateOfRequest" Type="Date" />
-    <Reference Name="FundingStreamId" Type="FundingStream?" />
-    <Reference Name="FundingCallTypeId" Type="FundingCallType?" />
+    <Property Name="FundingStreamId" Type="FundingStream?" />
+    <Property Name="FundingCallTypeId" Type="FundingCallType?" />
     <Property Name="FundingStreamName" Type="meta:name" />
     <Property Name="TargetSubmissionDate" Type="Date?" />
     <Property Name="ExperienceOfResearchAwards" Type="string[1000]" />
@@ -18,6 +18,6 @@
     <Property Name="BriefDescription" Type="string[5000]" />
     <Property Name="SupportRequested" Type="string[2000]" />
     <Property Name="LeadApplicantNHS" Type="boolean" />
-    <Reference Name="StatusId" Type="SupportRequestStatus" />
+    <Property Name="StatusId" Type="SupportRequestStatus" />
   </Entity>
 </Schema>

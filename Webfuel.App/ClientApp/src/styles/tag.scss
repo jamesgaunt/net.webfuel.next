@@ -2,8 +2,8 @@
 
 .tag {
   display: inline-block;
-  background-color: var(--palette-control);
-  color: var(--palette-control-contrast);
+  background-color: var(--palette-control-addon-background);
+  color: var(--palette-control-addon-foreground);
   display: flex;
   align-items: center;
   padding: 0 0.6rem 0 0.6rem;
@@ -17,7 +17,7 @@
 
     &:hover {
       opacity: 1.0;
-      color: var(--palette-warning);
+      color: var(--palette-warning-text);
     }
   }
 }

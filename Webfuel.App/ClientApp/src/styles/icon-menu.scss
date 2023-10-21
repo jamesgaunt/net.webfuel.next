@@ -6,14 +6,14 @@
   gap: 1rem;
 
   a {
-    color: var(--palette-text);
+    color: var(--palette-control-text);
     text-align: center;
     display: inline-block;
     padding: 0.5rem;
     cursor: pointer;
     width: 8rem;
     vertical-align: top;
-    background-color: var(--control-background);
+    background-color: var(--palette-control-background);
     border: 1px solid #eee;
     transition: box-shadow 0.25s ease;
 
@@ -29,7 +29,7 @@
       box-shadow: 0 0 10px RGBA(0, 0, 0, 0.4);
 
       i {
-        color: var(--palette-primary);
+        color: var(--palette-primary-text);
       }
     }
 

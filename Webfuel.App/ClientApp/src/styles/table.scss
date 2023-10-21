@@ -30,8 +30,9 @@ tr.cdk-drag-animating {
 }
 
 .table {
-  border: 1px solid var(--border-color);
-  background-color: var(--table-background);
+  color: var(--palette-control-text);
+  border: 1px solid var(--palette-control-border);
+  background-color: var(--palette-control-background);
   padding: 0 0.5rem 0.5rem 0.5rem;
   overflow-x: auto;
 
@@ -54,16 +55,16 @@ tr.cdk-drag-animating {
 
     th {
       vertical-align: middle;
-      border-bottom: 2px solid var(--border-color);
+      border-bottom: 2px solid var(--palette-control-border);
     }
 
     td {
       vertical-align: top;
-      border-top: 1px solid var(--border-color);
+      border-top: 1px solid var(--palette-control-border);
     }
 
     tr:nth-child(even) {
-      background-color: var(--table-background-alt);
+      background-color: var(--palette-control-background-alt);
     }
   }
 }

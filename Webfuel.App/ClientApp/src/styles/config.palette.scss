@@ -1,0 +1,89 @@
+
+
+:root {
+  --palette-text: #333;
+  --palette-text-disabled: #666;
+}
+
+:root {
+  --palette-body-text: #000;
+  --palette-body-text-highlight: #485fc7;
+  --palette-body-border: #dbdbdb;
+  --palette-body-background: #F4F4F4;
+  --palette-body-background-alt: #F0F0F0;
+}
+
+
+$paletteAction: 'primary', 'secondary', 'success', 'warning', 'danger';
+
+:root {
+  --palette-primary-text: hsl(208, 56%, 46%);
+  --palette-primary-foreground: #FFF;
+  --palette-primary-background: hsl(208, 56%, 46%);
+  --palette-primary-background-hover: hsl(208, 56%, 41%);
+}
+
+:root {
+  --palette-secondary-text: hsl(210, 30%, 89%);
+  --palette-secondary-foreground: #333;
+  --palette-secondary-background: hsl(210, 30%, 89%);
+  --palette-secondary-background-hover: hsl(210, 30%, 86%);
+}
+
+:root {
+
+  --palette-success-text: hsl(173, 70%, 35%);
+  --palette-success-foreground: #FFF;
+  --palette-success-background: hsl(173, 70%, 35%);
+  --palette-success-background-hover: hsl(173, 70%, 30%);
+}
+
+:root {
+  --palette-warning-text: hsl(25, 100%, 40%);
+  --palette-warning-foreground: #FFF;
+  --palette-warning-background: hsl(25, 100%, 40%);
+  --palette-warning-background-hover: hsl(25, 100%, 35%);
+}
+
+:root {
+  --palette-danger-text: hsl(351, 52%, 43%);
+  --palette-danger-foreground: #FFF;
+  --palette-danger-background: hsl(351, 52%, 43%);
+  --palette-danger-background-hover: hsl(351, 52%, 38%);
+}
+
+:root {
+  --palette-control-text: var(--palette-text);
+  --palette-control-text-disabled: var(---palette-text-disabled);
+  --palette-control-background: #FFFFFF;
+  --palette-control-background-alt: #F7F7F7;
+  --palette-control-border: #dbdbdb;
+  --palette-control-border-hover: #ababab;
+  --palette-control-border-focus: hsl(208, 10%, 41%);
+  --palette-control-border-error: var(--palette-danger-text);
+  --palette-control-shadow: RGBA(0, 0, 0, 0.3);
+}
+
+
+// Dark Mode
+
+body.dark-mode {
+  --palette-text: #fff;
+  //--palette-control-text: #fff;
+  //--palette-control-background: #555;
+  //--palette-control-background-alt: #363636;
+  --palette-control-border: #525252;
+  --palette-control-shadow: RGBA(200, 200, 200, 0.2);
+  --palette-body-text: #FFF;
+  --palette-body-text-highlight: #3298DC;
+  --palette-body-background: #2F3434;
+  --palette-body-background-alt: #1F2424;
+  --sidebar-highlight: #09949E;
+  --sidebar-background: #5F6D7A;
+  --sidebar-background-hover: RGBA(10, 10, 10, 0.5);
+  --sidebar-background-active: RGBA(10, 10, 10, 0.7);
+  --navbar-highlight: #09949E;
+  --navbar-background: #5F6D7A;
+  --navbar-background-hover: RGBA(10, 10, 10, 0.5);
+  --navbar-background-active: RGBA(10, 10, 10, 0.7);
+}

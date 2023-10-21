@@ -6,7 +6,6 @@ namespace Webfuel.Domain.StaticData
     {
         public required string Name { get; set; }
         public bool Default { get; set; } = false;
-        public bool Hidden { get; set; } = false;
     }
     internal class CreateTitleHandler : IRequestHandler<CreateTitle, Title>
     {
@@ -23,7 +22,6 @@ namespace Webfuel.Domain.StaticData
             return await _titleRepository.InsertTitle(new Title {
                     Name = request.Name,
                     Default = request.Default,
-                    Hidden = request.Hidden,
                     SortOrder = await _titleRepository.CountTitle(),
                 });
         }

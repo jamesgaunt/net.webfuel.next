@@ -6,8 +6,8 @@
   max-width: 100% !important;
   text-align: center;
   user-select: none;
-  background-color: var(--table-background);
-  color: var(---palette-text);
+  background-color: var(--palette-control-background);
+  color: var(--palette-control-text);
   white-space: nowrap;
   font-size: 20px;
 }
@@ -19,8 +19,8 @@
 }
 
 .date-calendar .day-control, .date-calendar .month-control {
-  background-color: var(--palette-primary);
-  color: var(--palette-primary-contrast);
+  background-color: var(--palette-primary-background);
+  color: var(--palette-primary-foreground);
 }
 
 .date-calendar .day-control a, .date-calendar .month-control a {
@@ -41,7 +41,7 @@
 }
 
 .date-calendar .day a:hover {
-  background-color: var(--table-background-alt);
+  background-color: var(--palette-control-background-alt);
 }
 
 .date-calendar .day.inactive a {
@@ -50,8 +50,8 @@
 
 .date-calendar .day.selected a {
   font-weight: bold;
-  background-color: var(--palette-control);
-  color: var(--palette-control-contrast);
+  background-color: var(--palette-control-background);
+  color: var(--palette-control-foreground);
 }
 
 .date-calendar .month a {

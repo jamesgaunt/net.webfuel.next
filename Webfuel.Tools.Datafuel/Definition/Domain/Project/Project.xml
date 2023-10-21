@@ -5,11 +5,7 @@
     <Key Name="Id" Type="guid" />
     <Property Name="LinkId" Type="guid" />
     <Property Name="Title" Type="string[1000]" />
-
-    
-    
-    
-    <Reference Name="FundingBodyId" Type="FundingBody?" />
-    <Reference Name="ResearchMethodologyId" Type="ResearchMethodology?" />
+    <Property Name="FundingBodyId" Type="FundingBody?" />
+    <Property Name="ResearchMethodologyId" Type="ResearchMethodology?" />
   </Entity>
 </Schema>

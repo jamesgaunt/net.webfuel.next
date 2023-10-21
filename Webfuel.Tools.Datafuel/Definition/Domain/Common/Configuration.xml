@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="Configuration">
+    <Key Name="Id" Type="guid" />
+
+    <Property Name="NextProjectNumber" Type="Int32" Default="1" />
+    
+   
+  </Entity>
+</Schema>

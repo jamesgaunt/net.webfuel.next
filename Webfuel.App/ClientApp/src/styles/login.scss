@@ -31,7 +31,7 @@
   }
 }
 
-@media (max-width: var(--container-breakpoint-sm)) {
+@media ($breakpoint-sm) {
   .login {
     margin-top: 0px;
   }

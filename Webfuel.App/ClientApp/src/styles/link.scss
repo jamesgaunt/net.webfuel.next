@@ -9,7 +9,7 @@
 
   @each $p in $paletteAction {
     &.is-#{$p} {
-      color: var(--palette-#{$p});
+      color: var(--palette-#{$p}-text);
     }
   }
 }

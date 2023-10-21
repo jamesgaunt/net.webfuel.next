@@ -32,9 +32,6 @@ namespace Webfuel.Domain.StaticData
                     case nameof(Title.Default):
                         result.Add(new SqlParameter(nameof(Title.Default), entity.Default));
                         break;
-                    case nameof(Title.Hidden):
-                        result.Add(new SqlParameter(nameof(Title.Hidden), entity.Hidden));
-                        break;
                 }
             }
             return result;
@@ -65,7 +62,6 @@ namespace Webfuel.Domain.StaticData
                 yield return "Name";
                 yield return "SortOrder";
                 yield return "Default";
-                yield return "Hidden";
             }
         }
         
@@ -77,7 +73,6 @@ namespace Webfuel.Domain.StaticData
                 yield return "Name";
                 yield return "SortOrder";
                 yield return "Default";
-                yield return "Hidden";
             }
         }
         
@@ -88,7 +83,6 @@ namespace Webfuel.Domain.StaticData
                 yield return "Name";
                 yield return "SortOrder";
                 yield return "Default";
-                yield return "Hidden";
             }
         }
         
