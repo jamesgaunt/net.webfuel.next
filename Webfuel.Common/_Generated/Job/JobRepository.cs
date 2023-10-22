@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 
-namespace Webfuel.Domain
+namespace Webfuel.Common
 {
     internal partial interface IJobRepository
     {

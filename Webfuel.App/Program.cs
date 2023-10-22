@@ -1,5 +1,6 @@
 using Serilog;
 using FluentValidation;
+using Webfuel.Common;
 using Webfuel.Domain;
 using Serilog.Events;
 using Webfuel.Domain.StaticData;
@@ -24,6 +25,7 @@ namespace Webfuel.App
                 builder.Host.UseSerilog();
 
                 builder.Services.RegisterCoreServices();
+                builder.Services.RegisterCommonServices();
                 builder.Services.RegisterDomainServices();
                 builder.Services.RegisterStaticDataServices();
 
@@ -31,6 +33,7 @@ namespace Webfuel.App
                 {
                     c.RegisterServicesFromAssemblyContaining<CoreAssemblyMarker>();
                     c.RegisterServicesFromAssemblyContaining<DomainAssemblyMarker>();
+                    c.RegisterServicesFromAssemblyContaining<CommonAssemblyMarker>();
                     c.RegisterServicesFromAssemblyContaining<StaticDataAssemblyMarker>();
                 });
 

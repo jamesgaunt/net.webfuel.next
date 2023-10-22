@@ -30,6 +30,9 @@ import { GridReferenceColumnComponent } from './grid/columns/grid-reference-colu
 // Directives
 import { AutocompleteCodeDirective } from './directives/autocomplete-code.directive';
 
+// Dialogs
+import { ChangePasswordDialogComponent } from './dialogs/change-password-dialog/change-password-dialog.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -64,6 +67,9 @@ import { AutocompleteCodeDirective } from './directives/autocomplete-code.direct
 
     // Directives
     AutocompleteCodeDirective,
+
+    // Dialogs
+    ChangePasswordDialogComponent
   ],
   exports: [
     CommonModule,
@@ -95,6 +101,9 @@ import { AutocompleteCodeDirective } from './directives/autocomplete-code.direct
 
     // Directives
     AutocompleteCodeDirective,
+
+    // Dialogs
+    ChangePasswordDialogComponent
   ]
 })
 export class SharedModule { }

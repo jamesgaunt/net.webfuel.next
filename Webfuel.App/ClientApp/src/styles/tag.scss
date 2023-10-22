@@ -21,3 +21,20 @@
     }
   }
 }
+
+.message {
+  margin: var(--gap) 0 var(--gap) 0;
+  color: var(--palette-primary-text);
+  border: 2px solid var(--palette-primary-background);
+  background-color: color-mix(in hsl, var(--palette-primary-background) 10%, #FFF);
+  padding: var(--gap);
+  font-weight: bold;
+
+  @each $p in $paletteAction {
+    &.is-#{$p} {
+      background-color: color-mix(in hsl, var(--palette-#{$p}-background) 10%, #FFF);
+      color: var(--palette-#{$p}-text);
+      border-color: var(--palette-#{$p}-background);
+    }
+  }
+}

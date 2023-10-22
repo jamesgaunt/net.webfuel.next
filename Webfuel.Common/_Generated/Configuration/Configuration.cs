@@ -2,7 +2,7 @@ using FluentValidation;
 using Microsoft.Data.SqlClient;
 using System.Text.Json.Serialization;
 
-namespace Webfuel.Domain
+namespace Webfuel.Common
 {
     public partial class Configuration
     {
@@ -20,6 +20,9 @@ namespace Webfuel.Domain
                     case nameof(Configuration.Id):
                         Id = (Guid)value!;
                         break;
+                    case nameof(Configuration.Prefix):
+                        Prefix = (string)value!;
+                        break;
                     case nameof(Configuration.NextProjectNumber):
                         NextProjectNumber = (int)value!;
                         break;
@@ -27,11 +30,13 @@ namespace Webfuel.Domain
             }
         }
         public Guid Id  { get; set; } = Guid.Empty;
+        public string Prefix  { get; set; } = "IC";
         public int NextProjectNumber  { get; set; } = 1;
         public Configuration Copy()
         {
             var entity = new Configuration();
             entity.Id = Id;
+            entity.Prefix = Prefix;
             entity.NextProjectNumber = NextProjectNumber;
             return entity;
         }

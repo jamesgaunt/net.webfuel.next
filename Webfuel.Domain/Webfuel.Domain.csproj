@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Webfuel.Core\Webfuel.Core.csproj" />
+    <ProjectReference Include="..\Webfuel.Common\Webfuel.Common.csproj" />
     <ProjectReference Include="..\Webfuel.Domain.StaticData\Webfuel.Domain.StaticData.csproj" />
   </ItemGroup>
 

@@ -64,6 +64,6 @@ $breakpoint-lg: 1600px;
 
   &.ng-invalid.ng-touched {
     border-color: var(--palette-control-border-error);
-    box-shadow: inset 0 0 2px var(--palette-control-border-error);
+    box-shadow: inset 0 0 6px var(--palette-control-border-error);
   }
 }

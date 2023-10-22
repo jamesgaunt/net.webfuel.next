@@ -10,6 +10,7 @@ import { LoginService } from '../../core/login.service';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import _ from 'shared/common/underscore';
+import { ChangePasswordDialogComponent } from '../dialogs/change-password-dialog/change-password-dialog.component';
 
 @Component({
   selector: 'chrome',
@@ -132,5 +133,6 @@ export class ChromeComponent implements OnInit, OnDestroy {
 
   changePassword() {
     this.closeUserMenu();
+    this.dialogService.open(ChangePasswordDialogComponent);
   }
 }

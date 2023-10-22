@@ -2,7 +2,7 @@
 
 
 .dialog {
-  background-color: var(--palette-body-background-alt);
+  background-color: var(--palette-body-background);
   display: block;
   position: relative;
   box-shadow: 1px 1px 10px #000;
@@ -31,6 +31,8 @@
     padding: var(--gap);
     overflow: visible;
     max-height: 80vh;
+    border-left: 1px solid var(--palette-control-border);
+    border-right: 1px solid var(--palette-control-border);
   }
 
   .dialog-buttons {
@@ -49,7 +51,7 @@
       border: none;
       border-right: 1px solid var(--palette-control-border);
       transition: color 0.25s ease, background-color 0.25s ease;
-      background-color: var(--palette-body-background-alt);
+      background-color: var(--palette-body-background);
 
       &:hover {
         background-color: #D2D2D2;

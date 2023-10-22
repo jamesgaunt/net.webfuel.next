@@ -14,6 +14,7 @@ namespace Webfuel.Tools.Typefuel
             new TypeAnalyser()
                 .AnalyseAssembly(schema, typeof(Webfuel.App.Program).GetTypeInfo().Assembly)
                 .AnalyseAssembly(schema, typeof(Webfuel.CoreAssemblyMarker).GetTypeInfo().Assembly)
+                .AnalyseAssembly(schema, typeof(Webfuel.Common.CommonAssemblyMarker).GetTypeInfo().Assembly)
                 .AnalyseAssembly(schema, typeof(Webfuel.Domain.DomainAssemblyMarker).GetTypeInfo().Assembly)
                 .AnalyseAssembly(schema, typeof(Webfuel.Domain.StaticData.StaticDataAssemblyMarker).GetTypeInfo().Assembly);
 

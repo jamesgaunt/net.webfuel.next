@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { CreateUser, User, UpdateUser, QueryUser, QueryResult, LoginUser, StringResult } from './api.types';
+import { CreateUser, User, UpdateUser, ChangeUserPassword, LoginUser, StringResult, QueryUser, QueryResult } from './api.types';
 
 @Injectable()
 export class UserApi implements IDataSource<User, QueryUser, CreateUser, UpdateUser> {
@@ -21,16 +21,20 @@ export class UserApi implements IDataSource<User, QueryUser, CreateUser, UpdateU
         return this.apiService.request<undefined, any>("DELETE", "api/user/" + params.id + "", undefined, options).pipe(tap(_ => this.changed.emit()));
     }
     
+    public changePassword (body: ChangeUserPassword, options?: ApiOptions): Observable<any> {
+        return this.apiService.request<ChangeUserPassword, any>("POST", "api/user/change-password", body, options);
+    }
+    
+    public login (body: LoginUser, options?: ApiOptions): Observable<StringResult> {
+        return this.apiService.request<LoginUser, StringResult>("POST", "api/user/login", body, options);
+    }
+    
     public query (body: QueryUser, options?: ApiOptions): Observable<QueryResult<User>> {
         return this.apiService.request<QueryUser, QueryResult<User>>("POST", "api/user/query", body, options);
     }
     
     public resolve (params: { id: string }, options?: ApiOptions): Observable<User> {
         return this.apiService.request<undefined, User>("GET", "api/user/" + params.id + "", undefined, options);
-    }
-    
-    public login (body: LoginUser, options?: ApiOptions): Observable<StringResult> {
-        return this.apiService.request<LoginUser, StringResult>("POST", "api/user/login", body, options);
     }
     
     changed = new EventEmitter<any>();

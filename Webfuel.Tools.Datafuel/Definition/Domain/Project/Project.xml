@@ -4,8 +4,14 @@
   <Entity Name="Project">
     <Key Name="Id" Type="guid" />
     <Property Name="LinkId" Type="guid" />
+    <Property Name="Number" Type="Int32" />
     <Property Name="Title" Type="string[1000]" />
     <Property Name="FundingBodyId" Type="FundingBody?" />
     <Property Name="ResearchMethodologyId" Type="ResearchMethodology?" />
+
+    <Index Unique="true">
+      <Member Name="Number" />
+    </Index>
+    
   </Entity>
 </Schema>

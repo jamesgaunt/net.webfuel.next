@@ -2,7 +2,7 @@ using FluentValidation;
 using Microsoft.Data.SqlClient;
 using System.Text.Json.Serialization;
 
-namespace Webfuel.Domain
+namespace Webfuel.Common
 {
     public partial class JobMetadata: IRepositoryMetadata<Job>
     {

@@ -138,12 +138,12 @@ export interface Title extends IStaticData {
     name: string;
     sortOrder: number;
     default: boolean;
-    hidden: boolean;
 }
 
 export interface Project {
     id: string;
     linkId: string;
+    number: number;
     title: string;
     fundingBodyId: string | null | null;
     researchMethodologyId: string | null | null;
@@ -244,13 +244,10 @@ export interface UpdateUser {
     userGroupId: string;
 }
 
-export interface QueryUser extends Query {
-    skip: number;
-    take: number;
-    projection?: Array<string>;
-    filters?: Array<QueryFilter>;
-    sort?: Array<QuerySort>;
-    search?: string;
+export interface ChangeUserPassword {
+    currentPassword: string;
+    newPassword: string;
+    confirmNewPassword: string;
 }
 
 export interface StringResult {
@@ -260,6 +257,15 @@ export interface StringResult {
 export interface LoginUser {
     email: string;
     password: string;
+}
+
+export interface QueryUser extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
 }
 
 export interface UserGroup {
@@ -483,14 +489,12 @@ export interface QuerySupportRequestStatus extends Query {
 export interface CreateTitle {
     name: string;
     default: boolean;
-    hidden: boolean;
 }
 
 export interface UpdateTitle {
     id: string;
     name: string;
     default: boolean;
-    hidden: boolean;
 }
 
 export interface SortTitle {

@@ -4,6 +4,7 @@
   <Entity Name="Configuration">
     <Key Name="Id" Type="guid" />
 
+    <Property Name="Prefix" Type="meta:name" Default="IC" />
     <Property Name="NextProjectNumber" Type="Int32" Default="1" />
     
    

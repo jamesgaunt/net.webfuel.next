@@ -21,6 +21,11 @@ namespace Webfuel.App
             app.MapDelete("api/user/{id:guid}", Delete)
                 .RequireClaim(c => c.CanEditUsers);
 
+            app.MapPost("api/user/change-password", ChangePassword)
+                .RequireIdentity();
+
+            app.MapPost("api/user/login", Login);
+
             // Querys
 
             app.MapPost("api/user/query", Query)
@@ -29,7 +34,6 @@ namespace Webfuel.App
             app.MapGet("api/user/{id:guid}", Resolve)
                 .RequireIdentity();
 
-            app.MapPost("api/user/login", Login);
         }
 
         public static Task<User> Create([FromBody] CreateUser command, IMediator mediator)
@@ -58,6 +62,11 @@ namespace Webfuel.App
         }
 
         public static Task<StringResult> Login([FromBody] LoginUser command, IMediator mediator)
+        {
+            return mediator.Send(command);
+        }
+
+        public static Task ChangePassword([FromBody] ChangeUserPassword command, IMediator mediator)
         {
             return mediator.Send(command);
         }

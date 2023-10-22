@@ -2,7 +2,7 @@ using FluentValidation;
 using Microsoft.Data.SqlClient;
 using System.Text.Json.Serialization;
 
-namespace Webfuel.Domain
+namespace Webfuel.Common
 {
     public partial class ConfigurationMetadata: IRepositoryMetadata<Configuration>
     {
@@ -22,6 +22,9 @@ namespace Webfuel.Domain
                 switch (property)
                 {
                     case nameof(Configuration.Id):
+                        break;
+                    case nameof(Configuration.Prefix):
+                        result.Add(new SqlParameter(nameof(Configuration.Prefix), entity.Prefix));
                         break;
                     case nameof(Configuration.NextProjectNumber):
                         result.Add(new SqlParameter(nameof(Configuration.NextProjectNumber), entity.NextProjectNumber));
@@ -53,6 +56,7 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Id";
+                yield return "Prefix";
                 yield return "NextProjectNumber";
             }
         }
@@ -62,6 +66,7 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Id";
+                yield return "Prefix";
                 yield return "NextProjectNumber";
             }
         }
@@ -70,6 +75,7 @@ namespace Webfuel.Domain
         {
             get
             {
+                yield return "Prefix";
                 yield return "NextProjectNumber";
             }
         }
@@ -78,16 +84,27 @@ namespace Webfuel.Domain
         
         public static void Validate(Configuration entity)
         {
+            entity.Prefix = entity.Prefix ?? String.Empty;
+            entity.Prefix = entity.Prefix.Trim();
             Validator.ValidateAndThrow(entity);
         }
         
         public static ConfigurationRepositoryValidator Validator { get; } = new ConfigurationRepositoryValidator();
         
+        public const int Prefix_MaxLength = 64;
+        
+        public static void Prefix_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(Prefix_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
         
         public class ConfigurationRepositoryValidator: AbstractValidator<Configuration>
         {
             public ConfigurationRepositoryValidator()
             {
+                RuleFor(x => x.Prefix).Use(Prefix_ValidationRules);
             }
         }
     }
