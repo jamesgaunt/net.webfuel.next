@@ -20,10 +20,12 @@ namespace Webfuel.Domain.StaticData
         IReadOnlyList<IsTeamMembersConsulted> IsTeamMembersConsulted { get; }
         IReadOnlyList<ProjectStatus> ProjectStatus { get; }
         IReadOnlyList<ResearchMethodology> ResearchMethodology { get; }
+        IReadOnlyList<SubmissionOutcome> SubmissionOutcome { get; }
         IReadOnlyList<SubmissionStage> SubmissionStage { get; }
         IReadOnlyList<SupportProvided> SupportProvided { get; }
         IReadOnlyList<SupportRequestStatus> SupportRequestStatus { get; }
         IReadOnlyList<Title> Title { get; }
+        IReadOnlyList<WorkActivity> WorkActivity { get; }
         DateTimeOffset LoadedAt { get; }
     }
     internal class StaticDataModel: IStaticDataModel
@@ -44,10 +46,12 @@ namespace Webfuel.Domain.StaticData
         public required IReadOnlyList<IsTeamMembersConsulted> IsTeamMembersConsulted { get; init; }
         public required IReadOnlyList<ProjectStatus> ProjectStatus { get; init; }
         public required IReadOnlyList<ResearchMethodology> ResearchMethodology { get; init; }
+        public required IReadOnlyList<SubmissionOutcome> SubmissionOutcome { get; init; }
         public required IReadOnlyList<SubmissionStage> SubmissionStage { get; init; }
         public required IReadOnlyList<SupportProvided> SupportProvided { get; init; }
         public required IReadOnlyList<SupportRequestStatus> SupportRequestStatus { get; init; }
         public required IReadOnlyList<Title> Title { get; init; }
+        public required IReadOnlyList<WorkActivity> WorkActivity { get; init; }
         public DateTimeOffset LoadedAt { get; init; }
         
         internal static async Task<StaticDataModel> Load(IServiceProvider serviceProvider)
@@ -70,10 +74,12 @@ namespace Webfuel.Domain.StaticData
                 IsTeamMembersConsulted = await serviceProvider.GetRequiredService<IIsTeamMembersConsultedRepository>().SelectIsTeamMembersConsulted(),
                 ProjectStatus = await serviceProvider.GetRequiredService<IProjectStatusRepository>().SelectProjectStatus(),
                 ResearchMethodology = await serviceProvider.GetRequiredService<IResearchMethodologyRepository>().SelectResearchMethodology(),
+                SubmissionOutcome = await serviceProvider.GetRequiredService<ISubmissionOutcomeRepository>().SelectSubmissionOutcome(),
                 SubmissionStage = await serviceProvider.GetRequiredService<ISubmissionStageRepository>().SelectSubmissionStage(),
                 SupportProvided = await serviceProvider.GetRequiredService<ISupportProvidedRepository>().SelectSupportProvided(),
                 SupportRequestStatus = await serviceProvider.GetRequiredService<ISupportRequestStatusRepository>().SelectSupportRequestStatus(),
                 Title = await serviceProvider.GetRequiredService<ITitleRepository>().SelectTitle(),
+                WorkActivity = await serviceProvider.GetRequiredService<IWorkActivityRepository>().SelectWorkActivity(),
                 LoadedAt = DateTimeOffset.Now
             };
         }

@@ -7,6 +7,7 @@ import { ProjectApi } from '../../api/project.api';
 import { ProjectListComponent } from './project-list/project-list.component';
 import { ProjectItemComponent } from './project-item/project-item.component';
 import { ProjectRequestComponent } from './project-request/project-request.component';
+import { ProjectSupportComponent } from './project-support/project-support.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,13 @@ const routes: Routes = [
     component: ProjectRequestComponent,
     resolve: { project: ProjectApi.projectResolver('id') },
     canDeactivate: [DeactivateService.isPristine<ProjectRequestComponent>()],
+    data: { activeSideMenu: 'Projects' }
+  },
+  {
+    path: 'project-support/:id',
+    component: ProjectSupportComponent,
+    resolve: { project: ProjectApi.projectResolver('id') },
+    canDeactivate: [DeactivateService.isPristine<ProjectSupportComponent>()],
     data: { activeSideMenu: 'Projects' }
   },
 ];

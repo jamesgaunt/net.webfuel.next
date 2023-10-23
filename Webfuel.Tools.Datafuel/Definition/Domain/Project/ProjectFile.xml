@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="ProjectFile">
+    <Key Name="Id" Type="guid" />
+    <Property Name="FileGroupId" Type="Guid" />
+    <Property Name="FileName" Type="meta:name" />
+    <Property Name="SizeBytes" Type="Int64" />
+    <Property Name="UploadedAt" Type="DateTime" />
+    <Property Name="UploadedBy" Type="meta:name" />
+    <Property Name="Description" Type="meta:name" />
+    <Index Unique="false">
+      <Member Name="FileGroupId" />
+    </Index>
+  </Entity>
+</Schema>

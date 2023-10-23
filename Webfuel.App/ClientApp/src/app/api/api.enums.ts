@@ -61,6 +61,15 @@ export enum ProjectStatusEnum {
     Discarded = "164fdeee-8d6f-42fa-a23b-fbab0ef3ba93",
 }
 
+export enum SubmissionOutcomeEnum {
+    Unknown = "32b584a9-c539-447b-a542-df3e5283ef3c",
+    Shortlisted = "36969c16-31b1-4c1e-81eb-b4ccf626a98c",
+    Rejected = "bdbf02dc-75a7-413c-b8f5-7c610a6695aa",
+    Withdrawn = "b60f7e48-d744-403e-8fc1-f23445cb40c5",
+    FundedfullStageOnly = "38dc9caf-820d-4980-8f00-6bc260092a96",
+    NotApplicable = "b785f487-82fa-4149-8c7d-4a615ca90420",
+}
+
 export enum SubmissionStageEnum {
     OutlineStageStage1 = "18174faf-8787-480e-b0b4-5698a5e59d93",
     Stage2 = "deecb94c-8284-45c8-b499-1c0c099215b0",

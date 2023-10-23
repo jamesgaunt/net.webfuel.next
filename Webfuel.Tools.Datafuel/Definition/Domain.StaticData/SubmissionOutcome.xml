@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="SubmissionOutcome" Tags="StaticData|Enum" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Property Name="Hidden" Type="boolean" />
+    <Property Name="FreeText" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="32b584a9-c539-447b-a542-df3e5283ef3c" Name="Unknown" />
+      <Row Id="36969c16-31b1-4c1e-81eb-b4ccf626a98c" Name="Shortlisted" />
+      <Row Id="bdbf02dc-75a7-413c-b8f5-7c610a6695aa" Name="Rejected" />
+      <Row Id="b60f7e48-d744-403e-8fc1-f23445cb40c5" Name="Withdrawn" />
+      <Row Id="38dc9caf-820d-4980-8f00-6bc260092a96" Name="Funded (full stage only)" />
+      <Row Id="b785f487-82fa-4149-8c7d-4a615ca90420" Name="Not Applicable" />
+    </Data>
+  </Entity>
+</Schema>

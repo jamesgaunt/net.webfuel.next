@@ -6,6 +6,7 @@ import { SupportRequestApi } from '../../../api/support-request.api';
 import { FormService } from '../../../core/form.service';
 
 @Component({
+  selector: 'support-request-create-dialog',
   templateUrl: './support-request-create-dialog.component.html'
 })
 export class SupportRequestCreateDialogComponent {

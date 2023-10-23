@@ -4,6 +4,10 @@
   <Entity Name="ProjectSubmission">
     <Key Name="Id" Type="guid" />
     <Property Name="ProjectId" Type="Project" />
-    
+    <Property Name="NIHRReference" Type="meta:name" />
+    <Property Name="SubmissionDate" Type="Date" />
+    <Property Name="SubmissionStageId" Type="SubmissionStage" />
+    <Property Name="SubmissionOutcomeId" Type="SubmissionOutcome?" />
+    <Property Name="FundingAmountOnSubmission" Type="Int32" />
   </Entity>
 </Schema>

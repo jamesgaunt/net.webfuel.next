@@ -17,6 +17,10 @@
   }
 }
 
+body.dark-mode .field .label {
+    font-weight: normal;
+}
+
 .input, .select, .textarea, .checkbox, .radio-group, .tag-input {
     @include form-input;
 }

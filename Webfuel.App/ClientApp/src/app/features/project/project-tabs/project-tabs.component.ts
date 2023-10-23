@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Project } from '../../../api/api.types';
+import { Project, ProjectSupport } from '../../../api/api.types';
+import { DialogService } from '../../../core/dialog.service';
+import { ProjectSupportCreateDialogComponent, ProjectSupportCreateDialogOptions } from '../project-support-create-dialog/project-support-create-dialog.component';
 
 @Component({
   selector: 'project-tabs',
@@ -11,6 +13,7 @@ export class ProjectTabsComponent implements OnInit  {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private dialogService: DialogService
   ) {
   }
 
@@ -22,5 +25,13 @@ export class ProjectTabsComponent implements OnInit  {
 
   reset(item: Project) {
     this.item = item;
+  }
+
+  addSupport() {
+    this.dialogService.open<ProjectSupport, ProjectSupportCreateDialogOptions>(ProjectSupportCreateDialogComponent, {
+      data: {
+        projectId: this.item.id
+      }
+    });
   }
 }

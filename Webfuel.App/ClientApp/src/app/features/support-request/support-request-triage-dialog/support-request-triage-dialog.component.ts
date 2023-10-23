@@ -8,12 +8,12 @@ import { StaticDataCache } from '../../../api/static-data.cache';
 import { QueryOp } from '../../../api/api.enums';
 import { Router } from '@angular/router';
 
-
 export interface SupportRequestTriageDialogOptions {
   id: string;
 }
 
 @Component({
+  selector: 'support-request-triage-dialog',
   templateUrl: './support-request-triage-dialog.component.html'
 })
 export class SupportRequestTriageDialogComponent {

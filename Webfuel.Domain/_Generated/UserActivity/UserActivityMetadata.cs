@@ -23,8 +23,17 @@ namespace Webfuel.Domain
                 {
                     case nameof(UserActivity.Id):
                         break;
+                    case nameof(UserActivity.Date):
+                        result.Add(new SqlParameter(nameof(UserActivity.Date), entity.Date));
+                        break;
+                    case nameof(UserActivity.Description):
+                        result.Add(new SqlParameter(nameof(UserActivity.Description), entity.Description));
+                        break;
                     case nameof(UserActivity.UserId):
                         result.Add(new SqlParameter(nameof(UserActivity.UserId), entity.UserId));
+                        break;
+                    case nameof(UserActivity.WorkActivityId):
+                        result.Add(new SqlParameter(nameof(UserActivity.WorkActivityId), entity.WorkActivityId));
                         break;
                 }
             }
@@ -53,7 +62,10 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Id";
+                yield return "Date";
+                yield return "Description";
                 yield return "UserId";
+                yield return "WorkActivityId";
             }
         }
         
@@ -62,7 +74,10 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Id";
+                yield return "Date";
+                yield return "Description";
                 yield return "UserId";
+                yield return "WorkActivityId";
             }
         }
         
@@ -70,7 +85,10 @@ namespace Webfuel.Domain
         {
             get
             {
+                yield return "Date";
+                yield return "Description";
                 yield return "UserId";
+                yield return "WorkActivityId";
             }
         }
         
@@ -78,16 +96,27 @@ namespace Webfuel.Domain
         
         public static void Validate(UserActivity entity)
         {
+            entity.Description = entity.Description ?? String.Empty;
+            entity.Description = entity.Description.Trim();
             Validator.ValidateAndThrow(entity);
         }
         
         public static UserActivityRepositoryValidator Validator { get; } = new UserActivityRepositoryValidator();
         
+        public const int Description_MaxLength = 1024;
+        
+        public static void Description_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(Description_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
         
         public class UserActivityRepositoryValidator: AbstractValidator<UserActivity>
         {
             public UserActivityRepositoryValidator()
             {
+                RuleFor(x => x.Description).Use(Description_ValidationRules);
             }
         }
     }

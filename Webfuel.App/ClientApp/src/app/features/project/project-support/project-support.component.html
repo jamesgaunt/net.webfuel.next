@@ -1,0 +1,19 @@
+<ul class="breadcrumbs">
+  <li><a routerLink="/home">Home</a></li>
+  <li><a routerLink="/project/project-list">Projects</a></li>
+  <li><a routerLink="/project/project-item/{{ item.id }}">Project</a></li>
+</ul>
+<div class="container">
+  <project-tabs></project-tabs>
+
+  <div class="project-support-list">
+    <div class="project-support" *ngFor="let projectSupport of items">
+      {{ projectSupport.description }}
+    </div>
+  </div>
+
+
+  <div class="floating-buttons">
+    <button class="button" (click)="cancel()">Close</button>
+  </div>
+</div>

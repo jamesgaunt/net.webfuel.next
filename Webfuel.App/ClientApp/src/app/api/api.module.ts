@@ -23,6 +23,7 @@ import { IsResubmissionApi } from './is-resubmission.api';
 import { IsTeamMembersConsultedApi } from './is-team-members-consulted.api';
 import { ProjectStatusApi } from './project-status.api';
 import { ResearchMethodologyApi } from './research-methodology.api';
+import { SubmissionOutcomeApi } from './submission-outcome.api';
 import { SubmissionStageApi } from './submission-stage.api';
 import { SupportProvidedApi } from './support-provided.api';
 import { SupportRequestStatusApi } from './support-request-status.api';
@@ -55,6 +56,7 @@ import { StaticDataCache } from './static-data.cache';
         IsTeamMembersConsultedApi,
         ProjectStatusApi,
         ResearchMethodologyApi,
+        SubmissionOutcomeApi,
         SubmissionStageApi,
         SupportProvidedApi,
         SupportRequestStatusApi,

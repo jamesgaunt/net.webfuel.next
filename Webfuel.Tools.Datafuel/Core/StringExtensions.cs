@@ -58,7 +58,7 @@ namespace Webfuel
             foreach (var c in input)
             {
                 if (char.IsLetterOrDigit(c)) {
-                    if (char.IsWhiteSpace(prev))
+                    if (!char.IsLetterOrDigit(prev))
                         sb.Append(char.ToUpper(c));
                     else
                         sb.Append(c);

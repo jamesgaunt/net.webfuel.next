@@ -48,6 +48,7 @@ export interface IStaticDataModel {
     isTeamMembersConsulted: Array<IsTeamMembersConsulted>;
     projectStatus: Array<ProjectStatus>;
     researchMethodology: Array<ResearchMethodology>;
+    submissionOutcome: Array<SubmissionOutcome>;
     submissionStage: Array<SubmissionStage>;
     supportProvided: Array<SupportProvided>;
     supportRequestStatus: Array<SupportRequestStatus>;
@@ -182,6 +183,15 @@ export interface ProjectStatus extends IStaticData {
 }
 
 export interface ResearchMethodology extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface SubmissionOutcome extends IStaticData {
     id: string;
     name: string;
     sortOrder: number;
@@ -780,6 +790,15 @@ export interface SortResearchMethodology {
 }
 
 export interface QueryResearchMethodology extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface QuerySubmissionOutcome extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;

@@ -3,6 +3,15 @@ W1: Scaffolding & UI / Tenants & Connection Strings / Deploy to Azure
 W2: Files / Support Request Form
 W3: Feedback
 
+
+NEXT:
+
+Scaffold Project Submission (use Project Support as starting point)
+
+Flesh out Add Support Request Form + Chrome free version for embedding - or revert to Razor
+
+User / User Activity
+
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 > Deploy to Azure / Tenants / Connection Strings
