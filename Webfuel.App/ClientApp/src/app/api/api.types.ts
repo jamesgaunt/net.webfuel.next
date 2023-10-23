@@ -37,9 +37,19 @@ export interface IStaticDataModel {
     fundingCallType: Array<FundingCallType>;
     fundingStream: Array<FundingStream>;
     gender: Array<Gender>;
+    howDidYouFindUs: Array<HowDidYouFindUs>;
+    isCTUTeamContribution: Array<IsCTUTeamContribution>;
+    isFellowship: Array<IsFellowship>;
+    isInternationalMultiSiteStudy: Array<IsInternationalMultiSiteStudy>;
+    isLeadApplicantNHS: Array<IsLeadApplicantNHS>;
+    isPPIEAndEDIContribution: Array<IsPPIEAndEDIContribution>;
+    isQuantativeTeamContribution: Array<IsQuantativeTeamContribution>;
+    isResubmission: Array<IsResubmission>;
+    isTeamMembersConsulted: Array<IsTeamMembersConsulted>;
     projectStatus: Array<ProjectStatus>;
     researchMethodology: Array<ResearchMethodology>;
     submissionStage: Array<SubmissionStage>;
+    supportProvided: Array<SupportProvided>;
     supportRequestStatus: Array<SupportRequestStatus>;
     title: Array<Title>;
     loadedAt: string;
@@ -97,6 +107,71 @@ export interface Gender extends IStaticData {
     freeText: boolean;
 }
 
+export interface HowDidYouFindUs extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface IsCTUTeamContribution extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+}
+
+export interface IsFellowship extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+}
+
+export interface IsInternationalMultiSiteStudy extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+}
+
+export interface IsLeadApplicantNHS extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+}
+
+export interface IsPPIEAndEDIContribution extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+}
+
+export interface IsQuantativeTeamContribution extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+}
+
+export interface IsResubmission extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+}
+
+export interface IsTeamMembersConsulted extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+}
+
 export interface ProjectStatus extends IStaticData {
     id: string;
     name: string;
@@ -124,6 +199,15 @@ export interface SubmissionStage extends IStaticData {
     freeText: boolean;
 }
 
+export interface SupportProvided extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
 export interface SupportRequestStatus extends IStaticData {
     id: string;
     name: string;
@@ -142,11 +226,36 @@ export interface Title extends IStaticData {
 
 export interface Project {
     id: string;
-    linkId: string;
     number: number;
+    prefixedNumber: string;
+    closureDate: string | null | null;
+    nihrrssMemberCollaboratorIds: Array<string>;
+    submittedFundingStreamName: string;
+    dateOfRequest: string;
     title: string;
-    fundingBodyId: string | null | null;
-    researchMethodologyId: string | null | null;
+    briefDescription: string;
+    fundingStreamName: string;
+    targetSubmissionDate: string | null | null;
+    experienceOfResearchAwards: string;
+    supportRequested: string;
+    projectStartDate: string | null | null;
+    recruitmentTarget: number | null | null;
+    numberOfProjectSites: number | null | null;
+    statusId: string;
+    isQuantativeTeamContributionId: string | null | null;
+    isCTUTeamContributionId: string | null | null;
+    isPPIEAndEDIContributionId: string | null | null;
+    submittedFundingStreamId: string | null | null;
+    supportRequestId: string | null | null;
+    applicationStageId: string | null | null;
+    fundingStreamId: string | null | null;
+    fundingCallTypeId: string | null | null;
+    isFellowshipId: string | null | null;
+    isTeamMembersConsultedId: string | null | null;
+    isResubmissionId: string | null | null;
+    isLeadApplicantNHSId: string | null | null;
+    howDidYouFindUsId: string | null | null;
+    isInternationalMultiSiteStudyId: string | null | null;
 }
 
 export interface CreateProject {
@@ -155,9 +264,15 @@ export interface CreateProject {
 
 export interface UpdateProject {
     id: string;
-    title: string;
-    fundingBodyId: string | null | null;
-    researchMethodologyId: string | null | null;
+    isQuantativeTeamContributionId: string | null | null;
+    isCTUTeamContributionId: string | null | null;
+    isPPIEAndEDIContributionId: string | null | null;
+    submittedFundingStreamId: string | null | null;
+    submittedFundingStreamName: string;
+    projectStartDate: string | null | null;
+    recruitmentTarget: number | null | null;
+    numberOfProjectSites: number | null | null;
+    isInternationalMultiSiteStudyId: string | null | null;
 }
 
 export interface QueryResult<TItem> {
@@ -195,6 +310,41 @@ export interface Query {
     search?: string;
 }
 
+export interface ProjectSupport {
+    id: string;
+    date: string;
+    adviserIds: Array<string>;
+    supportProvidedIds: Array<string>;
+    description: string;
+    projectId: string;
+}
+
+export interface CreateProjectSupport {
+    projectId: string;
+    date: string | null | null;
+    adviserIds: Array<string>;
+    supportProvidedIds: Array<string>;
+    description: string;
+}
+
+export interface UpdateProjectSupport {
+    id: string;
+    date: string;
+    adviserIds: Array<string>;
+    supportProvidedIds: Array<string>;
+    description: string;
+}
+
+export interface QueryProjectSupport extends Query {
+    projectId: string;
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
 export interface Researcher {
     id: string;
     email: string;
@@ -210,6 +360,76 @@ export interface UpdateResearcher {
 }
 
 export interface QueryResearcher extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface SupportRequest {
+    id: string;
+    title: string;
+    dateOfRequest: string;
+    fundingStreamName: string;
+    targetSubmissionDate: string | null | null;
+    experienceOfResearchAwards: string;
+    briefDescription: string;
+    supportRequested: string;
+    isFellowshipId: string | null | null;
+    applicationStageId: string | null | null;
+    fundingStreamId: string | null | null;
+    fundingCallTypeId: string | null | null;
+    isTeamMembersConsultedId: string | null | null;
+    isResubmissionId: string | null | null;
+    howDidYouFindUsId: string | null | null;
+    isLeadApplicantNHSId: string | null | null;
+    statusId: string;
+    projectId: string | null | null;
+}
+
+export interface CreateSupportRequest {
+    title: string;
+    fundingStreamName: string;
+    targetSubmissionDate: string | null | null;
+    experienceOfResearchAwards: string;
+    briefDescription: string;
+    supportRequested: string;
+    isFellowshipId: string | null | null;
+    isTeamMembersConsultedId: string | null | null;
+    isResubmissionId: string | null | null;
+    isLeadApplicantNHSId: string | null | null;
+    applicationStageId: string | null | null;
+    fundingStreamId: string | null | null;
+    fundingCallTypeId: string | null | null;
+    howDidYouFindUsId: string | null | null;
+}
+
+export interface UpdateSupportRequest {
+    id: string;
+    title: string;
+    fundingStreamName: string;
+    targetSubmissionDate: string | null | null;
+    experienceOfResearchAwards: string;
+    briefDescription: string;
+    supportRequested: string;
+    isFellowshipId: string | null | null;
+    isTeamMembersConsultedId: string | null | null;
+    isResubmissionId: string | null | null;
+    isLeadApplicantNHSId: string | null | null;
+    applicationStageId: string | null | null;
+    fundingStreamId: string | null | null;
+    fundingCallTypeId: string | null | null;
+    howDidYouFindUsId: string | null | null;
+}
+
+export interface TriageSupportRequest {
+    id: string;
+    statusId: string;
+}
+
+export interface QuerySupportRequest extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;
@@ -431,6 +651,106 @@ export interface QueryGender extends Query {
     search?: string;
 }
 
+export interface CreateHowDidYouFindUs {
+    name: string;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface UpdateHowDidYouFindUs {
+    id: string;
+    name: string;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface SortHowDidYouFindUs {
+    ids: Array<string>;
+}
+
+export interface QueryHowDidYouFindUs extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface QueryIsCTUTeamContribution extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface QueryIsFellowship extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface QueryIsInternationalMultiSiteStudy extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface QueryIsLeadApplicantNHS extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface QueryIsPPIEAndEDIContribution extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface QueryIsQuantativeTeamContribution extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface QueryIsResubmission extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface QueryIsTeamMembersConsulted extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
 export interface QueryProjectStatus extends Query {
     skip: number;
     take: number;
@@ -469,6 +789,34 @@ export interface QueryResearchMethodology extends Query {
 }
 
 export interface QuerySubmissionStage extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface CreateSupportProvided {
+    name: string;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface UpdateSupportProvided {
+    id: string;
+    name: string;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface SortSupportProvided {
+    ids: Array<string>;
+}
+
+export interface QuerySupportProvided extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;

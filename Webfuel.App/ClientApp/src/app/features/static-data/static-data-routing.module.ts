@@ -6,6 +6,11 @@ import { FundingBodyComponent } from './types/funding-body.component';
 import { GenderComponent } from './types/gender.component';
 import { ResearchMethodologyComponent } from './types/research-methodology.component';
 import { ProjectStatusComponent } from './types/project-status.component';
+import { ApplicationStageComponent } from './types/application-stage.component';
+import { FundingCallTypeComponent } from './types/funding-call-type.component';
+import { SubmissionStageComponent } from './types/submission-stage.component';
+import { HowDidYouFindUsComponent } from './types/how-did-you-find-us.component';
+import { SupportProvidedComponent } from './types/support-provided.component';
 
 const routes: Routes = [
   {
@@ -36,6 +41,31 @@ const routes: Routes = [
   {
     path: 'project-status',
     component: ProjectStatusComponent,
+    data: { activeSideMenu: 'Configuration' }
+  },
+  {
+    path: 'application-stage',
+    component: ApplicationStageComponent,
+    data: { activeSideMenu: 'Configuration' }
+  },
+  {
+    path: 'funding-call-type',
+    component: FundingCallTypeComponent,
+    data: { activeSideMenu: 'Configuration' }
+  },
+  {
+    path: 'submission-stage',
+    component: SubmissionStageComponent,
+    data: { activeSideMenu: 'Configuration' }
+  },
+  {
+    path: 'comms',
+    component: HowDidYouFindUsComponent,
+    data: { activeSideMenu: 'Configuration' }
+  },
+  {
+    path: 'support-provided',
+    component: SupportProvidedComponent,
     data: { activeSideMenu: 'Configuration' }
   },
 ];

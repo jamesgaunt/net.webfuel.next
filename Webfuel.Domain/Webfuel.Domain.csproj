@@ -15,9 +15,7 @@
     <Folder Include="Project\ProjectFile\" />
     <Folder Include="Project\ProjectDiagnostic\" />
     <Folder Include="Project\ProjectActivity\" />
-    <Folder Include="Project\ProjectSupport\" />
     <Folder Include="Researcher\Researcher\Services\" />
-    <Folder Include="SupportRequest\SupportRequest\" />
   </ItemGroup>
 
 </Project>

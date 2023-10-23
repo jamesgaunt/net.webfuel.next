@@ -1,0 +1,22 @@
+@import 'config.scss';
+
+.flex {
+  display: flex;
+  gap: var(--gap);
+  margin-bottom: var(--gap);
+  flex-wrap: wrap;
+
+  &.has-min-025 {
+    & > * {
+      min-width: 25%;
+    }
+  }
+
+  & > * {
+    flex-grow: 1;
+  }
+
+  .is-full-width {
+    width: 100%;
+  }
+}

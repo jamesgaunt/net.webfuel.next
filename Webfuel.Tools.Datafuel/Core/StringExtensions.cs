@@ -54,10 +54,16 @@ namespace Webfuel
             if (String.IsNullOrEmpty(input))
                 return input;
             StringBuilder sb = new StringBuilder();
+            var prev = ' ';
             foreach (var c in input)
             {
-                if (char.IsLetterOrDigit(c))
-                    sb.Append(c);
+                if (char.IsLetterOrDigit(c)) {
+                    if (char.IsWhiteSpace(prev))
+                        sb.Append(char.ToUpper(c));
+                    else
+                        sb.Append(c);
+                }
+                prev = c;
             }
             var id = sb.ToString();
             if (!char.IsLetter(id[0]))

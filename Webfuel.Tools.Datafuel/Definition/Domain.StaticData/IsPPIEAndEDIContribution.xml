@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="IsPPIEAndEDIContribution" Tags="StaticData|Enum" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="547241ba-72d4-4901-bc1e-5fffc9aaadfa" Name="Yes" />
+      <Row Id="c2c2e7b5-f64d-421b-b4c7-de34cebbef53" Name="No" />
+    </Data>
+  </Entity>
+</Schema>

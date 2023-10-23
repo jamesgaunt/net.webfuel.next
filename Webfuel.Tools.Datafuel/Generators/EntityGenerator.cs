@@ -26,6 +26,7 @@ namespace Webfuel.Tools.Datafuel
         {
             sb.WriteLine("using FluentValidation;");
             sb.WriteLine("using Microsoft.Data.SqlClient;");
+            sb.WriteLine("using System.Text.Json;");
             sb.WriteLine("using System.Text.Json.Serialization;");
             sb.WriteLine("");
         }

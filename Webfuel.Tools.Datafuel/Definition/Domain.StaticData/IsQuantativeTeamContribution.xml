@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="IsQuantativeTeamContribution" Tags="StaticData|Enum" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="8192a0f7-a0c9-4e57-a36a-42383a3832d9" Name="Yes" />
+      <Row Id="30923282-7f55-48b2-bc34-2a7c822401d9" Name="No" />
+    </Data>
+  </Entity>
+</Schema>

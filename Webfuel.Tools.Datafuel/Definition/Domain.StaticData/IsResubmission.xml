@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="IsResubmission" Tags="StaticData|Enum" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="0cdc79cc-6053-4163-9661-2aff37dacf30" Name="Yes - this application is a resubmission" />
+      <Row Id="ab294a68-3b87-4809-8923-2b06fa9e2958" Name="No - this application is not a resubmission" />
+    </Data>
+  </Entity>
+</Schema>

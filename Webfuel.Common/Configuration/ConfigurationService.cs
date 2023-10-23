@@ -27,7 +27,10 @@ namespace Webfuel.Common
             var _configuration = await GetConfiguration();
 
             var nextProjectNumber = _configuration.NextProjectNumber;
+
             _configuration.NextProjectNumber++;
+            await _configurationRepository.UpdateConfiguration(_configuration);
+
             return nextProjectNumber;
         }
 
@@ -47,6 +50,5 @@ namespace Webfuel.Common
         static readonly Guid ConfigurationId = Guid.Parse("ad45744d-4630-489f-9e2b-94613752c516");
 
         static Configuration? _configuration = null;
-
     }
 }

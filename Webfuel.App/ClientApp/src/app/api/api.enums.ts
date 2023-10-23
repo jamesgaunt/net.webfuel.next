@@ -14,6 +14,46 @@ export enum QueryOp {
     Or = "or",
 }
 
+export enum IsCTUTeamContributionEnum {
+    Yes = "3e1f2673-e708-44a8-8768-cbf9fe1afb7c",
+    No = "5b18a6b2-1169-4f7c-91b7-e738ea4527c6",
+}
+
+export enum IsFellowshipEnum {
+    YesThisApplicationIsForAFellowship = "d8f6423c-00da-49df-94aa-24bad595858d",
+    NoThisApplicationIsNotForAFellowship = "65f431cb-e66a-4f36-b457-f783266827da",
+}
+
+export enum IsInternationalMultiSiteStudyEnum {
+    Yes = "744bb5e0-399e-4c3c-a92f-25ffcc4dbd7d",
+    No = "853f0502-651a-44d6-99c2-1ee731483c88",
+}
+
+export enum IsLeadApplicantNHSEnum {
+    YesTheyAre = "616ee238-466d-4f5e-9eab-5b3b48b95bc9",
+    NoTheyAreNot = "f9aa774f-616e-481a-9137-e5d55a9c99bd",
+}
+
+export enum IsPPIEAndEDIContributionEnum {
+    Yes = "547241ba-72d4-4901-bc1e-5fffc9aaadfa",
+    No = "c2c2e7b5-f64d-421b-b4c7-de34cebbef53",
+}
+
+export enum IsQuantativeTeamContributionEnum {
+    Yes = "8192a0f7-a0c9-4e57-a36a-42383a3832d9",
+    No = "30923282-7f55-48b2-bc34-2a7c822401d9",
+}
+
+export enum IsResubmissionEnum {
+    YesThisApplicationIsAResubmission = "0cdc79cc-6053-4163-9661-2aff37dacf30",
+    NoThisApplicationIsNotAResubmission = "ab294a68-3b87-4809-8923-2b06fa9e2958",
+}
+
+export enum IsTeamMembersConsultedEnum {
+    YesTeamMembersHaveBeenConsulted = "01340892-ce30-4c07-8ff3-90f5b9898b8c",
+    NoTeamMembersHaveNotBeenConsulted = "b5f5f413-e742-494d-a22a-4ecfa1d52ce8",
+}
+
 export enum ProjectStatusEnum {
     Active = "6c83e9e4-617b-4386-b087-16a11f6b24af",
     Inactive = "15787677-fc83-4071-961a-1da5b5f41018",
@@ -29,10 +69,10 @@ export enum SubmissionStageEnum {
 }
 
 export enum SupportRequestStatusEnum {
-    Tobetriaged = "206b6f9d-feee-4b28-9795-1e1a2b7b887f",
-    ClosedasnoteligiblefromNIHRRSS = "1fa7ae4c-8bb7-49da-9efc-f9aa96de4c1d",
-    ClosedasreferredtoanotherNIHRRSS = "3d344c3c-9964-4079-877e-bc3b6864f52d",
-    ReferredtoNIHRRSSexpertteams = "c22df21d-30ed-49d5-bee0-0f304b74a365",
+    ToBeTriaged = "206b6f9d-feee-4b28-9795-1e1a2b7b887f",
+    ClosedAsNotEligibleFromNIHRRSS = "1fa7ae4c-8bb7-49da-9efc-f9aa96de4c1d",
+    ClosedAsReferredToAnotherNIHRRSS = "3d344c3c-9964-4079-877e-bc3b6864f52d",
+    ReferredToNIHRRSSExpertTeams = "c22df21d-30ed-49d5-bee0-0f304b74a365",
 }
 
 

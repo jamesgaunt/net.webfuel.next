@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="IsFellowship" Tags="StaticData|Enum" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="d8f6423c-00da-49df-94aa-24bad595858d" Name="Yes - this application is for a fellowship" />
+      <Row Id="65f431cb-e66a-4f36-b457-f783266827da" Name="No - this application is not for a fellowship" />
+    </Data>
+  </Entity>
+</Schema>

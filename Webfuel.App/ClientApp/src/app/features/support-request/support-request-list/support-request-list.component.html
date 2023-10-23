@@ -1,0 +1,16 @@
+<ul class="breadcrumbs">
+  <li><a routerLink="/home">Home</a></li>
+  <li><a routerLink="/support-request/support-request-list">Support Requests</a></li>
+</ul>
+<div class="container">
+  <h1 class="title">Support Requests</h1>
+  <grid [dataSource]="supportRequestApi" [search]="true">
+    <grid-date-column name="dateOfRequest" label="Date" />
+    <grid-reference-column [dataSource]="staticDataCache.supportRequestStatus" name="statusId" />
+    <grid-column name="title" />
+    <grid-date-column name="targetSubmissionDate" label="Target Submission Date" />
+    <grid-action-column (add)="add()" (edit)="edit($event)" (delete)="delete($event)" />
+  </grid>
+</div>
+
+

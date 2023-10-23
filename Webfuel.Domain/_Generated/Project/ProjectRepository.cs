@@ -18,8 +18,6 @@ namespace Webfuel.Domain
         Task<int> CountProject();
         Task<List<Project>> SelectProject();
         Task<List<Project>> SelectProjectWithPage(int skip, int take);
-        Task<Project?> GetProjectByNumber(int number);
-        Task<Project> RequireProjectByNumber(int number);
     }
     [Service(typeof(IProjectRepository))]
     internal partial class ProjectRepository: IProjectRepository
@@ -92,19 +90,6 @@ namespace Webfuel.Domain
                 new SqlParameter("@Take", take),
             };
             return await _connection.ExecuteReader<Project, ProjectMetadata>(sql, parameters);
-        }
-        public async Task<Project?> GetProjectByNumber(int number)
-        {
-            var sql = @"SELECT * FROM [Project] WHERE Number = @Number ORDER BY Id ASC";
-            var parameters = new List<SqlParameter>
-            {
-                new SqlParameter("@Number", number),
-            };
-            return (await _connection.ExecuteReader<Project, ProjectMetadata>(sql, parameters)).SingleOrDefault();
-        }
-        public async Task<Project> RequireProjectByNumber(int number)
-        {
-            return await GetProjectByNumber(number) ?? throw new InvalidOperationException("The specified Project does not exist");
         }
     }
 }

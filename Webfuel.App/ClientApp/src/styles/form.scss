@@ -13,11 +13,16 @@
     display: block;
     font-weight: bold;
     margin-bottom: 0.4rem;
+    line-height: 1.5em;
   }
 }
 
 .input, .select, .textarea, .checkbox, .radio-group, .tag-input {
     @include form-input;
+}
+
+.textarea {
+    height: 8em;
 }
 
 .checkbox input[type=checkbox] {

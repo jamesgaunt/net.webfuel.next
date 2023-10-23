@@ -35,10 +35,18 @@ export class ProjectItemComponent implements OnInit {
 
   form = new FormGroup({
     id: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
-    title: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
 
-    fundingBodyId: new FormControl<string | null>(null),
-    researchMethodologyId: new FormControl<string | null>(null),
+    isQuantativeTeamContributionId: new FormControl<string | null>(null),
+    isCTUTeamContributionId: new FormControl<string | null>(null),
+    isPPIEAndEDIContributionId: new FormControl<string | null>(null),
+
+    submittedFundingStreamId: new FormControl<string | null>(null),
+    submittedFundingStreamName: new FormControl<string>('', { nonNullable: true }),
+
+    projectStartDate: new FormControl<string | null>(null),
+    recruitmentTarget: new FormControl<number | null>(null),
+    numberOfProjectSites: new FormControl<number | null>(null),
+    isInternationalMultiSiteStudyId: new FormControl<string | null>(null),
   });
 
   save(close: boolean) {

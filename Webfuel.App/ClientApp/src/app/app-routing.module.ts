@@ -46,6 +46,11 @@ const routes: Routes = [
     canActivate: [isAuthenticated]
   },
   {
+    path: 'support-request',
+    loadChildren: () => import('./features/support-request/support-request.module').then(m => m.SupportRequestModule),
+    canActivate: [isAuthenticated]
+  },
+  {
     path: 'static-data',
     loadChildren: () => import('./features/static-data/static-data.module').then(m => m.StaticDataModule),
     canActivate: [isAuthenticated]

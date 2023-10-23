@@ -23,6 +23,8 @@ namespace Webfuel.Common
         public Task ProvideClientConfiguration(ClientConfiguration clientConfiguration)
         {
             clientConfiguration.SideMenu.AddChild(name: "Projects", action: "/project/project-list", icon: "fas fa-books");
+            clientConfiguration.SideMenu.AddChild(name: "Requests", action: "/support-request/support-request-list", icon: "fas fa-user-headset");
+
             clientConfiguration.SideMenu.AddChild(name: "Users", action: "/user/user-list", icon: "fas fa-users");
             clientConfiguration.SideMenu.AddChild(name: "User Groups", action: "/user/user-group-list", icon: "fas fa-users-cog");
             clientConfiguration.SideMenu.AddChild(name: "Researchers", action: "/researcher/researcher-list", icon: "fas fa-chalkboard-teacher");

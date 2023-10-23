@@ -5,6 +5,9 @@
 </ul>
 <div class="container">
   <h1 class="title">{{typeName}}</h1>
+  <div class="message is-warning">
+    Warning: Changes made to static will apply retrospectively to all projects and can have implications for how reports and diagnostics work. Please only make changes if you are sure of what you are doing. If in doubt please contact Webfuel.
+  </div>
   <grid [dataSource]="dataSource" [search]="true">
     <grid-column name="name" />
     <grid-boolean-column name="default" />

@@ -9,9 +9,19 @@ namespace Webfuel.Domain.StaticData
         IReadOnlyList<FundingCallType> FundingCallType { get; }
         IReadOnlyList<FundingStream> FundingStream { get; }
         IReadOnlyList<Gender> Gender { get; }
+        IReadOnlyList<HowDidYouFindUs> HowDidYouFindUs { get; }
+        IReadOnlyList<IsCTUTeamContribution> IsCTUTeamContribution { get; }
+        IReadOnlyList<IsFellowship> IsFellowship { get; }
+        IReadOnlyList<IsInternationalMultiSiteStudy> IsInternationalMultiSiteStudy { get; }
+        IReadOnlyList<IsLeadApplicantNHS> IsLeadApplicantNHS { get; }
+        IReadOnlyList<IsPPIEAndEDIContribution> IsPPIEAndEDIContribution { get; }
+        IReadOnlyList<IsQuantativeTeamContribution> IsQuantativeTeamContribution { get; }
+        IReadOnlyList<IsResubmission> IsResubmission { get; }
+        IReadOnlyList<IsTeamMembersConsulted> IsTeamMembersConsulted { get; }
         IReadOnlyList<ProjectStatus> ProjectStatus { get; }
         IReadOnlyList<ResearchMethodology> ResearchMethodology { get; }
         IReadOnlyList<SubmissionStage> SubmissionStage { get; }
+        IReadOnlyList<SupportProvided> SupportProvided { get; }
         IReadOnlyList<SupportRequestStatus> SupportRequestStatus { get; }
         IReadOnlyList<Title> Title { get; }
         DateTimeOffset LoadedAt { get; }
@@ -23,9 +33,19 @@ namespace Webfuel.Domain.StaticData
         public required IReadOnlyList<FundingCallType> FundingCallType { get; init; }
         public required IReadOnlyList<FundingStream> FundingStream { get; init; }
         public required IReadOnlyList<Gender> Gender { get; init; }
+        public required IReadOnlyList<HowDidYouFindUs> HowDidYouFindUs { get; init; }
+        public required IReadOnlyList<IsCTUTeamContribution> IsCTUTeamContribution { get; init; }
+        public required IReadOnlyList<IsFellowship> IsFellowship { get; init; }
+        public required IReadOnlyList<IsInternationalMultiSiteStudy> IsInternationalMultiSiteStudy { get; init; }
+        public required IReadOnlyList<IsLeadApplicantNHS> IsLeadApplicantNHS { get; init; }
+        public required IReadOnlyList<IsPPIEAndEDIContribution> IsPPIEAndEDIContribution { get; init; }
+        public required IReadOnlyList<IsQuantativeTeamContribution> IsQuantativeTeamContribution { get; init; }
+        public required IReadOnlyList<IsResubmission> IsResubmission { get; init; }
+        public required IReadOnlyList<IsTeamMembersConsulted> IsTeamMembersConsulted { get; init; }
         public required IReadOnlyList<ProjectStatus> ProjectStatus { get; init; }
         public required IReadOnlyList<ResearchMethodology> ResearchMethodology { get; init; }
         public required IReadOnlyList<SubmissionStage> SubmissionStage { get; init; }
+        public required IReadOnlyList<SupportProvided> SupportProvided { get; init; }
         public required IReadOnlyList<SupportRequestStatus> SupportRequestStatus { get; init; }
         public required IReadOnlyList<Title> Title { get; init; }
         public DateTimeOffset LoadedAt { get; init; }
@@ -39,9 +59,19 @@ namespace Webfuel.Domain.StaticData
                 FundingCallType = await serviceProvider.GetRequiredService<IFundingCallTypeRepository>().SelectFundingCallType(),
                 FundingStream = await serviceProvider.GetRequiredService<IFundingStreamRepository>().SelectFundingStream(),
                 Gender = await serviceProvider.GetRequiredService<IGenderRepository>().SelectGender(),
+                HowDidYouFindUs = await serviceProvider.GetRequiredService<IHowDidYouFindUsRepository>().SelectHowDidYouFindUs(),
+                IsCTUTeamContribution = await serviceProvider.GetRequiredService<IIsCTUTeamContributionRepository>().SelectIsCTUTeamContribution(),
+                IsFellowship = await serviceProvider.GetRequiredService<IIsFellowshipRepository>().SelectIsFellowship(),
+                IsInternationalMultiSiteStudy = await serviceProvider.GetRequiredService<IIsInternationalMultiSiteStudyRepository>().SelectIsInternationalMultiSiteStudy(),
+                IsLeadApplicantNHS = await serviceProvider.GetRequiredService<IIsLeadApplicantNHSRepository>().SelectIsLeadApplicantNHS(),
+                IsPPIEAndEDIContribution = await serviceProvider.GetRequiredService<IIsPPIEAndEDIContributionRepository>().SelectIsPPIEAndEDIContribution(),
+                IsQuantativeTeamContribution = await serviceProvider.GetRequiredService<IIsQuantativeTeamContributionRepository>().SelectIsQuantativeTeamContribution(),
+                IsResubmission = await serviceProvider.GetRequiredService<IIsResubmissionRepository>().SelectIsResubmission(),
+                IsTeamMembersConsulted = await serviceProvider.GetRequiredService<IIsTeamMembersConsultedRepository>().SelectIsTeamMembersConsulted(),
                 ProjectStatus = await serviceProvider.GetRequiredService<IProjectStatusRepository>().SelectProjectStatus(),
                 ResearchMethodology = await serviceProvider.GetRequiredService<IResearchMethodologyRepository>().SelectResearchMethodology(),
                 SubmissionStage = await serviceProvider.GetRequiredService<ISubmissionStageRepository>().SelectSubmissionStage(),
+                SupportProvided = await serviceProvider.GetRequiredService<ISupportProvidedRepository>().SelectSupportProvided(),
                 SupportRequestStatus = await serviceProvider.GetRequiredService<ISupportRequestStatusRepository>().SelectSupportRequestStatus(),
                 Title = await serviceProvider.GetRequiredService<ITitleRepository>().SelectTitle(),
                 LoadedAt = DateTimeOffset.Now

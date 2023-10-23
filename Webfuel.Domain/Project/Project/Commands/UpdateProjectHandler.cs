@@ -4,16 +4,16 @@ namespace Webfuel.Domain
 {
     internal class UpdateProjectHandler : IRequestHandler<UpdateProject, Project>
     {
-        private readonly IUpdateProjectService _projectUpdateService;
+        private readonly IUpdateProjectService _updateProjectService;
 
-        public UpdateProjectHandler(IUpdateProjectService projectUpdateService)
+        public UpdateProjectHandler(IUpdateProjectService updateProjectService)
         {
-            _projectUpdateService = projectUpdateService;
+            _updateProjectService = updateProjectService;
         }
 
         public async Task<Project> Handle(UpdateProject request, CancellationToken cancellationToken)
         {
-            return await _projectUpdateService.UpdateProject(request);
+            return await _updateProjectService.UpdateProject(request);
         }
     }
 }

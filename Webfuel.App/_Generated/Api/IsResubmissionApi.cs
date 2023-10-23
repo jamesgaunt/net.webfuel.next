@@ -1,0 +1,27 @@
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Webfuel.Domain.StaticData;
+
+namespace Webfuel.App
+{
+    [ApiService]
+    [ApiDataSource]
+    [ApiStaticData]
+    public static class IsResubmissionApi
+    {
+        public static void RegisterEndpoints(IEndpointRouteBuilder app)
+        {
+            
+            // Querys
+            
+            app.MapPost("api/is-resubmission/query", Query)
+                .RequireIdentity();
+        }
+        
+        public static Task<QueryResult<IsResubmission>> Query([FromBody] QueryIsResubmission command, IMediator mediator)
+        {
+            return mediator.Send(command);
+        }
+    }
+}
+

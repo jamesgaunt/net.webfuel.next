@@ -6,6 +6,7 @@ import { ProjectApi } from '../../api/project.api';
 
 import { ProjectListComponent } from './project-list/project-list.component';
 import { ProjectItemComponent } from './project-item/project-item.component';
+import { ProjectRequestComponent } from './project-request/project-request.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,13 @@ const routes: Routes = [
     component: ProjectItemComponent,
     resolve: { project: ProjectApi.projectResolver('id') },
     canDeactivate: [DeactivateService.isPristine<ProjectItemComponent>()],
+    data: { activeSideMenu: 'Projects' }
+  },
+  {
+    path: 'project-request/:id',
+    component: ProjectRequestComponent,
+    resolve: { project: ProjectApi.projectResolver('id') },
+    canDeactivate: [DeactivateService.isPristine<ProjectRequestComponent>()],
     data: { activeSideMenu: 'Projects' }
   },
 ];

@@ -27,9 +27,16 @@ namespace Webfuel.Domain
 
             var updated = original.Copy();
 
-            updated.Title = request.Title;
-            updated.FundingBodyId = request.FundingBodyId;
-            updated.ResearchMethodologyId = request.ResearchMethodologyId;
+            updated.IsQuantativeTeamContributionId = request.IsQuantativeTeamContributionId;
+            updated.IsCTUTeamContributionId = request.IsCTUTeamContributionId;
+            updated.IsPPIEAndEDIContributionId = request.IsPPIEAndEDIContributionId;
+            updated.SubmittedFundingStreamId = request.SubmittedFundingStreamId;
+            updated.SubmittedFundingStreamName = request.SubmittedFundingStreamName;
+
+            updated.ProjectStartDate = request.ProjectStartDate;
+            updated.RecruitmentTarget = request.RecruitmentTarget;
+            updated.NumberOfProjectSites = request.NumberOfProjectSites;
+            updated.IsInternationalMultiSiteStudyId = request.IsInternationalMultiSiteStudyId;
 
             return await _projectRepository.UpdateProject(original: original, updated: updated);
         }

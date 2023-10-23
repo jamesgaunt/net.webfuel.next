@@ -5,7 +5,7 @@
 <div class="container">
   <h1 class="title">Projects</h1>
   <grid [dataSource]="projectApi" [search]="true">
-    <grid-column name="number" />
+    <grid-column name="prefixedNumber" label="Number" />
     <grid-column name="title" />
     <grid-reference-column [dataSource]="staticDataCache.fundingBody" name="fundingBodyId" />
     <grid-action-column (add)="add()" (edit)="edit($event)" (delete)="delete($event)" />

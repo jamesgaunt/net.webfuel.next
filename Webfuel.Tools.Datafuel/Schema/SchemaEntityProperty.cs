@@ -72,19 +72,19 @@ namespace Webfuel.Tools.Datafuel
                 }
             }
 
-            if(type.StartsWith("json:"))
+            if(type.ToLower().StartsWith("json:"))
             {
                 tag = type.Substring("json:".Length);
                 type = "json";
             }
 
-            if (type.StartsWith("enum:"))
+            if (type.ToLower().StartsWith("enum:"))
             {
                 tag = type.Substring("enum:".Length);
                 type = "enum";
             }
 
-            if (type.StartsWith("flags:"))
+            if (type.ToLower().StartsWith("flags:"))
             {
                 tag = type.Substring("flags:".Length);
                 type = "flags";

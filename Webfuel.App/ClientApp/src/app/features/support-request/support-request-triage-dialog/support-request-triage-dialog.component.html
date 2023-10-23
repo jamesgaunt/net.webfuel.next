@@ -1,0 +1,18 @@
+<form class="form dialog is-warning" [formGroup]="form">
+  <div class="dialog-head">
+    Triage Support Request
+  </div>
+  <div class="dialog-body">
+
+    <div class="field">
+      <label class="label">Please select outcome of triage</label>
+      <dropdown-select placeholder="required" formControlName="statusId" [dataSource]="staticDataCache.supportRequestStatus" (filter)="filterStatus($event)"></dropdown-select>
+    </div>
+
+  </div>
+  <div class="dialog-buttons">
+    <button type="submit" class="is-success" (click)="save()">Save</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+  </div>
+</form>
+

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="UserActivity">
+    <Key Name="Id" Type="guid" />
+    <Property Name="UserId" Type="User" />
+    
+  </Entity>
+</Schema>

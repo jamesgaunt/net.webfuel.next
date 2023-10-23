@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="SupportProvided" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Property Name="Hidden" Type="boolean" />
+    <Property Name="FreeText" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="3883c1a8-f033-401b-bd3d-fdb52c602406" Name="General consultation" />
+      <Row Id="5fed957a-ebaf-4f90-a980-2c49c1b4ba34" Name="Quantitative research design consultation" />
+      <Row Id="698016b2-a58b-41a8-82bb-0a7f179b38c4" Name="Qualitative research design consultation" />
+      <Row Id="e857da05-d503-463d-b303-2aeaa1955e98" Name="Research design for mixed methods consultation" />
+      <Row Id="56c50f32-ace8-4f4d-8f61-be5f6495bbeb" Name="RCT Research design or CTU consultation" />
+      <Row Id="b10dc4f1-f7df-4f3e-8c68-e7fb7956f79e" Name="Identifying and applying to appropriate funding sources" />
+      <Row Id="4a939edd-9b57-4d3f-8b14-2b4381d65e52" Name="Identifying appropriate collaborators in research" />
+      <Row Id="988bafe1-1e2c-45c8-a3e2-e1d7981c154c" Name="Promoting and faciliating PPIE" />
+      <Row Id="d153785e-ebad-4324-a91d-c28bf1bae74e" Name="Promoting and faciliating EDI" />
+      <Row Id="b615378f-b1f3-4fb9-aba6-a77d2da8fb52" Name="Signposting to specialist centers and individuals for advice" />
+      <Row Id="15e063bb-890a-4b4f-aad9-ced19fef3a1b" Name="Signposting to CRN or ARC" />
+      <Row Id="b2163d9b-ecfc-44bf-b8e3-ef87104b2669" Name="Granstmaship review" />
+    </Data>
+  </Entity>
+</Schema>

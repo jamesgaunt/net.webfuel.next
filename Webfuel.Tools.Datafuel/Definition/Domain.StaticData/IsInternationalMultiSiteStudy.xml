@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="IsInternationalMultiSiteStudy" Tags="StaticData|Enum" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="744bb5e0-399e-4c3c-a92f-25ffcc4dbd7d" Name="Yes" />
+      <Row Id="853f0502-651a-44d6-99c2-1ee731483c88" Name="No" />
+    </Data>
+  </Entity>
+</Schema>

@@ -42,14 +42,14 @@ namespace Webfuel.Tools.Datafuel
         {
             using (sb.OpenBrace($"public {CLRType} {Name}"))
             {
-                sb.WriteLine($"get {{ return _{Name} ?? (_{Name} = JSON.Deserialize<{CLRType}>(_{Name}Json)); }}");
+                sb.WriteLine($"get {{ return _{Name} ?? (_{Name} = SafeJsonSerializer.Deserialize<{CLRType}>(_{Name}Json)); }}");
                 sb.WriteLine($"{(InternalSet ? "internal " : "")}set {{ _{Name} = value; }}");
             }
             sb.WriteLine($"{CLRType}? _{Name} = null;");
 
             using (sb.OpenBrace($"internal string {Name}Json"))
             {
-                sb.WriteLine($"get {{ var result = _{Name} == null ? _{Name}Json : (_{Name}Json = JSON.Serialize(_{Name})); _{Name} = null; return result; }}");
+                sb.WriteLine($"get {{ var result = _{Name} == null ? _{Name}Json : (_{Name}Json = SafeJsonSerializer.Serialize(_{Name})); _{Name} = null; return result; }}");
                 sb.WriteLine($"set {{ _{Name}Json = value; _{Name} = null; }}");
             }
             sb.WriteLine($"string _{Name}Json = String.Empty;");

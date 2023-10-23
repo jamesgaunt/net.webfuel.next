@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Query, QueryFilter, QueryResult } from '../../api/api.types';
-import { ChangeDetectorRef, Component, ContentChild, DestroyRef, ElementRef, EventEmitter, HostListener, Input, TemplateRef, ViewChild, ViewContainerRef, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, ContentChild, DestroyRef, ElementRef, EventEmitter, HostListener, Input, Output, TemplateRef, ViewChild, ViewContainerRef, inject } from '@angular/core';
 import { IDataSource } from './data-source';
 import _ from 'shared/common/underscore';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
@@ -28,6 +28,9 @@ export class DropDownBase<TItem> {
 
   @Input()
   filterHidden = false;
+
+  @Output()
+  filter = new EventEmitter<Query>();
 
   // Data Source
 
@@ -67,6 +70,9 @@ export class DropDownBase<TItem> {
     if (this.filterHidden) {
       q.filters!.push({ field: 'hidden', op: QueryOp.NotEqual, value: true });
     }
+
+    if (this.filter.observed)
+      this.filter.emit(q);
 
     this.dataSource.query(q).subscribe((response) => {
       if (currentCallback !== this.optionItemsCallback)

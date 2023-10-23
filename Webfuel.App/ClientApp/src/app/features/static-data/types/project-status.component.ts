@@ -5,7 +5,7 @@ import { ProjectStatusApi } from '../../../api/project-status.api';
 import { StaticDataComponent } from '../shared/static-data.component';
 
 @Component({
-  selector: 'project-statusy-list',
+  selector: 'project-status-list',
   templateUrl: '../shared/static-data.component.html'
 })
 export class ProjectStatusComponent extends StaticDataComponent<ProjectStatus, QueryProjectStatus, any, any> {

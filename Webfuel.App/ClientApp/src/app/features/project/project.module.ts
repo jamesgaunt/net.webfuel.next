@@ -7,6 +7,7 @@ import { ProjectListComponent } from './project-list/project-list.component';
 import { ProjectItemComponent } from './project-item/project-item.component';
 import { ProjectCreateDialogComponent } from './project-create-dialog/project-create-dialog.component';
 import { ProjectTabsComponent } from './project-tabs/project-tabs.component';
+import { ProjectRequestComponent } from './project-request/project-request.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { ProjectTabsComponent } from './project-tabs/project-tabs.component';
   declarations: [
     ProjectListComponent,
     ProjectItemComponent,
+    ProjectRequestComponent,
     ProjectCreateDialogComponent,
     ProjectTabsComponent,
   ]

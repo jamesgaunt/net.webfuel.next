@@ -3,15 +3,43 @@
 <Schema>
   <Entity Name="Project">
     <Key Name="Id" Type="guid" />
-    <Property Name="LinkId" Type="guid" />
     <Property Name="Number" Type="Int32" />
-    <Property Name="Title" Type="string[1000]" />
-    <Property Name="FundingBodyId" Type="FundingBody?" />
-    <Property Name="ResearchMethodologyId" Type="ResearchMethodology?" />
-
-    <Index Unique="true">
-      <Member Name="Number" />
-    </Index>
+    <Property Name="PrefixedNumber" Type="meta:name" />
+    <Property Name="StatusId" Type="ProjectStatus" />
+    <Property Name="ClosureDate" Type="Date?" />
     
+    <Property Name="IsQuantativeTeamContributionId" Type="IsQuantativeTeamContribution?" />
+    <Property Name="IsCTUTeamContributionId" Type="IsCTUTeamContribution?" />
+    <Property Name="IsPPIEAndEDIContributionId" Type="IsPPIEAndEDIContribution?" />
+
+    <Property Name="NIHRRSSMemberCollaboratorIds" Type="Json:List{Guid}" />
+
+    <Property Name="SubmittedFundingStreamId" Type="FundingStream?" />
+    <Property Name="SubmittedFundingStreamName" Type="meta:name" />
+    
+    <!-- Replicated from Support Request -->
+    <Property Name="SupportRequestId" Type="SupportRequest?" />
+    <Property Name="DateOfRequest" Type="Date" />
+    <Property Name="Title" Type="string[1000]" />
+    <Property Name="BriefDescription" Type="string[5000]" />
+    <Property Name="ApplicationStageId" Type="ApplicationStage?" />
+    <Property Name="FundingStreamId" Type="FundingStream?" />
+    <Property Name="FundingStreamName" Type="meta:name" />
+    <Property Name="FundingCallTypeId" Type="FundingCallType?" />
+    <Property Name="TargetSubmissionDate" Type="Date?" />
+    <Property Name="ExperienceOfResearchAwards" Type="string[1000]" />
+    <Property Name="IsFellowshipId" Type="IsFellowship?" />
+    <Property Name="IsTeamMembersConsultedId" Type="IsTeamMembersConsulted?" />
+    <Property Name="IsResubmissionId" Type="IsResubmission?" />
+    <Property Name="IsLeadApplicantNHSId" Type="IsLeadApplicantNHS?" />
+    <Property Name="SupportRequested" Type="string[2000]" />
+    <Property Name="HowDidYouFindUsId" Type="HowDidYouFindUs?" />
+
+    <!-- For clinical trial submissions -->
+    <Property Name="ProjectStartDate" Type="Date?" />
+    <Property Name="RecruitmentTarget" Type="Int32?" />
+    <Property Name="NumberOfProjectSites" Type="Int32?" />
+    <Property Name="IsInternationalMultiSiteStudyId" Type="IsInternationalMultiSiteStudy?" />
+
   </Entity>
 </Schema>

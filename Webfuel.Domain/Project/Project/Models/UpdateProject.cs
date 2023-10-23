@@ -11,11 +11,17 @@ namespace Webfuel.Domain
     {
         public required Guid Id { get; set; }
 
-        public required string Title { get; set; }
+        public Guid? IsQuantativeTeamContributionId { get; set; }
+        public Guid? IsCTUTeamContributionId { get; set; }
+        public Guid? IsPPIEAndEDIContributionId { get; set; }
+        public Guid? SubmittedFundingStreamId { get; set; }
+        public string SubmittedFundingStreamName { get; set; } = String.Empty;
 
-        public Guid? FundingBodyId { get; set; }
+        // Clinical Trial Submissions
 
-        public Guid? ResearchMethodologyId { get; set; }
-
+        public DateOnly? ProjectStartDate { get; set; } = null;
+        public int? RecruitmentTarget { get; set; } = null;
+        public int? NumberOfProjectSites { get; set; } = null;
+        public Guid? IsInternationalMultiSiteStudyId { get; set; }
     }
 }

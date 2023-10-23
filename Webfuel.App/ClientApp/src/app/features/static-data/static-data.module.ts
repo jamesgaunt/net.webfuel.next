@@ -12,6 +12,11 @@ import { FundingBodyComponent } from './types/funding-body.component';
 import { GenderComponent } from './types/gender.component';
 import { ResearchMethodologyComponent } from './types/research-methodology.component';
 import { ProjectStatusComponent } from './types/project-status.component';
+import { ApplicationStageComponent } from './types/application-stage.component';
+import { FundingCallTypeComponent } from './types/funding-call-type.component';
+import { SubmissionStageComponent } from './types/submission-stage.component';
+import { HowDidYouFindUsComponent } from './types/how-did-you-find-us.component';
+import { SupportProvidedComponent } from './types/support-provided.component';
 
 @NgModule({
   imports: [
@@ -26,6 +31,11 @@ import { ProjectStatusComponent } from './types/project-status.component';
     GenderComponent,
     ResearchMethodologyComponent,
     ProjectStatusComponent,
+    ApplicationStageComponent,
+    FundingCallTypeComponent,
+    SubmissionStageComponent,
+    HowDidYouFindUsComponent,
+    SupportProvidedComponent,
 
     StaticDataCreateDialogComponent,
     StaticDataUpdateDialogComponent,

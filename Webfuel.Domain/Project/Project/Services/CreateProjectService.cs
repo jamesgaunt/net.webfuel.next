@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Webfuel.Common;
+using Webfuel.Domain.StaticData;
 
 namespace Webfuel.Domain
 {
     public interface ICreateProjectService
     {
         Task<Project> CreateProject(CreateProject command);
+
+        Task<Project> CreateProject(SupportRequest supportRequest);
     }
 
     [Service(typeof(ICreateProjectService))]
@@ -24,13 +27,34 @@ namespace Webfuel.Domain
             _configurationService = configurationService;
         }
 
-        public async Task<Project> CreateProject(CreateProject request)
+        public Task<Project> CreateProject(CreateProject request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Project> CreateProject(SupportRequest supportRequest)
         {
             var project = new Project();
-
-
             project.Number = await GetNextProjectNumber();
-            project.Title = request.Title;
+            project.PrefixedNumber = FormatPrefixedNumber(project);
+            project.StatusId = ProjectStatusEnum.Active;
+
+            // Replicate Support Request Values
+            project.SupportRequestId = supportRequest.Id;
+            project.DateOfRequest = supportRequest.DateOfRequest;
+            project.Title = supportRequest.Title;
+            project.BriefDescription = supportRequest.BriefDescription;
+            project.ApplicationStageId = supportRequest.ApplicationStageId;
+            project.FundingStreamId = supportRequest.FundingStreamId;
+            project.FundingStreamName = supportRequest.FundingStreamName;
+            project.TargetSubmissionDate = supportRequest.TargetSubmissionDate;
+            project.ExperienceOfResearchAwards = supportRequest.ExperienceOfResearchAwards;
+            project.IsFellowshipId = supportRequest.IsFellowshipId;
+            project.IsTeamMembersConsultedId = supportRequest.IsTeamMembersConsultedId;
+            project.IsResubmissionId = supportRequest.IsResubmissionId;
+            project.IsLeadApplicantNHSId = supportRequest.IsLeadApplicantNHSId;
+            project.SupportRequested = supportRequest.SupportRequested;
+            project.HowDidYouFindUsId = supportRequest.HowDidYouFindUsId;
 
             return await _projectRepository.InsertProject(project);
         }
@@ -40,6 +64,11 @@ namespace Webfuel.Domain
         async Task<int> GetNextProjectNumber()
         {
             return await _configurationService.AllocateNextProjectNumber();
+        }
+
+        string FormatPrefixedNumber(Project project)
+        {
+            return "IC" + project.Number.ToString("D5");
         }
     }
 }

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="IsLeadApplicantNHS" Tags="StaticData|Enum" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="616ee238-466d-4f5e-9eab-5b3b48b95bc9" Name="Yes - they are" />
+      <Row Id="f9aa774f-616e-481a-9137-e5d55a9c99bd" Name="No - they are not" />
+    </Data>
+  </Entity>
+</Schema>

@@ -4,16 +4,16 @@ namespace Webfuel.Domain
 {
     internal class DeleteProjectHandler : IRequestHandler<DeleteProject>
     {
-        private readonly IDeleteProjectService _projectDeleteService;
+        private readonly IDeleteProjectService _deleteProjectService;
 
-        public DeleteProjectHandler(IDeleteProjectService projectDeleteService)
+        public DeleteProjectHandler(IDeleteProjectService deleteProjectService)
         {
-            _projectDeleteService = projectDeleteService;
+            _deleteProjectService = deleteProjectService;
         }
 
         public async Task Handle(DeleteProject request, CancellationToken cancellationToken)
         {
-            await _projectDeleteService.DeleteProject(request);
+            await _deleteProjectService.DeleteProject(request);
         }
     }
 }

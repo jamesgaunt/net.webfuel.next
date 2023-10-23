@@ -29,6 +29,7 @@
   background-color: color-mix(in hsl, var(--palette-primary-background) 10%, #FFF);
   padding: var(--gap);
   font-weight: bold;
+  line-height: 1.6rem;
 
   @each $p in $paletteAction {
     &.is-#{$p} {

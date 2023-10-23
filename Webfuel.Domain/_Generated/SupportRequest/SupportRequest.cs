@@ -1,5 +1,6 @@
 using FluentValidation;
 using Microsoft.Data.SqlClient;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Webfuel.Domain
@@ -20,14 +21,8 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.Id):
                         Id = (Guid)value!;
                         break;
-                    case nameof(SupportRequest.LinkId):
-                        LinkId = (Guid)value!;
-                        break;
                     case nameof(SupportRequest.Title):
                         Title = (string)value!;
-                        break;
-                    case nameof(SupportRequest.Fellowship):
-                        Fellowship = (bool)value!;
                         break;
                     case nameof(SupportRequest.DateOfRequest):
                         DateOfRequest = DateOnly.FromDateTime((DateTime)value!);
@@ -41,20 +36,14 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.ExperienceOfResearchAwards):
                         ExperienceOfResearchAwards = (string)value!;
                         break;
-                    case nameof(SupportRequest.TeamMembersConsulted):
-                        TeamMembersConsulted = (bool)value!;
-                        break;
-                    case nameof(SupportRequest.Resubmission):
-                        Resubmission = (bool)value!;
-                        break;
                     case nameof(SupportRequest.BriefDescription):
                         BriefDescription = (string)value!;
                         break;
                     case nameof(SupportRequest.SupportRequested):
                         SupportRequested = (string)value!;
                         break;
-                    case nameof(SupportRequest.LeadApplicantNHS):
-                        LeadApplicantNHS = (bool)value!;
+                    case nameof(SupportRequest.IsFellowshipId):
+                        IsFellowshipId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
                     case nameof(SupportRequest.ApplicationStageId):
                         ApplicationStageId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
@@ -65,49 +54,66 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.FundingCallTypeId):
                         FundingCallTypeId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
+                    case nameof(SupportRequest.IsTeamMembersConsultedId):
+                        IsTeamMembersConsultedId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(SupportRequest.IsResubmissionId):
+                        IsResubmissionId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(SupportRequest.HowDidYouFindUsId):
+                        HowDidYouFindUsId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(SupportRequest.IsLeadApplicantNHSId):
+                        IsLeadApplicantNHSId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
                     case nameof(SupportRequest.StatusId):
                         StatusId = (Guid)value!;
+                        break;
+                    case nameof(SupportRequest.ProjectId):
+                        ProjectId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
                 }
             }
         }
         public Guid Id  { get; set; } = Guid.Empty;
-        public Guid LinkId  { get; set; } = Guid.Empty;
         public string Title  { get; set; } = String.Empty;
-        public bool Fellowship  { get; set; } = false;
         public DateOnly DateOfRequest  { get; set; } = new DateOnly(1900, 1, 1);
         public string FundingStreamName  { get; set; } = String.Empty;
         public DateOnly? TargetSubmissionDate  { get; set; } = null;
         public string ExperienceOfResearchAwards  { get; set; } = String.Empty;
-        public bool TeamMembersConsulted  { get; set; } = false;
-        public bool Resubmission  { get; set; } = false;
         public string BriefDescription  { get; set; } = String.Empty;
         public string SupportRequested  { get; set; } = String.Empty;
-        public bool LeadApplicantNHS  { get; set; } = false;
+        public Guid? IsFellowshipId { get; set; }
         public Guid? ApplicationStageId { get; set; }
         public Guid? FundingStreamId { get; set; }
         public Guid? FundingCallTypeId { get; set; }
+        public Guid? IsTeamMembersConsultedId { get; set; }
+        public Guid? IsResubmissionId { get; set; }
+        public Guid? HowDidYouFindUsId { get; set; }
+        public Guid? IsLeadApplicantNHSId { get; set; }
         public Guid StatusId { get; set; }
+        public Guid? ProjectId { get; set; }
         public SupportRequest Copy()
         {
             var entity = new SupportRequest();
             entity.Id = Id;
-            entity.LinkId = LinkId;
             entity.Title = Title;
-            entity.Fellowship = Fellowship;
             entity.DateOfRequest = DateOfRequest;
             entity.FundingStreamName = FundingStreamName;
             entity.TargetSubmissionDate = TargetSubmissionDate;
             entity.ExperienceOfResearchAwards = ExperienceOfResearchAwards;
-            entity.TeamMembersConsulted = TeamMembersConsulted;
-            entity.Resubmission = Resubmission;
             entity.BriefDescription = BriefDescription;
             entity.SupportRequested = SupportRequested;
-            entity.LeadApplicantNHS = LeadApplicantNHS;
+            entity.IsFellowshipId = IsFellowshipId;
             entity.ApplicationStageId = ApplicationStageId;
             entity.FundingStreamId = FundingStreamId;
             entity.FundingCallTypeId = FundingCallTypeId;
+            entity.IsTeamMembersConsultedId = IsTeamMembersConsultedId;
+            entity.IsResubmissionId = IsResubmissionId;
+            entity.HowDidYouFindUsId = HowDidYouFindUsId;
+            entity.IsLeadApplicantNHSId = IsLeadApplicantNHSId;
             entity.StatusId = StatusId;
+            entity.ProjectId = ProjectId;
             return entity;
         }
     }

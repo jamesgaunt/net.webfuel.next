@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="HowDidYouFindUs" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Property Name="Hidden" Type="boolean" />
+    <Property Name="FreeText" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="d540de22-bc6c-4649-8324-b31e1d18f0e2" Name="Online search" />
+      <Row Id="7bbb1d18-4493-4760-bfed-05e2d0537ffd" Name="RSS central website" />
+      <Row Id="2f775365-6d3a-4376-a0b5-2f1f51ac2e27" Name="Imperial RSS website" />
+      <Row Id="f1a60a8a-bdd3-443f-912c-cb70a394bf3b" Name="NIHR event" />
+      <Row Id="76b20c8b-eea2-4376-b113-4f24ca9e22d1" Name="RSS event" />
+      <Row Id="1d387021-fb9a-4da0-ada3-dd7a25f023a1" Name="Recommendation from a friend" />
+      <Row Id="401abb5a-080a-4401-834d-10722eb3510e" Name="Referral from another RSS" />
+      <Row Id="6b6eb5e8-4728-419f-b2bd-d45b0c362264" Name="Referral from RDS" />
+      <Row Id="ad75402e-95cf-412a-b274-b38828c0d32c" Name="Other" FreeText="true" />
+     </Data>
+  </Entity>
+</Schema>

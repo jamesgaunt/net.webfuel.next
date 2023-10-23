@@ -4,16 +4,16 @@ namespace Webfuel.Domain
 {
     internal class CreateProjectHandler : IRequestHandler<CreateProject, Project>
     {
-        private readonly ICreateProjectService _projectCreateService;
+        private readonly ICreateProjectService _createProjectService;
 
-        public CreateProjectHandler(ICreateProjectService projectCreateService)
+        public CreateProjectHandler(ICreateProjectService createProjectService)
         {
-            _projectCreateService = projectCreateService;
+            _createProjectService = createProjectService;
         }
 
         public async Task<Project> Handle(CreateProject request, CancellationToken cancellationToken)
         {
-            return await _projectCreateService.CreateProject(request);
+            return await _createProjectService.CreateProject(request);
         }
     }
 }
