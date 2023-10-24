@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { IDataSource } from 'shared/common/data-source';
+import { IDataSource, IDataSourceWithGet } from 'shared/common/data-source';
 import { StaticDataService } from '../core/static-data.service';
-import { ApplicationStage, FundingBody, FundingCallType, FundingStream, Gender, HowDidYouFindUs, IsCTUTeamContribution, IsFellowship, IsInternationalMultiSiteStudy, IsLeadApplicantNHS, IsPPIEAndEDIContribution, IsQuantativeTeamContribution, IsResubmission, IsTeamMembersConsulted, ProjectStatus, ResearchMethodology, SubmissionOutcome, SubmissionStage, SupportProvided, SupportRequestStatus, Title } from './api.types';
+import { ApplicationStage, FundingBody, FundingCallType, FundingStream, Gender, HowDidYouFindUs, IsCTUTeamContribution, IsFellowship, IsInternationalMultiSiteStudy, IsLeadApplicantNHS, IsPPIEAndEDIContribution, IsQuantativeTeamContribution, IsResubmission, IsTeamMembersConsulted, ProjectStatus, ResearchMethodology, SubmissionOutcome, SubmissionStage, SupportProvided, SupportRequestStatus, Title, UserDiscipline, WorkActivity } from './api.types';
 
 @Injectable()
 export class StaticDataCache {
@@ -9,46 +9,119 @@ export class StaticDataCache {
     constructor(private staticDataService: StaticDataService) {
     }
     
-    applicationStage: IDataSource<ApplicationStage> = { query: (query) => this.staticDataService.load(query, s => s.applicationStage) };
+    applicationStage: IDataSourceWithGet<ApplicationStage> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.applicationStage),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.applicationStage),
+    };
     
-    fundingBody: IDataSource<FundingBody> = { query: (query) => this.staticDataService.load(query, s => s.fundingBody) };
+    fundingBody: IDataSourceWithGet<FundingBody> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.fundingBody),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.fundingBody),
+    };
     
-    fundingCallType: IDataSource<FundingCallType> = { query: (query) => this.staticDataService.load(query, s => s.fundingCallType) };
+    fundingCallType: IDataSourceWithGet<FundingCallType> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.fundingCallType),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.fundingCallType),
+    };
     
-    fundingStream: IDataSource<FundingStream> = { query: (query) => this.staticDataService.load(query, s => s.fundingStream) };
+    fundingStream: IDataSourceWithGet<FundingStream> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.fundingStream),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.fundingStream),
+    };
     
-    gender: IDataSource<Gender> = { query: (query) => this.staticDataService.load(query, s => s.gender) };
+    gender: IDataSourceWithGet<Gender> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.gender),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.gender),
+    };
     
-    howDidYouFindUs: IDataSource<HowDidYouFindUs> = { query: (query) => this.staticDataService.load(query, s => s.howDidYouFindUs) };
+    howDidYouFindUs: IDataSourceWithGet<HowDidYouFindUs> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.howDidYouFindUs),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.howDidYouFindUs),
+    };
     
-    isCTUTeamContribution: IDataSource<IsCTUTeamContribution> = { query: (query) => this.staticDataService.load(query, s => s.isCTUTeamContribution) };
+    isCTUTeamContribution: IDataSourceWithGet<IsCTUTeamContribution> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.isCTUTeamContribution),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.isCTUTeamContribution),
+    };
     
-    isFellowship: IDataSource<IsFellowship> = { query: (query) => this.staticDataService.load(query, s => s.isFellowship) };
+    isFellowship: IDataSourceWithGet<IsFellowship> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.isFellowship),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.isFellowship),
+    };
     
-    isInternationalMultiSiteStudy: IDataSource<IsInternationalMultiSiteStudy> = { query: (query) => this.staticDataService.load(query, s => s.isInternationalMultiSiteStudy) };
+    isInternationalMultiSiteStudy: IDataSourceWithGet<IsInternationalMultiSiteStudy> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.isInternationalMultiSiteStudy),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.isInternationalMultiSiteStudy),
+    };
     
-    isLeadApplicantNHS: IDataSource<IsLeadApplicantNHS> = { query: (query) => this.staticDataService.load(query, s => s.isLeadApplicantNHS) };
+    isLeadApplicantNHS: IDataSourceWithGet<IsLeadApplicantNHS> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.isLeadApplicantNHS),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.isLeadApplicantNHS),
+    };
     
-    isPPIEAndEDIContribution: IDataSource<IsPPIEAndEDIContribution> = { query: (query) => this.staticDataService.load(query, s => s.isPPIEAndEDIContribution) };
+    isPPIEAndEDIContribution: IDataSourceWithGet<IsPPIEAndEDIContribution> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.isPPIEAndEDIContribution),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.isPPIEAndEDIContribution),
+    };
     
-    isQuantativeTeamContribution: IDataSource<IsQuantativeTeamContribution> = { query: (query) => this.staticDataService.load(query, s => s.isQuantativeTeamContribution) };
+    isQuantativeTeamContribution: IDataSourceWithGet<IsQuantativeTeamContribution> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.isQuantativeTeamContribution),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.isQuantativeTeamContribution),
+    };
     
-    isResubmission: IDataSource<IsResubmission> = { query: (query) => this.staticDataService.load(query, s => s.isResubmission) };
+    isResubmission: IDataSourceWithGet<IsResubmission> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.isResubmission),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.isResubmission),
+    };
     
-    isTeamMembersConsulted: IDataSource<IsTeamMembersConsulted> = { query: (query) => this.staticDataService.load(query, s => s.isTeamMembersConsulted) };
+    isTeamMembersConsulted: IDataSourceWithGet<IsTeamMembersConsulted> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.isTeamMembersConsulted),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.isTeamMembersConsulted),
+    };
     
-    projectStatus: IDataSource<ProjectStatus> = { query: (query) => this.staticDataService.load(query, s => s.projectStatus) };
+    projectStatus: IDataSourceWithGet<ProjectStatus> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.projectStatus),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.projectStatus),
+    };
     
-    researchMethodology: IDataSource<ResearchMethodology> = { query: (query) => this.staticDataService.load(query, s => s.researchMethodology) };
+    researchMethodology: IDataSourceWithGet<ResearchMethodology> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.researchMethodology),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.researchMethodology),
+    };
     
-    submissionOutcome: IDataSource<SubmissionOutcome> = { query: (query) => this.staticDataService.load(query, s => s.submissionOutcome) };
+    submissionOutcome: IDataSourceWithGet<SubmissionOutcome> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.submissionOutcome),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.submissionOutcome),
+    };
     
-    submissionStage: IDataSource<SubmissionStage> = { query: (query) => this.staticDataService.load(query, s => s.submissionStage) };
+    submissionStage: IDataSourceWithGet<SubmissionStage> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.submissionStage),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.submissionStage),
+    };
     
-    supportProvided: IDataSource<SupportProvided> = { query: (query) => this.staticDataService.load(query, s => s.supportProvided) };
+    supportProvided: IDataSourceWithGet<SupportProvided> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.supportProvided),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.supportProvided),
+    };
     
-    supportRequestStatus: IDataSource<SupportRequestStatus> = { query: (query) => this.staticDataService.load(query, s => s.supportRequestStatus) };
+    supportRequestStatus: IDataSourceWithGet<SupportRequestStatus> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.supportRequestStatus),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.supportRequestStatus),
+    };
     
-    title: IDataSource<Title> = { query: (query) => this.staticDataService.load(query, s => s.title) };
+    title: IDataSourceWithGet<Title> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.title),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.title),
+    };
+    
+    userDiscipline: IDataSourceWithGet<UserDiscipline> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.userDiscipline),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.userDiscipline),
+    };
+    
+    workActivity: IDataSourceWithGet<WorkActivity> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.workActivity),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.workActivity),
+    };
 }
 

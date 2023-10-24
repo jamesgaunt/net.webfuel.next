@@ -26,7 +26,7 @@ namespace Webfuel.App
             app.MapPost("api/researcher/query", Query)
                 .RequireIdentity();
 
-            app.MapGet("api/researcher/{id:guid}", Resolve)
+            app.MapGet("api/researcher/{id:guid}", Get)
                 .RequireIdentity();
         }
 
@@ -50,9 +50,9 @@ namespace Webfuel.App
             return mediator.Send(command);
         }
 
-        public static async Task<Researcher> Resolve(Guid id, IMediator mediator)
+        public static async Task<Researcher?> Get(Guid id, IMediator mediator)
         {
-            return await mediator.Send(new GetResearcher { Id = id }) ?? throw new InvalidOperationException("The specified researcher does not exist");
+            return await mediator.Send(new GetResearcher { Id = id });
         }
     }
 }

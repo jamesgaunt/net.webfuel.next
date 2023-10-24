@@ -25,7 +25,7 @@ export class ResearcherApi implements IDataSource<Researcher, QueryResearcher, C
         return this.apiService.request<QueryResearcher, QueryResult<Researcher>>("POST", "api/researcher/query", body, options);
     }
     
-    public resolve (params: { id: string }, options?: ApiOptions): Observable<Researcher> {
+    public get (params: { id: string }, options?: ApiOptions): Observable<Researcher> {
         return this.apiService.request<undefined, Researcher>("GET", "api/researcher/" + params.id + "", undefined, options);
     }
     
@@ -35,7 +35,7 @@ export class ResearcherApi implements IDataSource<Researcher, QueryResearcher, C
     
     static researcherResolver(param: string): ResolveFn<Researcher> {
         return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Researcher> => {
-            return inject(ResearcherApi).resolve({id: route.paramMap.get(param)! });
+            return inject(ResearcherApi).get({id: route.paramMap.get(param)! });
         };
     }
 }

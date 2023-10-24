@@ -36,6 +36,8 @@ namespace Webfuel.Domain.StaticData
             clientConfiguration.StaticDataMenu.AddChild(name: "Funding Body", action: "/static-data/funding-body");
             clientConfiguration.StaticDataMenu.AddChild(name: "Funding Call Type", action: "/static-data/funding-call-type");
             clientConfiguration.StaticDataMenu.AddChild(name: "Support Provided", action: "/static-data/support-provided");
+            clientConfiguration.StaticDataMenu.AddChild(name: "Work Activity", action: "/static-data/work-activity");
+            clientConfiguration.StaticDataMenu.AddChild(name: "User Discipline", action: "/static-data/user-discipline");
             return Task.CompletedTask;
         }
     }

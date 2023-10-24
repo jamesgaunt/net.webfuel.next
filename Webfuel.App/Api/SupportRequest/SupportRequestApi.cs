@@ -29,7 +29,7 @@ namespace Webfuel.App
             app.MapPost("api/support-request/query", Query)
                 .RequireIdentity();
 
-            app.MapGet("api/support-request/{id:guid}", Resolve)
+            app.MapGet("api/support-request/{id:guid}", Get)
                 .RequireIdentity();
         }
 
@@ -58,9 +58,9 @@ namespace Webfuel.App
             return mediator.Send(command);
         }
 
-        public static async Task<SupportRequest> Resolve(Guid id, IMediator mediator)
+        public static async Task<SupportRequest?> Get(Guid id, IMediator mediator)
         {
-            return await mediator.Send(new GetSupportRequest { Id = id }) ?? throw new InvalidOperationException("The specified support request does not exist");
+            return await mediator.Send(new GetSupportRequest { Id = id });
         }
     }
 }

@@ -30,6 +30,8 @@ namespace Webfuel.App
             
             app.MapPost("api/funding-body/query", Query)
                 .RequireIdentity();
+            
+            
         }
         
         public static Task<FundingBody> Create([FromBody] CreateFundingBody command, IMediator mediator)

@@ -30,6 +30,8 @@ namespace Webfuel.App
             
             app.MapPost("api/research-methodology/query", Query)
                 .RequireIdentity();
+            
+            
         }
         
         public static Task<ResearchMethodology> Create([FromBody] CreateResearchMethodology command, IMediator mediator)

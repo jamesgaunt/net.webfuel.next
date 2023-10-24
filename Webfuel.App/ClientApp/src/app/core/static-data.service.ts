@@ -19,14 +19,23 @@ export class StaticDataService {
     this._loadStaticData();
   }
 
-  load<TItem>(query: Query, selector: (staticData: IStaticDataModel) => TItem[]) {
+  queryFactory<TItem>(query: Query, selector: (staticData: IStaticDataModel) => TItem[]) {
 
     if (this._staticData.value === null)
       this._loadStaticData();
 
     return this._staticData.pipe(
       first(p => p !== null), // This is a one-shot subscription
-      switchMap((p) => this.queryService.fetch(query, selector(p!))));
+      switchMap((p) => this.queryService.query(query, selector(p!))));
+  }
+
+  getFactory<TItem>(id: string, selector: (staticData: IStaticDataModel) => TItem[]) {
+    if (this._staticData.value === null)
+      this._loadStaticData();
+
+    return this._staticData.pipe(
+      first(p => p !== null), // This is a one-shot subscription
+      switchMap((p) => this.queryService.get(id, selector(p!))));
   }
 
   // Implementation

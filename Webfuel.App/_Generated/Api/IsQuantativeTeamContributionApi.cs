@@ -16,6 +16,8 @@ namespace Webfuel.App
             
             app.MapPost("api/is-quantative-team-contribution/query", Query)
                 .RequireIdentity();
+            
+            
         }
         
         public static Task<QueryResult<IsQuantativeTeamContribution>> Query([FromBody] QueryIsQuantativeTeamContribution command, IMediator mediator)

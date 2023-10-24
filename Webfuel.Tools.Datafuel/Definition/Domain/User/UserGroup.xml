@@ -7,5 +7,9 @@
     <Index Unique="true">
       <Member Name="Name" />
     </Index>
+    <Data>
+      <Row Id="67fa9133-ad7b-4d79-8601-dc4641fa10f2" Name="User" />
+      <Row Id="e1a1890d-f60d-467b-b32d-2679639d26bc" Name="Administrator" />
+    </Data>
   </Entity>
 </Schema>

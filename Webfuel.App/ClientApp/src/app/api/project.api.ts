@@ -25,7 +25,7 @@ export class ProjectApi implements IDataSource<Project, QueryProject, CreateProj
         return this.apiService.request<QueryProject, QueryResult<Project>>("POST", "api/project/query", body, options);
     }
     
-    public resolve (params: { id: string }, options?: ApiOptions): Observable<Project> {
+    public get (params: { id: string }, options?: ApiOptions): Observable<Project> {
         return this.apiService.request<undefined, Project>("GET", "api/project/" + params.id + "", undefined, options);
     }
     
@@ -35,7 +35,7 @@ export class ProjectApi implements IDataSource<Project, QueryProject, CreateProj
     
     static projectResolver(param: string): ResolveFn<Project> {
         return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Project> => {
-            return inject(ProjectApi).resolve({id: route.paramMap.get(param)! });
+            return inject(ProjectApi).get({id: route.paramMap.get(param)! });
         };
     }
 }

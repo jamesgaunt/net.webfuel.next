@@ -16,6 +16,8 @@ namespace Webfuel.App
             
             app.MapPost("api/is-international-multi-site-study/query", Query)
                 .RequireIdentity();
+            
+            
         }
         
         public static Task<QueryResult<IsInternationalMultiSiteStudy>> Query([FromBody] QueryIsInternationalMultiSiteStudy command, IMediator mediator)

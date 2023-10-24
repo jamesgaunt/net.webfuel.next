@@ -29,6 +29,9 @@ export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, T
   @Input()
   filterForm: FormGroup | null = null;
 
+  @Output()
+  filter = new EventEmitter<TQuery>();
+
   @Input()
   search = false;
 
@@ -69,6 +72,9 @@ export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, T
 
     if (this.search)
       query = _.merge(query, this.searchForm.getRawValue());
+
+    if (this.filter)
+      this.filter.emit(query);
 
     return query;
   }

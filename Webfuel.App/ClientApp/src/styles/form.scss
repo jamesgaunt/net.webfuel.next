@@ -1,7 +1,8 @@
 @import 'config.scss';
+@import 'form.tag-input.scss';
 
 .cdk-overlay-dark-backdrop {
-  background: rgba(0,0,0,0.05);
+  background: rgba(0,0,0,0.5);
 }
 
 .form {
@@ -11,14 +12,10 @@
 .field {
   .label {
     display: block;
-    font-weight: bold;
+    font-weight: var(--bold-if-light);
     margin-bottom: 0.4rem;
     line-height: 1.5em;
   }
-}
-
-body.dark-mode .field .label {
-    font-weight: normal;
 }
 
 .input, .select, .textarea, .checkbox, .radio-group, .tag-input {

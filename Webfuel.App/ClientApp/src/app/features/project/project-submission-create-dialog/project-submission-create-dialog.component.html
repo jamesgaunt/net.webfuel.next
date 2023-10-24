@@ -1,0 +1,34 @@
+<form class="form dialog" [formGroup]="form">
+  <div class="dialog-head">
+    Add Project Submission
+  </div>
+  <div class="dialog-body">
+    <div class="grid">
+      <div class="field">
+        <label class="label">Submission date</label>
+        <date-picker placeholder="required" formControlName="submissionDate"></date-picker>
+      </div>
+      <div class="field">
+        <label class="label">NIHR reference</label>
+        <input class="input" type="text" placeholder="optional" formControlName="nihrReference" />
+      </div>
+      <div class="field">
+        <label class="label">Submission stage</label>
+        <dropdown-select [dataSource]="staticDataCache.submissionStage" placeholder="required" formControlName="submissionStageId"></dropdown-select>
+      </div>
+      <div class="field">
+        <label class="label">Submission outcome</label>
+        <dropdown-select [dataSource]="staticDataCache.submissionOutcome" placeholder="optional" formControlName="submissionOutcomeId"></dropdown-select>
+      </div>
+      <div class="field">
+        <label class="label">Funding amount on submission</label>
+        <input class="input" type="number" placeholder="optional" formControlName="fundingAmountOnSubmission" />
+      </div>
+    </div>
+  </div>
+  <div class="dialog-buttons">
+    <button type="submit" class="is-success" (click)="save()">Add</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+  </div>
+</form>
+

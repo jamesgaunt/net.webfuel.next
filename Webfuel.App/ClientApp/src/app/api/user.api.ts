@@ -33,7 +33,7 @@ export class UserApi implements IDataSource<User, QueryUser, CreateUser, UpdateU
         return this.apiService.request<QueryUser, QueryResult<User>>("POST", "api/user/query", body, options);
     }
     
-    public resolve (params: { id: string }, options?: ApiOptions): Observable<User> {
+    public get (params: { id: string }, options?: ApiOptions): Observable<User> {
         return this.apiService.request<undefined, User>("GET", "api/user/" + params.id + "", undefined, options);
     }
     
@@ -43,7 +43,7 @@ export class UserApi implements IDataSource<User, QueryUser, CreateUser, UpdateU
     
     static userResolver(param: string): ResolveFn<User> {
         return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User> => {
-            return inject(UserApi).resolve({id: route.paramMap.get(param)! });
+            return inject(UserApi).get({id: route.paramMap.get(param)! });
         };
     }
 }

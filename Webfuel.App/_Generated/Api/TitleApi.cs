@@ -30,6 +30,8 @@ namespace Webfuel.App
             
             app.MapPost("api/title/query", Query)
                 .RequireIdentity();
+            
+            
         }
         
         public static Task<Title> Create([FromBody] CreateTitle command, IMediator mediator)

@@ -90,6 +90,8 @@ namespace Webfuel.Tools.Datafuel
 
             app.MapPost(""api/{entity.Name.ToSnakeCase('-')}/query"", Query)
                 .RequireIdentity();
+
+
 ");
             }
         }

@@ -5,6 +5,7 @@
   <div class="column">
     <div class="buttons is-right">
       <button class="button is-primary" (click)="addSupport()">Add Support</button>
+      <button class="button is-primary" (click)="addSubmission()">Add Submission</button>
     </div>
   </div>
 </div>
@@ -12,7 +13,7 @@
   <ul>
     <li routerLinkActive="is-active"><a routerLink="../../project-item/{{ item.id }}">Project</a></li>
     <li routerLinkActive="is-active"><a routerLink="../../project-request/{{ item.id }}">Request</a></li>
-    <li><a>Submissions</a></li>
+    <li routerLinkActive="is-active"><a routerLink="../../project-submission/{{ item.id }}">Submissions</a></li>
     <li routerLinkActive="is-active"><a routerLink="../../project-support/{{ item.id }}">Support</a></li>
     <li><a>Files</a></li>
     <li><a>Activity</a></li>

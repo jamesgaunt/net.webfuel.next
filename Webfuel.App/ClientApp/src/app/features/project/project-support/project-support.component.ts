@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Project, ProjectSupport, QueryProjectSupport } from '../../../api/api.types';
+import { Project, ProjectSupport, QueryProjectSupport, User } from '../../../api/api.types';
 import { ProjectApi } from '../../../api/project.api';
 import { StaticDataCache } from '../../../api/static-data.cache';
 import { FormService } from '../../../core/form.service';
 import { ProjectSupportApi } from '../../../api/project-support.api';
-import { IDataSource } from '../../../shared/common/data-source';
+import { DataSourceLookup, IDataSource, IDataSourceWithGet } from '../../../shared/common/data-source';
+import { UserApi } from '../../../api/user.api';
 
 @Component({
   selector: 'project-support',
@@ -18,9 +19,11 @@ export class ProjectSupportComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formService: FormService,
+    private userApi: UserApi,
     private projectSupportApi: ProjectSupportApi,
     public staticDataCache: StaticDataCache
   ) {
+    this.userLookup = new DataSourceLookup(userApi);
   }
 
   ngOnInit() {
@@ -51,4 +54,6 @@ export class ProjectSupportComponent implements OnInit {
       this.items = result.items;
     })
   }
+
+  userLookup: DataSourceLookup<User>;
 }

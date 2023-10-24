@@ -31,7 +31,7 @@ namespace Webfuel.App
             app.MapPost("api/user/query", Query)
                 .RequireIdentity();
 
-            app.MapGet("api/user/{id:guid}", Resolve)
+            app.MapGet("api/user/{id:guid}", Get)
                 .RequireIdentity();
 
         }
@@ -56,9 +56,9 @@ namespace Webfuel.App
             return mediator.Send(command);
         }
 
-        public static async Task<User> Resolve(Guid id, IMediator mediator)
+        public static async Task<User?> Get(Guid id, IMediator mediator)
         {
-            return await mediator.Send(new GetUser { Id = id }) ?? throw new InvalidOperationException("The specified user does not exist");
+            return await mediator.Send(new GetUser { Id = id });
         }
 
         public static Task<StringResult> Login([FromBody] LoginUser command, IMediator mediator)

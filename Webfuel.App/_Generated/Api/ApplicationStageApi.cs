@@ -30,6 +30,8 @@ namespace Webfuel.App
             
             app.MapPost("api/application-stage/query", Query)
                 .RequireIdentity();
+            
+            
         }
         
         public static Task<ApplicationStage> Create([FromBody] CreateApplicationStage command, IMediator mediator)

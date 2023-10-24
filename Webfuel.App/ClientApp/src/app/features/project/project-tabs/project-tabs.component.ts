@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Project, ProjectSupport } from '../../../api/api.types';
+import { Project, ProjectSubmission, ProjectSupport } from '../../../api/api.types';
 import { DialogService } from '../../../core/dialog.service';
 import { ProjectSupportCreateDialogComponent, ProjectSupportCreateDialogOptions } from '../project-support-create-dialog/project-support-create-dialog.component';
+import { ProjectSubmissionCreateDialogComponent, ProjectSubmissionCreateDialogOptions } from '../project-submission-create-dialog/project-submission-create-dialog.component';
 
 @Component({
   selector: 'project-tabs',
@@ -31,7 +32,17 @@ export class ProjectTabsComponent implements OnInit  {
     this.dialogService.open<ProjectSupport, ProjectSupportCreateDialogOptions>(ProjectSupportCreateDialogComponent, {
       data: {
         projectId: this.item.id
-      }
+      },
+      width: "1000px"
+    });
+  }
+
+  addSubmission() {
+    this.dialogService.open<ProjectSubmission, ProjectSubmissionCreateDialogOptions>(ProjectSubmissionCreateDialogComponent, {
+      data: {
+        projectId: this.item.id
+      },
+      width: "1000px"
     });
   }
 }

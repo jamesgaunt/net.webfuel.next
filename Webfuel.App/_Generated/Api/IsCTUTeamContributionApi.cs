@@ -16,6 +16,8 @@ namespace Webfuel.App
             
             app.MapPost("api/is-ctu-team-contribution/query", Query)
                 .RequireIdentity();
+            
+            
         }
         
         public static Task<QueryResult<IsCTUTeamContribution>> Query([FromBody] QueryIsCTUTeamContribution command, IMediator mediator)

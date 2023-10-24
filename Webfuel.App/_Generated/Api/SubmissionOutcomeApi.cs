@@ -16,6 +16,8 @@ namespace Webfuel.App
             
             app.MapPost("api/submission-outcome/query", Query)
                 .RequireIdentity();
+            
+            
         }
         
         public static Task<QueryResult<SubmissionOutcome>> Query([FromBody] QuerySubmissionOutcome command, IMediator mediator)

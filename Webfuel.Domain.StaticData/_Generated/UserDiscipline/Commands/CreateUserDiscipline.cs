@@ -1,0 +1,34 @@
+using MediatR;
+
+namespace Webfuel.Domain.StaticData
+{
+    public class CreateUserDiscipline: IRequest<UserDiscipline>
+    {
+        public required string Name { get; set; }
+        public bool Default { get; set; } = false;
+        public bool Hidden { get; set; } = false;
+        public bool FreeText { get; set; } = false;
+    }
+    internal class CreateUserDisciplineHandler : IRequestHandler<CreateUserDiscipline, UserDiscipline>
+    {
+        private readonly IUserDisciplineRepository _userDisciplineRepository;
+        
+        
+        public CreateUserDisciplineHandler(IUserDisciplineRepository userDisciplineRepository)
+        {
+            _userDisciplineRepository = userDisciplineRepository;
+        }
+        
+        public async Task<UserDiscipline> Handle(CreateUserDiscipline request, CancellationToken cancellationToken)
+        {
+            return await _userDisciplineRepository.InsertUserDiscipline(new UserDiscipline {
+                    Name = request.Name,
+                    Default = request.Default,
+                    Hidden = request.Hidden,
+                    FreeText = request.FreeText,
+                    SortOrder = await _userDisciplineRepository.CountUserDiscipline(),
+                });
+        }
+    }
+}
+

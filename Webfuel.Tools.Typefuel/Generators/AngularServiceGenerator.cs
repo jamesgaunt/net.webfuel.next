@@ -100,7 +100,7 @@ namespace Webfuel.Tools.Typefuel
         {
             foreach (var method in service.Methods)
             {
-                if (method.Name != "Resolve")
+                if (method.Name != "Get")
                     continue;
 
                 sb.WriteLine();
@@ -108,7 +108,7 @@ namespace Webfuel.Tools.Typefuel
                 sb.WriteLine();
                 sb.WriteLine($"static {service.Name.ToCamelCase()}Resolver(param: string): ResolveFn<{service.Name}> {{");
                 sb.WriteLine($"return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<{service.Name}> => {{");
-                sb.WriteLine($"return inject({service.Name}Api).resolve({{id: route.paramMap.get(param)! }});");
+                sb.WriteLine($"return inject({service.Name}Api).get({{id: route.paramMap.get(param)! }});");
                 sb.WriteLine("};");
                 sb.WriteLine("}");
             }

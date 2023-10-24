@@ -7,6 +7,12 @@ namespace Webfuel.Domain
     {
         public required string Email { get; set; }
 
+        public required string Title { get; set; }
+
+        public required string FirstName { get; set; }
+
+        public required string LastName { get; set; }
+
         public required Guid UserGroupId { get; set; }
     }
 }

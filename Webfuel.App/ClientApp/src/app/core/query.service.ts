@@ -61,7 +61,7 @@ export class QueryService {
 
   // In-memory fetch
 
-  fetch<TItem>(query: Query, items: TItem[]): Observable<QueryResult<TItem>> {
+  query<TItem>(query: Query, items: TItem[]): Observable<QueryResult<TItem>> {
 
     var result = items;
 
@@ -80,6 +80,15 @@ export class QueryService {
       subscriber.complete();
     });
   }
+
+  get<TItem>(id: string, items: TItem[]): Observable<TItem | null> {
+    return new Observable<TItem  | null>((subscriber) => {
+      subscriber.next(_.find(items, (p) => (<any>p)['id'] == id) || null);
+      subscriber.complete();
+    });
+  }
+
+  // Implementation
 
   private _applyPageToItemArray<TItem>(skip: number, take: number, items: TItem[]): TItem[] {
 

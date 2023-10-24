@@ -8,6 +8,7 @@ import { ProjectListComponent } from './project-list/project-list.component';
 import { ProjectItemComponent } from './project-item/project-item.component';
 import { ProjectRequestComponent } from './project-request/project-request.component';
 import { ProjectSupportComponent } from './project-support/project-support.component';
+import { ProjectSubmissionComponent } from './project-submission/project-submission.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,13 @@ const routes: Routes = [
     component: ProjectSupportComponent,
     resolve: { project: ProjectApi.projectResolver('id') },
     canDeactivate: [DeactivateService.isPristine<ProjectSupportComponent>()],
+    data: { activeSideMenu: 'Projects' }
+  },
+  {
+    path: 'project-submission/:id',
+    component: ProjectSubmissionComponent,
+    resolve: { project: ProjectApi.projectResolver('id') },
+    canDeactivate: [DeactivateService.isPristine<ProjectSubmissionComponent>()],
     data: { activeSideMenu: 'Projects' }
   },
 ];

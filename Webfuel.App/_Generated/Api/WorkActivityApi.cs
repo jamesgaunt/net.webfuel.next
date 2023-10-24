@@ -30,6 +30,8 @@ namespace Webfuel.App
             
             app.MapPost("api/work-activity/query", Query)
                 .RequireIdentity();
+            
+            
         }
         
         public static Task<WorkActivity> Create([FromBody] CreateWorkActivity command, IMediator mediator)

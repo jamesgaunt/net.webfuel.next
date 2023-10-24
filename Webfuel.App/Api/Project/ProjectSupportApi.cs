@@ -26,7 +26,7 @@ namespace Webfuel.App
             app.MapPost("api/project-support/query", Query)
                 .RequireIdentity();
 
-            app.MapGet("api/project-support/{id:guid}", Resolve)
+            app.MapGet("api/project-support/{id:guid}", Get)
                 .RequireIdentity();
         }
 
@@ -50,9 +50,9 @@ namespace Webfuel.App
             return mediator.Send(command);
         }
 
-        public static async Task<ProjectSupport> Resolve(Guid id, IMediator mediator)
+        public static async Task<ProjectSupport?> Get(Guid id, IMediator mediator)
         {
-            return await mediator.Send(new GetProjectSupport { Id = id }) ?? throw new InvalidOperationException("The specified project support does not exist");
+            return await mediator.Send(new GetProjectSupport { Id = id });
         }
     }
 }

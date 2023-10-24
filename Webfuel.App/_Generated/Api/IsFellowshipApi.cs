@@ -16,6 +16,8 @@ namespace Webfuel.App
             
             app.MapPost("api/is-fellowship/query", Query)
                 .RequireIdentity();
+            
+            
         }
         
         public static Task<QueryResult<IsFellowship>> Query([FromBody] QueryIsFellowship command, IMediator mediator)

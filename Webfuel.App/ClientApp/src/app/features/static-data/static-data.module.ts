@@ -17,6 +17,8 @@ import { FundingCallTypeComponent } from './types/funding-call-type.component';
 import { SubmissionStageComponent } from './types/submission-stage.component';
 import { HowDidYouFindUsComponent } from './types/how-did-you-find-us.component';
 import { SupportProvidedComponent } from './types/support-provided.component';
+import { WorkActivityComponent } from './types/work-activity.component';
+import { UserDisciplineComponent } from './types/user-discipline.component';
 
 @NgModule({
   imports: [
@@ -36,6 +38,8 @@ import { SupportProvidedComponent } from './types/support-provided.component';
     SubmissionStageComponent,
     HowDidYouFindUsComponent,
     SupportProvidedComponent,
+    WorkActivityComponent,
+    UserDisciplineComponent,
 
     StaticDataCreateDialogComponent,
     StaticDataUpdateDialogComponent,

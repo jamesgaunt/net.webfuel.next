@@ -53,6 +53,8 @@ export interface IStaticDataModel {
     supportProvided: Array<SupportProvided>;
     supportRequestStatus: Array<SupportRequestStatus>;
     title: Array<Title>;
+    userDiscipline: Array<UserDiscipline>;
+    workActivity: Array<WorkActivity>;
     loadedAt: string;
 }
 
@@ -234,6 +236,24 @@ export interface Title extends IStaticData {
     default: boolean;
 }
 
+export interface UserDiscipline extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface WorkActivity extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
 export interface Project {
     id: string;
     number: number;
@@ -312,6 +332,44 @@ export interface QuerySort {
 }
 
 export interface Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface ProjectSubmission {
+    id: string;
+    nihrReference: string;
+    submissionDate: string;
+    fundingAmountOnSubmission: number;
+    projectId: string;
+    submissionStageId: string;
+    submissionOutcomeId: string | null | null;
+}
+
+export interface CreateProjectSubmission {
+    projectId: string;
+    submissionDate: string;
+    nihrReference: string;
+    submissionStageId: string;
+    submissionOutcomeId: string | null | null;
+    fundingAmountOnSubmission: number;
+}
+
+export interface UpdateProjectSubmission {
+    id: string;
+    submissionDate: string;
+    nihrReference: string;
+    submissionStageId: string;
+    submissionOutcomeId: string | null | null;
+    fundingAmountOnSubmission: number;
+}
+
+export interface QueryProjectSubmission extends Query {
+    projectId: string;
     skip: number;
     take: number;
     projection?: Array<string>;
@@ -448,13 +506,53 @@ export interface QuerySupportRequest extends Query {
     search?: string;
 }
 
+export interface UserActivity {
+    id: string;
+    date: string;
+    description: string;
+    userId: string;
+    workActivityId: string;
+}
+
+export interface CreateUserActivity {
+    userId: string;
+    date: string;
+    workActivityId: string;
+    description: string;
+}
+
+export interface UpdateUserActivity {
+    id: string;
+    date: string;
+    workActivityId: string;
+    description: string;
+}
+
+export interface QueryUserActivity extends Query {
+    userId: string;
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
 export interface User {
     id: string;
     email: string;
     developer: boolean;
+    title: string;
     firstName: string;
     lastName: string;
-    phone: string;
+    rssJobTitle: string;
+    universityJobTitle: string;
+    universityBackground: string;
+    specialisation: string;
+    disciplineIds: Array<string>;
+    startDateForRSS: string | null | null;
+    endDateForRSS: string | null | null;
+    fullTimeEquivalentForRSS: number;
     hidden: boolean;
     disabled: boolean;
     lastLoginAt: string | null | null;
@@ -465,6 +563,9 @@ export interface User {
 
 export interface CreateUser {
     email: string;
+    title: string;
+    firstName: string;
+    lastName: string;
     userGroupId: string;
 }
 
@@ -869,6 +970,62 @@ export interface SortTitle {
 }
 
 export interface QueryTitle extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface CreateUserDiscipline {
+    name: string;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface UpdateUserDiscipline {
+    id: string;
+    name: string;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface SortUserDiscipline {
+    ids: Array<string>;
+}
+
+export interface QueryUserDiscipline extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface CreateWorkActivity {
+    name: string;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface UpdateWorkActivity {
+    id: string;
+    name: string;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface SortWorkActivity {
+    ids: Array<string>;
+}
+
+export interface QueryWorkActivity extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;

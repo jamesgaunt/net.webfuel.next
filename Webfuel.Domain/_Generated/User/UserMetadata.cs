@@ -29,14 +29,38 @@ namespace Webfuel.Domain
                     case nameof(User.Developer):
                         result.Add(new SqlParameter(nameof(User.Developer), entity.Developer));
                         break;
+                    case nameof(User.Title):
+                        result.Add(new SqlParameter(nameof(User.Title), entity.Title));
+                        break;
                     case nameof(User.FirstName):
                         result.Add(new SqlParameter(nameof(User.FirstName), entity.FirstName));
                         break;
                     case nameof(User.LastName):
                         result.Add(new SqlParameter(nameof(User.LastName), entity.LastName));
                         break;
-                    case nameof(User.Phone):
-                        result.Add(new SqlParameter(nameof(User.Phone), entity.Phone));
+                    case nameof(User.RSSJobTitle):
+                        result.Add(new SqlParameter(nameof(User.RSSJobTitle), entity.RSSJobTitle));
+                        break;
+                    case nameof(User.UniversityJobTitle):
+                        result.Add(new SqlParameter(nameof(User.UniversityJobTitle), entity.UniversityJobTitle));
+                        break;
+                    case nameof(User.UniversityBackground):
+                        result.Add(new SqlParameter(nameof(User.UniversityBackground), entity.UniversityBackground));
+                        break;
+                    case nameof(User.Specialisation):
+                        result.Add(new SqlParameter(nameof(User.Specialisation), entity.Specialisation));
+                        break;
+                    case nameof(User.DisciplineIds):
+                        result.Add(new SqlParameter(nameof(User.DisciplineIds), entity.DisciplineIdsJson));
+                        break;
+                    case nameof(User.StartDateForRSS):
+                        result.Add(new SqlParameter(nameof(User.StartDateForRSS), entity.StartDateForRSS ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(User.EndDateForRSS):
+                        result.Add(new SqlParameter(nameof(User.EndDateForRSS), entity.EndDateForRSS ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(User.FullTimeEquivalentForRSS):
+                        result.Add(new SqlParameter(nameof(User.FullTimeEquivalentForRSS), entity.FullTimeEquivalentForRSS));
                         break;
                     case nameof(User.Hidden):
                         result.Add(new SqlParameter(nameof(User.Hidden), entity.Hidden));
@@ -100,9 +124,17 @@ namespace Webfuel.Domain
                 yield return "Id";
                 yield return "Email";
                 yield return "Developer";
+                yield return "Title";
                 yield return "FirstName";
                 yield return "LastName";
-                yield return "Phone";
+                yield return "RSSJobTitle";
+                yield return "UniversityJobTitle";
+                yield return "UniversityBackground";
+                yield return "Specialisation";
+                yield return "DisciplineIds";
+                yield return "StartDateForRSS";
+                yield return "EndDateForRSS";
+                yield return "FullTimeEquivalentForRSS";
                 yield return "Hidden";
                 yield return "Disabled";
                 yield return "LastLoginAt";
@@ -124,9 +156,17 @@ namespace Webfuel.Domain
                 yield return "Id";
                 yield return "Email";
                 yield return "Developer";
+                yield return "Title";
                 yield return "FirstName";
                 yield return "LastName";
-                yield return "Phone";
+                yield return "RSSJobTitle";
+                yield return "UniversityJobTitle";
+                yield return "UniversityBackground";
+                yield return "Specialisation";
+                yield return "DisciplineIds";
+                yield return "StartDateForRSS";
+                yield return "EndDateForRSS";
+                yield return "FullTimeEquivalentForRSS";
                 yield return "Hidden";
                 yield return "Disabled";
                 yield return "LastLoginAt";
@@ -147,9 +187,17 @@ namespace Webfuel.Domain
             {
                 yield return "Email";
                 yield return "Developer";
+                yield return "Title";
                 yield return "FirstName";
                 yield return "LastName";
-                yield return "Phone";
+                yield return "RSSJobTitle";
+                yield return "UniversityJobTitle";
+                yield return "UniversityBackground";
+                yield return "Specialisation";
+                yield return "DisciplineIds";
+                yield return "StartDateForRSS";
+                yield return "EndDateForRSS";
+                yield return "FullTimeEquivalentForRSS";
                 yield return "Hidden";
                 yield return "Disabled";
                 yield return "LastLoginAt";
@@ -170,12 +218,20 @@ namespace Webfuel.Domain
         {
             entity.Email = entity.Email ?? String.Empty;
             entity.Email = entity.Email.Trim();
+            entity.Title = entity.Title ?? String.Empty;
+            entity.Title = entity.Title.Trim();
             entity.FirstName = entity.FirstName ?? String.Empty;
             entity.FirstName = entity.FirstName.Trim();
             entity.LastName = entity.LastName ?? String.Empty;
             entity.LastName = entity.LastName.Trim();
-            entity.Phone = entity.Phone ?? String.Empty;
-            entity.Phone = entity.Phone.Trim();
+            entity.RSSJobTitle = entity.RSSJobTitle ?? String.Empty;
+            entity.RSSJobTitle = entity.RSSJobTitle.Trim();
+            entity.UniversityJobTitle = entity.UniversityJobTitle ?? String.Empty;
+            entity.UniversityJobTitle = entity.UniversityJobTitle.Trim();
+            entity.UniversityBackground = entity.UniversityBackground ?? String.Empty;
+            entity.UniversityBackground = entity.UniversityBackground.Trim();
+            entity.Specialisation = entity.Specialisation ?? String.Empty;
+            entity.Specialisation = entity.Specialisation.Trim();
             entity.PasswordHash = entity.PasswordHash ?? String.Empty;
             entity.PasswordHash = entity.PasswordHash.Trim();
             entity.PasswordSalt = entity.PasswordSalt ?? String.Empty;
@@ -186,9 +242,13 @@ namespace Webfuel.Domain
         public static UserRepositoryValidator Validator { get; } = new UserRepositoryValidator();
         
         public const int Email_MaxLength = 64;
+        public const int Title_MaxLength = 16;
         public const int FirstName_MaxLength = 64;
         public const int LastName_MaxLength = 64;
-        public const int Phone_MaxLength = 64;
+        public const int RSSJobTitle_MaxLength = 64;
+        public const int UniversityJobTitle_MaxLength = 64;
+        public const int UniversityBackground_MaxLength = 64;
+        public const int Specialisation_MaxLength = 64;
         public const int PasswordHash_MaxLength = 256;
         public const int PasswordSalt_MaxLength = 256;
         
@@ -197,6 +257,13 @@ namespace Webfuel.Domain
             ruleBuilder
                 .NotNull()
                 .MaximumLength(Email_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void Title_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(Title_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
         public static void FirstName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
@@ -213,11 +280,32 @@ namespace Webfuel.Domain
                 .MaximumLength(LastName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
-        public static void Phone_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        public static void RSSJobTitle_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull()
-                .MaximumLength(Phone_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+                .MaximumLength(RSSJobTitle_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void UniversityJobTitle_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(UniversityJobTitle_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void UniversityBackground_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(UniversityBackground_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void Specialisation_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(Specialisation_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
         public static void PasswordHash_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
@@ -239,9 +327,13 @@ namespace Webfuel.Domain
             public UserRepositoryValidator()
             {
                 RuleFor(x => x.Email).Use(Email_ValidationRules);
+                RuleFor(x => x.Title).Use(Title_ValidationRules);
                 RuleFor(x => x.FirstName).Use(FirstName_ValidationRules);
                 RuleFor(x => x.LastName).Use(LastName_ValidationRules);
-                RuleFor(x => x.Phone).Use(Phone_ValidationRules);
+                RuleFor(x => x.RSSJobTitle).Use(RSSJobTitle_ValidationRules);
+                RuleFor(x => x.UniversityJobTitle).Use(UniversityJobTitle_ValidationRules);
+                RuleFor(x => x.UniversityBackground).Use(UniversityBackground_ValidationRules);
+                RuleFor(x => x.Specialisation).Use(Specialisation_ValidationRules);
                 RuleFor(x => x.PasswordHash).Use(PasswordHash_ValidationRules);
                 RuleFor(x => x.PasswordSalt).Use(PasswordSalt_ValidationRules);
             }

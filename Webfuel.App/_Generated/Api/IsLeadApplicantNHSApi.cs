@@ -16,6 +16,8 @@ namespace Webfuel.App
             
             app.MapPost("api/is-lead-applicant-nhs/query", Query)
                 .RequireIdentity();
+            
+            
         }
         
         public static Task<QueryResult<IsLeadApplicantNHS>> Query([FromBody] QueryIsLeadApplicantNHS command, IMediator mediator)

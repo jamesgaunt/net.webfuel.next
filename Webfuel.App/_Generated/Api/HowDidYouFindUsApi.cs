@@ -30,6 +30,8 @@ namespace Webfuel.App
             
             app.MapPost("api/how-did-you-find-us/query", Query)
                 .RequireIdentity();
+            
+            
         }
         
         public static Task<HowDidYouFindUs> Create([FromBody] CreateHowDidYouFindUs command, IMediator mediator)

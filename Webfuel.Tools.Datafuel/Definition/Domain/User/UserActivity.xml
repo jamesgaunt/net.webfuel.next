@@ -8,6 +8,5 @@
     <Property Name="Date" Type="Date" />
     <Property Name="WorkActivityId" Type="WorkActivity" />
     <Property Name="Description" Type="meta:description" />
-
   </Entity>
 </Schema>

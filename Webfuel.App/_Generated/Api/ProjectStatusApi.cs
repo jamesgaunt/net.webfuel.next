@@ -16,6 +16,8 @@ namespace Webfuel.App
             
             app.MapPost("api/project-status/query", Query)
                 .RequireIdentity();
+            
+            
         }
         
         public static Task<QueryResult<ProjectStatus>> Query([FromBody] QueryProjectStatus command, IMediator mediator)

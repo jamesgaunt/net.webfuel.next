@@ -25,6 +25,7 @@ namespace Webfuel.Domain.StaticData
         IReadOnlyList<SupportProvided> SupportProvided { get; }
         IReadOnlyList<SupportRequestStatus> SupportRequestStatus { get; }
         IReadOnlyList<Title> Title { get; }
+        IReadOnlyList<UserDiscipline> UserDiscipline { get; }
         IReadOnlyList<WorkActivity> WorkActivity { get; }
         DateTimeOffset LoadedAt { get; }
     }
@@ -51,6 +52,7 @@ namespace Webfuel.Domain.StaticData
         public required IReadOnlyList<SupportProvided> SupportProvided { get; init; }
         public required IReadOnlyList<SupportRequestStatus> SupportRequestStatus { get; init; }
         public required IReadOnlyList<Title> Title { get; init; }
+        public required IReadOnlyList<UserDiscipline> UserDiscipline { get; init; }
         public required IReadOnlyList<WorkActivity> WorkActivity { get; init; }
         public DateTimeOffset LoadedAt { get; init; }
         
@@ -79,6 +81,7 @@ namespace Webfuel.Domain.StaticData
                 SupportProvided = await serviceProvider.GetRequiredService<ISupportProvidedRepository>().SelectSupportProvided(),
                 SupportRequestStatus = await serviceProvider.GetRequiredService<ISupportRequestStatusRepository>().SelectSupportRequestStatus(),
                 Title = await serviceProvider.GetRequiredService<ITitleRepository>().SelectTitle(),
+                UserDiscipline = await serviceProvider.GetRequiredService<IUserDisciplineRepository>().SelectUserDiscipline(),
                 WorkActivity = await serviceProvider.GetRequiredService<IWorkActivityRepository>().SelectWorkActivity(),
                 LoadedAt = DateTimeOffset.Now
             };

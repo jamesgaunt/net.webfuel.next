@@ -5,14 +5,19 @@
 </ul>
 <div class="container">
   <project-tabs></project-tabs>
-
   <div class="project-support-list">
     <div class="project-support" *ngFor="let projectSupport of items">
-      {{ projectSupport.description }}
+      <div class="header">
+        <div class="advisers">
+          <span>{{ projectSupport.date | date: 'dd-MMM-yy' }}</span><span *ngFor="let id of projectSupport.adviserIds">&nbsp;|&nbsp;{{ (userLookup.get({ id: id }) | async)?.email }}</span>
+        </div>
+        <div class="support-provided">
+          <span class="tag" *ngFor="let id of projectSupport.supportProvidedIds">{{ (staticDataCache.supportProvided.get({ id: id }) | async)?.name }}</span>
+        </div>
+      </div>
+      <pre class="description">{{ projectSupport.description }}</pre>
     </div>
   </div>
-
-
   <div class="floating-buttons">
     <button class="button" (click)="cancel()">Close</button>
   </div>

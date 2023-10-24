@@ -6,8 +6,7 @@
   display: block;
   position: relative;
   box-shadow: 1px 1px 10px #000;
-  width: 600px;
-  max-width: 95%;
+  min-width: 600px;
 
   .dialog-head {
     height: 3.5rem;

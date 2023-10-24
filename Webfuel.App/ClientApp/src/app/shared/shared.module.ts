@@ -6,6 +6,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { DialogModule } from '@angular/cdk/dialog';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
+// Chrome
 import { ChromeComponent } from './chrome/chrome.component';
 
 // Form
@@ -33,6 +34,7 @@ import { AutocompleteCodeDirective } from './directives/autocomplete-code.direct
 // Dialogs
 import { ChangePasswordDialogComponent } from './dialogs/change-password-dialog/change-password-dialog.component';
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -44,6 +46,7 @@ import { ChangePasswordDialogComponent } from './dialogs/change-password-dialog/
   ],
   declarations: [
 
+    // Chrome
     ChromeComponent,
 
     // Form
@@ -78,6 +81,7 @@ import { ChangePasswordDialogComponent } from './dialogs/change-password-dialog/
     OverlayModule,
     DialogModule,
 
+    // Chrome
     ChromeComponent,
 
     // Form

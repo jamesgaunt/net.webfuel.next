@@ -30,6 +30,8 @@ namespace Webfuel.App
             
             app.MapPost("api/support-provided/query", Query)
                 .RequireIdentity();
+            
+            
         }
         
         public static Task<SupportProvided> Create([FromBody] CreateSupportProvided command, IMediator mediator)

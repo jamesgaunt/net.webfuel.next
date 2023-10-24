@@ -16,6 +16,8 @@ namespace Webfuel.App
             
             app.MapPost("api/is-ppie-and-edi-contribution/query", Query)
                 .RequireIdentity();
+            
+            
         }
         
         public static Task<QueryResult<IsPPIEAndEDIContribution>> Query([FromBody] QueryIsPPIEAndEDIContribution command, IMediator mediator)

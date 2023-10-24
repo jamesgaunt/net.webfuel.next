@@ -11,6 +11,8 @@ import { FundingCallTypeComponent } from './types/funding-call-type.component';
 import { SubmissionStageComponent } from './types/submission-stage.component';
 import { HowDidYouFindUsComponent } from './types/how-did-you-find-us.component';
 import { SupportProvidedComponent } from './types/support-provided.component';
+import { WorkActivityComponent } from './types/work-activity.component';
+import { UserDisciplineComponent } from './types/user-discipline.component';
 
 const routes: Routes = [
   {
@@ -66,6 +68,16 @@ const routes: Routes = [
   {
     path: 'support-provided',
     component: SupportProvidedComponent,
+    data: { activeSideMenu: 'Configuration' }
+  },
+  {
+    path: 'work-activity',
+    component: WorkActivityComponent,
+    data: { activeSideMenu: 'Configuration' }
+  },
+  {
+    path: 'user-discipline',
+    component: UserDisciplineComponent,
     data: { activeSideMenu: 'Configuration' }
   },
 ];

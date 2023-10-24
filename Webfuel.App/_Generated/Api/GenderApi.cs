@@ -30,6 +30,8 @@ namespace Webfuel.App
             
             app.MapPost("api/gender/query", Query)
                 .RequireIdentity();
+            
+            
         }
         
         public static Task<Gender> Create([FromBody] CreateGender command, IMediator mediator)

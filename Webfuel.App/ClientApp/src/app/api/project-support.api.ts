@@ -25,7 +25,7 @@ export class ProjectSupportApi implements IDataSource<ProjectSupport, QueryProje
         return this.apiService.request<QueryProjectSupport, QueryResult<ProjectSupport>>("POST", "api/project-support/query", body, options);
     }
     
-    public resolve (params: { id: string }, options?: ApiOptions): Observable<ProjectSupport> {
+    public get (params: { id: string }, options?: ApiOptions): Observable<ProjectSupport> {
         return this.apiService.request<undefined, ProjectSupport>("GET", "api/project-support/" + params.id + "", undefined, options);
     }
     
@@ -35,7 +35,7 @@ export class ProjectSupportApi implements IDataSource<ProjectSupport, QueryProje
     
     static projectSupportResolver(param: string): ResolveFn<ProjectSupport> {
         return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ProjectSupport> => {
-            return inject(ProjectSupportApi).resolve({id: route.paramMap.get(param)! });
+            return inject(ProjectSupportApi).get({id: route.paramMap.get(param)! });
         };
     }
 }

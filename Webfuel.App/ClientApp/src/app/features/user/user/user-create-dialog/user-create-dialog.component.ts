@@ -5,6 +5,7 @@ import { UserApi } from 'api/user.api';
 import { User, UserGroup } from '../../../../api/api.types';
 import { UserGroupApi } from '../../../../api/user-group.api';
 import { FormService } from '../../../../core/form.service';
+import { StaticDataCache } from '../../../../api/static-data.cache';
 
 @Component({
   selector: 'user-create-dialog-component',
@@ -16,12 +17,16 @@ export class UserCreateDialogComponent {
     private dialogRef: DialogRef<User>,
     private formService: FormService,
     private userApi: UserApi,
-    public userGroupApi: UserGroupApi
+    public userGroupApi: UserGroupApi,
+    public staticDataCache: StaticDataCache
   ) {
   }
 
   form = new FormGroup({
     email: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+    title: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+    firstName: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+    lastName: new FormControl('', { validators: [Validators.required], nonNullable: true }),
     userGroupId: new FormControl('', { validators: [Validators.required], nonNullable: true }),
   });
 

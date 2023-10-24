@@ -26,7 +26,7 @@ namespace Webfuel.App
             app.MapPost("api/user-group/query", Query)
                 .RequireIdentity();
 
-            app.MapGet("api/user-group/{id:guid}", Resolve)
+            app.MapGet("api/user-group/{id:guid}", Get)
                 .RequireIdentity();
         }
 
@@ -50,9 +50,9 @@ namespace Webfuel.App
             return mediator.Send(command);
         }
 
-        public static async Task<UserGroup> Resolve(Guid id, IMediator mediator)
+        public static async Task<UserGroup?> Get(Guid id, IMediator mediator)
         {
-            return await mediator.Send(new GetUserGroup { Id = id }) ?? throw new InvalidOperationException("The specified user group does not exist");
+            return await mediator.Send(new GetUserGroup { Id = id }) ;
         }
     }
 }

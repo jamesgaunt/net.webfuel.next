@@ -16,6 +16,8 @@ namespace Webfuel.App
             
             app.MapPost("api/is-resubmission/query", Query)
                 .RequireIdentity();
+            
+            
         }
         
         public static Task<QueryResult<IsResubmission>> Query([FromBody] QueryIsResubmission command, IMediator mediator)

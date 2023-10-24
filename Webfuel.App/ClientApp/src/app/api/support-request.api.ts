@@ -29,7 +29,7 @@ export class SupportRequestApi implements IDataSource<SupportRequest, QuerySuppo
         return this.apiService.request<QuerySupportRequest, QueryResult<SupportRequest>>("POST", "api/support-request/query", body, options);
     }
     
-    public resolve (params: { id: string }, options?: ApiOptions): Observable<SupportRequest> {
+    public get (params: { id: string }, options?: ApiOptions): Observable<SupportRequest> {
         return this.apiService.request<undefined, SupportRequest>("GET", "api/support-request/" + params.id + "", undefined, options);
     }
     
@@ -39,7 +39,7 @@ export class SupportRequestApi implements IDataSource<SupportRequest, QuerySuppo
     
     static supportRequestResolver(param: string): ResolveFn<SupportRequest> {
         return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<SupportRequest> => {
-            return inject(SupportRequestApi).resolve({id: route.paramMap.get(param)! });
+            return inject(SupportRequestApi).get({id: route.paramMap.get(param)! });
         };
     }
 }

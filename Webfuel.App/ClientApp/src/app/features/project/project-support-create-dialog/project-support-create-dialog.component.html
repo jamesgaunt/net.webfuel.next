@@ -10,7 +10,14 @@
       </div>
       <div class="field">
         <label class="label">Advisers (include all advisers providing support)</label>
-        <dropdown-multi-select [dataSource]="userApi" placeholder="required" formControlName="adviserIds"></dropdown-multi-select>
+        <dropdown-multi-select [dataSource]="userApi" placeholder="required" formControlName="adviserIds">
+          <ng-template #optionTemplate let-item>
+            {{ item.email }}
+          </ng-template>
+          <ng-template #pickedTemplate let-item>
+            {{ item.email }}
+          </ng-template>
+        </dropdown-multi-select>
       </div>
       <div class="field">
         <label class="label">Support provided (include all types of support provided)</label>
@@ -18,7 +25,7 @@
       </div>
       <div class="field">
         <label class="label">Description of support</label>
-        <textarea class="textarea" formControlName="description" placeholder="required"></textarea>
+        <textarea style="height: 400px" class="textarea" formControlName="description" placeholder="required"></textarea>
       </div>
     </div>
   </div>

@@ -20,7 +20,7 @@ namespace Webfuel.Tools.Typefuel
             var sb = new ScriptBuilder();
 
             sb.WriteLine("import { Injectable } from '@angular/core';");
-            sb.WriteLine("import { IDataSource } from 'shared/common/data-source';");
+            sb.WriteLine("import { IDataSource, IDataSourceWithGet } from 'shared/common/data-source';");
             sb.WriteLine("import { StaticDataService } from '../core/static-data.service';");
 
             var staticDataServices = schema.Services.Where(p => p.StaticData).ToList();
@@ -44,7 +44,10 @@ namespace Webfuel.Tools.Typefuel
                     var c = n.ToCamelCase();
 
                     sb.WriteLine();
-                    sb.WriteLine($"{c}: IDataSource<{n}> = {{ query: (query) => this.staticDataService.load(query, s => s.{c}) }};");
+                    sb.WriteLine($"{c}: IDataSourceWithGet<{n}> = {{");
+                    sb.WriteLine($"query: (query) => this.staticDataService.queryFactory(query, s => s.{c}),");
+                    sb.WriteLine($"get: (params: {{ id: string }}) => this.staticDataService.getFactory(params.id, s => s.{c}),");
+                    sb.WriteLine("};");
                 }
 
             }

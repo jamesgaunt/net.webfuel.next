@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="UserDiscipline" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Property Name="Hidden" Type="boolean" />
+    <Property Name="FreeText" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="8e3c1540-b6fa-40db-bbef-c27ca71733f8" Name="Qualitative" />
+      <Row Id="da785573-ccdd-4eab-92ef-ebf5bb1c525d" Name="Mixed methods" />
+      <Row Id="9c1e4e91-fa9d-453b-b163-cdd7ca0962a7" Name="Health Economist" />
+      <Row Id="81021188-5b1d-413b-9735-0adbedb5dab9" Name="Statistician" />
+      <Row Id="77847f08-2477-4c5d-a742-21710c43ec4a" Name="Epidemiologist" />
+      <Row Id="2cdeacce-50bb-4d08-8396-e85d3515a18a" Name="Data scientist" />
+      <Row Id="9db42785-3708-4be4-85ed-3295d3ee16b1" Name="Clinical trialist" />
+      <Row Id="0eb82f98-3d1f-4acf-a5f3-26192693fc37" Name="Health psychologist/behavioural scientist" />
+      <Row Id="d6c6dea0-ee19-4f97-b041-9a7bccdeb638" Name="Patient and public involvement and engagement" />
+      <Row Id="3e2bb92b-83f0-41cb-a49c-0325b593f10b" Name="Social scientist" />
+      <Row Id="8893f5d2-67e3-44c2-b31c-1ec6120e7207" Name="EDI" />
+      <Row Id="4c722fb4-089b-4aef-a913-82c99c6940e2" Name="Other" FreeText="true" />
+    </Data>
+  </Entity>
+</Schema>

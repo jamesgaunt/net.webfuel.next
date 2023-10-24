@@ -13,9 +13,9 @@ namespace Webfuel.Domain
 
         public DateOnly? Date { get; set; }
 
-        public List<Guid> AdviserIds { get; } = new List<Guid>();
+        public required List<Guid> AdviserIds { get; set; }
 
-        public List<Guid> SupportProvidedIds { get; } = new List<Guid>();
+        public required List<Guid> SupportProvidedIds { get; set; }
 
         public string Description { get; set; } = String.Empty;
     }

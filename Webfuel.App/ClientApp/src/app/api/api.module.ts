@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 import { ConfigurationApi } from './configuration.api';
 import { StaticDataApi } from './static-data.api';
 import { ProjectApi } from './project.api';
+import { ProjectSubmissionApi } from './project-submission.api';
 import { ProjectSupportApi } from './project-support.api';
 import { ResearcherApi } from './researcher.api';
 import { SupportRequestApi } from './support-request.api';
+import { UserActivityApi } from './user-activity.api';
 import { UserApi } from './user.api';
 import { UserGroupApi } from './user-group.api';
 import { ApplicationStageApi } from './application-stage.api';
@@ -28,6 +30,8 @@ import { SubmissionStageApi } from './submission-stage.api';
 import { SupportProvidedApi } from './support-provided.api';
 import { SupportRequestStatusApi } from './support-request-status.api';
 import { TitleApi } from './title.api';
+import { UserDisciplineApi } from './user-discipline.api';
+import { WorkActivityApi } from './work-activity.api';
 import { StaticDataCache } from './static-data.cache';
 
 @NgModule({
@@ -35,9 +39,11 @@ import { StaticDataCache } from './static-data.cache';
         ConfigurationApi,
         StaticDataApi,
         ProjectApi,
+        ProjectSubmissionApi,
         ProjectSupportApi,
         ResearcherApi,
         SupportRequestApi,
+        UserActivityApi,
         UserApi,
         UserGroupApi,
         ApplicationStageApi,
@@ -61,6 +67,8 @@ import { StaticDataCache } from './static-data.cache';
         SupportProvidedApi,
         SupportRequestStatusApi,
         TitleApi,
+        UserDisciplineApi,
+        WorkActivityApi,
         StaticDataCache,
     ]
 })

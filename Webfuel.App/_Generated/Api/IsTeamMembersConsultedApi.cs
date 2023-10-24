@@ -16,6 +16,8 @@ namespace Webfuel.App
             
             app.MapPost("api/is-team-members-consulted/query", Query)
                 .RequireIdentity();
+            
+            
         }
         
         public static Task<QueryResult<IsTeamMembersConsulted>> Query([FromBody] QueryIsTeamMembersConsulted command, IMediator mediator)

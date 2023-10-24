@@ -16,6 +16,8 @@ namespace Webfuel.App
             
             app.MapPost("api/support-request-status/query", Query)
                 .RequireIdentity();
+            
+            
         }
         
         public static Task<QueryResult<SupportRequestStatus>> Query([FromBody] QuerySupportRequestStatus command, IMediator mediator)

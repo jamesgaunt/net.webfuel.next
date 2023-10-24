@@ -10,6 +10,7 @@ $breakpoint-lg: 1600px;
 
 :root {
   --gap: 1.0rem;
+  --bold-if-light: bold;
 }
 
 :root {
@@ -28,6 +29,11 @@ $breakpoint-lg: 1600px;
   --navbar-height: 3rem;
 }
 
+// Dark Mode
+
+body.dark-mode {
+    --bold-if-light: normal;
+}
 
 // Mixins
 

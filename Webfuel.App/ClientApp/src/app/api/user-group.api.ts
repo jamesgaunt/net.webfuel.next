@@ -25,7 +25,7 @@ export class UserGroupApi implements IDataSource<UserGroup, QueryUserGroup, Crea
         return this.apiService.request<QueryUserGroup, QueryResult<UserGroup>>("POST", "api/user-group/query", body, options);
     }
     
-    public resolve (params: { id: string }, options?: ApiOptions): Observable<UserGroup> {
+    public get (params: { id: string }, options?: ApiOptions): Observable<UserGroup> {
         return this.apiService.request<undefined, UserGroup>("GET", "api/user-group/" + params.id + "", undefined, options);
     }
     
@@ -35,7 +35,7 @@ export class UserGroupApi implements IDataSource<UserGroup, QueryUserGroup, Crea
     
     static userGroupResolver(param: string): ResolveFn<UserGroup> {
         return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<UserGroup> => {
-            return inject(UserGroupApi).resolve({id: route.paramMap.get(param)! });
+            return inject(UserGroupApi).get({id: route.paramMap.get(param)! });
         };
     }
 }
