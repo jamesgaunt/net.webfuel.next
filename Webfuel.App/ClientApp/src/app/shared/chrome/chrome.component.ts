@@ -135,4 +135,10 @@ export class ChromeComponent implements OnInit, OnDestroy {
     this.closeUserMenu();
     this.dialogService.open(ChangePasswordDialogComponent);
   }
+
+  // Activity
+
+  addActivity() {
+    this.dialogService.addUserActivity();
+  }
 }

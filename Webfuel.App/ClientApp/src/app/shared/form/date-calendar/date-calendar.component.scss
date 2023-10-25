@@ -19,8 +19,8 @@
 }
 
 .date-calendar .day-control, .date-calendar .month-control {
-  background-color: var(--palette-primary-background);
-  color: var(--palette-primary-foreground);
+  background-color: var(--palette-secondary-background);
+  color: var(--palette-secondary-foreground);
 }
 
 .date-calendar .day-control a, .date-calendar .month-control a {
@@ -56,8 +56,8 @@
 
 .date-calendar .month a {
   display: block;
-  padding-top: 1.62em;
-  padding-bottom: 1.62em;
+  padding-top: 1.60em;
+  padding-bottom: 1.60em;
   transition: background-color 0.25s ease;
 }
 

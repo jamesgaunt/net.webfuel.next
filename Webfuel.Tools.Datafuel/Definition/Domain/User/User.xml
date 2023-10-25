@@ -13,13 +13,14 @@
 
     <Property Name="RSSJobTitle" Type="meta:name" />
     <Property Name="UniversityJobTitle" Type="meta:name" />
-    <Property Name="UniversityBackground" Type="meta:name" />
+    <Property Name="ProfessionalBackground" Type="meta:name" />
     <Property Name="Specialisation" Type="meta:name" />
     <Property Name="DisciplineIds" Type="Json:List{Guid}" />
+    <Property Name="SiteId" Type="Site?" />
     
     <Property Name="StartDateForRSS" Type="Date?" />
     <Property Name="EndDateForRSS" Type="Date?" />
-    <Property Name="FullTimeEquivalentForRSS" Type="decimal" />
+    <Property Name="FullTimeEquivalentForRSS" Type="decimal?" />
     
     <Property Name="Hidden" Type="boolean" />
     <Property Name="Disabled" Type="boolean" />

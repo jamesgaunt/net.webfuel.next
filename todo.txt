@@ -3,14 +3,18 @@ W1: Scaffolding & UI / Tenants & Connection Strings / Deploy to Azure
 W2: Files / Support Request Form
 W3: Feedback
 
-
 NEXT:
 
-Scaffold Project Submission (use Project Support as starting point)
-
-Flesh out Add Support Request Form + Chrome free version for embedding - or revert to Razor
-
-User / User Activity
+> Allow disable on all fields
+> Allow tabbing on all fields
+> Razor based support request form
+> Fix up validation logic/display
+> More flexible/accurate form field layout (flex/grid => form-flex / form-grid)
+> More complex grid search properly integrated into grid 
+> Allow grid to save state in local storage 
+> Forgotten password link on home page
+> Think about a user cache? GUID => Presentation Only
+> Other / Free Text fields
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 

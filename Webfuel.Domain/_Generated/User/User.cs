@@ -42,8 +42,8 @@ namespace Webfuel.Domain
                     case nameof(User.UniversityJobTitle):
                         UniversityJobTitle = (string)value!;
                         break;
-                    case nameof(User.UniversityBackground):
-                        UniversityBackground = (string)value!;
+                    case nameof(User.ProfessionalBackground):
+                        ProfessionalBackground = (string)value!;
                         break;
                     case nameof(User.Specialisation):
                         Specialisation = (string)value!;
@@ -58,7 +58,7 @@ namespace Webfuel.Domain
                         EndDateForRSS = value == DBNull.Value ? (DateOnly?)null : DateOnly.FromDateTime((DateTime)value!);
                         break;
                     case nameof(User.FullTimeEquivalentForRSS):
-                        FullTimeEquivalentForRSS = (Decimal)value!;
+                        FullTimeEquivalentForRSS = value == DBNull.Value ? (Decimal?)null : (Decimal?)value;
                         break;
                     case nameof(User.Hidden):
                         Hidden = (bool)value!;
@@ -90,6 +90,9 @@ namespace Webfuel.Domain
                     case nameof(User.UpdatedAt):
                         UpdatedAt = (DateTimeOffset)value!;
                         break;
+                    case nameof(User.SiteId):
+                        SiteId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
                     case nameof(User.UserGroupId):
                         UserGroupId = (Guid)value!;
                         break;
@@ -104,7 +107,7 @@ namespace Webfuel.Domain
         public string LastName  { get; set; } = String.Empty;
         public string RSSJobTitle  { get; set; } = String.Empty;
         public string UniversityJobTitle  { get; set; } = String.Empty;
-        public string UniversityBackground  { get; set; } = String.Empty;
+        public string ProfessionalBackground  { get; set; } = String.Empty;
         public string Specialisation  { get; set; } = String.Empty;
         public List<Guid> DisciplineIds
         {
@@ -120,7 +123,7 @@ namespace Webfuel.Domain
         string _DisciplineIdsJson = String.Empty;
         public DateOnly? StartDateForRSS  { get; set; } = null;
         public DateOnly? EndDateForRSS  { get; set; } = null;
-        public Decimal FullTimeEquivalentForRSS  { get; set; } = 0M;
+        public Decimal? FullTimeEquivalentForRSS  { get; set; } = null;
         public bool Hidden  { get; set; } = false;
         public bool Disabled  { get; set; } = false;
         public DateTimeOffset? LastLoginAt  { get; set; } = null;
@@ -136,6 +139,7 @@ namespace Webfuel.Domain
         public DateTimeOffset PasswordResetValidUntil  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public DateTimeOffset UpdatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
+        public Guid? SiteId { get; set; }
         public Guid UserGroupId { get; set; }
         public User Copy()
         {
@@ -148,7 +152,7 @@ namespace Webfuel.Domain
             entity.LastName = LastName;
             entity.RSSJobTitle = RSSJobTitle;
             entity.UniversityJobTitle = UniversityJobTitle;
-            entity.UniversityBackground = UniversityBackground;
+            entity.ProfessionalBackground = ProfessionalBackground;
             entity.Specialisation = Specialisation;
             entity.DisciplineIdsJson = DisciplineIdsJson;
             entity.StartDateForRSS = StartDateForRSS;
@@ -164,6 +168,7 @@ namespace Webfuel.Domain
             entity.PasswordResetValidUntil = PasswordResetValidUntil;
             entity.CreatedAt = CreatedAt;
             entity.UpdatedAt = UpdatedAt;
+            entity.SiteId = SiteId;
             entity.UserGroupId = UserGroupId;
             return entity;
         }

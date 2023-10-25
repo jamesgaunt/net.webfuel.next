@@ -3,6 +3,7 @@
 .grid {
   display: grid;
   gap: var(--gap);
+  margin-bottom: var(--gap);
 
   &.has-columns-2 {
     grid-template-columns: repeat(2, 1fr);

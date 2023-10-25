@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IDataSource, IDataSourceWithGet } from 'shared/common/data-source';
 import { StaticDataService } from '../core/static-data.service';
-import { ApplicationStage, FundingBody, FundingCallType, FundingStream, Gender, HowDidYouFindUs, IsCTUTeamContribution, IsFellowship, IsInternationalMultiSiteStudy, IsLeadApplicantNHS, IsPPIEAndEDIContribution, IsQuantativeTeamContribution, IsResubmission, IsTeamMembersConsulted, ProjectStatus, ResearchMethodology, SubmissionOutcome, SubmissionStage, SupportProvided, SupportRequestStatus, Title, UserDiscipline, WorkActivity } from './api.types';
+import { ApplicationStage, FundingBody, FundingCallType, FundingStream, Gender, HowDidYouFindUs, IsCTUTeamContribution, IsFellowship, IsInternationalMultiSiteStudy, IsLeadApplicantNHS, IsPPIEAndEDIContribution, IsQuantativeTeamContribution, IsResubmission, IsTeamMembersConsulted, ProjectStatus, ResearchMethodology, Site, SubmissionOutcome, SubmissionStage, SupportProvided, SupportRequestStatus, Title, UserDiscipline, WorkActivity } from './api.types';
 
 @Injectable()
 export class StaticDataCache {
@@ -87,6 +87,11 @@ export class StaticDataCache {
     researchMethodology: IDataSourceWithGet<ResearchMethodology> = {
         query: (query) => this.staticDataService.queryFactory(query, s => s.researchMethodology),
         get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.researchMethodology),
+    };
+    
+    site: IDataSourceWithGet<Site> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.site),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.site),
     };
     
     submissionOutcome: IDataSourceWithGet<SubmissionOutcome> = {

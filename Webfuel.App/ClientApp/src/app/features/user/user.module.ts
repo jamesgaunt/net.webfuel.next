@@ -5,6 +5,7 @@ import { UserRoutingModule } from './user-routing.module';
 
 import { UserListComponent } from './user/user-list/user-list.component';
 import { UserItemComponent } from './user/user-item/user-item.component';
+import { UserActivityComponent } from './user/user-activity/user-activity.component';
 import { UserCreateDialogComponent } from './user/user-create-dialog/user-create-dialog.component';
 import { UserTabsComponent } from './user/user-tabs/user-tabs.component';
 
@@ -22,6 +23,7 @@ import { UserGroupTabsComponent } from './user-group/user-group-tabs/user-group-
   declarations: [
     UserListComponent,
     UserItemComponent,
+    UserActivityComponent,
     UserCreateDialogComponent,
     UserTabsComponent,
 

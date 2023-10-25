@@ -6,6 +6,7 @@ import { User } from '../../../../api/api.types';
 import { UserGroupApi } from '../../../../api/user-group.api';
 import { FormService } from '../../../../core/form.service';
 import { TitleApi } from '../../../../api/title.api';
+import { StaticDataCache } from '../../../../api/static-data.cache';
 
 @Component({
   selector: 'user-item',
@@ -19,7 +20,7 @@ export class UserItemComponent implements OnInit {
     private formService: FormService,
     public userApi: UserApi,
     public userGroupApi: UserGroupApi,
-    public titleApi: TitleApi,
+    public staticDataCache: StaticDataCache
   ) {
   }
 
@@ -37,20 +38,35 @@ export class UserItemComponent implements OnInit {
 
   form = new FormGroup({
     id: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
-    email: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
-    userGroupId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
-    birthday: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
-    title: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
-    multi: new FormControl<string[]>([], { validators: [Validators.required], nonNullable: true }),
+    email: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+    title: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+    firstName: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+    lastName: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+    userGroupId: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+
+    rssJobTitle: new FormControl('', { nonNullable: true }),
+    universityJobTitle: new FormControl('', { nonNullable: true }),
+    professionalBackground: new FormControl('', {  nonNullable: true }),
+    specialisation: new FormControl('', { nonNullable: true }),
+    disciplineIds: new FormControl<string[]>([], { nonNullable: true }),
+
+    startDateForRSS: new FormControl<string | null>(null),
+    endDateForRSS: new FormControl<string | null>(null),
+    fullTimeEquivalentForRSS: new FormControl<number | null>(null),
+    siteId: new FormControl<string | null>(null),
+
+    disabled: new FormControl<boolean>(false, { nonNullable: true }),
+    hidden: new FormControl<boolean>(false, { nonNullable: true }),
   });
 
-  save() {
+  save(close: boolean) {
     if (!this.form.valid)
       return;
 
     this.userApi.update(this.form.getRawValue(), { successGrowl: "User Updated" }).subscribe((result) => {
       this.reset(result);
-      this.router.navigate(['user/user-list']);
+      if(close)
+        this.router.navigate(['user/user-list']);
     });
   }
 

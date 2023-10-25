@@ -54,8 +54,9 @@ export class DateCalendarComponent implements ControlValueAccessor, OnInit {
 
     var date = firstDayOfMonth.addDays(-firstDayOfMonth.dayOfWeek);
     for (var i = 0; i < 42; i++) {
-      if (this.days[this.days.length - 1].length == 7)
+      if (this.days[this.days.length - 1].length == 7) {
         this.days.push([]);
+      }
       this.days[this.days.length - 1].push({
         value: date.clone(),
         selected: date.isSame(this.value),

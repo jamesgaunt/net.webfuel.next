@@ -16,6 +16,9 @@ namespace Webfuel.Domain
             return await _userRepository.InsertUser(new User
             {
                 Email = request.Email,
+                Title = request.Title,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
                 UserGroupId = request.UserGroupId,
                 CreatedAt = DateTimeOffset.UtcNow
             });

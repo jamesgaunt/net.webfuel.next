@@ -20,6 +20,7 @@ namespace Webfuel.Domain.StaticData
         IReadOnlyList<IsTeamMembersConsulted> IsTeamMembersConsulted { get; }
         IReadOnlyList<ProjectStatus> ProjectStatus { get; }
         IReadOnlyList<ResearchMethodology> ResearchMethodology { get; }
+        IReadOnlyList<Site> Site { get; }
         IReadOnlyList<SubmissionOutcome> SubmissionOutcome { get; }
         IReadOnlyList<SubmissionStage> SubmissionStage { get; }
         IReadOnlyList<SupportProvided> SupportProvided { get; }
@@ -47,6 +48,7 @@ namespace Webfuel.Domain.StaticData
         public required IReadOnlyList<IsTeamMembersConsulted> IsTeamMembersConsulted { get; init; }
         public required IReadOnlyList<ProjectStatus> ProjectStatus { get; init; }
         public required IReadOnlyList<ResearchMethodology> ResearchMethodology { get; init; }
+        public required IReadOnlyList<Site> Site { get; init; }
         public required IReadOnlyList<SubmissionOutcome> SubmissionOutcome { get; init; }
         public required IReadOnlyList<SubmissionStage> SubmissionStage { get; init; }
         public required IReadOnlyList<SupportProvided> SupportProvided { get; init; }
@@ -76,6 +78,7 @@ namespace Webfuel.Domain.StaticData
                 IsTeamMembersConsulted = await serviceProvider.GetRequiredService<IIsTeamMembersConsultedRepository>().SelectIsTeamMembersConsulted(),
                 ProjectStatus = await serviceProvider.GetRequiredService<IProjectStatusRepository>().SelectProjectStatus(),
                 ResearchMethodology = await serviceProvider.GetRequiredService<IResearchMethodologyRepository>().SelectResearchMethodology(),
+                Site = await serviceProvider.GetRequiredService<ISiteRepository>().SelectSite(),
                 SubmissionOutcome = await serviceProvider.GetRequiredService<ISubmissionOutcomeRepository>().SelectSubmissionOutcome(),
                 SubmissionStage = await serviceProvider.GetRequiredService<ISubmissionStageRepository>().SelectSubmissionStage(),
                 SupportProvided = await serviceProvider.GetRequiredService<ISupportProvidedRepository>().SelectSupportProvided(),

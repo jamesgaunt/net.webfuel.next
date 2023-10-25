@@ -48,6 +48,7 @@ export interface IStaticDataModel {
     isTeamMembersConsulted: Array<IsTeamMembersConsulted>;
     projectStatus: Array<ProjectStatus>;
     researchMethodology: Array<ResearchMethodology>;
+    site: Array<Site>;
     submissionOutcome: Array<SubmissionOutcome>;
     submissionStage: Array<SubmissionStage>;
     supportProvided: Array<SupportProvided>;
@@ -191,6 +192,13 @@ export interface ResearchMethodology extends IStaticData {
     default: boolean;
     hidden: boolean;
     freeText: boolean;
+}
+
+export interface Site extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
 }
 
 export interface SubmissionOutcome extends IStaticData {
@@ -515,7 +523,6 @@ export interface UserActivity {
 }
 
 export interface CreateUserActivity {
-    userId: string;
     date: string;
     workActivityId: string;
     description: string;
@@ -547,17 +554,18 @@ export interface User {
     lastName: string;
     rssJobTitle: string;
     universityJobTitle: string;
-    universityBackground: string;
+    professionalBackground: string;
     specialisation: string;
     disciplineIds: Array<string>;
     startDateForRSS: string | null | null;
     endDateForRSS: string | null | null;
-    fullTimeEquivalentForRSS: number;
+    fullTimeEquivalentForRSS: number | null | null;
     hidden: boolean;
     disabled: boolean;
     lastLoginAt: string | null | null;
     createdAt: string;
     updatedAt: string;
+    siteId: string | null | null;
     userGroupId: string;
 }
 
@@ -572,7 +580,21 @@ export interface CreateUser {
 export interface UpdateUser {
     id: string;
     email: string;
+    title: string;
+    firstName: string;
+    lastName: string;
     userGroupId: string;
+    rssJobTitle: string;
+    universityJobTitle: string;
+    professionalBackground: string;
+    specialisation: string;
+    disciplineIds: Array<string>;
+    startDateForRSS: string | null | null;
+    endDateForRSS: string | null | null;
+    fullTimeEquivalentForRSS: number | null | null;
+    siteId: string | null | null;
+    disabled: boolean;
+    hidden: boolean;
 }
 
 export interface ChangeUserPassword {
@@ -891,6 +913,30 @@ export interface SortResearchMethodology {
 }
 
 export interface QueryResearchMethodology extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface CreateSite {
+    name: string;
+    default: boolean;
+}
+
+export interface UpdateSite {
+    id: string;
+    name: string;
+    default: boolean;
+}
+
+export interface SortSite {
+    ids: Array<string>;
+}
+
+export interface QuerySite extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;

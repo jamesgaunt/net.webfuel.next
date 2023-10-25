@@ -2,7 +2,7 @@
   <div class="input" *ngIf="pickedItems.length === 0" (click)="togglePopup($event)">
     {{ placeholder || "&nbsp;" }}
   </div>
-  <div class="tag-input" *ngIf="pickedItems.length !== 0">
+  <div class="tag-input" *ngIf="pickedItems.length !== 0" (click)="togglePopup($event)">
     <span class="tag" *ngFor="let item of pickedItems">
       <span class="text"><ng-container *ngTemplateOutlet="_pickedTemplate;context: { $implicit: item }"></ng-container></span><span (click)="removeItem(item, $event)" class="closer"><i class="fas fa-times"></i></span>
     </span>

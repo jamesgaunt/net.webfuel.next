@@ -25,6 +25,7 @@
     <div class="sidebar" *ngIf="(configuration | async) !== null">
       <ul class="sidebar-list">
         <li><a [class.active]="activeSideMenu=='Home'" routerLink="/home"><i class="fas fa-home"></i><span>Home</span></a></li>
+        <li><a (click)="addActivity()"><i class="fas fa-calculator"></i><span>Add Activity</span></a></li>
         <li *ngFor="let item of (configuration | async)!.sideMenu.children">
           <a [class.active]="activeSideMenu == item.name"
              [routerLink]="item.action">

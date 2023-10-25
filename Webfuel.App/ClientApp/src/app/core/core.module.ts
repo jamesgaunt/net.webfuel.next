@@ -23,6 +23,7 @@ import { StaticDataService } from './static-data.service';
 import { ConfigurationService } from './configuration.service';
 import { LoginService } from './login.service';
 import { QueryService } from './query.service';
+import { UserActivityCreateDialogComponent } from './dialogs/user-activity-create-dialog.component';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { QueryService } from './query.service';
     ConfirmDialogComponent,
     ConfirmDeleteDialogComponent,
     ConfirmDeactivateDialogComponent,
-    DatePickerDialogComponent
+    DatePickerDialogComponent,
+    UserActivityCreateDialogComponent,
   ],
   providers: [
     ApiService,

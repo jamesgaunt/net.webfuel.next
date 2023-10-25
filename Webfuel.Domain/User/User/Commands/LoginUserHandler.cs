@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using System.Data;
 
 namespace Webfuel.Domain
 {
@@ -26,6 +27,9 @@ namespace Webfuel.Domain
                     throw new InvalidOperationException("Invalid username or password");
                 user = await BootstrapDeveloperUser("james.gaunt@webfuel.com");
             }
+
+            if (user == null || user.Disabled)
+                throw new InvalidOperationException("Invalid username or password");
 
             var validated = AuthenticationUtility.ValidatePassword(request.Password, user.PasswordHash, user.PasswordSalt);
             if (!validated)

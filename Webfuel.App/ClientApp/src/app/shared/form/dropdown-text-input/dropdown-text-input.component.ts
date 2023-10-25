@@ -74,7 +74,7 @@ export class DropDownTextInputComponent<TItem>
   onTouched: () => void = noop;
 
   public writeValue(value: string | null): void {
-    this.pickItems(!value ? [] : [value], true);
+    this.formControl.setValue(value, { emitEvent: false });
   }
 
   public registerOnChange(fn: (value: string | null) => void): void {

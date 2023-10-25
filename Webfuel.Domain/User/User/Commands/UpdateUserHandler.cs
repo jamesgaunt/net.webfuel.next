@@ -17,7 +17,24 @@ namespace Webfuel.Domain
 
             var updated = original.Copy();
             updated.Email = request.Email;
+            updated.Title = request.Title;
+            updated.FirstName = request.FirstName;
+            updated.LastName = request.LastName;
             updated.UserGroupId = request.UserGroupId;
+
+            updated.RSSJobTitle = request.RSSJobTitle;
+            updated.UniversityJobTitle = request.UniversityJobTitle;
+            updated.ProfessionalBackground = request.ProfessionalBackground;
+            updated.Specialisation = request.Specialisation;
+            updated.DisciplineIds = request.DisciplineIds;
+            updated.SiteId = request.SiteId;
+
+            updated.StartDateForRSS= request.StartDateForRSS;
+            updated.EndDateForRSS = request.EndDateForRSS;
+            updated.FullTimeEquivalentForRSS = request.FullTimeEquivalentForRSS;
+
+            updated.Hidden = request.Hidden;
+            updated.Disabled = request.Disabled;
 
             return await _userRepository.UpdateUser(original: original, updated: updated);
         }
