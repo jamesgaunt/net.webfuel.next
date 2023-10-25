@@ -1,8 +1,4 @@
 
-W1: Scaffolding & UI / Tenants & Connection Strings / Deploy to Azure
-W2: Files / Support Request Form
-W3: Feedback
-
 NEXT:
 
 > Allow disable on all fields
@@ -15,6 +11,16 @@ NEXT:
 > Forgotten password link on home page
 > Think about a user cache? GUID => Presentation Only
 > Other / Free Text fields
+> Sort out responsiveness
+> Roll out CreatedAt / UpdatedAt
+> Standardise date formats dd MMM yy (can we globalise the default)
+
+Dialog 2.0
+> Dialog Options/Data required on all calls or not? General Type Safety improvements on dialogs (e.g. open requires templated type) 
+> remove dialog method wrappers, move dialogs into shared
+> dialogs longer than the screen (scroll the body)
+
+
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 

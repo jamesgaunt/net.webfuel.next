@@ -8,15 +8,15 @@ import { ProjectSubmissionApi } from '../../../api/project-submission.api';
 import { UserApi } from '../../../api/user.api';
 import { StaticDataCache } from '../../../api/static-data.cache';
 
-export interface ProjectSubmissionCreateDialogOptions {
-  projectId: string
+export interface ProjectSubmissionUpdateDialogOptions {
+  projectSubmission: ProjectSubmission;
 }
 
 @Component({
-  selector: 'project-submission-create-dialog',
-  templateUrl: './project-submission-create-dialog.component.html'
+  selector: 'project-submission-update-dialog',
+  templateUrl: './project-submission-update-dialog.component.html'
 })
-export class ProjectSubmissionCreateDialogComponent {
+export class ProjectSubmissionUpdateDialogComponent {
 
   constructor(
     private dialogRef: DialogRef<ProjectSubmission>,
@@ -24,13 +24,13 @@ export class ProjectSubmissionCreateDialogComponent {
     private projectSubmissionApi: ProjectSubmissionApi,
     public userApi: UserApi,
     public staticDataCache: StaticDataCache,
-    @Inject(DIALOG_DATA) public options: ProjectSubmissionCreateDialogOptions,
+    @Inject(DIALOG_DATA) public options: ProjectSubmissionUpdateDialogOptions,
   ) {
-    this.form.patchValue({ projectId: options.projectId });
+    this.form.patchValue(options.projectSubmission);
   }
 
   form = new FormGroup({
-    projectId: new FormControl<string>('', { nonNullable: true }),
+    id: new FormControl<string>('', { nonNullable: true }),
     submissionDate: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     nihrReference: new FormControl<string>('', { nonNullable: true }),
     submissionStageId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
@@ -42,7 +42,7 @@ export class ProjectSubmissionCreateDialogComponent {
     if (this.formService.checkForErrors(this.form))
       return;
 
-    this.projectSubmissionApi.create(this.form.getRawValue(), { successGrowl: "Project Submission Added" }).subscribe((result) => {
+    this.projectSubmissionApi.update(this.form.getRawValue(), { successGrowl: "Project Submission Updated" }).subscribe((result) => {
       this.dialogRef.close(result);
     });
   }

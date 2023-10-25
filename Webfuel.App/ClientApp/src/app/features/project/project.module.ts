@@ -12,7 +12,9 @@ import { ProjectSubmissionComponent } from './project-submission/project-submiss
 
 import { ProjectCreateDialogComponent } from './project-create-dialog/project-create-dialog.component';
 import { ProjectSupportCreateDialogComponent } from './project-support-create-dialog/project-support-create-dialog.component';
+import { ProjectSupportUpdateDialogComponent } from './project-support-update-dialog/project-support-update-dialog.component';
 import { ProjectSubmissionCreateDialogComponent } from './project-submission-create-dialog/project-submission-create-dialog.component';
+import { ProjectSubmissionUpdateDialogComponent } from './project-submission-update-dialog/project-submission-update-dialog.component';
 
 @NgModule({
   imports: [
@@ -30,7 +32,9 @@ import { ProjectSubmissionCreateDialogComponent } from './project-submission-cre
 
     ProjectCreateDialogComponent,
     ProjectSupportCreateDialogComponent,
-    ProjectSubmissionCreateDialogComponent
+    ProjectSupportUpdateDialogComponent,
+    ProjectSubmissionCreateDialogComponent,
+    ProjectSubmissionUpdateDialogComponent,
   ]
 })
 export class ProjectModule { }

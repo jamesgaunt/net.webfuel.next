@@ -3,19 +3,26 @@
 
 .project-support {
   margin-top: var(--gap);
+  margin-bottom: calc(var(--gap) * 2);
+  border: 1px solid var(--palette-control-border);
+  padding: var(--gap);
+
+  .button {
+    margin-left: 6px;
+  }
 
   .advisers {
     font-weight: var(--bold-if-light);
     display: flex;
     gap: 4px;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     flex-wrap: wrap;
   }
 
   .support-provided {
     display: flex;
     gap: 2px;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     flex-wrap: wrap;
   }
 
@@ -24,5 +31,7 @@
     color: var(--palette-control-text);
     padding: var(--gap);
     margin: 0;
+    line-height: 1.5;
+    white-space: pre-wrap;
   }
 }

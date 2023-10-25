@@ -7,6 +7,7 @@ import { ConfirmDeactivateDialogComponent, IConfirmDeactivateDialogOptions } fro
 import { DatePickerDialogComponent, IDatePickerDialogOptions } from "./dialogs/date-picker-dialog.component";
 import { ConfirmDialogComponent, IConfirmDialogOptions } from "./dialogs/confirm-dialog.component";
 import { IUserActivityCreateDialogOptions, UserActivityCreateDialogComponent } from "./dialogs/user-activity-create-dialog.component";
+import { IUserActivityUpdateDialogOptions, UserActivityUpdateDialogComponent } from "./dialogs/user-activity-update-dialog.component";
 
 export interface IDialogOptions<TResult, TData> {
   data?: TData;
@@ -98,6 +99,17 @@ export class DialogService {
 
   addUserActivity(options?: IUserActivityCreateDialogOptions) {
     this.open(UserActivityCreateDialogComponent, {
+      data: options,
+      callback: (result) => {
+        if (result !== undefined && options && options.callback)
+          options.callback(<any>result);
+      },
+      width: 'auto'
+    })
+  }
+
+  updateUserActivity(options: IUserActivityUpdateDialogOptions) {
+    this.open(UserActivityUpdateDialogComponent, {
       data: options,
       callback: (result) => {
         if (result !== undefined && options && options.callback)

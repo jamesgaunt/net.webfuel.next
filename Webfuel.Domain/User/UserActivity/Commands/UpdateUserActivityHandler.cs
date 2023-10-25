@@ -17,9 +17,9 @@ namespace Webfuel.Domain
 
             var updated = userActivity.Copy();
 
-            userActivity.Date = request.Date;
-            userActivity.WorkActivityId = request.WorkActivityId;
-            userActivity.Description = request.Description;
+            updated.Date = request.Date;
+            updated.WorkActivityId = request.WorkActivityId;
+            updated.Description = request.Description;
 
             return await _userActivityRepository.UpdateUserActivity(updated: updated, original: userActivity);
         }

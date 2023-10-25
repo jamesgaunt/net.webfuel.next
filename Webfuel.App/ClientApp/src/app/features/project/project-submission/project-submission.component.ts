@@ -9,6 +9,7 @@ import { ProjectSubmissionApi } from '../../../api/project-submission.api';
 import { DataSourceLookup, IDataSource, IDataSourceWithGet } from '../../../shared/common/data-source';
 import { UserApi } from '../../../api/user.api';
 import { DialogService } from '../../../core/dialog.service';
+import { ProjectSubmissionUpdateDialogComponent } from '../project-submission-update-dialog/project-submission-update-dialog.component';
 
 @Component({
   selector: 'project-submission',
@@ -49,7 +50,11 @@ export class ProjectSubmissionComponent implements OnInit {
   }
 
   edit(item: ProjectSubmission) {
-
+    this.dialogService.open(ProjectSubmissionUpdateDialogComponent, {
+      data: {
+        projectSubmission: item
+      }
+    });
   }
 
   delete(item: ProjectSubmission) {

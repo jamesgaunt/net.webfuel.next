@@ -11,6 +11,8 @@ import { ConfirmDialogComponent } from './dialogs/confirm-dialog.component';
 import { ConfirmDeleteDialogComponent } from './dialogs/confirm-delete-dialog.component';
 import { ConfirmDeactivateDialogComponent } from './dialogs/confirm-deactivate-dialog.component';
 import { DatePickerDialogComponent } from './dialogs/date-picker-dialog.component';
+import { UserActivityCreateDialogComponent } from './dialogs/user-activity-create-dialog.component';
+import { UserActivityUpdateDialogComponent } from './dialogs/user-activity-update-dialog.component';
 
 import { ApiService } from './api.service';
 import { DialogService } from './dialog.service';
@@ -23,7 +25,6 @@ import { StaticDataService } from './static-data.service';
 import { ConfigurationService } from './configuration.service';
 import { LoginService } from './login.service';
 import { QueryService } from './query.service';
-import { UserActivityCreateDialogComponent } from './dialogs/user-activity-create-dialog.component';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { UserActivityCreateDialogComponent } from './dialogs/user-activity-creat
     ConfirmDeactivateDialogComponent,
     DatePickerDialogComponent,
     UserActivityCreateDialogComponent,
+    UserActivityUpdateDialogComponent,
   ],
   providers: [
     ApiService,
