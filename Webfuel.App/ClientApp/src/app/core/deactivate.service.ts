@@ -3,21 +3,20 @@ import { GrowlService } from './growl.service';
 import { DialogService } from './dialog.service';
 import { CanDeactivateFn } from '@angular/router';
 import { FormGroup } from '@angular/forms';
+import { ConfirmDeactivateDialogService } from '../shared/dialogs/confirm-deactivate/confirm-deactivate-dialog.component';
 
 @Injectable()
 export class DeactivateService {
 
   constructor(
-    private dialogService: DialogService
+    private confirmDeactivateDialogService: ConfirmDeactivateDialogService
   ) { }
 
   confirmDeactivate(dirty: boolean) {
     if (!dirty)
       return true;
     return new Promise<boolean>((resolver) => {
-      this.dialogService.confirmDeactivate({
-        callback: (result) => resolver(result)
-      });
+      this.confirmDeactivateDialogService.open().subscribe((result) => resolver(result));
     });
   }
 

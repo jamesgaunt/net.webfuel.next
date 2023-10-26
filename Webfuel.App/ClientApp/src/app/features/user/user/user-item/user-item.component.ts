@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserApi } from 'api/user.api';
-import { User } from '../../../../api/api.types';
-import { UserGroupApi } from '../../../../api/user-group.api';
-import { FormService } from '../../../../core/form.service';
-import { TitleApi } from '../../../../api/title.api';
-import { StaticDataCache } from '../../../../api/static-data.cache';
+import { User } from 'api/api.types';
+import { UserGroupApi } from 'api/user-group.api';
+import { FormService } from 'core/form.service';
+import { TitleApi } from 'api/title.api';
+import { StaticDataCache } from 'api/static-data.cache';
 
 @Component({
   selector: 'user-item',

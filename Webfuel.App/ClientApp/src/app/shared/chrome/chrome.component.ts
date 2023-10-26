@@ -1,16 +1,17 @@
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
 import { DOCUMENT } from '@angular/common';
 import { Component, ElementRef, Inject, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { ResolveEnd, Router } from '@angular/router';
+import { ClientConfiguration } from 'api/api.types';
+import { ConfigurationService } from 'core/configuration.service';
+import { GrowlService } from 'core/growl.service';
+import { LoginService } from 'core/login.service';
 import { BehaviorSubject } from 'rxjs';
-import { ClientConfiguration } from '../../api/api.types';
-import { ConfigurationService } from '../../core/configuration.service';
-import { DialogService } from '../../core/dialog.service';
-import { GrowlService } from '../../core/growl.service';
-import { LoginService } from '../../core/login.service';
-import { Overlay, OverlayRef } from '@angular/cdk/overlay';
-import { TemplatePortal } from '@angular/cdk/portal';
 import _ from 'shared/common/underscore';
-import { ChangePasswordDialogComponent } from '../dialogs/change-password-dialog/change-password-dialog.component';
+import { ChangePasswordDialogService } from '../dialogs/change-password-dialog/change-password-dialog.component';
+import { ConfirmDialogService } from '../dialogs/confirm-dialog/confirm-dialog.component';
+import { UserActivityCreateDialogService } from '../dialogs/user-activity-create-dialog/user-activity-create-dialog.component';
 
 @Component({
   selector: 'chrome',
@@ -23,7 +24,9 @@ export class ChromeComponent implements OnInit, OnDestroy {
     public growlService: GrowlService,
     public configurationService: ConfigurationService,
     public loginService: LoginService,
-    public dialogService: DialogService,
+    private changePasswordDialog: ChangePasswordDialogService,
+    private confirmDialog: ConfirmDialogService,
+    private createUserActivityDialog: UserActivityCreateDialogService,
     public overlay: Overlay,
     public viewContainerRef: ViewContainerRef,
     @Inject(DOCUMENT) public document: Document
@@ -52,12 +55,11 @@ export class ChromeComponent implements OnInit, OnDestroy {
 
   logout() {
     this.closeUserMenu();
-    this.dialogService.confirm({
+    this.confirmDialog.open({
       title: "Logout",
-      message: "Are you sure you want to logout?",
-      confirmedCallback: () => {
-        this.loginService.logout();
-      }
+      message: "Are you sure you want to logout?"
+    }).subscribe((result) => {
+      this.loginService.logout();
     });
   }
 
@@ -133,12 +135,12 @@ export class ChromeComponent implements OnInit, OnDestroy {
 
   changePassword() {
     this.closeUserMenu();
-    this.dialogService.open(ChangePasswordDialogComponent);
+    this.changePasswordDialog.open();
   }
 
   // Activity
 
   addActivity() {
-    this.dialogService.addUserActivity();
+    this.createUserActivityDialog.open();
   }
 }

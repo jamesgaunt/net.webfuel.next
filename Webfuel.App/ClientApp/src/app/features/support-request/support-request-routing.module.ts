@@ -4,8 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { DeactivateService } from '../../core/deactivate.service';
 import { SupportRequestApi } from '../../api/support-request.api';
 
-import { SupportRequestListComponent } from './support-request-list/support-request-list.component';
-import { SupportRequestItemComponent } from './support-request-item/support-request-item.component';
+import { SupportRequestListComponent } from './support-request/support-request-list/support-request-list.component';
+import { SupportRequestItemComponent } from './support-request/support-request-item/support-request-item.component';
 
 const routes: Routes = [
   {

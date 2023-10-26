@@ -1,10 +1,9 @@
-import { Component, inject } from '@angular/core';
-import { DialogService } from 'core/dialog.service';
+import { inject } from '@angular/core';
 import { Query } from '../../../api/api.types';
 import { IDataSource } from '../../../shared/common/data-source';
-import { StaticDataCreateDialogComponent, StaticDataCreateOptions } from '../dialogs/static-data-create-dialog/static-data-create-dialog.component';
-import { StaticDataUpdateDialogComponent, StaticDataUpdateOptions } from '../dialogs/static-data-update-dialog/static-data-update-dialog.component';
-import _ from 'shared/common/underscore';
+import { ConfirmDeleteDialogService } from '../../../shared/dialogs/confirm-delete/confirm-delete-dialog.component';
+import { StaticDataCreateDialogService } from '../dialogs/static-data-create-dialog/static-data-create-dialog.component';
+import { StaticDataUpdateDialogService } from '../dialogs/static-data-update-dialog/static-data-update-dialog.component';
 
 export class StaticDataComponent<TItem, TQuery extends Query = Query, TCreate = any, TUpdate = any> {
   constructor(
@@ -14,23 +13,23 @@ export class StaticDataComponent<TItem, TQuery extends Query = Query, TCreate = 
 
   typeName = "Undefined";
 
-  dialogService = inject(DialogService);
+  createStaticDataDialog = inject(StaticDataCreateDialogService);
+
+  updateStaticDataDialog = inject(StaticDataUpdateDialogService);
+
+  confirmDeleteDialog = inject(ConfirmDeleteDialogService);
 
   get canAdd() {
     return this.dataSource.create !== undefined;
   }
 
   onAdd() {
-    this.dialogService.open<TCreate, StaticDataCreateOptions>(StaticDataCreateDialogComponent, {
-      data: {
-        typeName: this.typeName,
-        enableHidden: this.enableHidden,
-        enableFreeText: this.enableFreeText,
-      },
-      successCallback: (command) => {
-        this.dataSource.create!(command).subscribe((result) => {
-        });
-      }
+    this.createStaticDataDialog.open<TCreate>({
+      typeName: this.typeName,
+      enableHidden: this.enableHidden,
+      enableFreeText: this.enableFreeText,
+    }).subscribe((result) => {
+      this.dataSource.create!(result).subscribe();
     });
   }
 
@@ -39,17 +38,13 @@ export class StaticDataComponent<TItem, TQuery extends Query = Query, TCreate = 
   }
 
   onEdit(item: TItem) {
-    this.dialogService.open<TUpdate, StaticDataUpdateOptions>(StaticDataUpdateDialogComponent, {
-      data: {
-        data: item,
-        typeName: this.typeName,
-        enableHidden: this.enableHidden,
-        enableFreeText: this.enableFreeText,
-      },
-      successCallback: (command) => {
-        this.dataSource.update!(command).subscribe((result) => {
-        });
-      }
+    this.updateStaticDataDialog.open<TUpdate>({
+      data: item,
+      typeName: this.typeName,
+      enableHidden: this.enableHidden,
+      enableFreeText: this.enableFreeText,
+    }).subscribe((result) => {
+      this.dataSource.update!(result).subscribe();
     });
   }
 
@@ -58,12 +53,9 @@ export class StaticDataComponent<TItem, TQuery extends Query = Query, TCreate = 
   }
 
   onDelete(item: TItem) {
-    this.dialogService.confirmDelete({
-      confirmedCallback: () => {
-        this.dataSource.delete!({ id: (<any>item)['id'] }).subscribe((result) => {
-        });
-      }
-    })
+    this.confirmDeleteDialog.open({ title: this.typeName }).subscribe(() => {
+      this.dataSource.delete!({ id: (<any>item)['id'] }).subscribe();
+    });
   }
 
   // Flexible Fields

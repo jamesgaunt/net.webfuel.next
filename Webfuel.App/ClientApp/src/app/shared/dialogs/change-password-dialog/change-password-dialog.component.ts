@@ -1,10 +1,22 @@
 import { DialogRef } from '@angular/cdk/dialog';
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Project } from '../../../api/api.types';
 import { UserApi } from '../../../api/user.api';
 import { FormService } from '../../../core/form.service';
 import { GrowlService } from '../../../core/growl.service';
+import { DialogService } from '../../../core/dialog.service';
+
+@Injectable()
+export class ChangePasswordDialogService {
+  constructor(
+    private dialogService: DialogService
+  ) { }
+
+  open() {
+    return this.dialogService.openComponent<true>(ChangePasswordDialogComponent);
+  }
+}
 
 @Component({
   templateUrl: './change-password-dialog.component.html'
@@ -12,7 +24,7 @@ import { GrowlService } from '../../../core/growl.service';
 export class ChangePasswordDialogComponent {
 
   constructor(
-    private dialogRef: DialogRef<Project>,
+    private dialogRef: DialogRef<true>,
     private formService: FormService,
     private growlService: GrowlService,
     private userApi: UserApi,
@@ -31,7 +43,7 @@ export class ChangePasswordDialogComponent {
 
     this.userApi.changePassword(this.form.getRawValue()).subscribe(() => {
       this.growlService.growlSuccess("Password changed");
-      this.dialogRef.close();
+      this.dialogRef.close(true);
     });
 
   }

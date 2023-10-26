@@ -7,13 +7,6 @@ import { AuthorizationInterceptor } from './interceptors/authorization.intercept
 import { LoggingInterceptor } from './interceptors/logging.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 
-import { ConfirmDialogComponent } from './dialogs/confirm-dialog.component';
-import { ConfirmDeleteDialogComponent } from './dialogs/confirm-delete-dialog.component';
-import { ConfirmDeactivateDialogComponent } from './dialogs/confirm-deactivate-dialog.component';
-import { DatePickerDialogComponent } from './dialogs/date-picker-dialog.component';
-import { UserActivityCreateDialogComponent } from './dialogs/user-activity-create-dialog.component';
-import { UserActivityUpdateDialogComponent } from './dialogs/user-activity-update-dialog.component';
-
 import { ApiService } from './api.service';
 import { DialogService } from './dialog.service';
 import { GrowlService } from './growl.service';
@@ -32,12 +25,6 @@ import { QueryService } from './query.service';
     SharedModule,
   ],
   declarations: [
-    ConfirmDialogComponent,
-    ConfirmDeleteDialogComponent,
-    ConfirmDeactivateDialogComponent,
-    DatePickerDialogComponent,
-    UserActivityCreateDialogComponent,
-    UserActivityUpdateDialogComponent,
   ],
   providers: [
     ApiService,

@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { UserGroupApi } from 'api/user-group.api';
 import { DialogService } from 'core/dialog.service';
 import { UserGroup } from '../../../../api/api.types';
-import { UserGroupCreateDialogComponent } from '../user-group-create-dialog/user-group-create-dialog.component';
+import { UserGroupCreateDialogService } from '../dialogs/user-group-create-dialog/user-group-create-dialog.component';
+import { ConfirmDeleteDialogService } from 'shared/dialogs/confirm-delete/confirm-delete-dialog.component';
 
 @Component({
   selector: 'user-group-list',
@@ -12,14 +13,14 @@ import { UserGroupCreateDialogComponent } from '../user-group-create-dialog/user
 export class UserGroupListComponent {
   constructor(
     private router: Router,
-    private dialogService: DialogService,
+    private createUserGroupDialog: UserGroupCreateDialogService,
+    private confirmDeleteDialog: ConfirmDeleteDialogService,
     public userGroupApi: UserGroupApi,
   ) {
   }
 
   add() {
-    this.dialogService.open(UserGroupCreateDialogComponent, {
-    });
+    this.createUserGroupDialog.open();
   }
 
   edit(item: UserGroup) {
@@ -27,12 +28,8 @@ export class UserGroupListComponent {
   }
 
   delete(item: UserGroup) {
-    this.dialogService.confirmDelete({
-      title: item.name,
-      confirmedCallback: () => {
-        this.userGroupApi.delete({ id: item.id }, { successGrowl: "User Group Deleted" }).subscribe((result) => {
-        })
-      }
+    this.confirmDeleteDialog.open({ title: "User Group" }).subscribe(() => {
+      this.userGroupApi.delete({ id: item.id }, { successGrowl: "User Group Deleted" }).subscribe();
     });
   }
 }

@@ -32,7 +32,13 @@ import { GridReferenceColumnComponent } from './grid/columns/grid-reference-colu
 import { AutocompleteCodeDirective } from './directives/autocomplete-code.directive';
 
 // Dialogs
-import { ChangePasswordDialogComponent } from './dialogs/change-password-dialog/change-password-dialog.component';
+import { ChangePasswordDialogComponent, ChangePasswordDialogService } from './dialogs/change-password-dialog/change-password-dialog.component';
+import { ConfirmDialogComponent, ConfirmDialogService } from './dialogs/confirm-dialog/confirm-dialog.component';
+import { ConfirmDeleteDialogComponent, ConfirmDeleteDialogService } from './dialogs/confirm-delete/confirm-delete-dialog.component';
+import { ConfirmDeactivateDialogComponent, ConfirmDeactivateDialogService } from './dialogs/confirm-deactivate/confirm-deactivate-dialog.component';
+import { DatePickerDialogComponent, DatePickerDialogService } from './dialogs/date-picker-dialog/date-picker-dialog.component';
+import { UserActivityCreateDialogComponent, UserActivityCreateDialogService } from './dialogs/user-activity-create-dialog/user-activity-create-dialog.component';
+import { UserActivityUpdateDialogComponent, UserActivityUpdateDialogService } from './dialogs/user-activity-update-dialog/user-activity-update-dialog.component';
 
 
 @NgModule({
@@ -72,7 +78,13 @@ import { ChangePasswordDialogComponent } from './dialogs/change-password-dialog/
     AutocompleteCodeDirective,
 
     // Dialogs
-    ChangePasswordDialogComponent
+    ChangePasswordDialogComponent,
+    ConfirmDialogComponent,
+    ConfirmDeleteDialogComponent,
+    ConfirmDeactivateDialogComponent,
+    DatePickerDialogComponent,
+    UserActivityCreateDialogComponent,
+    UserActivityUpdateDialogComponent,
   ],
   exports: [
     CommonModule,
@@ -107,7 +119,22 @@ import { ChangePasswordDialogComponent } from './dialogs/change-password-dialog/
     AutocompleteCodeDirective,
 
     // Dialogs
-    ChangePasswordDialogComponent
+    ChangePasswordDialogComponent,
+    ConfirmDialogComponent,
+    ConfirmDeleteDialogComponent,
+    ConfirmDeactivateDialogComponent,
+    DatePickerDialogComponent,
+    UserActivityCreateDialogComponent,
+    UserActivityUpdateDialogComponent,
+  ],
+  providers: [
+    ChangePasswordDialogService,
+    ConfirmDialogService,
+    ConfirmDeleteDialogService,
+    ConfirmDeactivateDialogService,
+    DatePickerDialogService,
+    UserActivityCreateDialogService,
+    UserActivityUpdateDialogService,
   ]
 })
 export class SharedModule { }

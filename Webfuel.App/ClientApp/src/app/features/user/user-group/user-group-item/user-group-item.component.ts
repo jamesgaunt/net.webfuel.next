@@ -1,10 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, ActivatedRouteSnapshot, ResolveFn, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserGroupApi } from 'api/user-group.api';
-import { Observable } from 'rxjs';
-import { FormService } from '../../../../core/form.service';
 import { UserGroup } from '../../../../api/api.types';
+import { FormService } from '../../../../core/form.service';
 
 @Component({
   selector: 'user-group-item',

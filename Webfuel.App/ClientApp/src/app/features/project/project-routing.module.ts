@@ -4,11 +4,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { DeactivateService } from '../../core/deactivate.service';
 import { ProjectApi } from '../../api/project.api';
 
-import { ProjectListComponent } from './project-list/project-list.component';
-import { ProjectItemComponent } from './project-item/project-item.component';
-import { ProjectRequestComponent } from './project-request/project-request.component';
-import { ProjectSupportComponent } from './project-support/project-support.component';
-import { ProjectSubmissionComponent } from './project-submission/project-submission.component';
+import { ProjectListComponent } from './project/project-list/project-list.component';
+import { ProjectItemComponent } from './project/project-item/project-item.component';
+import { ProjectRequestComponent } from './project/project-request/project-request.component';
+import { ProjectSupportComponent } from './project/project-support/project-support.component';
+import { ProjectSubmissionComponent } from './project/project-submission/project-submission.component';
 
 const routes: Routes = [
   {

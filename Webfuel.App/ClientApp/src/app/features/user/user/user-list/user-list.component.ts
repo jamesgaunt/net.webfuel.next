@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserApi } from 'api/user.api';
-import { DialogService } from 'core/dialog.service';
 import { User } from '../../../../api/api.types';
 import { UserGroupApi } from '../../../../api/user-group.api';
-import { UserCreateDialogComponent } from '../user-create-dialog/user-create-dialog.component';
+import { ConfirmDeleteDialogService } from '../../../../shared/dialogs/confirm-delete/confirm-delete-dialog.component';
+import { UserCreateDialogService } from '../dialogs/user-create-dialog/user-create-dialog.component';
 
 @Component({
   selector: 'user-list',
@@ -13,15 +13,15 @@ import { UserCreateDialogComponent } from '../user-create-dialog/user-create-dia
 export class UserListComponent {
   constructor(
     private router: Router,
-    private dialogService: DialogService,
+    private createUserDialog: UserCreateDialogService,
+    private confirmDeleteDialog: ConfirmDeleteDialogService,
     public userApi: UserApi,
     public userGroupApi: UserGroupApi
   ) {
   }
 
   add() {
-    this.dialogService.open(UserCreateDialogComponent, {
-    });
+    this.createUserDialog.open();
   }
 
   edit(item: User) {
@@ -29,12 +29,8 @@ export class UserListComponent {
   }
 
   delete(item: User) {
-    this.dialogService.confirmDelete({
-      title: item.email,
-      confirmedCallback: () => {
-        this.userApi.delete({ id: item.id }, { successGrowl: "User Deleted" }).subscribe((result) => {
-        })
-      }
+    this.confirmDeleteDialog.open({ title: "User" }).subscribe(() => {
+      this.userApi.delete({ id: item.id }, { successGrowl: "User Deleted" }).subscribe();
     });
   }
 }

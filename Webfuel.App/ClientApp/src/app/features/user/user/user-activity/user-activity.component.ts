@@ -1,15 +1,14 @@
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UserApi } from 'api/user.api';
-import { User, UserActivity } from '../../../../api/api.types';
-import { UserGroupApi } from '../../../../api/user-group.api';
-import { FormService } from '../../../../core/form.service';
-import { TitleApi } from '../../../../api/title.api';
-import { StaticDataCache } from '../../../../api/static-data.cache';
-import { UserActivityApi } from '../../../../api/user-activity.api';
-import { DialogService } from '../../../../core/dialog.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { User, UserActivity } from 'api/api.types';
+import { StaticDataCache } from 'api/static-data.cache';
+import { UserActivityApi } from 'api/user-activity.api';
+import { UserApi } from 'api/user.api';
+import { FormService } from 'core/form.service';
+import { ConfirmDeleteDialogService } from 'shared/dialogs/confirm-delete/confirm-delete-dialog.component';
+import { UserActivityUpdateDialogService } from '../../../../shared/dialogs/user-activity-update-dialog/user-activity-update-dialog.component';
 
 @Component({
   selector: 'user-activity',
@@ -23,7 +22,8 @@ export class UserActivityComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formService: FormService,
-    private dialogService: DialogService,
+    private updateUserActivityDialog: UserActivityUpdateDialogService,
+    private confirmDeleteDialog: ConfirmDeleteDialogService,
     public userApi: UserApi,
     public userActivityApi: UserActivityApi,
     public staticDataCache: StaticDataCache
@@ -66,15 +66,12 @@ export class UserActivityComponent implements OnInit {
   }
 
   editUserActivity(userActivity: UserActivity) {
-    this.dialogService.updateUserActivity({ userActivity: userActivity });
+    this.updateUserActivityDialog.open({ userActivity: userActivity });
   }
 
   deleteUserActivity(userActivity: UserActivity) {
-    this.dialogService.confirmDelete({
-      confirmedCallback: () => {
-        this.userActivityApi.delete({ id: userActivity.id }, { successGrowl: "User Activity Deleted" }).subscribe((result) => {
-        })
-      }
+    this.confirmDeleteDialog.open({ title: "User Activity" }).subscribe(() => {
+      this.userActivityApi.delete({ id: userActivity.id }, { successGrowl: "User Activity Deleted" }).subscribe();
     });
   }
 }

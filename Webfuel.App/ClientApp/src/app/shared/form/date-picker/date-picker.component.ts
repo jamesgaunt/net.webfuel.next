@@ -3,6 +3,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { noop } from 'rxjs';
 import { DialogService } from '../../../core/dialog.service';
 import { Day } from '../date-calendar/Day';
+import { DatePickerDialogService } from '../../dialogs/date-picker-dialog/date-picker-dialog.component';
 
 @Component({
   selector: 'date-picker',
@@ -21,7 +22,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
-    private dialogService: DialogService,
+    private datePickerDialog: DatePickerDialogService,
     private cd: ChangeDetectorRef
   ) {
   }
@@ -60,14 +61,11 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   }
 
   togglePopup($event: Event) {
-    this.dialogService.pickDate({
-      value: this.value,
-      callback: (result) => {
-        this.value = result;
-        this.onChange(result);
-        this.cd.detectChanges();
-      }
-    })
+    this.datePickerDialog.open({ value: this.value }).subscribe((result) => {
+      this.value = result;
+      this.onChange(result);
+      this.cd.detectChanges();
+    });
   }
 
   // ControlValueAccessor API
