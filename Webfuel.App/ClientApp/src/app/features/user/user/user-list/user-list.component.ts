@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { UserApi } from 'api/user.api';
 import { User } from '../../../../api/api.types';
 import { UserGroupApi } from '../../../../api/user-group.api';
-import { ConfirmDeleteDialogService } from '../../../../shared/dialogs/confirm-delete/confirm-delete-dialog.component';
-import { UserCreateDialogService } from '../dialogs/user-create-dialog/user-create-dialog.component';
+import { CreateUserDialog } from '../dialogs/create-user/create-user.dialog';
+import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
 
 @Component({
   selector: 'user-list',
@@ -13,8 +13,8 @@ import { UserCreateDialogService } from '../dialogs/user-create-dialog/user-crea
 export class UserListComponent {
   constructor(
     private router: Router,
-    private createUserDialog: UserCreateDialogService,
-    private confirmDeleteDialog: ConfirmDeleteDialogService,
+    private createUserDialog: CreateUserDialog,
+    private confirmDeleteDialog: ConfirmDeleteDialog,
     public userApi: UserApi,
     public userGroupApi: UserGroupApi
   ) {

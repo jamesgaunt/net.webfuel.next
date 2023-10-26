@@ -5,7 +5,7 @@ import { SupportRequest } from 'api/api.types';
 import { StaticDataCache } from 'api/static-data.cache';
 import { SupportRequestApi } from 'api/support-request.api';
 import { FormService } from 'core/form.service';
-import { SupportRequestTriageDialogService } from '../dialogs/support-request-triage-dialog/support-request-triage-dialog.component';
+import { TriageSupportRequestDialog } from '../dialogs/triage-support-request/triage-support-request.dialog';
 
 @Component({
   selector: 'support-request-item',
@@ -17,7 +17,7 @@ export class SupportRequestItemComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formService: FormService,
-    private triageSupportRequestDialog: SupportRequestTriageDialogService,
+    private triageSupportRequestDialog: TriageSupportRequestDialog,
     public staticDataCache: StaticDataCache,
     public supportRequestApi: SupportRequestApi,
    

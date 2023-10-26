@@ -3,9 +3,8 @@ import { Router } from '@angular/router';
 import { Project } from 'api/api.types';
 import { ProjectApi } from 'api/project.api';
 import { StaticDataCache } from 'api/static-data.cache';
-import { ConfirmDeleteDialogService } from '../../../../shared/dialogs/confirm-delete/confirm-delete-dialog.component';
-import { ProjectCreateDialogService } from '../dialogs/project-create-dialog/project-create-dialog.component';
-
+import { CreateProjectDialog } from '../dialogs/create-project/create-project.dialog';
+import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
 
 @Component({
   selector: 'project-list',
@@ -16,8 +15,8 @@ export class ProjectListComponent {
     private router: Router,
     public projectApi: ProjectApi,
     public staticDataCache: StaticDataCache,
-    private createProjectDialog: ProjectCreateDialogService,
-    private confirmDeleteDialog: ConfirmDeleteDialogService
+    private createProjectDialog: CreateProjectDialog,
+    private confirmDeleteDialog: ConfirmDeleteDialog
   ) {
   }
 

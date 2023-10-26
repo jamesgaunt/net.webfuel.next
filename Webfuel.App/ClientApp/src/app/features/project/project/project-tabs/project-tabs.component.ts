@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Project } from 'api/api.types';
-import { ProjectSubmissionCreateDialogService } from '../dialogs/project-submission-create-dialog/project-submission-create-dialog.component';
-import { ProjectSupportCreateDialogService } from '../dialogs/project-support-create-dialog/project-support-create-dialog.component';
+import { CreateProjectSubmissionDialog } from '../dialogs/create-project-submission/create-project-submission.dialog';
+import { CreateProjectSupportDialog } from '../dialogs/create-project-support/create-project-support.dialog';
 
 @Component({
   selector: 'project-tabs',
@@ -13,8 +13,8 @@ export class ProjectTabsComponent implements OnInit  {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private createProjectSupportDialog: ProjectSupportCreateDialogService,
-    private createProjectSubmissionDialog: ProjectSubmissionCreateDialogService
+    private createProjectSupportDialog: CreateProjectSupportDialog,
+    private createProjectSubmissionDialog: CreateProjectSubmissionDialog,
   ) {
   }
 

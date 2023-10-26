@@ -9,9 +9,9 @@ import { GrowlService } from 'core/growl.service';
 import { LoginService } from 'core/login.service';
 import { BehaviorSubject } from 'rxjs';
 import _ from 'shared/common/underscore';
-import { ChangePasswordDialogService } from '../dialogs/change-password-dialog/change-password-dialog.component';
-import { ConfirmDialogService } from '../dialogs/confirm-dialog/confirm-dialog.component';
-import { UserActivityCreateDialogService } from '../dialogs/user-activity-create-dialog/user-activity-create-dialog.component';
+import { ChangePasswordDialog } from '../dialogs/change-password/change-password.dialog';
+import { ConfirmDialog } from '../dialogs/confirm/confirm.dialog';
+import { CreateUserActivityDialog } from '../dialogs/create-user-activity/create-user-activity.dialog';
 
 @Component({
   selector: 'chrome',
@@ -24,9 +24,9 @@ export class ChromeComponent implements OnInit, OnDestroy {
     public growlService: GrowlService,
     public configurationService: ConfigurationService,
     public loginService: LoginService,
-    private changePasswordDialog: ChangePasswordDialogService,
-    private confirmDialog: ConfirmDialogService,
-    private createUserActivityDialog: UserActivityCreateDialogService,
+    private changePasswordDialog: ChangePasswordDialog,
+    private confirmDialog: ConfirmDialog,
+    private createUserActivityDialog: CreateUserActivityDialog,
     public overlay: Overlay,
     public viewContainerRef: ViewContainerRef,
     @Inject(DOCUMENT) public document: Document
@@ -38,7 +38,6 @@ export class ChromeComponent implements OnInit, OnDestroy {
     this.collapsed = _.getLocalStorage("chrome.collapsed") || false;
   }
   configuration: BehaviorSubject<ClientConfiguration | null>;
-
 
   ngOnInit(): void {
     this.router.events.forEach((event) => {

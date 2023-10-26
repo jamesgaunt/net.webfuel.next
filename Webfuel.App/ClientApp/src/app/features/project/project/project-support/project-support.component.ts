@@ -8,8 +8,8 @@ import { StaticDataCache } from 'api/static-data.cache';
 import { UserApi } from 'api/user.api';
 import { FormService } from 'core/form.service';
 import { DataSourceLookup } from 'shared/common/data-source';
-import { ConfirmDeleteDialogService } from 'shared/dialogs/confirm-delete/confirm-delete-dialog.component';
-import { ProjectSupportUpdateDialogService } from '../dialogs/project-support-update-dialog/project-support-update-dialog.component';
+import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
+import { UpdateProjectSupportDialog } from '../dialogs/update-project-support/update-project-support.dialog';
 
 @Component({
   selector: 'project-support',
@@ -24,8 +24,8 @@ export class ProjectSupportComponent implements OnInit {
     private router: Router,
     private formService: FormService,
     private userApi: UserApi,
-    private confirmDeleteDialog: ConfirmDeleteDialogService,
-    private updateProjectSupportDialog: ProjectSupportUpdateDialogService,
+    private confirmDeleteDialog: ConfirmDeleteDialog,
+    private updateProjectSupportDialog: UpdateProjectSupportDialog,
     private projectSupportApi: ProjectSupportApi,
     public staticDataCache: StaticDataCache
   ) {

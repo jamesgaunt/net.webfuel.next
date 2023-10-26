@@ -7,8 +7,8 @@ import { StaticDataCache } from 'api/static-data.cache';
 import { UserActivityApi } from 'api/user-activity.api';
 import { UserApi } from 'api/user.api';
 import { FormService } from 'core/form.service';
-import { ConfirmDeleteDialogService } from 'shared/dialogs/confirm-delete/confirm-delete-dialog.component';
-import { UserActivityUpdateDialogService } from '../../../../shared/dialogs/user-activity-update-dialog/user-activity-update-dialog.component';
+import { UpdateUserActivityDialog } from '../../../../shared/dialogs/update-user-activity/update-user-activity.dialog';
+import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
 
 @Component({
   selector: 'user-activity',
@@ -22,8 +22,8 @@ export class UserActivityComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formService: FormService,
-    private updateUserActivityDialog: UserActivityUpdateDialogService,
-    private confirmDeleteDialog: ConfirmDeleteDialogService,
+    private updateUserActivityDialog: UpdateUserActivityDialog,
+    private confirmDeleteDialog: ConfirmDeleteDialog,
     public userApi: UserApi,
     public userActivityApi: UserActivityApi,
     public staticDataCache: StaticDataCache

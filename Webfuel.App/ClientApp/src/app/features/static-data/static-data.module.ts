@@ -3,9 +3,6 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared/shared.module';
 import { StaticDataRoutingModule } from './static-data-routing.module';
 
-import { StaticDataCreateDialogComponent } from './dialogs/static-data-create-dialog/static-data-create-dialog.component';
-import { StaticDataUpdateDialogComponent } from './dialogs/static-data-update-dialog/static-data-update-dialog.component';
-
 import { TitleComponent } from './types/title.component';
 import { FundingStreamComponent } from './types/funding-stream.component';
 import { FundingBodyComponent } from './types/funding-body.component';
@@ -19,6 +16,9 @@ import { HowDidYouFindUsComponent } from './types/how-did-you-find-us.component'
 import { SupportProvidedComponent } from './types/support-provided.component';
 import { WorkActivityComponent } from './types/work-activity.component';
 import { UserDisciplineComponent } from './types/user-discipline.component';
+
+import { CreateStaticDataDialog, CreateStaticDataDialogComponent } from './dialogs/create-static-data/create-static-data.dialog';
+import { UpdateStaticDataDialog, UpdateStaticDataDialogComponent } from './dialogs/update-static-data/update-static-data.dialog';
 
 @NgModule({
   imports: [
@@ -41,8 +41,12 @@ import { UserDisciplineComponent } from './types/user-discipline.component';
     WorkActivityComponent,
     UserDisciplineComponent,
 
-    StaticDataCreateDialogComponent,
-    StaticDataUpdateDialogComponent,
+    CreateStaticDataDialogComponent,
+    UpdateStaticDataDialogComponent,
+  ],
+  providers: [
+    CreateStaticDataDialog,
+    UpdateStaticDataDialog,
   ]
 })
 export class StaticDataModule { }

@@ -7,7 +7,7 @@ import { ResearcherListComponent } from './researcher/researcher-list/researcher
 import { ResearcherItemComponent } from './researcher/researcher-item/researcher-item.component';
 import { ResearcherTabsComponent } from './researcher/researcher-tabs/researcher-tabs.component';
 
-import { ResearcherCreateDialogComponent, ResearcherCreateDialogService } from './researcher/dialogs/researcher-create-dialog/researcher-create-dialog.component';
+import { CreateResearcherDialog, CreateResearcherDialogComponent } from './researcher/dialogs/create-researcher/create-researcher.dialog';
 
 @NgModule({
   imports: [
@@ -20,10 +20,10 @@ import { ResearcherCreateDialogComponent, ResearcherCreateDialogService } from '
     ResearcherItemComponent,
     ResearcherTabsComponent,
 
-    ResearcherCreateDialogComponent,
+    CreateResearcherDialogComponent,
   ],
   providers: [
-    ResearcherCreateDialogService
+    CreateResearcherDialog
   ]
 })
 export class ResearcherModule { }

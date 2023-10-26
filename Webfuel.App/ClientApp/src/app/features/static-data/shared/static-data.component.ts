@@ -1,9 +1,9 @@
 import { inject } from '@angular/core';
 import { Query } from '../../../api/api.types';
 import { IDataSource } from '../../../shared/common/data-source';
-import { ConfirmDeleteDialogService } from '../../../shared/dialogs/confirm-delete/confirm-delete-dialog.component';
-import { StaticDataCreateDialogService } from '../dialogs/static-data-create-dialog/static-data-create-dialog.component';
-import { StaticDataUpdateDialogService } from '../dialogs/static-data-update-dialog/static-data-update-dialog.component';
+import { CreateStaticDataDialog } from '../dialogs/create-static-data/create-static-data.dialog';
+import { UpdateStaticDataDialog } from '../dialogs/update-static-data/update-static-data.dialog';
+import { ConfirmDeleteDialog } from '../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
 
 export class StaticDataComponent<TItem, TQuery extends Query = Query, TCreate = any, TUpdate = any> {
   constructor(
@@ -13,18 +13,18 @@ export class StaticDataComponent<TItem, TQuery extends Query = Query, TCreate = 
 
   typeName = "Undefined";
 
-  createStaticDataDialog = inject(StaticDataCreateDialogService);
+  createStaticDataDialog = inject(CreateStaticDataDialog);
 
-  updateStaticDataDialog = inject(StaticDataUpdateDialogService);
+  updateStaticDataDialog = inject(UpdateStaticDataDialog);
 
-  confirmDeleteDialog = inject(ConfirmDeleteDialogService);
+  confirmDeleteDialog = inject(ConfirmDeleteDialog);
 
   get canAdd() {
     return this.dataSource.create !== undefined;
   }
 
   onAdd() {
-    this.createStaticDataDialog.open<TCreate>({
+    this.createStaticDataDialog.open({
       typeName: this.typeName,
       enableHidden: this.enableHidden,
       enableFreeText: this.enableFreeText,
@@ -38,7 +38,7 @@ export class StaticDataComponent<TItem, TQuery extends Query = Query, TCreate = 
   }
 
   onEdit(item: TItem) {
-    this.updateStaticDataDialog.open<TUpdate>({
+    this.updateStaticDataDialog.open({
       data: item,
       typeName: this.typeName,
       enableHidden: this.enableHidden,

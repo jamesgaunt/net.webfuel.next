@@ -10,11 +10,11 @@ import { ProjectRequestComponent } from './project/project-request/project-reque
 import { ProjectSupportComponent } from './project/project-support/project-support.component';
 import { ProjectSubmissionComponent } from './project/project-submission/project-submission.component';
 
-import { ProjectCreateDialogComponent, ProjectCreateDialogService } from './project/dialogs/project-create-dialog/project-create-dialog.component';
-import { ProjectSupportCreateDialogComponent, ProjectSupportCreateDialogService } from './project/dialogs/project-support-create-dialog/project-support-create-dialog.component';
-import { ProjectSupportUpdateDialogComponent, ProjectSupportUpdateDialogService } from './project/dialogs/project-support-update-dialog/project-support-update-dialog.component';
-import { ProjectSubmissionCreateDialogComponent, ProjectSubmissionCreateDialogService } from './project/dialogs/project-submission-create-dialog/project-submission-create-dialog.component';
-import { ProjectSubmissionUpdateDialogComponent, ProjectSubmissionUpdateDialogService } from './project/dialogs/project-submission-update-dialog/project-submission-update-dialog.component';
+import { CreateProjectDialog, CreateProjectDialogComponent } from './project/dialogs/create-project/create-project.dialog';
+import { CreateProjectSupportDialog, CreateProjectSupportDialogComponent } from './project/dialogs/create-project-support/create-project-support.dialog';
+import { CreateProjectSubmissionDialog, CreateProjectSubmissionDialogComponent } from './project/dialogs/create-project-submission/create-project-submission.dialog';
+import { UpdateProjectSupportDialog, UpdateProjectSupportDialogComponent } from './project/dialogs/update-project-support/update-project-support.dialog';
+import { UpdateProjectSubmissionDialog, UpdateProjectSubmissionDialogComponent } from './project/dialogs/update-project-submission/update-project-submission.dialog';
 
 @NgModule({
   imports: [
@@ -30,18 +30,18 @@ import { ProjectSubmissionUpdateDialogComponent, ProjectSubmissionUpdateDialogSe
     ProjectSubmissionComponent,
     ProjectTabsComponent,
 
-    ProjectCreateDialogComponent,
-    ProjectSupportCreateDialogComponent,
-    ProjectSupportUpdateDialogComponent,
-    ProjectSubmissionCreateDialogComponent,
-    ProjectSubmissionUpdateDialogComponent,
+    CreateProjectDialogComponent,
+    CreateProjectSupportDialogComponent,
+    CreateProjectSubmissionDialogComponent,
+    UpdateProjectSupportDialogComponent,
+    UpdateProjectSubmissionDialogComponent,
   ],
   providers: [
-    ProjectCreateDialogService,
-    ProjectSupportCreateDialogService,
-    ProjectSupportUpdateDialogService,
-    ProjectSubmissionCreateDialogService,
-    ProjectSubmissionUpdateDialogService,
+    CreateProjectDialog,
+    CreateProjectSupportDialog,
+    CreateProjectSubmissionDialog,
+    UpdateProjectSupportDialog,
+    UpdateProjectSubmissionDialog
   ]
 })
 export class ProjectModule { }

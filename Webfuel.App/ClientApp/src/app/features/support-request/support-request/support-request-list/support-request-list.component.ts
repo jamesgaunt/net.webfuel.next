@@ -4,8 +4,8 @@ import { DialogService } from 'core/dialog.service';
 import { SupportRequest } from 'api/api.types';
 import { SupportRequestApi } from 'api/support-request.api';
 import { StaticDataCache } from 'api/static-data.cache';
-import { SupportRequestCreateDialogService } from '../dialogs/support-request-create-dialog/support-request-create-dialog.component';
-import { ConfirmDeleteDialogService } from '../../../../shared/dialogs/confirm-delete/confirm-delete-dialog.component';
+import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
+import { CreateSupportRequestDialog } from '../dialogs/create-support-request/create-support-request.dialog';
 
 @Component({
   selector: 'support-request-list',
@@ -14,8 +14,8 @@ import { ConfirmDeleteDialogService } from '../../../../shared/dialogs/confirm-d
 export class SupportRequestListComponent {
   constructor(
     private router: Router,
-    private confirmDeleteDialog: ConfirmDeleteDialogService,
-    private createSupportRequestDialog: SupportRequestCreateDialogService,
+    private confirmDeleteDialog: ConfirmDeleteDialog,
+    private createSupportRequestDialog: CreateSupportRequestDialog,
     public supportRequestApi: SupportRequestApi,
     public staticDataCache: StaticDataCache
   ) {

@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ResearcherApi } from 'api/researcher.api';
-import { DialogService } from 'core/dialog.service';
 import { Researcher } from 'api/api.types';
-import { ResearcherCreateDialogComponent, ResearcherCreateDialogService } from '../dialogs/researcher-create-dialog/researcher-create-dialog.component';
-import { ConfirmDeleteDialogService } from 'shared/dialogs/confirm-delete/confirm-delete-dialog.component';
+import { ResearcherApi } from 'api/researcher.api';
+import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
+import { CreateResearcherDialog } from '../dialogs/create-researcher/create-researcher.dialog';
 
 @Component({
   selector: 'researcher-list',
@@ -13,8 +12,8 @@ import { ConfirmDeleteDialogService } from 'shared/dialogs/confirm-delete/confir
 export class ResearcherListComponent {
   constructor(
     private router: Router,
-    private createResearcherDialog: ResearcherCreateDialogService,
-    private confirmDeleteDialog: ConfirmDeleteDialogService,
+    private createResearcherDialog: CreateResearcherDialog,
+    private confirmDeleteDialog: ConfirmDeleteDialog,
     public researcherApi: ResearcherApi
   ) {
   }

@@ -7,8 +7,8 @@ import { SupportRequestListComponent } from './support-request/support-request-l
 import { SupportRequestItemComponent } from './support-request/support-request-item/support-request-item.component';
 import { SupportRequestTabsComponent } from './support-request/support-request-tabs/support-request-tabs.component';
 
-import { SupportRequestTriageDialogComponent, SupportRequestTriageDialogService } from './support-request/dialogs/support-request-triage-dialog/support-request-triage-dialog.component';
-import { SupportRequestCreateDialogComponent, SupportRequestCreateDialogService } from './support-request/dialogs/support-request-create-dialog/support-request-create-dialog.component';
+import { CreateSupportRequestDialog, CreateSupportRequestDialogComponent } from './support-request/dialogs/create-support-request/create-support-request.dialog';
+import { TriageSupportRequestDialog, TriageSupportRequestDialogComponent } from './support-request/dialogs/triage-support-request/triage-support-request.dialog';
 
 @NgModule({
   imports: [
@@ -21,12 +21,12 @@ import { SupportRequestCreateDialogComponent, SupportRequestCreateDialogService 
     SupportRequestItemComponent,
     SupportRequestTabsComponent,
 
-    SupportRequestCreateDialogComponent,
-    SupportRequestTriageDialogComponent,
+    CreateSupportRequestDialogComponent,
+    TriageSupportRequestDialogComponent,
   ],
   providers: [
-    SupportRequestCreateDialogService,
-    SupportRequestTriageDialogService
+    CreateSupportRequestDialog,
+    TriageSupportRequestDialog
   ]
 })
 export class SupportRequestModule { }

@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserGroupApi } from 'api/user-group.api';
-import { DialogService } from 'core/dialog.service';
 import { UserGroup } from '../../../../api/api.types';
-import { UserGroupCreateDialogService } from '../dialogs/user-group-create-dialog/user-group-create-dialog.component';
-import { ConfirmDeleteDialogService } from 'shared/dialogs/confirm-delete/confirm-delete-dialog.component';
+import { CreateUserGroupDialog } from '../dialogs/create-user-group/create-user-group.dialog';
+import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
 
 @Component({
   selector: 'user-group-list',
@@ -13,8 +12,8 @@ import { ConfirmDeleteDialogService } from 'shared/dialogs/confirm-delete/confir
 export class UserGroupListComponent {
   constructor(
     private router: Router,
-    private createUserGroupDialog: UserGroupCreateDialogService,
-    private confirmDeleteDialog: ConfirmDeleteDialogService,
+    private createUserGroupDialog: CreateUserGroupDialog,
+    private confirmDeleteDialog: ConfirmDeleteDialog,
     public userGroupApi: UserGroupApi,
   ) {
   }

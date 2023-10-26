@@ -1,22 +1,20 @@
 import { Injectable, inject } from '@angular/core';
-import { GrowlService } from './growl.service';
-import { DialogService } from './dialog.service';
-import { CanDeactivateFn } from '@angular/router';
 import { FormGroup } from '@angular/forms';
-import { ConfirmDeactivateDialogService } from '../shared/dialogs/confirm-deactivate/confirm-deactivate-dialog.component';
+import { CanDeactivateFn } from '@angular/router';
+import { ConfirmDeactivateDialog } from '../shared/dialogs/confirm-deactivate/confirm-deactivate.dialog';
 
 @Injectable()
 export class DeactivateService {
 
   constructor(
-    private confirmDeactivateDialogService: ConfirmDeactivateDialogService
+    private confirmDeactivateDialog: ConfirmDeactivateDialog
   ) { }
 
   confirmDeactivate(dirty: boolean) {
     if (!dirty)
       return true;
     return new Promise<boolean>((resolver) => {
-      this.confirmDeactivateDialogService.open().subscribe((result) => resolver(result));
+      this.confirmDeactivateDialog.open().subscribe((result) => resolver(result));
     });
   }
 

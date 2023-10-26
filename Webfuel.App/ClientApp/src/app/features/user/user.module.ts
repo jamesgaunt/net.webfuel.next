@@ -8,13 +8,12 @@ import { UserItemComponent } from './user/user-item/user-item.component';
 import { UserActivityComponent } from './user/user-activity/user-activity.component';
 import { UserTabsComponent } from './user/user-tabs/user-tabs.component';
 
-import { UserCreateDialogComponent, UserCreateDialogService } from './user/dialogs/user-create-dialog/user-create-dialog.component';
-
 import { UserGroupListComponent } from './user-group/user-group-list/user-group-list.component';
 import { UserGroupItemComponent } from './user-group/user-group-item/user-group-item.component';
 import { UserGroupTabsComponent } from './user-group/user-group-tabs/user-group-tabs.component';
 
-import { UserGroupCreateDialogComponent, UserGroupCreateDialogService } from './user-group/dialogs/user-group-create-dialog/user-group-create-dialog.component';
+import { CreateUserDialog, CreateUserDialogComponent } from './user/dialogs/create-user/create-user.dialog';
+import { CreateUserGroupDialog, CreateUserGroupDialogComponent } from './user-group/dialogs/create-user-group/create-user-group.dialog';
 
 @NgModule({
   imports: [
@@ -28,19 +27,16 @@ import { UserGroupCreateDialogComponent, UserGroupCreateDialogService } from './
     UserActivityComponent,
     UserTabsComponent,
 
-    UserCreateDialogComponent,
-
     UserGroupListComponent,
     UserGroupItemComponent,
     UserGroupTabsComponent,
 
-    UserGroupCreateDialogComponent,
-
+    CreateUserDialogComponent,
+    CreateUserGroupDialogComponent,
   ],
   providers: [
-    UserCreateDialogService,
-
-    UserGroupCreateDialogService,
+    CreateUserDialog,
+    CreateUserGroupDialog,
   ]
 })
 export class UserModule { }

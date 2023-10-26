@@ -6,8 +6,8 @@ import { ProjectSubmissionApi } from 'api/project-submission.api';
 import { StaticDataCache } from 'api/static-data.cache';
 import { DialogService } from 'core/dialog.service';
 import { FormService } from 'core/form.service';
-import { ProjectSubmissionUpdateDialogService } from '../dialogs/project-submission-update-dialog/project-submission-update-dialog.component';
-import { ConfirmDeleteDialogService } from '../../../../shared/dialogs/confirm-delete/confirm-delete-dialog.component';
+import { UpdateProjectSubmissionDialog } from '../dialogs/update-project-submission/update-project-submission.dialog';
+import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
 
 @Component({
   selector: 'project-submission',
@@ -19,8 +19,8 @@ export class ProjectSubmissionComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formService: FormService,
-    private updateProjectSubmissionDialog: ProjectSubmissionUpdateDialogService,
-    private confirmDeleteDialog: ConfirmDeleteDialogService,
+    private updateProjectSubmissionDialog: UpdateProjectSubmissionDialog,
+    private confirmDeleteDialog: ConfirmDeleteDialog,
     public projectSubmissionApi: ProjectSubmissionApi,
     public staticDataCache: StaticDataCache
   ) {
