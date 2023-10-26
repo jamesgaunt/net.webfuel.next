@@ -7,10 +7,10 @@ import { GrowlService } from '../../core/growl.service';
 import { LoginService } from '../../core/login.service';
 
 @Component({
-  selector: 'login',
-  templateUrl: './login.component.html'
+  selector: 'forgotten-password',
+  templateUrl: './forgotten-password.component.html'
 })
-export class LoginComponent implements OnInit {
+export class ForgottenPasswordComponent implements OnInit {
 
   constructor(
     private router: Router,
@@ -27,23 +27,14 @@ export class LoginComponent implements OnInit {
 
   form = new FormGroup({
     email: new FormControl('', { validators: [Validators.required], nonNullable: true }),
-    password: new FormControl('', { validators: [Validators.required], nonNullable: true }),
   });
 
-  login() {
+  forgottenPassword() {
     if (!this.form.valid)
       return;
-
-    this.loginService.login(this.form.getRawValue()).subscribe((result) => {
-      if (result) {
-        this.router.navigateByUrl("/home");
-      } else {
-        this.growlService.growlDanger("Invalid username or password");
-      }
-    });
   }
 
-  forgottenPassword() {
-    this.router.navigateByUrl("/forgotten-password");
+  returnToLogin() {
+    this.router.navigateByUrl("/login");
   }
 }

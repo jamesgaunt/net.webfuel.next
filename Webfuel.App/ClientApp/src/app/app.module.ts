@@ -7,13 +7,16 @@ import { ApiModule } from './api/api.module';
 import { CoreModule } from './core/core.module';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login/login.component';
 import { AppRoutingModule } from './app-routing.module';
+
+import { LoginComponent } from './login/login/login.component';
+import { ForgottenPasswordComponent } from './login/forgotten-password/forgotten-password.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    ForgottenPasswordComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -38,11 +38,11 @@ export class CreateUserActivityDialogComponent extends DialogComponentBase<UserA
       return;
 
     this.userActivityApi.create(this.form.getRawValue(), { successGrowl: "User Activity Added" }).subscribe((result) => {
-      this.close(result);
+      this._closeDialog(result);
     })
   }
 
   cancel() {
-    this.cancel();
+    this._cancelDialog();
   }
 }

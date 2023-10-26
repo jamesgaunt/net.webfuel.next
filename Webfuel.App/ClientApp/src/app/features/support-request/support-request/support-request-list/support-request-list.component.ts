@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { DialogService } from 'core/dialog.service';
 import { SupportRequest } from 'api/api.types';
-import { SupportRequestApi } from 'api/support-request.api';
 import { StaticDataCache } from 'api/static-data.cache';
+import { SupportRequestApi } from 'api/support-request.api';
 import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
 import { CreateSupportRequestDialog } from '../dialogs/create-support-request/create-support-request.dialog';
 

@@ -25,10 +25,10 @@ export class ConfirmDialogComponent extends DialogComponentBase<true, ConfirmDia
   }
 
   confirm() {
-    this.close(true);
+    this._closeDialog(true);
   }
 
   cancel() {
-    this.cancel();
+    this._cancelDialog();
   }
 }

@@ -26,7 +26,7 @@ export class DatePickerDialogComponent extends DialogComponentBase<string | null
     super();
     this.formControl.setValue(this.data.value || null);
     this.formControl.valueChanges.subscribe((value) => {
-      this.close(value);
+      this._closeDialog(value);
     });
   }
 }

@@ -1,7 +1,6 @@
 
 NEXT:
 
-> Allow disable on all fields
 > Allow tabbing on all fields
 > Razor based support request form
 > Fix up validation logic/display
@@ -11,16 +10,15 @@ NEXT:
 > Forgotten password link on home page
 > Think about a user cache? GUID => Presentation Only
 > Other / Free Text fields
-> Sort out responsiveness
 > Roll out CreatedAt / UpdatedAt
 > Standardise date formats dd MMM yy (can we globalise the default)
 
-Dialog 2.0
-> Dialog Options/Data required on all calls or not? General Type Safety improvements on dialogs (e.g. open requires templated type) 
-> remove dialog method wrappers, move dialogs into shared
-> dialogs longer than the screen (scroll the body)
+DONE:
 
-
+> Sort out responsiveness [DONE]
+> Dialog 2.0 [DONE]
+> Grey out placeholders in custom controls [DONE]
+> Allow disable on all fields [DONE]
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 

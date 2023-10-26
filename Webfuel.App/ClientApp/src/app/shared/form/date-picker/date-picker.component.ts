@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, forwardRef, inject, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { noop } from 'rxjs';
-import { DialogService } from '../../../core/dialog.service';
-import { Day } from '../date-calendar/Day';
 import { DatePickerDialog } from '../../dialogs/date-picker/date-picker.dialog';
+import { Day } from '../date-calendar/Day';
 
 @Component({
   selector: 'date-picker',
@@ -55,12 +54,18 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   // Client Events
 
   clear($event: Event) {
+    if (this._isDisabled)
+      return;
+
     this.value = null;
     this.onChange(null);
     this.cd.detectChanges();
   }
 
   togglePopup($event: Event) {
+    if (this._isDisabled)
+      return;
+
     this.datePickerDialog.open({ value: this.value }).subscribe((result) => {
       this.value = result;
       this.onChange(result);
@@ -93,6 +98,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
 
   public setDisabledState?(isDisabled: boolean): void {
     this._isDisabled = isDisabled;
+    this.cd.detectChanges();
   }
-  private _isDisabled = false;
+  public _isDisabled = false;
 }

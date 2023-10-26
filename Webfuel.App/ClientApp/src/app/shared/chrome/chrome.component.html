@@ -16,7 +16,7 @@
           <i *ngIf="darkMode" class="fas fa-house-night"></i>
         </span>
         <a class="menu" #userMenuAnchor (click)="openUserMenu()">
-          {{ (configuration | async)?.email }}&nbsp;&nbsp;<i class="fas fa-bars"></i>
+          <span class="hidden-sm">{{ (configuration | async)?.email }}&nbsp;&nbsp;</span><i class="fas fa-bars"></i>
         </a>
       </div>
     </div>

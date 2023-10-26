@@ -6,7 +6,7 @@ import { StaticDataCache } from 'api/static-data.cache';
 import { UserGroupApi } from 'api/user-group.api';
 import { UserApi } from 'api/user.api';
 import { FormService } from 'core/form.service';
-import { DialogBase } from 'shared/common/dialog-base';
+import { DialogBase, DialogComponentBase } from 'shared/common/dialog-base';
 
 @Injectable()
 export class CreateUserDialog extends DialogBase<User> {
@@ -19,15 +19,15 @@ export class CreateUserDialog extends DialogBase<User> {
   selector: 'create-user-dialog',
   templateUrl: './create-user.dialog.html'
 })
-export class CreateUserDialogComponent {
+export class CreateUserDialogComponent extends DialogComponentBase<User> {
 
   constructor(
-    private dialogRef: DialogRef<User>,
     private formService: FormService,
     private userApi: UserApi,
     public userGroupApi: UserGroupApi,
     public staticDataCache: StaticDataCache
   ) {
+    super();
   }
 
   form = new FormGroup({
@@ -43,11 +43,11 @@ export class CreateUserDialogComponent {
       return;
 
     this.userApi.create(this.form.getRawValue(), { successGrowl: "User Created" }).subscribe((result) => {
-      this.dialogRef.close(result);
+      this._closeDialog(result);
     });
   }
 
   cancel() {
-    this.dialogRef.close();
+    this._cancelDialog();
   }
 }

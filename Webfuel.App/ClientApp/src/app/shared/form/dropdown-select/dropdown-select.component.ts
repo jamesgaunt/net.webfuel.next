@@ -30,6 +30,9 @@ export class DropDownSelectComponent<TItem>
   // Client Events
 
   pickItem(item: TItem) {
+    if (this._isDisabled)
+      return;
+
     var id = this.getId(item);
     if (this.pickedItems.length == 1 && id == this.getId(this.pickedItems[0])) {
       this.closePopup();
@@ -47,6 +50,9 @@ export class DropDownSelectComponent<TItem>
       $event.preventDefault();
       $event.stopPropagation();
     }
+    if (this._isDisabled)
+      return;
+
     this.removePickedItem(this.getId(item));
     this.doChangeCallback();
   }
@@ -54,6 +60,9 @@ export class DropDownSelectComponent<TItem>
   clear($event: Event) {
     $event.preventDefault();
     $event.stopPropagation();
+    if (this._isDisabled)
+      return;
+
     this.clearPickedItems();
     this.closePopup();
     this.doChangeCallback();
@@ -62,6 +71,9 @@ export class DropDownSelectComponent<TItem>
   togglePopup($event: Event) {
     $event.preventDefault();
     $event.stopPropagation();
+    if (this._isDisabled)
+      return;
+
     this.popupOpen ? this.closePopup() : this.openPopup();
   }
 
@@ -91,6 +103,7 @@ export class DropDownSelectComponent<TItem>
 
   public setDisabledState?(isDisabled: boolean): void {
     this._isDisabled = isDisabled;
+    this.cd.detectChanges();
   }
-  private _isDisabled = false;
+  public _isDisabled = false;
 }

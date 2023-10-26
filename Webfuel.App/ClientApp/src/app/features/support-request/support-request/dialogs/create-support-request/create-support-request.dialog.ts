@@ -47,11 +47,11 @@ export class CreateSupportRequestDialogComponent extends DialogComponentBase<Sup
       return;
 
     this.supportRequestApi.create(this.form.getRawValue(), { successGrowl: "Support Request Created" }).subscribe((result) => {
-      this.close(result);
+      this._closeDialog(result);
     });
   }
 
   cancel() {
-    this.cancel();
+    this._cancelDialog();
   }
 }

@@ -49,11 +49,11 @@ export class UpdateProjectSupportDialogComponent extends DialogComponentBase<Pro
       return;
 
     this.projectSupportApi.update(this.form.getRawValue(), { successGrowl: "Project Support Updated" }).subscribe((result) => {
-      this.close(result);
+      this._closeDialog(result);
     });
   }
 
   cancel() {
-    this.cancel();
+    this._cancelDialog();
   }
 }

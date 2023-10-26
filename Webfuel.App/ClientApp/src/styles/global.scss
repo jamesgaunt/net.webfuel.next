@@ -2,9 +2,23 @@
 
 html {
   font-size: 16px;
+}
 
-  &.font-12 {
-      font-size: 12px;
+@media (max-width: $breakpoint-lg) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  html {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  html {
+    font-size: 10px;
   }
 }
 
@@ -29,4 +43,16 @@ p {
 
 p + p {
     margin-top: var(--gap);
+}
+
+::placeholder {
+  color: var(--palette-control-text-disabled);
+  opacity: 1; /* Firefox */
+}
+
+
+@media (max-width: $breakpoint-sm) {
+  .hidden-sm {
+    display: none !important;
+  }
 }

@@ -41,10 +41,10 @@ export class UpdateStaticDataDialogComponent extends DialogComponentBase<any, Up
   save() {
     if (!this.form.valid)
       return;
-    this.close(this.form.getRawValue());
+    this._closeDialog(this.form.getRawValue());
   }
 
   cancel() {
-    this.cancel();
+    this._cancelDialog();
   }
 }

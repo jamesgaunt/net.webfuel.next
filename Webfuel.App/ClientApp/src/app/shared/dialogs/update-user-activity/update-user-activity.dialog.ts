@@ -44,11 +44,11 @@ export class UpdateUserActivityDialogComponent extends DialogComponentBase<UserA
       return;
 
     this.userActivityApi.update(this.form.getRawValue(), { successGrowl: "User Activity Updated" }).subscribe((result) => {
-      this.close(result);
+      this._closeDialog(result);
     })
   }
 
   cancel() {
-    this.cancel();
+    this._cancelDialog();
   }
 }

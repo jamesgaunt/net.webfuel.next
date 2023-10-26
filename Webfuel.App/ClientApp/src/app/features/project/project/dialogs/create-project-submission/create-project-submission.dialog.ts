@@ -50,11 +50,11 @@ export class CreateProjectSubmissionDialogComponent extends DialogComponentBase<
       return;
 
     this.projectSubmissionApi.create(this.form.getRawValue(), { successGrowl: "Project Submission Added" }).subscribe((result) => {
-      this.close(result);
+      this._closeDialog(result);
     });
   }
 
   cancel() {
-    this.cancel();
+    this._cancelDialog();
   }
 }

@@ -35,11 +35,11 @@ export class CreateUserGroupDialogComponent extends DialogComponentBase<UserGrou
       return;
 
     this.userGroupApi.create(this.form.getRawValue(), { successGrowl: "User Group Created" }).subscribe((result) => {
-      this.close(result);
+      this._closeDialog(result);
     });
   }
 
   cancel() {
-    this.cancel();
+    this._cancelDialog();
   }
 }

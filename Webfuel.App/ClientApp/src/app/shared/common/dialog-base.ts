@@ -20,11 +20,11 @@ export abstract class DialogComponentBase<TResult, TData = unknown> {
 
   data: TData = inject(DIALOG_DATA);
 
-  close(result: TResult) {
+  protected _closeDialog(result: TResult) {
     this._dialogRef.close(result);
   }
 
-  cancel() {
+  protected _cancelDialog() {
     this._dialogRef.close();
   }
 }

@@ -32,7 +32,7 @@ $breakpoint-lg: 1600px;
 // Dark Mode
 
 body.dark-mode {
-    --bold-if-light: normal;
+  --bold-if-light: normal;
 }
 
 // Mixins
@@ -56,6 +56,10 @@ body.dark-mode {
   vertical-align: top;
   width: 100%;
   flex-shrink: 1;
+
+  &.placeholder {
+    color: var(--palette-control-text-disabled);
+  }
 
   &:hover {
     border: 1px solid var(--palette-control-border-hover);

@@ -50,11 +50,11 @@ export class UpdateProjectSubmissionDialogComponent extends DialogComponentBase<
       return;
 
     this.projectSubmissionApi.update(this.form.getRawValue(), { successGrowl: "Project Submission Updated" }).subscribe((result) => {
-      this.close(result);
+      this._closeDialog(result);
     });
   }
 
   cancel() {
-    this.cancel();
+    this._cancelDialog();
   }
 }

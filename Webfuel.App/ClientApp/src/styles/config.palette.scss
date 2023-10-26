@@ -2,7 +2,7 @@
 
 :root {
   --palette-text: #333;
-  --palette-text-disabled: #666;
+  --palette-text-disabled: #999;
 }
 
 :root {
@@ -53,8 +53,8 @@ $paletteAction: 'primary', 'secondary', 'success', 'warning', 'danger';
 }
 
 :root {
-  --palette-control-text: var(--palette-text);
-  --palette-control-text-disabled: var(---palette-text-disabled);
+  --palette-control-text: #333;
+  --palette-control-text-disabled: #999;
   --palette-control-background: #FFFFFF;
   --palette-control-background-alt: #F7F7F7;
   --palette-control-border: #dbdbdb;

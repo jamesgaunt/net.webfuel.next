@@ -23,6 +23,7 @@ export class ProjectRequestComponent implements OnInit {
 
   ngOnInit() {
     this.reset(this.route.snapshot.data.project);
+    this.form.disable();
   }
 
   item!: Project;

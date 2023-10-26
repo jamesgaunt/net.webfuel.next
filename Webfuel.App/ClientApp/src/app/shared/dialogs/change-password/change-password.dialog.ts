@@ -38,11 +38,11 @@ export class ChangePasswordDialogComponent extends DialogComponentBase<true> {
 
     this.userApi.changePassword(this.form.getRawValue()).subscribe(() => {
       this.growlService.growlSuccess("Password changed");
-      this.close(true);
+      this._closeDialog(true);
     });
   }
 
   cancel() {
-    this.cancel();
+    this._cancelDialog();
   }
 }

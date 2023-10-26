@@ -4,10 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Project, ProjectSubmission, QueryProjectSubmission } from 'api/api.types';
 import { ProjectSubmissionApi } from 'api/project-submission.api';
 import { StaticDataCache } from 'api/static-data.cache';
-import { DialogService } from 'core/dialog.service';
 import { FormService } from 'core/form.service';
-import { UpdateProjectSubmissionDialog } from '../dialogs/update-project-submission/update-project-submission.dialog';
 import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
+import { UpdateProjectSubmissionDialog } from '../dialogs/update-project-submission/update-project-submission.dialog';
 
 @Component({
   selector: 'project-submission',

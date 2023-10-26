@@ -34,11 +34,11 @@ export class CreateResearcherDialogComponent extends DialogComponentBase<Researc
       return;
 
     this.researcherApi.create(this.form.getRawValue(), { successGrowl: "Researcher Created" }).subscribe((result) => {
-      this.close(result);
+      this._closeDialog(result);
     });
   }
 
   cancel() {
-    this.cancel();
+    this._cancelDialog();
   }
 }

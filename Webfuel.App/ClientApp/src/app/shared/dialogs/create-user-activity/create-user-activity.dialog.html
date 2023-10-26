@@ -3,19 +3,21 @@
     Add Activity
   </div>
   <div class="dialog-body">
-    <div class="field">
-      <label class="label">Date</label>
-      <date-picker placeholder="required" formControlName="date"></date-picker>
-    </div>
-    <div class="field">
-      <label class="label">Work Activity</label>
-      <dropdown-select [dataSource]="staticDataCache.workActivity" placeholder="required" formControlName="workActivityId"></dropdown-select>
-    </div>
-    <div class="field">
-      <label class="label">
-        Description
-      </label>
-      <textarea class="textarea" formControlName="description" placeholder="required"></textarea>
+    <div class="grid">
+      <div class="field">
+        <label class="label">Date</label>
+        <date-picker placeholder="required" formControlName="date"></date-picker>
+      </div>
+      <div class="field">
+        <label class="label">Work Activity</label>
+        <dropdown-select [dataSource]="staticDataCache.workActivity" placeholder="required" formControlName="workActivityId"></dropdown-select>
+      </div>
+      <div class="field">
+        <label class="label">
+          Description
+        </label>
+        <textarea class="textarea" formControlName="description" placeholder="required"></textarea>
+      </div>
     </div>
   </div>
   <div class="dialog-buttons">

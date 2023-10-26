@@ -33,11 +33,11 @@ export class CreateProjectDialogComponent extends DialogComponentBase<Project> {
     if (this.formService.checkForErrors(this.form))
       return;
     this.projectApi.create(this.form.getRawValue(), { successGrowl: "Project Created" }).subscribe((result) => {
-      this.close(result);
+      this._closeDialog(result);
     });
   }
 
   cancel() {
-    this.cancel();
+    this._cancelDialog();
   }
 }

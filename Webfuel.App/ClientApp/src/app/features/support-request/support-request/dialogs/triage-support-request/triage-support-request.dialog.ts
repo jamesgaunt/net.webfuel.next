@@ -50,13 +50,13 @@ export class TriageSupportRequestDialogComponent extends DialogComponentBase<Pro
         return;
       }
 
-      this.close(result);
+      this._closeDialog(result);
       this.router.navigateByUrl(`/project/project-item/${result.id}`);
     })
   }
 
   cancel() {
-    this.cancel();
+    this._cancelDialog();
   }
 
   filterStatus(query: Query) {

@@ -24,10 +24,10 @@ export class ConfirmDeleteDialogComponent extends DialogComponentBase<true, Conf
   }
 
   delete() {
-    this.close(true);
+    this._closeDialog(true);
   }
 
   cancel() {
-    this.cancel();
+    this._cancelDialog();
   }
 }

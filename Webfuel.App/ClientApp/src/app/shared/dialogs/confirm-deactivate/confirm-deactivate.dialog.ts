@@ -20,10 +20,10 @@ export class ConfirmDeactivateDialogComponent extends DialogComponentBase<boolea
   }
 
   discard() {
-    this.close(true);
+    this._closeDialog(true);
   }
 
   cancel() {
-    this.close(false);
+    this._closeDialog(false);
   }
 }

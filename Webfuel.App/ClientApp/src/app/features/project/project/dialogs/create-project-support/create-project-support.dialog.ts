@@ -49,11 +49,11 @@ export class CreateProjectSupportDialogComponent extends DialogComponentBase<Pro
       return;
 
     this.projectSupportApi.create(this.form.getRawValue(), { successGrowl: "Project Support Added" }).subscribe((result) => {
-      this.close(result);
+      this._closeDialog(result);
     });
   }
 
   cancel() {
-    this.cancel();
+    this._cancelDialog();
   }
 }

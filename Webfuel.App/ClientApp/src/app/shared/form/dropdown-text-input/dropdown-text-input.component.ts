@@ -42,6 +42,9 @@ export class DropDownTextInputComponent<TItem>
   pickItem(item: TItem, $event: Event) {
     $event.preventDefault();
     $event.stopPropagation();
+    if (this._isDisabled)
+      return;
+
     this.closePopup();
     this.formControl.setValue((<any>item).name);
     this.cd.detectChanges();
@@ -50,6 +53,9 @@ export class DropDownTextInputComponent<TItem>
   clear($event: Event) {
     $event.preventDefault();
     $event.stopPropagation();
+    if (this._isDisabled)
+      return;
+
     this.closePopup();
     this.formControl.setValue('');
     this.cd.detectChanges();
@@ -58,6 +64,9 @@ export class DropDownTextInputComponent<TItem>
   togglePopup($event: Event, $textInput: HTMLElement) {
     $event.preventDefault();
     $event.stopPropagation();
+    if (this._isDisabled)
+      return;
+
     if (this.popupOpen) {
       this.closePopup()
     }
@@ -87,6 +96,7 @@ export class DropDownTextInputComponent<TItem>
 
   public setDisabledState?(isDisabled: boolean): void {
     this._isDisabled = isDisabled;
+    this.cd.detectChanges();
   }
-  private _isDisabled = false;
+  public _isDisabled = false;
 }

@@ -34,6 +34,9 @@ export class DropDownMultiSelectComponent<TItem>
   // Client Events
 
   pickItem(item: TItem) {
+    if (this._isDisabled)
+      return;
+
     var id = this.getId(item);
     this.pickItems([id], false);
     this.closePopup();
@@ -45,6 +48,9 @@ export class DropDownMultiSelectComponent<TItem>
       $event.preventDefault();
       $event.stopPropagation();
     }
+    if (this._isDisabled)
+      return;
+
     this.removePickedItem(this.getId(item));
     this.doChangeCallback();
   }
@@ -52,6 +58,9 @@ export class DropDownMultiSelectComponent<TItem>
   clear($event: Event) {
     $event.preventDefault();
     $event.stopPropagation();
+    if (this._isDisabled)
+      return;
+
     this.clearPickedItems();
     this.closePopup();
     this.doChangeCallback();
@@ -60,6 +69,9 @@ export class DropDownMultiSelectComponent<TItem>
   togglePopup($event: Event) {
     $event.preventDefault();
     $event.stopPropagation();
+    if (this._isDisabled)
+      return;
+
     this.popupOpen ? this.closePopup() : this.openPopup();
   }
 
@@ -89,6 +101,7 @@ export class DropDownMultiSelectComponent<TItem>
 
   public setDisabledState?(isDisabled: boolean): void {
     this._isDisabled = isDisabled;
+    this.cd.detectChanges();
   }
-  private _isDisabled = false;
+  public _isDisabled = false;
 }
