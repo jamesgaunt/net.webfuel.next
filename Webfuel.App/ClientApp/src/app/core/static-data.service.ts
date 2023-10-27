@@ -1,10 +1,8 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import _ from 'shared/common/underscore';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, first, switchMap } from 'rxjs';
+import { IStaticDataModel, Query } from '../api/api.types';
 import { StaticDataApi } from '../api/static-data.api';
-import { FundingBody, FundingStream, Gender, IStaticDataModel, Query, ResearchMethodology, Title } from '../api/api.types';
-import { BehaviorSubject, filter, first, switchMap, take } from 'rxjs';
 import { IdentityService } from './identity.service';
-import { IDataSource } from 'shared/common/data-source';
 import { QueryService } from './query.service';
 
 @Injectable()

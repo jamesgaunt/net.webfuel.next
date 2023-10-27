@@ -11,8 +11,6 @@ NEXT:
 > Standardise date formats dd MMM yy (can we globalise the default)
 > Dialog widths
 
-> Prototype Other / Free Text fields
-
 DONE:
 
 > Sort out responsiveness [DONE]
@@ -21,7 +19,7 @@ DONE:
 > Allow disable on all fields [DONE]
 > Forgotten password link on home page [DONE]
 > Roll out CreatedAt [DONE]
-
+> Prototype Other / Free Text fields [DONE]
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
