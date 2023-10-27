@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Webfuel.Domain.StaticData
 {
-    public partial class ApplicationStage: IStaticData
+    public partial class ApplicationStage: IStaticData, IStaticDataWithFreeText
     {
         public ApplicationStage() { }
         

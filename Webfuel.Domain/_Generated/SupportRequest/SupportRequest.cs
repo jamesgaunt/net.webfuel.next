@@ -42,17 +42,20 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.SupportRequested):
                         SupportRequested = (string)value!;
                         break;
+                    case nameof(SupportRequest.CreatedAt):
+                        CreatedAt = (DateTimeOffset)value!;
+                        break;
                     case nameof(SupportRequest.IsFellowshipId):
                         IsFellowshipId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
                     case nameof(SupportRequest.ApplicationStageId):
                         ApplicationStageId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
-                    case nameof(SupportRequest.FundingStreamId):
-                        FundingStreamId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
-                        break;
                     case nameof(SupportRequest.FundingCallTypeId):
                         FundingCallTypeId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(SupportRequest.FundingStreamId):
+                        FundingStreamId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
                     case nameof(SupportRequest.IsTeamMembersConsultedId):
                         IsTeamMembersConsultedId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
@@ -60,11 +63,11 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.IsResubmissionId):
                         IsResubmissionId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
-                    case nameof(SupportRequest.HowDidYouFindUsId):
-                        HowDidYouFindUsId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
-                        break;
                     case nameof(SupportRequest.IsLeadApplicantNHSId):
                         IsLeadApplicantNHSId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(SupportRequest.HowDidYouFindUsId):
+                        HowDidYouFindUsId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
                     case nameof(SupportRequest.StatusId):
                         StatusId = (Guid)value!;
@@ -83,14 +86,15 @@ namespace Webfuel.Domain
         public string ExperienceOfResearchAwards  { get; set; } = String.Empty;
         public string BriefDescription  { get; set; } = String.Empty;
         public string SupportRequested  { get; set; } = String.Empty;
+        public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid? IsFellowshipId { get; set; }
         public Guid? ApplicationStageId { get; set; }
-        public Guid? FundingStreamId { get; set; }
         public Guid? FundingCallTypeId { get; set; }
+        public Guid? FundingStreamId { get; set; }
         public Guid? IsTeamMembersConsultedId { get; set; }
         public Guid? IsResubmissionId { get; set; }
-        public Guid? HowDidYouFindUsId { get; set; }
         public Guid? IsLeadApplicantNHSId { get; set; }
+        public Guid? HowDidYouFindUsId { get; set; }
         public Guid StatusId { get; set; }
         public Guid? ProjectId { get; set; }
         public SupportRequest Copy()
@@ -104,14 +108,15 @@ namespace Webfuel.Domain
             entity.ExperienceOfResearchAwards = ExperienceOfResearchAwards;
             entity.BriefDescription = BriefDescription;
             entity.SupportRequested = SupportRequested;
+            entity.CreatedAt = CreatedAt;
             entity.IsFellowshipId = IsFellowshipId;
             entity.ApplicationStageId = ApplicationStageId;
-            entity.FundingStreamId = FundingStreamId;
             entity.FundingCallTypeId = FundingCallTypeId;
+            entity.FundingStreamId = FundingStreamId;
             entity.IsTeamMembersConsultedId = IsTeamMembersConsultedId;
             entity.IsResubmissionId = IsResubmissionId;
-            entity.HowDidYouFindUsId = HowDidYouFindUsId;
             entity.IsLeadApplicantNHSId = IsLeadApplicantNHSId;
+            entity.HowDidYouFindUsId = HowDidYouFindUsId;
             entity.StatusId = StatusId;
             entity.ProjectId = ProjectId;
             return entity;

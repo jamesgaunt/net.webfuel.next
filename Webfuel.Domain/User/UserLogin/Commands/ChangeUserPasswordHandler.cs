@@ -16,6 +16,11 @@ namespace Webfuel.Domain
 
         public async Task Handle(ChangeUserPassword request, CancellationToken cancellationToken)
         {
+            if (request.NewPassword != request.ConfirmNewPassword)
+                throw new InvalidOperationException("New passwords do not match");
+
+            AuthenticationUtility.EnforcePasswordRequirements(request.NewPassword);
+
             if (_identityAccessor.User == null)
                 throw new InvalidOperationException("No current user");
 
@@ -26,15 +31,13 @@ namespace Webfuel.Domain
             if (!AuthenticationUtility.ValidatePassword(request.CurrentPassword, user.PasswordHash, user.PasswordSalt))
                 throw new InvalidOperationException("Current password is not valid");
 
-            if (request.NewPassword != request.ConfirmNewPassword)
-                throw new InvalidOperationException("New passwords do not match");
-
-            AuthenticationUtility.EnforcePasswordRequirements(request.NewPassword);
-
             // Looks like we are ok to go ahead with this change
             var updated = user.Copy();
             updated.PasswordSalt = AuthenticationUtility.CreateSalt();
             updated.PasswordHash = AuthenticationUtility.CreateHash(request.NewPassword, updated.PasswordSalt);
+            updated.PasswordResetAt = DateTimeOffset.UtcNow;
+            updated.PasswordResetToken = Guid.Empty;
+            updated.PasswordResetValidUntil = DateTimeOffset.UtcNow.AddDays(-1);
             await _userRepository.UpdateUser(updated: updated, original: user);
         }
     }

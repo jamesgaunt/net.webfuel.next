@@ -3,10 +3,16 @@
 <Schema>
   <Entity Name="Configuration">
     <Key Name="Id" Type="guid" />
-
-    <Property Name="Prefix" Type="meta:name" Default="IC" />
-    <Property Name="NextProjectNumber" Type="Int32" Default="1" />
-    
-   
+    <Property Name="Prefix" Type="meta:name"  />
+    <Property Name="NextProjectNumber" Type="Int32" />
+    <Property Name="DomainName" Type="meta:name" />
+    <Property Name="ReplyTo" Type="meta:name" />
+    <Data>
+      <Row Id="00000000-0000-0000-0000-000000000000"
+           Prefix="IC"
+           NextProjectNumber="1"
+           DomainName="https://localhost"
+           ReplyTo="noreply@webfuel.com" />
+    </Data>
   </Entity>
 </Schema>

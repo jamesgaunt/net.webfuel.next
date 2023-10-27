@@ -7,21 +7,24 @@
     <Property Name="IsFellowshipId" Type="IsFellowship?" />
     <Property Name="ApplicationStageId" Type="ApplicationStage?" />
     <Property Name="DateOfRequest" Type="Date" />
-    <Property Name="FundingStreamId" Type="FundingStream?" />
     <Property Name="FundingCallTypeId" Type="FundingCallType?" />
+    <Property Name="FundingStreamId" Type="FundingStream?" />
     <Property Name="FundingStreamName" Type="meta:name" />
     <Property Name="TargetSubmissionDate" Type="Date?" />
     <Property Name="ExperienceOfResearchAwards" Type="string[1000]" />
     <Property Name="IsTeamMembersConsultedId" Type="IsTeamMembersConsulted?" />
     <Property Name="IsResubmissionId" Type="IsResubmission?" />
+    <Property Name="IsLeadApplicantNHSId" Type="IsLeadApplicantNHS?" />
     <Property Name="BriefDescription" Type="string[5000]" />
     <Property Name="SupportRequested" Type="string[2000]" />
     <Property Name="HowDidYouFindUsId" Type="HowDidYouFindUs?" />
-    <Property Name="IsLeadApplicantNHSId" Type="IsLeadApplicantNHS?" />
     <Property Name="StatusId" Type="SupportRequestStatus" />
-    
+
     <!-- Replicated from Project -->
     <Property Name="ProjectId" Type="Project?" />
-    
+
+    <!-- Audit -->
+    <Property Name="CreatedAt" Type="DateTime" />
+
   </Entity>
 </Schema>

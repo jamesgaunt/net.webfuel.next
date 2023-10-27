@@ -1,5 +1,6 @@
 using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Webfuel.Domain
 {
@@ -22,6 +23,7 @@ namespace Webfuel.Domain
             return await _researcherRepository.InsertResearcher(new Researcher
             {
                 Email = request.Email,
+                CreatedAt = DateTimeOffset.UtcNow,
             });
         }
     }

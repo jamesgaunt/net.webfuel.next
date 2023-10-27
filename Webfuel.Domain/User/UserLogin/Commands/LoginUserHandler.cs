@@ -48,7 +48,8 @@ namespace Webfuel.Domain
             {
                 Email = email,
                 UserGroupId = userGroup.Id,
-                Developer = true
+                Developer = true,
+                CreatedAt = DateTimeOffset.UtcNow,
             });
         }
     }

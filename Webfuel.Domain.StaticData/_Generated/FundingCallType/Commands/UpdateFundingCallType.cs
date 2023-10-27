@@ -8,7 +8,6 @@ namespace Webfuel.Domain.StaticData
         public required string Name { get; set; }
         public bool Default { get; set; } = false;
         public bool Hidden { get; set; } = false;
-        public bool FreeText { get; set; } = false;
     }
     internal class UpdateFundingCallTypeHandler : IRequestHandler<UpdateFundingCallType, FundingCallType>
     {
@@ -28,7 +27,6 @@ namespace Webfuel.Domain.StaticData
             updated.Name = request.Name;
             updated.Default = request.Default;
             updated.Hidden = request.Hidden;
-            updated.FreeText = request.FreeText;
             
             return await _fundingCallTypeRepository.UpdateFundingCallType(original: original, updated: updated);
         }

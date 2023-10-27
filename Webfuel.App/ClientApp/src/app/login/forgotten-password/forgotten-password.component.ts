@@ -5,6 +5,7 @@ import { IdentityService } from '../../core/identity.service';
 import { Router } from '@angular/router';
 import { GrowlService } from '../../core/growl.service';
 import { LoginService } from '../../core/login.service';
+import { UserLoginApi } from '../../api/user-login.api';
 
 @Component({
   selector: 'forgotten-password',
@@ -14,13 +15,13 @@ export class ForgottenPasswordComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private loginService: LoginService,
+    private userLoginApi: UserLoginApi,
     private formService: FormService,
     private growlService: GrowlService,
   ) {
   }
 
-  invalidLogin = false;
+  emailSent = false;
 
   ngOnInit() {
   }
@@ -32,6 +33,10 @@ export class ForgottenPasswordComponent implements OnInit {
   forgottenPassword() {
     if (!this.form.valid)
       return;
+
+    this.userLoginApi.sendPasswordResetEmail(this.form.getRawValue()).subscribe((result) => {
+      this.emailSent = true;
+    })
   }
 
   returnToLogin() {

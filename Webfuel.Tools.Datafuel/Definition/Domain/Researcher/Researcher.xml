@@ -4,6 +4,10 @@
   <Entity Name="Researcher">
     <Key Name="Id" Type="guid" />
     <Property Name="Email" Type="meta:email" />
+
+    <!-- Audit -->
+    <Property Name="CreatedAt" Type="DateTime" />
+
     <Index Unique="true">
       <Member Name="Email" />
     </Index>

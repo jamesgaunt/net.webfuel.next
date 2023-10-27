@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login/login.component';
 import { isAuthenticated } from './core/guards/identity.guard';
 import { ForgottenPasswordComponent } from './login/forgotten-password/forgotten-password.component';
+import { ResetPasswordComponent } from './login/reset-password/reset-password.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,11 @@ const routes: Routes = [
   {
     path: 'forgotten-password',
     component: ForgottenPasswordComponent,
+    data: { chrome: false }
+  },
+  {
+    path: 'reset-password/:uid/:tid',
+    component: ResetPasswordComponent,
     data: { chrome: false }
   },
   {

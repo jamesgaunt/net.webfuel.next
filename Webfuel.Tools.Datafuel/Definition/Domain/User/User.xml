@@ -31,10 +31,10 @@
     <Property Name="PasswordResetAt" Type="DateTime" Tags="JsonIgnore" />
     <Property Name="PasswordResetToken" Type="guid" Tags="JsonIgnore" />
     <Property Name="PasswordResetValidUntil" Type="DateTime" Tags="JsonIgnore" />
-    
+
+    <!-- Audit -->
     <Property Name="CreatedAt" Type="DateTime" />
-    <Property Name="UpdatedAt" Type="DateTime" />
-    
+
     <Index Unique="true">
       <Member Name="Email" />
     </Index>

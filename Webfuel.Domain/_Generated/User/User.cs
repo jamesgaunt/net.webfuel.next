@@ -87,9 +87,6 @@ namespace Webfuel.Domain
                     case nameof(User.CreatedAt):
                         CreatedAt = (DateTimeOffset)value!;
                         break;
-                    case nameof(User.UpdatedAt):
-                        UpdatedAt = (DateTimeOffset)value!;
-                        break;
                     case nameof(User.SiteId):
                         SiteId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
@@ -138,7 +135,6 @@ namespace Webfuel.Domain
         [JsonIgnore]
         public DateTimeOffset PasswordResetValidUntil  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
-        public DateTimeOffset UpdatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid? SiteId { get; set; }
         public Guid UserGroupId { get; set; }
         public User Copy()
@@ -167,7 +163,6 @@ namespace Webfuel.Domain
             entity.PasswordResetToken = PasswordResetToken;
             entity.PasswordResetValidUntil = PasswordResetValidUntil;
             entity.CreatedAt = CreatedAt;
-            entity.UpdatedAt = UpdatedAt;
             entity.SiteId = SiteId;
             entity.UserGroupId = UserGroupId;
             return entity;

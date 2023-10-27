@@ -33,6 +33,9 @@ namespace Webfuel.Domain
                     case nameof(Project.NIHRRSSMemberCollaboratorIds):
                         NIHRRSSMemberCollaboratorIdsJson = (string)value!;
                         break;
+                    case nameof(Project.SubmittedFundingStreamFreeText):
+                        SubmittedFundingStreamFreeText = (string)value!;
+                        break;
                     case nameof(Project.SubmittedFundingStreamName):
                         SubmittedFundingStreamName = (string)value!;
                         break;
@@ -65,6 +68,9 @@ namespace Webfuel.Domain
                         break;
                     case nameof(Project.NumberOfProjectSites):
                         NumberOfProjectSites = value == DBNull.Value ? (int?)null : (int?)value;
+                        break;
+                    case nameof(Project.CreatedAt):
+                        CreatedAt = (DateTimeOffset)value!;
                         break;
                     case nameof(Project.StatusId):
                         StatusId = (Guid)value!;
@@ -130,6 +136,7 @@ namespace Webfuel.Domain
             set { _NIHRRSSMemberCollaboratorIdsJson = value; _NIHRRSSMemberCollaboratorIds = null; }
         }
         string _NIHRRSSMemberCollaboratorIdsJson = String.Empty;
+        public string SubmittedFundingStreamFreeText  { get; set; } = String.Empty;
         public string SubmittedFundingStreamName  { get; set; } = String.Empty;
         public DateOnly DateOfRequest  { get; set; } = new DateOnly(1900, 1, 1);
         public string Title  { get; set; } = String.Empty;
@@ -141,6 +148,7 @@ namespace Webfuel.Domain
         public DateOnly? ProjectStartDate  { get; set; } = null;
         public int? RecruitmentTarget  { get; set; } = null;
         public int? NumberOfProjectSites  { get; set; } = null;
+        public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid StatusId { get; set; }
         public Guid? IsQuantativeTeamContributionId { get; set; }
         public Guid? IsCTUTeamContributionId { get; set; }
@@ -164,6 +172,7 @@ namespace Webfuel.Domain
             entity.PrefixedNumber = PrefixedNumber;
             entity.ClosureDate = ClosureDate;
             entity.NIHRRSSMemberCollaboratorIdsJson = NIHRRSSMemberCollaboratorIdsJson;
+            entity.SubmittedFundingStreamFreeText = SubmittedFundingStreamFreeText;
             entity.SubmittedFundingStreamName = SubmittedFundingStreamName;
             entity.DateOfRequest = DateOfRequest;
             entity.Title = Title;
@@ -175,6 +184,7 @@ namespace Webfuel.Domain
             entity.ProjectStartDate = ProjectStartDate;
             entity.RecruitmentTarget = RecruitmentTarget;
             entity.NumberOfProjectSites = NumberOfProjectSites;
+            entity.CreatedAt = CreatedAt;
             entity.StatusId = StatusId;
             entity.IsQuantativeTeamContributionId = IsQuantativeTeamContributionId;
             entity.IsCTUTeamContributionId = IsCTUTeamContributionId;

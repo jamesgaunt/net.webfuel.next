@@ -35,9 +35,6 @@ namespace Webfuel.Domain.StaticData
                     case nameof(FundingCallType.Hidden):
                         result.Add(new SqlParameter(nameof(FundingCallType.Hidden), entity.Hidden));
                         break;
-                    case nameof(FundingCallType.FreeText):
-                        result.Add(new SqlParameter(nameof(FundingCallType.FreeText), entity.FreeText));
-                        break;
                 }
             }
             return result;
@@ -69,7 +66,6 @@ namespace Webfuel.Domain.StaticData
                 yield return "SortOrder";
                 yield return "Default";
                 yield return "Hidden";
-                yield return "FreeText";
             }
         }
         
@@ -82,7 +78,6 @@ namespace Webfuel.Domain.StaticData
                 yield return "SortOrder";
                 yield return "Default";
                 yield return "Hidden";
-                yield return "FreeText";
             }
         }
         
@@ -94,7 +89,6 @@ namespace Webfuel.Domain.StaticData
                 yield return "SortOrder";
                 yield return "Default";
                 yield return "Hidden";
-                yield return "FreeText";
             }
         }
         

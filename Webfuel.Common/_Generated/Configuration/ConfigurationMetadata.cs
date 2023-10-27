@@ -29,6 +29,12 @@ namespace Webfuel.Common
                     case nameof(Configuration.NextProjectNumber):
                         result.Add(new SqlParameter(nameof(Configuration.NextProjectNumber), entity.NextProjectNumber));
                         break;
+                    case nameof(Configuration.DomainName):
+                        result.Add(new SqlParameter(nameof(Configuration.DomainName), entity.DomainName));
+                        break;
+                    case nameof(Configuration.ReplyTo):
+                        result.Add(new SqlParameter(nameof(Configuration.ReplyTo), entity.ReplyTo));
+                        break;
                 }
             }
             return result;
@@ -58,6 +64,8 @@ namespace Webfuel.Common
                 yield return "Id";
                 yield return "Prefix";
                 yield return "NextProjectNumber";
+                yield return "DomainName";
+                yield return "ReplyTo";
             }
         }
         
@@ -68,6 +76,8 @@ namespace Webfuel.Common
                 yield return "Id";
                 yield return "Prefix";
                 yield return "NextProjectNumber";
+                yield return "DomainName";
+                yield return "ReplyTo";
             }
         }
         
@@ -77,6 +87,8 @@ namespace Webfuel.Common
             {
                 yield return "Prefix";
                 yield return "NextProjectNumber";
+                yield return "DomainName";
+                yield return "ReplyTo";
             }
         }
         
@@ -86,12 +98,18 @@ namespace Webfuel.Common
         {
             entity.Prefix = entity.Prefix ?? String.Empty;
             entity.Prefix = entity.Prefix.Trim();
+            entity.DomainName = entity.DomainName ?? String.Empty;
+            entity.DomainName = entity.DomainName.Trim();
+            entity.ReplyTo = entity.ReplyTo ?? String.Empty;
+            entity.ReplyTo = entity.ReplyTo.Trim();
             Validator.ValidateAndThrow(entity);
         }
         
         public static ConfigurationRepositoryValidator Validator { get; } = new ConfigurationRepositoryValidator();
         
         public const int Prefix_MaxLength = 64;
+        public const int DomainName_MaxLength = 64;
+        public const int ReplyTo_MaxLength = 64;
         
         public static void Prefix_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
@@ -100,11 +118,27 @@ namespace Webfuel.Common
                 .MaximumLength(Prefix_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
+        public static void DomainName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(DomainName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void ReplyTo_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(ReplyTo_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
         public class ConfigurationRepositoryValidator: AbstractValidator<Configuration>
         {
             public ConfigurationRepositoryValidator()
             {
                 RuleFor(x => x.Prefix).Use(Prefix_ValidationRules);
+                RuleFor(x => x.DomainName).Use(DomainName_ValidationRules);
+                RuleFor(x => x.ReplyTo).Use(ReplyTo_ValidationRules);
             }
         }
     }

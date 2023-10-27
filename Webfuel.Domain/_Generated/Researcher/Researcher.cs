@@ -24,16 +24,21 @@ namespace Webfuel.Domain
                     case nameof(Researcher.Email):
                         Email = (string)value!;
                         break;
+                    case nameof(Researcher.CreatedAt):
+                        CreatedAt = (DateTimeOffset)value!;
+                        break;
                 }
             }
         }
         public Guid Id  { get; set; } = Guid.Empty;
         public string Email  { get; set; } = String.Empty;
+        public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Researcher Copy()
         {
             var entity = new Researcher();
             entity.Id = Id;
             entity.Email = Email;
+            entity.CreatedAt = CreatedAt;
             return entity;
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,6 +39,7 @@ namespace Webfuel.Domain
             project.Number = await GetNextProjectNumber();
             project.PrefixedNumber = FormatPrefixedNumber(project);
             project.StatusId = ProjectStatusEnum.Active;
+            project.CreatedAt = DateTimeOffset.UtcNow;
 
             // Replicate Support Request Values
             project.SupportRequestId = supportRequest.Id;

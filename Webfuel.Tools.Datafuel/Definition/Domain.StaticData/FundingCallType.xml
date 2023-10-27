@@ -7,7 +7,6 @@
     <Property Name="SortOrder" Type="Int32" />
     <Property Name="Default" Type="boolean" />
     <Property Name="Hidden" Type="boolean" />
-    <Property Name="FreeText" Type="boolean" />
     <Index Unique="true">
       <Member Name="Name" />
     </Index>

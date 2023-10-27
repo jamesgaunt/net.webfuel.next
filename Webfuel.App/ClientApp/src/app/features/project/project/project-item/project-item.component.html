@@ -22,6 +22,7 @@
       <div class="field">
         <label class="label">Funding stream submitted to</label>
         <dropdown-select [dataSource]="staticDataCache.fundingStream" placeholder="optional" formControlName="submittedFundingStreamId"></dropdown-select>
+        <input *ngIf="showSubmittedFundingStreamFreeText" class="input" type="text" placeholder="please specify other..." formControlName="submittedFundingStreamFreeText" />
       </div>
       <div class="field is-full-width">
         <label class="label">Funding stream name</label>
@@ -54,4 +55,5 @@
       <button class="button" (click)="cancel()">Cancel</button>
     </div>
   </form>
+  <p>Created {{ item.createdAt | date: 'dd MMM yy HH:mm'}}</p>
 </div>

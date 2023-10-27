@@ -26,6 +26,9 @@ namespace Webfuel.Domain
                     case nameof(Researcher.Email):
                         result.Add(new SqlParameter(nameof(Researcher.Email), entity.Email));
                         break;
+                    case nameof(Researcher.CreatedAt):
+                        result.Add(new SqlParameter(nameof(Researcher.CreatedAt), entity.CreatedAt));
+                        break;
                 }
             }
             return result;
@@ -54,6 +57,7 @@ namespace Webfuel.Domain
             {
                 yield return "Id";
                 yield return "Email";
+                yield return "CreatedAt";
             }
         }
         
@@ -63,6 +67,7 @@ namespace Webfuel.Domain
             {
                 yield return "Id";
                 yield return "Email";
+                yield return "CreatedAt";
             }
         }
         
@@ -71,6 +76,7 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Email";
+                yield return "CreatedAt";
             }
         }
         

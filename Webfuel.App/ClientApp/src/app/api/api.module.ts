@@ -9,6 +9,7 @@ import { SupportRequestApi } from './support-request.api';
 import { UserActivityApi } from './user-activity.api';
 import { UserApi } from './user.api';
 import { UserGroupApi } from './user-group.api';
+import { UserLoginApi } from './user-login.api';
 import { ApplicationStageApi } from './application-stage.api';
 import { FundingBodyApi } from './funding-body.api';
 import { FundingCallTypeApi } from './funding-call-type.api';
@@ -47,6 +48,7 @@ import { StaticDataCache } from './static-data.cache';
         UserActivityApi,
         UserApi,
         UserGroupApi,
+        UserLoginApi,
         ApplicationStageApi,
         FundingBodyApi,
         FundingCallTypeApi,

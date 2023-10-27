@@ -10,6 +10,8 @@ namespace Webfuel.Common
     public interface IConfigurationService
     {
         Task<int> AllocateNextProjectNumber();
+
+        Task<Configuration> GetConfiguration();
     }
 
     [Service(typeof(IConfigurationService))]
@@ -34,20 +36,12 @@ namespace Webfuel.Common
             return nextProjectNumber;
         }
 
-        async Task<Configuration> GetConfiguration()
+        public async Task<Configuration> GetConfiguration()
         {
-            if (_configuration != null)
-                return _configuration;
-
-            _configuration = await _configurationRepository.GetConfiguration(ConfigurationId);
-            if(_configuration != null)
-                return _configuration;
-
-            _configuration = await _configurationRepository.InsertConfiguration(new Configuration { Id = ConfigurationId });
-            return _configuration;
+            if (_configuration == null)
+                _configuration = await _configurationRepository.RequireConfiguration(Guid.Empty);
+            return _configuration.Copy();
         }
-
-        static readonly Guid ConfigurationId = Guid.Parse("ad45744d-4630-489f-9e2b-94613752c516");
 
         static Configuration? _configuration = null;
     }

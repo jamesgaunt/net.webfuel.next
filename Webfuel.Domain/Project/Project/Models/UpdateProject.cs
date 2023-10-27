@@ -15,6 +15,7 @@ namespace Webfuel.Domain
         public Guid? IsCTUTeamContributionId { get; set; }
         public Guid? IsPPIEAndEDIContributionId { get; set; }
         public Guid? SubmittedFundingStreamId { get; set; }
+        public string SubmittedFundingStreamFreeText { get; set; } = String.Empty;
         public string SubmittedFundingStreamName { get; set; } = String.Empty;
 
         // Clinical Trial Submissions

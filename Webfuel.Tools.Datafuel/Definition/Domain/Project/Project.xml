@@ -15,6 +15,7 @@
     <Property Name="NIHRRSSMemberCollaboratorIds" Type="Json:List{Guid}" />
 
     <Property Name="SubmittedFundingStreamId" Type="FundingStream?" />
+    <Property Name="SubmittedFundingStreamFreeText" Type="meta:name" />
     <Property Name="SubmittedFundingStreamName" Type="meta:name" />
     
     <!-- Replicated from Support Request -->
@@ -40,6 +41,9 @@
     <Property Name="RecruitmentTarget" Type="Int32?" />
     <Property Name="NumberOfProjectSites" Type="Int32?" />
     <Property Name="IsInternationalMultiSiteStudyId" Type="IsInternationalMultiSiteStudy?" />
+    
+    <!-- Audit -->
+    <Property Name="CreatedAt" Type="DateTime" />
 
   </Entity>
 </Schema>

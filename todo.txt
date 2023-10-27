@@ -7,11 +7,11 @@ NEXT:
 > More flexible/accurate form field layout (flex/grid => form-flex / form-grid)
 > More complex grid search properly integrated into grid 
 > Allow grid to save state in local storage 
-> Forgotten password link on home page
 > Think about a user cache? GUID => Presentation Only
-> Other / Free Text fields
-> Roll out CreatedAt / UpdatedAt
 > Standardise date formats dd MMM yy (can we globalise the default)
+> Dialog widths
+
+> Prototype Other / Free Text fields
 
 DONE:
 
@@ -19,6 +19,9 @@ DONE:
 > Dialog 2.0 [DONE]
 > Grey out placeholders in custom controls [DONE]
 > Allow disable on all fields [DONE]
+> Forgotten password link on home page [DONE]
+> Roll out CreatedAt [DONE]
+
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 

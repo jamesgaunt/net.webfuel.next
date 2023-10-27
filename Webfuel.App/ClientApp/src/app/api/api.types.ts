@@ -268,6 +268,7 @@ export interface Project {
     prefixedNumber: string;
     closureDate: string | null | null;
     nihrrssMemberCollaboratorIds: Array<string>;
+    submittedFundingStreamFreeText: string;
     submittedFundingStreamName: string;
     dateOfRequest: string;
     title: string;
@@ -279,6 +280,7 @@ export interface Project {
     projectStartDate: string | null | null;
     recruitmentTarget: number | null | null;
     numberOfProjectSites: number | null | null;
+    createdAt: string;
     statusId: string;
     isQuantativeTeamContributionId: string | null | null;
     isCTUTeamContributionId: string | null | null;
@@ -306,6 +308,7 @@ export interface UpdateProject {
     isCTUTeamContributionId: string | null | null;
     isPPIEAndEDIContributionId: string | null | null;
     submittedFundingStreamId: string | null | null;
+    submittedFundingStreamFreeText: string;
     submittedFundingStreamName: string;
     projectStartDate: string | null | null;
     recruitmentTarget: number | null | null;
@@ -424,6 +427,7 @@ export interface QueryProjectSupport extends Query {
 export interface Researcher {
     id: string;
     email: string;
+    createdAt: string;
 }
 
 export interface CreateResearcher {
@@ -453,14 +457,15 @@ export interface SupportRequest {
     experienceOfResearchAwards: string;
     briefDescription: string;
     supportRequested: string;
+    createdAt: string;
     isFellowshipId: string | null | null;
     applicationStageId: string | null | null;
-    fundingStreamId: string | null | null;
     fundingCallTypeId: string | null | null;
+    fundingStreamId: string | null | null;
     isTeamMembersConsultedId: string | null | null;
     isResubmissionId: string | null | null;
-    howDidYouFindUsId: string | null | null;
     isLeadApplicantNHSId: string | null | null;
+    howDidYouFindUsId: string | null | null;
     statusId: string;
     projectId: string | null | null;
 }
@@ -564,7 +569,6 @@ export interface User {
     disabled: boolean;
     lastLoginAt: string | null | null;
     createdAt: string;
-    updatedAt: string;
     siteId: string | null | null;
     userGroupId: string;
 }
@@ -597,21 +601,6 @@ export interface UpdateUser {
     hidden: boolean;
 }
 
-export interface ChangeUserPassword {
-    currentPassword: string;
-    newPassword: string;
-    confirmNewPassword: string;
-}
-
-export interface StringResult {
-    value: string;
-}
-
-export interface LoginUser {
-    email: string;
-    password: string;
-}
-
 export interface QueryUser extends Query {
     skip: number;
     take: number;
@@ -642,6 +631,32 @@ export interface QueryUserGroup extends Query {
     filters?: Array<QueryFilter>;
     sort?: Array<QuerySort>;
     search?: string;
+}
+
+export interface StringResult {
+    value: string;
+}
+
+export interface LoginUser {
+    email: string;
+    password: string;
+}
+
+export interface ChangeUserPassword {
+    currentPassword: string;
+    newPassword: string;
+    confirmNewPassword: string;
+}
+
+export interface SendUserPasswordResetEmail {
+    email: string;
+}
+
+export interface ResetUserPassword {
+    userId: string;
+    passwordResetToken: string;
+    newPassword: string;
+    confirmNewPassword: string;
 }
 
 export interface CreateApplicationStage {

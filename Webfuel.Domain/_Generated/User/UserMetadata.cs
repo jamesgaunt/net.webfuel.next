@@ -89,9 +89,6 @@ namespace Webfuel.Domain
                     case nameof(User.CreatedAt):
                         result.Add(new SqlParameter(nameof(User.CreatedAt), entity.CreatedAt));
                         break;
-                    case nameof(User.UpdatedAt):
-                        result.Add(new SqlParameter(nameof(User.UpdatedAt), entity.UpdatedAt));
-                        break;
                     case nameof(User.SiteId):
                         result.Add(new SqlParameter(nameof(User.SiteId), entity.SiteId ?? (object?)DBNull.Value));
                         break;
@@ -147,7 +144,6 @@ namespace Webfuel.Domain
                 yield return "PasswordResetToken";
                 yield return "PasswordResetValidUntil";
                 yield return "CreatedAt";
-                yield return "UpdatedAt";
                 yield return "SiteId";
                 yield return "UserGroupId";
             }
@@ -180,7 +176,6 @@ namespace Webfuel.Domain
                 yield return "PasswordResetToken";
                 yield return "PasswordResetValidUntil";
                 yield return "CreatedAt";
-                yield return "UpdatedAt";
                 yield return "SiteId";
                 yield return "UserGroupId";
             }
@@ -212,7 +207,6 @@ namespace Webfuel.Domain
                 yield return "PasswordResetToken";
                 yield return "PasswordResetValidUntil";
                 yield return "CreatedAt";
-                yield return "UpdatedAt";
                 yield return "SiteId";
                 yield return "UserGroupId";
             }

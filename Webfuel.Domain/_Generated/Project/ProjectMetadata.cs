@@ -35,6 +35,9 @@ namespace Webfuel.Domain
                     case nameof(Project.NIHRRSSMemberCollaboratorIds):
                         result.Add(new SqlParameter(nameof(Project.NIHRRSSMemberCollaboratorIds), entity.NIHRRSSMemberCollaboratorIdsJson));
                         break;
+                    case nameof(Project.SubmittedFundingStreamFreeText):
+                        result.Add(new SqlParameter(nameof(Project.SubmittedFundingStreamFreeText), entity.SubmittedFundingStreamFreeText));
+                        break;
                     case nameof(Project.SubmittedFundingStreamName):
                         result.Add(new SqlParameter(nameof(Project.SubmittedFundingStreamName), entity.SubmittedFundingStreamName));
                         break;
@@ -67,6 +70,9 @@ namespace Webfuel.Domain
                         break;
                     case nameof(Project.NumberOfProjectSites):
                         result.Add(new SqlParameter(nameof(Project.NumberOfProjectSites), entity.NumberOfProjectSites ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(Project.CreatedAt):
+                        result.Add(new SqlParameter(nameof(Project.CreatedAt), entity.CreatedAt));
                         break;
                     case nameof(Project.StatusId):
                         result.Add(new SqlParameter(nameof(Project.StatusId), entity.StatusId));
@@ -144,6 +150,7 @@ namespace Webfuel.Domain
                 yield return "PrefixedNumber";
                 yield return "ClosureDate";
                 yield return "NIHRRSSMemberCollaboratorIds";
+                yield return "SubmittedFundingStreamFreeText";
                 yield return "SubmittedFundingStreamName";
                 yield return "DateOfRequest";
                 yield return "Title";
@@ -155,6 +162,7 @@ namespace Webfuel.Domain
                 yield return "ProjectStartDate";
                 yield return "RecruitmentTarget";
                 yield return "NumberOfProjectSites";
+                yield return "CreatedAt";
                 yield return "StatusId";
                 yield return "IsQuantativeTeamContributionId";
                 yield return "IsCTUTeamContributionId";
@@ -182,6 +190,7 @@ namespace Webfuel.Domain
                 yield return "PrefixedNumber";
                 yield return "ClosureDate";
                 yield return "NIHRRSSMemberCollaboratorIds";
+                yield return "SubmittedFundingStreamFreeText";
                 yield return "SubmittedFundingStreamName";
                 yield return "DateOfRequest";
                 yield return "Title";
@@ -193,6 +202,7 @@ namespace Webfuel.Domain
                 yield return "ProjectStartDate";
                 yield return "RecruitmentTarget";
                 yield return "NumberOfProjectSites";
+                yield return "CreatedAt";
                 yield return "StatusId";
                 yield return "IsQuantativeTeamContributionId";
                 yield return "IsCTUTeamContributionId";
@@ -219,6 +229,7 @@ namespace Webfuel.Domain
                 yield return "PrefixedNumber";
                 yield return "ClosureDate";
                 yield return "NIHRRSSMemberCollaboratorIds";
+                yield return "SubmittedFundingStreamFreeText";
                 yield return "SubmittedFundingStreamName";
                 yield return "DateOfRequest";
                 yield return "Title";
@@ -230,6 +241,7 @@ namespace Webfuel.Domain
                 yield return "ProjectStartDate";
                 yield return "RecruitmentTarget";
                 yield return "NumberOfProjectSites";
+                yield return "CreatedAt";
                 yield return "StatusId";
                 yield return "IsQuantativeTeamContributionId";
                 yield return "IsCTUTeamContributionId";
@@ -254,6 +266,8 @@ namespace Webfuel.Domain
         {
             entity.PrefixedNumber = entity.PrefixedNumber ?? String.Empty;
             entity.PrefixedNumber = entity.PrefixedNumber.Trim();
+            entity.SubmittedFundingStreamFreeText = entity.SubmittedFundingStreamFreeText ?? String.Empty;
+            entity.SubmittedFundingStreamFreeText = entity.SubmittedFundingStreamFreeText.Trim();
             entity.SubmittedFundingStreamName = entity.SubmittedFundingStreamName ?? String.Empty;
             entity.SubmittedFundingStreamName = entity.SubmittedFundingStreamName.Trim();
             entity.Title = entity.Title ?? String.Empty;
@@ -272,6 +286,7 @@ namespace Webfuel.Domain
         public static ProjectRepositoryValidator Validator { get; } = new ProjectRepositoryValidator();
         
         public const int PrefixedNumber_MaxLength = 64;
+        public const int SubmittedFundingStreamFreeText_MaxLength = 64;
         public const int SubmittedFundingStreamName_MaxLength = 64;
         public const int Title_MaxLength = 1000;
         public const int BriefDescription_MaxLength = 5000;
@@ -284,6 +299,13 @@ namespace Webfuel.Domain
             ruleBuilder
                 .NotNull()
                 .MaximumLength(PrefixedNumber_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void SubmittedFundingStreamFreeText_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(SubmittedFundingStreamFreeText_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
         public static void SubmittedFundingStreamName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
@@ -333,6 +355,7 @@ namespace Webfuel.Domain
             public ProjectRepositoryValidator()
             {
                 RuleFor(x => x.PrefixedNumber).Use(PrefixedNumber_ValidationRules);
+                RuleFor(x => x.SubmittedFundingStreamFreeText).Use(SubmittedFundingStreamFreeText_ValidationRules);
                 RuleFor(x => x.SubmittedFundingStreamName).Use(SubmittedFundingStreamName_ValidationRules);
                 RuleFor(x => x.Title).Use(Title_ValidationRules);
                 RuleFor(x => x.BriefDescription).Use(BriefDescription_ValidationRules);

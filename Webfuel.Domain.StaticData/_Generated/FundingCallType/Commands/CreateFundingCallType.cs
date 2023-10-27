@@ -7,7 +7,6 @@ namespace Webfuel.Domain.StaticData
         public required string Name { get; set; }
         public bool Default { get; set; } = false;
         public bool Hidden { get; set; } = false;
-        public bool FreeText { get; set; } = false;
     }
     internal class CreateFundingCallTypeHandler : IRequestHandler<CreateFundingCallType, FundingCallType>
     {
@@ -25,7 +24,6 @@ namespace Webfuel.Domain.StaticData
                     Name = request.Name,
                     Default = request.Default,
                     Hidden = request.Hidden,
-                    FreeText = request.FreeText,
                     SortOrder = await _fundingCallTypeRepository.CountFundingCallType(),
                 });
         }

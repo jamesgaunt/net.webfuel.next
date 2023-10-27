@@ -44,17 +44,20 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.SupportRequested):
                         result.Add(new SqlParameter(nameof(SupportRequest.SupportRequested), entity.SupportRequested));
                         break;
+                    case nameof(SupportRequest.CreatedAt):
+                        result.Add(new SqlParameter(nameof(SupportRequest.CreatedAt), entity.CreatedAt));
+                        break;
                     case nameof(SupportRequest.IsFellowshipId):
                         result.Add(new SqlParameter(nameof(SupportRequest.IsFellowshipId), entity.IsFellowshipId ?? (object?)DBNull.Value));
                         break;
                     case nameof(SupportRequest.ApplicationStageId):
                         result.Add(new SqlParameter(nameof(SupportRequest.ApplicationStageId), entity.ApplicationStageId ?? (object?)DBNull.Value));
                         break;
-                    case nameof(SupportRequest.FundingStreamId):
-                        result.Add(new SqlParameter(nameof(SupportRequest.FundingStreamId), entity.FundingStreamId ?? (object?)DBNull.Value));
-                        break;
                     case nameof(SupportRequest.FundingCallTypeId):
                         result.Add(new SqlParameter(nameof(SupportRequest.FundingCallTypeId), entity.FundingCallTypeId ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(SupportRequest.FundingStreamId):
+                        result.Add(new SqlParameter(nameof(SupportRequest.FundingStreamId), entity.FundingStreamId ?? (object?)DBNull.Value));
                         break;
                     case nameof(SupportRequest.IsTeamMembersConsultedId):
                         result.Add(new SqlParameter(nameof(SupportRequest.IsTeamMembersConsultedId), entity.IsTeamMembersConsultedId ?? (object?)DBNull.Value));
@@ -62,11 +65,11 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.IsResubmissionId):
                         result.Add(new SqlParameter(nameof(SupportRequest.IsResubmissionId), entity.IsResubmissionId ?? (object?)DBNull.Value));
                         break;
-                    case nameof(SupportRequest.HowDidYouFindUsId):
-                        result.Add(new SqlParameter(nameof(SupportRequest.HowDidYouFindUsId), entity.HowDidYouFindUsId ?? (object?)DBNull.Value));
-                        break;
                     case nameof(SupportRequest.IsLeadApplicantNHSId):
                         result.Add(new SqlParameter(nameof(SupportRequest.IsLeadApplicantNHSId), entity.IsLeadApplicantNHSId ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(SupportRequest.HowDidYouFindUsId):
+                        result.Add(new SqlParameter(nameof(SupportRequest.HowDidYouFindUsId), entity.HowDidYouFindUsId ?? (object?)DBNull.Value));
                         break;
                     case nameof(SupportRequest.StatusId):
                         result.Add(new SqlParameter(nameof(SupportRequest.StatusId), entity.StatusId));
@@ -108,14 +111,15 @@ namespace Webfuel.Domain
                 yield return "ExperienceOfResearchAwards";
                 yield return "BriefDescription";
                 yield return "SupportRequested";
+                yield return "CreatedAt";
                 yield return "IsFellowshipId";
                 yield return "ApplicationStageId";
-                yield return "FundingStreamId";
                 yield return "FundingCallTypeId";
+                yield return "FundingStreamId";
                 yield return "IsTeamMembersConsultedId";
                 yield return "IsResubmissionId";
-                yield return "HowDidYouFindUsId";
                 yield return "IsLeadApplicantNHSId";
+                yield return "HowDidYouFindUsId";
                 yield return "StatusId";
                 yield return "ProjectId";
             }
@@ -133,14 +137,15 @@ namespace Webfuel.Domain
                 yield return "ExperienceOfResearchAwards";
                 yield return "BriefDescription";
                 yield return "SupportRequested";
+                yield return "CreatedAt";
                 yield return "IsFellowshipId";
                 yield return "ApplicationStageId";
-                yield return "FundingStreamId";
                 yield return "FundingCallTypeId";
+                yield return "FundingStreamId";
                 yield return "IsTeamMembersConsultedId";
                 yield return "IsResubmissionId";
-                yield return "HowDidYouFindUsId";
                 yield return "IsLeadApplicantNHSId";
+                yield return "HowDidYouFindUsId";
                 yield return "StatusId";
                 yield return "ProjectId";
             }
@@ -157,14 +162,15 @@ namespace Webfuel.Domain
                 yield return "ExperienceOfResearchAwards";
                 yield return "BriefDescription";
                 yield return "SupportRequested";
+                yield return "CreatedAt";
                 yield return "IsFellowshipId";
                 yield return "ApplicationStageId";
-                yield return "FundingStreamId";
                 yield return "FundingCallTypeId";
+                yield return "FundingStreamId";
                 yield return "IsTeamMembersConsultedId";
                 yield return "IsResubmissionId";
-                yield return "HowDidYouFindUsId";
                 yield return "IsLeadApplicantNHSId";
+                yield return "HowDidYouFindUsId";
                 yield return "StatusId";
                 yield return "ProjectId";
             }

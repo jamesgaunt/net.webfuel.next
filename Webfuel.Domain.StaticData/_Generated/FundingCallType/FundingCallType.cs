@@ -33,9 +33,6 @@ namespace Webfuel.Domain.StaticData
                     case nameof(FundingCallType.Hidden):
                         Hidden = (bool)value!;
                         break;
-                    case nameof(FundingCallType.FreeText):
-                        FreeText = (bool)value!;
-                        break;
                 }
             }
         }
@@ -44,7 +41,6 @@ namespace Webfuel.Domain.StaticData
         public int SortOrder  { get; internal set; } = 0;
         public bool Default  { get; internal set; } = false;
         public bool Hidden  { get; internal set; } = false;
-        public bool FreeText  { get; internal set; } = false;
         public FundingCallType Copy()
         {
             var entity = new FundingCallType();
@@ -53,7 +49,6 @@ namespace Webfuel.Domain.StaticData
             entity.SortOrder = SortOrder;
             entity.Default = Default;
             entity.Hidden = Hidden;
-            entity.FreeText = FreeText;
             return entity;
         }
     }

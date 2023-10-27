@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Webfuel.Domain.StaticData
 {
-    public partial class FundingStream: IStaticData
+    public partial class FundingStream: IStaticData, IStaticDataWithFreeText
     {
         public FundingStream() { }
         

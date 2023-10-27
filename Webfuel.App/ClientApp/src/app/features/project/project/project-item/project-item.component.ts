@@ -1,16 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Project } from 'api/api.types';
 import { ProjectApi } from 'api/project.api';
 import { StaticDataCache } from 'api/static-data.cache';
 import { FormService } from 'core/form.service';
+import { Observable, debounceTime, tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'project-item',
   templateUrl: './project-item.component.html'
 })
 export class ProjectItemComponent implements OnInit {
+
+  destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
     private route: ActivatedRoute,
@@ -23,6 +27,10 @@ export class ProjectItemComponent implements OnInit {
 
   ngOnInit() {
     this.reset(this.route.snapshot.data.project);
+    this.form.valueChanges.pipe(
+      debounceTime(200),
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe(() => this.toggleFreeText());
   }
 
   item!: Project;
@@ -31,6 +39,7 @@ export class ProjectItemComponent implements OnInit {
     this.item = item;
     this.form.patchValue(item);
     this.form.markAsPristine();
+    this.toggleFreeText()
   }
 
   form = new FormGroup({
@@ -41,6 +50,7 @@ export class ProjectItemComponent implements OnInit {
     isPPIEAndEDIContributionId: new FormControl<string | null>(null),
 
     submittedFundingStreamId: new FormControl<string | null>(null),
+    submittedFundingStreamFreeText: new FormControl<string>('', { nonNullable: true }),
     submittedFundingStreamName: new FormControl<string>('', { nonNullable: true }),
 
     projectStartDate: new FormControl<string | null>(null),
@@ -64,4 +74,13 @@ export class ProjectItemComponent implements OnInit {
     this.reset(this.item);
     this.router.navigate(['project/project-list']);
   }
+
+  // Free Text Toggles
+
+  toggleFreeText() {
+    this.staticDataCache.fundingStream.get({ id: this.form.value.submittedFundingStreamId || '' })
+      .subscribe((result) => this.showSubmittedFundingStreamFreeText = (result?.freeText ?? false));
+  }
+
+  showSubmittedFundingStreamFreeText = false;
 }
