@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { ConfigurationApi } from './configuration.api';
+import { PingApi } from './ping.api';
 import { StaticDataApi } from './static-data.api';
 import { ProjectApi } from './project.api';
 import { ProjectSubmissionApi } from './project-submission.api';
@@ -39,6 +40,7 @@ import { StaticDataCache } from './static-data.cache';
 @NgModule({
     providers: [
         ConfigurationApi,
+        PingApi,
         StaticDataApi,
         ProjectApi,
         ProjectSubmissionApi,

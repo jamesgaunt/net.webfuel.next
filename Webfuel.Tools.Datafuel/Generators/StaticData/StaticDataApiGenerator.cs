@@ -15,10 +15,10 @@ namespace Webfuel.Tools.Datafuel
                 if (!entity.StaticData)
                     continue;
 
-                if (!Directory.Exists(Settings.AppGeneratedRoot + $@"\Api"))
-                    Directory.CreateDirectory(Settings.AppGeneratedRoot + $@"\Api");
+                if (!Directory.Exists(Settings.ApiGeneratedRoot + $@"\Api"))
+                    Directory.CreateDirectory(Settings.ApiGeneratedRoot + $@"\Api");
 
-                File.WriteAllText(Settings.AppGeneratedRoot + $@"\Api\{entity.Name}Api.cs", Api(entity));
+                File.WriteAllText(Settings.ApiGeneratedRoot + $@"\Api\{entity.Name}Api.cs", Api(entity));
             }
         }
 

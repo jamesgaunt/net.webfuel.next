@@ -34,6 +34,6 @@ namespace Webfuel.Tools.Datafuel
 
         public static string DefinitionRoot { get { return SolutionRoot + @"\Webfuel.Tools.Datafuel\Definition"; } }
 
-        public static string AppGeneratedRoot { get { return SolutionRoot + @"\Webfuel.App\_Generated"; } }
+        public static string ApiGeneratedRoot { get { return SolutionRoot + @"\Webfuel.Api\_Generated"; } }
     }
 }

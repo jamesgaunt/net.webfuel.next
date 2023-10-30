@@ -8,7 +8,7 @@
     -->
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Webfuel.App\Webfuel.App.csproj" />
+    <ProjectReference Include="..\Webfuel.Api\Webfuel.Api.csproj" />
     <ProjectReference Include="..\Webfuel.Domain\Webfuel.Domain.csproj" />
   </ItemGroup>
 </Project>

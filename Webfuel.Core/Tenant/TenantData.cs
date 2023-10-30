@@ -11,9 +11,5 @@ namespace Webfuel
         public required string Id { get; init; }
 
         public required string Name { get; init; }
-
-        public required string DatabaseLogin { get; init; }
-
-        public required string DatabasePassword { get; init; }
     }
 }

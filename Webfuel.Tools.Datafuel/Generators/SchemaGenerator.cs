@@ -15,7 +15,7 @@ namespace Webfuel.Tools.Datafuel
             foreach (var entity in schema.Entities)
                 DeleteDirectory(entity.GeneratedDirectory);
 
-            DeleteDirectory(Settings.AppGeneratedRoot);
+            DeleteDirectory(Settings.ApiGeneratedRoot);
 
             foreach (var entity in schema.Entities)
             {

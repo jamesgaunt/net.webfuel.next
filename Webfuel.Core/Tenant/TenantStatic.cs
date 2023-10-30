@@ -12,9 +12,7 @@ namespace Webfuel
         {
             new TenantData { 
                 Id = Tenant.RSS_ICL, 
-                Name = "RSS Imperial College London" , 
-                DatabaseLogin = "login_rss_icl@webfuel",
-                DatabasePassword = "APAxTFbB2AoGdmbRUuHe"
+                Name = "RSS Imperial College London"
             },
         };
     }

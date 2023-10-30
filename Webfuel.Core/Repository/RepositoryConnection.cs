@@ -46,7 +46,7 @@ namespace Webfuel
         public RepositoryConnection(ITenantAccessor tenantAccessor, IRepositoryConfiguration repositoryConfiguration)
         {
             var tenant = tenantAccessor.Tenant;
-            _connectionString = repositoryConfiguration.ConnectionString + $"User ID={tenant.DatabaseLogin};Password={tenant.DatabasePassword}";
+            _connectionString = repositoryConfiguration.ConnectionString;
         }
 
         public async Task ExecuteNonQuery(
