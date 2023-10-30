@@ -22,9 +22,6 @@ namespace Webfuel.App
 
                 var builder = WebApplication.CreateBuilder(args);
 
-                builder.Services.AddRazorPages()
-                    .AddRazorRuntimeCompilation(); // Development only!
-
                 builder.Host.UseSerilog();
 
                 builder.Services.RegisterCoreServices();
@@ -49,8 +46,6 @@ namespace Webfuel.App
                 app.UseMiddleware<IdentityMiddleware>();
                 app.UseMiddleware<StaticDataMiddleware>();
                 app.UseApiServices<Program>();
-
-                app.MapRazorPages();
 
                 app.Run();
             }

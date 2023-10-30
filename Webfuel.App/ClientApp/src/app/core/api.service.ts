@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { GrowlService } from './growl.service';
+import { environment } from '../../environments/environment';
 
 export interface IApiErrorHandler {
   handleError(error: any): void;
@@ -24,8 +25,10 @@ export class ApiService {
   public request<TRequest, TResponse>(method: string, url: string, body?: TRequest, options?: ApiOptions): Observable<TResponse> {
     options = options || {};
 
+    var hostedUrl = environment.apiHost + url;
+
     var observable = <Observable<TResponse>>this.httpClient.request(
-      method, url, {
+      method, hostedUrl, {
       body: body,
       headers: { 'Content-Type': 'application/json' },
       params: { 'r': Math.random() }

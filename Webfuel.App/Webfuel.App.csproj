@@ -10,18 +10,11 @@
     <UserSecretsId>85708f9f-12c3-489f-ade2-3979537c06b2</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.13" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="7.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="7.0.13" />
   </ItemGroup>
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
-    <Compile Remove="_Generated\StaticData\**" />
     <Content Remove="$(SpaRoot)**" />
-    <Content Remove="_Generated\StaticData\**" />
-    <EmbeddedResource Remove="_Generated\StaticData\**" />
-    <None Remove="$(SpaRoot)**" />
-    <None Remove="_Generated\StaticData\**" />
-    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\assets\external.css" />
@@ -32,6 +25,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Webfuel.Domain.StaticData\Webfuel.Domain.StaticData.csproj" />
     <ProjectReference Include="..\Webfuel.Domain\Webfuel.Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ClientApp\dist\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
