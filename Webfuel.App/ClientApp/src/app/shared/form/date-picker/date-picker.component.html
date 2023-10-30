@@ -4,7 +4,7 @@
     <span *ngIf="value === null">{{ placeholder || "&nbsp;" }}</span>
   </div>
   <!-- Clear Icon -->
-  <div *ngIf="!_isDisabled && enableClear" class="icon is-secondary" (click)="clear($event)">
+  <div *ngIf="!_isDisabled && enableClear && value !== null" class="icon is-secondary" (click)="clear($event)">
     <i class="fas fa-times"></i>
   </div>
   <!-- Calendar Icon -->

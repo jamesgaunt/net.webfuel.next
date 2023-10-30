@@ -10,6 +10,8 @@ export class FormService {
     private growlService: GrowlService
   ) { }
 
+  // TODO: Track active form somehow?
+
   checkForErrors(form: FormGroup) {
     if (form.valid)
       return false;

@@ -6,6 +6,7 @@ import { SupportRequestApi } from '../../api/support-request.api';
 
 import { SupportRequestListComponent } from './support-request/support-request-list/support-request-list.component';
 import { SupportRequestItemComponent } from './support-request/support-request-item/support-request-item.component';
+import { SupportRequestFilesComponent } from './support-request/support-request-files/support-request-files.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,13 @@ const routes: Routes = [
     component: SupportRequestItemComponent,
     resolve: { supportRequest: SupportRequestApi.supportRequestResolver('id') },
     canDeactivate: [DeactivateService.isPristine<SupportRequestItemComponent>()],
+    data: { activeSideMenu: 'Requests' }
+  },
+  {
+    path: 'support-request-files/:id',
+    component: SupportRequestFilesComponent,
+    resolve: { supportRequest: SupportRequestApi.supportRequestResolver('id') },
+    canDeactivate: [DeactivateService.isPristine<SupportRequestFilesComponent>()],
     data: { activeSideMenu: 'Requests' }
   },
 ];

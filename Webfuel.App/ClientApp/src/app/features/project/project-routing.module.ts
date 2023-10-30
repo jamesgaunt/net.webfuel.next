@@ -9,6 +9,8 @@ import { ProjectItemComponent } from './project/project-item/project-item.compon
 import { ProjectRequestComponent } from './project/project-request/project-request.component';
 import { ProjectSupportComponent } from './project/project-support/project-support.component';
 import { ProjectSubmissionComponent } from './project/project-submission/project-submission.component';
+import { ProjectFilesComponent } from './project/project-files/project-files.component';
+import { ProjectHistoryComponent } from './project/project-history/project-history.component';
 
 const routes: Routes = [
   {
@@ -42,6 +44,20 @@ const routes: Routes = [
     component: ProjectSubmissionComponent,
     resolve: { project: ProjectApi.projectResolver('id') },
     canDeactivate: [DeactivateService.isPristine<ProjectSubmissionComponent>()],
+    data: { activeSideMenu: 'Projects' }
+  },
+  {
+    path: 'project-files/:id',
+    component: ProjectFilesComponent,
+    resolve: { project: ProjectApi.projectResolver('id') },
+    canDeactivate: [DeactivateService.isPristine<ProjectFilesComponent>()],
+    data: { activeSideMenu: 'Projects' }
+  },
+  {
+    path: 'project-history/:id',
+    component: ProjectHistoryComponent,
+    resolve: { project: ProjectApi.projectResolver('id') },
+    canDeactivate: [DeactivateService.isPristine<ProjectHistoryComponent>()],
     data: { activeSideMenu: 'Projects' }
   },
 ];

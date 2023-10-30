@@ -59,7 +59,7 @@ export interface IStaticDataModel {
     loadedAt: string;
 }
 
-export interface ApplicationStage extends IStaticData {
+export interface ApplicationStage extends IStaticData, IStaticDataWithFreeText {
     id: string;
     name: string;
     sortOrder: number;
@@ -75,7 +75,12 @@ export interface IStaticData {
     default: boolean;
 }
 
-export interface FundingBody extends IStaticData {
+export interface IStaticDataWithFreeText {
+    id: string;
+    freeText: boolean;
+}
+
+export interface FundingBody extends IStaticData, IStaticDataWithFreeText {
     id: string;
     name: string;
     sortOrder: number;
@@ -90,10 +95,9 @@ export interface FundingCallType extends IStaticData {
     sortOrder: number;
     default: boolean;
     hidden: boolean;
-    freeText: boolean;
 }
 
-export interface FundingStream extends IStaticData {
+export interface FundingStream extends IStaticData, IStaticDataWithFreeText {
     id: string;
     name: string;
     sortOrder: number;
@@ -322,6 +326,12 @@ export interface QueryResult<TItem> {
 }
 
 export interface QueryProject extends Query {
+    number: string;
+    title: string;
+    fromDate: string | null | null;
+    toDate: string | null | null;
+    statusId: string | null | null;
+    fundingStreamId: string | null | null;
     skip: number;
     take: number;
     projection?: Array<string>;
@@ -719,7 +729,6 @@ export interface CreateFundingCallType {
     name: string;
     default: boolean;
     hidden: boolean;
-    freeText: boolean;
 }
 
 export interface UpdateFundingCallType {
@@ -727,7 +736,6 @@ export interface UpdateFundingCallType {
     name: string;
     default: boolean;
     hidden: boolean;
-    freeText: boolean;
 }
 
 export interface SortFundingCallType {

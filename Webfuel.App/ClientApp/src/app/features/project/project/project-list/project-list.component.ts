@@ -5,6 +5,7 @@ import { ProjectApi } from 'api/project.api';
 import { StaticDataCache } from 'api/static-data.cache';
 import { CreateProjectDialog } from '../dialogs/create-project/create-project.dialog';
 import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'project-list',
@@ -18,6 +19,26 @@ export class ProjectListComponent {
     private createProjectDialog: CreateProjectDialog,
     private confirmDeleteDialog: ConfirmDeleteDialog
   ) {
+  }
+
+  filterForm = new FormGroup({
+    number: new FormControl<string>('', { nonNullable: true }),
+    fromDate: new FormControl<string | null>(null),
+    toDate: new FormControl<string | null>(null),
+    statusId: new FormControl<string | null>(null),
+    fundingStreamId: new FormControl<string | null>(null),
+    title: new FormControl<string>('', { nonNullable: true })
+  });
+
+  resetFilterForm() {
+    this.filterForm.patchValue({
+      number: '',
+      fromDate: null,
+      toDate: null,
+      statusId: null,
+      fundingStreamId: null,
+      title: ''
+    })
   }
 
   add() {

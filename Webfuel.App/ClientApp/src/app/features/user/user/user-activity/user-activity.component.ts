@@ -57,7 +57,7 @@ export class UserActivityComponent implements OnInit {
 
   // User Activity
 
-  items: UserActivity[] = [];
+  items: UserActivity[] | null = null;
 
   loadUserActivity() {
     this.userActivityApi.query({ userId: this.item.id, skip: 0, take: 100 }).subscribe((result) => {

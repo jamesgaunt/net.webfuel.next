@@ -12,10 +12,10 @@ import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/c
 import { UpdateProjectSupportDialog } from '../dialogs/update-project-support/update-project-support.dialog';
 
 @Component({
-  selector: 'project-support',
-  templateUrl: './project-support.component.html'
+  selector: 'project-history',
+  templateUrl: './project-history.component.html'
 })
-export class ProjectSupportComponent implements OnInit {
+export class ProjectHistoryComponent implements OnInit {
 
   destroyRef: DestroyRef = inject(DestroyRef);
 
@@ -23,23 +23,13 @@ export class ProjectSupportComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formService: FormService,
-    private userApi: UserApi,
     private confirmDeleteDialog: ConfirmDeleteDialog,
-    private updateProjectSupportDialog: UpdateProjectSupportDialog,
-    private projectSupportApi: ProjectSupportApi,
     public staticDataCache: StaticDataCache
   ) {
-    this.userLookup = new DataSourceLookup(userApi);
   }
 
   ngOnInit() {
     this.reset(this.route.snapshot.data.project);
-    this.loadProjectSupport();
-
-    this.projectSupportApi.changed.pipe(
-      takeUntilDestroyed(this.destroyRef)
-    )
-      .subscribe(() => this.loadProjectSupport());
   }
 
   item!: Project;
@@ -56,25 +46,4 @@ export class ProjectSupportComponent implements OnInit {
     this.router.navigate(['project/project-list']);
   }
 
-  // Project Support
-
-  items: ProjectSupport[] | null = null;
-
-  loadProjectSupport() {
-    this.projectSupportApi.query({ projectId: this.item.id, skip: 0, take: 100 }).subscribe((result) => {
-      this.items = result.items;
-    })
-  }
-
-  userLookup: DataSourceLookup<User>;
-
-  editProjectSupport(projectSupport: ProjectSupport) {
-    this.updateProjectSupportDialog.open({ projectSupport: projectSupport });
-  }
-
-  deleteProjectSupport(projectSupport: ProjectSupport) {
-    this.confirmDeleteDialog.open({ title: "Project Support" }).subscribe(() => {
-      this.projectSupportApi.delete({ id: projectSupport.id }, { successGrowl: "Project Support Deleted" }).subscribe();
-    });
-  }
 }

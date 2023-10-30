@@ -4,10 +4,43 @@
 </ul>
 <div class="container">
   <h1 class="title">Projects</h1>
-  <grid [dataSource]="projectApi" [search]="true">
+
+  <div class="filter-form">
+    <form class="form" [formGroup]="filterForm">
+      <div class="flex">
+        <div class="field is-3">
+          <input class="input" type="text" formControlName="number" placeholder="Number" />
+        </div>
+        <div class="field is-9">
+          <input class="input" type="text" formControlName="title" placeholder="Title" />
+        </div>
+      </div>
+      <div class="flex">
+        <div class="field is-3">
+          <dropdown-select [dataSource]="staticDataCache.projectStatus" placeholder="Status" formControlName="statusId" [enableClear]="true"></dropdown-select>
+        </div>
+        <div class="field is-3">
+          <date-picker placeholder="From Date" formControlName="fromDate" [enableClear]="true" />
+        </div>
+        <div class="field is-3">
+          <date-picker placeholder="To Date" formControlName="toDate" [enableClear]="true" />
+        </div>
+        <div class="field is-3">
+          <dropdown-select [dataSource]="staticDataCache.fundingStream" placeholder="Funding Stream" formControlName="fundingStreamId" [enableClear]="true"></dropdown-select>
+        </div>
+        <div class="is-12 is-right">
+          <button (click)="resetFilterForm()" class="button is-small">show all</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <grid [dataSource]="projectApi" [filterForm]="filterForm" stateKey="ProjectList">
     <grid-column name="prefixedNumber" label="Number" />
+    <grid-date-column name="dateOfRequest" />
+    <grid-reference-column [dataSource]="staticDataCache.projectStatus" name="statusId" />
     <grid-column name="title" />
-    <grid-reference-column [dataSource]="staticDataCache.fundingBody" name="fundingBodyId" />
+    <grid-reference-column [dataSource]="staticDataCache.fundingStream" name="submittedFundingStreamId" label="Funding Stream" />
     <grid-action-column (add)="add()" (edit)="edit($event)" (delete)="delete($event)" />
   </grid>
 </div>

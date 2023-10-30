@@ -9,6 +9,8 @@ import { ProjectTabsComponent } from './project/project-tabs/project-tabs.compon
 import { ProjectRequestComponent } from './project/project-request/project-request.component';
 import { ProjectSupportComponent } from './project/project-support/project-support.component';
 import { ProjectSubmissionComponent } from './project/project-submission/project-submission.component';
+import { ProjectFilesComponent } from './project/project-files/project-files.component';
+import { ProjectHistoryComponent } from './project/project-history/project-history.component';
 
 import { CreateProjectDialog, CreateProjectDialogComponent } from './project/dialogs/create-project/create-project.dialog';
 import { CreateProjectSupportDialog, CreateProjectSupportDialogComponent } from './project/dialogs/create-project-support/create-project-support.dialog';
@@ -28,6 +30,8 @@ import { UpdateProjectSubmissionDialog, UpdateProjectSubmissionDialogComponent }
     ProjectRequestComponent,
     ProjectSupportComponent,
     ProjectSubmissionComponent,
+    ProjectHistoryComponent,
+    ProjectFilesComponent,
     ProjectTabsComponent,
 
     CreateProjectDialogComponent,

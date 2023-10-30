@@ -44,6 +44,7 @@ export class ProjectItemComponent implements OnInit {
 
   form = new FormGroup({
     id: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    statusId: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
 
     isQuantativeTeamContributionId: new FormControl<string | null>(null),
     isCTUTeamContributionId: new FormControl<string | null>(null),

@@ -2,17 +2,116 @@
 
 .flex {
   display: flex;
-  gap: var(--gap);
-  margin-bottom: var(--gap);
   flex-wrap: wrap;
-
-  &.has-min-025 {
-    & > * {
-      min-width: 25%;
-    }
-  }
+  margin-left: calc(var(--gap)/-2);
+  margin-right: calc(var(--gap)/-2);
 
   & > * {
     flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    padding: 0 calc(var(--gap)/2) 0 calc(var(--gap)/2);
+    margin-bottom: var(--gap);
+    min-width: 20%;
+  }
+
+  & > .is-3 {
+    flex: none;
+    width: 25%;
+  }
+
+  & > .is-4 {
+    flex: none;
+    width: 33.33%;
+  }
+
+  & > .is-6 {
+    flex: none;
+    width: 50%;
+  }
+
+  & > .is-12 {
+    flex: none;
+    width: 100%;
+  }
+
+  & > .is-right {
+      text-align: right;
+  }
+}
+
+@media (max-width: $breakpoint-md - 1) {
+  .flex {
+    & > .is-3-md {
+      flex: none;
+      width: 25%;
+    }
+
+    & > .is-4-md {
+      flex: none;
+      width: 33.33%;
+    }
+
+    & > .is-6-md {
+      flex: none;
+      width: 50%;
+    }
+
+    & > .is-12-md {
+      flex: none;
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-sm - 1) {
+  .flex {
+    // SM everything goes to 100% by default
+
+    & > * {
+      flex: none;
+      width: 100%;
+    }
+
+    & > .is-3 {
+      flex: none;
+      width: 100%;
+    }
+
+    & > .is-4 {
+      flex: none;
+      width: 100%;
+    }
+
+    & > .is-6 {
+      flex: none;
+      width: 100%;
+    }
+
+    & > .is-12 {
+      flex: none;
+      width: 100%;
+    }
+    // SM Overrides
+
+    & > .is-3-sm {
+      flex: none;
+      width: 25%;
+    }
+
+    & > .is-4-sm {
+      flex: none;
+      width: 33.33%;
+    }
+
+    & > .is-6-sm {
+      flex: none;
+      width: 50%;
+    }
+
+    & > .is-12-sm {
+      flex: none;
+      width: 100%;
+    }
   }
 }

@@ -1,0 +1,17 @@
+<ul class="breadcrumbs">
+  <li><a routerLink="/home">Home</a></li>
+  <li><a routerLink="/support-request/support-request-list">Support Requests</a></li>
+  <li><a routerLink="/support-request/support-request-item/{{ item.id }}">Support Request</a></li>
+</ul>
+<div class="container">
+  <div class="columns">
+    <div class="column">
+      <h1 class="title">Support Request</h1>
+    </div>
+  </div>
+  <support-request-tabs></support-request-tabs>
+  <div class="message is-warning">
+    Coming Soon: Access to files uploaded by the researcher via the support request form.
+  </div>
+  <p>Created {{ item.createdAt | date: 'dd MMM yy HH:mm'}}</p>
+</div>

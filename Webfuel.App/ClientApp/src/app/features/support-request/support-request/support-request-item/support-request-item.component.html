@@ -16,64 +16,64 @@
   </div>
   <support-request-tabs></support-request-tabs>
   <form class="form" [formGroup]="form">
-    <div class="flex has-min-025">
-      <div class="field is-full-width">
+    <div class="flex">
+      <div class="field is-12">
         <label class="label">Title</label>
         <input class="input" type="text" placeholder="required" formControlName="title" />
       </div>
-      <div class="field">
+      <div class="field is-6">
+        <label class="label">Date of request</label>
+        <date-picker placeholder="optional" formControlName="dateOfRequest"></date-picker>
+      </div>
+      <div class="field is-6">
+        <label class="label">Stage of application</label>
+        <dropdown-select [dataSource]="staticDataCache.applicationStage" placeholder="optional" formControlName="applicationStageId"></dropdown-select>
+      </div>
+      <div class="field is-6">
         <label class="label">Is this application for a fellowship?</label>
         <dropdown-select [dataSource]="staticDataCache.isFellowship" placeholder="optional" formControlName="isFellowshipId"></dropdown-select>
       </div>
-      <div class="field">
+      <div class="field is-6">
         <label class="label">
           Is the project team lead / lead applicant an NHS employee seeking RSS support for the first time? 
         </label>
         <dropdown-select [dataSource]="staticDataCache.isLeadApplicantNHS" placeholder="optional" formControlName="isLeadApplicantNHSId"></dropdown-select>
       </div>
-      <div class="field">
-        <label class="label">Stage of application</label>
-        <dropdown-select [dataSource]="staticDataCache.applicationStage" placeholder="optional" formControlName="applicationStageId"></dropdown-select>
-      </div>
-      <div class="field">
-        <label class="label">Date of request</label>
-        <date-picker placeholder="optional" formControlName="dateOfRequest"></date-picker>
-      </div>
-      <div class="field">
+      <div class="field is-6">
         <label class="label">Proposed funding stream if known</label>
         <dropdown-select [dataSource]="staticDataCache.fundingStream" placeholder="optional" formControlName="fundingStreamId"></dropdown-select>
       </div>
-      <div class="field">
+      <div class="field is-6">
         <label class="label">Type of call if known</label>
         <dropdown-select [dataSource]="staticDataCache.fundingCallType" placeholder="optional" formControlName="fundingCallTypeId"></dropdown-select>
       </div>
-      <div class="field">
+      <div class="field is-6">
         <label class="label">Target submission date</label>
         <date-picker placeholder="optional" formControlName="targetSubmissionDate"></date-picker>
       </div>
-      <div class="field">
+      <div class="field is-6">
         <label class="label">What is your (or the CIs)  experience of securing funding awards?</label>
         <input class="input" type="text" placeholder="optional" formControlName="experienceOfResearchAwards" />
       </div>
-      <div class="field">
+      <div class="field is-6">
         <label class="label">Have your team members been consulted for support?</label>
         <dropdown-select [dataSource]="staticDataCache.isTeamMembersConsulted" placeholder="optional" formControlName="isTeamMembersConsultedId"></dropdown-select>
       </div>
-      <div class="field">
+      <div class="field is-6">
         <label class="label">Has the application or similar been submitted to a funder before?</label>
         <dropdown-select [dataSource]="staticDataCache.isResubmission" placeholder="optional" formControlName="isResubmissionId"></dropdown-select>
       </div>
-      <div class="field">
+      <div class="field is-6">
         <label class="label">How did you hear about our hub?</label>
         <dropdown-select [dataSource]="staticDataCache.howDidYouFindUs" placeholder="optional" formControlName="howDidYouFindUsId"></dropdown-select>
       </div>
-      <div class="field is-full-width">
+      <div class="field is-12">
         <label class="label">
           Please add a brief description of your proposed study. Where possible include an outline of research question, aims, need and methods (including analysis), potential impact. [max 500 words]
         </label>
         <textarea class="textarea" formControlName="briefDescription" placeholder="required"></textarea>
       </div>
-      <div class="field is-full-width">
+      <div class="field is-12">
         <label class="label">
           What support are you looking for from RSS?  Eg funding advice, methods advice, PPIE and EDI advice, CTU support, training in methods for grants?
         </label>

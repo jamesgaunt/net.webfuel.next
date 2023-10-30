@@ -35,6 +35,9 @@ export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, T
   @Input()
   search = false;
 
+  @Input()
+  stateKey = '';
+
   // Query
 
   searchForm = new FormGroup({
@@ -50,12 +53,15 @@ export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, T
       this.query.take = 100;
     }
 
-    this.dataSource.query(this.buildQuery()).subscribe((response) => {
+    var query = this.buildQuery();
+
+    this.dataSource.query(query).subscribe((response) => {
       if (response.totalCount > 0 && response.items.length === 0 && this.query.skip! > 0) {
         this.query.skip = 0;
         this.fetch();
         return;
       }
+      this.saveState();
       this.sorting = false;
       this.items = response.items;
       this.totalCount = response.totalCount;
@@ -97,6 +103,38 @@ export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, T
 
   get columnCount() {
     return this.columns.length + (this.sortable ? 1 : 0);
+  }
+
+  // State
+
+  saveState() {
+    if (!this.stateKey)
+      return;
+
+    var state = <any>{ query: this.query }
+
+    if (this.filterForm)
+      state.filterForm = this.filterForm.getRawValue();
+
+    console.log("Saving Grid State: " + this.stateKey, state);
+
+    _.setLocalStorage("GridState:" + this.stateKey, state, 60 * 60 * 24);
+  }
+
+  loadState() {
+    if (!this.stateKey)
+      return;
+
+    var state = _.getLocalStorage("GridState:" + this.stateKey);
+    if (!state || !state.query)
+      return;
+
+    console.log("Loaded Grid State: " + this.stateKey, state);
+
+    this.query = state.query;
+
+    if (state.filterForm || this.filterForm)
+      this.filterForm?.patchValue(state.filterForm, { emitEvent: false });
   }
 
   // Page
@@ -166,6 +204,8 @@ export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, T
   // Lifecycle
 
   ngAfterViewInit() {
+    this.loadState();
+
     this.columns = this.columnQuery.toArray();
 
     _.forEach(this.columns, p => {
@@ -174,7 +214,7 @@ export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, T
 
     if (this.dataSource && this.dataSource.changed) {
       this.dataSource.changed.pipe(
-        debounceTime(200),
+        debounceTime(250),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(() => this.fetch());
@@ -192,7 +232,7 @@ export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, T
     if (this.search) {
       this.searchForm.valueChanges
         .pipe(
-          debounceTime(200),
+          debounceTime(250),
           takeUntilDestroyed(this.destroyRef)
         )
         .subscribe(() => this.fetch());

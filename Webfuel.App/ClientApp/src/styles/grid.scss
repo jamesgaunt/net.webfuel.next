@@ -13,6 +13,10 @@
     grid-template-columns: repeat(3, 1fr);
   }
 
+  &.has-columns-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
   > .column-span-2 {
     grid-column-end: span 2;
   }

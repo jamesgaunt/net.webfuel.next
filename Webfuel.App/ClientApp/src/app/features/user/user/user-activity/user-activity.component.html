@@ -10,7 +10,15 @@
     </div>
   </div>
   <user-tabs></user-tabs>
-  <div class="project-support-list">
+  <div *ngIf="items === null">
+    <p>Loading...</p>
+  </div>
+  <div *ngIf="items !== null && items.length == 0">
+    <div class="message is-primary">
+      No activity events have been recorded for this user.
+    </div>
+  </div>
+  <div *ngIf="items !== null && items.length > 0" class="project-support-list">
     <div class="project-support" *ngFor="let userActivity of items">
       <div class="header">
         <div class="columns">

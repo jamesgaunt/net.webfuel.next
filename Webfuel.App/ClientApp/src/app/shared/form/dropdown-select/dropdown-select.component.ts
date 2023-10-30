@@ -82,7 +82,8 @@ export class DropDownSelectComponent<TItem>
   doChangeCallback() {
     if (this.pickedItems.length === 0)
       this.onChange(null);
-    this.onChange(this.getId(this.pickedItems[0]));
+    else
+      this.onChange(this.getId(this.pickedItems[0]));
   }
 
   onChange: (value: string | null) => void = noop;

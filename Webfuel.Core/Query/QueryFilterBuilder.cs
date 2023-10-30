@@ -46,7 +46,7 @@
             return builder;
         }
 
-        public static IQueryFilterBuilder GreaterThan(this IQueryFilterBuilder builder, string field, object value, bool condition)
+        public static IQueryFilterBuilder GreaterThan(this IQueryFilterBuilder builder, string field, object? value, bool condition)
         {
             if (!condition)
                 return builder;
@@ -54,7 +54,7 @@
             return builder;
         }
 
-        public static IQueryFilterBuilder GreaterThanOrEqual(this IQueryFilterBuilder builder, string field, object value, bool condition)
+        public static IQueryFilterBuilder GreaterThanOrEqual(this IQueryFilterBuilder builder, string field, object? value, bool condition)
         {
             if (!condition)
                 return builder;
@@ -62,7 +62,7 @@
             return builder;
         }
 
-        public static IQueryFilterBuilder LessThan(this IQueryFilterBuilder builder, string field, object value, bool condition)
+        public static IQueryFilterBuilder LessThan(this IQueryFilterBuilder builder, string field, object? value, bool condition)
         {
             if (!condition)
                 return builder;
@@ -70,7 +70,7 @@
             return builder;
         }
 
-        public static IQueryFilterBuilder LessThanOrEqual(this IQueryFilterBuilder builder, string field, object value, bool condition)
+        public static IQueryFilterBuilder LessThanOrEqual(this IQueryFilterBuilder builder, string field, object? value, bool condition)
         {
             if (!condition)
                 return builder;

@@ -6,44 +6,51 @@
 <div class="container">
   <project-tabs></project-tabs>
   <form class="form" [formGroup]="form">
-    <div class="flex has-min-025">
-      <div class="field">
+    <div class="flex">
+      <div class="field is-3">
+        <label class="label">Status</label>
+        <dropdown-select [dataSource]="staticDataCache.projectStatus" placeholder="required" formControlName="statusId"></dropdown-select>
+      </div>
+      <div class="field is-3">
         <label class="label">Quantative team contribution</label>
         <dropdown-select [dataSource]="staticDataCache.isQuantativeTeamContribution" placeholder="optional" formControlName="isQuantativeTeamContributionId"></dropdown-select>
       </div>
-      <div class="field">
+      <div class="field is-3">
         <label class="label">CTU team contribution</label>
         <dropdown-select [dataSource]="staticDataCache.isCTUTeamContribution" placeholder="optional" formControlName="isCTUTeamContributionId"></dropdown-select>
       </div>
-      <div class="field">
+      <div class="field is-3">
         <label class="label">PPIE and EDI contribution</label>
         <dropdown-select [dataSource]="staticDataCache.isPPIEAndEDIContribution" placeholder="optional" formControlName="isPPIEAndEDIContributionId"></dropdown-select>
       </div>
-      <div class="field">
+      <div class="field is-6">
         <label class="label">Funding stream submitted to</label>
         <dropdown-select [dataSource]="staticDataCache.fundingStream" placeholder="optional" formControlName="submittedFundingStreamId"></dropdown-select>
         <input *ngIf="showSubmittedFundingStreamFreeText" class="input" type="text" placeholder="please specify other..." formControlName="submittedFundingStreamFreeText" />
       </div>
-      <div class="field is-full-width">
+      <div class="field is-6">
         <label class="label">Funding stream name</label>
         <input class="input" type="text" placeholder="required" formControlName="submittedFundingStreamName" />
       </div>
     </div>
 
-    <div class="flex has-min-025">
-      <div class="field">
+    <hr/>
+    <h3>For Clinical Trial Submissions</h3>
+
+    <div class="flex">
+      <div class="field is-3 is-6-md">
         <label class="label">Project start date</label>
         <date-picker placeholder="optional" formControlName="projectStartDate"></date-picker>
       </div>
-      <div class="field">
+      <div class="field is-3 is-6-md">
         <label class="label">Recruitment target</label>
         <input type="number" placeholder="optional" class="input" formControlName="recruitmentTarget" />
       </div>
-      <div class="field">
+      <div class="field is-3 is-6-md">
         <label class="label">Number of project sites</label>
         <input type="number" placeholder="optional" class="input" formControlName="numberOfProjectSites" />
       </div>
-      <div class="field">
+      <div class="field is-3 is-6-md">
         <label class="label">Is this an international multi-site study</label>
         <dropdown-select [dataSource]="staticDataCache.isInternationalMultiSiteStudy" placeholder="optional" formControlName="isInternationalMultiSiteStudyId"></dropdown-select>
       </div>

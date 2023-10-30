@@ -11,77 +11,77 @@
   </div>
   <user-tabs></user-tabs>
   <form class="form" [formGroup]="form">
-    <div class="grid has-columns-2">
-      <div class="field">
+    <div class="flex">
+      <div class="field is-6">
         <label class="label">Email</label>
         <input class="input" type="text" placeholder="required" formControlName="email" />
       </div>
-      <div class="field">
+      <div class="field is-6">
         <label class="label">Title</label>
         <dropdown-text-input placeholder="required" [dataSource]="staticDataCache.title" formControlName="title" />
       </div>
-      <div class="field">
+      <div class="field is-6">
         <label class="label">First name</label>
         <input class="input" type="text" placeholder="required" formControlName="firstName" />
       </div>
-      <div class="field">
+      <div class="field is-6">
         <label class="label">Last name</label>
         <input class="input" type="text" placeholder="required" formControlName="lastName" />
       </div>
-      <div class="field">
+      <div class="field is-6">
         <label class="label">User group</label>
         <dropdown-select [dataSource]="userGroupApi" placeholder="required" formControlName="userGroupId"></dropdown-select>
       </div>
     </div>
 
-    <div class="grid has-columns-2">
-      <div class="field">
+    <div class="flex">
+      <div class="field is-6">
         <label class="label">RSS job title</label>
         <input class="input" type="text" placeholder="required" formControlName="rssJobTitle" />
       </div>
-      <div class="field">
+      <div class="field is-6">
         <label class="label">University job title</label>
         <input class="input" type="text" placeholder="required" formControlName="universityJobTitle" />
       </div>
-      <div class="field">
+      <div class="field is-6">
         <label class="label">Professional background</label>
         <input class="input" type="text" placeholder="required" formControlName="professionalBackground" />
       </div>
-      <div class="field">
+      <div class="field is-6">
         <label class="label">Specialisation</label>
         <input class="input" type="text" placeholder="required" formControlName="specialisation" />
       </div>
-      <div class="field column-span-2">
+      <div class="field is-12">
         <label class="label">Adviser type / discipline</label>
         <dropdown-multi-select [dataSource]="staticDataCache.userDiscipline" placeholder="required" formControlName="disciplineIds"></dropdown-multi-select>
       </div>
     </div>
 
-    <div class="grid has-columns-2">
-      <div class="field">
+    <div class="flex">
+      <div class="field is-6">
         <label class="label">Start date for RSS</label>
         <date-picker placeholder="optional" formControlName="startDateForRSS"></date-picker>
       </div>
-      <div class="field">
+      <div class="field is-6">
         <label class="label">End date for RSS</label>
         <date-picker placeholder="optional" formControlName="endDateForRSS"></date-picker>
       </div>
-      <div class="field">
+      <div class="field is-6">
         <label class="label">Full time equivalent for RSS [0 - 1]</label>
         <input class="input" type="number" step="0.1" min="0" max="1" placeholder="optional" formControlName="fullTimeEquivalentForRSS" />
       </div>
-      <div class="field">
+      <div class="field is-6">
         <label class="label">Site</label>
         <dropdown-select [dataSource]="staticDataCache.site" placeholder="required" formControlName="siteId"></dropdown-select>
       </div>
     </div>
 
-    <div class="grid has-columns-2">
+    <div class="flex is-6">
       <div class="field">
         <label class="label">Hidden (will not be selectable in drop down lists)</label>
         <toggle-input formControlName="hidden" />
       </div>
-      <div class="field">
+      <div class="field is-6">
         <label class="label">Disabled (will not be able to login)</label>
         <toggle-input formControlName="disabled" />
       </div>
