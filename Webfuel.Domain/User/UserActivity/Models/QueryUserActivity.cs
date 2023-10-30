@@ -9,11 +9,11 @@ namespace Webfuel.Domain
 {
     public class QueryUserActivity : Query, IRequest<QueryResult<UserActivity>>
     {
-        public required Guid UserId { get; set; }
+        public required Guid? UserId { get; set; }
 
         public Query ApplyCustomFilters()
         {
-            this.Equal(nameof(UserActivity.UserId), UserId);
+            this.Equal(nameof(UserActivity.UserId), UserId, UserId != null);
             return this;
         }
     }

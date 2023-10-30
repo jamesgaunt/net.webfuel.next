@@ -10,6 +10,7 @@
     <UserSecretsId>85708f9f-12c3-489f-ade2-3979537c06b2</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="7.0.11" />
   </ItemGroup>
   <ItemGroup>
@@ -21,6 +22,12 @@
     <None Remove="$(SpaRoot)**" />
     <None Remove="_Generated\StaticData\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\assets\external.css" />
+    <None Include="wwwroot\assets\external.form.css" />
+    <None Include="wwwroot\assets\external.js" />
+    <None Include="wwwroot\assets\external.layout.css" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Webfuel.Domain.StaticData\Webfuel.Domain.StaticData.csproj" />

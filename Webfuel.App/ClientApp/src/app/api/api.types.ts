@@ -1,6 +1,7 @@
 export interface ClientConfiguration {
     email: string;
     sideMenu: ClientConfigurationMenu;
+    settingsMenu: ClientConfigurationMenu;
     staticDataMenu: ClientConfigurationMenu;
 }
 
@@ -551,7 +552,7 @@ export interface UpdateUserActivity {
 }
 
 export interface QueryUserActivity extends Query {
-    userId: string;
+    userId: string | null | null;
     skip: number;
     take: number;
     projection?: Array<string>;

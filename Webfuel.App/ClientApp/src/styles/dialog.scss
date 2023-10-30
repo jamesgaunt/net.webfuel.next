@@ -1,13 +1,19 @@
 @import 'config.scss';
 
+.cdk-dialog-container {
+    position: relative;
+}
 
 .dialog {
   background-color: var(--palette-body-background);
   display: block;
   position: relative;
   box-shadow: 1px 1px 10px #000;
-  width: 40rem;
-  max-width: 98vh;
+  width: 100%;
+  min-width: 40rem;
+  max-width: 90vw;
+  margin-left: auto;
+  margin-right: auto;
 
   .dialog-head {
     height: 3.5rem;

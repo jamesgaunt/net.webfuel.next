@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login/login.component';
 import { ForgottenPasswordComponent } from './login/forgotten-password/forgotten-password.component';
 import { ResetPasswordComponent } from './login/reset-password/reset-password.component';
+import { SupportRequestFormComponent } from './external/support-request-form.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ResetPasswordComponent } from './login/reset-password/reset-password.co
     LoginComponent,
     ForgottenPasswordComponent,
     ResetPasswordComponent,
+    SupportRequestFormComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -1,21 +1,12 @@
 
 NEXT:
 
-> Change Add Activity to My Activity (or put that on the dashboard)?
-> Move User Groups into Configuration
-> Remove Researchers entirely
-
 > Fix Drop Down Text field to work better (customise backdrop opacity)
 > Allow tabbing on all fields
 > Razor based support request form (mock up example)
 > Fix up validation logic/display - form service checks and processing server side errors - register active form with api (can we do it on active controller)
 > Think about a user cache? GUID => Presentation Only
 > Standardise date formats dd MMM yy (can we globalise the default - customisation service - user level customisations, formats, palettes, etc)
-
-> More complex grid search properly integrated into grid 
-> Allow grid to save state in local storage 
-> More flexible/accurate form field layout (flex/grid => form-flex / form-grid)
-> Dialog widths
 
 DONE:
 
@@ -26,6 +17,13 @@ DONE:
 > Forgotten password link on home page [DONE]
 > Roll out CreatedAt [DONE]
 > Prototype Other / Free Text fields [DONE]
+> More complex grid search properly integrated into grid [DONE]
+> Allow grid to save state in local storage [DONE] 
+> More flexible/accurate form field layout (flex/grid => form-flex / form-grid) [DONE]
+> Change Add Activity to My Activity (or put that on the dashboard)? [DONE]
+> Move User Groups into Configuration [DONE]
+> Remove Researchers entirely [DONE]
+> Dialog widths [DONE]
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 

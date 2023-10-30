@@ -1,5 +1,16 @@
 @import 'config.scss';
 
+.app-login {
+  background-image: url(https://www.webfuel.com/temp/login-background.jpg);
+  background-position: 50% 50%;
+  background-size: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
 .login-wrapper {
   position: fixed;
   top: 0;

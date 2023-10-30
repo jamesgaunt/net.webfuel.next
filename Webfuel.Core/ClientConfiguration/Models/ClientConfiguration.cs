@@ -13,6 +13,8 @@ namespace Webfuel
 
         public ClientConfigurationMenu SideMenu { get; set; } = new ClientConfigurationMenu();
 
+        public ClientConfigurationMenu SettingsMenu { get; set; } = new ClientConfigurationMenu();
+
         public ClientConfigurationMenu StaticDataMenu { get; set; } = new ClientConfigurationMenu();
 
     }

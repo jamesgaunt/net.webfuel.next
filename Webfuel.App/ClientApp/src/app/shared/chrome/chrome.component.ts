@@ -42,9 +42,7 @@ export class ChromeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.router.events.forEach((event) => {
       if (event instanceof ResolveEnd) {
-
         this.resolveActiveSideMenu(event);
-        this.hidden = event.state.root.firstChild!.data.chrome === false;
       }
     });
   }
@@ -72,10 +70,6 @@ export class ChromeComponent implements OnInit, OnDestroy {
       this.activeSideMenu = node.data.activeSideMenu || this.activeSideMenu;
     }
   }
-
-  // Hidden
-
-  hidden = true;
 
   // Collapsed
 

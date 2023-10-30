@@ -5,12 +5,18 @@ import { LoginComponent } from './login/login/login.component';
 import { isAuthenticated } from './core/guards/identity.guard';
 import { ForgottenPasswordComponent } from './login/forgotten-password/forgotten-password.component';
 import { ResetPasswordComponent } from './login/reset-password/reset-password.component';
+import { SupportRequestFormComponent } from './external/support-request-form.component';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
+  },
+  {
+    path: 'external/support-request',
+    component: SupportRequestFormComponent,
+    data: { chrome: false }
   },
   {
     path: 'login',

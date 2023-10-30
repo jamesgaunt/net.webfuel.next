@@ -1,5 +1,17 @@
 <body>
-  <chrome>
-    <router-outlet></router-outlet>
-  </chrome>
+  <div [ngSwitch]="mode | async">
+    <div *ngSwitchCase="'loading'">
+    </div>
+    <div *ngSwitchCase="'external'" class="app-external">
+      <router-outlet></router-outlet>
+    </div>
+    <div *ngSwitchCase="'login'" class="app-login">
+      <router-outlet></router-outlet>
+    </div>
+    <div *ngSwitchCase="'active'">
+      <chrome>
+        <router-outlet></router-outlet>
+      </chrome>
+    </div>
+  </div>
 </body>

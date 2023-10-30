@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.Domain", "Webfuel.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.Domain.StaticData", "Webfuel.Domain.StaticData\Webfuel.Domain.StaticData.csproj", "{420ED23D-7C14-46DC-8A7A-0C42F2637FA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webfuel.Common", "Webfuel.Common\Webfuel.Common.csproj", "{2627CC29-6D1C-4D9C-8894-FB78CF63713B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.Common", "Webfuel.Common\Webfuel.Common.csproj", "{2627CC29-6D1C-4D9C-8894-FB78CF63713B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
