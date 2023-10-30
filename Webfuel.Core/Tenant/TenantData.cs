@@ -12,7 +12,7 @@ namespace Webfuel
 
         public required string Name { get; init; }
 
-        public required string DatabaseSchema { get; init; }
+        public required string DatabaseLogin { get; init; }
 
         public required string DatabasePassword { get; init; }
     }

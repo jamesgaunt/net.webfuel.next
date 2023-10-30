@@ -15,7 +15,7 @@ namespace Webfuel.Tools.Datafuel
     {
         // Database
 
-        public static string DatabaseName { get { return "net.webfuel.next"; } }
+        public static string DatabaseName { get { return "net.webfuel.rss_icl"; } }
 
         public static string DatabaseServer { get { return "Data Source=JAMES-RTX\\SQLEXPRESS;Integrated Security=true;TrustServerCertificate=true"; } }
 
@@ -23,9 +23,7 @@ namespace Webfuel.Tools.Datafuel
 
         public static List<Tenant> Tenants { get; } = new List<Tenant>
         {
-            new Tenant { Name = "Development", DatabaseSchema = "rssdev" },
-            new Tenant { Name = "RSSLeicester", DatabaseSchema = "rsslct" },
-            new Tenant { Name = "RSSLondon", DatabaseSchema = "rssldn" }
+            new Tenant { Name = "RSS Imperial College London", DatabaseSchema = "rss_icl" },
         };
 
         // Solution

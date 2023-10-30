@@ -11,22 +11,10 @@ namespace Webfuel
         public static IReadOnlyList<TenantData> Tenants = new List<TenantData>
         {
             new TenantData { 
-                Id = Tenant.RSS_Development, 
-                Name = "Development" , 
-                DatabaseSchema = "rssdev", 
-                DatabasePassword = "multitenantpwd" 
-            },
-            new TenantData { 
-                Id = Tenant.RSS_Leicester, 
-                Name = "RSS Leicester", 
-                DatabaseSchema = "rsslct", 
-                DatabasePassword = "multitenantpwd" 
-            },
-            new TenantData { 
-                Id = Tenant.RSS_London,
-                Name = "RSS London", 
-                DatabaseSchema = "rssldn", 
-                DatabasePassword = "multitenantpwd" 
+                Id = Tenant.RSS_ICL, 
+                Name = "RSS Imperial College London" , 
+                DatabaseLogin = "login_rss_icl@webfuel",
+                DatabasePassword = "APAxTFbB2AoGdmbRUuHe"
             },
         };
     }

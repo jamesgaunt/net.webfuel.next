@@ -8,12 +8,6 @@ namespace Webfuel
 {
     public static class Tenant
     {
-        public static string RSS_Development => "rss_development";
-        public static string RSS_London => "rss_london";
-        public static string RSS_Leicester => "rss_leicester";
-        public static string RSS_Birmingham => "rss_birmingham";
-        public static string RSS_Southampton => "rss_southampton";
-
-        public static string RSS_Imperial => "rss_imperial";
+        public static string RSS_ICL => "rss_icl";
     }
 }
