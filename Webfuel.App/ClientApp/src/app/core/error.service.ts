@@ -21,6 +21,11 @@ export class ErrorService {
 
   interceptError(err: HttpErrorResponse) {
 
+    if (err.status == 0) {
+      this.growlService.growlDanger("Status 0. API is probably down!");
+      return;
+    }
+
     var error = this._extractError(err);
 
     if (!error) {

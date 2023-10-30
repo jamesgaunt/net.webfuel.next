@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiHost: 'https://localhost:7076/'
+  apiHost: 'https://localhost:7076/',
+  //apiHost: 'https://webfuel-rss-icl-api.azurewebsites.net/'
 };
 
 /*

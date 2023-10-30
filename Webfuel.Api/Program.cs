@@ -45,12 +45,15 @@ namespace Webfuel.Api
                         policy =>
                         {
                             policy.WithOrigins(
+                                "https://www.webfuel.com",
                                 "https://localhost:44426",
                                 "https://webfuel-rss-icl.azurewebsites.net");
 
                             policy.WithHeaders(
                                 "content-type",
-                                "identity_token");
+                                "identity-token");
+
+                            policy.WithMethods("GET", "POST", "PUT", "DELETE");
                         });
                 });
 

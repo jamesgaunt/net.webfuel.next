@@ -10,9 +10,14 @@ namespace Webfuel.App
             app.MapGet("api/ping", Ping);
         }
 
-        public static string Ping()
+        public static PingResponse Ping()
         {
-            return DateTime.Now.ToString();
+            return new PingResponse { Timestamp = DateTime.Now.ToString() };
+        }
+
+        public class PingResponse
+        {
+            public required string Timestamp { get; set; }
         }
     }
 }

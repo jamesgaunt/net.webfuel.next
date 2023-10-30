@@ -74,18 +74,27 @@ export class DropDownBase<TItem> {
     if (this.filter.observed)
       this.filter.emit(q);
 
-    this.dataSource.query(q).subscribe((response) => {
-      if (currentCallback !== this.optionItemsCallback)
-        return; // We have forced a reload while waiting for these items to come back
-      this.optionItemsCallback = null;
-      if (flush)
-        this.optionItems = [];
-      if (response.items.length == 0) {
-        this.optionItemsComplete = true;
-      } else {
-        this.optionItems = this.optionItems.concat(response.items);
+    console.log("SELECT QUERYING");
+
+    this.dataSource.query(q).subscribe({
+      next: (response) => {
+        console.log("SELECT QUERY SUCCESS: " + response);
+
+        if (currentCallback !== this.optionItemsCallback)
+          return; // We have forced a reload while waiting for these items to come back
+        this.optionItemsCallback = null;
+        if (flush)
+          this.optionItems = [];
+        if (response.items.length == 0) {
+          this.optionItemsComplete = true;
+        } else {
+          this.optionItems = this.optionItems.concat(response.items);
+        }
+        this.cd.detectChanges();
+      },
+      error: (error) =>{
+        console.log("SELECT QUERY ERROR: " + error);
       }
-      this.cd.detectChanges();
     })
   }
 

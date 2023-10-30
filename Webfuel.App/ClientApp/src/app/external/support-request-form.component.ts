@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { StaticDataCache } from '../api/static-data.cache';
+import { PingApi } from '../api/ping.api';
 
 @Component({
   selector: 'support-request-form',
@@ -11,9 +12,20 @@ export class SupportRequestFormComponent {
 
   constructor(
     private router: Router,
+    public pingApi: PingApi,
     public staticDataCache: StaticDataCache,
   ) {
+    this.pingApi.ping().subscribe({
+      next: (result) => {
+        this.ping = result.timestamp;
+      },
+      error: (error) => {
+        this.ping = JSON.stringify(error);
+      }
+    })
   }
+
+  ping = "PING";
 
   form = new FormGroup({
     title: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),

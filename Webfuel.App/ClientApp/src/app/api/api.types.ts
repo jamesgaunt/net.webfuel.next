@@ -32,6 +32,10 @@ export interface ValidationError {
     message: string;
 }
 
+export interface PingResponse {
+    timestamp: string;
+}
+
 export interface IStaticDataModel {
     applicationStage: Array<ApplicationStage>;
     fundingBody: Array<FundingBody>;

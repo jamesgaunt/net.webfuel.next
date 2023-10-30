@@ -12,8 +12,7 @@ namespace Webfuel.App
         {
             // Queries
 
-            app.MapGet("api/static-data", GetStaticData)
-                .RequireIdentity();
+            app.MapGet("api/static-data", GetStaticData);
         }
 
         public static Task<IStaticDataModel> GetStaticData(IStaticDataService staticDataService)

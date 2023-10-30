@@ -1,8 +1,9 @@
 <div class="container">
-  <h1>Support Request Form</h1>
-
   <form class="form" [formGroup]="form">
     <div class="flex">
+      <div class="field is-12">
+        <label class="label">{{ ping }}</label>
+      </div>
       <div class="field is-12">
         <label class="label">Working title of the project</label>
         <input class="input" type="text" placeholder="required" formControlName="title" />
@@ -61,8 +62,8 @@
         </label>
         <textarea class="textarea" formControlName="supportRequested" placeholder="required"></textarea>
       </div>
+      <p>&nbsp;</p>
     </div>
   </form>
-
 </div>
 

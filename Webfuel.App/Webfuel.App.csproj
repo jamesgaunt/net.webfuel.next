@@ -17,12 +17,6 @@
     <Content Remove="$(SpaRoot)**" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="wwwroot\assets\external.css" />
-    <None Include="wwwroot\assets\external.form.css" />
-    <None Include="wwwroot\assets\external.js" />
-    <None Include="wwwroot\assets\external.layout.css" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Webfuel.Domain.StaticData\Webfuel.Domain.StaticData.csproj" />
     <ProjectReference Include="..\Webfuel.Domain\Webfuel.Domain.csproj" />
   </ItemGroup>

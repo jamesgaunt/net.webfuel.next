@@ -14,7 +14,7 @@ namespace Webfuel
         {
             builder.AddEndpointFilter((EndpointFilterInvocationContext context, EndpointFilterDelegate next) =>
             {
-                var token = context.HttpContext.GetState<IdentityToken>(IdentityToken.Key);
+                var token = context.HttpContext.GetState<IdentityToken>(IdentityStatic.StateKey);
                 if (token == null)
                     throw new NotAuthenticatedException();
                 if (!claim(token.Claims))
@@ -30,7 +30,7 @@ namespace Webfuel
         {
             builder.AddEndpointFilter((EndpointFilterInvocationContext context, EndpointFilterDelegate next) =>
             {
-                var token = context.HttpContext.GetState<IdentityToken>(IdentityToken.Key);
+                var token = context.HttpContext.GetState<IdentityToken>(IdentityStatic.StateKey);
                 if (token == null)
                     throw new NotAuthenticatedException();
 

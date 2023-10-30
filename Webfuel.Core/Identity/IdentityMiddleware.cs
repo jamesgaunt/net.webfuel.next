@@ -20,7 +20,7 @@ namespace Webfuel
         {
             var token = GetIdentityToken(context);
             if (token != null) { 
-                context.SetState(IdentityToken.Key, token);
+                context.SetState(IdentityStatic.StateKey, token);
             }
             await _request(context);
         }
@@ -36,10 +36,10 @@ namespace Webfuel
 
         string? ReadHeaderJson(HttpContext httpContext)
         {
-            if (!httpContext.Request.Headers.ContainsKey(IdentityToken.Key))
+            if (!httpContext.Request.Headers.ContainsKey(IdentityStatic.Header))
                 return null;
 
-            var header = httpContext.Request.Headers[IdentityToken.Key];
+            var header = httpContext.Request.Headers[IdentityStatic.Header];
             if (header.Count == 0)
                 return null;
 

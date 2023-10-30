@@ -23,7 +23,7 @@ namespace Webfuel
         {
             get
             {
-                var token = _httpContextAccessor.HttpContext?.GetState<IdentityToken>(IdentityToken.Key);
+                var token = _httpContextAccessor.HttpContext?.GetState<IdentityToken>(IdentityStatic.StateKey);
                 if (token == null)
                     return null;
                 return token.User;
@@ -34,7 +34,7 @@ namespace Webfuel
         {
             get
             {
-                var token = _httpContextAccessor.HttpContext?.GetState<IdentityToken>(IdentityToken.Key);
+                var token = _httpContextAccessor.HttpContext?.GetState<IdentityToken>(IdentityStatic.StateKey);
                 if (token == null)
                     return new IdentityClaims();
                 return token.Claims;
