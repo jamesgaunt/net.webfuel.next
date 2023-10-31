@@ -13,6 +13,9 @@ import { HowDidYouFindUsComponent } from './types/how-did-you-find-us.component'
 import { SupportProvidedComponent } from './types/support-provided.component';
 import { WorkActivityComponent } from './types/work-activity.component';
 import { UserDisciplineComponent } from './types/user-discipline.component';
+import { AgeRangeComponent } from './types/age-range';
+import { EthnicityComponent } from './types/ethnicity.component';
+import { DisabilityComponent } from './types/disability.component';
 
 const routes: Routes = [
   {
@@ -78,6 +81,21 @@ const routes: Routes = [
   {
     path: 'user-discipline',
     component: UserDisciplineComponent,
+    data: { activeSideMenu: 'Configuration' }
+  },
+  {
+    path: 'age-range',
+    component: AgeRangeComponent,
+    data: { activeSideMenu: 'Configuration' }
+  },
+  {
+    path: 'ethnicity',
+    component: EthnicityComponent,
+    data: { activeSideMenu: 'Configuration' }
+  },
+  {
+    path: 'disability',
+    component: DisabilityComponent,
     data: { activeSideMenu: 'Configuration' }
   },
 ];

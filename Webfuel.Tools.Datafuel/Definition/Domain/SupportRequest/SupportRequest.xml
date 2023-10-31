@@ -3,6 +3,9 @@
 <Schema>
   <Entity Name="SupportRequest">
     <Key Name="Id" Type="guid" />
+    
+    <!-- Project Details -->
+    
     <Property Name="Title" Type="string[1000]" />
     <Property Name="IsFellowshipId" Type="IsFellowship?" />
     <Property Name="ApplicationStageId" Type="ApplicationStage?" />
@@ -14,12 +17,47 @@
     <Property Name="ExperienceOfResearchAwards" Type="string[1000]" />
     <Property Name="IsTeamMembersConsultedId" Type="IsTeamMembersConsulted?" />
     <Property Name="IsResubmissionId" Type="IsResubmission?" />
-    <Property Name="IsLeadApplicantNHSId" Type="IsLeadApplicantNHS?" />
     <Property Name="BriefDescription" Type="string[5000]" />
     <Property Name="SupportRequested" Type="string[2000]" />
     <Property Name="HowDidYouFindUsId" Type="HowDidYouFindUs?" />
     <Property Name="StatusId" Type="SupportRequestStatus" />
 
+    <!-- Team Contact Details -->
+
+    <Property Name="TeamContactTitle" Type="meta:name" />
+    <Property Name="TeamContactFirstName" Type="meta:name" />
+    <Property Name="TeamContactLastName" Type="meta:name" />
+    <Property Name="TeamContactEmail" Type="meta:name" />
+    <Property Name="TeamContactRoleId" Type="ResearcherRole?" />
+    <Property Name="TeamContactMailingPermission" Type="boolean" />
+    <Property Name="TeamContactPrivacyStatementRead" Type="boolean" />
+
+    <!-- Lead Applicant Details -->
+
+    <Property Name="LeadApplicantTitle" Type="meta:name" />
+    <Property Name="LeadApplicantFirstName" Type="meta:name" />
+    <Property Name="LeadApplicantLastName" Type="meta:name" />
+
+    <Property Name="LeadApplicantJobRole" Type="meta:name" />
+    <Property Name="LeadApplicantOrganisationType" Type="ResearcherOrganisationType?" />
+    <Property Name="LeadApplicantOrganisation" Type="meta:name" />
+    <Property Name="LeadApplicantDepartment" Type="meta:name" />
+
+    <Property Name="LeadApplicantAddressLine1" Type="meta:name" />
+    <Property Name="LeadApplicantAddressLine2" Type="meta:name" />
+    <Property Name="LeadApplicantAddressTown" Type="meta:name" />
+    <Property Name="LeadApplicantAddressCounty" Type="meta:name" />
+    <Property Name="LeadApplicantAddressCountry" Type="meta:name" />
+    <Property Name="LeadApplicantAddressPostcode" Type="meta:name" />
+
+    <Property Name="LeadApplicantORCID" Type="meta:name" />
+    <Property Name="IsLeadApplicantNHSId" Type="IsLeadApplicantNHS?" />
+
+    <Property Name="LeadApplicantAgeRangeId" Type="AgeRange?" />
+    <Property Name="LeadApplicantDisabilityId" Type="Disability?" />
+    <Property Name="LeadApplicantGenderId" Type="Gender?" />
+    <Property Name="LeadApplicantEthnicityId" Type="Ethnicity?" />
+    
     <!-- Replicated from Project -->
     <Property Name="ProjectId" Type="Project?" />
 
@@ -28,3 +66,4 @@
 
   </Entity>
 </Schema>
+

@@ -40,7 +40,7 @@ export class UpdateUserActivityDialogComponent extends DialogComponentBase<UserA
   });
 
   save() {
-    if (this.formService.checkForErrors(this.form))
+    if (this.formService.hasErrors(this.form))
       return;
 
     this.userActivityApi.update(this.form.getRawValue(), { successGrowl: "User Activity Updated" }).subscribe((result) => {

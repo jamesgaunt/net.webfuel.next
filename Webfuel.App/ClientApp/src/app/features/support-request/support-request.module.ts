@@ -7,8 +7,8 @@ import { SupportRequestListComponent } from './support-request/support-request-l
 import { SupportRequestItemComponent } from './support-request/support-request-item/support-request-item.component';
 import { SupportRequestTabsComponent } from './support-request/support-request-tabs/support-request-tabs.component';
 import { SupportRequestFilesComponent } from './support-request/support-request-files/support-request-files.component';
+import { SupportRequestResearcherComponent } from './support-request/support-request-researcher/support-request-researcher.component';
 
-import { CreateSupportRequestDialog, CreateSupportRequestDialogComponent } from './support-request/dialogs/create-support-request/create-support-request.dialog';
 import { TriageSupportRequestDialog, TriageSupportRequestDialogComponent } from './support-request/dialogs/triage-support-request/triage-support-request.dialog';
 
 @NgModule({
@@ -22,12 +22,11 @@ import { TriageSupportRequestDialog, TriageSupportRequestDialogComponent } from 
     SupportRequestItemComponent,
     SupportRequestTabsComponent,
     SupportRequestFilesComponent,
+    SupportRequestResearcherComponent,
 
-    CreateSupportRequestDialogComponent,
     TriageSupportRequestDialogComponent,
   ],
   providers: [
-    CreateSupportRequestDialog,
     TriageSupportRequestDialog
   ]
 })

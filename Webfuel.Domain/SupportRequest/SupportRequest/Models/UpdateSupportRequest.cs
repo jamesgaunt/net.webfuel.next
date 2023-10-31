@@ -19,7 +19,6 @@ namespace Webfuel.Domain
         public Guid? IsFellowshipId { get; set; }
         public Guid? IsTeamMembersConsultedId { get; set; }
         public Guid? IsResubmissionId { get; set; }
-        public Guid? IsLeadApplicantNHSId { get; set; }
         public Guid? ApplicationStageId { get; set; }
         public Guid? FundingStreamId { get; set; }
         public Guid? FundingCallTypeId { get; set; }

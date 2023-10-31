@@ -16,6 +16,9 @@ import { HowDidYouFindUsComponent } from './types/how-did-you-find-us.component'
 import { SupportProvidedComponent } from './types/support-provided.component';
 import { WorkActivityComponent } from './types/work-activity.component';
 import { UserDisciplineComponent } from './types/user-discipline.component';
+import { AgeRangeComponent } from './types/age-range';
+import { EthnicityComponent } from './types/ethnicity.component';
+import { DisabilityComponent } from './types/disability.component';
 
 import { CreateStaticDataDialog, CreateStaticDataDialogComponent } from './dialogs/create-static-data/create-static-data.dialog';
 import { UpdateStaticDataDialog, UpdateStaticDataDialogComponent } from './dialogs/update-static-data/update-static-data.dialog';
@@ -40,6 +43,9 @@ import { UpdateStaticDataDialog, UpdateStaticDataDialogComponent } from './dialo
     SupportProvidedComponent,
     WorkActivityComponent,
     UserDisciplineComponent,
+    AgeRangeComponent,
+    EthnicityComponent,
+    DisabilityComponent,
 
     CreateStaticDataDialogComponent,
     UpdateStaticDataDialogComponent,

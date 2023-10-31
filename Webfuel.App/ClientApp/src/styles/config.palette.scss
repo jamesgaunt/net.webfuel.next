@@ -67,7 +67,7 @@ $paletteAction: 'primary', 'secondary', 'success', 'warning', 'danger';
 
 // Dark Mode
 
-body.dark-mode {
+body.mode-active.dark-mode {
   --palette-text: #fff;
   //--palette-control-text: #fff;
   //--palette-control-background: #555;

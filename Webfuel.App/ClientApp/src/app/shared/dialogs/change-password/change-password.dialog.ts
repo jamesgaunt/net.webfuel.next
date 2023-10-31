@@ -33,7 +33,7 @@ export class ChangePasswordDialogComponent extends DialogComponentBase<true> {
   });
 
   save() {
-    if (this.formService.checkForErrors(this.form))
+    if (this.formService.hasErrors(this.form))
       return;
 
     this.userLoginApi.changePassword(this.form.getRawValue()).subscribe(() => {

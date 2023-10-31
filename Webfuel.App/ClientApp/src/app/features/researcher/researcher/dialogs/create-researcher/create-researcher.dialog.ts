@@ -30,7 +30,7 @@ export class CreateResearcherDialogComponent extends DialogComponentBase<Researc
   });
 
   save() {
-    if (this.formService.checkForErrors(this.form))
+    if (this.formService.hasErrors(this.form))
       return;
 
     this.researcherApi.create(this.form.getRawValue(), { successGrowl: "Researcher Created" }).subscribe((result) => {

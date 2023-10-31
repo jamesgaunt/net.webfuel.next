@@ -46,7 +46,7 @@ export class CreateProjectSubmissionDialogComponent extends DialogComponentBase<
   });
 
   save() {
-    if (this.formService.checkForErrors(this.form))
+    if (this.formService.hasErrors(this.form))
       return;
 
     this.projectSubmissionApi.create(this.form.getRawValue(), { successGrowl: "Project Submission Added" }).subscribe((result) => {

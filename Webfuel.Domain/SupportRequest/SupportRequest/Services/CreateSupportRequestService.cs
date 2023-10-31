@@ -24,25 +24,11 @@ namespace Webfuel.Domain
 
         public async Task<SupportRequest> CreateSupportRequest(CreateSupportRequest request)
         {
-            var supportRequest = new SupportRequest();
+            var supportRequest = new SupportRequestMapper().Map(request);
+
             supportRequest.StatusId = SupportRequestStatusEnum.ToBeTriaged;
             supportRequest.DateOfRequest = DateOnly.FromDateTime(DateTime.Now);
             supportRequest.CreatedAt = DateTimeOffset.UtcNow;
-
-            supportRequest.Title = request.Title;
-            supportRequest.IsFellowshipId = request.IsFellowshipId;
-            supportRequest.FundingStreamName = request.FundingStreamName;
-            supportRequest.TargetSubmissionDate = request.TargetSubmissionDate;
-            supportRequest.ExperienceOfResearchAwards = request.ExperienceOfResearchAwards;
-            supportRequest.IsTeamMembersConsultedId = request.IsTeamMembersConsultedId;
-            supportRequest.IsResubmissionId = request.IsResubmissionId;
-            supportRequest.BriefDescription = request.BriefDescription;
-            supportRequest.SupportRequested = request.SupportRequested;
-            supportRequest.IsLeadApplicantNHSId = request.IsLeadApplicantNHSId;
-            supportRequest.ApplicationStageId = request.ApplicationStageId;
-            supportRequest.FundingStreamId = request.FundingStreamId;
-            supportRequest.FundingCallTypeId = request.FundingCallTypeId;
-            supportRequest.HowDidYouFindUsId = request.HowDidYouFindUsId;
 
             return await _supportRequestRepository.InsertSupportRequest(supportRequest);
         }

@@ -18,6 +18,9 @@ namespace Webfuel.App
             app.MapPut("api/support-request", Update)
                 .RequireIdentity();
 
+            app.MapPut("api/support-request/researcher", UpdateResearcher)
+                .RequireIdentity();
+
             app.MapPost("api/support-request/triage", Triage)
                 .RequireIdentity();
 
@@ -42,6 +45,12 @@ namespace Webfuel.App
         {
             return mediator.Send(command);
         }
+
+        public static Task<SupportRequest> UpdateResearcher([FromBody] UpdateSupportRequestResearcher command, IMediator mediator)
+        {
+            return mediator.Send(command);
+        }
+
 
         public static Task<Project?> Triage([FromBody] TriageSupportRequest command, IMediator mediator)
         {

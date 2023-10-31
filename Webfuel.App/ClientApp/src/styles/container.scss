@@ -24,3 +24,9 @@
     max-width: 100%;
   }
 }
+
+body.mode-external .container {
+    width: 100% !important;
+    max-width: 1600px !important;
+    padding: 0 !important;
+}

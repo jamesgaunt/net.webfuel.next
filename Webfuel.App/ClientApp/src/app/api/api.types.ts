@@ -37,7 +37,10 @@ export interface PingResponse {
 }
 
 export interface IStaticDataModel {
+    ageRange: Array<AgeRange>;
     applicationStage: Array<ApplicationStage>;
+    disability: Array<Disability>;
+    ethnicity: Array<Ethnicity>;
     fundingBody: Array<FundingBody>;
     fundingCallType: Array<FundingCallType>;
     fundingStream: Array<FundingStream>;
@@ -52,6 +55,8 @@ export interface IStaticDataModel {
     isResubmission: Array<IsResubmission>;
     isTeamMembersConsulted: Array<IsTeamMembersConsulted>;
     projectStatus: Array<ProjectStatus>;
+    researcherOrganisationType: Array<ResearcherOrganisationType>;
+    researcherRole: Array<ResearcherRole>;
     researchMethodology: Array<ResearchMethodology>;
     site: Array<Site>;
     submissionOutcome: Array<SubmissionOutcome>;
@@ -64,13 +69,11 @@ export interface IStaticDataModel {
     loadedAt: string;
 }
 
-export interface ApplicationStage extends IStaticData, IStaticDataWithFreeText {
+export interface AgeRange extends IStaticData {
     id: string;
     name: string;
     sortOrder: number;
     default: boolean;
-    hidden: boolean;
-    freeText: boolean;
 }
 
 export interface IStaticData {
@@ -80,8 +83,35 @@ export interface IStaticData {
     default: boolean;
 }
 
+export interface ApplicationStage extends IStaticData, IStaticDataWithFreeText {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
 export interface IStaticDataWithFreeText {
     id: string;
+    freeText: boolean;
+}
+
+export interface Disability extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface Ethnicity extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
     freeText: boolean;
 }
 
@@ -192,6 +222,23 @@ export interface ProjectStatus extends IStaticData {
     default: boolean;
     hidden: boolean;
     freeText: boolean;
+}
+
+export interface ResearcherOrganisationType extends IStaticData, IStaticDataWithFreeText {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface ResearcherRole extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
 }
 
 export interface ResearchMethodology extends IStaticData {
@@ -472,6 +519,25 @@ export interface SupportRequest {
     experienceOfResearchAwards: string;
     briefDescription: string;
     supportRequested: string;
+    teamContactTitle: string;
+    teamContactFirstName: string;
+    teamContactLastName: string;
+    teamContactEmail: string;
+    teamContactMailingPermission: boolean;
+    teamContactPrivacyStatementRead: boolean;
+    leadApplicantTitle: string;
+    leadApplicantFirstName: string;
+    leadApplicantLastName: string;
+    leadApplicantJobRole: string;
+    leadApplicantOrganisation: string;
+    leadApplicantDepartment: string;
+    leadApplicantAddressLine1: string;
+    leadApplicantAddressLine2: string;
+    leadApplicantAddressTown: string;
+    leadApplicantAddressCounty: string;
+    leadApplicantAddressCountry: string;
+    leadApplicantAddressPostcode: string;
+    leadApplicantORCID: string;
     createdAt: string;
     isFellowshipId: string | null | null;
     applicationStageId: string | null | null;
@@ -479,9 +545,15 @@ export interface SupportRequest {
     fundingStreamId: string | null | null;
     isTeamMembersConsultedId: string | null | null;
     isResubmissionId: string | null | null;
-    isLeadApplicantNHSId: string | null | null;
     howDidYouFindUsId: string | null | null;
     statusId: string;
+    teamContactRoleId: string | null | null;
+    leadApplicantOrganisationType: string | null | null;
+    isLeadApplicantNHSId: string | null | null;
+    leadApplicantAgeRangeId: string | null | null;
+    leadApplicantDisabilityId: string | null | null;
+    leadApplicantGenderId: string | null | null;
+    leadApplicantEthnicityId: string | null | null;
     projectId: string | null | null;
 }
 
@@ -495,11 +567,36 @@ export interface CreateSupportRequest {
     isFellowshipId: string | null | null;
     isTeamMembersConsultedId: string | null | null;
     isResubmissionId: string | null | null;
-    isLeadApplicantNHSId: string | null | null;
     applicationStageId: string | null | null;
     fundingStreamId: string | null | null;
     fundingCallTypeId: string | null | null;
     howDidYouFindUsId: string | null | null;
+    teamContactTitle: string;
+    teamContactFirstName: string;
+    teamContactLastName: string;
+    teamContactEmail: string;
+    teamContactRoleId: string | null | null;
+    teamContactMailingPermission: boolean;
+    teamContactPrivacyStatementRead: boolean;
+    leadApplicantTitle: string;
+    leadApplicantFirstName: string;
+    leadApplicantLastName: string;
+    leadApplicantJobRole: string;
+    leadApplicantOrganisationTypeId: string | null | null;
+    leadApplicantOrganisation: string;
+    leadApplicantDepartment: string;
+    leadApplicantAddressLine1: string;
+    leadApplicantAddressLine2: string;
+    leadApplicantAddressTown: string;
+    leadApplicantAddressCounty: string;
+    leadApplicantAddressCountry: string;
+    leadApplicantAddressPostcode: string;
+    leadApplicantORCID: string;
+    isLeadApplicantNHSId: string | null | null;
+    leadApplicantAgeRangeId: string | null | null;
+    leadApplicantDisabilityId: string | null | null;
+    leadApplicantGenderId: string | null | null;
+    leadApplicantEthnicityId: string | null | null;
 }
 
 export interface UpdateSupportRequest {
@@ -513,11 +610,40 @@ export interface UpdateSupportRequest {
     isFellowshipId: string | null | null;
     isTeamMembersConsultedId: string | null | null;
     isResubmissionId: string | null | null;
-    isLeadApplicantNHSId: string | null | null;
     applicationStageId: string | null | null;
     fundingStreamId: string | null | null;
     fundingCallTypeId: string | null | null;
     howDidYouFindUsId: string | null | null;
+}
+
+export interface UpdateSupportRequestResearcher {
+    id: string;
+    teamContactTitle: string;
+    teamContactFirstName: string;
+    teamContactLastName: string;
+    teamContactEmail: string;
+    teamContactRoleId: string | null | null;
+    teamContactMailingPermission: boolean;
+    teamContactPrivacyStatementRead: boolean;
+    leadApplicantTitle: string;
+    leadApplicantFirstName: string;
+    leadApplicantLastName: string;
+    leadApplicantJobRole: string;
+    leadApplicantOrganisationTypeId: string | null | null;
+    leadApplicantOrganisation: string;
+    leadApplicantDepartment: string;
+    leadApplicantAddressLine1: string;
+    leadApplicantAddressLine2: string;
+    leadApplicantAddressTown: string;
+    leadApplicantAddressCounty: string;
+    leadApplicantAddressCountry: string;
+    leadApplicantAddressPostcode: string;
+    leadApplicantORCID: string;
+    isLeadApplicantNHSId: string | null | null;
+    leadApplicantAgeRangeId: string | null | null;
+    leadApplicantDisabilityId: string | null | null;
+    leadApplicantGenderId: string | null | null;
+    leadApplicantEthnicityId: string | null | null;
 }
 
 export interface TriageSupportRequest {
@@ -674,6 +800,30 @@ export interface ResetUserPassword {
     confirmNewPassword: string;
 }
 
+export interface CreateAgeRange {
+    name: string;
+    default: boolean;
+}
+
+export interface UpdateAgeRange {
+    id: string;
+    name: string;
+    default: boolean;
+}
+
+export interface SortAgeRange {
+    ids: Array<string>;
+}
+
+export interface QueryAgeRange extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
 export interface CreateApplicationStage {
     name: string;
     default: boolean;
@@ -694,6 +844,62 @@ export interface SortApplicationStage {
 }
 
 export interface QueryApplicationStage extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface CreateDisability {
+    name: string;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface UpdateDisability {
+    id: string;
+    name: string;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface SortDisability {
+    ids: Array<string>;
+}
+
+export interface QueryDisability extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface CreateEthnicity {
+    name: string;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface UpdateEthnicity {
+    id: string;
+    name: string;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface SortEthnicity {
+    ids: Array<string>;
+}
+
+export interface QueryEthnicity extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;
@@ -913,6 +1119,60 @@ export interface QueryIsTeamMembersConsulted extends Query {
 }
 
 export interface QueryProjectStatus extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface CreateResearcherOrganisationType {
+    name: string;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface UpdateResearcherOrganisationType {
+    id: string;
+    name: string;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface SortResearcherOrganisationType {
+    ids: Array<string>;
+}
+
+export interface QueryResearcherOrganisationType extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface CreateResearcherRole {
+    name: string;
+    default: boolean;
+    hidden: boolean;
+}
+
+export interface UpdateResearcherRole {
+    id: string;
+    name: string;
+    default: boolean;
+    hidden: boolean;
+}
+
+export interface SortResearcherRole {
+    ids: Array<string>;
+}
+
+export interface QueryResearcherRole extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;

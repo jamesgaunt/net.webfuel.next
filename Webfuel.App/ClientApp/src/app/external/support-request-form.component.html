@@ -1,69 +1,230 @@
 <div class="container">
-  <form class="form" [formGroup]="form">
-    <div class="flex">
-      <div class="field is-12">
-        <label class="label">{{ ping }}</label>
+  <div *ngIf="stage == 'input'">
+    <form class="form" [formGroup]="form">
+
+      <!-- Project Details-->
+      <h2>Project Details</h2>
+      <p>Please tell us more about your project. Please complete all required fields, selecting 'Not Known' if necessary.</p>
+      <div class="flex">
+        <div class="field is-12">
+          <label class="label">Working title of the project</label>
+          <input class="input" type="text" placeholder="required" formControlName="title" />
+        </div>
+        <div class="field is-6">
+          <label class="label">Stage of application</label>
+          <dropdown-select [dataSource]="staticDataCache.applicationStage" placeholder="required" formControlName="applicationStageId"></dropdown-select>
+        </div>
+        <div class="field is-6">
+          <label class="label">Is this application for a fellowship?</label>
+          <dropdown-select [dataSource]="staticDataCache.isFellowship" placeholder="required" formControlName="isFellowshipId"></dropdown-select>
+        </div>
+        <div class="field is-6">
+          <label class="label">Proposed funding stream</label>
+          <dropdown-select [dataSource]="staticDataCache.fundingStream" placeholder="required" formControlName="fundingStreamId"></dropdown-select>
+        </div>
+        <div class="field is-6">
+          <label class="label">Funding stream name / specialist call if known</label>
+          <input class="input" type="text" placeholder="optional" formControlName="fundingStreamName" />
+        </div>
+        <div class="field is-6">
+          <label class="label">Type of call</label>
+          <dropdown-select [dataSource]="staticDataCache.fundingCallType" placeholder="required" formControlName="fundingCallTypeId"></dropdown-select>
+        </div>
+        <div class="field is-6">
+          <label class="label">Type of call</label>
+          <dropdown-select [dataSource]="staticDataCache.fundingCallType" placeholder="required" formControlName="fundingCallTypeId"></dropdown-select>
+        </div>
+        <div class="field is-6">
+          <label class="label">Target submission date (if known)</label>
+          <date-picker placeholder="optional" formControlName="targetSubmissionDate"></date-picker>
+        </div>
+        <div class="field is-6">
+          <label class="label">Have your team members been consulted for support?</label>
+          <dropdown-select [dataSource]="staticDataCache.isTeamMembersConsulted" placeholder="required" formControlName="isTeamMembersConsultedId"></dropdown-select>
+        </div>
+        <div class="field is-6">
+          <label class="label">Has the application or similar been submitted to a funder before?</label>
+          <dropdown-select [dataSource]="staticDataCache.isResubmission" placeholder="required" formControlName="isResubmissionId"></dropdown-select>
+        </div>
+        <div class="field is-6">
+          <label class="label">How did you hear about our hub?</label>
+          <dropdown-select [dataSource]="staticDataCache.howDidYouFindUs" placeholder="required" formControlName="howDidYouFindUsId"></dropdown-select>
+        </div>
+        <div class="field is-12">
+          <label class="label">What is your (or the CIs)  experience of securing funding awards?</label>
+          <textarea class="textarea" formControlName="experienceOfResearchAwards" placeholder="required"></textarea>
+        </div>
+        <div class="field is-12">
+          <label class="label">
+            Please add a brief description of your proposed study. Where possible include an outline of research question, aims, need and methods (including analysis), potential impact. [max 500 words]
+          </label>
+          <textarea class="textarea" formControlName="briefDescription" placeholder="required"></textarea>
+        </div>
+        <div class="field is-12">
+          <label class="label">
+            What support are you looking for from RSS?  Eg funding advice, methods advice, PPIE and EDI advice, CTU support, training in methods for grants?
+          </label>
+          <textarea class="textarea" formControlName="supportRequested" placeholder="required"></textarea>
+        </div>
       </div>
-      <div class="field is-12">
-        <label class="label">Working title of the project</label>
-        <input class="input" type="text" placeholder="required" formControlName="title" />
+
+      <!-- Team Contact Details -->
+      <hr class="external-form-divider" />
+      <h2>Contact Details</h2>
+      <p>Please enter the details for the person we will contact regarding this project (this may or may not be the chief investigator).</p>
+      <div class="flex">
+        <div class="field is-4">
+          <label class="label">Title</label>
+          <dropdown-text-input placeholder="required" [dataSource]="staticDataCache.title" formControlName="teamContactTitle" />
+        </div>
+        <div class="field is-4">
+          <label class="label">First name</label>
+          <input class="input" type="text" placeholder="required" formControlName="teamContactFirstName" />
+        </div>
+        <div class="field is-4">
+          <label class="label">Last name</label>
+          <input class="input" type="text" placeholder="required" formControlName="teamContactLastName" />
+        </div>
+        <div class="field is-4">
+          <label class="label">Email</label>
+          <input class="input" type="text" placeholder="required" formControlName="teamContactEmail" />
+        </div>
+        <div class="field is-4">
+          <label class="label">Role in application</label>
+          <dropdown-select [dataSource]="staticDataCache.researcherRole" placeholder="required" formControlName="teamContactRoleId"></dropdown-select>
+        </div>
+        <div class="field is-12">
+          <div class="checkbox">
+            <label><input type="checkbox" formControlName="teamContactMailingPermission" /> Please tick this checkbox to confirm you give us permission to contact you via email.</label>
+          </div>
+        </div>
+        <div class="field is-12">
+          <div class="checkbox">
+            <label><input type="checkbox" formControlName="teamContactPrivacyStatementRead" /> Please tick this checkbox to confirm you have read our privacy statement [LINK REQUIRED].</label>
+          </div>
+        </div>
       </div>
-      <div class="field is-12">
-        <label class="label">Stage of application</label>
-        <dropdown-select [dataSource]="staticDataCache.applicationStage" placeholder="optional" formControlName="applicationStageId"></dropdown-select>
+
+      <!-- Lead Applicant Details -->
+      <hr class="external-form-divider" />
+      <h2>Chief Investigator Details</h2>
+      <p>Please enter the details for the chief investigator for this project.</p>
+      <div class="flex">
+        <div class="field is-4">
+          <label class="label">Title</label>
+          <dropdown-text-input placeholder="required" [dataSource]="staticDataCache.title" formControlName="leadApplicantTitle" />
+        </div>
+        <div class="field is-4">
+          <label class="label">First name</label>
+          <input class="input" type="text" placeholder="required" formControlName="leadApplicantFirstName" />
+        </div>
+        <div class="field is-4">
+          <label class="label">Last name</label>
+          <input class="input" type="text" placeholder="required" formControlName="leadApplicantLastName" />
+        </div>
+
+        <div class="field is-4">
+          <label class="label">Job Role</label>
+          <input class="input" type="text" placeholder="required" formControlName="leadApplicantJobRole" />
+        </div>
+        <div class="field is-4">
+          <label class="label">Organisation Type</label>
+          <dropdown-select [dataSource]="staticDataCache.researcherOrganisationType" placeholder="required" formControlName="leadApplicantOrganisationTypeId"></dropdown-select>
+        </div>
+        <div class="field is-4">
+          <label class="label">Organisation</label>
+          <input class="input" type="text" placeholder="required" formControlName="leadApplicantOrganisation" />
+        </div>
+        <div class="field is-4">
+          <label class="label">Department</label>
+          <input class="input" type="text" placeholder="required" formControlName="leadApplicantDepartment" />
+        </div>
+        <div class="field is-4">
+          <label class="label">ORCID</label>
+          <input class="input" type="text" placeholder="required" formControlName="leadApplicantORCID" />
+        </div>
+        <div class="field is-12">
+          <label class="label">
+            Is the chief investigator an NHS employee seeking RSS support for the first time? 
+          </label>
+          <dropdown-select [dataSource]="staticDataCache.isLeadApplicantNHS" placeholder="required" formControlName="isLeadApplicantNHSId"></dropdown-select>
+        </div>
       </div>
-      <div class="field is-126">
-        <label class="label">Is this application for a fellowship?</label>
-        <dropdown-select [dataSource]="staticDataCache.isFellowship" placeholder="optional" formControlName="isFellowshipId"></dropdown-select>
+      <h3>Work Address</h3>
+      <div class="flex">
+        <div class="field is-12">
+          <label class="label">Line 1</label>
+          <input class="input" type="text" placeholder="required" formControlName="leadApplicantAddressLine1" />
+        </div>
+        <div class="field is-12">
+          <label class="label">Line 2</label>
+          <input class="input" type="text" placeholder="optional" formControlName="leadApplicantAddressLine2" />
+        </div>
+        <div class="field is-12">
+          <label class="label">Town/City</label>
+          <input class="input" type="text" placeholder="required" formControlName="leadApplicantAddressTown" />
+        </div>
+        <div class="field is-12">
+          <label class="label">County</label>
+          <input class="input" type="text" placeholder="required" formControlName="leadApplicantAddressCounty" />
+        </div>
+        <div class="field is-12">
+          <label class="label">Country</label>
+          <input class="input" type="text" placeholder="required" formControlName="leadApplicantAddressCountry" />
+        </div>
+        <div class="field is-12">
+          <label class="label">Postcode</label>
+          <input class="input" type="text" placeholder="required" formControlName="leadApplicantAddressPostcode" />
+        </div>
       </div>
-      <div class="field is-12">
-        <label class="label">
-          Is the project team lead / lead applicant an NHS employee seeking RSS support for the first time? 
-        </label>
-        <dropdown-select [dataSource]="staticDataCache.isLeadApplicantNHS" placeholder="optional" formControlName="isLeadApplicantNHSId"></dropdown-select>
+
+      <h3>Enthnicity, Diversity &amp; Inclusion</h3>
+      <p>If you would prefer not to supply this information please select 'Prefer not to say'.</p>
+      <div class="flex">
+        <div class="field is-6">
+          <label class="label">Age Range</label>
+          <dropdown-select [dataSource]="staticDataCache.ageRange" placeholder="required" formControlName="leadApplicantAgeRangeId"></dropdown-select>
+        </div>
+        <div class="field is-6">
+          <label class="label">Gender</label>
+          <dropdown-select [dataSource]="staticDataCache.gender" placeholder="required" formControlName="leadApplicantGenderId"></dropdown-select>
+        </div>
+        <div class="field is-6">
+          <label class="label">Ethnicity</label>
+          <dropdown-select [dataSource]="staticDataCache.ethnicity" placeholder="required" formControlName="leadApplicantEthnicityId"></dropdown-select>
+        </div>
+        <div class="field is-6">
+          <label class="label">Disability</label>
+          <dropdown-select [dataSource]="staticDataCache.disability" placeholder="required" formControlName="leadApplicantDisabilityId"></dropdown-select>
+        </div>
       </div>
-      <div class="field is-12">
-        <label class="label">Proposed funding stream if known</label>
-        <dropdown-select [dataSource]="staticDataCache.fundingStream" placeholder="optional" formControlName="fundingStreamId"></dropdown-select>
+
+      <hr class="external-form-divider" />
+      <h2>Supporting Documents</h2>
+      <p>If available, please provide copies of draft documentation, protocols, background information or feedback from any previous applications.</p>
+      <div class="message is-warning">Work In Progress</div>
+
+      <hr class="external-form-divider" />
+      <h2>Submit Your Application</h2>
+      <p>You will receive an email confirming receipt of your application.</p>
+
+      <div class="buttons">
+
+        <button type="button" [disabled]="submitting" class="button is-success" (click)="submit()">Submit Application</button>
+        &nbsp;
+        <span class="text is-danger is-bold">{{ errorMessage }}</span>
+
       </div>
-      <div class="field is-12">
-        <label class="label">Type of call if known</label>
-        <dropdown-select [dataSource]="staticDataCache.fundingCallType" placeholder="optional" formControlName="fundingCallTypeId"></dropdown-select>
-      </div>
-      <div class="field is-12">
-        <label class="label">Target submission date</label>
-        <date-picker placeholder="optional" formControlName="targetSubmissionDate"></date-picker>
-      </div>
-      <div class="field is-12">
-        <label class="label">What is your (or the CIs)  experience of securing funding awards?</label>
-        <input class="input" type="text" placeholder="optional" formControlName="experienceOfResearchAwards" />
-      </div>
-      <div class="field is-12">
-        <label class="label">Have your team members been consulted for support?</label>
-        <dropdown-select [dataSource]="staticDataCache.isTeamMembersConsulted" placeholder="optional" formControlName="isTeamMembersConsultedId"></dropdown-select>
-      </div>
-      <div class="field is-12">
-        <label class="label">Has the application or similar been submitted to a funder before?</label>
-        <dropdown-select [dataSource]="staticDataCache.isResubmission" placeholder="optional" formControlName="isResubmissionId"></dropdown-select>
-      </div>
-      <div class="field is-12">
-        <label class="label">How did you hear about our hub?</label>
-        <dropdown-select [dataSource]="staticDataCache.howDidYouFindUs" placeholder="optional" formControlName="howDidYouFindUsId"></dropdown-select>
-      </div>
-      <div class="field is-12">
-        <label class="label">
-          Please add a brief description of your proposed study. Where possible include an outline of research question, aims, need and methods (including analysis), potential impact. [max 500 words]
-        </label>
-        <textarea class="textarea" formControlName="briefDescription" placeholder="required"></textarea>
-      </div>
-      <div class="field is-12">
-        <label class="label">
-          What support are you looking for from RSS?  Eg funding advice, methods advice, PPIE and EDI advice, CTU support, training in methods for grants?
-        </label>
-        <textarea class="textarea" formControlName="supportRequested" placeholder="required"></textarea>
-      </div>
-      <p>&nbsp;</p>
+    </form>
+  </div>
+  <div *ngIf="stage == 'submitted'">
+    <p>Thank you for submitting your support request. A member of our team will be in touch shortly.</p>
+  </div>
+  <div *ngIf="stage == 'error'">
+    <div class="message is-danger">
+      An error occured while attempting to submit your support request.
     </div>
-  </form>
+  </div>
 </div>
+<br />
 

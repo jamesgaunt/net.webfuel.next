@@ -8,6 +8,17 @@ NEXT:
 > Think about a user cache? GUID => Presentation Only
 > Standardise date formats dd MMM yy (can we globalise the default - customisation service - user level customisations, formats, palettes, etc)
 
+> To Right Buttons need some CSS work
+
+> Support Request Item/Researcher Rework
+> Support Request Number
+> Support Request Filters/Improvements to table
+> Set Max Length on support request form input fields
+
+> Change Support Request Funding Stream > Proposed Funding Stream / Name
+
+> Support Request Form Aria
+
 DONE:
 
 > Sort out responsiveness [DONE]

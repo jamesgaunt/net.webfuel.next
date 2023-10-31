@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="Disability" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Property Name="Hidden" Type="boolean" />
+    <Property Name="FreeText" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="d94327d9-b1f6-4a9f-8d80-0b520d244791" Name="(list of options required)" />
+      <Row Id="830fbd18-04cd-4c42-b7b0-1d98542fecda" Name="Prefer not to say" />
+    </Data>
+  </Entity>
+</Schema>

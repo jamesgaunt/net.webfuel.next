@@ -1,7 +1,8 @@
 @import 'config.scss';
 
-.cdk-overlay-dark-backdrop {
-  background: rgba(0,0,0,0.5);
+.external-form-divider {
+  border-top: 12px solid #ccc;
+  margin: calc(var(--gap) * 2) 0 calc(var(--gap) * 2) 0;
 }
 
 .form {
@@ -9,7 +10,9 @@
 }
 
 .filter-form {
-    .form { margin-bottom: 0 }
+  .form {
+    margin-bottom: 0
+  }
 }
 
 .field {
@@ -22,17 +25,39 @@
 }
 
 .input, .select, .textarea, .checkbox, .radio-group, .tag-input {
-    @include form-input;
+  @include form-input;
+}
+
+.control-host.ng-invalid.ng-touched {
+  .input, .select, .textarea, .checkbox, .radio-group, .tag-input {
+    border-color: var(--palette-control-border-error);
+    box-shadow: inset 0 0 6px var(--palette-control-border-error);
+  }
 }
 
 .textarea {
-    height: 8em;
+  height: 8em;
 }
 
-.checkbox input[type=checkbox] {
-  margin-right: 0.5rem;
-  width: 1.2rem;
+.checkbox {
+  display: flex;
+
+  label {
+    cursor: pointer;
+    flex-grow: 1;
+  }
+
+  input[type=checkbox] {
+    margin-right: 0.5rem;
+    width: 1.2rem;
+  }
+
+  &:has(.ng-invalid.ng-touched) {
+    border-color: var(--palette-control-border-error);
+    box-shadow: inset 0 0 6px var(--palette-control-border-error);
+  }
 }
+
 
 .radio-group {
   flex-wrap: wrap;

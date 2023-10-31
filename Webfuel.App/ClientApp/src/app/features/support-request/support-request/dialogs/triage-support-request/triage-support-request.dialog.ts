@@ -41,7 +41,7 @@ export class TriageSupportRequestDialogComponent extends DialogComponentBase<Pro
   });
 
   save() {
-    if (this.formService.checkForErrors(this.form))
+    if (this.formService.hasErrors(this.form))
       return;
 
     this.supportRequestApi.triage(this.form.getRawValue()).subscribe((result) => {

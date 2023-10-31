@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IDataSource, IDataSourceWithGet } from 'shared/common/data-source';
 import { StaticDataService } from '../core/static-data.service';
-import { ApplicationStage, FundingBody, FundingCallType, FundingStream, Gender, HowDidYouFindUs, IsCTUTeamContribution, IsFellowship, IsInternationalMultiSiteStudy, IsLeadApplicantNHS, IsPPIEAndEDIContribution, IsQuantativeTeamContribution, IsResubmission, IsTeamMembersConsulted, ProjectStatus, ResearchMethodology, Site, SubmissionOutcome, SubmissionStage, SupportProvided, SupportRequestStatus, Title, UserDiscipline, WorkActivity } from './api.types';
+import { AgeRange, ApplicationStage, Disability, Ethnicity, FundingBody, FundingCallType, FundingStream, Gender, HowDidYouFindUs, IsCTUTeamContribution, IsFellowship, IsInternationalMultiSiteStudy, IsLeadApplicantNHS, IsPPIEAndEDIContribution, IsQuantativeTeamContribution, IsResubmission, IsTeamMembersConsulted, ProjectStatus, ResearcherOrganisationType, ResearcherRole, ResearchMethodology, Site, SubmissionOutcome, SubmissionStage, SupportProvided, SupportRequestStatus, Title, UserDiscipline, WorkActivity } from './api.types';
 
 @Injectable()
 export class StaticDataCache {
@@ -9,9 +9,24 @@ export class StaticDataCache {
     constructor(private staticDataService: StaticDataService) {
     }
     
+    ageRange: IDataSourceWithGet<AgeRange> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.ageRange),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.ageRange),
+    };
+    
     applicationStage: IDataSourceWithGet<ApplicationStage> = {
         query: (query) => this.staticDataService.queryFactory(query, s => s.applicationStage),
         get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.applicationStage),
+    };
+    
+    disability: IDataSourceWithGet<Disability> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.disability),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.disability),
+    };
+    
+    ethnicity: IDataSourceWithGet<Ethnicity> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.ethnicity),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.ethnicity),
     };
     
     fundingBody: IDataSourceWithGet<FundingBody> = {
@@ -82,6 +97,16 @@ export class StaticDataCache {
     projectStatus: IDataSourceWithGet<ProjectStatus> = {
         query: (query) => this.staticDataService.queryFactory(query, s => s.projectStatus),
         get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.projectStatus),
+    };
+    
+    researcherOrganisationType: IDataSourceWithGet<ResearcherOrganisationType> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.researcherOrganisationType),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.researcherOrganisationType),
+    };
+    
+    researcherRole: IDataSourceWithGet<ResearcherRole> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.researcherRole),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.researcherRole),
     };
     
     researchMethodology: IDataSourceWithGet<ResearchMethodology> = {

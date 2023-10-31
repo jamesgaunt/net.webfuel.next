@@ -12,7 +12,7 @@ export class FormService {
 
   // TODO: Track active form somehow?
 
-  checkForErrors(form: FormGroup) {
+  hasErrors(form: FormGroup) {
     if (form.valid)
       return false;
 

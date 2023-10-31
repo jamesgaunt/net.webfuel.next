@@ -11,3 +11,16 @@ h1, h2, h3, h4, h5, h6 {
 p {
   margin: var(--gap) 0 var(--gap) 0;
 }
+
+.text {
+
+  @each $p in $paletteAction {
+    &.is-#{$p} {
+      color: var(--palette-#{$p}-text);
+    }
+  }
+
+  &.is-bold {
+      font-weight: bold;
+  }
+}

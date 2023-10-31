@@ -31,6 +31,9 @@ namespace Webfuel.Domain.StaticData
             clientConfiguration.StaticDataMenu.AddChild(name: "Submission Stage", action: "/static-data/submission-stage");
             clientConfiguration.StaticDataMenu.AddChild(name: "Title", action: "/static-data/title");
             clientConfiguration.StaticDataMenu.AddChild(name: "Gender", action: "/static-data/gender");
+            clientConfiguration.StaticDataMenu.AddChild(name: "Age Range", action: "/static-data/age-range");
+            clientConfiguration.StaticDataMenu.AddChild(name: "Ethnicity", action: "/static-data/ethnicity");
+            clientConfiguration.StaticDataMenu.AddChild(name: "Disability", action: "/static-data/disability");
             clientConfiguration.StaticDataMenu.AddChild(name: "Comms", action: "/static-data/comms");
             clientConfiguration.StaticDataMenu.AddChild(name: "Funding Stream", action: "/static-data/funding-stream");
             clientConfiguration.StaticDataMenu.AddChild(name: "Funding Body", action: "/static-data/funding-body");

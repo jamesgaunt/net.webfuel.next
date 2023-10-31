@@ -1,11 +1,11 @@
-<body>
+<body class="mode-{{ mode | async }}">
   <div [ngSwitch]="mode | async">
     <div *ngSwitchCase="'loading'">
     </div>
-    <div *ngSwitchCase="'external'" class="app-external">
+    <div *ngSwitchCase="'external'">
       <router-outlet></router-outlet>
     </div>
-    <div *ngSwitchCase="'login'" class="app-login">
+    <div *ngSwitchCase="'login'">
       <router-outlet></router-outlet>
     </div>
     <div *ngSwitchCase="'active'">

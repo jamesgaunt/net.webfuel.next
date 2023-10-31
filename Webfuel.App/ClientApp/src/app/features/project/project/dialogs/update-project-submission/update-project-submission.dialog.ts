@@ -46,7 +46,7 @@ export class UpdateProjectSubmissionDialogComponent extends DialogComponentBase<
   });
 
   save() {
-    if (this.formService.checkForErrors(this.form))
+    if (this.formService.hasErrors(this.form))
       return;
 
     this.projectSubmissionApi.update(this.form.getRawValue(), { successGrowl: "Project Submission Updated" }).subscribe((result) => {

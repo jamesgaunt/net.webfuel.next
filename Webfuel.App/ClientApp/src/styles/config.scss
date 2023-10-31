@@ -31,7 +31,7 @@ $breakpoint-lg: 1600px;
 
 // Dark Mode
 
-body.dark-mode {
+body.mode-active.dark-mode {
   --bold-if-light: normal;
 }
 

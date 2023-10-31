@@ -39,7 +39,7 @@ export class CreateUserDialogComponent extends DialogComponentBase<User> {
   });
 
   save() {
-    if (this.formService.checkForErrors(this.form))
+    if (this.formService.hasErrors(this.form))
       return;
 
     this.userApi.create(this.form.getRawValue(), { successGrowl: "User Created" }).subscribe((result) => {

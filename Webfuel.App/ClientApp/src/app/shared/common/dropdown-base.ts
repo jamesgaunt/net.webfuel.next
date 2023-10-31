@@ -1,6 +1,6 @@
-import { Observable } from 'rxjs';
+import { Observable, noop } from 'rxjs';
 import { Query, QueryFilter, QueryResult } from '../../api/api.types';
-import { ChangeDetectorRef, Component, ContentChild, DestroyRef, ElementRef, EventEmitter, HostListener, Input, Output, TemplateRef, ViewChild, ViewContainerRef, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, ContentChild, DestroyRef, ElementRef, EventEmitter, HostBinding, HostListener, Input, Output, TemplateRef, ViewChild, ViewContainerRef, inject } from '@angular/core';
 import { IDataSource } from './data-source';
 import _ from 'shared/common/underscore';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
@@ -11,6 +11,8 @@ import { QueryOp } from '../../api/api.enums';
   template: ''
 })
 export class DropDownBase<TItem> {
+
+  @HostBinding('class.control-host') host = true;
 
   destroyRef: DestroyRef = inject(DestroyRef);
   overlay: Overlay = inject(Overlay);
@@ -74,12 +76,8 @@ export class DropDownBase<TItem> {
     if (this.filter.observed)
       this.filter.emit(q);
 
-    console.log("SELECT QUERYING");
-
     this.dataSource.query(q).subscribe({
       next: (response) => {
-        console.log("SELECT QUERY SUCCESS: " + response);
-
         if (currentCallback !== this.optionItemsCallback)
           return; // We have forced a reload while waiting for these items to come back
         this.optionItemsCallback = null;
@@ -93,7 +91,7 @@ export class DropDownBase<TItem> {
         this.cd.detectChanges();
       },
       error: (error) =>{
-        console.log("SELECT QUERY ERROR: " + error);
+        console.log("Error fetching data in dropdown-base: " + error);
       }
     })
   }
@@ -179,6 +177,9 @@ export class DropDownBase<TItem> {
       return;
 
     this.popupRef = this.overlay.create({
+      scrollStrategy: this.overlay.scrollStrategies.reposition({
+        scrollThrottle: 50
+      }),
       positionStrategy: this.overlay.position().flexibleConnectedTo(this.popupAnchor).withPositions([
         { originX: 'start', originY: 'bottom', overlayX: 'start', overlayY: 'top' },
         { originX: 'start', originY: 'top', overlayX: 'start', overlayY: 'bottom' },
@@ -199,6 +200,7 @@ export class DropDownBase<TItem> {
       return;
     this.popupRef!.detach();
     this.popupRef = null;
+    this.onTouched();
   }
 
   delayedClosePopup() {
@@ -251,4 +253,14 @@ export class DropDownBase<TItem> {
   get _pickedTemplate() {
     return this.pickedTemplate || this.defaultPickedTemplate;
   }
+
+  // Touched
+
+
+  onTouched: () => void = noop;
+
+  public registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+
 }

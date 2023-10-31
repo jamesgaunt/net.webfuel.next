@@ -4,7 +4,10 @@ namespace Webfuel.Domain.StaticData
 {
     public interface IStaticDataModel
     {
+        IReadOnlyList<AgeRange> AgeRange { get; }
         IReadOnlyList<ApplicationStage> ApplicationStage { get; }
+        IReadOnlyList<Disability> Disability { get; }
+        IReadOnlyList<Ethnicity> Ethnicity { get; }
         IReadOnlyList<FundingBody> FundingBody { get; }
         IReadOnlyList<FundingCallType> FundingCallType { get; }
         IReadOnlyList<FundingStream> FundingStream { get; }
@@ -19,6 +22,8 @@ namespace Webfuel.Domain.StaticData
         IReadOnlyList<IsResubmission> IsResubmission { get; }
         IReadOnlyList<IsTeamMembersConsulted> IsTeamMembersConsulted { get; }
         IReadOnlyList<ProjectStatus> ProjectStatus { get; }
+        IReadOnlyList<ResearcherOrganisationType> ResearcherOrganisationType { get; }
+        IReadOnlyList<ResearcherRole> ResearcherRole { get; }
         IReadOnlyList<ResearchMethodology> ResearchMethodology { get; }
         IReadOnlyList<Site> Site { get; }
         IReadOnlyList<SubmissionOutcome> SubmissionOutcome { get; }
@@ -32,7 +37,10 @@ namespace Webfuel.Domain.StaticData
     }
     internal class StaticDataModel: IStaticDataModel
     {
+        public required IReadOnlyList<AgeRange> AgeRange { get; init; }
         public required IReadOnlyList<ApplicationStage> ApplicationStage { get; init; }
+        public required IReadOnlyList<Disability> Disability { get; init; }
+        public required IReadOnlyList<Ethnicity> Ethnicity { get; init; }
         public required IReadOnlyList<FundingBody> FundingBody { get; init; }
         public required IReadOnlyList<FundingCallType> FundingCallType { get; init; }
         public required IReadOnlyList<FundingStream> FundingStream { get; init; }
@@ -47,6 +55,8 @@ namespace Webfuel.Domain.StaticData
         public required IReadOnlyList<IsResubmission> IsResubmission { get; init; }
         public required IReadOnlyList<IsTeamMembersConsulted> IsTeamMembersConsulted { get; init; }
         public required IReadOnlyList<ProjectStatus> ProjectStatus { get; init; }
+        public required IReadOnlyList<ResearcherOrganisationType> ResearcherOrganisationType { get; init; }
+        public required IReadOnlyList<ResearcherRole> ResearcherRole { get; init; }
         public required IReadOnlyList<ResearchMethodology> ResearchMethodology { get; init; }
         public required IReadOnlyList<Site> Site { get; init; }
         public required IReadOnlyList<SubmissionOutcome> SubmissionOutcome { get; init; }
@@ -62,7 +72,10 @@ namespace Webfuel.Domain.StaticData
         {
             return new StaticDataModel
             {
+                AgeRange = await serviceProvider.GetRequiredService<IAgeRangeRepository>().SelectAgeRange(),
                 ApplicationStage = await serviceProvider.GetRequiredService<IApplicationStageRepository>().SelectApplicationStage(),
+                Disability = await serviceProvider.GetRequiredService<IDisabilityRepository>().SelectDisability(),
+                Ethnicity = await serviceProvider.GetRequiredService<IEthnicityRepository>().SelectEthnicity(),
                 FundingBody = await serviceProvider.GetRequiredService<IFundingBodyRepository>().SelectFundingBody(),
                 FundingCallType = await serviceProvider.GetRequiredService<IFundingCallTypeRepository>().SelectFundingCallType(),
                 FundingStream = await serviceProvider.GetRequiredService<IFundingStreamRepository>().SelectFundingStream(),
@@ -77,6 +90,8 @@ namespace Webfuel.Domain.StaticData
                 IsResubmission = await serviceProvider.GetRequiredService<IIsResubmissionRepository>().SelectIsResubmission(),
                 IsTeamMembersConsulted = await serviceProvider.GetRequiredService<IIsTeamMembersConsultedRepository>().SelectIsTeamMembersConsulted(),
                 ProjectStatus = await serviceProvider.GetRequiredService<IProjectStatusRepository>().SelectProjectStatus(),
+                ResearcherOrganisationType = await serviceProvider.GetRequiredService<IResearcherOrganisationTypeRepository>().SelectResearcherOrganisationType(),
+                ResearcherRole = await serviceProvider.GetRequiredService<IResearcherRoleRepository>().SelectResearcherRole(),
                 ResearchMethodology = await serviceProvider.GetRequiredService<IResearchMethodologyRepository>().SelectResearchMethodology(),
                 Site = await serviceProvider.GetRequiredService<ISiteRepository>().SelectSite(),
                 SubmissionOutcome = await serviceProvider.GetRequiredService<ISubmissionOutcomeRepository>().SelectSubmissionOutcome(),

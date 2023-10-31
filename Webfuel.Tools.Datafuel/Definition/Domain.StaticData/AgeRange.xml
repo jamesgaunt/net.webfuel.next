@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="AgeRange" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="cc58ade1-cbe3-4cbe-911c-8ec00f00d440" Name="25-34" />
+      <Row Id="3e5d1894-2c32-483b-a906-a752236ad846" Name="35-44" />
+      <Row Id="e9611818-a418-4cb2-b6db-1ff1124c0248" Name="45-54" />
+      <Row Id="58135845-614c-4aa9-aa26-26f18acf11a7" Name="55-64" />
+      <Row Id="acb5990c-6fcf-44b1-8855-21a96951308e" Name="65-74" />
+      <Row Id="4d4dee34-ef28-46f7-a23e-3022472f10e4" Name="75+" />
+      <Row Id="7e3db191-5682-42e5-b29e-e0231495bdaa" Name="Prefer not to say" />
+    </Data>
+  </Entity>
+</Schema>

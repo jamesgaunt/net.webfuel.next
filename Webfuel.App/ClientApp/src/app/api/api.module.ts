@@ -11,7 +11,10 @@ import { UserActivityApi } from './user-activity.api';
 import { UserApi } from './user.api';
 import { UserGroupApi } from './user-group.api';
 import { UserLoginApi } from './user-login.api';
+import { AgeRangeApi } from './age-range.api';
 import { ApplicationStageApi } from './application-stage.api';
+import { DisabilityApi } from './disability.api';
+import { EthnicityApi } from './ethnicity.api';
 import { FundingBodyApi } from './funding-body.api';
 import { FundingCallTypeApi } from './funding-call-type.api';
 import { FundingStreamApi } from './funding-stream.api';
@@ -26,6 +29,8 @@ import { IsQuantativeTeamContributionApi } from './is-quantative-team-contributi
 import { IsResubmissionApi } from './is-resubmission.api';
 import { IsTeamMembersConsultedApi } from './is-team-members-consulted.api';
 import { ProjectStatusApi } from './project-status.api';
+import { ResearcherOrganisationTypeApi } from './researcher-organisation-type.api';
+import { ResearcherRoleApi } from './researcher-role.api';
 import { ResearchMethodologyApi } from './research-methodology.api';
 import { SiteApi } from './site.api';
 import { SubmissionOutcomeApi } from './submission-outcome.api';
@@ -51,7 +56,10 @@ import { StaticDataCache } from './static-data.cache';
         UserApi,
         UserGroupApi,
         UserLoginApi,
+        AgeRangeApi,
         ApplicationStageApi,
+        DisabilityApi,
+        EthnicityApi,
         FundingBodyApi,
         FundingCallTypeApi,
         FundingStreamApi,
@@ -66,6 +74,8 @@ import { StaticDataCache } from './static-data.cache';
         IsResubmissionApi,
         IsTeamMembersConsultedApi,
         ProjectStatusApi,
+        ResearcherOrganisationTypeApi,
+        ResearcherRoleApi,
         ResearchMethodologyApi,
         SiteApi,
         SubmissionOutcomeApi,

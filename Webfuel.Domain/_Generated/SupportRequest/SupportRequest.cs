@@ -42,6 +42,63 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.SupportRequested):
                         SupportRequested = (string)value!;
                         break;
+                    case nameof(SupportRequest.TeamContactTitle):
+                        TeamContactTitle = (string)value!;
+                        break;
+                    case nameof(SupportRequest.TeamContactFirstName):
+                        TeamContactFirstName = (string)value!;
+                        break;
+                    case nameof(SupportRequest.TeamContactLastName):
+                        TeamContactLastName = (string)value!;
+                        break;
+                    case nameof(SupportRequest.TeamContactEmail):
+                        TeamContactEmail = (string)value!;
+                        break;
+                    case nameof(SupportRequest.TeamContactMailingPermission):
+                        TeamContactMailingPermission = (bool)value!;
+                        break;
+                    case nameof(SupportRequest.TeamContactPrivacyStatementRead):
+                        TeamContactPrivacyStatementRead = (bool)value!;
+                        break;
+                    case nameof(SupportRequest.LeadApplicantTitle):
+                        LeadApplicantTitle = (string)value!;
+                        break;
+                    case nameof(SupportRequest.LeadApplicantFirstName):
+                        LeadApplicantFirstName = (string)value!;
+                        break;
+                    case nameof(SupportRequest.LeadApplicantLastName):
+                        LeadApplicantLastName = (string)value!;
+                        break;
+                    case nameof(SupportRequest.LeadApplicantJobRole):
+                        LeadApplicantJobRole = (string)value!;
+                        break;
+                    case nameof(SupportRequest.LeadApplicantOrganisation):
+                        LeadApplicantOrganisation = (string)value!;
+                        break;
+                    case nameof(SupportRequest.LeadApplicantDepartment):
+                        LeadApplicantDepartment = (string)value!;
+                        break;
+                    case nameof(SupportRequest.LeadApplicantAddressLine1):
+                        LeadApplicantAddressLine1 = (string)value!;
+                        break;
+                    case nameof(SupportRequest.LeadApplicantAddressLine2):
+                        LeadApplicantAddressLine2 = (string)value!;
+                        break;
+                    case nameof(SupportRequest.LeadApplicantAddressTown):
+                        LeadApplicantAddressTown = (string)value!;
+                        break;
+                    case nameof(SupportRequest.LeadApplicantAddressCounty):
+                        LeadApplicantAddressCounty = (string)value!;
+                        break;
+                    case nameof(SupportRequest.LeadApplicantAddressCountry):
+                        LeadApplicantAddressCountry = (string)value!;
+                        break;
+                    case nameof(SupportRequest.LeadApplicantAddressPostcode):
+                        LeadApplicantAddressPostcode = (string)value!;
+                        break;
+                    case nameof(SupportRequest.LeadApplicantORCID):
+                        LeadApplicantORCID = (string)value!;
+                        break;
                     case nameof(SupportRequest.CreatedAt):
                         CreatedAt = (DateTimeOffset)value!;
                         break;
@@ -63,14 +120,32 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.IsResubmissionId):
                         IsResubmissionId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
-                    case nameof(SupportRequest.IsLeadApplicantNHSId):
-                        IsLeadApplicantNHSId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
-                        break;
                     case nameof(SupportRequest.HowDidYouFindUsId):
                         HowDidYouFindUsId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
                     case nameof(SupportRequest.StatusId):
                         StatusId = (Guid)value!;
+                        break;
+                    case nameof(SupportRequest.TeamContactRoleId):
+                        TeamContactRoleId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(SupportRequest.LeadApplicantOrganisationType):
+                        LeadApplicantOrganisationType = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(SupportRequest.IsLeadApplicantNHSId):
+                        IsLeadApplicantNHSId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(SupportRequest.LeadApplicantAgeRangeId):
+                        LeadApplicantAgeRangeId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(SupportRequest.LeadApplicantDisabilityId):
+                        LeadApplicantDisabilityId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(SupportRequest.LeadApplicantGenderId):
+                        LeadApplicantGenderId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(SupportRequest.LeadApplicantEthnicityId):
+                        LeadApplicantEthnicityId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
                     case nameof(SupportRequest.ProjectId):
                         ProjectId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
@@ -86,6 +161,25 @@ namespace Webfuel.Domain
         public string ExperienceOfResearchAwards  { get; set; } = String.Empty;
         public string BriefDescription  { get; set; } = String.Empty;
         public string SupportRequested  { get; set; } = String.Empty;
+        public string TeamContactTitle  { get; set; } = String.Empty;
+        public string TeamContactFirstName  { get; set; } = String.Empty;
+        public string TeamContactLastName  { get; set; } = String.Empty;
+        public string TeamContactEmail  { get; set; } = String.Empty;
+        public bool TeamContactMailingPermission  { get; set; } = false;
+        public bool TeamContactPrivacyStatementRead  { get; set; } = false;
+        public string LeadApplicantTitle  { get; set; } = String.Empty;
+        public string LeadApplicantFirstName  { get; set; } = String.Empty;
+        public string LeadApplicantLastName  { get; set; } = String.Empty;
+        public string LeadApplicantJobRole  { get; set; } = String.Empty;
+        public string LeadApplicantOrganisation  { get; set; } = String.Empty;
+        public string LeadApplicantDepartment  { get; set; } = String.Empty;
+        public string LeadApplicantAddressLine1  { get; set; } = String.Empty;
+        public string LeadApplicantAddressLine2  { get; set; } = String.Empty;
+        public string LeadApplicantAddressTown  { get; set; } = String.Empty;
+        public string LeadApplicantAddressCounty  { get; set; } = String.Empty;
+        public string LeadApplicantAddressCountry  { get; set; } = String.Empty;
+        public string LeadApplicantAddressPostcode  { get; set; } = String.Empty;
+        public string LeadApplicantORCID  { get; set; } = String.Empty;
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid? IsFellowshipId { get; set; }
         public Guid? ApplicationStageId { get; set; }
@@ -93,9 +187,15 @@ namespace Webfuel.Domain
         public Guid? FundingStreamId { get; set; }
         public Guid? IsTeamMembersConsultedId { get; set; }
         public Guid? IsResubmissionId { get; set; }
-        public Guid? IsLeadApplicantNHSId { get; set; }
         public Guid? HowDidYouFindUsId { get; set; }
         public Guid StatusId { get; set; }
+        public Guid? TeamContactRoleId { get; set; }
+        public Guid? LeadApplicantOrganisationType { get; set; }
+        public Guid? IsLeadApplicantNHSId { get; set; }
+        public Guid? LeadApplicantAgeRangeId { get; set; }
+        public Guid? LeadApplicantDisabilityId { get; set; }
+        public Guid? LeadApplicantGenderId { get; set; }
+        public Guid? LeadApplicantEthnicityId { get; set; }
         public Guid? ProjectId { get; set; }
         public SupportRequest Copy()
         {
@@ -108,6 +208,25 @@ namespace Webfuel.Domain
             entity.ExperienceOfResearchAwards = ExperienceOfResearchAwards;
             entity.BriefDescription = BriefDescription;
             entity.SupportRequested = SupportRequested;
+            entity.TeamContactTitle = TeamContactTitle;
+            entity.TeamContactFirstName = TeamContactFirstName;
+            entity.TeamContactLastName = TeamContactLastName;
+            entity.TeamContactEmail = TeamContactEmail;
+            entity.TeamContactMailingPermission = TeamContactMailingPermission;
+            entity.TeamContactPrivacyStatementRead = TeamContactPrivacyStatementRead;
+            entity.LeadApplicantTitle = LeadApplicantTitle;
+            entity.LeadApplicantFirstName = LeadApplicantFirstName;
+            entity.LeadApplicantLastName = LeadApplicantLastName;
+            entity.LeadApplicantJobRole = LeadApplicantJobRole;
+            entity.LeadApplicantOrganisation = LeadApplicantOrganisation;
+            entity.LeadApplicantDepartment = LeadApplicantDepartment;
+            entity.LeadApplicantAddressLine1 = LeadApplicantAddressLine1;
+            entity.LeadApplicantAddressLine2 = LeadApplicantAddressLine2;
+            entity.LeadApplicantAddressTown = LeadApplicantAddressTown;
+            entity.LeadApplicantAddressCounty = LeadApplicantAddressCounty;
+            entity.LeadApplicantAddressCountry = LeadApplicantAddressCountry;
+            entity.LeadApplicantAddressPostcode = LeadApplicantAddressPostcode;
+            entity.LeadApplicantORCID = LeadApplicantORCID;
             entity.CreatedAt = CreatedAt;
             entity.IsFellowshipId = IsFellowshipId;
             entity.ApplicationStageId = ApplicationStageId;
@@ -115,9 +234,15 @@ namespace Webfuel.Domain
             entity.FundingStreamId = FundingStreamId;
             entity.IsTeamMembersConsultedId = IsTeamMembersConsultedId;
             entity.IsResubmissionId = IsResubmissionId;
-            entity.IsLeadApplicantNHSId = IsLeadApplicantNHSId;
             entity.HowDidYouFindUsId = HowDidYouFindUsId;
             entity.StatusId = StatusId;
+            entity.TeamContactRoleId = TeamContactRoleId;
+            entity.LeadApplicantOrganisationType = LeadApplicantOrganisationType;
+            entity.IsLeadApplicantNHSId = IsLeadApplicantNHSId;
+            entity.LeadApplicantAgeRangeId = LeadApplicantAgeRangeId;
+            entity.LeadApplicantDisabilityId = LeadApplicantDisabilityId;
+            entity.LeadApplicantGenderId = LeadApplicantGenderId;
+            entity.LeadApplicantEthnicityId = LeadApplicantEthnicityId;
             entity.ProjectId = ProjectId;
             return entity;
         }

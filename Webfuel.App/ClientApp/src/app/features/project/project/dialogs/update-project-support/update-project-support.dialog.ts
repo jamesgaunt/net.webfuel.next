@@ -45,7 +45,7 @@ export class UpdateProjectSupportDialogComponent extends DialogComponentBase<Pro
   });
 
   save() {
-    if (this.formService.checkForErrors(this.form))
+    if (this.formService.hasErrors(this.form))
       return;
 
     this.projectSupportApi.update(this.form.getRawValue(), { successGrowl: "Project Support Updated" }).subscribe((result) => {

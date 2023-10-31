@@ -85,18 +85,12 @@ export class DropDownMultiSelectComponent<TItem>
 
   onChange: (value: string[] | null) => void = noop;
 
-  onTouched: () => void = noop;
-
   public writeValue(value: string[] | null): void {
     this.pickItems(!value ? [] : value, true);
   }
 
   public registerOnChange(fn: (value: string[] | null) => void): void {
     this.onChange = fn;
-  }
-
-  public registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
   }
 
   public setDisabledState?(isDisabled: boolean): void {

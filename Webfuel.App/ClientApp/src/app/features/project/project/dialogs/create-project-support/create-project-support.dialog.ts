@@ -45,7 +45,7 @@ export class CreateProjectSupportDialogComponent extends DialogComponentBase<Pro
   });
 
   save() {
-    if (this.formService.checkForErrors(this.form))
+    if (this.formService.hasErrors(this.form))
       return;
 
     this.projectSupportApi.create(this.form.getRawValue(), { successGrowl: "Project Support Added" }).subscribe((result) => {

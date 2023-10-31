@@ -1,0 +1,146 @@
+<ul class="breadcrumbs">
+  <li><a routerLink="/home">Home</a></li>
+  <li><a routerLink="/support-request/support-request-list">Support Requests</a></li>
+  <li><a routerLink="/support-request/support-request-item/{{ item.id }}">Support Request</a></li>
+</ul>
+<div class="container">
+  <div class="columns">
+    <div class="column">
+      <h1 class="title">Support Request</h1>
+    </div>
+  </div>
+  <support-request-tabs></support-request-tabs>
+  <form class="form" [formGroup]="form">
+
+    <h2>Contact Details</h2>
+    <div class="flex">
+      <div class="field is-4">
+        <label class="label">Title</label>
+        <dropdown-text-input placeholder="required" [dataSource]="staticDataCache.title" formControlName="teamContactTitle" />
+      </div>
+      <div class="field is-4">
+        <label class="label">First name</label>
+        <input class="input" type="text" placeholder="required" formControlName="teamContactFirstName" />
+      </div>
+      <div class="field is-4">
+        <label class="label">Last name</label>
+        <input class="input" type="text" placeholder="required" formControlName="teamContactLastName" />
+      </div>
+      <div class="field is-4">
+        <label class="label">Email</label>
+        <input class="input" type="text" placeholder="required" formControlName="teamContactEmail" />
+      </div>
+      <div class="field is-4">
+        <label class="label">Role in application</label>
+        <dropdown-select [dataSource]="staticDataCache.researcherRole" placeholder="required" formControlName="teamContactRoleId"></dropdown-select>
+      </div>
+      <div class="field is-12">
+        <div class="checkbox">
+          <label><input type="checkbox" formControlName="teamContactMailingPermission" /> Please tick this checkbox to confirm you give us permission to contact you via email.</label>
+        </div>
+      </div>
+      <div class="field is-12">
+        <div class="checkbox">
+          <label><input type="checkbox" formControlName="teamContactPrivacyStatementRead" /> Please tick this checkbox to confirm you have read our privacy statement [LINK REQUIRED].</label>
+        </div>
+      </div>
+    </div>
+
+    <h2>Chief Investigator Details</h2>
+    <div class="flex">
+      <div class="field is-4">
+        <label class="label">Title</label>
+        <dropdown-text-input placeholder="required" [dataSource]="staticDataCache.title" formControlName="leadApplicantTitle" />
+      </div>
+      <div class="field is-4">
+        <label class="label">First name</label>
+        <input class="input" type="text" placeholder="required" formControlName="leadApplicantFirstName" />
+      </div>
+      <div class="field is-4">
+        <label class="label">Last name</label>
+        <input class="input" type="text" placeholder="required" formControlName="leadApplicantLastName" />
+      </div>
+
+      <div class="field is-4">
+        <label class="label">Job Role</label>
+        <input class="input" type="text" placeholder="required" formControlName="leadApplicantJobRole" />
+      </div>
+      <div class="field is-4">
+        <label class="label">Organisation Type</label>
+        <dropdown-select [dataSource]="staticDataCache.researcherOrganisationType" placeholder="required" formControlName="leadApplicantOrganisationTypeId"></dropdown-select>
+      </div>
+      <div class="field is-4">
+        <label class="label">Organisation</label>
+        <input class="input" type="text" placeholder="required" formControlName="leadApplicantOrganisation" />
+      </div>
+      <div class="field is-4">
+        <label class="label">Department</label>
+        <input class="input" type="text" placeholder="required" formControlName="leadApplicantDepartment" />
+      </div>
+      <div class="field is-4">
+        <label class="label">ORCID</label>
+        <input class="input" type="text" placeholder="required" formControlName="leadApplicantORCID" />
+      </div>
+      <div class="field is-12">
+        <label class="label">
+          Is the chief investigator an NHS employee seeking RSS support for the first time? 
+        </label>
+        <dropdown-select [dataSource]="staticDataCache.isLeadApplicantNHS" placeholder="required" formControlName="isLeadApplicantNHSId"></dropdown-select>
+      </div>
+    </div>
+    <h3>Work Address</h3>
+    <div class="flex">
+      <div class="field is-12">
+        <label class="label">Line 1</label>
+        <input class="input" type="text" placeholder="required" formControlName="leadApplicantAddressLine1" />
+      </div>
+      <div class="field is-12">
+        <label class="label">Line 2</label>
+        <input class="input" type="text" placeholder="optional" formControlName="leadApplicantAddressLine2" />
+      </div>
+      <div class="field is-12">
+        <label class="label">Town/City</label>
+        <input class="input" type="text" placeholder="required" formControlName="leadApplicantAddressTown" />
+      </div>
+      <div class="field is-12">
+        <label class="label">County</label>
+        <input class="input" type="text" placeholder="required" formControlName="leadApplicantAddressCounty" />
+      </div>
+      <div class="field is-12">
+        <label class="label">Country</label>
+        <input class="input" type="text" placeholder="required" formControlName="leadApplicantAddressCountry" />
+      </div>
+      <div class="field is-12">
+        <label class="label">Postcode</label>
+        <input class="input" type="text" placeholder="required" formControlName="leadApplicantAddressPostcode" />
+      </div>
+    </div>
+
+    <h3>Enthnicity, Diversity &amp; Inclusion</h3>
+    <div class="flex">
+      <div class="field is-6">
+        <label class="label">Age Range</label>
+        <dropdown-select [dataSource]="staticDataCache.ageRange" placeholder="required" formControlName="leadApplicantAgeRangeId"></dropdown-select>
+      </div>
+      <div class="field is-6">
+        <label class="label">Gender</label>
+        <dropdown-select [dataSource]="staticDataCache.gender" placeholder="required" formControlName="leadApplicantGenderId"></dropdown-select>
+      </div>
+      <div class="field is-6">
+        <label class="label">Ethnicity</label>
+        <dropdown-select [dataSource]="staticDataCache.ethnicity" placeholder="required" formControlName="leadApplicantEthnicityId"></dropdown-select>
+      </div>
+      <div class="field is-6">
+        <label class="label">Disability</label>
+        <dropdown-select [dataSource]="staticDataCache.disability" placeholder="required" formControlName="leadApplicantDisabilityId"></dropdown-select>
+      </div>
+    </div>
+
+    <div class="floating-buttons">
+      <button class="button is-success" (click)="save(false)">Save</button>
+      <button class="button is-success" (click)="save(true)">Save &amp; Close</button>
+      <button class="button" (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+  <p>Created {{ item.createdAt | date: 'dd MMM yy HH:mm'}}</p>
+</div>

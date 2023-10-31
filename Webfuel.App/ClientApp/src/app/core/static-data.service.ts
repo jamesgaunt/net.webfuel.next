@@ -11,10 +11,7 @@ export class StaticDataService {
   constructor(
     private staticDataApi: StaticDataApi,
     private queryService: QueryService,
-    private identityService: IdentityService
   ) {
-    this.identityService.identityChanged.subscribe(() => this._loadStaticData());
-    this._loadStaticData();
   }
 
   queryFactory<TItem>(query: Query, selector: (staticData: IStaticDataModel) => TItem[]) {
@@ -44,16 +41,12 @@ export class StaticDataService {
 
   private _loadStaticData() {
 
-    if (!this.identityService.isAuthenticated) {
-      if (this._staticData.value !== null) {
-        this._staticData.next(null);
-        console.log("Cleared Static Data");
-      }
+    console.log("Loading Static Data");
+
+    if (this._loadingStaticData) {
+      console.log("Static Data Already Loading");
       return;
     }
-
-    if (this._loadingStaticData)
-      return;
     this._loadingStaticData = true;
 
     this.staticDataApi.getStaticData().subscribe({
@@ -68,5 +61,4 @@ export class StaticDataService {
       }
     });
   }
-
 }

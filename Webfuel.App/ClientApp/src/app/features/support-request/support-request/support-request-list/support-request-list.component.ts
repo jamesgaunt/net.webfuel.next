@@ -4,7 +4,6 @@ import { SupportRequest } from 'api/api.types';
 import { StaticDataCache } from 'api/static-data.cache';
 import { SupportRequestApi } from 'api/support-request.api';
 import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
-import { CreateSupportRequestDialog } from '../dialogs/create-support-request/create-support-request.dialog';
 
 @Component({
   selector: 'support-request-list',
@@ -14,14 +13,13 @@ export class SupportRequestListComponent {
   constructor(
     private router: Router,
     private confirmDeleteDialog: ConfirmDeleteDialog,
-    private createSupportRequestDialog: CreateSupportRequestDialog,
     public supportRequestApi: SupportRequestApi,
     public staticDataCache: StaticDataCache
   ) {
   }
 
   add() {
-    this.createSupportRequestDialog.open();
+    window.open("https://www.webfuel.com/test-support-request-form-icl", "_blank");
   }
 
   edit(item: SupportRequest) {

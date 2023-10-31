@@ -23,9 +23,12 @@ html {
 }
 
 body {
-  background-color: var(--palette-body-background);
   color: var(--palette-text);
   font-family: var(--font-family);
+}
+
+body.mode-active {
+  background-color: var(--palette-body-background);
 }
 
 a, button {
@@ -50,6 +53,9 @@ p + p {
   opacity: 1; /* Firefox */
 }
 
+.cdk-overlay-dark-backdrop {
+  background: rgba(0,0,0,0);
+}
 
 @media (max-width: $breakpoint-sm) {
   .hidden-sm {
