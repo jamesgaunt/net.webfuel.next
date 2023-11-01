@@ -9,11 +9,14 @@ NEXT:
 
 > Date Popup needs to attach to the field
 > Required / invalid indicator on Date Picker input
-
 > Project : Submission more fields on grid
 
 > Support Request Number (?)
 > Support Request Form Aria
+
+> Check big dialogs for layout improvements
+> Sample diagnostics
+> Check fields against specification
 
 DONE:
 
