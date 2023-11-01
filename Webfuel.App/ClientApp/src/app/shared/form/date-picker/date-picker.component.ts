@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, forwardRef, inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, forwardRef, HostBinding, inject, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { noop } from 'rxjs';
 import { DatePickerDialog } from '../../dialogs/date-picker/date-picker.dialog';
@@ -25,6 +25,8 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
     private cd: ChangeDetectorRef
   ) {
   }
+
+  @HostBinding('class.control-host') host = true;
 
   ngOnInit(): void {
   }

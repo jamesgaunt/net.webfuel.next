@@ -46,6 +46,7 @@ namespace Webfuel.Api
                         {
                             policy.WithOrigins(
                                 "https://www.webfuel.com",
+                                "http://localhost:4200",
                                 "https://localhost:44426",
                                 "https://webfuel-rss-icl.azurewebsites.net");
 

@@ -27,7 +27,13 @@ export class FormService {
       if (!control || control.valid)
         continue;
 
-      const fieldName = _.camelCaseToLabel(field);
+      var fieldName = _.camelCaseToLabel(field);
+
+      if (fieldName.endsWith(" Id"))
+        fieldName =  fieldName.substring(0, fieldName.length - 3);
+
+      if (fieldName.endsWith(" Ids"))
+        fieldName = fieldName.substring(0, fieldName.length - 4);
 
       for (const error in control.errors) {
         var validator = control.errors[error] || {};
@@ -40,6 +46,9 @@ export class FormService {
         }
         else if (error == "min") {
           this.growlService.growlDanger(`${fieldName} must be greater than or equal to '${validator.min}'`)
+        }
+        else if (error == "minArrayLength") {
+          this.growlService.growlDanger(`${fieldName} is required`);
         }
         else if (error.indexOf(fieldName) > 0) {
           this.growlService.growlDanger(`${error}`);

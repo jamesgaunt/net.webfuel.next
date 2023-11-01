@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/1e0cd445-1ab7-4a3a-a66a-e677887e057a/resourceGroups/Group/providers/Microsoft.Web/sites/webfuel-rss-icl",
+    "appService.deploySubpath": "ClientApp\\dist"
+}
