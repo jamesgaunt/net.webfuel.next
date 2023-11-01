@@ -24,7 +24,7 @@ namespace Webfuel.Common
         {
             clientConfiguration.SideMenu.AddChild(name: "My Activity", action: "/home/my-activity", icon: "fas fa-calculator");
             clientConfiguration.SideMenu.AddChild(name: "Projects", action: "/project/project-list", icon: "fas fa-books");
-            clientConfiguration.SideMenu.AddChild(name: "Requests", action: "/support-request/support-request-list", icon: "fas fa-user-headset");
+            clientConfiguration.SideMenu.AddChild(name: "Requests", action: "/support-request/support-request-list", icon: "far fa-question");
             clientConfiguration.SideMenu.AddChild(name: "Users", action: "/user/user-list", icon: "fas fa-users");
             clientConfiguration.SideMenu.AddChild(name: "Configuration", action: "/configuration/configuration-menu", icon: "fas fa-cogs");
 

@@ -31,7 +31,7 @@ export class ForgottenPasswordComponent implements OnInit {
   });
 
   forgottenPassword() {
-    if (!this.form.valid)
+    if (this.formService.hasErrors(this.form))
       return;
 
     this.userLoginApi.sendPasswordResetEmail(this.form.getRawValue()).subscribe((result) => {

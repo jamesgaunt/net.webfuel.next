@@ -11,6 +11,7 @@ import { ProjectSupportComponent } from './project/project-support/project-suppo
 import { ProjectSubmissionComponent } from './project/project-submission/project-submission.component';
 import { ProjectFilesComponent } from './project/project-files/project-files.component';
 import { ProjectHistoryComponent } from './project/project-history/project-history.component';
+import { ProjectResearcherComponent } from './project/project-researcher/project-researcher.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,13 @@ const routes: Routes = [
     component: ProjectRequestComponent,
     resolve: { project: ProjectApi.projectResolver('id') },
     canDeactivate: [DeactivateService.isPristine<ProjectRequestComponent>()],
+    data: { activeSideMenu: 'Projects' }
+  },
+  {
+    path: 'project-researcher/:id',
+    component: ProjectResearcherComponent,
+    resolve: { project: ProjectApi.projectResolver('id') },
+    canDeactivate: [DeactivateService.isPristine<ProjectResearcherComponent>()],
     data: { activeSideMenu: 'Projects' }
   },
   {

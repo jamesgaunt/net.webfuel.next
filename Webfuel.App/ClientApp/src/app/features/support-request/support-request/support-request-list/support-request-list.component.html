@@ -4,7 +4,32 @@
 </ul>
 <div class="container">
   <h1 class="title">Support Requests</h1>
-  <grid [dataSource]="supportRequestApi" [search]="true">
+
+  <div class="filter-form">
+    <form class="form" [formGroup]="filterForm">
+      <div class="flex">
+        <div class="field is-12">
+          <input class="input" type="text" formControlName="title" placeholder="Title" />
+        </div>
+      </div>
+      <div class="flex">
+        <div class="field is-4">
+          <dropdown-select [dataSource]="staticDataCache.supportRequestStatus" placeholder="Status" formControlName="statusId" [enableClear]="true"></dropdown-select>
+        </div>
+        <div class="field is-4">
+          <date-picker placeholder="From Date" formControlName="fromDate" [enableClear]="true" />
+        </div>
+        <div class="field is-4">
+          <date-picker placeholder="To Date" formControlName="toDate" [enableClear]="true" />
+        </div>
+        <div class="is-12 is-right">
+          <button (click)="resetFilterForm()" class="button is-small">show all</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <grid [dataSource]="supportRequestApi" [filterForm]="filterForm" stateKey="SupportRequestList">
     <grid-date-column name="dateOfRequest" label="Date" />
     <grid-reference-column [dataSource]="staticDataCache.supportRequestStatus" name="statusId" />
     <grid-column name="title" />

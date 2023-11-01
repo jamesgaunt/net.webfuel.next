@@ -41,27 +41,6 @@ namespace Webfuel.Domain
                     case nameof(Project.SubmittedFundingStreamName):
                         result.Add(new SqlParameter(nameof(Project.SubmittedFundingStreamName), entity.SubmittedFundingStreamName));
                         break;
-                    case nameof(Project.DateOfRequest):
-                        result.Add(new SqlParameter(nameof(Project.DateOfRequest), entity.DateOfRequest));
-                        break;
-                    case nameof(Project.Title):
-                        result.Add(new SqlParameter(nameof(Project.Title), entity.Title));
-                        break;
-                    case nameof(Project.BriefDescription):
-                        result.Add(new SqlParameter(nameof(Project.BriefDescription), entity.BriefDescription));
-                        break;
-                    case nameof(Project.FundingStreamName):
-                        result.Add(new SqlParameter(nameof(Project.FundingStreamName), entity.FundingStreamName));
-                        break;
-                    case nameof(Project.TargetSubmissionDate):
-                        result.Add(new SqlParameter(nameof(Project.TargetSubmissionDate), entity.TargetSubmissionDate ?? (object?)DBNull.Value));
-                        break;
-                    case nameof(Project.ExperienceOfResearchAwards):
-                        result.Add(new SqlParameter(nameof(Project.ExperienceOfResearchAwards), entity.ExperienceOfResearchAwards));
-                        break;
-                    case nameof(Project.SupportRequested):
-                        result.Add(new SqlParameter(nameof(Project.SupportRequested), entity.SupportRequested));
-                        break;
                     case nameof(Project.ProjectStartDate):
                         result.Add(new SqlParameter(nameof(Project.ProjectStartDate), entity.ProjectStartDate ?? (object?)DBNull.Value));
                         break;
@@ -70,6 +49,84 @@ namespace Webfuel.Domain
                         break;
                     case nameof(Project.NumberOfProjectSites):
                         result.Add(new SqlParameter(nameof(Project.NumberOfProjectSites), entity.NumberOfProjectSites ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(Project.DateOfRequest):
+                        result.Add(new SqlParameter(nameof(Project.DateOfRequest), entity.DateOfRequest));
+                        break;
+                    case nameof(Project.Title):
+                        result.Add(new SqlParameter(nameof(Project.Title), entity.Title));
+                        break;
+                    case nameof(Project.ProposedFundingStreamName):
+                        result.Add(new SqlParameter(nameof(Project.ProposedFundingStreamName), entity.ProposedFundingStreamName));
+                        break;
+                    case nameof(Project.TargetSubmissionDate):
+                        result.Add(new SqlParameter(nameof(Project.TargetSubmissionDate), entity.TargetSubmissionDate ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(Project.ExperienceOfResearchAwards):
+                        result.Add(new SqlParameter(nameof(Project.ExperienceOfResearchAwards), entity.ExperienceOfResearchAwards));
+                        break;
+                    case nameof(Project.BriefDescription):
+                        result.Add(new SqlParameter(nameof(Project.BriefDescription), entity.BriefDescription));
+                        break;
+                    case nameof(Project.SupportRequested):
+                        result.Add(new SqlParameter(nameof(Project.SupportRequested), entity.SupportRequested));
+                        break;
+                    case nameof(Project.TeamContactTitle):
+                        result.Add(new SqlParameter(nameof(Project.TeamContactTitle), entity.TeamContactTitle));
+                        break;
+                    case nameof(Project.TeamContactFirstName):
+                        result.Add(new SqlParameter(nameof(Project.TeamContactFirstName), entity.TeamContactFirstName));
+                        break;
+                    case nameof(Project.TeamContactLastName):
+                        result.Add(new SqlParameter(nameof(Project.TeamContactLastName), entity.TeamContactLastName));
+                        break;
+                    case nameof(Project.TeamContactEmail):
+                        result.Add(new SqlParameter(nameof(Project.TeamContactEmail), entity.TeamContactEmail));
+                        break;
+                    case nameof(Project.TeamContactMailingPermission):
+                        result.Add(new SqlParameter(nameof(Project.TeamContactMailingPermission), entity.TeamContactMailingPermission));
+                        break;
+                    case nameof(Project.TeamContactPrivacyStatementRead):
+                        result.Add(new SqlParameter(nameof(Project.TeamContactPrivacyStatementRead), entity.TeamContactPrivacyStatementRead));
+                        break;
+                    case nameof(Project.LeadApplicantTitle):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantTitle), entity.LeadApplicantTitle));
+                        break;
+                    case nameof(Project.LeadApplicantFirstName):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantFirstName), entity.LeadApplicantFirstName));
+                        break;
+                    case nameof(Project.LeadApplicantLastName):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantLastName), entity.LeadApplicantLastName));
+                        break;
+                    case nameof(Project.LeadApplicantJobRole):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantJobRole), entity.LeadApplicantJobRole));
+                        break;
+                    case nameof(Project.LeadApplicantOrganisation):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantOrganisation), entity.LeadApplicantOrganisation));
+                        break;
+                    case nameof(Project.LeadApplicantDepartment):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantDepartment), entity.LeadApplicantDepartment));
+                        break;
+                    case nameof(Project.LeadApplicantAddressLine1):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantAddressLine1), entity.LeadApplicantAddressLine1));
+                        break;
+                    case nameof(Project.LeadApplicantAddressLine2):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantAddressLine2), entity.LeadApplicantAddressLine2));
+                        break;
+                    case nameof(Project.LeadApplicantAddressTown):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantAddressTown), entity.LeadApplicantAddressTown));
+                        break;
+                    case nameof(Project.LeadApplicantAddressCounty):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantAddressCounty), entity.LeadApplicantAddressCounty));
+                        break;
+                    case nameof(Project.LeadApplicantAddressCountry):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantAddressCountry), entity.LeadApplicantAddressCountry));
+                        break;
+                    case nameof(Project.LeadApplicantAddressPostcode):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantAddressPostcode), entity.LeadApplicantAddressPostcode));
+                        break;
+                    case nameof(Project.LeadApplicantORCID):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantORCID), entity.LeadApplicantORCID));
                         break;
                     case nameof(Project.CreatedAt):
                         result.Add(new SqlParameter(nameof(Project.CreatedAt), entity.CreatedAt));
@@ -89,20 +146,23 @@ namespace Webfuel.Domain
                     case nameof(Project.SubmittedFundingStreamId):
                         result.Add(new SqlParameter(nameof(Project.SubmittedFundingStreamId), entity.SubmittedFundingStreamId ?? (object?)DBNull.Value));
                         break;
+                    case nameof(Project.IsInternationalMultiSiteStudyId):
+                        result.Add(new SqlParameter(nameof(Project.IsInternationalMultiSiteStudyId), entity.IsInternationalMultiSiteStudyId ?? (object?)DBNull.Value));
+                        break;
                     case nameof(Project.SupportRequestId):
                         result.Add(new SqlParameter(nameof(Project.SupportRequestId), entity.SupportRequestId ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(Project.IsFellowshipId):
+                        result.Add(new SqlParameter(nameof(Project.IsFellowshipId), entity.IsFellowshipId ?? (object?)DBNull.Value));
                         break;
                     case nameof(Project.ApplicationStageId):
                         result.Add(new SqlParameter(nameof(Project.ApplicationStageId), entity.ApplicationStageId ?? (object?)DBNull.Value));
                         break;
-                    case nameof(Project.FundingStreamId):
-                        result.Add(new SqlParameter(nameof(Project.FundingStreamId), entity.FundingStreamId ?? (object?)DBNull.Value));
+                    case nameof(Project.ProposedFundingCallTypeId):
+                        result.Add(new SqlParameter(nameof(Project.ProposedFundingCallTypeId), entity.ProposedFundingCallTypeId ?? (object?)DBNull.Value));
                         break;
-                    case nameof(Project.FundingCallTypeId):
-                        result.Add(new SqlParameter(nameof(Project.FundingCallTypeId), entity.FundingCallTypeId ?? (object?)DBNull.Value));
-                        break;
-                    case nameof(Project.IsFellowshipId):
-                        result.Add(new SqlParameter(nameof(Project.IsFellowshipId), entity.IsFellowshipId ?? (object?)DBNull.Value));
+                    case nameof(Project.ProposedFundingStreamId):
+                        result.Add(new SqlParameter(nameof(Project.ProposedFundingStreamId), entity.ProposedFundingStreamId ?? (object?)DBNull.Value));
                         break;
                     case nameof(Project.IsTeamMembersConsultedId):
                         result.Add(new SqlParameter(nameof(Project.IsTeamMembersConsultedId), entity.IsTeamMembersConsultedId ?? (object?)DBNull.Value));
@@ -110,14 +170,29 @@ namespace Webfuel.Domain
                     case nameof(Project.IsResubmissionId):
                         result.Add(new SqlParameter(nameof(Project.IsResubmissionId), entity.IsResubmissionId ?? (object?)DBNull.Value));
                         break;
-                    case nameof(Project.IsLeadApplicantNHSId):
-                        result.Add(new SqlParameter(nameof(Project.IsLeadApplicantNHSId), entity.IsLeadApplicantNHSId ?? (object?)DBNull.Value));
-                        break;
                     case nameof(Project.HowDidYouFindUsId):
                         result.Add(new SqlParameter(nameof(Project.HowDidYouFindUsId), entity.HowDidYouFindUsId ?? (object?)DBNull.Value));
                         break;
-                    case nameof(Project.IsInternationalMultiSiteStudyId):
-                        result.Add(new SqlParameter(nameof(Project.IsInternationalMultiSiteStudyId), entity.IsInternationalMultiSiteStudyId ?? (object?)DBNull.Value));
+                    case nameof(Project.TeamContactRoleId):
+                        result.Add(new SqlParameter(nameof(Project.TeamContactRoleId), entity.TeamContactRoleId ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(Project.LeadApplicantOrganisationType):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantOrganisationType), entity.LeadApplicantOrganisationType ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(Project.IsLeadApplicantNHSId):
+                        result.Add(new SqlParameter(nameof(Project.IsLeadApplicantNHSId), entity.IsLeadApplicantNHSId ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(Project.LeadApplicantAgeRangeId):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantAgeRangeId), entity.LeadApplicantAgeRangeId ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(Project.LeadApplicantDisabilityId):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantDisabilityId), entity.LeadApplicantDisabilityId ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(Project.LeadApplicantGenderId):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantGenderId), entity.LeadApplicantGenderId ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(Project.LeadApplicantEthnicityId):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantEthnicityId), entity.LeadApplicantEthnicityId ?? (object?)DBNull.Value));
                         break;
                 }
             }
@@ -152,32 +227,57 @@ namespace Webfuel.Domain
                 yield return "NIHRRSSMemberCollaboratorIds";
                 yield return "SubmittedFundingStreamFreeText";
                 yield return "SubmittedFundingStreamName";
-                yield return "DateOfRequest";
-                yield return "Title";
-                yield return "BriefDescription";
-                yield return "FundingStreamName";
-                yield return "TargetSubmissionDate";
-                yield return "ExperienceOfResearchAwards";
-                yield return "SupportRequested";
                 yield return "ProjectStartDate";
                 yield return "RecruitmentTarget";
                 yield return "NumberOfProjectSites";
+                yield return "DateOfRequest";
+                yield return "Title";
+                yield return "ProposedFundingStreamName";
+                yield return "TargetSubmissionDate";
+                yield return "ExperienceOfResearchAwards";
+                yield return "BriefDescription";
+                yield return "SupportRequested";
+                yield return "TeamContactTitle";
+                yield return "TeamContactFirstName";
+                yield return "TeamContactLastName";
+                yield return "TeamContactEmail";
+                yield return "TeamContactMailingPermission";
+                yield return "TeamContactPrivacyStatementRead";
+                yield return "LeadApplicantTitle";
+                yield return "LeadApplicantFirstName";
+                yield return "LeadApplicantLastName";
+                yield return "LeadApplicantJobRole";
+                yield return "LeadApplicantOrganisation";
+                yield return "LeadApplicantDepartment";
+                yield return "LeadApplicantAddressLine1";
+                yield return "LeadApplicantAddressLine2";
+                yield return "LeadApplicantAddressTown";
+                yield return "LeadApplicantAddressCounty";
+                yield return "LeadApplicantAddressCountry";
+                yield return "LeadApplicantAddressPostcode";
+                yield return "LeadApplicantORCID";
                 yield return "CreatedAt";
                 yield return "StatusId";
                 yield return "IsQuantativeTeamContributionId";
                 yield return "IsCTUTeamContributionId";
                 yield return "IsPPIEAndEDIContributionId";
                 yield return "SubmittedFundingStreamId";
+                yield return "IsInternationalMultiSiteStudyId";
                 yield return "SupportRequestId";
-                yield return "ApplicationStageId";
-                yield return "FundingStreamId";
-                yield return "FundingCallTypeId";
                 yield return "IsFellowshipId";
+                yield return "ApplicationStageId";
+                yield return "ProposedFundingCallTypeId";
+                yield return "ProposedFundingStreamId";
                 yield return "IsTeamMembersConsultedId";
                 yield return "IsResubmissionId";
-                yield return "IsLeadApplicantNHSId";
                 yield return "HowDidYouFindUsId";
-                yield return "IsInternationalMultiSiteStudyId";
+                yield return "TeamContactRoleId";
+                yield return "LeadApplicantOrganisationType";
+                yield return "IsLeadApplicantNHSId";
+                yield return "LeadApplicantAgeRangeId";
+                yield return "LeadApplicantDisabilityId";
+                yield return "LeadApplicantGenderId";
+                yield return "LeadApplicantEthnicityId";
             }
         }
         
@@ -192,32 +292,57 @@ namespace Webfuel.Domain
                 yield return "NIHRRSSMemberCollaboratorIds";
                 yield return "SubmittedFundingStreamFreeText";
                 yield return "SubmittedFundingStreamName";
-                yield return "DateOfRequest";
-                yield return "Title";
-                yield return "BriefDescription";
-                yield return "FundingStreamName";
-                yield return "TargetSubmissionDate";
-                yield return "ExperienceOfResearchAwards";
-                yield return "SupportRequested";
                 yield return "ProjectStartDate";
                 yield return "RecruitmentTarget";
                 yield return "NumberOfProjectSites";
+                yield return "DateOfRequest";
+                yield return "Title";
+                yield return "ProposedFundingStreamName";
+                yield return "TargetSubmissionDate";
+                yield return "ExperienceOfResearchAwards";
+                yield return "BriefDescription";
+                yield return "SupportRequested";
+                yield return "TeamContactTitle";
+                yield return "TeamContactFirstName";
+                yield return "TeamContactLastName";
+                yield return "TeamContactEmail";
+                yield return "TeamContactMailingPermission";
+                yield return "TeamContactPrivacyStatementRead";
+                yield return "LeadApplicantTitle";
+                yield return "LeadApplicantFirstName";
+                yield return "LeadApplicantLastName";
+                yield return "LeadApplicantJobRole";
+                yield return "LeadApplicantOrganisation";
+                yield return "LeadApplicantDepartment";
+                yield return "LeadApplicantAddressLine1";
+                yield return "LeadApplicantAddressLine2";
+                yield return "LeadApplicantAddressTown";
+                yield return "LeadApplicantAddressCounty";
+                yield return "LeadApplicantAddressCountry";
+                yield return "LeadApplicantAddressPostcode";
+                yield return "LeadApplicantORCID";
                 yield return "CreatedAt";
                 yield return "StatusId";
                 yield return "IsQuantativeTeamContributionId";
                 yield return "IsCTUTeamContributionId";
                 yield return "IsPPIEAndEDIContributionId";
                 yield return "SubmittedFundingStreamId";
+                yield return "IsInternationalMultiSiteStudyId";
                 yield return "SupportRequestId";
-                yield return "ApplicationStageId";
-                yield return "FundingStreamId";
-                yield return "FundingCallTypeId";
                 yield return "IsFellowshipId";
+                yield return "ApplicationStageId";
+                yield return "ProposedFundingCallTypeId";
+                yield return "ProposedFundingStreamId";
                 yield return "IsTeamMembersConsultedId";
                 yield return "IsResubmissionId";
-                yield return "IsLeadApplicantNHSId";
                 yield return "HowDidYouFindUsId";
-                yield return "IsInternationalMultiSiteStudyId";
+                yield return "TeamContactRoleId";
+                yield return "LeadApplicantOrganisationType";
+                yield return "IsLeadApplicantNHSId";
+                yield return "LeadApplicantAgeRangeId";
+                yield return "LeadApplicantDisabilityId";
+                yield return "LeadApplicantGenderId";
+                yield return "LeadApplicantEthnicityId";
             }
         }
         
@@ -231,32 +356,57 @@ namespace Webfuel.Domain
                 yield return "NIHRRSSMemberCollaboratorIds";
                 yield return "SubmittedFundingStreamFreeText";
                 yield return "SubmittedFundingStreamName";
-                yield return "DateOfRequest";
-                yield return "Title";
-                yield return "BriefDescription";
-                yield return "FundingStreamName";
-                yield return "TargetSubmissionDate";
-                yield return "ExperienceOfResearchAwards";
-                yield return "SupportRequested";
                 yield return "ProjectStartDate";
                 yield return "RecruitmentTarget";
                 yield return "NumberOfProjectSites";
+                yield return "DateOfRequest";
+                yield return "Title";
+                yield return "ProposedFundingStreamName";
+                yield return "TargetSubmissionDate";
+                yield return "ExperienceOfResearchAwards";
+                yield return "BriefDescription";
+                yield return "SupportRequested";
+                yield return "TeamContactTitle";
+                yield return "TeamContactFirstName";
+                yield return "TeamContactLastName";
+                yield return "TeamContactEmail";
+                yield return "TeamContactMailingPermission";
+                yield return "TeamContactPrivacyStatementRead";
+                yield return "LeadApplicantTitle";
+                yield return "LeadApplicantFirstName";
+                yield return "LeadApplicantLastName";
+                yield return "LeadApplicantJobRole";
+                yield return "LeadApplicantOrganisation";
+                yield return "LeadApplicantDepartment";
+                yield return "LeadApplicantAddressLine1";
+                yield return "LeadApplicantAddressLine2";
+                yield return "LeadApplicantAddressTown";
+                yield return "LeadApplicantAddressCounty";
+                yield return "LeadApplicantAddressCountry";
+                yield return "LeadApplicantAddressPostcode";
+                yield return "LeadApplicantORCID";
                 yield return "CreatedAt";
                 yield return "StatusId";
                 yield return "IsQuantativeTeamContributionId";
                 yield return "IsCTUTeamContributionId";
                 yield return "IsPPIEAndEDIContributionId";
                 yield return "SubmittedFundingStreamId";
+                yield return "IsInternationalMultiSiteStudyId";
                 yield return "SupportRequestId";
-                yield return "ApplicationStageId";
-                yield return "FundingStreamId";
-                yield return "FundingCallTypeId";
                 yield return "IsFellowshipId";
+                yield return "ApplicationStageId";
+                yield return "ProposedFundingCallTypeId";
+                yield return "ProposedFundingStreamId";
                 yield return "IsTeamMembersConsultedId";
                 yield return "IsResubmissionId";
-                yield return "IsLeadApplicantNHSId";
                 yield return "HowDidYouFindUsId";
-                yield return "IsInternationalMultiSiteStudyId";
+                yield return "TeamContactRoleId";
+                yield return "LeadApplicantOrganisationType";
+                yield return "IsLeadApplicantNHSId";
+                yield return "LeadApplicantAgeRangeId";
+                yield return "LeadApplicantDisabilityId";
+                yield return "LeadApplicantGenderId";
+                yield return "LeadApplicantEthnicityId";
             }
         }
         
@@ -272,14 +422,48 @@ namespace Webfuel.Domain
             entity.SubmittedFundingStreamName = entity.SubmittedFundingStreamName.Trim();
             entity.Title = entity.Title ?? String.Empty;
             entity.Title = entity.Title.Trim();
-            entity.BriefDescription = entity.BriefDescription ?? String.Empty;
-            entity.BriefDescription = entity.BriefDescription.Trim();
-            entity.FundingStreamName = entity.FundingStreamName ?? String.Empty;
-            entity.FundingStreamName = entity.FundingStreamName.Trim();
+            entity.ProposedFundingStreamName = entity.ProposedFundingStreamName ?? String.Empty;
+            entity.ProposedFundingStreamName = entity.ProposedFundingStreamName.Trim();
             entity.ExperienceOfResearchAwards = entity.ExperienceOfResearchAwards ?? String.Empty;
             entity.ExperienceOfResearchAwards = entity.ExperienceOfResearchAwards.Trim();
+            entity.BriefDescription = entity.BriefDescription ?? String.Empty;
+            entity.BriefDescription = entity.BriefDescription.Trim();
             entity.SupportRequested = entity.SupportRequested ?? String.Empty;
             entity.SupportRequested = entity.SupportRequested.Trim();
+            entity.TeamContactTitle = entity.TeamContactTitle ?? String.Empty;
+            entity.TeamContactTitle = entity.TeamContactTitle.Trim();
+            entity.TeamContactFirstName = entity.TeamContactFirstName ?? String.Empty;
+            entity.TeamContactFirstName = entity.TeamContactFirstName.Trim();
+            entity.TeamContactLastName = entity.TeamContactLastName ?? String.Empty;
+            entity.TeamContactLastName = entity.TeamContactLastName.Trim();
+            entity.TeamContactEmail = entity.TeamContactEmail ?? String.Empty;
+            entity.TeamContactEmail = entity.TeamContactEmail.Trim();
+            entity.LeadApplicantTitle = entity.LeadApplicantTitle ?? String.Empty;
+            entity.LeadApplicantTitle = entity.LeadApplicantTitle.Trim();
+            entity.LeadApplicantFirstName = entity.LeadApplicantFirstName ?? String.Empty;
+            entity.LeadApplicantFirstName = entity.LeadApplicantFirstName.Trim();
+            entity.LeadApplicantLastName = entity.LeadApplicantLastName ?? String.Empty;
+            entity.LeadApplicantLastName = entity.LeadApplicantLastName.Trim();
+            entity.LeadApplicantJobRole = entity.LeadApplicantJobRole ?? String.Empty;
+            entity.LeadApplicantJobRole = entity.LeadApplicantJobRole.Trim();
+            entity.LeadApplicantOrganisation = entity.LeadApplicantOrganisation ?? String.Empty;
+            entity.LeadApplicantOrganisation = entity.LeadApplicantOrganisation.Trim();
+            entity.LeadApplicantDepartment = entity.LeadApplicantDepartment ?? String.Empty;
+            entity.LeadApplicantDepartment = entity.LeadApplicantDepartment.Trim();
+            entity.LeadApplicantAddressLine1 = entity.LeadApplicantAddressLine1 ?? String.Empty;
+            entity.LeadApplicantAddressLine1 = entity.LeadApplicantAddressLine1.Trim();
+            entity.LeadApplicantAddressLine2 = entity.LeadApplicantAddressLine2 ?? String.Empty;
+            entity.LeadApplicantAddressLine2 = entity.LeadApplicantAddressLine2.Trim();
+            entity.LeadApplicantAddressTown = entity.LeadApplicantAddressTown ?? String.Empty;
+            entity.LeadApplicantAddressTown = entity.LeadApplicantAddressTown.Trim();
+            entity.LeadApplicantAddressCounty = entity.LeadApplicantAddressCounty ?? String.Empty;
+            entity.LeadApplicantAddressCounty = entity.LeadApplicantAddressCounty.Trim();
+            entity.LeadApplicantAddressCountry = entity.LeadApplicantAddressCountry ?? String.Empty;
+            entity.LeadApplicantAddressCountry = entity.LeadApplicantAddressCountry.Trim();
+            entity.LeadApplicantAddressPostcode = entity.LeadApplicantAddressPostcode ?? String.Empty;
+            entity.LeadApplicantAddressPostcode = entity.LeadApplicantAddressPostcode.Trim();
+            entity.LeadApplicantORCID = entity.LeadApplicantORCID ?? String.Empty;
+            entity.LeadApplicantORCID = entity.LeadApplicantORCID.Trim();
             Validator.ValidateAndThrow(entity);
         }
         
@@ -289,10 +473,27 @@ namespace Webfuel.Domain
         public const int SubmittedFundingStreamFreeText_MaxLength = 64;
         public const int SubmittedFundingStreamName_MaxLength = 64;
         public const int Title_MaxLength = 1000;
-        public const int BriefDescription_MaxLength = 5000;
-        public const int FundingStreamName_MaxLength = 64;
+        public const int ProposedFundingStreamName_MaxLength = 64;
         public const int ExperienceOfResearchAwards_MaxLength = 1000;
+        public const int BriefDescription_MaxLength = 5000;
         public const int SupportRequested_MaxLength = 2000;
+        public const int TeamContactTitle_MaxLength = 64;
+        public const int TeamContactFirstName_MaxLength = 64;
+        public const int TeamContactLastName_MaxLength = 64;
+        public const int TeamContactEmail_MaxLength = 64;
+        public const int LeadApplicantTitle_MaxLength = 64;
+        public const int LeadApplicantFirstName_MaxLength = 64;
+        public const int LeadApplicantLastName_MaxLength = 64;
+        public const int LeadApplicantJobRole_MaxLength = 64;
+        public const int LeadApplicantOrganisation_MaxLength = 64;
+        public const int LeadApplicantDepartment_MaxLength = 64;
+        public const int LeadApplicantAddressLine1_MaxLength = 64;
+        public const int LeadApplicantAddressLine2_MaxLength = 64;
+        public const int LeadApplicantAddressTown_MaxLength = 64;
+        public const int LeadApplicantAddressCounty_MaxLength = 64;
+        public const int LeadApplicantAddressCountry_MaxLength = 64;
+        public const int LeadApplicantAddressPostcode_MaxLength = 64;
+        public const int LeadApplicantORCID_MaxLength = 64;
         
         public static void PrefixedNumber_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
@@ -322,18 +523,11 @@ namespace Webfuel.Domain
                 .MaximumLength(Title_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
-        public static void BriefDescription_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        public static void ProposedFundingStreamName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull()
-                .MaximumLength(BriefDescription_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
-        }
-        
-        public static void FundingStreamName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
-        {
-            ruleBuilder
-                .NotNull()
-                .MaximumLength(FundingStreamName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+                .MaximumLength(ProposedFundingStreamName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
         public static void ExperienceOfResearchAwards_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
@@ -343,11 +537,137 @@ namespace Webfuel.Domain
                 .MaximumLength(ExperienceOfResearchAwards_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
+        public static void BriefDescription_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(BriefDescription_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
         public static void SupportRequested_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull()
                 .MaximumLength(SupportRequested_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void TeamContactTitle_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(TeamContactTitle_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void TeamContactFirstName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(TeamContactFirstName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void TeamContactLastName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(TeamContactLastName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void TeamContactEmail_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(TeamContactEmail_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void LeadApplicantTitle_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(LeadApplicantTitle_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void LeadApplicantFirstName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(LeadApplicantFirstName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void LeadApplicantLastName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(LeadApplicantLastName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void LeadApplicantJobRole_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(LeadApplicantJobRole_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void LeadApplicantOrganisation_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(LeadApplicantOrganisation_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void LeadApplicantDepartment_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(LeadApplicantDepartment_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void LeadApplicantAddressLine1_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(LeadApplicantAddressLine1_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void LeadApplicantAddressLine2_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(LeadApplicantAddressLine2_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void LeadApplicantAddressTown_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(LeadApplicantAddressTown_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void LeadApplicantAddressCounty_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(LeadApplicantAddressCounty_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void LeadApplicantAddressCountry_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(LeadApplicantAddressCountry_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void LeadApplicantAddressPostcode_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(LeadApplicantAddressPostcode_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void LeadApplicantORCID_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(LeadApplicantORCID_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
         public class ProjectRepositoryValidator: AbstractValidator<Project>
@@ -358,10 +678,27 @@ namespace Webfuel.Domain
                 RuleFor(x => x.SubmittedFundingStreamFreeText).Use(SubmittedFundingStreamFreeText_ValidationRules);
                 RuleFor(x => x.SubmittedFundingStreamName).Use(SubmittedFundingStreamName_ValidationRules);
                 RuleFor(x => x.Title).Use(Title_ValidationRules);
-                RuleFor(x => x.BriefDescription).Use(BriefDescription_ValidationRules);
-                RuleFor(x => x.FundingStreamName).Use(FundingStreamName_ValidationRules);
+                RuleFor(x => x.ProposedFundingStreamName).Use(ProposedFundingStreamName_ValidationRules);
                 RuleFor(x => x.ExperienceOfResearchAwards).Use(ExperienceOfResearchAwards_ValidationRules);
+                RuleFor(x => x.BriefDescription).Use(BriefDescription_ValidationRules);
                 RuleFor(x => x.SupportRequested).Use(SupportRequested_ValidationRules);
+                RuleFor(x => x.TeamContactTitle).Use(TeamContactTitle_ValidationRules);
+                RuleFor(x => x.TeamContactFirstName).Use(TeamContactFirstName_ValidationRules);
+                RuleFor(x => x.TeamContactLastName).Use(TeamContactLastName_ValidationRules);
+                RuleFor(x => x.TeamContactEmail).Use(TeamContactEmail_ValidationRules);
+                RuleFor(x => x.LeadApplicantTitle).Use(LeadApplicantTitle_ValidationRules);
+                RuleFor(x => x.LeadApplicantFirstName).Use(LeadApplicantFirstName_ValidationRules);
+                RuleFor(x => x.LeadApplicantLastName).Use(LeadApplicantLastName_ValidationRules);
+                RuleFor(x => x.LeadApplicantJobRole).Use(LeadApplicantJobRole_ValidationRules);
+                RuleFor(x => x.LeadApplicantOrganisation).Use(LeadApplicantOrganisation_ValidationRules);
+                RuleFor(x => x.LeadApplicantDepartment).Use(LeadApplicantDepartment_ValidationRules);
+                RuleFor(x => x.LeadApplicantAddressLine1).Use(LeadApplicantAddressLine1_ValidationRules);
+                RuleFor(x => x.LeadApplicantAddressLine2).Use(LeadApplicantAddressLine2_ValidationRules);
+                RuleFor(x => x.LeadApplicantAddressTown).Use(LeadApplicantAddressTown_ValidationRules);
+                RuleFor(x => x.LeadApplicantAddressCounty).Use(LeadApplicantAddressCounty_ValidationRules);
+                RuleFor(x => x.LeadApplicantAddressCountry).Use(LeadApplicantAddressCountry_ValidationRules);
+                RuleFor(x => x.LeadApplicantAddressPostcode).Use(LeadApplicantAddressPostcode_ValidationRules);
+                RuleFor(x => x.LeadApplicantORCID).Use(LeadApplicantORCID_ValidationRules);
             }
         }
     }

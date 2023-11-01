@@ -1,36 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SupportRequest } from 'api/api.types';
+import { Project } from 'api/api.types';
+import { ProjectApi } from 'api/project.api';
 import { StaticDataCache } from 'api/static-data.cache';
-import { SupportRequestApi } from 'api/support-request.api';
 import { FormService } from 'core/form.service';
-import { TriageSupportRequestDialog } from '../dialogs/triage-support-request/triage-support-request.dialog';
+import { Observable, debounceTime, tap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'support-request-researcher',
-  templateUrl: './support-request-researcher.component.html'
+  selector: 'project-researcher',
+  templateUrl: './project-researcher.component.html'
 })
-export class SupportRequestResearcherComponent implements OnInit {
+export class ProjectResearcherComponent implements OnInit {
+
+  destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    public projectApi: ProjectApi,
     private formService: FormService,
-    private triageSupportRequestDialog: TriageSupportRequestDialog,
-    public staticDataCache: StaticDataCache,
-    public supportRequestApi: SupportRequestApi,
-   
+    public staticDataCache: StaticDataCache
   ) {
   }
 
   ngOnInit() {
-    this.reset(this.route.snapshot.data.supportRequest);
+    this.reset(this.route.snapshot.data.project);
+    this.form.disable();
   }
 
-  item!: SupportRequest;
+  item!: Project;
 
-  reset(item: SupportRequest) {
+  reset(item: Project) {
     this.item = item;
     this.form.patchValue(item);
     this.form.markAsPristine();
@@ -76,19 +78,8 @@ export class SupportRequestResearcherComponent implements OnInit {
     leadApplicantEthnicityId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
   });
 
-  save(close: boolean) {
-    if (this.formService.hasErrors(this.form))
-      return;
-
-    this.supportRequestApi.updateResearcher(this.form.getRawValue(), { successGrowl: "Support Request Updated" }).subscribe((result) => {
-      this.reset(result);
-      if(close)
-        this.router.navigate(['support-request/support-request-list']);
-    });
-  }
-
   cancel() {
     this.reset(this.item);
-    this.router.navigate(['support-request/support-request-list']);
+    this.router.navigate(['project/project-list']);
   }
 }

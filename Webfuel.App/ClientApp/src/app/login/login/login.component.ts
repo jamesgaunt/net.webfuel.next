@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
   });
 
   login() {
-    if (!this.form.valid)
+    if (this.formService.hasErrors(this.form))
       return;
 
     this.loginService.login(this.form.getRawValue()).subscribe((result) => {

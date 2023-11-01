@@ -4,6 +4,7 @@ import { SupportRequest } from 'api/api.types';
 import { StaticDataCache } from 'api/static-data.cache';
 import { SupportRequestApi } from 'api/support-request.api';
 import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'support-request-list',
@@ -18,8 +19,24 @@ export class SupportRequestListComponent {
   ) {
   }
 
+  filterForm = new FormGroup({
+    fromDate: new FormControl<string | null>(null),
+    toDate: new FormControl<string | null>(null),
+    statusId: new FormControl<string | null>(null),
+    title: new FormControl<string>('', { nonNullable: true })
+  });
+
+  resetFilterForm() {
+    this.filterForm.patchValue({
+      fromDate: null,
+      toDate: null,
+      statusId: null,
+      title: ''
+    })
+  }
+
   add() {
-    window.open("https://www.webfuel.com/test-support-request-form-icl", "_blank");
+    window.open("/external/support-request", "_blank");
   }
 
   edit(item: SupportRequest) {

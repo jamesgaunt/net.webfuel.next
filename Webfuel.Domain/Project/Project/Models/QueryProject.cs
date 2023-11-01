@@ -9,7 +9,6 @@ namespace Webfuel.Domain
             var number = FilterUtility.ExtractInt32(Number);
 
             this.Contains(nameof(Project.Title), Title);
-
             this.Equal(nameof(Project.Number), number, number != null);
             this.GreaterThanOrEqual(nameof(Project.DateOfRequest), FromDate, FromDate != null);
             this.LessThanOrEqual(nameof(Project.DateOfRequest), ToDate, ToDate != null);

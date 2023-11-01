@@ -39,7 +39,7 @@ export class SupportRequestFormComponent {
 
     title: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     isFellowshipId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
-    fundingStreamName: new FormControl<string>('', { nonNullable: true }),
+    proposedFundingStreamName: new FormControl<string>('', { nonNullable: true }),
     targetSubmissionDate: new FormControl<string | null>(null),
     experienceOfResearchAwards: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     isTeamMembersConsultedId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
@@ -47,8 +47,8 @@ export class SupportRequestFormComponent {
     briefDescription: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     supportRequested: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     applicationStageId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
-    fundingStreamId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
-    fundingCallTypeId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
+    proposedFundingStreamId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
+    proposedFundingCallTypeId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     howDidYouFindUsId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
 
     // Team Contact Details

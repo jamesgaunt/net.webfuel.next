@@ -7,6 +7,7 @@ import { ProjectListComponent } from './project/project-list/project-list.compon
 import { ProjectItemComponent } from './project/project-item/project-item.component';
 import { ProjectTabsComponent } from './project/project-tabs/project-tabs.component';
 import { ProjectRequestComponent } from './project/project-request/project-request.component';
+import { ProjectResearcherComponent } from './project/project-researcher/project-researcher.component';
 import { ProjectSupportComponent } from './project/project-support/project-support.component';
 import { ProjectSubmissionComponent } from './project/project-submission/project-submission.component';
 import { ProjectFilesComponent } from './project/project-files/project-files.component';
@@ -28,6 +29,7 @@ import { UpdateProjectSubmissionDialog, UpdateProjectSubmissionDialogComponent }
     ProjectListComponent,
     ProjectItemComponent,
     ProjectRequestComponent,
+    ProjectResearcherComponent,
     ProjectSupportComponent,
     ProjectSubmissionComponent,
     ProjectHistoryComponent,

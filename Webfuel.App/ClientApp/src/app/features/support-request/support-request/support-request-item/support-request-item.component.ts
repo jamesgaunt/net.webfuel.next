@@ -40,7 +40,7 @@ export class SupportRequestItemComponent implements OnInit {
     id: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     title: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     isFellowshipId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
-    fundingStreamName: new FormControl<string>('', { nonNullable: true }),
+    proposedFundingStreamName: new FormControl<string>('', { nonNullable: true }),
     targetSubmissionDate: new FormControl<string | null>(null),
     experienceOfResearchAwards: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     isTeamMembersConsultedId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
@@ -48,13 +48,13 @@ export class SupportRequestItemComponent implements OnInit {
     briefDescription: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     supportRequested: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     applicationStageId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
-    fundingStreamId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
-    fundingCallTypeId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
+    proposedFundingStreamId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
+    proposedFundingCallTypeId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
     howDidYouFindUsId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
   });
 
   save(close: boolean) {
-    if (!this.form.valid)
+    if (this.formService.hasErrors(this.form))
       return;
 
     this.supportRequestApi.update(this.form.getRawValue(), { successGrowl: "Support Request Updated" }).subscribe((result) => {

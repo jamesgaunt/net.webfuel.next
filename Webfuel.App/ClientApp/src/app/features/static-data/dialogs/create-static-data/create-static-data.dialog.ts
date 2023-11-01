@@ -36,7 +36,7 @@ export class CreateStaticDataDialogComponent extends DialogComponentBase<any, Cr
   });
 
   save() {
-    if (!this.form.valid)
+    if (this.formService.hasErrors(this.form))
       return;
     this._closeDialog(this.form.getRawValue());
   }

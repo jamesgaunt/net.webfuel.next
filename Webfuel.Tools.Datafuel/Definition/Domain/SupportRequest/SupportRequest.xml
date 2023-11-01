@@ -3,16 +3,17 @@
 <Schema>
   <Entity Name="SupportRequest">
     <Key Name="Id" Type="guid" />
-    
+    <Property Name="StatusId" Type="SupportRequestStatus" />
+
     <!-- Project Details -->
-    
+
+    <Property Name="DateOfRequest" Type="Date" />
     <Property Name="Title" Type="string[1000]" />
     <Property Name="IsFellowshipId" Type="IsFellowship?" />
     <Property Name="ApplicationStageId" Type="ApplicationStage?" />
-    <Property Name="DateOfRequest" Type="Date" />
-    <Property Name="FundingCallTypeId" Type="FundingCallType?" />
-    <Property Name="FundingStreamId" Type="FundingStream?" />
-    <Property Name="FundingStreamName" Type="meta:name" />
+    <Property Name="ProposedFundingCallTypeId" Type="FundingCallType?" />
+    <Property Name="ProposedFundingStreamId" Type="FundingStream?" />
+    <Property Name="ProposedFundingStreamName" Type="meta:name" />
     <Property Name="TargetSubmissionDate" Type="Date?" />
     <Property Name="ExperienceOfResearchAwards" Type="string[1000]" />
     <Property Name="IsTeamMembersConsultedId" Type="IsTeamMembersConsulted?" />
@@ -20,7 +21,6 @@
     <Property Name="BriefDescription" Type="string[5000]" />
     <Property Name="SupportRequested" Type="string[2000]" />
     <Property Name="HowDidYouFindUsId" Type="HowDidYouFindUs?" />
-    <Property Name="StatusId" Type="SupportRequestStatus" />
 
     <!-- Team Contact Details -->
 

@@ -13,7 +13,7 @@ namespace Webfuel.Domain
         // Project Details
 
         public string Title { get; set; } = String.Empty;
-        public string FundingStreamName { get; set; } = String.Empty;
+        public string ProposedFundingStreamName { get; set; } = String.Empty;
         public DateOnly? TargetSubmissionDate { get; set; } = null;
         public string ExperienceOfResearchAwards { get; set; } = String.Empty;
         public string BriefDescription { get; set; } = String.Empty;
@@ -22,8 +22,8 @@ namespace Webfuel.Domain
         public Guid? IsTeamMembersConsultedId { get; set; }
         public Guid? IsResubmissionId { get; set; }
         public Guid? ApplicationStageId { get; set; }
-        public Guid? FundingStreamId { get; set; }
-        public Guid? FundingCallTypeId { get; set; }
+        public Guid? ProposedFundingStreamId { get; set; }
+        public Guid? ProposedFundingCallTypeId { get; set; }
         public Guid? HowDidYouFindUsId { get; set; }
 
         // Team Contact Details

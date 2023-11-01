@@ -13,7 +13,7 @@ const routes: Routes = [
   {
     path: 'support-request-list',
     component: SupportRequestListComponent,
-    data: { activeSideMenu: 'SupportRequests' }
+    data: { activeSideMenu: 'Requests' }
   },
   {
     path: 'support-request-item/:id',

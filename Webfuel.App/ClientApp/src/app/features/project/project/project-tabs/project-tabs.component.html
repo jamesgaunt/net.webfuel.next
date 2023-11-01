@@ -1,9 +1,9 @@
 <div class="columns">
   <div class="column">
-    <h1 class="title">Project</h1>
+    <h1 class="title">Project {{ item.prefixedNumber }}</h1>
   </div>
   <div class="column">
-    <div class="buttons is-right">
+    <div class="header-buttons">
       <button class="button is-primary" (click)="addSupport()">Add Support</button>
       <button class="button is-primary" (click)="addSubmission()">Add Submission</button>
     </div>
@@ -13,6 +13,7 @@
   <ul>
     <li routerLinkActive="is-active"><a routerLink="../../project-item/{{ item.id }}">Project</a></li>
     <li routerLinkActive="is-active"><a routerLink="../../project-request/{{ item.id }}">Request</a></li>
+    <li routerLinkActive="is-active"><a routerLink="../../project-researcher/{{ item.id }}">Researcher</a></li>
     <li routerLinkActive="is-active"><a routerLink="../../project-support/{{ item.id }}">Support</a></li>
     <li routerLinkActive="is-active"><a routerLink="../../project-files/{{ item.id }}">Files</a></li>
     <li routerLinkActive="is-active"><a routerLink="../../project-submission/{{ item.id }}">Submissions</a></li>

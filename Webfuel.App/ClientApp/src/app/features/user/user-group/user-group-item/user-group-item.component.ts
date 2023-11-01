@@ -37,7 +37,7 @@ export class UserGroupItemComponent implements OnInit {
   });
 
   save() {
-    if (!this.form.valid)
+    if (this.formService.hasErrors(this.form))
       return;
 
     this.userGroupApi.update(this.form.getRawValue(), { successGrowl: "User Group Updated" }).subscribe((result) => {

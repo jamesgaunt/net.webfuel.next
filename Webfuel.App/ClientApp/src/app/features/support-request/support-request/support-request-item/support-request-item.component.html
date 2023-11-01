@@ -9,7 +9,7 @@
       <h1 class="title">Support Request</h1>
     </div>
     <div class="column">
-      <div class="buttons is-right">
+      <div class="header-buttons">
         <button class="button is-warning" (click)="triage()">Triage</button>
       </div>
     </div>
@@ -31,19 +31,15 @@
       </div>
       <div class="field is-6">
         <label class="label">Proposed funding stream</label>
-        <dropdown-select [dataSource]="staticDataCache.fundingStream" placeholder="required" formControlName="fundingStreamId"></dropdown-select>
+        <dropdown-select [dataSource]="staticDataCache.fundingStream" placeholder="required" formControlName="proposedFundingStreamId"></dropdown-select>
       </div>
       <div class="field is-6">
         <label class="label">Funding stream name / specialist call if known</label>
-        <input class="input" type="text" placeholder="optional" formControlName="fundingStreamName" />
+        <input class="input" type="text" placeholder="optional" formControlName="proposedFundingStreamName" />
       </div>
       <div class="field is-6">
         <label class="label">Type of call</label>
-        <dropdown-select [dataSource]="staticDataCache.fundingCallType" placeholder="required" formControlName="fundingCallTypeId"></dropdown-select>
-      </div>
-      <div class="field is-6">
-        <label class="label">Type of call</label>
-        <dropdown-select [dataSource]="staticDataCache.fundingCallType" placeholder="required" formControlName="fundingCallTypeId"></dropdown-select>
+        <dropdown-select [dataSource]="staticDataCache.fundingCallType" placeholder="required" formControlName="proposedFundingCallTypeId"></dropdown-select>
       </div>
       <div class="field is-6">
         <label class="label">Target submission date (if known)</label>

@@ -44,3 +44,16 @@
         margin-left: calc(var(--gap) / 2);
     }
 }
+
+.header-buttons {
+  text-align: right;
+  margin: var(--gap) 0 0 0;
+
+  .button + .button {
+    margin-left: calc(var(--gap) / 2);
+  }
+
+  .button {
+    margin-bottom: calc(var(--gap) / 2);
+  }
+}

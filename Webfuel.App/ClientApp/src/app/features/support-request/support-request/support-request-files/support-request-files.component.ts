@@ -20,7 +20,6 @@ export class SupportRequestFilesComponent implements OnInit {
     private triageSupportRequestDialog: TriageSupportRequestDialog,
     public staticDataCache: StaticDataCache,
     public supportRequestApi: SupportRequestApi,
-   
   ) {
   }
 
@@ -37,41 +36,10 @@ export class SupportRequestFilesComponent implements OnInit {
   }
 
   form = new FormGroup({
-    id: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
-    title: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
-    isFellowshipId: new FormControl<string | null>(null),
-    dateOfRequest: new FormControl<string | null>(null),
-    fundingStreamName: new FormControl<string>('', { nonNullable: true }),
-    targetSubmissionDate: new FormControl<string | null>(null),
-    experienceOfResearchAwards: new FormControl<string>('', { nonNullable: true }),
-    isTeamMembersConsultedId: new FormControl<string | null>(null),
-    isResubmissionId: new FormControl<string | null>(null),
-    briefDescription: new FormControl<string>('', { nonNullable: true }),
-    supportRequested: new FormControl<string>('', { nonNullable: true }),
-    isLeadApplicantNHSId: new FormControl<string | null>(null),
-    applicationStageId: new FormControl<string | null>(null),
-    fundingStreamId: new FormControl<string | null>(null),
-    fundingCallTypeId: new FormControl<string | null>(null),
-    howDidYouFindUsId: new FormControl<string | null>(null),
   });
-
-  save(close: boolean) {
-    if (!this.form.valid)
-      return;
-
-    this.supportRequestApi.update(this.form.getRawValue(), { successGrowl: "Support Request Updated" }).subscribe((result) => {
-      this.reset(result);
-      if(close)
-        this.router.navigate(['support-request/support-request-list']);
-    });
-  }
 
   cancel() {
     this.reset(this.item);
     this.router.navigate(['support-request/support-request-list']);
-  }
-
-  triage() {
-    this.triageSupportRequestDialog.open({ id: this.item.id });
   }
 }

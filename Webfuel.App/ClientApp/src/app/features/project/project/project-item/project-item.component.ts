@@ -61,7 +61,7 @@ export class ProjectItemComponent implements OnInit {
   });
 
   save(close: boolean) {
-    if (!this.form.valid)
+    if (this.formService.hasErrors(this.form))
       return;
 
     this.projectApi.update(this.form.getRawValue(), { successGrowl: "Project Updated" }).subscribe((result) => {

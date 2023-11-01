@@ -60,7 +60,7 @@ export class UserItemComponent implements OnInit {
   });
 
   save(close: boolean) {
-    if (!this.form.valid)
+    if (this.formService.hasErrors(this.form))
       return;
 
     this.userApi.update(this.form.getRawValue(), { successGrowl: "User Updated" }).subscribe((result) => {

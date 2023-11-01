@@ -23,14 +23,14 @@ namespace Webfuel.Domain
                 {
                     case nameof(SupportRequest.Id):
                         break;
-                    case nameof(SupportRequest.Title):
-                        result.Add(new SqlParameter(nameof(SupportRequest.Title), entity.Title));
-                        break;
                     case nameof(SupportRequest.DateOfRequest):
                         result.Add(new SqlParameter(nameof(SupportRequest.DateOfRequest), entity.DateOfRequest));
                         break;
-                    case nameof(SupportRequest.FundingStreamName):
-                        result.Add(new SqlParameter(nameof(SupportRequest.FundingStreamName), entity.FundingStreamName));
+                    case nameof(SupportRequest.Title):
+                        result.Add(new SqlParameter(nameof(SupportRequest.Title), entity.Title));
+                        break;
+                    case nameof(SupportRequest.ProposedFundingStreamName):
+                        result.Add(new SqlParameter(nameof(SupportRequest.ProposedFundingStreamName), entity.ProposedFundingStreamName));
                         break;
                     case nameof(SupportRequest.TargetSubmissionDate):
                         result.Add(new SqlParameter(nameof(SupportRequest.TargetSubmissionDate), entity.TargetSubmissionDate ?? (object?)DBNull.Value));
@@ -104,17 +104,20 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.CreatedAt):
                         result.Add(new SqlParameter(nameof(SupportRequest.CreatedAt), entity.CreatedAt));
                         break;
+                    case nameof(SupportRequest.StatusId):
+                        result.Add(new SqlParameter(nameof(SupportRequest.StatusId), entity.StatusId));
+                        break;
                     case nameof(SupportRequest.IsFellowshipId):
                         result.Add(new SqlParameter(nameof(SupportRequest.IsFellowshipId), entity.IsFellowshipId ?? (object?)DBNull.Value));
                         break;
                     case nameof(SupportRequest.ApplicationStageId):
                         result.Add(new SqlParameter(nameof(SupportRequest.ApplicationStageId), entity.ApplicationStageId ?? (object?)DBNull.Value));
                         break;
-                    case nameof(SupportRequest.FundingCallTypeId):
-                        result.Add(new SqlParameter(nameof(SupportRequest.FundingCallTypeId), entity.FundingCallTypeId ?? (object?)DBNull.Value));
+                    case nameof(SupportRequest.ProposedFundingCallTypeId):
+                        result.Add(new SqlParameter(nameof(SupportRequest.ProposedFundingCallTypeId), entity.ProposedFundingCallTypeId ?? (object?)DBNull.Value));
                         break;
-                    case nameof(SupportRequest.FundingStreamId):
-                        result.Add(new SqlParameter(nameof(SupportRequest.FundingStreamId), entity.FundingStreamId ?? (object?)DBNull.Value));
+                    case nameof(SupportRequest.ProposedFundingStreamId):
+                        result.Add(new SqlParameter(nameof(SupportRequest.ProposedFundingStreamId), entity.ProposedFundingStreamId ?? (object?)DBNull.Value));
                         break;
                     case nameof(SupportRequest.IsTeamMembersConsultedId):
                         result.Add(new SqlParameter(nameof(SupportRequest.IsTeamMembersConsultedId), entity.IsTeamMembersConsultedId ?? (object?)DBNull.Value));
@@ -124,9 +127,6 @@ namespace Webfuel.Domain
                         break;
                     case nameof(SupportRequest.HowDidYouFindUsId):
                         result.Add(new SqlParameter(nameof(SupportRequest.HowDidYouFindUsId), entity.HowDidYouFindUsId ?? (object?)DBNull.Value));
-                        break;
-                    case nameof(SupportRequest.StatusId):
-                        result.Add(new SqlParameter(nameof(SupportRequest.StatusId), entity.StatusId));
                         break;
                     case nameof(SupportRequest.TeamContactRoleId):
                         result.Add(new SqlParameter(nameof(SupportRequest.TeamContactRoleId), entity.TeamContactRoleId ?? (object?)DBNull.Value));
@@ -179,9 +179,9 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Id";
-                yield return "Title";
                 yield return "DateOfRequest";
-                yield return "FundingStreamName";
+                yield return "Title";
+                yield return "ProposedFundingStreamName";
                 yield return "TargetSubmissionDate";
                 yield return "ExperienceOfResearchAwards";
                 yield return "BriefDescription";
@@ -206,14 +206,14 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantAddressPostcode";
                 yield return "LeadApplicantORCID";
                 yield return "CreatedAt";
+                yield return "StatusId";
                 yield return "IsFellowshipId";
                 yield return "ApplicationStageId";
-                yield return "FundingCallTypeId";
-                yield return "FundingStreamId";
+                yield return "ProposedFundingCallTypeId";
+                yield return "ProposedFundingStreamId";
                 yield return "IsTeamMembersConsultedId";
                 yield return "IsResubmissionId";
                 yield return "HowDidYouFindUsId";
-                yield return "StatusId";
                 yield return "TeamContactRoleId";
                 yield return "LeadApplicantOrganisationType";
                 yield return "IsLeadApplicantNHSId";
@@ -230,9 +230,9 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Id";
-                yield return "Title";
                 yield return "DateOfRequest";
-                yield return "FundingStreamName";
+                yield return "Title";
+                yield return "ProposedFundingStreamName";
                 yield return "TargetSubmissionDate";
                 yield return "ExperienceOfResearchAwards";
                 yield return "BriefDescription";
@@ -257,14 +257,14 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantAddressPostcode";
                 yield return "LeadApplicantORCID";
                 yield return "CreatedAt";
+                yield return "StatusId";
                 yield return "IsFellowshipId";
                 yield return "ApplicationStageId";
-                yield return "FundingCallTypeId";
-                yield return "FundingStreamId";
+                yield return "ProposedFundingCallTypeId";
+                yield return "ProposedFundingStreamId";
                 yield return "IsTeamMembersConsultedId";
                 yield return "IsResubmissionId";
                 yield return "HowDidYouFindUsId";
-                yield return "StatusId";
                 yield return "TeamContactRoleId";
                 yield return "LeadApplicantOrganisationType";
                 yield return "IsLeadApplicantNHSId";
@@ -280,9 +280,9 @@ namespace Webfuel.Domain
         {
             get
             {
-                yield return "Title";
                 yield return "DateOfRequest";
-                yield return "FundingStreamName";
+                yield return "Title";
+                yield return "ProposedFundingStreamName";
                 yield return "TargetSubmissionDate";
                 yield return "ExperienceOfResearchAwards";
                 yield return "BriefDescription";
@@ -307,14 +307,14 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantAddressPostcode";
                 yield return "LeadApplicantORCID";
                 yield return "CreatedAt";
+                yield return "StatusId";
                 yield return "IsFellowshipId";
                 yield return "ApplicationStageId";
-                yield return "FundingCallTypeId";
-                yield return "FundingStreamId";
+                yield return "ProposedFundingCallTypeId";
+                yield return "ProposedFundingStreamId";
                 yield return "IsTeamMembersConsultedId";
                 yield return "IsResubmissionId";
                 yield return "HowDidYouFindUsId";
-                yield return "StatusId";
                 yield return "TeamContactRoleId";
                 yield return "LeadApplicantOrganisationType";
                 yield return "IsLeadApplicantNHSId";
@@ -332,8 +332,8 @@ namespace Webfuel.Domain
         {
             entity.Title = entity.Title ?? String.Empty;
             entity.Title = entity.Title.Trim();
-            entity.FundingStreamName = entity.FundingStreamName ?? String.Empty;
-            entity.FundingStreamName = entity.FundingStreamName.Trim();
+            entity.ProposedFundingStreamName = entity.ProposedFundingStreamName ?? String.Empty;
+            entity.ProposedFundingStreamName = entity.ProposedFundingStreamName.Trim();
             entity.ExperienceOfResearchAwards = entity.ExperienceOfResearchAwards ?? String.Empty;
             entity.ExperienceOfResearchAwards = entity.ExperienceOfResearchAwards.Trim();
             entity.BriefDescription = entity.BriefDescription ?? String.Empty;
@@ -380,7 +380,7 @@ namespace Webfuel.Domain
         public static SupportRequestRepositoryValidator Validator { get; } = new SupportRequestRepositoryValidator();
         
         public const int Title_MaxLength = 1000;
-        public const int FundingStreamName_MaxLength = 64;
+        public const int ProposedFundingStreamName_MaxLength = 64;
         public const int ExperienceOfResearchAwards_MaxLength = 1000;
         public const int BriefDescription_MaxLength = 5000;
         public const int SupportRequested_MaxLength = 2000;
@@ -409,11 +409,11 @@ namespace Webfuel.Domain
                 .MaximumLength(Title_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
-        public static void FundingStreamName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        public static void ProposedFundingStreamName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull()
-                .MaximumLength(FundingStreamName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+                .MaximumLength(ProposedFundingStreamName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
         public static void ExperienceOfResearchAwards_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
@@ -561,7 +561,7 @@ namespace Webfuel.Domain
             public SupportRequestRepositoryValidator()
             {
                 RuleFor(x => x.Title).Use(Title_ValidationRules);
-                RuleFor(x => x.FundingStreamName).Use(FundingStreamName_ValidationRules);
+                RuleFor(x => x.ProposedFundingStreamName).Use(ProposedFundingStreamName_ValidationRules);
                 RuleFor(x => x.ExperienceOfResearchAwards).Use(ExperienceOfResearchAwards_ValidationRules);
                 RuleFor(x => x.BriefDescription).Use(BriefDescription_ValidationRules);
                 RuleFor(x => x.SupportRequested).Use(SupportRequested_ValidationRules);

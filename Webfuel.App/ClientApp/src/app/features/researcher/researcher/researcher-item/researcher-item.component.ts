@@ -39,7 +39,7 @@ export class ResearcherItemComponent implements OnInit {
   });
 
   save() {
-    if (!this.form.valid)
+    if (this.formService.hasErrors(this.form))
       return;
 
     this.researcherApi.update(this.form.getRawValue(), { successGrowl: "Researcher Updated" }).subscribe((result) => {

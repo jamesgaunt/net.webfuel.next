@@ -326,32 +326,57 @@ export interface Project {
     nihrrssMemberCollaboratorIds: Array<string>;
     submittedFundingStreamFreeText: string;
     submittedFundingStreamName: string;
-    dateOfRequest: string;
-    title: string;
-    briefDescription: string;
-    fundingStreamName: string;
-    targetSubmissionDate: string | null | null;
-    experienceOfResearchAwards: string;
-    supportRequested: string;
     projectStartDate: string | null | null;
     recruitmentTarget: number | null | null;
     numberOfProjectSites: number | null | null;
+    dateOfRequest: string;
+    title: string;
+    proposedFundingStreamName: string;
+    targetSubmissionDate: string | null | null;
+    experienceOfResearchAwards: string;
+    briefDescription: string;
+    supportRequested: string;
+    teamContactTitle: string;
+    teamContactFirstName: string;
+    teamContactLastName: string;
+    teamContactEmail: string;
+    teamContactMailingPermission: boolean;
+    teamContactPrivacyStatementRead: boolean;
+    leadApplicantTitle: string;
+    leadApplicantFirstName: string;
+    leadApplicantLastName: string;
+    leadApplicantJobRole: string;
+    leadApplicantOrganisation: string;
+    leadApplicantDepartment: string;
+    leadApplicantAddressLine1: string;
+    leadApplicantAddressLine2: string;
+    leadApplicantAddressTown: string;
+    leadApplicantAddressCounty: string;
+    leadApplicantAddressCountry: string;
+    leadApplicantAddressPostcode: string;
+    leadApplicantORCID: string;
     createdAt: string;
     statusId: string;
     isQuantativeTeamContributionId: string | null | null;
     isCTUTeamContributionId: string | null | null;
     isPPIEAndEDIContributionId: string | null | null;
     submittedFundingStreamId: string | null | null;
+    isInternationalMultiSiteStudyId: string | null | null;
     supportRequestId: string | null | null;
-    applicationStageId: string | null | null;
-    fundingStreamId: string | null | null;
-    fundingCallTypeId: string | null | null;
     isFellowshipId: string | null | null;
+    applicationStageId: string | null | null;
+    proposedFundingCallTypeId: string | null | null;
+    proposedFundingStreamId: string | null | null;
     isTeamMembersConsultedId: string | null | null;
     isResubmissionId: string | null | null;
-    isLeadApplicantNHSId: string | null | null;
     howDidYouFindUsId: string | null | null;
-    isInternationalMultiSiteStudyId: string | null | null;
+    teamContactRoleId: string | null | null;
+    leadApplicantOrganisationType: string | null | null;
+    isLeadApplicantNHSId: string | null | null;
+    leadApplicantAgeRangeId: string | null | null;
+    leadApplicantDisabilityId: string | null | null;
+    leadApplicantGenderId: string | null | null;
+    leadApplicantEthnicityId: string | null | null;
 }
 
 export interface CreateProject {
@@ -512,9 +537,9 @@ export interface QueryResearcher extends Query {
 
 export interface SupportRequest {
     id: string;
-    title: string;
     dateOfRequest: string;
-    fundingStreamName: string;
+    title: string;
+    proposedFundingStreamName: string;
     targetSubmissionDate: string | null | null;
     experienceOfResearchAwards: string;
     briefDescription: string;
@@ -539,14 +564,14 @@ export interface SupportRequest {
     leadApplicantAddressPostcode: string;
     leadApplicantORCID: string;
     createdAt: string;
+    statusId: string;
     isFellowshipId: string | null | null;
     applicationStageId: string | null | null;
-    fundingCallTypeId: string | null | null;
-    fundingStreamId: string | null | null;
+    proposedFundingCallTypeId: string | null | null;
+    proposedFundingStreamId: string | null | null;
     isTeamMembersConsultedId: string | null | null;
     isResubmissionId: string | null | null;
     howDidYouFindUsId: string | null | null;
-    statusId: string;
     teamContactRoleId: string | null | null;
     leadApplicantOrganisationType: string | null | null;
     isLeadApplicantNHSId: string | null | null;
@@ -559,7 +584,7 @@ export interface SupportRequest {
 
 export interface CreateSupportRequest {
     title: string;
-    fundingStreamName: string;
+    proposedFundingStreamName: string;
     targetSubmissionDate: string | null | null;
     experienceOfResearchAwards: string;
     briefDescription: string;
@@ -568,8 +593,8 @@ export interface CreateSupportRequest {
     isTeamMembersConsultedId: string | null | null;
     isResubmissionId: string | null | null;
     applicationStageId: string | null | null;
-    fundingStreamId: string | null | null;
-    fundingCallTypeId: string | null | null;
+    proposedFundingStreamId: string | null | null;
+    proposedFundingCallTypeId: string | null | null;
     howDidYouFindUsId: string | null | null;
     teamContactTitle: string;
     teamContactFirstName: string;
@@ -602,7 +627,7 @@ export interface CreateSupportRequest {
 export interface UpdateSupportRequest {
     id: string;
     title: string;
-    fundingStreamName: string;
+    proposedFundingStreamName: string;
     targetSubmissionDate: string | null | null;
     experienceOfResearchAwards: string;
     briefDescription: string;
@@ -611,8 +636,8 @@ export interface UpdateSupportRequest {
     isTeamMembersConsultedId: string | null | null;
     isResubmissionId: string | null | null;
     applicationStageId: string | null | null;
-    fundingStreamId: string | null | null;
-    fundingCallTypeId: string | null | null;
+    proposedFundingStreamId: string | null | null;
+    proposedFundingCallTypeId: string | null | null;
     howDidYouFindUsId: string | null | null;
 }
 
@@ -652,6 +677,10 @@ export interface TriageSupportRequest {
 }
 
 export interface QuerySupportRequest extends Query {
+    title: string;
+    fromDate: string | null | null;
+    toDate: string | null | null;
+    statusId: string | null | null;
     skip: number;
     take: number;
     projection?: Array<string>;

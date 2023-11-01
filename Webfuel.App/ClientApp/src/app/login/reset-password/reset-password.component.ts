@@ -38,7 +38,7 @@ export class ResetPasswordComponent implements OnInit {
   });
 
   resetPassword() {
-    if (!this.form.valid)
+    if (this.formService.hasErrors(this.form))
       return;
 
     this.userLoginApi.resetPassword(this.form.getRawValue()).subscribe((result) => {

@@ -15,5 +15,7 @@ namespace Webfuel.Domain
         public partial void  Apply(UpdateSupportRequest request, SupportRequest existing);
 
         public partial void Apply(UpdateSupportRequestResearcher request, SupportRequest existing);
+
+        public partial void Apply(SupportRequest request, Project existing);
     }
 }

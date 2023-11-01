@@ -1,26 +1,24 @@
 
 NEXT:
 
-> Fix Drop Down Text field to work better (customise backdrop opacity)
 > Allow tabbing on all fields
 > Razor based support request form (mock up example)
 > Fix up validation logic/display - form service checks and processing server side errors - register active form with api (can we do it on active controller)
 > Think about a user cache? GUID => Presentation Only
 > Standardise date formats dd MMM yy (can we globalise the default - customisation service - user level customisations, formats, palettes, etc)
 
-> To Right Buttons need some CSS work
+> Date Popup needs to attach to the field
+> Required / invalid indicator on Date Picker input
 
-> Support Request Item/Researcher Rework
-> Support Request Number
-> Support Request Filters/Improvements to table
-> Set Max Length on support request form input fields
+> Project : Submission more fields on grid
 
-> Change Support Request Funding Stream > Proposed Funding Stream / Name
-
+> Support Request Number (?)
 > Support Request Form Aria
 
 DONE:
 
+> Change Support Request Funding Stream > Proposed Funding Stream / Name [DONE]
+> Support Request Item/Researcher Rework [DONE]
 > Sort out responsiveness [DONE]
 > Dialog 2.0 [DONE]
 > Grey out placeholders in custom controls [DONE]
@@ -35,6 +33,11 @@ DONE:
 > Move User Groups into Configuration [DONE]
 > Remove Researchers entirely [DONE]
 > Dialog widths [DONE]
+> Fix Drop Down Text field to work better (customise backdrop opacity) [DONE]
+> Support Request Filters/Improvements to table [DONE]
+> Set Max Length on support request form input fields [DONE]
+> To Right Buttons need some CSS work [DONE]
+
 
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 

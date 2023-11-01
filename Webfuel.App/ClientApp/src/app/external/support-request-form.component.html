@@ -8,7 +8,7 @@
       <div class="flex">
         <div class="field is-12">
           <label class="label">Working title of the project</label>
-          <input class="input" type="text" placeholder="required" formControlName="title" />
+          <input class="input" type="text" placeholder="required" formControlName="title" maxlength="1000"/>
         </div>
         <div class="field is-6">
           <label class="label">Stage of application</label>
@@ -20,19 +20,15 @@
         </div>
         <div class="field is-6">
           <label class="label">Proposed funding stream</label>
-          <dropdown-select [dataSource]="staticDataCache.fundingStream" placeholder="required" formControlName="fundingStreamId"></dropdown-select>
+          <dropdown-select [dataSource]="staticDataCache.fundingStream" placeholder="required" formControlName="proposedFundingStreamId"></dropdown-select>
         </div>
         <div class="field is-6">
           <label class="label">Funding stream name / specialist call if known</label>
-          <input class="input" type="text" placeholder="optional" formControlName="fundingStreamName" />
+          <input class="input" type="text" placeholder="optional" formControlName="proposedFundingStreamName" maxlength="64" />
         </div>
         <div class="field is-6">
           <label class="label">Type of call</label>
-          <dropdown-select [dataSource]="staticDataCache.fundingCallType" placeholder="required" formControlName="fundingCallTypeId"></dropdown-select>
-        </div>
-        <div class="field is-6">
-          <label class="label">Type of call</label>
-          <dropdown-select [dataSource]="staticDataCache.fundingCallType" placeholder="required" formControlName="fundingCallTypeId"></dropdown-select>
+          <dropdown-select [dataSource]="staticDataCache.fundingCallType" placeholder="required" formControlName="proposedFundingCallTypeId"></dropdown-select>
         </div>
         <div class="field is-6">
           <label class="label">Target submission date (if known)</label>
@@ -52,19 +48,19 @@
         </div>
         <div class="field is-12">
           <label class="label">What is your (or the CIs)  experience of securing funding awards?</label>
-          <textarea class="textarea" formControlName="experienceOfResearchAwards" placeholder="required"></textarea>
+          <textarea class="textarea" formControlName="experienceOfResearchAwards" placeholder="required" maxlength="1000"></textarea>
         </div>
         <div class="field is-12">
           <label class="label">
             Please add a brief description of your proposed study. Where possible include an outline of research question, aims, need and methods (including analysis), potential impact. [max 500 words]
           </label>
-          <textarea class="textarea" formControlName="briefDescription" placeholder="required"></textarea>
+          <textarea class="textarea" formControlName="briefDescription" placeholder="required" maxlength="5000"></textarea>
         </div>
         <div class="field is-12">
           <label class="label">
             What support are you looking for from RSS?  Eg funding advice, methods advice, PPIE and EDI advice, CTU support, training in methods for grants?
           </label>
-          <textarea class="textarea" formControlName="supportRequested" placeholder="required"></textarea>
+          <textarea class="textarea" formControlName="supportRequested" placeholder="required" maxlength="2000"></textarea>
         </div>
       </div>
 
@@ -79,15 +75,15 @@
         </div>
         <div class="field is-4">
           <label class="label">First name</label>
-          <input class="input" type="text" placeholder="required" formControlName="teamContactFirstName" />
+          <input class="input" type="text" placeholder="required" formControlName="teamContactFirstName" maxlength="64" />
         </div>
         <div class="field is-4">
           <label class="label">Last name</label>
-          <input class="input" type="text" placeholder="required" formControlName="teamContactLastName" />
+          <input class="input" type="text" placeholder="required" formControlName="teamContactLastName" maxlength="64" />
         </div>
         <div class="field is-4">
           <label class="label">Email</label>
-          <input class="input" type="text" placeholder="required" formControlName="teamContactEmail" />
+          <input class="input" type="text" placeholder="required" formControlName="teamContactEmail" maxlength="64" />
         </div>
         <div class="field is-4">
           <label class="label">Role in application</label>
@@ -116,16 +112,16 @@
         </div>
         <div class="field is-4">
           <label class="label">First name</label>
-          <input class="input" type="text" placeholder="required" formControlName="leadApplicantFirstName" />
+          <input class="input" type="text" placeholder="required" formControlName="leadApplicantFirstName" maxlength="64" />
         </div>
         <div class="field is-4">
           <label class="label">Last name</label>
-          <input class="input" type="text" placeholder="required" formControlName="leadApplicantLastName" />
+          <input class="input" type="text" placeholder="required" formControlName="leadApplicantLastName" maxlength="64" />
         </div>
 
         <div class="field is-4">
           <label class="label">Job Role</label>
-          <input class="input" type="text" placeholder="required" formControlName="leadApplicantJobRole" />
+          <input class="input" type="text" placeholder="required" formControlName="leadApplicantJobRole" maxlength="64" />
         </div>
         <div class="field is-4">
           <label class="label">Organisation Type</label>
@@ -133,71 +129,80 @@
         </div>
         <div class="field is-4">
           <label class="label">Organisation</label>
-          <input class="input" type="text" placeholder="required" formControlName="leadApplicantOrganisation" />
+          <input class="input" type="text" placeholder="required" formControlName="leadApplicantOrganisation" maxlength="64" />
         </div>
         <div class="field is-4">
           <label class="label">Department</label>
-          <input class="input" type="text" placeholder="required" formControlName="leadApplicantDepartment" />
+          <input class="input" type="text" placeholder="required" formControlName="leadApplicantDepartment" maxlength="64" />
         </div>
         <div class="field is-4">
           <label class="label">ORCID</label>
-          <input class="input" type="text" placeholder="required" formControlName="leadApplicantORCID" />
+          <input class="input" type="text" placeholder="required" formControlName="leadApplicantORCID" maxlength="64" />
         </div>
-        <div class="field is-12">
+        <div class="field is-4">
           <label class="label">
             Is the chief investigator an NHS employee seeking RSS support for the first time? 
           </label>
           <dropdown-select [dataSource]="staticDataCache.isLeadApplicantNHS" placeholder="required" formControlName="isLeadApplicantNHSId"></dropdown-select>
         </div>
       </div>
-      <h3>Work Address</h3>
+
       <div class="flex">
-        <div class="field is-12">
-          <label class="label">Line 1</label>
-          <input class="input" type="text" placeholder="required" formControlName="leadApplicantAddressLine1" />
+        <div class="is-6">
+          <h3>Work Address</h3>
+          <div class="flex">
+            <div class="field is-12">
+              <label class="label">Line 1</label>
+              <input class="input" type="text" placeholder="required" formControlName="leadApplicantAddressLine1" maxlength="64" />
+            </div>
+            <div class="field is-12">
+              <label class="label">Line 2</label>
+              <input class="input" type="text" placeholder="optional" formControlName="leadApplicantAddressLine2" maxlength="64" />
+            </div>
+            <div class="field is-12">
+              <label class="label">Town/City</label>
+              <input class="input" type="text" placeholder="required" formControlName="leadApplicantAddressTown" maxlength="64" />
+            </div>
+            <div class="field is-12">
+              <label class="label">County</label>
+              <input class="input" type="text" placeholder="required" formControlName="leadApplicantAddressCounty" maxlength="64" />
+            </div>
+            <div class="field is-12">
+              <label class="label">Country</label>
+              <input class="input" type="text" placeholder="required" formControlName="leadApplicantAddressCountry" maxlength="64" />
+            </div>
+            <div class="field is-12">
+              <label class="label">Postcode</label>
+              <input class="input" type="text" placeholder="required" formControlName="leadApplicantAddressPostcode" maxlength="64" />
+            </div>
+          </div>
         </div>
-        <div class="field is-12">
-          <label class="label">Line 2</label>
-          <input class="input" type="text" placeholder="optional" formControlName="leadApplicantAddressLine2" />
-        </div>
-        <div class="field is-12">
-          <label class="label">Town/City</label>
-          <input class="input" type="text" placeholder="required" formControlName="leadApplicantAddressTown" />
-        </div>
-        <div class="field is-12">
-          <label class="label">County</label>
-          <input class="input" type="text" placeholder="required" formControlName="leadApplicantAddressCounty" />
-        </div>
-        <div class="field is-12">
-          <label class="label">Country</label>
-          <input class="input" type="text" placeholder="required" formControlName="leadApplicantAddressCountry" />
-        </div>
-        <div class="field is-12">
-          <label class="label">Postcode</label>
-          <input class="input" type="text" placeholder="required" formControlName="leadApplicantAddressPostcode" />
+        <div class="is-6">
+          <h3>Enthnicity, Diversity &amp; Inclusion</h3>
+          <div class="flex">
+            <div class="field is-12">
+              <label class="label">Age Range</label>
+              <dropdown-select [dataSource]="staticDataCache.ageRange" placeholder="required" formControlName="leadApplicantAgeRangeId"></dropdown-select>
+            </div>
+            <div class="field is-12">
+              <label class="label">Gender</label>
+              <dropdown-select [dataSource]="staticDataCache.gender" placeholder="required" formControlName="leadApplicantGenderId"></dropdown-select>
+            </div>
+            <div class="field is-12">
+              <label class="label">Ethnicity</label>
+              <dropdown-select [dataSource]="staticDataCache.ethnicity" placeholder="required" formControlName="leadApplicantEthnicityId"></dropdown-select>
+            </div>
+            <div class="field is-12">
+              <label class="label">Disability</label>
+              <dropdown-select [dataSource]="staticDataCache.disability" placeholder="required" formControlName="leadApplicantDisabilityId"></dropdown-select>
+            </div>
+          </div>
         </div>
       </div>
 
-      <h3>Enthnicity, Diversity &amp; Inclusion</h3>
-      <p>If you would prefer not to supply this information please select 'Prefer not to say'.</p>
-      <div class="flex">
-        <div class="field is-6">
-          <label class="label">Age Range</label>
-          <dropdown-select [dataSource]="staticDataCache.ageRange" placeholder="required" formControlName="leadApplicantAgeRangeId"></dropdown-select>
-        </div>
-        <div class="field is-6">
-          <label class="label">Gender</label>
-          <dropdown-select [dataSource]="staticDataCache.gender" placeholder="required" formControlName="leadApplicantGenderId"></dropdown-select>
-        </div>
-        <div class="field is-6">
-          <label class="label">Ethnicity</label>
-          <dropdown-select [dataSource]="staticDataCache.ethnicity" placeholder="required" formControlName="leadApplicantEthnicityId"></dropdown-select>
-        </div>
-        <div class="field is-6">
-          <label class="label">Disability</label>
-          <dropdown-select [dataSource]="staticDataCache.disability" placeholder="required" formControlName="leadApplicantDisabilityId"></dropdown-select>
-        </div>
-      </div>
+
+
+
 
       <hr class="external-form-divider" />
       <h2>Supporting Documents</h2>
