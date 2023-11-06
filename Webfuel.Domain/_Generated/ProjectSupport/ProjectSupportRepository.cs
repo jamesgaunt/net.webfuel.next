@@ -18,6 +18,8 @@ namespace Webfuel.Domain
         Task<int> CountProjectSupport();
         Task<List<ProjectSupport>> SelectProjectSupport();
         Task<List<ProjectSupport>> SelectProjectSupportWithPage(int skip, int take);
+        Task<List<ProjectSupport>> SelectProjectSupportByDate(DateOnly date);
+        Task<List<ProjectSupport>> SelectProjectSupportByProjectId(Guid projectId);
     }
     [Service(typeof(IProjectSupportRepository))]
     internal partial class ProjectSupportRepository: IProjectSupportRepository
@@ -78,16 +80,34 @@ namespace Webfuel.Domain
         }
         public async Task<List<ProjectSupport>> SelectProjectSupport()
         {
-            var sql = @"SELECT * FROM [ProjectSupport] ORDER BY Id ASC";
+            var sql = @"SELECT * FROM [ProjectSupport] ORDER BY Date DESC";
             return await _connection.ExecuteReader<ProjectSupport, ProjectSupportMetadata>(sql);
         }
         public async Task<List<ProjectSupport>> SelectProjectSupportWithPage(int skip, int take)
         {
-            var sql = @"SELECT * FROM [ProjectSupport] ORDER BY Id ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+            var sql = @"SELECT * FROM [ProjectSupport] ORDER BY Date DESC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Skip", skip),
                 new SqlParameter("@Take", take),
+            };
+            return await _connection.ExecuteReader<ProjectSupport, ProjectSupportMetadata>(sql, parameters);
+        }
+        public async Task<List<ProjectSupport>> SelectProjectSupportByDate(DateOnly date)
+        {
+            var sql = @"SELECT * FROM [ProjectSupport] WHERE Date = @Date ORDER BY Date DESC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@Date", date),
+            };
+            return await _connection.ExecuteReader<ProjectSupport, ProjectSupportMetadata>(sql, parameters);
+        }
+        public async Task<List<ProjectSupport>> SelectProjectSupportByProjectId(Guid projectId)
+        {
+            var sql = @"SELECT * FROM [ProjectSupport] WHERE ProjectId = @ProjectId ORDER BY Date DESC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@ProjectId", projectId),
             };
             return await _connection.ExecuteReader<ProjectSupport, ProjectSupportMetadata>(sql, parameters);
         }

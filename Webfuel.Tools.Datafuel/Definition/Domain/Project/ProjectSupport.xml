@@ -1,12 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Schema>
-  <Entity Name="ProjectSupport">
+  <Entity Name="ProjectSupport" OrderBy="-Date">
     <Key Name="Id" Type="guid" />
     <Property Name="ProjectId" Type="Project" />
     <Property Name="Date" Type="Date" />
     <Property Name="AdviserIds" Type="Json:List{Guid}" />
     <Property Name="SupportProvidedIds" Type="Json:List{Guid}" />
     <Property Name="Description" Type="meta:description" />
+
+    <Index Unique="false">
+      <Member Name="ProjectId" />
+    </Index>
+    <Index Unique="false">
+      <Member Name="Date" />
+    </Index>
   </Entity>
 </Schema>

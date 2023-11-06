@@ -6,8 +6,12 @@
 <div class="container">
   <project-tabs></project-tabs>
 
-  <grid [dataSource]="projectSubmissionApi" [search]="true" (filter)="filter($event)">
+  <grid [dataSource]="projectSubmissionApi" (filter)="filter($event)">
     <grid-date-column name="submissionDate" />
+    <grid-column name="nihrReference" label="NIHR Reference" />
+    <grid-reference-column name="submissionStageId" [dataSource]="staticDataCache.submissionStage" label="Stage" />
+    <grid-number-column name="fundingAmountOnSubmission" label="Funding Amount" prefix="£" />
+    <grid-reference-column name="submissionOutcomeId" [dataSource]="staticDataCache.submissionOutcome" label="Outcome" />
     <grid-action-column [canAdd]="false" (edit)="edit($event)" (delete)="delete($event)" />
   </grid>
 

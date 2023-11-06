@@ -41,8 +41,8 @@ namespace Webfuel.Tools.Datafuel
         public override string ParameterMapper(SchemaEntityQueryParameter parameter)
         {
             if (Nullable)
-                return $"new SqlParameter(\"{parameter.Name}\", (object?){parameter.Name.Replace("@", "").ToCamelCase()}?.ToDateTime() ?? DBNull.Value)";
-            return $"new SqlParameter(\"{parameter.Name}\", {parameter.Name.Replace("@", "").ToCamelCase()}.ToDateTime())";
+                return $"new SqlParameter(\"{parameter.Name}\", (object?){parameter.Name.Replace("@", "").ToCamelCase()} ?? DBNull.Value)";
+            return $"new SqlParameter(\"{parameter.Name}\", {parameter.Name.Replace("@", "").ToCamelCase()})";
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Webfuel.Domain
         
         public static string DatabaseTable => "UserActivity";
         
-        public static string DefaultOrderBy => "ORDER BY Id ASC";
+        public static string DefaultOrderBy => "ORDER BY Date DESC";
         
         public static UserActivity DataReader(SqlDataReader dr) => new UserActivity(dr);
         

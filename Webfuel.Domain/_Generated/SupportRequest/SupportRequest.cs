@@ -21,6 +21,12 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.Id):
                         Id = (Guid)value!;
                         break;
+                    case nameof(SupportRequest.Number):
+                        Number = (int)value!;
+                        break;
+                    case nameof(SupportRequest.PrefixedNumber):
+                        PrefixedNumber = (string)value!;
+                        break;
                     case nameof(SupportRequest.DateOfRequest):
                         DateOfRequest = DateOnly.FromDateTime((DateTime)value!);
                         break;
@@ -154,6 +160,8 @@ namespace Webfuel.Domain
             }
         }
         public Guid Id  { get; set; } = Guid.Empty;
+        public int Number  { get; set; } = 0;
+        public string PrefixedNumber  { get; set; } = String.Empty;
         public DateOnly DateOfRequest  { get; set; } = new DateOnly(1900, 1, 1);
         public string Title  { get; set; } = String.Empty;
         public string ProposedFundingStreamName  { get; set; } = String.Empty;
@@ -201,6 +209,8 @@ namespace Webfuel.Domain
         {
             var entity = new SupportRequest();
             entity.Id = Id;
+            entity.Number = Number;
+            entity.PrefixedNumber = PrefixedNumber;
             entity.DateOfRequest = DateOfRequest;
             entity.Title = Title;
             entity.ProposedFundingStreamName = ProposedFundingStreamName;

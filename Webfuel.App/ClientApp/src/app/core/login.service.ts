@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Router } from '@angular/router';
-import { Observable, map } from "rxjs";
+import { Observable, map, tap } from "rxjs";
 import { LoginUser } from '../api/api.types';
 import { IdentityService } from './identity.service';
 import { UserLoginApi } from "../api/user-login.api";
@@ -13,12 +13,23 @@ export class LoginService {
     private router: Router,
   ) {
   }
-  
+
   login(request: LoginUser): Observable<boolean> {
     return this.userLoginApi.login(request).pipe(
+      tap({
+        next: (result) => {
+          console.log(result);
+          if (!result || !result.value)
+            throw new Error("Invalid username or password");
+        },
+        error: (err) => {
+          console.log(err);
+          throw new Error("Invalid username or password");
+        }
+      }),
       map((result) => {
         this.identityService.token = result.value;
-        return true;
+        return !!(result && result.value);
       }));
   }
 

@@ -1,8 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Schema>
-  <Entity Name="SupportRequest">
+  <Entity Name="SupportRequest" OrderBy="-Number">
     <Key Name="Id" Type="guid" />
+    <Property Name="Number" Type="Int32" />
+    <Property Name="PrefixedNumber" Type="meta:name" />    
     <Property Name="StatusId" Type="SupportRequestStatus" />
 
     <!-- Project Details -->
@@ -63,6 +65,10 @@
 
     <!-- Audit -->
     <Property Name="CreatedAt" Type="DateTime" />
+
+    <Index Unique="false">
+      <Member Name="Number" />
+    </Index>
 
   </Entity>
 </Schema>

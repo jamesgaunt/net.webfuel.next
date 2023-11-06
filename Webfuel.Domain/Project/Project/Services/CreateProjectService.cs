@@ -39,7 +39,6 @@ namespace Webfuel.Domain
 
             new SupportRequestMapper().Apply(supportRequest, project);
 
-            project.Id = Guid.Empty; // Mapperly wil have mapped this!
             project.Number = await GetNextProjectNumber();
             project.PrefixedNumber = FormatPrefixedNumber(project);
             project.StatusId = ProjectStatusEnum.Active;

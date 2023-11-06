@@ -50,22 +50,22 @@ namespace Webfuel
         public static void EnforcePasswordRequirements(string password)
         {
             if (String.IsNullOrEmpty(password))
-                throw new InvalidOperationException("Password cannot be blank");
+                throw new DomainException("Password cannot be blank");
 
             if (password.Length < 8)
-                throw new InvalidOperationException("Password cannot be less than 8 characters long");
+                throw new DomainException("Password cannot be less than 8 characters long");
 
             if (password.Any(c => char.IsWhiteSpace(c)))
-                throw new InvalidOperationException("Password must not contain any whitespace");
+                throw new DomainException("Password must not contain any whitespace");
 
             if (!password.Any(c => char.IsUpper(c)))
-                throw new InvalidOperationException("Password must contain at least one upper case letter");
+                throw new DomainException("Password must contain at least one upper case letter");
 
             if (!password.Any(c => char.IsLower(c)))
-                throw new InvalidOperationException("Password must contain at least one lower case letter");
+                throw new DomainException("Password must contain at least one lower case letter");
 
             if (!password.Any(c => !char.IsLetterOrDigit(c)))
-                throw new InvalidOperationException("Password must contain at least one non-alphanumeric character");
+                throw new DomainException("Password must contain at least one non-alphanumeric character");
         }
 
     }

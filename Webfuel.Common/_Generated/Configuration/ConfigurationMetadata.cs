@@ -29,6 +29,9 @@ namespace Webfuel.Common
                     case nameof(Configuration.NextProjectNumber):
                         result.Add(new SqlParameter(nameof(Configuration.NextProjectNumber), entity.NextProjectNumber));
                         break;
+                    case nameof(Configuration.NextSupportRequestNumber):
+                        result.Add(new SqlParameter(nameof(Configuration.NextSupportRequestNumber), entity.NextSupportRequestNumber));
+                        break;
                     case nameof(Configuration.DomainName):
                         result.Add(new SqlParameter(nameof(Configuration.DomainName), entity.DomainName));
                         break;
@@ -64,6 +67,7 @@ namespace Webfuel.Common
                 yield return "Id";
                 yield return "Prefix";
                 yield return "NextProjectNumber";
+                yield return "NextSupportRequestNumber";
                 yield return "DomainName";
                 yield return "ReplyTo";
             }
@@ -76,6 +80,7 @@ namespace Webfuel.Common
                 yield return "Id";
                 yield return "Prefix";
                 yield return "NextProjectNumber";
+                yield return "NextSupportRequestNumber";
                 yield return "DomainName";
                 yield return "ReplyTo";
             }
@@ -87,6 +92,7 @@ namespace Webfuel.Common
             {
                 yield return "Prefix";
                 yield return "NextProjectNumber";
+                yield return "NextSupportRequestNumber";
                 yield return "DomainName";
                 yield return "ReplyTo";
             }

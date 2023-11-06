@@ -37,7 +37,7 @@ namespace Webfuel
                 await new ProblemDetails
                 {
                     Type = "/internal-server-error",
-                    Title = "Interal Server Error: " + exception.Message,
+                    Title = "Internal Server Error: " + exception.Message,
                     Status = (int)HttpStatusCode.InternalServerError,
                 }
                 .ApplyTo(context);

@@ -10,7 +10,7 @@ namespace Webfuel.Domain
         
         public static string DatabaseTable => "ProjectSupport";
         
-        public static string DefaultOrderBy => "ORDER BY Id ASC";
+        public static string DefaultOrderBy => "ORDER BY Date DESC";
         
         public static ProjectSupport DataReader(SqlDataReader dr) => new ProjectSupport(dr);
         

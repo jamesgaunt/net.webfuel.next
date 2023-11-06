@@ -2,7 +2,7 @@ import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User, UserActivity } from 'api/api.types';
+import { QueryUserActivity, User, UserActivity } from 'api/api.types';
 import { StaticDataCache } from 'api/static-data.cache';
 import { UserActivityApi } from 'api/user-activity.api';
 import { UserApi } from 'api/user.api';
@@ -32,15 +32,13 @@ export class UserActivityComponent implements OnInit {
 
   ngOnInit() {
     this.reset(this.route.snapshot.data.user);
-    this.loadUserActivity();
-
-    this.userActivityApi.changed.pipe(
-      takeUntilDestroyed(this.destroyRef)
-    )
-    .subscribe(() => this.loadUserActivity());
   }
 
   item!: User;
+
+  filter(query: QueryUserActivity) {
+    query.userId = this.item.id;
+  }
 
   reset(item: User) {
     this.item = item;
@@ -57,19 +55,11 @@ export class UserActivityComponent implements OnInit {
 
   // User Activity
 
-  items: UserActivity[] | null = null;
-
-  loadUserActivity() {
-    this.userActivityApi.query({ userId: this.item.id, skip: 0, take: 100 }).subscribe((result) => {
-      this.items = result.items;
-    })
-  }
-
-  editUserActivity(userActivity: UserActivity) {
+  edit(userActivity: UserActivity) {
     this.updateUserActivityDialog.open({ userActivity: userActivity });
   }
 
-  deleteUserActivity(userActivity: UserActivity) {
+  delete(userActivity: UserActivity) {
     this.confirmDeleteDialog.open({ title: "User Activity" }).subscribe(() => {
       this.userActivityApi.delete({ id: userActivity.id }, { successGrowl: "User Activity Deleted" }).subscribe();
     });

@@ -5,7 +5,7 @@ import { UserApi } from '../../../api/user.api';
 import { UserActivityApi } from '../../../api/user-activity.api';
 import { StaticDataCache } from '../../../api/static-data.cache';
 import { CreateUserActivityDialog } from '../../../shared/dialogs/create-user-activity/create-user-activity.dialog';
-import { UserActivity } from '../../../api/api.types';
+import { QueryUserActivity, UserActivity } from '../../../api/api.types';
 import { FormGroup } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -28,12 +28,10 @@ export class MyActivityComponent {
   }
 
   ngOnInit() {
-    this.loadUserActivity();
+  }
 
-    this.userActivityApi.changed.pipe(
-      takeUntilDestroyed(this.destroyRef)
-    )
-      .subscribe(() => this.loadUserActivity());
+  filter(query: QueryUserActivity) {
+    query.userId = null;
   }
 
   form = new FormGroup({
@@ -41,23 +39,15 @@ export class MyActivityComponent {
 
   // User Activity
 
-  items: UserActivity[] | null = null;
-
-  loadUserActivity() {
-    this.userActivityApi.query({ userId: null, skip: 0, take: 100 }).subscribe((result) => {
-      this.items = result.items;
-    })
-  }
-
   createUserActivity() {
     this.createUserActivityDialog.open();
   }
 
-  editUserActivity(userActivity: UserActivity) {
+  edit(userActivity: UserActivity) {
     this.updateUserActivityDialog.open({ userActivity: userActivity });
   }
 
-  deleteUserActivity(userActivity: UserActivity) {
+  delete(userActivity: UserActivity) {
     this.confirmDeleteDialog.open({ title: "User Activity" }).subscribe(() => {
       this.userActivityApi.delete({ id: userActivity.id }, { successGrowl: "User Activity Deleted" }).subscribe();
     });

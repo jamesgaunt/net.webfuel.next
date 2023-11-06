@@ -2,23 +2,32 @@
 NEXT:
 
 > Allow tabbing on all fields
-> Razor based support request form (mock up example)
 > Fix up validation logic/display - form service checks and processing server side errors - register active form with api (can we do it on active controller)
 > Think about a user cache? GUID => Presentation Only
 > Standardise date formats dd MMM yy (can we globalise the default - customisation service - user level customisations, formats, palettes, etc)
 
-> Date Popup needs to attach to the field
-> Required / invalid indicator on Date Picker input
-> Project : Submission more fields on grid
-
-> Support Request Number (?)
+> Prime user table with passwords / enable administrator password resets
 > Support Request Form Aria
+> Optional fields on user / required inputs on user
 
 > Check big dialogs for layout improvements
 > Sample diagnostics
 > Check fields against specification
 
+> Auto collapse chrome on mobile (use javascript) - expanded = hover on mobile (or hide entirely on mobile and put in top button)
+> First stab at history (just save 2 x json snapshot)
+
 DONE:
+
+> Login button spinner feedback [DONE]
+> Date Popup needs to attach to the field [DONE]
+> Required / invalid indicator on Date Picker input [DONE]
+> Project : Submission more fields on grid [DONE]
+> User Activity turn into a grid for now [DONE]
+> Support Request Number [DONE]
+> Support Provided Checkbox list (looks good and is easy to do!) [DONE]
+> Sort Activity, Submission, Support by reverse date order [DONE]
+> Sort Project, Support Request by reverse number [DONE]
 
 > Change Support Request Funding Stream > Proposed Funding Stream / Name [DONE]
 > Support Request Item/Researcher Rework [DONE]

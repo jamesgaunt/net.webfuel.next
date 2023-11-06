@@ -2,7 +2,6 @@
 
 
 .project-support {
-  margin-top: var(--gap);
   margin-bottom: calc(var(--gap) * 2);
   border: 1px solid var(--palette-control-border);
   padding: var(--gap);
@@ -33,5 +32,26 @@
     margin: 0;
     line-height: 1.5;
     white-space: pre-wrap;
+  }
+}
+
+.project-support-summary {
+
+  table {
+    border-collapse: collapse;
+
+    td {
+
+      &.active {
+        border-left: 1px solid var(--palette-control-border);
+        background-color: var(--palette-success-background);
+        color: var(--palette-success-foreground);
+      }
+
+      &.inactive {
+        border-left: 1px solid var(--palette-control-border);
+        color: var(--palette-text-disabled);
+      }
+    }
   }
 }

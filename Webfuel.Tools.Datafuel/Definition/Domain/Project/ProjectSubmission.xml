@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Schema>
-  <Entity Name="ProjectSubmission">
+  <Entity Name="ProjectSubmission" OrderBy="-SubmissionDate">
     <Key Name="Id" Type="guid" />
     <Property Name="ProjectId" Type="Project" />
     <Property Name="NIHRReference" Type="meta:name" />
@@ -9,5 +9,12 @@
     <Property Name="SubmissionStageId" Type="SubmissionStage" />
     <Property Name="SubmissionOutcomeId" Type="SubmissionOutcome?" />
     <Property Name="FundingAmountOnSubmission" Type="Int32" />
+
+    <Index Unique="false">
+      <Member Name="ProjectId" />
+    </Index>
+    <Index Unique="false">
+      <Member Name="SubmissionDate" />
+    </Index>
   </Entity>
 </Schema>

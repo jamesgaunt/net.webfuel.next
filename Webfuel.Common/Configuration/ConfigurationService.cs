@@ -11,6 +11,8 @@ namespace Webfuel.Common
     {
         Task<int> AllocateNextProjectNumber();
 
+        Task<int> AllocateNextSupportRequestNumber();
+
         Task<Configuration> GetConfiguration();
     }
 
@@ -30,10 +32,26 @@ namespace Webfuel.Common
 
             var nextProjectNumber = _configuration.NextProjectNumber;
 
+            var original = _configuration.Copy();
             _configuration.NextProjectNumber++;
-            await _configurationRepository.UpdateConfiguration(_configuration);
+
+            await _configurationRepository.UpdateConfiguration(original: original, updated: _configuration);
 
             return nextProjectNumber;
+        }
+
+        public async Task<int> AllocateNextSupportRequestNumber()
+        {
+            var _configuration = await GetConfiguration();
+
+            var nextSupportRequestNumber = _configuration.NextSupportRequestNumber;
+
+            var original = _configuration.Copy();
+            _configuration.NextSupportRequestNumber++;
+
+            await _configurationRepository.UpdateConfiguration(original: original, updated: _configuration);
+
+            return nextSupportRequestNumber;
         }
 
         public async Task<Configuration> GetConfiguration()

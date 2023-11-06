@@ -10,33 +10,18 @@
     </div>
   </div>
   <user-tabs></user-tabs>
-  <div *ngIf="items === null">
-    <p>Loading...</p>
-  </div>
-  <div *ngIf="items !== null && items.length == 0">
-    <div class="message is-primary">
-      No activity events have been recorded for this user.
-    </div>
-  </div>
-  <div *ngIf="items !== null && items.length > 0" class="project-support-list">
-    <div class="project-support" *ngFor="let userActivity of items">
-      <div class="header">
-        <div class="columns">
-          <div class="column advisers">
-            <span>{{ userActivity.date | date: 'dd-MMM-yy' }}</span>
-          </div>
-          <div class="column is-right">
-            <button class="button is-small is-primary" (click)="editUserActivity(userActivity)">edit</button>
-            <button class="button is-small is-danger" (click)="deleteUserActivity(userActivity)">delete</button>
-          </div>
-        </div>
-        <div class="support-provided">
-          <span class="tag">{{ (staticDataCache.workActivity.get({ id: userActivity.workActivityId }) | async)?.name }}</span>
-        </div>
-      </div>
-      <pre class="description">{{ userActivity.description }}</pre>
-    </div>
-  </div>
+
+  <grid [dataSource]="userActivityApi" (filter)="filter($event)">
+    <grid-date-column name="date" />
+    <grid-reference-column name="workActivityId" [dataSource]="staticDataCache.workActivity" />
+    <grid-column name="description">
+      <ng-template #itemTemplate let-item>
+        <pre class="grid-pre">{{ item.description }}</pre>
+      </ng-template>
+    </grid-column>
+    <grid-action-column [canAdd]="false" (edit)="edit($event)" (delete)="delete($event)" />
+  </grid>
+
   <div class="floating-buttons">
     <button class="button" (click)="cancel()">Close</button>
   </div>

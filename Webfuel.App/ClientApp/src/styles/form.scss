@@ -141,7 +141,7 @@
 }
 
 .date-picker-popup {
-  box-shadow: 1px 1px 10px #000;
+  box-shadow: 3px 3px 3px var(--palette-control-shadow);
 }
 
 .toggle-input {
@@ -196,7 +196,7 @@
   display: flex;
   gap: 1rem;
   padding: 1rem 3em 1rem 3rem;
-  position: absolute;
+  position: fixed;
   bottom: 2rem;
   left: 50%;
   transform: translate(-50%, 0);

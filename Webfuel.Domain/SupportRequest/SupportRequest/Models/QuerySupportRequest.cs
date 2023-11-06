@@ -8,13 +8,18 @@ namespace Webfuel.Domain
     {
         public Query ApplyCustomFilters()
         {
+            var number = FilterUtility.ExtractInt32(Number);
+
             this.Contains(nameof(SupportRequest.Title), Title);
+            this.Equal(nameof(SupportRequest.Number), number, number != null);
             this.GreaterThanOrEqual(nameof(SupportRequest.DateOfRequest), FromDate, FromDate != null);
             this.LessThanOrEqual(nameof(SupportRequest.DateOfRequest), ToDate, ToDate != null);
             this.Equal(nameof(SupportRequest.StatusId), StatusId, StatusId != null);
 
             return this;
         }
+
+        public string Number { get; set; } = System.String.Empty;
 
         public string Title { get; set; } = System.String.Empty;
 

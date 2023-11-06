@@ -27,8 +27,9 @@ body {
   font-family: var(--font-family);
 }
 
-body.mode-active {
+.app-mode-active {
   background-color: var(--palette-body-background);
+  min-height: 100vh;
 }
 
 a, button {

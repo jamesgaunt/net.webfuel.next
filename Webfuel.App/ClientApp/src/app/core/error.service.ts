@@ -41,7 +41,12 @@ export class ErrorService {
     this.growlService.growlDanger(error.title);
   }
 
-
+  public extractErrorMessage(err: HttpErrorResponse) {
+    var error = this._extractError(err);
+    if (!error)
+      return "Unrecognised error";
+    return error.title;
+  }
 
   private _extractError(err: HttpErrorResponse): IError | undefined {
     if (this._testForError(err.error))

@@ -10,7 +10,7 @@ namespace Webfuel.Domain
         
         public static string DatabaseTable => "SupportRequest";
         
-        public static string DefaultOrderBy => "ORDER BY Id ASC";
+        public static string DefaultOrderBy => "ORDER BY Number DESC";
         
         public static SupportRequest DataReader(SqlDataReader dr) => new SupportRequest(dr);
         
@@ -22,6 +22,12 @@ namespace Webfuel.Domain
                 switch (property)
                 {
                     case nameof(SupportRequest.Id):
+                        break;
+                    case nameof(SupportRequest.Number):
+                        result.Add(new SqlParameter(nameof(SupportRequest.Number), entity.Number));
+                        break;
+                    case nameof(SupportRequest.PrefixedNumber):
+                        result.Add(new SqlParameter(nameof(SupportRequest.PrefixedNumber), entity.PrefixedNumber));
                         break;
                     case nameof(SupportRequest.DateOfRequest):
                         result.Add(new SqlParameter(nameof(SupportRequest.DateOfRequest), entity.DateOfRequest));
@@ -179,6 +185,8 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Id";
+                yield return "Number";
+                yield return "PrefixedNumber";
                 yield return "DateOfRequest";
                 yield return "Title";
                 yield return "ProposedFundingStreamName";
@@ -230,6 +238,8 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Id";
+                yield return "Number";
+                yield return "PrefixedNumber";
                 yield return "DateOfRequest";
                 yield return "Title";
                 yield return "ProposedFundingStreamName";
@@ -280,6 +290,8 @@ namespace Webfuel.Domain
         {
             get
             {
+                yield return "Number";
+                yield return "PrefixedNumber";
                 yield return "DateOfRequest";
                 yield return "Title";
                 yield return "ProposedFundingStreamName";
@@ -330,6 +342,8 @@ namespace Webfuel.Domain
         
         public static void Validate(SupportRequest entity)
         {
+            entity.PrefixedNumber = entity.PrefixedNumber ?? String.Empty;
+            entity.PrefixedNumber = entity.PrefixedNumber.Trim();
             entity.Title = entity.Title ?? String.Empty;
             entity.Title = entity.Title.Trim();
             entity.ProposedFundingStreamName = entity.ProposedFundingStreamName ?? String.Empty;
@@ -379,6 +393,7 @@ namespace Webfuel.Domain
         
         public static SupportRequestRepositoryValidator Validator { get; } = new SupportRequestRepositoryValidator();
         
+        public const int PrefixedNumber_MaxLength = 64;
         public const int Title_MaxLength = 1000;
         public const int ProposedFundingStreamName_MaxLength = 64;
         public const int ExperienceOfResearchAwards_MaxLength = 1000;
@@ -401,6 +416,13 @@ namespace Webfuel.Domain
         public const int LeadApplicantAddressCountry_MaxLength = 64;
         public const int LeadApplicantAddressPostcode_MaxLength = 64;
         public const int LeadApplicantORCID_MaxLength = 64;
+        
+        public static void PrefixedNumber_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(PrefixedNumber_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
         
         public static void Title_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
@@ -560,6 +582,7 @@ namespace Webfuel.Domain
         {
             public SupportRequestRepositoryValidator()
             {
+                RuleFor(x => x.PrefixedNumber).Use(PrefixedNumber_ValidationRules);
                 RuleFor(x => x.Title).Use(Title_ValidationRules);
                 RuleFor(x => x.ProposedFundingStreamName).Use(ProposedFundingStreamName_ValidationRules);
                 RuleFor(x => x.ExperienceOfResearchAwards).Use(ExperienceOfResearchAwards_ValidationRules);

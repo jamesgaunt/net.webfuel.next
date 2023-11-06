@@ -1,4 +1,4 @@
-<div class="control">
+<div class="control" #popupAnchor>
   <div class="input" (click)="togglePopup($event)" [class.placeholder]="value === null">
     <span *ngIf="value !== null">{{ this.formattedValue }}</span>
     <span *ngIf="value === null">{{ placeholder || "&nbsp;" }}</span>
@@ -12,3 +12,10 @@
     <i class="far fa-calendar"></i>
   </div>
 </div>
+
+
+<ng-template #popupTemplate>
+  <div class="date-picker-popup">
+    <date-calendar [formControl]="popupFormControl"></date-calendar>
+  </div>
+</ng-template>

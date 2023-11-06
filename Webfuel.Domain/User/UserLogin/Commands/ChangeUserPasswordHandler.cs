@@ -17,7 +17,7 @@ namespace Webfuel.Domain
         public async Task Handle(ChangeUserPassword request, CancellationToken cancellationToken)
         {
             if (request.NewPassword != request.ConfirmNewPassword)
-                throw new InvalidOperationException("New passwords do not match");
+                throw new DomainException("New passwords do not match");
 
             AuthenticationUtility.EnforcePasswordRequirements(request.NewPassword);
 
@@ -29,7 +29,7 @@ namespace Webfuel.Domain
                 throw new InvalidOperationException("The specified user does not exist");
 
             if (!AuthenticationUtility.ValidatePassword(request.CurrentPassword, user.PasswordHash, user.PasswordSalt))
-                throw new InvalidOperationException("Current password is not valid");
+                throw new DomainException("Current password is not valid");
 
             // Looks like we are ok to go ahead with this change
             var updated = user.Copy();

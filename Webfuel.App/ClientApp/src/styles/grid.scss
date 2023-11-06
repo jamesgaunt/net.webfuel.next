@@ -54,3 +54,10 @@
     }
   }
 }
+
+.grid-pre {
+    background-color: transparent;
+    color: var(--palette-control-text);
+    margin: 0; padding: 0;
+    max-width: 400px;
+}

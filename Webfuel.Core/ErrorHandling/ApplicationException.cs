@@ -8,6 +8,10 @@ namespace Webfuel
 {
     public abstract class ApplicationException: Exception
     {
+        public ApplicationException() { }
+
+        public ApplicationException(string message) :base(message) { }
+
         public abstract ProblemDetails ToProblemDetails();
     }
 }

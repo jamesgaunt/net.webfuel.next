@@ -18,6 +18,8 @@ namespace Webfuel.Domain
         Task<int> CountUserActivity();
         Task<List<UserActivity>> SelectUserActivity();
         Task<List<UserActivity>> SelectUserActivityWithPage(int skip, int take);
+        Task<List<UserActivity>> SelectUserActivityByDate(DateOnly date);
+        Task<List<UserActivity>> SelectUserActivityByUserId(Guid userId);
     }
     [Service(typeof(IUserActivityRepository))]
     internal partial class UserActivityRepository: IUserActivityRepository
@@ -78,16 +80,34 @@ namespace Webfuel.Domain
         }
         public async Task<List<UserActivity>> SelectUserActivity()
         {
-            var sql = @"SELECT * FROM [UserActivity] ORDER BY Id ASC";
+            var sql = @"SELECT * FROM [UserActivity] ORDER BY Date DESC";
             return await _connection.ExecuteReader<UserActivity, UserActivityMetadata>(sql);
         }
         public async Task<List<UserActivity>> SelectUserActivityWithPage(int skip, int take)
         {
-            var sql = @"SELECT * FROM [UserActivity] ORDER BY Id ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+            var sql = @"SELECT * FROM [UserActivity] ORDER BY Date DESC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Skip", skip),
                 new SqlParameter("@Take", take),
+            };
+            return await _connection.ExecuteReader<UserActivity, UserActivityMetadata>(sql, parameters);
+        }
+        public async Task<List<UserActivity>> SelectUserActivityByDate(DateOnly date)
+        {
+            var sql = @"SELECT * FROM [UserActivity] WHERE Date = @Date ORDER BY Date DESC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@Date", date),
+            };
+            return await _connection.ExecuteReader<UserActivity, UserActivityMetadata>(sql, parameters);
+        }
+        public async Task<List<UserActivity>> SelectUserActivityByUserId(Guid userId)
+        {
+            var sql = @"SELECT * FROM [UserActivity] WHERE UserId = @UserId ORDER BY Date DESC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@UserId", userId),
             };
             return await _connection.ExecuteReader<UserActivity, UserActivityMetadata>(sql, parameters);
         }

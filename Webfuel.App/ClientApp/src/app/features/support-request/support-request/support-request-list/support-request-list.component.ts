@@ -20,6 +20,7 @@ export class SupportRequestListComponent {
   }
 
   filterForm = new FormGroup({
+    number: new FormControl<string>('', { nonNullable: true }),
     fromDate: new FormControl<string | null>(null),
     toDate: new FormControl<string | null>(null),
     statusId: new FormControl<string | null>(null),
@@ -28,6 +29,7 @@ export class SupportRequestListComponent {
 
   resetFilterForm() {
     this.filterForm.patchValue({
+      number: '',
       fromDate: null,
       toDate: null,
       statusId: null,

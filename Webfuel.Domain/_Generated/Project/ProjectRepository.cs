@@ -18,6 +18,7 @@ namespace Webfuel.Domain
         Task<int> CountProject();
         Task<List<Project>> SelectProject();
         Task<List<Project>> SelectProjectWithPage(int skip, int take);
+        Task<List<Project>> SelectProjectByNumber(int number);
     }
     [Service(typeof(IProjectRepository))]
     internal partial class ProjectRepository: IProjectRepository
@@ -78,16 +79,25 @@ namespace Webfuel.Domain
         }
         public async Task<List<Project>> SelectProject()
         {
-            var sql = @"SELECT * FROM [Project] ORDER BY Id ASC";
+            var sql = @"SELECT * FROM [Project] ORDER BY Number DESC";
             return await _connection.ExecuteReader<Project, ProjectMetadata>(sql);
         }
         public async Task<List<Project>> SelectProjectWithPage(int skip, int take)
         {
-            var sql = @"SELECT * FROM [Project] ORDER BY Id ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+            var sql = @"SELECT * FROM [Project] ORDER BY Number DESC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Skip", skip),
                 new SqlParameter("@Take", take),
+            };
+            return await _connection.ExecuteReader<Project, ProjectMetadata>(sql, parameters);
+        }
+        public async Task<List<Project>> SelectProjectByNumber(int number)
+        {
+            var sql = @"SELECT * FROM [Project] WHERE Number = @Number ORDER BY Number DESC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@Number", number),
             };
             return await _connection.ExecuteReader<Project, ProjectMetadata>(sql, parameters);
         }

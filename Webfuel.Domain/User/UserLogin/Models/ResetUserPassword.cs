@@ -15,8 +15,8 @@ namespace Webfuel.Domain
 
         public required Guid PasswordResetToken { get; set; }
 
-        public required string NewPassword { get; set;}
+        public required string NewPassword { get; set; }
 
-        public required string ConfirmNewPassword { get; set;}
+        public required string ConfirmNewPassword { get; set; }
     }
 }

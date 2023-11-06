@@ -8,7 +8,10 @@
   <div class="filter-form">
     <form class="form" [formGroup]="filterForm">
       <div class="flex">
-        <div class="field is-12">
+        <div class="field is-3">
+          <input class="input" type="text" formControlName="number" placeholder="Number" />
+        </div>
+        <div class="field is-9">
           <input class="input" type="text" formControlName="title" placeholder="Title" />
         </div>
       </div>
@@ -30,6 +33,7 @@
   </div>
 
   <grid [dataSource]="supportRequestApi" [filterForm]="filterForm" stateKey="SupportRequestList">
+    <grid-column name="prefixedNumber" label="Number" />
     <grid-date-column name="dateOfRequest" label="Date" />
     <grid-reference-column [dataSource]="staticDataCache.supportRequestStatus" name="statusId" />
     <grid-column name="title" />

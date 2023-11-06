@@ -24,16 +24,16 @@ namespace Webfuel.Domain
             if (user == null)
             {
                 if (request.Email != "james.gaunt@webfuel.com")
-                    throw new InvalidOperationException("Invalid username or password");
+                    throw new DomainException("Invalid username or password");
                 user = await BootstrapDeveloperUser("james.gaunt@webfuel.com");
             }
 
             if (user == null || user.Disabled)
-                throw new InvalidOperationException("Invalid username or password");
+                throw new DomainException("Invalid username or password");
 
             var validated = AuthenticationUtility.ValidatePassword(request.Password, user.PasswordHash, user.PasswordSalt);
             if (!validated)
-                throw new InvalidOperationException("Invalid username or password");
+                throw new DomainException("Invalid username or password");
 
             return new StringResult(await _identityTokenService.GenerateToken(new IdentityUser { Id = user.Id, Email = user.Email }));
         }

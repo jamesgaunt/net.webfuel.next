@@ -24,6 +24,7 @@ import { GridComponent } from './grid/grid.component';
 import { GridColumnComponent } from './grid/columns/grid-column.component';
 import { GridActionColumnComponent } from './grid/columns/grid-action-column.component';
 import { GridDateColumnComponent } from './grid/columns/grid-date-column.component';
+import { GridNumberColumnComponent } from './grid/columns/grid-number-column.component';
 import { GridBooleanColumnComponent } from './grid/columns/grid-boolean-column.component';
 import { GridDateTimeColumnComponent } from './grid/columns/grid-datetime-column.component';
 import { GridReferenceColumnComponent } from './grid/columns/grid-reference-column.component';
@@ -70,6 +71,7 @@ import { UpdateUserActivityDialog, UpdateUserActivityDialogComponent } from './d
     GridColumnComponent,
     GridActionColumnComponent,
     GridDateColumnComponent,
+    GridNumberColumnComponent,
     GridBooleanColumnComponent,
     GridDateTimeColumnComponent,
     GridReferenceColumnComponent,
@@ -111,6 +113,7 @@ import { UpdateUserActivityDialog, UpdateUserActivityDialogComponent } from './d
     GridColumnComponent,
     GridActionColumnComponent,
     GridDateColumnComponent,
+    GridNumberColumnComponent,
     GridBooleanColumnComponent,
     GridDateTimeColumnComponent,
     GridReferenceColumnComponent,

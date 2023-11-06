@@ -15,7 +15,7 @@
     <Property Name="UniversityJobTitle" Type="meta:name" />
     <Property Name="ProfessionalBackground" Type="meta:name" />
     <Property Name="Specialisation" Type="meta:name" />
-    <Property Name="DisciplineIds" Type="Json:List{Guid}" />
+    <Property Name="DisciplineIds" Type="Json:List{Guid}" Default="[]" />
     <Property Name="SiteId" Type="Site?" />
     
     <Property Name="StartDateForRSS" Type="Date?" />
@@ -38,5 +38,16 @@
     <Index Unique="true">
       <Member Name="Email" />
     </Index>
+
+    <Data>
+      <Row Id="b752fc3b-db1d-4ea3-9ac3-92299e44d3cd" Email="james.gaunt@webfuel.com" Title="Mr" FirstName="James" LastName="Gaunt" UserGroupId="67fa9133-ad7b-4d79-8601-dc4641fa10f2" />
+      <Row Id="30f66d8c-4255-4ba8-9e92-033930cc7edf" Email="v.cornelius@imperial.ac.uk" Title="" FirstName="Victoria" LastName="Cornelius" UserGroupId="67fa9133-ad7b-4d79-8601-dc4641fa10f2" />
+      <Row Id="2a757dbb-f09b-4050-be5e-a4766205e253" Email="e.kingwell@ucl.ac.uk" Title="" FirstName="Elaine" LastName="Kingwell" UserGroupId="67fa9133-ad7b-4d79-8601-dc4641fa10f2" />
+      <Row Id="20790bda-4547-462b-b68e-f151a845c312" Email="r.phillips@imperial.ac.uk" Title="" FirstName="Rachel" LastName="Phillips" UserGroupId="67fa9133-ad7b-4d79-8601-dc4641fa10f2" />
+      <Row Id="0d9610c5-2c3d-4732-a0f5-cd51dd12c556" Email="j.wilcock@ucl.ac.uk" Title="" FirstName="Jane" LastName="Wilcock" UserGroupId="67fa9133-ad7b-4d79-8601-dc4641fa10f2" />
+      <Row Id="916b53d4-a5ec-4d2c-be71-af215ceeed7d" Email="g.rait@ucl.ac.uk" Title="" FirstName="Greta" LastName="Rait" UserGroupId="67fa9133-ad7b-4d79-8601-dc4641fa10f2" />
+      <Row Id="758f3195-1c6e-4b28-8aa5-196f0864c1f0" Email="r.rayat@imperial.ac.uk" Title="" FirstName="Ranjit" LastName="Rayat" UserGroupId="67fa9133-ad7b-4d79-8601-dc4641fa10f2" />
+    </Data>
+    
   </Entity>
 </Schema>

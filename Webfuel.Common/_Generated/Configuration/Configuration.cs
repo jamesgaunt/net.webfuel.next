@@ -27,6 +27,9 @@ namespace Webfuel.Common
                     case nameof(Configuration.NextProjectNumber):
                         NextProjectNumber = (int)value!;
                         break;
+                    case nameof(Configuration.NextSupportRequestNumber):
+                        NextSupportRequestNumber = (int)value!;
+                        break;
                     case nameof(Configuration.DomainName):
                         DomainName = (string)value!;
                         break;
@@ -39,6 +42,7 @@ namespace Webfuel.Common
         public Guid Id  { get; set; } = Guid.Empty;
         public string Prefix  { get; set; } = String.Empty;
         public int NextProjectNumber  { get; set; } = 0;
+        public int NextSupportRequestNumber  { get; set; } = 0;
         public string DomainName  { get; set; } = String.Empty;
         public string ReplyTo  { get; set; } = String.Empty;
         public Configuration Copy()
@@ -47,6 +51,7 @@ namespace Webfuel.Common
             entity.Id = Id;
             entity.Prefix = Prefix;
             entity.NextProjectNumber = NextProjectNumber;
+            entity.NextSupportRequestNumber = NextSupportRequestNumber;
             entity.DomainName = DomainName;
             entity.ReplyTo = ReplyTo;
             return entity;

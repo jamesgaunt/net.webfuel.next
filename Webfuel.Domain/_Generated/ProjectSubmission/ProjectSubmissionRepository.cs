@@ -18,6 +18,8 @@ namespace Webfuel.Domain
         Task<int> CountProjectSubmission();
         Task<List<ProjectSubmission>> SelectProjectSubmission();
         Task<List<ProjectSubmission>> SelectProjectSubmissionWithPage(int skip, int take);
+        Task<List<ProjectSubmission>> SelectProjectSubmissionBySubmissionDate(DateOnly submissionDate);
+        Task<List<ProjectSubmission>> SelectProjectSubmissionByProjectId(Guid projectId);
     }
     [Service(typeof(IProjectSubmissionRepository))]
     internal partial class ProjectSubmissionRepository: IProjectSubmissionRepository
@@ -78,16 +80,34 @@ namespace Webfuel.Domain
         }
         public async Task<List<ProjectSubmission>> SelectProjectSubmission()
         {
-            var sql = @"SELECT * FROM [ProjectSubmission] ORDER BY Id ASC";
+            var sql = @"SELECT * FROM [ProjectSubmission] ORDER BY SubmissionDate DESC";
             return await _connection.ExecuteReader<ProjectSubmission, ProjectSubmissionMetadata>(sql);
         }
         public async Task<List<ProjectSubmission>> SelectProjectSubmissionWithPage(int skip, int take)
         {
-            var sql = @"SELECT * FROM [ProjectSubmission] ORDER BY Id ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+            var sql = @"SELECT * FROM [ProjectSubmission] ORDER BY SubmissionDate DESC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Skip", skip),
                 new SqlParameter("@Take", take),
+            };
+            return await _connection.ExecuteReader<ProjectSubmission, ProjectSubmissionMetadata>(sql, parameters);
+        }
+        public async Task<List<ProjectSubmission>> SelectProjectSubmissionBySubmissionDate(DateOnly submissionDate)
+        {
+            var sql = @"SELECT * FROM [ProjectSubmission] WHERE SubmissionDate = @SubmissionDate ORDER BY SubmissionDate DESC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@SubmissionDate", submissionDate),
+            };
+            return await _connection.ExecuteReader<ProjectSubmission, ProjectSubmissionMetadata>(sql, parameters);
+        }
+        public async Task<List<ProjectSubmission>> SelectProjectSubmissionByProjectId(Guid projectId)
+        {
+            var sql = @"SELECT * FROM [ProjectSubmission] WHERE ProjectId = @ProjectId ORDER BY SubmissionDate DESC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@ProjectId", projectId),
             };
             return await _connection.ExecuteReader<ProjectSubmission, ProjectSubmissionMetadata>(sql, parameters);
         }

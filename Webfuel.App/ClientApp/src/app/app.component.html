@@ -1,4 +1,4 @@
-<body class="mode-{{ mode | async }}">
+<div class="app-mode-{{ mode | async }}">
   <div [ngSwitch]="mode | async">
     <div *ngSwitchCase="'loading'">
     </div>
@@ -14,4 +14,4 @@
       </chrome>
     </div>
   </div>
-</body>
+</div>

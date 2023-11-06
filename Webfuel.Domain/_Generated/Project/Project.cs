@@ -132,6 +132,9 @@ namespace Webfuel.Domain
                     case nameof(Project.StatusId):
                         StatusId = (Guid)value!;
                         break;
+                    case nameof(Project.SupportRequestId):
+                        SupportRequestId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
                     case nameof(Project.IsQuantativeTeamContributionId):
                         IsQuantativeTeamContributionId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
@@ -146,9 +149,6 @@ namespace Webfuel.Domain
                         break;
                     case nameof(Project.IsInternationalMultiSiteStudyId):
                         IsInternationalMultiSiteStudyId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
-                        break;
-                    case nameof(Project.SupportRequestId):
-                        SupportRequestId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
                     case nameof(Project.IsFellowshipId):
                         IsFellowshipId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
@@ -244,12 +244,12 @@ namespace Webfuel.Domain
         public string LeadApplicantORCID  { get; set; } = String.Empty;
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid StatusId { get; set; }
+        public Guid? SupportRequestId { get; set; }
         public Guid? IsQuantativeTeamContributionId { get; set; }
         public Guid? IsCTUTeamContributionId { get; set; }
         public Guid? IsPPIEAndEDIContributionId { get; set; }
         public Guid? SubmittedFundingStreamId { get; set; }
         public Guid? IsInternationalMultiSiteStudyId { get; set; }
-        public Guid? SupportRequestId { get; set; }
         public Guid? IsFellowshipId { get; set; }
         public Guid? ApplicationStageId { get; set; }
         public Guid? ProposedFundingCallTypeId { get; set; }
@@ -305,12 +305,12 @@ namespace Webfuel.Domain
             entity.LeadApplicantORCID = LeadApplicantORCID;
             entity.CreatedAt = CreatedAt;
             entity.StatusId = StatusId;
+            entity.SupportRequestId = SupportRequestId;
             entity.IsQuantativeTeamContributionId = IsQuantativeTeamContributionId;
             entity.IsCTUTeamContributionId = IsCTUTeamContributionId;
             entity.IsPPIEAndEDIContributionId = IsPPIEAndEDIContributionId;
             entity.SubmittedFundingStreamId = SubmittedFundingStreamId;
             entity.IsInternationalMultiSiteStudyId = IsInternationalMultiSiteStudyId;
-            entity.SupportRequestId = SupportRequestId;
             entity.IsFellowshipId = IsFellowshipId;
             entity.ApplicationStageId = ApplicationStageId;
             entity.ProposedFundingCallTypeId = ProposedFundingCallTypeId;

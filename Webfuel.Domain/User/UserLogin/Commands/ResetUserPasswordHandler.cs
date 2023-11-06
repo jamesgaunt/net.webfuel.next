@@ -15,7 +15,7 @@ namespace Webfuel.Domain
         public async Task Handle(ResetUserPassword request, CancellationToken cancellationToken)
         {
             if (request.NewPassword != request.ConfirmNewPassword)
-                throw new InvalidOperationException("New passwords do not match");
+                throw new DomainException("New passwords do not match");
 
             AuthenticationUtility.EnforcePasswordRequirements(request.NewPassword);
 
@@ -24,10 +24,10 @@ namespace Webfuel.Domain
                 throw new InvalidOperationException("The specified user does not exist");
 
             if (user.PasswordResetToken == Guid.Empty || user.PasswordResetToken != request.PasswordResetToken)
-                throw new InvalidOperationException("Invalid password reset token");
+                throw new DomainException("Invalid password reset token");
 
             if (user.PasswordResetValidUntil < DateTimeOffset.UtcNow)
-                throw new InvalidOperationException("Password reset token has expired");
+                throw new DomainException("Password reset token has expired");
 
             // Looks like we are ok to go ahead with this change
             var updated = user.Copy();

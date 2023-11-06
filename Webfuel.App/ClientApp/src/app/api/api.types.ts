@@ -357,12 +357,12 @@ export interface Project {
     leadApplicantORCID: string;
     createdAt: string;
     statusId: string;
+    supportRequestId: string | null | null;
     isQuantativeTeamContributionId: string | null | null;
     isCTUTeamContributionId: string | null | null;
     isPPIEAndEDIContributionId: string | null | null;
     submittedFundingStreamId: string | null | null;
     isInternationalMultiSiteStudyId: string | null | null;
-    supportRequestId: string | null | null;
     isFellowshipId: string | null | null;
     applicationStageId: string | null | null;
     proposedFundingCallTypeId: string | null | null;
@@ -537,6 +537,8 @@ export interface QueryResearcher extends Query {
 
 export interface SupportRequest {
     id: string;
+    number: number;
+    prefixedNumber: string;
     dateOfRequest: string;
     title: string;
     proposedFundingStreamName: string;
@@ -677,6 +679,7 @@ export interface TriageSupportRequest {
 }
 
 export interface QuerySupportRequest extends Query {
+    number: string;
     title: string;
     fromDate: string | null | null;
     toDate: string | null | null;

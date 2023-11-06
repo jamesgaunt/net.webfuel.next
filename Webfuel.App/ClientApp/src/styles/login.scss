@@ -1,9 +1,10 @@
 @import 'config.scss';
 
-body.mode-login {
+.app-mode-login {
   background-image: url(https://www.webfuel.com/temp/login-background.jpg);
   background-position: 50% 50%;
   background-size: cover;
+  min-height: 100vh;
 }
 
 .login-wrapper {
@@ -26,13 +27,14 @@ body.mode-login {
 }
 
 .login-form {
-  max-width: 500px;
+  width: 600px;
+  max-width: 95%;
   margin-right: 40px;
   margin-left: 40px;
-  background-color: RGBA(220, 220, 220, .4);
+  background-color: RGBA(220, 220, 220, .5);
   padding: 2rem;
   box-shadow: 3px 3px 8px RGBA(0, 0, 0, 0.1);
-  backdrop-filter: blur(2px);
+  backdrop-filter: blur(1px);
   border-radius: 12px;
 
   img {

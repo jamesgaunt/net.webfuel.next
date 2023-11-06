@@ -1,12 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Schema>
-  <Entity Name="UserActivity">
+  <Entity Name="UserActivity" OrderBy="-Date">
     <Key Name="Id" Type="guid" />
     <Property Name="UserId" Type="User" />
 
     <Property Name="Date" Type="Date" />
     <Property Name="WorkActivityId" Type="WorkActivity" />
     <Property Name="Description" Type="meta:description" />
+
+    <Index Unique="false">
+      <Member Name="UserId" />
+    </Index>
+    <Index Unique="false">
+      <Member Name="Date" />
+    </Index>
   </Entity>
 </Schema>

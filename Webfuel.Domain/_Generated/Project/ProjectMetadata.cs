@@ -10,7 +10,7 @@ namespace Webfuel.Domain
         
         public static string DatabaseTable => "Project";
         
-        public static string DefaultOrderBy => "ORDER BY Id ASC";
+        public static string DefaultOrderBy => "ORDER BY Number DESC";
         
         public static Project DataReader(SqlDataReader dr) => new Project(dr);
         
@@ -134,6 +134,9 @@ namespace Webfuel.Domain
                     case nameof(Project.StatusId):
                         result.Add(new SqlParameter(nameof(Project.StatusId), entity.StatusId));
                         break;
+                    case nameof(Project.SupportRequestId):
+                        result.Add(new SqlParameter(nameof(Project.SupportRequestId), entity.SupportRequestId ?? (object?)DBNull.Value));
+                        break;
                     case nameof(Project.IsQuantativeTeamContributionId):
                         result.Add(new SqlParameter(nameof(Project.IsQuantativeTeamContributionId), entity.IsQuantativeTeamContributionId ?? (object?)DBNull.Value));
                         break;
@@ -148,9 +151,6 @@ namespace Webfuel.Domain
                         break;
                     case nameof(Project.IsInternationalMultiSiteStudyId):
                         result.Add(new SqlParameter(nameof(Project.IsInternationalMultiSiteStudyId), entity.IsInternationalMultiSiteStudyId ?? (object?)DBNull.Value));
-                        break;
-                    case nameof(Project.SupportRequestId):
-                        result.Add(new SqlParameter(nameof(Project.SupportRequestId), entity.SupportRequestId ?? (object?)DBNull.Value));
                         break;
                     case nameof(Project.IsFellowshipId):
                         result.Add(new SqlParameter(nameof(Project.IsFellowshipId), entity.IsFellowshipId ?? (object?)DBNull.Value));
@@ -258,12 +258,12 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantORCID";
                 yield return "CreatedAt";
                 yield return "StatusId";
+                yield return "SupportRequestId";
                 yield return "IsQuantativeTeamContributionId";
                 yield return "IsCTUTeamContributionId";
                 yield return "IsPPIEAndEDIContributionId";
                 yield return "SubmittedFundingStreamId";
                 yield return "IsInternationalMultiSiteStudyId";
-                yield return "SupportRequestId";
                 yield return "IsFellowshipId";
                 yield return "ApplicationStageId";
                 yield return "ProposedFundingCallTypeId";
@@ -323,12 +323,12 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantORCID";
                 yield return "CreatedAt";
                 yield return "StatusId";
+                yield return "SupportRequestId";
                 yield return "IsQuantativeTeamContributionId";
                 yield return "IsCTUTeamContributionId";
                 yield return "IsPPIEAndEDIContributionId";
                 yield return "SubmittedFundingStreamId";
                 yield return "IsInternationalMultiSiteStudyId";
-                yield return "SupportRequestId";
                 yield return "IsFellowshipId";
                 yield return "ApplicationStageId";
                 yield return "ProposedFundingCallTypeId";
@@ -387,12 +387,12 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantORCID";
                 yield return "CreatedAt";
                 yield return "StatusId";
+                yield return "SupportRequestId";
                 yield return "IsQuantativeTeamContributionId";
                 yield return "IsCTUTeamContributionId";
                 yield return "IsPPIEAndEDIContributionId";
                 yield return "SubmittedFundingStreamId";
                 yield return "IsInternationalMultiSiteStudyId";
-                yield return "SupportRequestId";
                 yield return "IsFellowshipId";
                 yield return "ApplicationStageId";
                 yield return "ProposedFundingCallTypeId";

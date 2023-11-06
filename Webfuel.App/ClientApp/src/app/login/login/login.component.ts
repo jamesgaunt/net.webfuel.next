@@ -20,7 +20,9 @@ export class LoginComponent implements OnInit {
   ) {
   }
 
-  invalidLogin = false;
+  errorMessage = "";
+
+  processing = false;
 
   ngOnInit() {
   }
@@ -31,14 +33,26 @@ export class LoginComponent implements OnInit {
   });
 
   login() {
-    if (this.formService.hasErrors(this.form))
+    if (this.formService.hasErrors(this.form)) {
+      this.errorMessage = "Please enter your email address and password";
       return;
+    }
 
-    this.loginService.login(this.form.getRawValue()).subscribe((result) => {
-      if (result) {
-        this.router.navigateByUrl("/home");
-      } else {
-        this.growlService.growlDanger("Invalid username or password");
+    this.errorMessage = "";
+
+    this.processing = true;
+    this.loginService.login(this.form.getRawValue()).subscribe({
+      next: (result) => {
+        if (result) {
+          this.router.navigateByUrl("/home");
+        } else {
+          this.errorMessage = "Invalid email address or password";
+        }
+        this.processing = false;
+      },
+      error: (err) => {
+        this.errorMessage = "Invalid email address or password";
+        this.processing = false;
       }
     });
   }

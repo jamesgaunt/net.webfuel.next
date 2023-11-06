@@ -18,9 +18,17 @@
           <input name="password" type="password" class="input" placeholder="Password" formControlName="password" />
         </div>
       </div>
+      <div *ngIf="errorMessage" class="message is-danger">
+        {{ errorMessage }}
+      </div>
       <div class="buttons">
-        <button type="submit" class="button is-success" (click)="login()">
-          Login
+        <button type="submit" class="button is-success" [class.processing]="processing" (click)="login()">
+          <span class="text">
+            Login
+          </span>
+          <span class="spin">
+            <i class="far fa-sync-alt"></i>
+          </span>
         </button>
         &nbsp;&nbsp;
         <a (click)="forgottenPassword()" class="link">forgotten password?</a>

@@ -5,6 +5,7 @@
     <Key Name="Id" Type="guid" />
     <Property Name="Prefix" Type="meta:name"  />
     <Property Name="NextProjectNumber" Type="Int32" />
+    <Property Name="NextSupportRequestNumber" Type="Int32" />
     <Property Name="DomainName" Type="meta:name" />
     <Property Name="ReplyTo" Type="meta:name" />
     <Data>

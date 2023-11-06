@@ -5,6 +5,7 @@ import { FormService } from '../../core/form.service';
 import { GrowlService } from '../../core/growl.service';
 import { LoginService } from '../../core/login.service';
 import { UserLoginApi } from '../../api/user-login.api';
+import { ErrorService } from '../../core/error.service';
 
 @Component({
   selector: 'reset-password',
@@ -17,9 +18,13 @@ export class ResetPasswordComponent implements OnInit {
     private router: Router,
     private userLoginApi: UserLoginApi,
     private formService: FormService,
-    private growlService: GrowlService,
+    private errorService: ErrorService,
   ) {
   }
+
+  errorMessage = "";
+
+  processing = false;
 
   passwordReset = false;
 
@@ -38,12 +43,19 @@ export class ResetPasswordComponent implements OnInit {
   });
 
   resetPassword() {
-    if (this.formService.hasErrors(this.form))
+    if (this.formService.hasErrors(this.form)) {
+      this.errorMessage = "Please complete all fields";
       return;
+    }
 
-    this.userLoginApi.resetPassword(this.form.getRawValue()).subscribe((result) => {
-      this.passwordReset = true;
-    })
+    this.userLoginApi.resetPassword(this.form.getRawValue()).subscribe({
+      next: (result) => {
+        this.passwordReset = true;
+      }, error: (err) => {
+        console.log(err);
+        this.errorMessage = this.errorService.extractErrorMessage(err);
+      }
+    });
   }
 
   returnToLogin() {
