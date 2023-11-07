@@ -15,16 +15,16 @@ namespace Webfuel.App
             // Commands
             
             app.MapPost("api/gender", Create)
-                .RequireClaim(c => c.CanEditStaticData);
+                .RequireClaim(c => c.UserGroupClaims.CanEditStaticData);
             
             app.MapPut("api/gender", Update)
-                .RequireClaim(c => c.CanEditStaticData);
+                .RequireClaim(c => c.UserGroupClaims.CanEditStaticData);
             
             app.MapPut("api/gender/sort", Sort)
-                .RequireClaim(c => c.CanEditStaticData);
+                .RequireClaim(c => c.UserGroupClaims.CanEditStaticData);
             
             app.MapDelete("api/gender/{id:guid}", Delete)
-                .RequireClaim(c => c.CanEditStaticData);
+                .RequireClaim(c => c.UserGroupClaims.CanEditStaticData);
             
             // Querys
             

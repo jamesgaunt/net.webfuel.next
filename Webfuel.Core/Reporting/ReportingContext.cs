@@ -12,8 +12,6 @@ namespace Webfuel
 
         string Name { get; }
 
-        string Description { get; }
-
         IEnumerable<ReportingField<TContext>> Fields { get; }
     }
 }

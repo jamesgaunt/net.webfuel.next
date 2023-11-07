@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { Injectable, inject } from "@angular/core";
+import { BehaviorSubject, Observable } from "rxjs";
 import { ClientConfiguration } from '../api/api.types';
 import { ConfigurationApi } from '../api/configuration.api';
 import { IdentityService } from "./identity.service";
@@ -36,6 +36,13 @@ export class ConfigurationService {
       this._configuration.next(configuration);
       console.log("Loaded Configuration: ", { configuration });
     });
+  }
+
+  static hasClaim(check: (c: ClientConfiguration) => boolean): boolean  {
+    var service = inject(ConfigurationService);
+    if (service.configuration.value != null)
+      return check(service.configuration.value);
+    return false;
   }
 }
 

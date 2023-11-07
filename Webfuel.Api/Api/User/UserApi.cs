@@ -13,13 +13,13 @@ namespace Webfuel.App
             // Commands
 
             app.MapPost("api/user", Create)
-                .RequireClaim(c => c.CanEditUsers);
+                .RequireClaim(c => c.UserGroupClaims.CanEditUsers);
 
             app.MapPut("api/user", Update)
-                .RequireClaim(c => c.CanEditUsers);
+                .RequireClaim(c => c.UserGroupClaims.CanEditUsers);
 
             app.MapDelete("api/user/{id:guid}", Delete)
-                .RequireClaim(c => c.CanEditUsers);
+                .RequireClaim(c => c.UserGroupClaims.CanEditUsers);
 
             // Querys
 

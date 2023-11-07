@@ -26,6 +26,9 @@ namespace Webfuel.Domain
                     case nameof(UserGroup.Name):
                         result.Add(new SqlParameter(nameof(UserGroup.Name), entity.Name));
                         break;
+                    case nameof(UserGroup.Claims):
+                        result.Add(new SqlParameter(nameof(UserGroup.Claims), entity.ClaimsJson));
+                        break;
                 }
             }
             return result;
@@ -54,6 +57,7 @@ namespace Webfuel.Domain
             {
                 yield return "Id";
                 yield return "Name";
+                yield return "Claims";
             }
         }
         
@@ -63,6 +67,7 @@ namespace Webfuel.Domain
             {
                 yield return "Id";
                 yield return "Name";
+                yield return "Claims";
             }
         }
         
@@ -71,6 +76,7 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Name";
+                yield return "Claims";
             }
         }
         

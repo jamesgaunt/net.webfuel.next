@@ -10,6 +10,7 @@ import { UserTabsComponent } from './user/user-tabs/user-tabs.component';
 
 import { UserGroupListComponent } from './user-group/user-group-list/user-group-list.component';
 import { UserGroupItemComponent } from './user-group/user-group-item/user-group-item.component';
+import { UserGroupClaimsComponent } from './user-group/user-group-claims/user-group-claims.component';
 import { UserGroupTabsComponent } from './user-group/user-group-tabs/user-group-tabs.component';
 
 import { CreateUserDialog, CreateUserDialogComponent } from './user/dialogs/create-user/create-user.dialog';
@@ -29,6 +30,7 @@ import { CreateUserGroupDialog, CreateUserGroupDialogComponent } from './user-gr
 
     UserGroupListComponent,
     UserGroupItemComponent,
+    UserGroupClaimsComponent,
     UserGroupTabsComponent,
 
     CreateUserDialogComponent,

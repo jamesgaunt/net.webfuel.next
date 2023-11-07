@@ -7,10 +7,6 @@ namespace Webfuel
     {
         public bool Developer { get; set; }
 
-        public bool CanEditUsers { get; set; } = true;
-
-        public bool CanEditResearchers { get; set; } = true;
-
-        public bool CanEditStaticData { get; set; } = true;
+        public UserGroupClaims UserGroupClaims { get; } = new UserGroupClaims();
     }
 }

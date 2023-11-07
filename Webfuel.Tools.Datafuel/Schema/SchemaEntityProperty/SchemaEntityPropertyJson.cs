@@ -33,7 +33,7 @@ namespace Webfuel.Tools.Datafuel
 
         public override object? ParseValue(string? input)
         {
-            return input;
+            return input ?? String.Empty;
         }
 
         // Generators

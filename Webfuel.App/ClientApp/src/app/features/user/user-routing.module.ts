@@ -11,6 +11,8 @@ import { UserGroupItemComponent } from './user-group/user-group-item/user-group-
 import { UserGroupApi } from '../../api/user-group.api';
 import { UserApi } from '../../api/user.api';
 import { DeactivateService } from '../../core/deactivate.service';
+import { ConfigurationService } from '../../core/configuration.service';
+import { UserGroupClaimsComponent } from './user-group/user-group-claims/user-group-claims.component';
 
 
 const routes: Routes = [
@@ -43,6 +45,13 @@ const routes: Routes = [
     component: UserGroupItemComponent,
     resolve: { userGroup: UserGroupApi.userGroupResolver('id') },
     canDeactivate: [DeactivateService.isPristine<UserGroupItemComponent>()],
+    data: { activeSideMenu: 'User Groups' }
+  },
+  {
+    path: 'user-group-claims/:id',
+    component: UserGroupClaimsComponent,
+    resolve: { userGroup: UserGroupApi.userGroupResolver('id') },
+    canDeactivate: [DeactivateService.isPristine<UserGroupClaimsComponent>()],
     data: { activeSideMenu: 'User Groups' }
   }
 ];

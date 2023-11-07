@@ -3,6 +3,7 @@ export interface ClientConfiguration {
     sideMenu: ClientConfigurationMenu;
     settingsMenu: ClientConfigurationMenu;
     staticDataMenu: ClientConfigurationMenu;
+    userGroupClaims: UserGroupClaims;
 }
 
 export interface ClientConfigurationMenu {
@@ -10,6 +11,12 @@ export interface ClientConfigurationMenu {
     name: string;
     action: string;
     children: Array<ClientConfigurationMenu> | null;
+}
+
+export interface UserGroupClaims {
+    canEditUsers: boolean;
+    canEditStaticData: boolean;
+    canEditResearchers: boolean;
 }
 
 export interface ProblemDetails {
@@ -786,6 +793,7 @@ export interface QueryUser extends Query {
 export interface UserGroup {
     id: string;
     name: string;
+    claims: UserGroupClaims;
 }
 
 export interface CreateUserGroup {
@@ -795,6 +803,13 @@ export interface CreateUserGroup {
 export interface UpdateUserGroup {
     id: string;
     name: string;
+}
+
+export interface UpdateUserGroupClaims {
+    id: string;
+    canEditUsers: boolean;
+    canEditStaticData: boolean;
+    canEditResearchers: boolean;
 }
 
 export interface QueryUserGroup extends Query {

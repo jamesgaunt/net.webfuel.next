@@ -13,13 +13,16 @@ namespace Webfuel.App
             // Commands
 
             app.MapPost("api/user-group", Create)
-                .RequireClaim(c => c.CanEditUsers);
+                .RequireClaim(c => c.UserGroupClaims.CanEditUsers);
 
             app.MapPut("api/user-group", Update)
-                .RequireClaim(c => c.CanEditUsers);
+                .RequireClaim(c => c.UserGroupClaims.CanEditUsers);
+
+            app.MapPut("api/user-group/claims", UpdateClaims)
+                .RequireClaim(c => c.UserGroupClaims.CanEditUsers);
 
             app.MapDelete("api/user-group/{id:guid}", Delete)
-                .RequireClaim(c => c.CanEditUsers);
+                .RequireClaim(c => c.UserGroupClaims.CanEditUsers);
 
             // Querys
 
@@ -36,6 +39,11 @@ namespace Webfuel.App
         }
 
         public static Task<UserGroup> Update([FromBody] UpdateUserGroup command, IMediator mediator)
+        {
+            return mediator.Send(command);
+        }
+
+        public static Task<UserGroup> UpdateClaims([FromBody] UpdateUserGroupClaims command, IMediator mediator)
         {
             return mediator.Send(command);
         }

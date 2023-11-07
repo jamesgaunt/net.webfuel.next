@@ -1,5 +1,20 @@
 
+KEY FEATURES:
+
+> Diagnostics
+> Reporting/Exporting (Scribble) => Needs Design
+> Permissions => Claims Based
+> Email Templates / Email Logging (Scribble)
+> Workflow
+> Additional Data Changes
+
 NEXT:
+
+> Consider excess property detection on API calls 
+
+  public updateClaims<T extends UpdateUserGroupClaims>(body: T & { [K in keyof T as K extends keyof UpdateUserGroupClaims ? never : K]: never; }, options?: ApiOptions): Observable<UserGroup> {
+    return this.apiService.request<UpdateUserGroupClaims, UserGroup>("PUT", "api/user-group/claims", body, options);
+  }
 
 > Allow tabbing on all fields
 > Fix up validation logic/display - form service checks and processing server side errors - register active form with api (can we do it on active controller)
@@ -17,10 +32,9 @@ NEXT:
 > Auto collapse chrome on mobile (use javascript) - expanded = hover on mobile (or hide entirely on mobile and put in top button)
 > First stab at history (just save 2 x json snapshot)
 
-> ActivityLog (Email, Login, Key Operations etc)
+> EmailLog
+> ActivityLog (Login, Key Operations etc)
 > HistoryLog (Higher volumes, enrichment, periodic archive)
-
-> Code highligher - use prism.js
 
 DONE:
 
