@@ -79,12 +79,12 @@ namespace Webfuel.Common
         }
         public async Task<List<ActivityLog>> SelectActivityLog()
         {
-            var sql = @"SELECT * FROM [ActivityLog] ORDER BY Id ASC";
+            var sql = @"SELECT * FROM [ActivityLog] ORDER BY Id DESC";
             return await _connection.ExecuteReader<ActivityLog, ActivityLogMetadata>(sql);
         }
         public async Task<List<ActivityLog>> SelectActivityLogWithPage(int skip, int take)
         {
-            var sql = @"SELECT * FROM [ActivityLog] ORDER BY Id ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+            var sql = @"SELECT * FROM [ActivityLog] ORDER BY Id DESC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Skip", skip),
@@ -94,7 +94,7 @@ namespace Webfuel.Common
         }
         public async Task<List<ActivityLog>> SelectActivityLogByEntityId(Guid entityId)
         {
-            var sql = @"SELECT * FROM [ActivityLog] WHERE EntityId = @EntityId ORDER BY Id ASC";
+            var sql = @"SELECT * FROM [ActivityLog] WHERE EntityId = @EntityId ORDER BY Id DESC";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@EntityId", entityId),

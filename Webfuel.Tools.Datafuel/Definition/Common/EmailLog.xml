@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="EmailLog" OrderBy="-Id">
+    <Key Name="Id" Type="guid" />
+    <Property Name="EntityId" Type="Guid" />
+    
+    <Property Name="SendTo" Type="string" />
+    <Property Name="SendCc" Type="string" />
+    <Property Name="SendBcc" Type="string" />
+
+    <Property Name="SentBy" Type="meta:name" />
+    <Property Name="ReplyTo" Type="meta:name" />
+
+    <Property Name="Subject" Type="string" />
+    <Property Name="HtmlBody" Type="string" />
+ 
+    <Property Name="SentAt" Type="DateTime" />
+
+    <Index Unique="false">
+      <Member Name="EntityId" />
+    </Index>
+  </Entity>
+</Schema>

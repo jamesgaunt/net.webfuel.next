@@ -10,7 +10,7 @@ namespace Webfuel.Common
         
         public static string DatabaseTable => "ActivityLog";
         
-        public static string DefaultOrderBy => "ORDER BY Id ASC";
+        public static string DefaultOrderBy => "ORDER BY Id DESC";
         
         public static ActivityLog DataReader(SqlDataReader dr) => new ActivityLog(dr);
         
@@ -26,17 +26,11 @@ namespace Webfuel.Common
                     case nameof(ActivityLog.EntityId):
                         result.Add(new SqlParameter(nameof(ActivityLog.EntityId), entity.EntityId));
                         break;
-                    case nameof(ActivityLog.EntityName):
-                        result.Add(new SqlParameter(nameof(ActivityLog.EntityName), entity.EntityName));
-                        break;
                     case nameof(ActivityLog.Summary):
                         result.Add(new SqlParameter(nameof(ActivityLog.Summary), entity.Summary));
                         break;
                     case nameof(ActivityLog.Message):
                         result.Add(new SqlParameter(nameof(ActivityLog.Message), entity.Message));
-                        break;
-                    case nameof(ActivityLog.MessageEnriched):
-                        result.Add(new SqlParameter(nameof(ActivityLog.MessageEnriched), entity.MessageEnriched));
                         break;
                     case nameof(ActivityLog.CreatedAt):
                         result.Add(new SqlParameter(nameof(ActivityLog.CreatedAt), entity.CreatedAt));
@@ -72,10 +66,8 @@ namespace Webfuel.Common
             {
                 yield return "Id";
                 yield return "EntityId";
-                yield return "EntityName";
                 yield return "Summary";
                 yield return "Message";
-                yield return "MessageEnriched";
                 yield return "CreatedAt";
                 yield return "CreatedBy";
             }
@@ -87,10 +79,8 @@ namespace Webfuel.Common
             {
                 yield return "Id";
                 yield return "EntityId";
-                yield return "EntityName";
                 yield return "Summary";
                 yield return "Message";
-                yield return "MessageEnriched";
                 yield return "CreatedAt";
                 yield return "CreatedBy";
             }
@@ -101,10 +91,8 @@ namespace Webfuel.Common
             get
             {
                 yield return "EntityId";
-                yield return "EntityName";
                 yield return "Summary";
                 yield return "Message";
-                yield return "MessageEnriched";
                 yield return "CreatedAt";
                 yield return "CreatedBy";
             }
@@ -114,8 +102,6 @@ namespace Webfuel.Common
         
         public static void Validate(ActivityLog entity)
         {
-            entity.EntityName = entity.EntityName ?? String.Empty;
-            entity.EntityName = entity.EntityName.Trim();
             entity.Summary = entity.Summary ?? String.Empty;
             entity.Summary = entity.Summary.Trim();
             entity.Message = entity.Message ?? String.Empty;
@@ -127,16 +113,8 @@ namespace Webfuel.Common
         
         public static ActivityLogRepositoryValidator Validator { get; } = new ActivityLogRepositoryValidator();
         
-        public const int EntityName_MaxLength = 64;
         public const int Summary_MaxLength = 64;
         public const int CreatedBy_MaxLength = 64;
-        
-        public static void EntityName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
-        {
-            ruleBuilder
-                .NotNull()
-                .MaximumLength(EntityName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
-        }
         
         public static void Summary_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
@@ -162,7 +140,6 @@ namespace Webfuel.Common
         {
             public ActivityLogRepositoryValidator()
             {
-                RuleFor(x => x.EntityName).Use(EntityName_ValidationRules);
                 RuleFor(x => x.Summary).Use(Summary_ValidationRules);
                 RuleFor(x => x.Message).Use(Message_ValidationRules);
                 RuleFor(x => x.CreatedBy).Use(CreatedBy_ValidationRules);

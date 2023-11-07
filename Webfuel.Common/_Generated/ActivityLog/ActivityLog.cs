@@ -24,17 +24,11 @@ namespace Webfuel.Common
                     case nameof(ActivityLog.EntityId):
                         EntityId = (Guid)value!;
                         break;
-                    case nameof(ActivityLog.EntityName):
-                        EntityName = (string)value!;
-                        break;
                     case nameof(ActivityLog.Summary):
                         Summary = (string)value!;
                         break;
                     case nameof(ActivityLog.Message):
                         Message = (string)value!;
-                        break;
-                    case nameof(ActivityLog.MessageEnriched):
-                        MessageEnriched = (bool)value!;
                         break;
                     case nameof(ActivityLog.CreatedAt):
                         CreatedAt = (DateTimeOffset)value!;
@@ -47,10 +41,8 @@ namespace Webfuel.Common
         }
         public Guid Id  { get; set; } = Guid.Empty;
         public Guid EntityId  { get; set; } = Guid.Empty;
-        public string EntityName  { get; set; } = String.Empty;
         public string Summary  { get; set; } = String.Empty;
         public string Message  { get; set; } = String.Empty;
-        public bool MessageEnriched  { get; set; } = false;
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public string CreatedBy  { get; set; } = String.Empty;
         public ActivityLog Copy()
@@ -58,10 +50,8 @@ namespace Webfuel.Common
             var entity = new ActivityLog();
             entity.Id = Id;
             entity.EntityId = EntityId;
-            entity.EntityName = EntityName;
             entity.Summary = Summary;
             entity.Message = Message;
-            entity.MessageEnriched = MessageEnriched;
             entity.CreatedAt = CreatedAt;
             entity.CreatedBy = CreatedBy;
             return entity;
