@@ -56,8 +56,11 @@
 }
 
 .grid-pre {
-    background-color: transparent;
-    color: var(--palette-control-text);
-    margin: 0; padding: 0;
-    max-width: 400px;
+  background-color: transparent;
+  color: var(--palette-control-text);
+  margin: 0;
+  padding: 0;
+  max-width: 400px;
+  white-space: pre-wrap;
+  line-height: 1.4;
 }

@@ -17,6 +17,11 @@ NEXT:
 > Auto collapse chrome on mobile (use javascript) - expanded = hover on mobile (or hide entirely on mobile and put in top button)
 > First stab at history (just save 2 x json snapshot)
 
+> ActivityLog (Email, Login, Key Operations etc)
+> HistoryLog (Higher volumes, enrichment, periodic archive)
+
+> Code highligher - use prism.js
+
 DONE:
 
 > Login button spinner feedback [DONE]

@@ -17,6 +17,11 @@
     <Content Remove="$(SpaRoot)**" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ClientApp\angular.json" />
+    <Content Include="ClientApp\package-lock.json" />
+    <Content Include="ClientApp\package.json" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Webfuel.Domain.StaticData\Webfuel.Domain.StaticData.csproj" />
     <ProjectReference Include="..\Webfuel.Domain\Webfuel.Domain.csproj" />
   </ItemGroup>

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../shared/shared.module';
 import { DeveloperRoutingModule } from './developer-routing.module';
 
+import { TestComponent } from './test/test.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -10,6 +12,7 @@ import { DeveloperRoutingModule } from './developer-routing.module';
     DeveloperRoutingModule
   ],
   declarations: [
+    TestComponent
   ]
 })
 export class DeveloperModule { }
