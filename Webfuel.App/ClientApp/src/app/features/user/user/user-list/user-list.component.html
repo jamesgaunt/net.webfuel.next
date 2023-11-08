@@ -5,6 +5,7 @@
 <div class="container">
   <h1 class="title">Users</h1>
   <grid [dataSource]="userApi" [search]="true">
+    <grid-column name="fullName" label="Name" />
     <grid-column name="email" />
     <grid-reference-column name="userGroupId" [dataSource]="userGroupApi" />
     <grid-action-column (add)="add()" (edit)="edit($event)" (delete)="delete($event)" />

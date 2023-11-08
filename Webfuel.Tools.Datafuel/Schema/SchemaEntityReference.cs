@@ -12,6 +12,9 @@ namespace Webfuel.Tools.Datafuel
         {
             _referenceEntityName = element.StringProperty("Type") ?? throw new InvalidOperationException();
 
+            if (!Name.EndsWith("Id"))
+                throw new InvalidOperationException("Reference names must end with Id");
+
             CascadeDelete = element.BooleanProperty("CascadeDelete") ?? false;
         }
 

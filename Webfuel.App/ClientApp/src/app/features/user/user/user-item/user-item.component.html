@@ -8,6 +8,11 @@
     <div class="column">
       <h1 class="title">User</h1>
     </div>
+    <div class="column">
+      <div class="header-buttons">
+        <button class="button is-warning" (click)="updatePassword()">Change Password</button>
+      </div>
+    </div>
   </div>
   <user-tabs></user-tabs>
   <form class="form" [formGroup]="form">

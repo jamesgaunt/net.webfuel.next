@@ -107,6 +107,9 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.LeadApplicantORCID):
                         result.Add(new SqlParameter(nameof(SupportRequest.LeadApplicantORCID), entity.LeadApplicantORCID));
                         break;
+                    case nameof(SupportRequest.ProjectId):
+                        result.Add(new SqlParameter(nameof(SupportRequest.ProjectId), entity.ProjectId ?? (object?)DBNull.Value));
+                        break;
                     case nameof(SupportRequest.CreatedAt):
                         result.Add(new SqlParameter(nameof(SupportRequest.CreatedAt), entity.CreatedAt));
                         break;
@@ -137,8 +140,8 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.TeamContactRoleId):
                         result.Add(new SqlParameter(nameof(SupportRequest.TeamContactRoleId), entity.TeamContactRoleId ?? (object?)DBNull.Value));
                         break;
-                    case nameof(SupportRequest.LeadApplicantOrganisationType):
-                        result.Add(new SqlParameter(nameof(SupportRequest.LeadApplicantOrganisationType), entity.LeadApplicantOrganisationType ?? (object?)DBNull.Value));
+                    case nameof(SupportRequest.LeadApplicantOrganisationTypeId):
+                        result.Add(new SqlParameter(nameof(SupportRequest.LeadApplicantOrganisationTypeId), entity.LeadApplicantOrganisationTypeId ?? (object?)DBNull.Value));
                         break;
                     case nameof(SupportRequest.IsLeadApplicantNHSId):
                         result.Add(new SqlParameter(nameof(SupportRequest.IsLeadApplicantNHSId), entity.IsLeadApplicantNHSId ?? (object?)DBNull.Value));
@@ -154,9 +157,6 @@ namespace Webfuel.Domain
                         break;
                     case nameof(SupportRequest.LeadApplicantEthnicityId):
                         result.Add(new SqlParameter(nameof(SupportRequest.LeadApplicantEthnicityId), entity.LeadApplicantEthnicityId ?? (object?)DBNull.Value));
-                        break;
-                    case nameof(SupportRequest.ProjectId):
-                        result.Add(new SqlParameter(nameof(SupportRequest.ProjectId), entity.ProjectId ?? (object?)DBNull.Value));
                         break;
                 }
             }
@@ -213,6 +213,7 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantAddressCountry";
                 yield return "LeadApplicantAddressPostcode";
                 yield return "LeadApplicantORCID";
+                yield return "ProjectId";
                 yield return "CreatedAt";
                 yield return "StatusId";
                 yield return "IsFellowshipId";
@@ -223,13 +224,12 @@ namespace Webfuel.Domain
                 yield return "IsResubmissionId";
                 yield return "HowDidYouFindUsId";
                 yield return "TeamContactRoleId";
-                yield return "LeadApplicantOrganisationType";
+                yield return "LeadApplicantOrganisationTypeId";
                 yield return "IsLeadApplicantNHSId";
                 yield return "LeadApplicantAgeRangeId";
                 yield return "LeadApplicantDisabilityId";
                 yield return "LeadApplicantGenderId";
                 yield return "LeadApplicantEthnicityId";
-                yield return "ProjectId";
             }
         }
         
@@ -266,6 +266,7 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantAddressCountry";
                 yield return "LeadApplicantAddressPostcode";
                 yield return "LeadApplicantORCID";
+                yield return "ProjectId";
                 yield return "CreatedAt";
                 yield return "StatusId";
                 yield return "IsFellowshipId";
@@ -276,13 +277,12 @@ namespace Webfuel.Domain
                 yield return "IsResubmissionId";
                 yield return "HowDidYouFindUsId";
                 yield return "TeamContactRoleId";
-                yield return "LeadApplicantOrganisationType";
+                yield return "LeadApplicantOrganisationTypeId";
                 yield return "IsLeadApplicantNHSId";
                 yield return "LeadApplicantAgeRangeId";
                 yield return "LeadApplicantDisabilityId";
                 yield return "LeadApplicantGenderId";
                 yield return "LeadApplicantEthnicityId";
-                yield return "ProjectId";
             }
         }
         
@@ -318,6 +318,7 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantAddressCountry";
                 yield return "LeadApplicantAddressPostcode";
                 yield return "LeadApplicantORCID";
+                yield return "ProjectId";
                 yield return "CreatedAt";
                 yield return "StatusId";
                 yield return "IsFellowshipId";
@@ -328,13 +329,12 @@ namespace Webfuel.Domain
                 yield return "IsResubmissionId";
                 yield return "HowDidYouFindUsId";
                 yield return "TeamContactRoleId";
-                yield return "LeadApplicantOrganisationType";
+                yield return "LeadApplicantOrganisationTypeId";
                 yield return "IsLeadApplicantNHSId";
                 yield return "LeadApplicantAgeRangeId";
                 yield return "LeadApplicantDisabilityId";
                 yield return "LeadApplicantGenderId";
                 yield return "LeadApplicantEthnicityId";
-                yield return "ProjectId";
             }
         }
         

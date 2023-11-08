@@ -12,8 +12,8 @@ namespace Webfuel.App
         {
             // Commands
 
-            app.MapPost("api/support-request", Create)
-                .RequireIdentity();
+            app.MapPost("api/support-request", Create); // Called from external support request form
+                
 
             app.MapPut("api/support-request", Update)
                 .RequireIdentity();

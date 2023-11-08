@@ -1,16 +1,17 @@
 
 KEY FEATURES:
 
-> Diagnostics
+> File Uploads [2D]
+> Permissions => Claims Based (look again at asp.net core infrastructure) [2D]
+
 > Reporting/Exporting (Scribble) => Needs Design
-> Permissions => Claims Based
 > Email Templates / Email Logging (Scribble)
 > Workflow
 > Additional Data Changes
 
 NEXT:
 
-> Consider excess property detection on API calls 
+> Consider excess property detection on API calls ???
 
   public updateClaims<T extends UpdateUserGroupClaims>(body: T & { [K in keyof T as K extends keyof UpdateUserGroupClaims ? never : K]: never; }, options?: ApiOptions): Observable<UserGroup> {
     return this.apiService.request<UpdateUserGroupClaims, UserGroup>("PUT", "api/user-group/claims", body, options);

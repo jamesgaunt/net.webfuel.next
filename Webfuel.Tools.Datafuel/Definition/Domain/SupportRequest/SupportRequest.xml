@@ -41,7 +41,7 @@
     <Property Name="LeadApplicantLastName" Type="meta:name" />
 
     <Property Name="LeadApplicantJobRole" Type="meta:name" />
-    <Property Name="LeadApplicantOrganisationType" Type="ResearcherOrganisationType?" />
+    <Property Name="LeadApplicantOrganisationTypeId" Type="ResearcherOrganisationType?" />
     <Property Name="LeadApplicantOrganisation" Type="meta:name" />
     <Property Name="LeadApplicantDepartment" Type="meta:name" />
 
@@ -61,10 +61,12 @@
     <Property Name="LeadApplicantEthnicityId" Type="Ethnicity?" />
     
     <!-- Replicated from Project -->
-    <Property Name="ProjectId" Type="Project?" />
+    <Property Name="ProjectId" Type="Guid?" />
 
     <!-- Audit -->
     <Property Name="CreatedAt" Type="DateTime" />
+
+    <!-- Indexes -->
 
     <Index Unique="false">
       <Member Name="Number" />

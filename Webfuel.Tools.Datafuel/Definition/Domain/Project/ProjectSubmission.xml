@@ -3,7 +3,7 @@
 <Schema>
   <Entity Name="ProjectSubmission" OrderBy="-SubmissionDate">
     <Key Name="Id" Type="guid" />
-    <Property Name="ProjectId" Type="Project" />
+    <Property Name="ProjectId" Type="Project" CascadeDelete="true" />
     <Property Name="NIHRReference" Type="meta:name" />
     <Property Name="SubmissionDate" Type="Date" />
     <Property Name="SubmissionStageId" Type="SubmissionStage" />

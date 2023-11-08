@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { LoginUser, StringResult, ChangeUserPassword, SendUserPasswordResetEmail, ResetUserPassword } from './api.types';
+import { LoginUser, StringResult, ChangeUserPassword, UpdateUserPassword, SendUserPasswordResetEmail, ResetUserPassword } from './api.types';
 
 @Injectable()
 export class UserLoginApi {
@@ -15,6 +15,10 @@ export class UserLoginApi {
     
     public changePassword (body: ChangeUserPassword, options?: ApiOptions): Observable<any> {
         return this.apiService.request<ChangeUserPassword, any>("POST", "api/user/change-password", body, options);
+    }
+    
+    public updatePassword (body: UpdateUserPassword, options?: ApiOptions): Observable<any> {
+        return this.apiService.request<UpdateUserPassword, any>("POST", "api/user/update-password", body, options);
     }
     
     public sendPasswordResetEmail (body: SendUserPasswordResetEmail, options?: ApiOptions): Observable<any> {

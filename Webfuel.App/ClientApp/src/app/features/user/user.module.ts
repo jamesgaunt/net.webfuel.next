@@ -15,6 +15,7 @@ import { UserGroupTabsComponent } from './user-group/user-group-tabs/user-group-
 
 import { CreateUserDialog, CreateUserDialogComponent } from './user/dialogs/create-user/create-user.dialog';
 import { CreateUserGroupDialog, CreateUserGroupDialogComponent } from './user-group/dialogs/create-user-group/create-user-group.dialog';
+import { UpdatePasswordDialog, UpdatePasswordDialogComponent } from './user/dialogs/update-password/update-password.dialog';
 
 @NgModule({
   imports: [
@@ -35,10 +36,12 @@ import { CreateUserGroupDialog, CreateUserGroupDialogComponent } from './user-gr
 
     CreateUserDialogComponent,
     CreateUserGroupDialogComponent,
+    UpdatePasswordDialogComponent,
   ],
   providers: [
     CreateUserDialog,
     CreateUserGroupDialog,
+    UpdatePasswordDialog,
   ]
 })
 export class UserModule { }

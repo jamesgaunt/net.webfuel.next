@@ -12,7 +12,7 @@
       <Row Id="00000000-0000-0000-0000-000000000000"
            Prefix="IC"
            NextProjectNumber="1"
-           DomainName="https://localhost"
+           DomainName="https://webfuel-rss-icl.azurewebsites.net"
            ReplyTo="noreply@webfuel.com" />
     </Data>
   </Entity>

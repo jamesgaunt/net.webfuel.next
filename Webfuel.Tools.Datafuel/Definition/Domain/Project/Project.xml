@@ -6,7 +6,7 @@
     <Property Name="Number" Type="Int32" />
     <Property Name="PrefixedNumber" Type="meta:name" />
     <Property Name="StatusId" Type="ProjectStatus" />
-    <Property Name="SupportRequestId" Type="SupportRequest?" />
+    <Property Name="SupportRequestId" Type="Guid?" />
     <Property Name="ClosureDate" Type="Date?" />
     
     <Property Name="IsQuantativeTeamContributionId" Type="IsQuantativeTeamContribution?" />
@@ -59,7 +59,7 @@
     <Property Name="LeadApplicantLastName" Type="meta:name" />
 
     <Property Name="LeadApplicantJobRole" Type="meta:name" />
-    <Property Name="LeadApplicantOrganisationType" Type="ResearcherOrganisationType?" />
+    <Property Name="LeadApplicantOrganisationTypeId" Type="ResearcherOrganisationType?" />
     <Property Name="LeadApplicantOrganisation" Type="meta:name" />
     <Property Name="LeadApplicantDepartment" Type="meta:name" />
 
@@ -83,6 +83,8 @@
     <!-- Audit -->
     <Property Name="CreatedAt" Type="DateTime" />
 
+    <!-- Indexes -->
+    
     <Index Unique="false">
       <Member Name="Number" />
     </Index>

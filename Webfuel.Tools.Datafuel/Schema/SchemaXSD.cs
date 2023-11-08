@@ -48,6 +48,7 @@ namespace Webfuel.Tools.Datafuel
                             {
                                 new XSDAttribute { Name = "Name", Required = true },
                                 new XSDAttribute { Name = "Type", Required = true },
+                                new XSDAttribute { Name = "CascadeDelete", Values = { "true", "false" } },
                                 new XSDAttribute { Name = "CaseSensitive", Values = { "true", "false" } },
                                 new XSDAttribute { Name = "Trim", Values = { "true", "false" } },
                                 new XSDAttribute { Name = "Default" },

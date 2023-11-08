@@ -16,6 +16,9 @@ namespace Webfuel.App
             app.MapPost("api/user/change-password", ChangePassword)
                 .RequireIdentity();
 
+            app.MapPost("api/user/update-password", UpdatePassword)
+                .RequireIdentity();
+
             app.MapPost("api/user/send-password-reset-email", SendPasswordResetEmail);
 
             app.MapPost("api/user/reset-password", ResetPassword);
@@ -27,6 +30,11 @@ namespace Webfuel.App
         }
 
         public static Task ChangePassword([FromBody] ChangeUserPassword command, IMediator mediator)
+        {
+            return mediator.Send(command);
+        }
+
+        public static Task UpdatePassword([FromBody] UpdateUserPassword command, IMediator mediator)
         {
             return mediator.Send(command);
         }

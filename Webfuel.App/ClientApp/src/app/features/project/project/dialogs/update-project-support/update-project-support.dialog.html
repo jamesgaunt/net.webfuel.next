@@ -12,10 +12,10 @@
         <label class="label">Advisers (include all advisers providing support)</label>
         <dropdown-multi-select [dataSource]="userApi" placeholder="required" formControlName="adviserIds">
           <ng-template #optionTemplate let-item>
-            {{ item.email }}
+            {{ item.fullName }}
           </ng-template>
           <ng-template #pickedTemplate let-item>
-            {{ item.email }}
+            {{ item.fullName }}
           </ng-template>
         </dropdown-multi-select>
       </div>

@@ -329,6 +329,7 @@ export interface Project {
     id: string;
     number: number;
     prefixedNumber: string;
+    supportRequestId: string | null | null;
     closureDate: string | null | null;
     nihrrssMemberCollaboratorIds: Array<string>;
     submittedFundingStreamFreeText: string;
@@ -364,7 +365,6 @@ export interface Project {
     leadApplicantORCID: string;
     createdAt: string;
     statusId: string;
-    supportRequestId: string | null | null;
     isQuantativeTeamContributionId: string | null | null;
     isCTUTeamContributionId: string | null | null;
     isPPIEAndEDIContributionId: string | null | null;
@@ -378,7 +378,7 @@ export interface Project {
     isResubmissionId: string | null | null;
     howDidYouFindUsId: string | null | null;
     teamContactRoleId: string | null | null;
-    leadApplicantOrganisationType: string | null | null;
+    leadApplicantOrganisationTypeId: string | null | null;
     isLeadApplicantNHSId: string | null | null;
     leadApplicantAgeRangeId: string | null | null;
     leadApplicantDisabilityId: string | null | null;
@@ -572,6 +572,7 @@ export interface SupportRequest {
     leadApplicantAddressCountry: string;
     leadApplicantAddressPostcode: string;
     leadApplicantORCID: string;
+    projectId: string | null | null;
     createdAt: string;
     statusId: string;
     isFellowshipId: string | null | null;
@@ -582,13 +583,12 @@ export interface SupportRequest {
     isResubmissionId: string | null | null;
     howDidYouFindUsId: string | null | null;
     teamContactRoleId: string | null | null;
-    leadApplicantOrganisationType: string | null | null;
+    leadApplicantOrganisationTypeId: string | null | null;
     isLeadApplicantNHSId: string | null | null;
     leadApplicantAgeRangeId: string | null | null;
     leadApplicantDisabilityId: string | null | null;
     leadApplicantGenderId: string | null | null;
     leadApplicantEthnicityId: string | null | null;
-    projectId: string | null | null;
 }
 
 export interface CreateSupportRequest {
@@ -731,6 +731,7 @@ export interface QueryUserActivity extends Query {
 }
 
 export interface User {
+    fullName: string;
     id: string;
     email: string;
     developer: boolean;
@@ -834,6 +835,11 @@ export interface ChangeUserPassword {
     currentPassword: string;
     newPassword: string;
     confirmNewPassword: string;
+}
+
+export interface UpdateUserPassword {
+    userId: string;
+    newPassword: string;
 }
 
 export interface SendUserPasswordResetEmail {

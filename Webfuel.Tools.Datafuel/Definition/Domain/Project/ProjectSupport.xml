@@ -3,7 +3,7 @@
 <Schema>
   <Entity Name="ProjectSupport" OrderBy="-Date">
     <Key Name="Id" Type="guid" />
-    <Property Name="ProjectId" Type="Project" />
+    <Property Name="ProjectId" Type="Project" CascadeDelete="true" />
     <Property Name="Date" Type="Date" />
     <Property Name="AdviserIds" Type="Json:List{Guid}" />
     <Property Name="SupportProvidedIds" Type="Json:List{Guid}" />

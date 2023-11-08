@@ -105,6 +105,9 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.LeadApplicantORCID):
                         LeadApplicantORCID = (string)value!;
                         break;
+                    case nameof(SupportRequest.ProjectId):
+                        ProjectId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
                     case nameof(SupportRequest.CreatedAt):
                         CreatedAt = (DateTimeOffset)value!;
                         break;
@@ -135,8 +138,8 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.TeamContactRoleId):
                         TeamContactRoleId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
-                    case nameof(SupportRequest.LeadApplicantOrganisationType):
-                        LeadApplicantOrganisationType = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                    case nameof(SupportRequest.LeadApplicantOrganisationTypeId):
+                        LeadApplicantOrganisationTypeId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
                     case nameof(SupportRequest.IsLeadApplicantNHSId):
                         IsLeadApplicantNHSId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
@@ -152,9 +155,6 @@ namespace Webfuel.Domain
                         break;
                     case nameof(SupportRequest.LeadApplicantEthnicityId):
                         LeadApplicantEthnicityId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
-                        break;
-                    case nameof(SupportRequest.ProjectId):
-                        ProjectId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
                 }
             }
@@ -188,6 +188,7 @@ namespace Webfuel.Domain
         public string LeadApplicantAddressCountry  { get; set; } = String.Empty;
         public string LeadApplicantAddressPostcode  { get; set; } = String.Empty;
         public string LeadApplicantORCID  { get; set; } = String.Empty;
+        public Guid? ProjectId  { get; set; } = null;
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid StatusId { get; set; }
         public Guid? IsFellowshipId { get; set; }
@@ -198,13 +199,12 @@ namespace Webfuel.Domain
         public Guid? IsResubmissionId { get; set; }
         public Guid? HowDidYouFindUsId { get; set; }
         public Guid? TeamContactRoleId { get; set; }
-        public Guid? LeadApplicantOrganisationType { get; set; }
+        public Guid? LeadApplicantOrganisationTypeId { get; set; }
         public Guid? IsLeadApplicantNHSId { get; set; }
         public Guid? LeadApplicantAgeRangeId { get; set; }
         public Guid? LeadApplicantDisabilityId { get; set; }
         public Guid? LeadApplicantGenderId { get; set; }
         public Guid? LeadApplicantEthnicityId { get; set; }
-        public Guid? ProjectId { get; set; }
         public SupportRequest Copy()
         {
             var entity = new SupportRequest();
@@ -237,6 +237,7 @@ namespace Webfuel.Domain
             entity.LeadApplicantAddressCountry = LeadApplicantAddressCountry;
             entity.LeadApplicantAddressPostcode = LeadApplicantAddressPostcode;
             entity.LeadApplicantORCID = LeadApplicantORCID;
+            entity.ProjectId = ProjectId;
             entity.CreatedAt = CreatedAt;
             entity.StatusId = StatusId;
             entity.IsFellowshipId = IsFellowshipId;
@@ -247,13 +248,12 @@ namespace Webfuel.Domain
             entity.IsResubmissionId = IsResubmissionId;
             entity.HowDidYouFindUsId = HowDidYouFindUsId;
             entity.TeamContactRoleId = TeamContactRoleId;
-            entity.LeadApplicantOrganisationType = LeadApplicantOrganisationType;
+            entity.LeadApplicantOrganisationTypeId = LeadApplicantOrganisationTypeId;
             entity.IsLeadApplicantNHSId = IsLeadApplicantNHSId;
             entity.LeadApplicantAgeRangeId = LeadApplicantAgeRangeId;
             entity.LeadApplicantDisabilityId = LeadApplicantDisabilityId;
             entity.LeadApplicantGenderId = LeadApplicantGenderId;
             entity.LeadApplicantEthnicityId = LeadApplicantEthnicityId;
-            entity.ProjectId = ProjectId;
             return entity;
         }
     }

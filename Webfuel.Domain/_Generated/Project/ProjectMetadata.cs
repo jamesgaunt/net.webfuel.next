@@ -29,6 +29,9 @@ namespace Webfuel.Domain
                     case nameof(Project.PrefixedNumber):
                         result.Add(new SqlParameter(nameof(Project.PrefixedNumber), entity.PrefixedNumber));
                         break;
+                    case nameof(Project.SupportRequestId):
+                        result.Add(new SqlParameter(nameof(Project.SupportRequestId), entity.SupportRequestId ?? (object?)DBNull.Value));
+                        break;
                     case nameof(Project.ClosureDate):
                         result.Add(new SqlParameter(nameof(Project.ClosureDate), entity.ClosureDate ?? (object?)DBNull.Value));
                         break;
@@ -134,9 +137,6 @@ namespace Webfuel.Domain
                     case nameof(Project.StatusId):
                         result.Add(new SqlParameter(nameof(Project.StatusId), entity.StatusId));
                         break;
-                    case nameof(Project.SupportRequestId):
-                        result.Add(new SqlParameter(nameof(Project.SupportRequestId), entity.SupportRequestId ?? (object?)DBNull.Value));
-                        break;
                     case nameof(Project.IsQuantativeTeamContributionId):
                         result.Add(new SqlParameter(nameof(Project.IsQuantativeTeamContributionId), entity.IsQuantativeTeamContributionId ?? (object?)DBNull.Value));
                         break;
@@ -176,8 +176,8 @@ namespace Webfuel.Domain
                     case nameof(Project.TeamContactRoleId):
                         result.Add(new SqlParameter(nameof(Project.TeamContactRoleId), entity.TeamContactRoleId ?? (object?)DBNull.Value));
                         break;
-                    case nameof(Project.LeadApplicantOrganisationType):
-                        result.Add(new SqlParameter(nameof(Project.LeadApplicantOrganisationType), entity.LeadApplicantOrganisationType ?? (object?)DBNull.Value));
+                    case nameof(Project.LeadApplicantOrganisationTypeId):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantOrganisationTypeId), entity.LeadApplicantOrganisationTypeId ?? (object?)DBNull.Value));
                         break;
                     case nameof(Project.IsLeadApplicantNHSId):
                         result.Add(new SqlParameter(nameof(Project.IsLeadApplicantNHSId), entity.IsLeadApplicantNHSId ?? (object?)DBNull.Value));
@@ -223,6 +223,7 @@ namespace Webfuel.Domain
                 yield return "Id";
                 yield return "Number";
                 yield return "PrefixedNumber";
+                yield return "SupportRequestId";
                 yield return "ClosureDate";
                 yield return "NIHRRSSMemberCollaboratorIds";
                 yield return "SubmittedFundingStreamFreeText";
@@ -258,7 +259,6 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantORCID";
                 yield return "CreatedAt";
                 yield return "StatusId";
-                yield return "SupportRequestId";
                 yield return "IsQuantativeTeamContributionId";
                 yield return "IsCTUTeamContributionId";
                 yield return "IsPPIEAndEDIContributionId";
@@ -272,7 +272,7 @@ namespace Webfuel.Domain
                 yield return "IsResubmissionId";
                 yield return "HowDidYouFindUsId";
                 yield return "TeamContactRoleId";
-                yield return "LeadApplicantOrganisationType";
+                yield return "LeadApplicantOrganisationTypeId";
                 yield return "IsLeadApplicantNHSId";
                 yield return "LeadApplicantAgeRangeId";
                 yield return "LeadApplicantDisabilityId";
@@ -288,6 +288,7 @@ namespace Webfuel.Domain
                 yield return "Id";
                 yield return "Number";
                 yield return "PrefixedNumber";
+                yield return "SupportRequestId";
                 yield return "ClosureDate";
                 yield return "NIHRRSSMemberCollaboratorIds";
                 yield return "SubmittedFundingStreamFreeText";
@@ -323,7 +324,6 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantORCID";
                 yield return "CreatedAt";
                 yield return "StatusId";
-                yield return "SupportRequestId";
                 yield return "IsQuantativeTeamContributionId";
                 yield return "IsCTUTeamContributionId";
                 yield return "IsPPIEAndEDIContributionId";
@@ -337,7 +337,7 @@ namespace Webfuel.Domain
                 yield return "IsResubmissionId";
                 yield return "HowDidYouFindUsId";
                 yield return "TeamContactRoleId";
-                yield return "LeadApplicantOrganisationType";
+                yield return "LeadApplicantOrganisationTypeId";
                 yield return "IsLeadApplicantNHSId";
                 yield return "LeadApplicantAgeRangeId";
                 yield return "LeadApplicantDisabilityId";
@@ -352,6 +352,7 @@ namespace Webfuel.Domain
             {
                 yield return "Number";
                 yield return "PrefixedNumber";
+                yield return "SupportRequestId";
                 yield return "ClosureDate";
                 yield return "NIHRRSSMemberCollaboratorIds";
                 yield return "SubmittedFundingStreamFreeText";
@@ -387,7 +388,6 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantORCID";
                 yield return "CreatedAt";
                 yield return "StatusId";
-                yield return "SupportRequestId";
                 yield return "IsQuantativeTeamContributionId";
                 yield return "IsCTUTeamContributionId";
                 yield return "IsPPIEAndEDIContributionId";
@@ -401,7 +401,7 @@ namespace Webfuel.Domain
                 yield return "IsResubmissionId";
                 yield return "HowDidYouFindUsId";
                 yield return "TeamContactRoleId";
-                yield return "LeadApplicantOrganisationType";
+                yield return "LeadApplicantOrganisationTypeId";
                 yield return "IsLeadApplicantNHSId";
                 yield return "LeadApplicantAgeRangeId";
                 yield return "LeadApplicantDisabilityId";

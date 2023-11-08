@@ -7,6 +7,7 @@ import { UserGroupApi } from 'api/user-group.api';
 import { FormService } from 'core/form.service';
 import { TitleApi } from 'api/title.api';
 import { StaticDataCache } from 'api/static-data.cache';
+import { UpdatePasswordDialog } from '../dialogs/update-password/update-password.dialog';
 
 @Component({
   selector: 'user-item',
@@ -20,7 +21,8 @@ export class UserItemComponent implements OnInit {
     private formService: FormService,
     public userApi: UserApi,
     public userGroupApi: UserGroupApi,
-    public staticDataCache: StaticDataCache
+    public staticDataCache: StaticDataCache,
+    public updatePasswordDialog: UpdatePasswordDialog,
   ) {
   }
 
@@ -73,5 +75,9 @@ export class UserItemComponent implements OnInit {
   cancel() {
     this.reset(this.item);
     this.router.navigate(['user/user-list']);
+  }
+
+  updatePassword() {
+    this.updatePasswordDialog.open(this.item);
   }
 }

@@ -44,7 +44,7 @@
           <div class="header">
             <div class="columns">
               <div class="column advisers">
-                <span>{{ projectSupport.date | date: 'dd-MMM-yy' }}</span><span *ngFor="let id of projectSupport.adviserIds">&nbsp;|&nbsp;{{ (userLookup.get({ id: id }) | async)?.email }}</span>
+                <span>{{ projectSupport.date | date: 'dd-MMM-yy' }}</span><span *ngFor="let id of projectSupport.adviserIds">&nbsp;|&nbsp;{{ (userLookup.get({ id: id }) | async)?.fullName }}</span>
               </div>
               <div class="column is-right">
                 <button class="button is-small is-primary" (click)="editProjectSupport(projectSupport)">edit</button>

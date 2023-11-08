@@ -42,7 +42,7 @@ export class UpdateProjectSubmissionDialogComponent extends DialogComponentBase<
     nihrReference: new FormControl<string>('', { nonNullable: true }),
     submissionStageId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     submissionOutcomeId: new FormControl<string>(null!),
-    fundingAmountOnSubmission: new FormControl<number>(null!, { validators: [Validators.required], nonNullable: true }),
+    fundingAmountOnSubmission: new FormControl<number>(null!, { validators: [Validators.required, Validators.min(0), Validators.max(999999999)], nonNullable: true }),
   });
 
   save() {

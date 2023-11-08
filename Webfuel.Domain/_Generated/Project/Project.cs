@@ -27,6 +27,9 @@ namespace Webfuel.Domain
                     case nameof(Project.PrefixedNumber):
                         PrefixedNumber = (string)value!;
                         break;
+                    case nameof(Project.SupportRequestId):
+                        SupportRequestId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
                     case nameof(Project.ClosureDate):
                         ClosureDate = value == DBNull.Value ? (DateOnly?)null : DateOnly.FromDateTime((DateTime)value!);
                         break;
@@ -132,9 +135,6 @@ namespace Webfuel.Domain
                     case nameof(Project.StatusId):
                         StatusId = (Guid)value!;
                         break;
-                    case nameof(Project.SupportRequestId):
-                        SupportRequestId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
-                        break;
                     case nameof(Project.IsQuantativeTeamContributionId):
                         IsQuantativeTeamContributionId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
@@ -174,8 +174,8 @@ namespace Webfuel.Domain
                     case nameof(Project.TeamContactRoleId):
                         TeamContactRoleId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
-                    case nameof(Project.LeadApplicantOrganisationType):
-                        LeadApplicantOrganisationType = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                    case nameof(Project.LeadApplicantOrganisationTypeId):
+                        LeadApplicantOrganisationTypeId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
                     case nameof(Project.IsLeadApplicantNHSId):
                         IsLeadApplicantNHSId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
@@ -198,6 +198,7 @@ namespace Webfuel.Domain
         public Guid Id  { get; set; } = Guid.Empty;
         public int Number  { get; set; } = 0;
         public string PrefixedNumber  { get; set; } = String.Empty;
+        public Guid? SupportRequestId  { get; set; } = null;
         public DateOnly? ClosureDate  { get; set; } = null;
         public List<Guid> NIHRRSSMemberCollaboratorIds
         {
@@ -244,7 +245,6 @@ namespace Webfuel.Domain
         public string LeadApplicantORCID  { get; set; } = String.Empty;
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid StatusId { get; set; }
-        public Guid? SupportRequestId { get; set; }
         public Guid? IsQuantativeTeamContributionId { get; set; }
         public Guid? IsCTUTeamContributionId { get; set; }
         public Guid? IsPPIEAndEDIContributionId { get; set; }
@@ -258,7 +258,7 @@ namespace Webfuel.Domain
         public Guid? IsResubmissionId { get; set; }
         public Guid? HowDidYouFindUsId { get; set; }
         public Guid? TeamContactRoleId { get; set; }
-        public Guid? LeadApplicantOrganisationType { get; set; }
+        public Guid? LeadApplicantOrganisationTypeId { get; set; }
         public Guid? IsLeadApplicantNHSId { get; set; }
         public Guid? LeadApplicantAgeRangeId { get; set; }
         public Guid? LeadApplicantDisabilityId { get; set; }
@@ -270,6 +270,7 @@ namespace Webfuel.Domain
             entity.Id = Id;
             entity.Number = Number;
             entity.PrefixedNumber = PrefixedNumber;
+            entity.SupportRequestId = SupportRequestId;
             entity.ClosureDate = ClosureDate;
             entity.NIHRRSSMemberCollaboratorIdsJson = NIHRRSSMemberCollaboratorIdsJson;
             entity.SubmittedFundingStreamFreeText = SubmittedFundingStreamFreeText;
@@ -305,7 +306,6 @@ namespace Webfuel.Domain
             entity.LeadApplicantORCID = LeadApplicantORCID;
             entity.CreatedAt = CreatedAt;
             entity.StatusId = StatusId;
-            entity.SupportRequestId = SupportRequestId;
             entity.IsQuantativeTeamContributionId = IsQuantativeTeamContributionId;
             entity.IsCTUTeamContributionId = IsCTUTeamContributionId;
             entity.IsPPIEAndEDIContributionId = IsPPIEAndEDIContributionId;
@@ -319,7 +319,7 @@ namespace Webfuel.Domain
             entity.IsResubmissionId = IsResubmissionId;
             entity.HowDidYouFindUsId = HowDidYouFindUsId;
             entity.TeamContactRoleId = TeamContactRoleId;
-            entity.LeadApplicantOrganisationType = LeadApplicantOrganisationType;
+            entity.LeadApplicantOrganisationTypeId = LeadApplicantOrganisationTypeId;
             entity.IsLeadApplicantNHSId = IsLeadApplicantNHSId;
             entity.LeadApplicantAgeRangeId = LeadApplicantAgeRangeId;
             entity.LeadApplicantDisabilityId = LeadApplicantDisabilityId;
