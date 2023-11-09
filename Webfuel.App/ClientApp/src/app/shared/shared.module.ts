@@ -32,6 +32,8 @@ import { GridReferenceColumnComponent } from './grid/columns/grid-reference-colu
 
 // Directives
 import { AutocompleteCodeDirective } from './directives/autocomplete-code.directive';
+
+// Dialogs
 import { ChangePasswordDialog, ChangePasswordDialogComponent } from './dialogs/change-password/change-password.dialog';
 import { ConfirmDialog, ConfirmDialogComponent } from './dialogs/confirm/confirm.dialog';
 import { ConfirmDeleteDialog, ConfirmDeleteDialogComponent } from './dialogs/confirm-delete/confirm-delete.dialog';
@@ -40,7 +42,8 @@ import { DatePickerDialog, DatePickerDialogComponent } from './dialogs/date-pick
 import { CreateUserActivityDialog, CreateUserActivityDialogComponent } from './dialogs/create-user-activity/create-user-activity.dialog';
 import { UpdateUserActivityDialog, UpdateUserActivityDialogComponent } from './dialogs/update-user-activity/update-user-activity.dialog';
 
-// Dialogs
+// Misc
+import { FileBrowserComponent } from './file-browser/file-browser.component';
 
 @NgModule({
   imports: [
@@ -88,6 +91,9 @@ import { UpdateUserActivityDialog, UpdateUserActivityDialogComponent } from './d
     DatePickerDialogComponent,
     CreateUserActivityDialogComponent,
     UpdateUserActivityDialogComponent,
+
+    // Misc
+    FileBrowserComponent
   ],
   exports: [
     CommonModule,
@@ -131,6 +137,9 @@ import { UpdateUserActivityDialog, UpdateUserActivityDialogComponent } from './d
     DatePickerDialogComponent,
     CreateUserActivityDialogComponent,
     UpdateUserActivityDialogComponent,
+
+    // Misc
+    FileBrowserComponent
   ],
   providers: [
     ChangePasswordDialog,

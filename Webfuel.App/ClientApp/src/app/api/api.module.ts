@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { ConfigurationApi } from './configuration.api';
+import { FileStorageApi } from './file-storage.api';
 import { PingApi } from './ping.api';
 import { StaticDataApi } from './static-data.api';
 import { ProjectApi } from './project.api';
@@ -7,7 +8,6 @@ import { ProjectSubmissionApi } from './project-submission.api';
 import { ProjectSupportApi } from './project-support.api';
 import { ResearcherApi } from './researcher.api';
 import { SupportRequestApi } from './support-request.api';
-import { SupportRequestFilesApi } from './support-request-files.api';
 import { UserActivityApi } from './user-activity.api';
 import { UserApi } from './user.api';
 import { UserGroupApi } from './user-group.api';
@@ -46,6 +46,7 @@ import { StaticDataCache } from './static-data.cache';
 @NgModule({
     providers: [
         ConfigurationApi,
+        FileStorageApi,
         PingApi,
         StaticDataApi,
         ProjectApi,
@@ -53,7 +54,6 @@ import { StaticDataCache } from './static-data.cache';
         ProjectSupportApi,
         ResearcherApi,
         SupportRequestApi,
-        SupportRequestFilesApi,
         UserActivityApi,
         UserApi,
         UserGroupApi,

@@ -10,8 +10,5 @@
     </div>
   </div>
   <support-request-tabs></support-request-tabs>
-  <div class="message is-warning">
-    Coming Soon: Access to files uploaded by the researcher via the support request form.
-  </div>
-  <p>Created {{ item.createdAt | date: 'dd MMM yy HH:mm'}}</p>
+  <file-browser [fileStorageGroupId]="item.fileStorageGroupId" />
 </div>

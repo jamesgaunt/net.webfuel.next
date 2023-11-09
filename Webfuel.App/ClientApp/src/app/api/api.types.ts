@@ -39,6 +39,16 @@ export interface ValidationError {
     message: string;
 }
 
+export interface FileStorageEntry {
+    id: string;
+    fileName: string;
+    sizeBytes: number;
+    uploadedAt: string | null | null;
+    uploadedBy: string;
+    description: string;
+    fileStorageGroupId: string;
+}
+
 export interface PingResponse {
     timestamp: string;
 }
@@ -657,20 +667,6 @@ export interface QuerySupportRequest extends Query {
     filters?: Array<QueryFilter>;
     sort?: Array<QuerySort>;
     search?: string;
-}
-
-export interface FileStorageEntry {
-    id: string;
-    fileName: string;
-    sizeBytes: number;
-    uploadedAt: string | null | null;
-    uploadedBy: string;
-    description: string;
-    fileStorageGroupId: string;
-}
-
-export interface ListSupportRequestFiles {
-    supportRequestId: string;
 }
 
 export interface UserActivity {

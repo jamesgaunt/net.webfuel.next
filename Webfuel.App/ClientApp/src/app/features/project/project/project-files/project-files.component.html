@@ -5,10 +5,5 @@
 </ul>
 <div class="container">
   <project-tabs></project-tabs>
-  <div class="message is-warning">
-    Coming Soon: Access to files uploaded by the researcher via the support request form. Allow upload and download of additional files by advisers.
-  </div>
-  <div class="floating-buttons">
-    <button class="button" (click)="cancel()">Close</button>
-  </div>
+  <file-browser [fileStorageGroupId]="item.fileStorageGroupId" />
 </div>
