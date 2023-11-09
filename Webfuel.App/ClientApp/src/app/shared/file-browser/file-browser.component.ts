@@ -5,6 +5,7 @@ import { debounceTime, noop, tap } from 'rxjs';
 import { FileStorageEntry } from '../../api/api.types';
 import { FileStorageApi } from '../../api/file-storage.api';
 import _ from 'shared/common/underscore';
+import { FileViewerDialog } from '../dialogs/file-viewer/file-viewer.dialog';
 
 @Component({
   selector: 'file-browser',
@@ -15,7 +16,8 @@ export class FileBrowserComponent implements OnInit {
   destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
-    private fileStorageApi: FileStorageApi
+    private fileStorageApi: FileStorageApi,
+    private fileViewerDialog: FileViewerDialog
   ) {
   }
 
@@ -38,4 +40,7 @@ export class FileBrowserComponent implements OnInit {
     return _.formatBytes(file.sizeBytes);
   }
 
+  view(file: FileStorageEntry) {
+    this.fileViewerDialog.open({ file: file });
+  }
 }

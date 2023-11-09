@@ -25,9 +25,9 @@ namespace Webfuel.App
             return await fileStorageService.ListFiles(fileStorageGroupId);
         }
 
-        public static async Task<string> GenerateFileSasUri(Guid fileStorageEntryId, IFileStorageService fileStorageService)
+        public static async Task<StringResult> GenerateFileSasUri(Guid fileStorageEntryId, IFileStorageService fileStorageService)
         {
-            return await fileStorageService.GenerateFileSasUri(fileStorageEntryId);
+            return new StringResult(await fileStorageService.GenerateFileSasUri(fileStorageEntryId));
         }
 
         public static async Task DeleteFiles(Guid fileStorageEntryId, IFileStorageService fileStorageService)

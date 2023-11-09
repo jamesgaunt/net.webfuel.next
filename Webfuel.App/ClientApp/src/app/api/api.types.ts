@@ -49,6 +49,10 @@ export interface FileStorageEntry {
     fileStorageGroupId: string;
 }
 
+export interface StringResult {
+    value: string;
+}
+
 export interface PingResponse {
     timestamp: string;
 }
@@ -790,10 +794,6 @@ export interface QueryUserGroup extends Query {
     filters?: Array<QueryFilter>;
     sort?: Array<QuerySort>;
     search?: string;
-}
-
-export interface StringResult {
-    value: string;
 }
 
 export interface LoginUser {

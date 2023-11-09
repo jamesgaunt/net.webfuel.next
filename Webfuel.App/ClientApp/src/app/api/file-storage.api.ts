@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { FileStorageEntry } from './api.types';
+import { FileStorageEntry, StringResult } from './api.types';
 
 @Injectable()
 export class FileStorageApi {
@@ -13,8 +13,8 @@ export class FileStorageApi {
         return this.apiService.request<undefined, Array<FileStorageEntry>>("GET", "api/file-storage/files/" + params.fileStorageGroupId + "", undefined, options);
     }
     
-    public generateFileSasUri (params: { fileStorageEntryId: string }, options?: ApiOptions): Observable<string> {
-        return this.apiService.request<undefined, string>("GET", "api/file-storage/sas-uri/" + params.fileStorageEntryId + "", undefined, options);
+    public generateFileSasUri (params: { fileStorageEntryId: string }, options?: ApiOptions): Observable<StringResult> {
+        return this.apiService.request<undefined, StringResult>("GET", "api/file-storage/sas-uri/" + params.fileStorageEntryId + "", undefined, options);
     }
     
     public deleteFiles (params: { fileStorageEntryId: string }, options?: ApiOptions): Observable<any> {
