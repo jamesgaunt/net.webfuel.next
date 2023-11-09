@@ -13,7 +13,10 @@ namespace Webfuel.App
             app.MapGet("api/file-storage/files/{fileStorageGroupId:guid}", ListFiles)
                  .RequireIdentity();
 
-            app.MapDelete("api/file-storage/files/{fileStorageEntryId:guid}", ListFiles)
+            app.MapGet("api/file-storage/sas-uri/{fileStorageEntryId:guid}", GenerateFileSasUri)
+                 .RequireIdentity();
+
+            app.MapDelete("api/file-storage/files/{fileStorageEntryId:guid}", DeleteFiles)
                 .RequireIdentity();
         }
 
@@ -22,7 +25,12 @@ namespace Webfuel.App
             return await fileStorageService.ListFiles(fileStorageGroupId);
         }
 
-        public static async Task DeleteFile(Guid fileStorageEntryId, IFileStorageService fileStorageService)
+        public static async Task<string> GenerateFileSasUri(Guid fileStorageEntryId, IFileStorageService fileStorageService)
+        {
+            return await fileStorageService.GenerateFileSasUri(fileStorageEntryId);
+        }
+
+        public static async Task DeleteFiles(Guid fileStorageEntryId, IFileStorageService fileStorageService)
         {
             await fileStorageService.DeleteFile(fileStorageEntryId);
         }

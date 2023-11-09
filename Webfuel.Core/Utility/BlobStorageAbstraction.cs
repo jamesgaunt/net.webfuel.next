@@ -63,6 +63,12 @@ namespace Webfuel
             return await ListBlobAsync(FixPath(path));
         }
 
+        public Uri GenerateSasUri(string path)
+        {
+            var blob = Container.GetBlobClient(FixPath(path));
+            return blob.GenerateSasUri(Azure.Storage.Sas.BlobSasPermissions.Read, DateTimeOffset.UtcNow.AddHours(1));
+        }
+
         public async Task UploadBlobAsync(string path, Stream stream)
         {
             var existing = await GetBlobAsync(path);

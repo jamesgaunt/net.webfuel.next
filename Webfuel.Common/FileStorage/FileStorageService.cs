@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +15,8 @@ namespace Webfuel.Common
         Task<FileStorageEntry> UploadFile(Guid fileStorageGroupId, IFormFile formFile);
 
         Task<List<FileStorageEntry>> ListFiles(Guid fileStorageGroupId);
+
+        Task<string> GenerateFileSasUri(Guid fileStorageEntryId);
 
         Task DeleteFile(Guid fileStorageEntryId);
     }
@@ -64,6 +67,14 @@ namespace Webfuel.Common
         public async Task<List<FileStorageEntry>> ListFiles(Guid fileStorageGroupId)
         {
             return await _fileStorageEntryRepository.SelectFileStorageEntryByFileStorageGroupId(fileStorageGroupId);
+        }
+
+        public async Task<string> GenerateFileSasUri(Guid fileStorageEntryId)
+        {
+            var entry = await _fileStorageEntryRepository.RequireFileStorageEntry(fileStorageEntryId);
+
+            var uri = BlobStorage.GenerateSasUri(Path(entry));
+            return uri.ToString();
         }
 
         public async Task DeleteFile(Guid fileStorageEntryId)
