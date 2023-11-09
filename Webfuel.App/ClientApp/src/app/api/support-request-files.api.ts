@@ -6,13 +6,11 @@ import { IDataSource } from 'shared/common/data-source';
 import { ListSupportRequestFiles, FileStorageEntry } from './api.types';
 
 @Injectable()
-export class SupportRequestFilesApi implements IDataSource<SupportRequestFiles, QuerySupportRequestFiles, any, any> {
+export class SupportRequestFilesApi {
     constructor(private apiService: ApiService) { }
     
     public listFiles (body: ListSupportRequestFiles, options?: ApiOptions): Observable<Array<FileStorageEntry>> {
         return this.apiService.request<ListSupportRequestFiles, Array<FileStorageEntry>>("POST", "api/support-request/list-files", body, options);
     }
-    
-    changed = new EventEmitter<any>();
 }
 

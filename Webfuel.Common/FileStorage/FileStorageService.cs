@@ -13,7 +13,7 @@ namespace Webfuel.Common
 
         Task<FileStorageEntry> UploadFile(Guid fileStorageGroupId, IFormFile formFile);
 
-        Task<List<FileStorageEntry>> ListFiles(Guid groupId);
+        Task<List<FileStorageEntry>> ListFiles(Guid fileStorageGroupId);
 
         Task DeleteFile(Guid fileStorageEntryId);
     }
@@ -61,9 +61,9 @@ namespace Webfuel.Common
             return await _fileStorageEntryRepository.UpdateFileStorageEntry(entry);
         }
 
-        public async Task<List<FileStorageEntry>> ListFiles(Guid groupId)
+        public async Task<List<FileStorageEntry>> ListFiles(Guid fileStorageGroupId)
         {
-            return await _fileStorageEntryRepository.SelectFileStorageEntryByFileStorageGroupId(groupId);
+            return await _fileStorageEntryRepository.SelectFileStorageEntryByFileStorageGroupId(fileStorageGroupId);
         }
 
         public async Task DeleteFile(Guid fileStorageEntryId)

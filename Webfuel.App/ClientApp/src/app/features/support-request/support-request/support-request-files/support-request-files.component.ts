@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SupportRequest } from 'api/api.types';
+import { FileStorageEntry, SupportRequest } from 'api/api.types';
 import { StaticDataCache } from 'api/static-data.cache';
 import { SupportRequestApi } from 'api/support-request.api';
 import { FormService } from 'core/form.service';
@@ -17,9 +17,8 @@ export class SupportRequestFilesComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formService: FormService,
-    private triageSupportRequestDialog: TriageSupportRequestDialog,
     public staticDataCache: StaticDataCache,
-    public supportRequestApi: SupportRequestApi,
+    public supportRequestApi: SupportRequestApi
   ) {
   }
 
