@@ -1,5 +1,31 @@
 
 <div class="file-list">
-  <h4>File List</h4>
+  <div *ngIf="files === null">
+    Loading...
+  </div>
+  <div *ngIf="files !== null && files.length == 0">
+    <i>No files have been uploaded.</i>
+  </div>
+
+  <div class="table" *ngIf="files !== null && files.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Filename</th>
+          <th style="text-align: right">Size</th>
+          <th>Uploaded At</th>
+          <th>Uploaded By</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let file of files">
+          <td>{{ file.fileName }}</td>
+          <td style="text-align: right">{{ formatSize(file) }}</td>
+          <td>{{ file.uploadedAt | date: 'dd MMM yyyy HH:mm' }}</td>
+          <td>Support Request Form</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 

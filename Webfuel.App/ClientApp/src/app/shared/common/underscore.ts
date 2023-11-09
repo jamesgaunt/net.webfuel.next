@@ -283,6 +283,18 @@ export default class Underscore {
     return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n! - <any>i).toFixed(c).slice(2) : "");
   }
 
+  static formatBytes(bytes: number, decimals = 2) {
+    if (!+bytes) return '0 Bytes'
+
+    const k = 1024
+    const dm = decimals < 0 ? 0 : decimals
+    const sizes = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+  }
+
   static parseNumber(value: any, forceZero: boolean): number | null {
     if (Underscore.isString(value)) {
       var text = ("" + value).replace(/[^\d\.\-]/g, "");

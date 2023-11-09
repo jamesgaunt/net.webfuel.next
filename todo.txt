@@ -9,6 +9,8 @@ KEY FEATURES:
 > Workflow
 > Additional Data Changes
 
+> Make rotating spinner actually spin on buttons
+
 NEXT:
 
 > Consider excess property detection on API calls ???
