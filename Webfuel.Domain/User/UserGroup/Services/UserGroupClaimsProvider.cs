@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,10 @@ namespace Webfuel.Domain
 
         public Task ProvideIdentityClaims(IdentityUser user, IdentityClaims claims)
         {
+            claims.UserGroupClaims.CanEditStaticData  = true;
+            claims.UserGroupClaims.CanEditResearchers = true;
+            claims.UserGroupClaims.CanEditUsers = true;
+
             return Task.FromResult<object?>(null);
         }
     }

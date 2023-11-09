@@ -192,6 +192,9 @@ namespace Webfuel.Domain
                     case nameof(Project.LeadApplicantEthnicityId):
                         LeadApplicantEthnicityId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
+                    case nameof(Project.FileStorageGroupId):
+                        FileStorageGroupId = (Guid)value!;
+                        break;
                 }
             }
         }
@@ -264,6 +267,7 @@ namespace Webfuel.Domain
         public Guid? LeadApplicantDisabilityId { get; set; }
         public Guid? LeadApplicantGenderId { get; set; }
         public Guid? LeadApplicantEthnicityId { get; set; }
+        public Guid FileStorageGroupId { get; set; }
         public Project Copy()
         {
             var entity = new Project();
@@ -325,6 +329,7 @@ namespace Webfuel.Domain
             entity.LeadApplicantDisabilityId = LeadApplicantDisabilityId;
             entity.LeadApplicantGenderId = LeadApplicantGenderId;
             entity.LeadApplicantEthnicityId = LeadApplicantEthnicityId;
+            entity.FileStorageGroupId = FileStorageGroupId;
             return entity;
         }
     }

@@ -2,44 +2,44 @@ using FluentValidation;
 using Microsoft.Data.SqlClient;
 using System.Text.Json.Serialization;
 
-namespace Webfuel.Domain
+namespace Webfuel.Common
 {
-    public partial class ProjectFileMetadata: IRepositoryMetadata<ProjectFile>
+    public partial class FileStorageEntryMetadata: IRepositoryMetadata<FileStorageEntry>
     {
         // Data Access
         
-        public static string DatabaseTable => "ProjectFile";
+        public static string DatabaseTable => "FileStorageEntry";
         
         public static string DefaultOrderBy => "ORDER BY Id ASC";
         
-        public static ProjectFile DataReader(SqlDataReader dr) => new ProjectFile(dr);
+        public static FileStorageEntry DataReader(SqlDataReader dr) => new FileStorageEntry(dr);
         
-        public static List<SqlParameter> ExtractParameters(ProjectFile entity, IEnumerable<string> properties)
+        public static List<SqlParameter> ExtractParameters(FileStorageEntry entity, IEnumerable<string> properties)
         {
-            var result = new List<SqlParameter> { new SqlParameter(nameof(ProjectFile.Id), entity.Id) };
+            var result = new List<SqlParameter> { new SqlParameter(nameof(FileStorageEntry.Id), entity.Id) };
             foreach(var property in properties)
             {
                 switch (property)
                 {
-                    case nameof(ProjectFile.Id):
+                    case nameof(FileStorageEntry.Id):
                         break;
-                    case nameof(ProjectFile.FileGroupId):
-                        result.Add(new SqlParameter(nameof(ProjectFile.FileGroupId), entity.FileGroupId));
+                    case nameof(FileStorageEntry.FileName):
+                        result.Add(new SqlParameter(nameof(FileStorageEntry.FileName), entity.FileName));
                         break;
-                    case nameof(ProjectFile.FileName):
-                        result.Add(new SqlParameter(nameof(ProjectFile.FileName), entity.FileName));
+                    case nameof(FileStorageEntry.SizeBytes):
+                        result.Add(new SqlParameter(nameof(FileStorageEntry.SizeBytes), entity.SizeBytes));
                         break;
-                    case nameof(ProjectFile.SizeBytes):
-                        result.Add(new SqlParameter(nameof(ProjectFile.SizeBytes), entity.SizeBytes));
+                    case nameof(FileStorageEntry.UploadedAt):
+                        result.Add(new SqlParameter(nameof(FileStorageEntry.UploadedAt), entity.UploadedAt ?? (object?)DBNull.Value));
                         break;
-                    case nameof(ProjectFile.UploadedAt):
-                        result.Add(new SqlParameter(nameof(ProjectFile.UploadedAt), entity.UploadedAt));
+                    case nameof(FileStorageEntry.UploadedBy):
+                        result.Add(new SqlParameter(nameof(FileStorageEntry.UploadedBy), entity.UploadedBy));
                         break;
-                    case nameof(ProjectFile.UploadedBy):
-                        result.Add(new SqlParameter(nameof(ProjectFile.UploadedBy), entity.UploadedBy));
+                    case nameof(FileStorageEntry.Description):
+                        result.Add(new SqlParameter(nameof(FileStorageEntry.Description), entity.Description));
                         break;
-                    case nameof(ProjectFile.Description):
-                        result.Add(new SqlParameter(nameof(ProjectFile.Description), entity.Description));
+                    case nameof(FileStorageEntry.FileStorageGroupId):
+                        result.Add(new SqlParameter(nameof(FileStorageEntry.FileStorageGroupId), entity.FileStorageGroupId));
                         break;
                 }
             }
@@ -49,18 +49,18 @@ namespace Webfuel.Domain
         public static string InsertSQL(IEnumerable<string>? properties = null)
         {
             properties = properties ?? InsertProperties;
-            return RepositoryMetadataDefaults.InsertSQL<ProjectFile, ProjectFileMetadata>(properties);
+            return RepositoryMetadataDefaults.InsertSQL<FileStorageEntry, FileStorageEntryMetadata>(properties);
         }
         
         public static string UpdateSQL(IEnumerable<string>? properties = null)
         {
             properties = properties ?? UpdateProperties;
-            return RepositoryMetadataDefaults.UpdateSQL<ProjectFile, ProjectFileMetadata>(properties);
+            return RepositoryMetadataDefaults.UpdateSQL<FileStorageEntry, FileStorageEntryMetadata>(properties);
         }
         
         public static string DeleteSQL()
         {
-            return RepositoryMetadataDefaults.DeleteSQL<ProjectFile, ProjectFileMetadata>();
+            return RepositoryMetadataDefaults.DeleteSQL<FileStorageEntry, FileStorageEntryMetadata>();
         }
         
         public static IEnumerable<string> SelectProperties
@@ -68,12 +68,12 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Id";
-                yield return "FileGroupId";
                 yield return "FileName";
                 yield return "SizeBytes";
                 yield return "UploadedAt";
                 yield return "UploadedBy";
                 yield return "Description";
+                yield return "FileStorageGroupId";
             }
         }
         
@@ -82,12 +82,12 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Id";
-                yield return "FileGroupId";
                 yield return "FileName";
                 yield return "SizeBytes";
                 yield return "UploadedAt";
                 yield return "UploadedBy";
                 yield return "Description";
+                yield return "FileStorageGroupId";
             }
         }
         
@@ -95,18 +95,18 @@ namespace Webfuel.Domain
         {
             get
             {
-                yield return "FileGroupId";
                 yield return "FileName";
                 yield return "SizeBytes";
                 yield return "UploadedAt";
                 yield return "UploadedBy";
                 yield return "Description";
+                yield return "FileStorageGroupId";
             }
         }
         
         // Validation
         
-        public static void Validate(ProjectFile entity)
+        public static void Validate(FileStorageEntry entity)
         {
             entity.FileName = entity.FileName ?? String.Empty;
             entity.FileName = entity.FileName.Trim();
@@ -117,7 +117,7 @@ namespace Webfuel.Domain
             Validator.ValidateAndThrow(entity);
         }
         
-        public static ProjectFileRepositoryValidator Validator { get; } = new ProjectFileRepositoryValidator();
+        public static FileStorageEntryRepositoryValidator Validator { get; } = new FileStorageEntryRepositoryValidator();
         
         public const int FileName_MaxLength = 64;
         public const int UploadedBy_MaxLength = 64;
@@ -144,9 +144,9 @@ namespace Webfuel.Domain
                 .MaximumLength(Description_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
-        public class ProjectFileRepositoryValidator: AbstractValidator<ProjectFile>
+        public class FileStorageEntryRepositoryValidator: AbstractValidator<FileStorageEntry>
         {
-            public ProjectFileRepositoryValidator()
+            public FileStorageEntryRepositoryValidator()
             {
                 RuleFor(x => x.FileName).Use(FileName_ValidationRules);
                 RuleFor(x => x.UploadedBy).Use(UploadedBy_ValidationRules);

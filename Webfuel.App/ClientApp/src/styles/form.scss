@@ -209,3 +209,38 @@
     box-shadow: 0 0 4px #444;
   }
 }
+
+.file-input {
+  border: 1px dashed var(--palette-secondary-foreground);
+  background-color: var(--palette-secondary-background);
+  padding: 2rem;
+  cursor: pointer;
+
+  .file-input-button {
+    display: inline-block;
+    margin-right: 1rem;
+    border: 1px dashed var(--palette-secondary-foreground);
+    padding: 1rem;
+    transition: background-color 0.25s ease;
+
+    &:hover {
+      background-color: RGBA(0, 0, 0, 0.1);
+    }
+  }
+
+  .file-input-input {
+    opacity: 0;
+    display: block;
+    overflow: hidden;
+    width: 0;
+    height: 0;
+  }
+
+  .file-input-file {
+    display: inline-block;
+    margin: 0.5rem 0.5rem 0 0;
+    padding: 0.5rem;
+    border: 1px dashed var(--palette-secondary-foreground);
+    font-weight: bold;
+  }
+}

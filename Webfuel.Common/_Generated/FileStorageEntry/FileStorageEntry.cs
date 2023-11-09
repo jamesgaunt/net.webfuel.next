@@ -3,13 +3,13 @@ using Microsoft.Data.SqlClient;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Webfuel.Domain
+namespace Webfuel.Common
 {
-    public partial class ProjectFile
+    public partial class FileStorageEntry
     {
-        public ProjectFile() { }
+        public FileStorageEntry() { }
         
-        public ProjectFile(SqlDataReader dr)
+        public FileStorageEntry(SqlDataReader dr)
         {
             for (var i = 0; i < dr.FieldCount; i++)
             {
@@ -18,47 +18,47 @@ namespace Webfuel.Domain
                 
                 switch (property)
                 {
-                    case nameof(ProjectFile.Id):
+                    case nameof(FileStorageEntry.Id):
                         Id = (Guid)value!;
                         break;
-                    case nameof(ProjectFile.FileGroupId):
-                        FileGroupId = (Guid)value!;
-                        break;
-                    case nameof(ProjectFile.FileName):
+                    case nameof(FileStorageEntry.FileName):
                         FileName = (string)value!;
                         break;
-                    case nameof(ProjectFile.SizeBytes):
+                    case nameof(FileStorageEntry.SizeBytes):
                         SizeBytes = (Int64)value!;
                         break;
-                    case nameof(ProjectFile.UploadedAt):
-                        UploadedAt = (DateTimeOffset)value!;
+                    case nameof(FileStorageEntry.UploadedAt):
+                        UploadedAt = value == DBNull.Value ? (DateTimeOffset?)null : (DateTimeOffset?)value;
                         break;
-                    case nameof(ProjectFile.UploadedBy):
+                    case nameof(FileStorageEntry.UploadedBy):
                         UploadedBy = (string)value!;
                         break;
-                    case nameof(ProjectFile.Description):
+                    case nameof(FileStorageEntry.Description):
                         Description = (string)value!;
+                        break;
+                    case nameof(FileStorageEntry.FileStorageGroupId):
+                        FileStorageGroupId = (Guid)value!;
                         break;
                 }
             }
         }
         public Guid Id  { get; set; } = Guid.Empty;
-        public Guid FileGroupId  { get; set; } = Guid.Empty;
         public string FileName  { get; set; } = String.Empty;
         public Int64 SizeBytes  { get; set; } = 0L;
-        public DateTimeOffset UploadedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
+        public DateTimeOffset? UploadedAt  { get; set; } = null;
         public string UploadedBy  { get; set; } = String.Empty;
         public string Description  { get; set; } = String.Empty;
-        public ProjectFile Copy()
+        public Guid FileStorageGroupId { get; set; }
+        public FileStorageEntry Copy()
         {
-            var entity = new ProjectFile();
+            var entity = new FileStorageEntry();
             entity.Id = Id;
-            entity.FileGroupId = FileGroupId;
             entity.FileName = FileName;
             entity.SizeBytes = SizeBytes;
             entity.UploadedAt = UploadedAt;
             entity.UploadedBy = UploadedBy;
             entity.Description = Description;
+            entity.FileStorageGroupId = FileStorageGroupId;
             return entity;
         }
     }

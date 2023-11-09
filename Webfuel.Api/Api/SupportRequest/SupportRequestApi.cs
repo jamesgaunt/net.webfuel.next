@@ -1,5 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Webfuel.Common;
 using Webfuel.Domain;
 
 namespace Webfuel.App
@@ -12,7 +15,7 @@ namespace Webfuel.App
         {
             // Commands
 
-            app.MapPost("api/support-request", Create); // Called from external support request form
+            app.MapPost("api/support-request", Submit); // Called from external support request form, also takes in files
                 
 
             app.MapPut("api/support-request", Update)
@@ -36,9 +39,23 @@ namespace Webfuel.App
                 .RequireIdentity();
         }
 
-        public static Task<SupportRequest> Create([FromBody] CreateSupportRequest command, IMediator mediator)
+        public static async Task<SupportRequest> Submit(HttpRequest request, IMediator mediator, IFileStorageService fileStorageService)
         {
-            return mediator.Send(command);
+            var fileStorageGroup = await fileStorageService.CreateGroup();
+            
+            foreach(var file in request.Form.Files)
+                await fileStorageService.UploadFile(fileStorageGroup.Id, file);
+
+            var data = request.Form["data"].ToString();
+            if (String.IsNullOrEmpty(data))
+                throw new InvalidOperationException("No data part found on create support request http request");
+
+            var command = JsonSerializer.Deserialize<CreateSupportRequest>(data, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            if (command == null)
+                throw new InvalidOperationException("Unable to deserialize create support request command");
+
+            command.FileStorageGroupId = fileStorageGroup.Id;
+            return await mediator.Send(command);
         }
 
         public static Task<SupportRequest> Update([FromBody] UpdateSupportRequest command, IMediator mediator)
@@ -50,7 +67,6 @@ namespace Webfuel.App
         {
             return mediator.Send(command);
         }
-
 
         public static Task<Project?> Triage([FromBody] TriageSupportRequest command, IMediator mediator)
         {

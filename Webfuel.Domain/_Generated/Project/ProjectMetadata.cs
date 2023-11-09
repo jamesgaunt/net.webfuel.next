@@ -194,6 +194,9 @@ namespace Webfuel.Domain
                     case nameof(Project.LeadApplicantEthnicityId):
                         result.Add(new SqlParameter(nameof(Project.LeadApplicantEthnicityId), entity.LeadApplicantEthnicityId ?? (object?)DBNull.Value));
                         break;
+                    case nameof(Project.FileStorageGroupId):
+                        result.Add(new SqlParameter(nameof(Project.FileStorageGroupId), entity.FileStorageGroupId));
+                        break;
                 }
             }
             return result;
@@ -278,6 +281,7 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantDisabilityId";
                 yield return "LeadApplicantGenderId";
                 yield return "LeadApplicantEthnicityId";
+                yield return "FileStorageGroupId";
             }
         }
         
@@ -343,6 +347,7 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantDisabilityId";
                 yield return "LeadApplicantGenderId";
                 yield return "LeadApplicantEthnicityId";
+                yield return "FileStorageGroupId";
             }
         }
         
@@ -407,6 +412,7 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantDisabilityId";
                 yield return "LeadApplicantGenderId";
                 yield return "LeadApplicantEthnicityId";
+                yield return "FileStorageGroupId";
             }
         }
         

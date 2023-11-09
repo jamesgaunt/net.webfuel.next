@@ -4,8 +4,9 @@
   <Entity Name="SupportRequest" OrderBy="-Number">
     <Key Name="Id" Type="guid" />
     <Property Name="Number" Type="Int32" />
-    <Property Name="PrefixedNumber" Type="meta:name" />    
+    <Property Name="PrefixedNumber" Type="meta:name" />
     <Property Name="StatusId" Type="SupportRequestStatus" />
+    <Property Name="FileStorageGroupId" Type="FileStorageGroup" />
 
     <!-- Project Details -->
 

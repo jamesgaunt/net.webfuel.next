@@ -6,6 +6,8 @@
     <Property Name="Number" Type="Int32" />
     <Property Name="PrefixedNumber" Type="meta:name" />
     <Property Name="StatusId" Type="ProjectStatus" />
+    <Reference Name="FileStorageGroupId" Type="FileStorageGroup" />
+    
     <Property Name="SupportRequestId" Type="Guid?" />
     <Property Name="ClosureDate" Type="Date?" />
     

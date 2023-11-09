@@ -15,5 +15,6 @@ public static class StaticDataRegistration
         services.RegisterServicesFromAssembly(typeof(StaticDataAssemblyMarker).Assembly);
 
         services.RegisterValidatorsFromAssembly(typeof(StaticDataAssemblyMarker).Assembly);
+
     }
 }

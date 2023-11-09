@@ -7,6 +7,7 @@ import { ProjectSubmissionApi } from './project-submission.api';
 import { ProjectSupportApi } from './project-support.api';
 import { ResearcherApi } from './researcher.api';
 import { SupportRequestApi } from './support-request.api';
+import { SupportRequestFilesApi } from './support-request-files.api';
 import { UserActivityApi } from './user-activity.api';
 import { UserApi } from './user.api';
 import { UserGroupApi } from './user-group.api';
@@ -52,6 +53,7 @@ import { StaticDataCache } from './static-data.cache';
         ProjectSupportApi,
         ResearcherApi,
         SupportRequestApi,
+        SupportRequestFilesApi,
         UserActivityApi,
         UserApi,
         UserGroupApi,

@@ -116,6 +116,9 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.StatusId):
                         result.Add(new SqlParameter(nameof(SupportRequest.StatusId), entity.StatusId));
                         break;
+                    case nameof(SupportRequest.FileStorageGroupId):
+                        result.Add(new SqlParameter(nameof(SupportRequest.FileStorageGroupId), entity.FileStorageGroupId));
+                        break;
                     case nameof(SupportRequest.IsFellowshipId):
                         result.Add(new SqlParameter(nameof(SupportRequest.IsFellowshipId), entity.IsFellowshipId ?? (object?)DBNull.Value));
                         break;
@@ -216,6 +219,7 @@ namespace Webfuel.Domain
                 yield return "ProjectId";
                 yield return "CreatedAt";
                 yield return "StatusId";
+                yield return "FileStorageGroupId";
                 yield return "IsFellowshipId";
                 yield return "ApplicationStageId";
                 yield return "ProposedFundingCallTypeId";
@@ -269,6 +273,7 @@ namespace Webfuel.Domain
                 yield return "ProjectId";
                 yield return "CreatedAt";
                 yield return "StatusId";
+                yield return "FileStorageGroupId";
                 yield return "IsFellowshipId";
                 yield return "ApplicationStageId";
                 yield return "ProposedFundingCallTypeId";
@@ -321,6 +326,7 @@ namespace Webfuel.Domain
                 yield return "ProjectId";
                 yield return "CreatedAt";
                 yield return "StatusId";
+                yield return "FileStorageGroupId";
                 yield return "IsFellowshipId";
                 yield return "ApplicationStageId";
                 yield return "ProposedFundingCallTypeId";

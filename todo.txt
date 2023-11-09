@@ -1,7 +1,7 @@
 
 KEY FEATURES:
 
-> File Uploads [2D]
+> File Uploads [2D] : Support Request Form => Upload Files => Generate Form Group => Assign
 > Permissions => Claims Based (look again at asp.net core infrastructure) [2D]
 
 > Reporting/Exporting (Scribble) => Needs Design

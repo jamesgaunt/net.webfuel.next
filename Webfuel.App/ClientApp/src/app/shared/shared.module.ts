@@ -18,6 +18,7 @@ import { DateCalendarComponent } from './form/date-calendar/date-calendar.compon
 import { DatePickerComponent } from './form/date-picker/date-picker.component';
 import { DropDownTextInputComponent } from './form/dropdown-text-input/dropdown-text-input.component';
 import { ToggleInputComponent } from './form/toggle-input/toggle-input.component';
+import { FileInputComponent } from './form/file-input/file-input.component';
 
 // Grid
 import { GridComponent } from './grid/grid.component';
@@ -40,7 +41,6 @@ import { CreateUserActivityDialog, CreateUserActivityDialogComponent } from './d
 import { UpdateUserActivityDialog, UpdateUserActivityDialogComponent } from './dialogs/update-user-activity/update-user-activity.dialog';
 
 // Dialogs
-
 
 @NgModule({
   imports: [
@@ -65,6 +65,7 @@ import { UpdateUserActivityDialog, UpdateUserActivityDialogComponent } from './d
     DateCalendarComponent,
     DatePickerComponent,
     ToggleInputComponent,
+    FileInputComponent,
 
     // Grid
     GridComponent,
@@ -107,6 +108,7 @@ import { UpdateUserActivityDialog, UpdateUserActivityDialogComponent } from './d
     DateCalendarComponent,
     DatePickerComponent,
     ToggleInputComponent,
+    FileInputComponent,
 
     // Grid
     GridComponent,

@@ -7,6 +7,8 @@ import { SupportRequestApi } from '../api/support-request.api';
 import { FormService } from '../core/form.service';
 import { debounceTime, takeUntil } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { HttpClient, HttpEventType } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'support-request-form',
@@ -21,6 +23,7 @@ export class SupportRequestFormComponent {
     private formService: FormService,
     private supportRequestApi: SupportRequestApi,
     public staticDataCache: StaticDataCache,
+    private httpClient: HttpClient,
   ) {
     this.form.valueChanges.pipe(
       takeUntilDestroyed(this.destroyRef),
@@ -86,6 +89,9 @@ export class SupportRequestFormComponent {
     leadApplicantDisabilityId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     leadApplicantGenderId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     leadApplicantEthnicityId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
+
+    // Files
+    files: new FormControl(null)
   });
 
   submitting = false;
@@ -99,16 +105,51 @@ export class SupportRequestFormComponent {
     }
 
     this.submitting = true;
-    this.supportRequestApi.create(this.form.getRawValue()).subscribe({
-      next: (result) => {
-        this.stage = 'submitted';
-      },
+    var formData = this.toFormData(this.form.value);
+
+    this.httpClient.post(environment.apiHost + "api/support-request", formData, {
+      reportProgress: true,
+      observe: 'events'
+    }).subscribe({
+      next:
+        (event) => {
+          if (event.type === HttpEventType.UploadProgress && event.total) {
+            var progress = Math.round((100 * event.loaded) / event.total);
+            console.log("Progress: " + progress);
+          }
+          if (event.type === HttpEventType.Response) {
+            console.log("Response: ", event.body);
+            this.stage = 'submitted';
+          }
+        },
       error: (err) => {
+        console.log("Error: ", err);
         this.stage = 'error';
       },
       complete: () => {
+        console.log("Complete");
         setTimeout(() => this.submitting = false, 1000);
       }
     });
+  }
+
+  toFormData(formValue: any) {
+    const formData = new FormData();
+    var data: any = {};
+
+    for (const key of Object.keys(formValue)) {
+      if (key != "files") {
+        data[key] = formValue[key];
+        continue;
+      }
+      var files = formValue[key];
+      if (files && files.length) {
+        for (var i = 0; i < files.length; i++) {
+          formData.append("file_" + i, files[i]);
+        }
+      }
+    }
+    formData.append("data", JSON.stringify(data));
+    return formData;
   }
 }

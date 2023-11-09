@@ -8,7 +8,7 @@
       <div class="flex">
         <div class="field is-12">
           <label class="label">Working title of the project</label>
-          <input class="input" type="text" placeholder="required" formControlName="title" maxlength="1000"/>
+          <input class="input" type="text" placeholder="required" formControlName="title" maxlength="1000" />
         </div>
         <div class="field is-6">
           <label class="label">Stage of application</label>
@@ -200,26 +200,28 @@
         </div>
       </div>
 
-
-
-
-
       <hr class="external-form-divider" />
       <h2>Supporting Documents</h2>
       <p>If available, please provide copies of draft documentation, protocols, background information or feedback from any previous applications.</p>
-      <div class="message is-warning">Work In Progress</div>
+      <file-input formControlName="files"></file-input>
 
       <hr class="external-form-divider" />
       <h2>Submit Your Application</h2>
       <p>You will receive an email confirming receipt of your application.</p>
 
       <div class="buttons">
-
-        <button type="button" [disabled]="submitting" class="button is-success" (click)="submit()">Submit Application</button>
+        <button type="button" [disabled]="submitting" [class.processing]="submitting" class="button is-success" (click)="submit()">
+          <span class="text">
+            Submit Application
+          </span>
+          <span class="spin">
+            <i class="far fa-sync-alt"></i>
+          </span>
+        </button>
         &nbsp;
         <span class="text is-danger is-bold">{{ errorMessage }}</span>
-
       </div>
+
     </form>
   </div>
   <div *ngIf="stage == 'submitted'">
@@ -232,4 +234,5 @@
   </div>
 </div>
 <br />
+<pre>{{ form.getRawValue() | json }}</pre>
 

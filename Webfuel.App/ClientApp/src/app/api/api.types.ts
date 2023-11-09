@@ -384,6 +384,7 @@ export interface Project {
     leadApplicantDisabilityId: string | null | null;
     leadApplicantGenderId: string | null | null;
     leadApplicantEthnicityId: string | null | null;
+    fileStorageGroupId: string;
 }
 
 export interface CreateProject {
@@ -575,6 +576,7 @@ export interface SupportRequest {
     projectId: string | null | null;
     createdAt: string;
     statusId: string;
+    fileStorageGroupId: string;
     isFellowshipId: string | null | null;
     applicationStageId: string | null | null;
     proposedFundingCallTypeId: string | null | null;
@@ -584,48 +586,6 @@ export interface SupportRequest {
     howDidYouFindUsId: string | null | null;
     teamContactRoleId: string | null | null;
     leadApplicantOrganisationTypeId: string | null | null;
-    isLeadApplicantNHSId: string | null | null;
-    leadApplicantAgeRangeId: string | null | null;
-    leadApplicantDisabilityId: string | null | null;
-    leadApplicantGenderId: string | null | null;
-    leadApplicantEthnicityId: string | null | null;
-}
-
-export interface CreateSupportRequest {
-    title: string;
-    proposedFundingStreamName: string;
-    targetSubmissionDate: string | null | null;
-    experienceOfResearchAwards: string;
-    briefDescription: string;
-    supportRequested: string;
-    isFellowshipId: string | null | null;
-    isTeamMembersConsultedId: string | null | null;
-    isResubmissionId: string | null | null;
-    applicationStageId: string | null | null;
-    proposedFundingStreamId: string | null | null;
-    proposedFundingCallTypeId: string | null | null;
-    howDidYouFindUsId: string | null | null;
-    teamContactTitle: string;
-    teamContactFirstName: string;
-    teamContactLastName: string;
-    teamContactEmail: string;
-    teamContactRoleId: string | null | null;
-    teamContactMailingPermission: boolean;
-    teamContactPrivacyStatementRead: boolean;
-    leadApplicantTitle: string;
-    leadApplicantFirstName: string;
-    leadApplicantLastName: string;
-    leadApplicantJobRole: string;
-    leadApplicantOrganisationTypeId: string | null | null;
-    leadApplicantOrganisation: string;
-    leadApplicantDepartment: string;
-    leadApplicantAddressLine1: string;
-    leadApplicantAddressLine2: string;
-    leadApplicantAddressTown: string;
-    leadApplicantAddressCounty: string;
-    leadApplicantAddressCountry: string;
-    leadApplicantAddressPostcode: string;
-    leadApplicantORCID: string;
     isLeadApplicantNHSId: string | null | null;
     leadApplicantAgeRangeId: string | null | null;
     leadApplicantDisabilityId: string | null | null;
@@ -697,6 +657,20 @@ export interface QuerySupportRequest extends Query {
     filters?: Array<QueryFilter>;
     sort?: Array<QuerySort>;
     search?: string;
+}
+
+export interface FileStorageEntry {
+    id: string;
+    fileName: string;
+    sizeBytes: number;
+    uploadedAt: string | null | null;
+    uploadedBy: string;
+    description: string;
+    fileStorageGroupId: string;
+}
+
+export interface ListSupportRequestFiles {
+    supportRequestId: string;
 }
 
 export interface UserActivity {
