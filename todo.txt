@@ -4,9 +4,12 @@ NW:
 > Complete Team Support Request Loop and UI
 > Feed Activity from Project Support 
 
+> Tidy up project support CSS - buttons on bottom, standardise text row, max height on a notes field? - standardize to card?
+> Shrink project support summary table
 
 KEY FEATURES:
 
+> Centralise custom validators
 > Permissions => Claims Based (look again at asp.net core infrastructure) [2D]
 
 > Reporting/Exporting (Scribble) => Needs Design

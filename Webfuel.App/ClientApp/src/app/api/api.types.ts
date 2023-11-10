@@ -564,6 +564,11 @@ export interface CreateProjectTeamSupport {
     notes: string;
 }
 
+export interface CompleteProjectTeamSupport {
+    id: string;
+    notes: string;
+}
+
 export interface QueryProjectTeamSupport extends Query {
     projectId: string;
     skip: number;

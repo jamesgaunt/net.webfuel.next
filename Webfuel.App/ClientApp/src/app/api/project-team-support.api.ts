@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { CreateProjectTeamSupport, ProjectTeamSupport, QueryProjectTeamSupport, QueryResult } from './api.types';
+import { CreateProjectTeamSupport, ProjectTeamSupport, CompleteProjectTeamSupport, QueryProjectTeamSupport, QueryResult } from './api.types';
 
 @Injectable()
 export class ProjectTeamSupportApi implements IDataSource<ProjectTeamSupport, QueryProjectTeamSupport, CreateProjectTeamSupport, any> {
@@ -11,6 +11,10 @@ export class ProjectTeamSupportApi implements IDataSource<ProjectTeamSupport, Qu
     
     public create (body: CreateProjectTeamSupport, options?: ApiOptions): Observable<ProjectTeamSupport> {
         return this.apiService.request<CreateProjectTeamSupport, ProjectTeamSupport>("POST", "api/project-team-support", body, options).pipe(tap(_ => this.changed.emit()));
+    }
+    
+    public complete (body: CompleteProjectTeamSupport, options?: ApiOptions): Observable<ProjectTeamSupport> {
+        return this.apiService.request<CompleteProjectTeamSupport, ProjectTeamSupport>("PUT", "api/project-team-support", body, options);
     }
     
     public delete (params: { id: string }, options?: ApiOptions): Observable<any> {

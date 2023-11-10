@@ -11,6 +11,7 @@ import { DataSourceLookup } from 'shared/common/data-source';
 import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
 import _ from 'shared/common/underscore';
 import { SupportTeamApi } from '../../../../api/support-team.api';
+import { CompleteProjectTeamSupportDialog } from './complete-project-team-support/complete-project-team-support.dialog';
 
 @Component({
   selector: 'project-team-support',
@@ -28,6 +29,7 @@ export class ProjectTeamSupportComponent implements OnInit {
     private supportTeamApi: SupportTeamApi,
     private confirmDeleteDialog: ConfirmDeleteDialog,
     private projectTeamSupportApi: ProjectTeamSupportApi,
+    private completeProjectTeamSupportDialog: CompleteProjectTeamSupportDialog,
     public staticDataCache: StaticDataCache
   ) {
     this.userLookup = new DataSourceLookup(userApi);
@@ -72,7 +74,10 @@ export class ProjectTeamSupportComponent implements OnInit {
 
   teamLookup: DataSourceLookup<SupportTeam>;
 
-  editProjectTeamSupport(projectTeamSupport: ProjectTeamSupport) {
+  completeProjectTeamSupport(projectTeamSupport: ProjectTeamSupport) {
+    this.completeProjectTeamSupportDialog.open({ id: projectTeamSupport.id }).subscribe(() => {
+      this.projectTeamSupportApi.changed.next(null);
+    })
   }
 
   deleteProjectTeamSupport(projectTeamSupport: ProjectTeamSupport) {

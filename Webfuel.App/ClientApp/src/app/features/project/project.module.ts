@@ -22,6 +22,7 @@ import { UpdateProjectSupportDialog, UpdateProjectSupportDialogComponent } from 
 import { CreateProjectSubmissionDialog, CreateProjectSubmissionDialogComponent } from './project/project-submission/create-project-submission/create-project-submission.dialog';
 import { UpdateProjectSubmissionDialog, UpdateProjectSubmissionDialogComponent } from './project/project-submission/update-project-submission/update-project-submission.dialog';
 import { CreateProjectTeamSupportDialog, CreateProjectTeamSupportDialogComponent } from './project/project-team-support/create-project-team-support/create-project-team-support.dialog';
+import { CompleteProjectTeamSupportDialog, CompleteProjectTeamSupportDialogComponent } from './project/project-team-support/complete-project-team-support/complete-project-team-support.dialog';
 
 @NgModule({
   imports: [
@@ -47,6 +48,7 @@ import { CreateProjectTeamSupportDialog, CreateProjectTeamSupportDialogComponent
     UpdateProjectSupportDialogComponent,
     UpdateProjectSubmissionDialogComponent,
     CreateProjectTeamSupportDialogComponent,
+    CompleteProjectTeamSupportDialogComponent,
   ],
   providers: [
     CreateProjectDialog,
@@ -55,6 +57,7 @@ import { CreateProjectTeamSupportDialog, CreateProjectTeamSupportDialogComponent
     UpdateProjectSupportDialog,
     UpdateProjectSubmissionDialog,
     CreateProjectTeamSupportDialog,
+    CompleteProjectTeamSupportDialog,
   ]
 })
 export class ProjectModule { }

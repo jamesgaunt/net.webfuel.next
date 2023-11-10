@@ -5,7 +5,14 @@
 </ul>
 <div class="container">
   <project-tabs></project-tabs>
-  <h3>Open Support Requests</h3>
+  <div class="columns">
+    <div class="column">
+      <h3 style="margin-top: 0">Open Team Support Requests</h3>
+    </div>
+    <div class="column is-right">
+      <a class="link is-primary">show historic/completed requests</a>
+    </div>
+  </div>
   <div class="flex">
     <div class="is-12">
       <div *ngIf="items === null">
@@ -35,15 +42,20 @@
             </div>
           </div>
           <pre class="description">{{ teamSupport.createdNotes }}</pre>
-          <div class="footer">
+          <div *ngIf="teamSupport.completedAt === null" class="footer">
             <div class="columns">
-              <div class="column">
-
-              </div>
               <div class="column is-right">
-                <button class="button is-small is-primary" (click)="editProjectTeamSupport(teamSupport)">mark as complete</button>
+                <button class="button is-small is-primary" (click)="completeProjectTeamSupport(teamSupport)">mark as complete</button>
               </div>
             </div>
+          </div>
+          <div *ngIf="teamSupport.completedAt !== null" class="footer">
+            <div class="teams">
+              {{ teamSupport.completedAt | date: 'dd-MMM-yy HH:mm' }}:
+              Marked as completed by
+              {{ (userLookup.get({ id: teamSupport.completedById || '' }) | async)?.fullName }}
+            </div>
+            <pre *ngIf="teamSupport.completedNotes" class="description">{{ teamSupport.completedNotes }}</pre>
           </div>
         </div>
       </div>
