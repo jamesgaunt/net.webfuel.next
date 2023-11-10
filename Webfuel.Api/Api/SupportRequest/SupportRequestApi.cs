@@ -44,7 +44,7 @@ namespace Webfuel.App
             var fileStorageGroup = await fileStorageService.CreateGroup();
             
             foreach(var file in request.Form.Files)
-                await fileStorageService.UploadFile(fileStorageGroup.Id, file);
+                await fileStorageService.UploadFile(new UploadFileStorageEntry { FileStorageGroupId = fileStorageGroup.Id, FormFile = file });
 
             var data = request.Form["data"].ToString();
             if (String.IsNullOrEmpty(data))

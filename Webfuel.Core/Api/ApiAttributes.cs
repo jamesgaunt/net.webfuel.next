@@ -15,7 +15,7 @@
     {
     }
 
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Property | AttributeTargets.Interface)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Property | AttributeTargets.Interface | AttributeTargets.Method)]
     public class ApiIgnoreAttribute : Attribute
     {
     }

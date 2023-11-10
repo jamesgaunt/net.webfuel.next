@@ -17,6 +17,7 @@ namespace Webfuel.Domain
 
             var updated = projectSupport.Copy();
             updated.Date = request.Date;
+            updated.TeamIds = request.TeamIds;
             updated.AdviserIds = request.AdviserIds;
             updated.SupportProvidedIds = request.SupportProvidedIds;
             updated.Description = request.Description;

@@ -39,6 +39,15 @@ export interface ValidationError {
     message: string;
 }
 
+export interface UploadFileStorageEntry {
+    fileStorageGroupId: string;
+}
+
+export interface QueryResult<TItem> {
+    items: Array<TItem>;
+    totalCount: number;
+}
+
 export interface FileStorageEntry {
     id: string;
     fileName: string;
@@ -49,8 +58,35 @@ export interface FileStorageEntry {
     fileStorageGroupId: string;
 }
 
-export interface StringResult {
-    value: string;
+export interface QueryFileStorageEntry extends Query {
+    fileStorageGroupId: string;
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface QueryFilter {
+    field?: string;
+    op: string;
+    value?: any | null;
+    filters?: Array<QueryFilter> | null;
+}
+
+export interface QuerySort {
+    field: string;
+    direction: number;
+}
+
+export interface Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
 }
 
 export interface PingResponse {
@@ -379,6 +415,7 @@ export interface Project {
     leadApplicantORCID: string;
     createdAt: string;
     statusId: string;
+    fileStorageGroupId: string;
     isQuantativeTeamContributionId: string | null | null;
     isCTUTeamContributionId: string | null | null;
     isPPIEAndEDIContributionId: string | null | null;
@@ -398,7 +435,6 @@ export interface Project {
     leadApplicantDisabilityId: string | null | null;
     leadApplicantGenderId: string | null | null;
     leadApplicantEthnicityId: string | null | null;
-    fileStorageGroupId: string;
 }
 
 export interface CreateProject {
@@ -419,11 +455,6 @@ export interface UpdateProject {
     isInternationalMultiSiteStudyId: string | null | null;
 }
 
-export interface QueryResult<TItem> {
-    items: Array<TItem>;
-    totalCount: number;
-}
-
 export interface QueryProject extends Query {
     number: string;
     title: string;
@@ -431,27 +462,6 @@ export interface QueryProject extends Query {
     toDate: string | null | null;
     statusId: string | null | null;
     fundingStreamId: string | null | null;
-    skip: number;
-    take: number;
-    projection?: Array<string>;
-    filters?: Array<QueryFilter>;
-    sort?: Array<QuerySort>;
-    search?: string;
-}
-
-export interface QueryFilter {
-    field?: string;
-    op: string;
-    value?: any | null;
-    filters?: Array<QueryFilter> | null;
-}
-
-export interface QuerySort {
-    field: string;
-    direction: number;
-}
-
-export interface Query {
     skip: number;
     take: number;
     projection?: Array<string>;
@@ -501,6 +511,7 @@ export interface QueryProjectSubmission extends Query {
 export interface ProjectSupport {
     id: string;
     date: string;
+    teamIds: Array<string>;
     adviserIds: Array<string>;
     supportProvidedIds: Array<string>;
     description: string;
@@ -510,6 +521,7 @@ export interface ProjectSupport {
 export interface CreateProjectSupport {
     projectId: string;
     date: string | null | null;
+    teamIds: Array<string>;
     adviserIds: Array<string>;
     supportProvidedIds: Array<string>;
     description: string;
@@ -518,12 +530,41 @@ export interface CreateProjectSupport {
 export interface UpdateProjectSupport {
     id: string;
     date: string;
+    teamIds: Array<string>;
     adviserIds: Array<string>;
     supportProvidedIds: Array<string>;
     description: string;
 }
 
 export interface QueryProjectSupport extends Query {
+    projectId: string;
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface ProjectTeamSupport {
+    id: string;
+    createdNotes: string;
+    createdAt: string;
+    completedNotes: string;
+    completedAt: string | null | null;
+    projectId: string;
+    supportTeamId: string;
+    createdById: string;
+    completedById: string | null | null;
+}
+
+export interface CreateProjectTeamSupport {
+    projectId: string;
+    supportTeamId: string;
+    notes: string;
+}
+
+export interface QueryProjectTeamSupport extends Query {
     projectId: string;
     skip: number;
     take: number;
@@ -673,6 +714,61 @@ export interface QuerySupportRequest extends Query {
     search?: string;
 }
 
+export interface SupportTeam {
+    id: string;
+    name: string;
+    sortOrder: number;
+}
+
+export interface CreateSupportTeam {
+    name: string;
+}
+
+export interface UpdateSupportTeam {
+    id: string;
+    name: string;
+}
+
+export interface SortSupportTeam {
+    ids: Array<string>;
+}
+
+export interface QuerySupportTeam extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface InsertSupportTeamUser {
+    supportTeamId: string;
+    userId: string;
+}
+
+export interface DeleteSupportTeamUser {
+    supportTeamId: string;
+    userId: string;
+}
+
+export interface SupportTeamUser {
+    id: string;
+    userId: string;
+    supportTeamId: string;
+}
+
+export interface QuerySupportTeamUser extends Query {
+    userId: string | null | null;
+    supportTeamId: string | null | null;
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
 export interface UserActivity {
     id: string;
     date: string;
@@ -794,6 +890,10 @@ export interface QueryUserGroup extends Query {
     filters?: Array<QueryFilter>;
     sort?: Array<QuerySort>;
     search?: string;
+}
+
+export interface StringResult {
+    value: string;
 }
 
 export interface LoginUser {

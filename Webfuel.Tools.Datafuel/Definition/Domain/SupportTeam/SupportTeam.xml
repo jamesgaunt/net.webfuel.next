@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="SupportTeam" OrderBy="SortOrder">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+
+    <Data>
+      <Row Id="4b013d8c-7aad-4100-9586-83054ef15bac" Name="Triage Team" />
+      <Row Id="9d4b32b9-7e7e-42c5-8f08-82de256fbcf0" Name="CTU Team" />
+      <Row Id="662067e9-875c-47f7-8427-26ac98078c20" Name="PPIE Team" />
+      <Row Id="5283e9be-faf3-45f5-83b2-4c5288c090c3" Name="Expert Quantitative Team" />
+      <Row Id="b1bdcae3-7df9-404a-aad7-a9265392b5aa" Name="Expert Qualitative Team" />
+    </Data>
+    
+  </Entity>
+</Schema>
+

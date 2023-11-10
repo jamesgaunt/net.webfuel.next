@@ -13,6 +13,8 @@ namespace Webfuel.Domain
 
         public DateOnly Date { get; set; }
 
+        public required List<Guid> TeamIds { get; set; }
+
         public required List<Guid> AdviserIds { get; set; }
 
         public required List<Guid> SupportProvidedIds { get; set; }

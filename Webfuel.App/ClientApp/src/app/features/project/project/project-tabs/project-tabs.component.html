@@ -6,6 +6,7 @@
     <div class="header-buttons">
       <button class="button is-primary" (click)="addSupport()">Add Support</button>
       <button class="button is-primary" (click)="addSubmission()">Add Submission</button>
+      <button class="button is-warning" (click)="addTeamSupport()">Request Team Support</button>
     </div>
   </div>
 </div>
@@ -14,7 +15,8 @@
     <li routerLinkActive="is-active"><a routerLink="../../project-item/{{ item.id }}">Project</a></li>
     <li routerLinkActive="is-active"><a routerLink="../../project-request/{{ item.id }}">Request</a></li>
     <li routerLinkActive="is-active"><a routerLink="../../project-researcher/{{ item.id }}">Researcher</a></li>
-    <li routerLinkActive="is-active"><a routerLink="../../project-support/{{ item.id }}">Support</a></li>
+    <li routerLinkActive="is-active"><a routerLink="../../project-team-support/{{ item.id }}" >Team Support</a></li>
+    <li routerLinkActive="is-active"><a routerLink="../../project-support/{{ item.id }}">Support Provided</a></li>
     <li routerLinkActive="is-active"><a routerLink="../../project-files/{{ item.id }}">Files</a></li>
     <li routerLinkActive="is-active"><a routerLink="../../project-submission/{{ item.id }}">Submissions</a></li>
     <li routerLinkActive="is-active"><a routerLink="../../project-history/{{ item.id }}">History</a></li>

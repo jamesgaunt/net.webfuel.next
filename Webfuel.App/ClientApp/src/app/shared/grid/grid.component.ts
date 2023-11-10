@@ -65,6 +65,7 @@ export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, T
       this.sorting = false;
       this.items = response.items;
       this.totalCount = response.totalCount;
+      this.calculatePage();
       this.cd.detectChanges();
     });
   }
@@ -147,7 +148,7 @@ export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, T
     return _.range(pageCount);
   }
 
-  calculate() {
+  calculatePage() {
     if (this.query.take <= 0) {
       this.pageIndex = 0;
       this.pageCount = 1;

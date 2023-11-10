@@ -6,7 +6,7 @@ import { ProjectSubmissionApi } from 'api/project-submission.api';
 import { StaticDataCache } from 'api/static-data.cache';
 import { FormService } from 'core/form.service';
 import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
-import { UpdateProjectSubmissionDialog } from '../dialogs/update-project-submission/update-project-submission.dialog';
+import { UpdateProjectSubmissionDialog } from '../project-submission/update-project-submission/update-project-submission.dialog';
 
 @Component({
   selector: 'project-submission',

@@ -137,6 +137,9 @@ namespace Webfuel.Domain
                     case nameof(Project.StatusId):
                         result.Add(new SqlParameter(nameof(Project.StatusId), entity.StatusId));
                         break;
+                    case nameof(Project.FileStorageGroupId):
+                        result.Add(new SqlParameter(nameof(Project.FileStorageGroupId), entity.FileStorageGroupId));
+                        break;
                     case nameof(Project.IsQuantativeTeamContributionId):
                         result.Add(new SqlParameter(nameof(Project.IsQuantativeTeamContributionId), entity.IsQuantativeTeamContributionId ?? (object?)DBNull.Value));
                         break;
@@ -193,9 +196,6 @@ namespace Webfuel.Domain
                         break;
                     case nameof(Project.LeadApplicantEthnicityId):
                         result.Add(new SqlParameter(nameof(Project.LeadApplicantEthnicityId), entity.LeadApplicantEthnicityId ?? (object?)DBNull.Value));
-                        break;
-                    case nameof(Project.FileStorageGroupId):
-                        result.Add(new SqlParameter(nameof(Project.FileStorageGroupId), entity.FileStorageGroupId));
                         break;
                 }
             }
@@ -262,6 +262,7 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantORCID";
                 yield return "CreatedAt";
                 yield return "StatusId";
+                yield return "FileStorageGroupId";
                 yield return "IsQuantativeTeamContributionId";
                 yield return "IsCTUTeamContributionId";
                 yield return "IsPPIEAndEDIContributionId";
@@ -281,7 +282,6 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantDisabilityId";
                 yield return "LeadApplicantGenderId";
                 yield return "LeadApplicantEthnicityId";
-                yield return "FileStorageGroupId";
             }
         }
         
@@ -328,6 +328,7 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantORCID";
                 yield return "CreatedAt";
                 yield return "StatusId";
+                yield return "FileStorageGroupId";
                 yield return "IsQuantativeTeamContributionId";
                 yield return "IsCTUTeamContributionId";
                 yield return "IsPPIEAndEDIContributionId";
@@ -347,7 +348,6 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantDisabilityId";
                 yield return "LeadApplicantGenderId";
                 yield return "LeadApplicantEthnicityId";
-                yield return "FileStorageGroupId";
             }
         }
         
@@ -393,6 +393,7 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantORCID";
                 yield return "CreatedAt";
                 yield return "StatusId";
+                yield return "FileStorageGroupId";
                 yield return "IsQuantativeTeamContributionId";
                 yield return "IsCTUTeamContributionId";
                 yield return "IsPPIEAndEDIContributionId";
@@ -412,7 +413,6 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantDisabilityId";
                 yield return "LeadApplicantGenderId";
                 yield return "LeadApplicantEthnicityId";
-                yield return "FileStorageGroupId";
             }
         }
         

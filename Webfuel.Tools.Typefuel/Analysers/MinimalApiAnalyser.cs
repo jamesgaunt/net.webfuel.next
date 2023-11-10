@@ -64,6 +64,9 @@ namespace Webfuel.Tools.Typefuel
             var parameters = methodInfo.GetParameters();
             var returnType = methodInfo.ReturnType;
 
+            if (methodInfo.GetCustomAttribute<ApiIgnoreAttribute>() != null)
+                return;
+
             var method = new ApiMethod(service);
 
             method.Name = GenerateMethodName(methodInfo, pattern.RawText);

@@ -12,12 +12,16 @@ import { ProjectSupportComponent } from './project/project-support/project-suppo
 import { ProjectSubmissionComponent } from './project/project-submission/project-submission.component';
 import { ProjectFilesComponent } from './project/project-files/project-files.component';
 import { ProjectHistoryComponent } from './project/project-history/project-history.component';
+import { ProjectTeamSupportComponent } from './project/project-team-support/project-team-support.component';
 
 import { CreateProjectDialog, CreateProjectDialogComponent } from './project/dialogs/create-project/create-project.dialog';
-import { CreateProjectSupportDialog, CreateProjectSupportDialogComponent } from './project/dialogs/create-project-support/create-project-support.dialog';
-import { CreateProjectSubmissionDialog, CreateProjectSubmissionDialogComponent } from './project/dialogs/create-project-submission/create-project-submission.dialog';
-import { UpdateProjectSupportDialog, UpdateProjectSupportDialogComponent } from './project/dialogs/update-project-support/update-project-support.dialog';
-import { UpdateProjectSubmissionDialog, UpdateProjectSubmissionDialogComponent } from './project/dialogs/update-project-submission/update-project-submission.dialog';
+
+import { CreateProjectSupportDialog, CreateProjectSupportDialogComponent } from './project/project-support/create-project-support/create-project-support.dialog';
+import { UpdateProjectSupportDialog, UpdateProjectSupportDialogComponent } from './project/project-support/update-project-support/update-project-support.dialog';
+
+import { CreateProjectSubmissionDialog, CreateProjectSubmissionDialogComponent } from './project/project-submission/create-project-submission/create-project-submission.dialog';
+import { UpdateProjectSubmissionDialog, UpdateProjectSubmissionDialogComponent } from './project/project-submission/update-project-submission/update-project-submission.dialog';
+import { CreateProjectTeamSupportDialog, CreateProjectTeamSupportDialogComponent } from './project/project-team-support/create-project-team-support/create-project-team-support.dialog';
 
 @NgModule({
   imports: [
@@ -32,6 +36,7 @@ import { UpdateProjectSubmissionDialog, UpdateProjectSubmissionDialogComponent }
     ProjectResearcherComponent,
     ProjectSupportComponent,
     ProjectSubmissionComponent,
+    ProjectTeamSupportComponent,
     ProjectHistoryComponent,
     ProjectFilesComponent,
     ProjectTabsComponent,
@@ -41,13 +46,15 @@ import { UpdateProjectSubmissionDialog, UpdateProjectSubmissionDialogComponent }
     CreateProjectSubmissionDialogComponent,
     UpdateProjectSupportDialogComponent,
     UpdateProjectSubmissionDialogComponent,
+    CreateProjectTeamSupportDialogComponent,
   ],
   providers: [
     CreateProjectDialog,
     CreateProjectSupportDialog,
     CreateProjectSubmissionDialog,
     UpdateProjectSupportDialog,
-    UpdateProjectSubmissionDialog
+    UpdateProjectSubmissionDialog,
+    CreateProjectTeamSupportDialog,
   ]
 })
 export class ProjectModule { }

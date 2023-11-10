@@ -17,6 +17,7 @@ namespace Webfuel.Domain
 
             projectSupport.ProjectId = request.ProjectId;
             projectSupport.Date = request.Date ?? DateOnly.FromDateTime(DateTime.Now);
+            projectSupport.TeamIds = request.TeamIds;
             projectSupport.AdviserIds = request.AdviserIds;
             projectSupport.SupportProvidedIds = request.SupportProvidedIds;
             projectSupport.Description = request.Description;

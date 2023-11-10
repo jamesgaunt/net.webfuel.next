@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Project } from 'api/api.types';
-import { CreateProjectSubmissionDialog } from '../dialogs/create-project-submission/create-project-submission.dialog';
-import { CreateProjectSupportDialog } from '../dialogs/create-project-support/create-project-support.dialog';
+import { CreateProjectSubmissionDialog } from '../project-submission/create-project-submission/create-project-submission.dialog';
+import { CreateProjectSupportDialog } from '../project-support/create-project-support/create-project-support.dialog';
+import { CreateProjectTeamSupportDialog } from '../project-team-support/create-project-team-support/create-project-team-support.dialog';
 
 @Component({
   selector: 'project-tabs',
@@ -15,6 +16,7 @@ export class ProjectTabsComponent implements OnInit  {
     private router: Router,
     private createProjectSupportDialog: CreateProjectSupportDialog,
     private createProjectSubmissionDialog: CreateProjectSubmissionDialog,
+    private createProjectTeamSupportDialog: CreateProjectTeamSupportDialog
   ) {
   }
 
@@ -34,5 +36,9 @@ export class ProjectTabsComponent implements OnInit  {
 
   addSubmission() {
     this.createProjectSubmissionDialog.open({ projectId: this.item.id });
+  }
+
+  addTeamSupport() {
+    this.createProjectTeamSupportDialog.open({ projectId: this.item.id });
   }
 }

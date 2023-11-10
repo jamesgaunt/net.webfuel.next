@@ -6,6 +6,7 @@ import { UserRoutingModule } from './user-routing.module';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { UserItemComponent } from './user/user-item/user-item.component';
 import { UserActivityComponent } from './user/user-activity/user-activity.component';
+import { UserSupportTeamComponent } from './user/user-support-team/user-support-team.component';
 import { UserTabsComponent } from './user/user-tabs/user-tabs.component';
 
 import { UserGroupListComponent } from './user-group/user-group-list/user-group-list.component';
@@ -27,6 +28,7 @@ import { UpdatePasswordDialog, UpdatePasswordDialogComponent } from './user/dial
     UserListComponent,
     UserItemComponent,
     UserActivityComponent,
+    UserSupportTeamComponent,
     UserTabsComponent,
 
     UserGroupListComponent,

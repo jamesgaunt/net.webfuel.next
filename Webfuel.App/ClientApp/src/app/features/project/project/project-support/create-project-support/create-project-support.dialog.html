@@ -9,6 +9,17 @@
         <date-picker placeholder="optional (defaults to today)" formControlName="date"></date-picker>
       </div>
       <div class="field">
+        <label class="label">Teams (include all teams providing support)</label>
+        <dropdown-multi-select [dataSource]="supportTeamApi" placeholder="required" formControlName="teamIds">
+          <ng-template #optionTemplate let-item>
+            {{ item.name }}
+          </ng-template>
+          <ng-template #pickedTemplate let-item>
+            {{ item.name }}
+          </ng-template>
+        </dropdown-multi-select>
+      </div>
+      <div class="field">
         <label class="label">Advisers (include all advisers providing support)</label>
         <dropdown-multi-select [dataSource]="userApi" placeholder="required" formControlName="adviserIds">
           <ng-template #optionTemplate let-item>

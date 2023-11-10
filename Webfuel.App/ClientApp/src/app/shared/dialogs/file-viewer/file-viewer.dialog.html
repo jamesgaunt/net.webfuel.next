@@ -3,7 +3,7 @@
     File Viewer
   </div>
   <div class="dialog-body">
-    <embed *ngIf="safeSasUri != null" [attr.src]="safeSasUri" style="width: 100%; height: 200px;" />
+    <embed *ngIf="safeSasUri != null" [src]="safeSasUri" style="width: 100%; height: 200px;" />
   </div>
   <div class="dialog-buttons">
     <button type="button" (click)="cancel()">Close</button>

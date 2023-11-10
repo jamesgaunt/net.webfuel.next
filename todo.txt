@@ -1,7 +1,12 @@
 
+NW:
+
+> Complete Team Support Request Loop and UI
+> Feed Activity from Project Support 
+
+
 KEY FEATURES:
 
-> File Uploads [2D] : Support Request Form => Upload Files => Generate Form Group => Assign
 > Permissions => Claims Based (look again at asp.net core infrastructure) [2D]
 
 > Reporting/Exporting (Scribble) => Needs Design
@@ -10,6 +15,7 @@ KEY FEATURES:
 > Additional Data Changes
 
 > Make rotating spinner actually spin on buttons
+> Put Google type indicators on login fields
 
 NEXT:
 

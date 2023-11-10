@@ -1,0 +1,14 @@
+<ul class="breadcrumbs">
+  <li><a routerLink="/home">Home</a></li>
+  <li><a routerLink="/configuration/configuration-menu">Configuration</a></li>
+  <li><a routerLink="/support-team/support-team-list">Support Teams</a></li>
+</ul>
+<div class="container">
+  <h1 class="title">Support Teams</h1>
+  <grid [dataSource]="supportTeamApi" [search]="true">
+    <grid-column name="name" />
+    <grid-action-column (add)="add()" (edit)="edit($event)" (delete)="delete($event)" />
+  </grid>
+</div>
+
+

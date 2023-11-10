@@ -88,7 +88,7 @@ namespace Webfuel.Tools.Typefuel
 
                 sb.Write(", options)");
 
-                if (method.Service.DataSource && (method.Name == "Update" || method.Name == "Create" || method.Name == "Delete" || method.Name == "Sort"))
+                if (method.Service.DataSource && (method.Name == "Update" || method.Name == "Create" || method.Name == "Delete" || method.Name == "Sort" || method.Name == "Upload"))
                     sb.Write(".pipe(tap(_ => this.changed.emit()))");
 
                 sb.WriteLine(";");

@@ -24,6 +24,9 @@ namespace Webfuel.Domain
                     case nameof(ProjectSupport.Date):
                         Date = DateOnly.FromDateTime((DateTime)value!);
                         break;
+                    case nameof(ProjectSupport.TeamIds):
+                        TeamIdsJson = (string)value!;
+                        break;
                     case nameof(ProjectSupport.AdviserIds):
                         AdviserIdsJson = (string)value!;
                         break;
@@ -41,6 +44,18 @@ namespace Webfuel.Domain
         }
         public Guid Id  { get; set; } = Guid.Empty;
         public DateOnly Date  { get; set; } = new DateOnly(1900, 1, 1);
+        public List<Guid> TeamIds
+        {
+            get { return _TeamIds ?? (_TeamIds = SafeJsonSerializer.Deserialize<List<Guid>>(_TeamIdsJson)); }
+            set { _TeamIds = value; }
+        }
+        List<Guid>? _TeamIds = null;
+        internal string TeamIdsJson
+        {
+            get { var result = _TeamIds == null ? _TeamIdsJson : (_TeamIdsJson = SafeJsonSerializer.Serialize(_TeamIds)); _TeamIds = null; return result; }
+            set { _TeamIdsJson = value; _TeamIds = null; }
+        }
+        string _TeamIdsJson = String.Empty;
         public List<Guid> AdviserIds
         {
             get { return _AdviserIds ?? (_AdviserIds = SafeJsonSerializer.Deserialize<List<Guid>>(_AdviserIdsJson)); }
@@ -72,6 +87,7 @@ namespace Webfuel.Domain
             var entity = new ProjectSupport();
             entity.Id = Id;
             entity.Date = Date;
+            entity.TeamIdsJson = TeamIdsJson;
             entity.AdviserIdsJson = AdviserIdsJson;
             entity.SupportProvidedIdsJson = SupportProvidedIdsJson;
             entity.Description = Description;

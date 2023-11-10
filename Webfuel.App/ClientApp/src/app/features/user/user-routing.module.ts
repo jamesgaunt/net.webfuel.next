@@ -13,6 +13,7 @@ import { UserApi } from '../../api/user.api';
 import { DeactivateService } from '../../core/deactivate.service';
 import { ConfigurationService } from '../../core/configuration.service';
 import { UserGroupClaimsComponent } from './user-group/user-group-claims/user-group-claims.component';
+import { UserSupportTeamComponent } from './user/user-support-team/user-support-team.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,13 @@ const routes: Routes = [
     component: UserItemComponent,
     resolve: { user: UserApi.userResolver('id') },
     canDeactivate: [DeactivateService.isPristine<UserItemComponent>()],
+    data: { activeSideMenu: 'Users' }
+  },
+  {
+    path: 'user-support-team/:id',
+    component: UserSupportTeamComponent,
+    resolve: { user: UserApi.userResolver('id') },
+    canDeactivate: [DeactivateService.isPristine<UserSupportTeamComponent>()],
     data: { activeSideMenu: 'Users' }
   },
   {

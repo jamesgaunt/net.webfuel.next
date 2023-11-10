@@ -1,16 +1,20 @@
-
-
-<div class="file-input" (click)="FileInput.click()">
-  <input class="file-input-input" type="file" #FileInput (change)="filesAdded($event)" multiple>
-
-  <span class="file-input-button">CHOOSE FILES</span> or drag and drop files here.
-
-  <div class="file-input-list">
-    <div class="file-input-file" *ngFor="let file of files">
-      {{ file.name }} [{{file.size}} bytes]
+<div class="file-input">
+  <div class="file-input-drop-area" (click)="FileInput.click()" [class.drag-over]="dragOver" (drop)="onDrop($event)" (dragover)="onDragOver($event)" (dragenter)="onDragEnter($event)" (dragleave)="onDragLeave($event)">
+    <input class="file-input-input" type="file" #FileInput (change)="filesAdded($event)" multiple>
+    <span class="file-input-button">CHOOSE FILES</span> or drag and drop files here (maximum total upload {{ formatSize(maxBytesTotal) }})
+    <span *ngIf="errorMessage" class="text is-danger is-bold">{{ errorMessage }}</span>
+    <div *ngIf="showFiles" class="file-input-list">
+      <div class="file-input-file" *ngFor="let file of files">
+        {{ file.name }} [{{ formatSize(file.size) }}]
+        <a class="link is-danger" (click)="removeFile(file, $event)"><i class="fas fa-times"></i></a>
+      </div>
     </div>
   </div>
-
+  <div *ngIf="progress !== null" class="file-input-progress-overlay">
+    <div class="file-input-progress-bar">
+      <div class="file-input-progress-bar-inner" [style.width]="progress + '%'"></div>
+    </div>
+  </div>
 </div>
 
 

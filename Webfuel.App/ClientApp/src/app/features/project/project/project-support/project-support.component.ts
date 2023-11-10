@@ -2,15 +2,16 @@ import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Project, ProjectSupport, SupportProvided, User } from 'api/api.types';
+import { Project, ProjectSupport, SupportProvided, SupportTeam, User } from 'api/api.types';
 import { ProjectSupportApi } from 'api/project-support.api';
 import { StaticDataCache } from 'api/static-data.cache';
 import { UserApi } from 'api/user.api';
 import { FormService } from 'core/form.service';
 import { DataSourceLookup } from 'shared/common/data-source';
 import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
-import { UpdateProjectSupportDialog } from '../dialogs/update-project-support/update-project-support.dialog';
+import { UpdateProjectSupportDialog } from '../project-support/update-project-support/update-project-support.dialog';
 import _ from 'shared/common/underscore';
+import { SupportTeamApi } from '../../../../api/support-team.api';
 
 @Component({
   selector: 'project-support',
@@ -25,12 +26,14 @@ export class ProjectSupportComponent implements OnInit {
     private router: Router,
     private formService: FormService,
     private userApi: UserApi,
+    private supportTeamApi: SupportTeamApi,
     private confirmDeleteDialog: ConfirmDeleteDialog,
     private updateProjectSupportDialog: UpdateProjectSupportDialog,
     private projectSupportApi: ProjectSupportApi,
     public staticDataCache: StaticDataCache
   ) {
     this.userLookup = new DataSourceLookup(userApi);
+    this.teamLookup = new DataSourceLookup(supportTeamApi)
   }
 
   ngOnInit() {
@@ -70,6 +73,8 @@ export class ProjectSupportComponent implements OnInit {
   }
 
   userLookup: DataSourceLookup<User>;
+
+  teamLookup: DataSourceLookup<SupportTeam>;
 
   editProjectSupport(projectSupport: ProjectSupport) {
     this.updateProjectSupportDialog.open({ projectSupport: projectSupport });

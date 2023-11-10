@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="SupportTeamUser">
+    <Key Name="Id" Type="guid" />
+    <Property Name="UserId" Type="User" />
+    <Property Name="SupportTeamId" Type="SupportTeam" />
+    
+    <Index Unique="true">
+      <Member Name="UserId" />
+      <Member Name="SupportTeamId" />
+    </Index>
+    <Index Unique="false">
+      <Member Name="UserId" />
+    </Index>
+    <Index Unique="false">
+      <Member Name="SupportTeamId" />
+    </Index>
+  </Entity>
+</Schema>
+

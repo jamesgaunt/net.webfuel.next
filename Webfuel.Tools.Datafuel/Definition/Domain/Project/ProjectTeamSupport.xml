@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="ProjectTeamSupport" OrderBy="-CreatedAt">
+    <Key Name="Id" Type="guid" />
+    <Property Name="ProjectId" Type="Project" CascadeDelete="true" />
+    <Property Name="SupportTeamId" Type="SupportTeam" />
+
+    <Property Name="CreatedNotes" Type="meta:description" />
+    <Property Name="CreatedAt" Type="DateTime" />
+    <Property Name="CreatedById" Type="User" />
+
+    <Property Name="CompletedNotes" Type="meta:description" />
+    <Property Name="CompletedAt" Type="DateTime?" />
+    <Property Name="CompletedById" Type="User?" />
+    
+    <Index Unique="false">
+      <Member Name="ProjectId" />
+    </Index>
+    <Index Unique="false">
+      <Member Name="SupportTeamId" />
+    </Index>
+  </Entity>
+</Schema>

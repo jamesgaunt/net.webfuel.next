@@ -2,6 +2,7 @@
 
 .link {
   font-weight: bold;
+  display: inline-block;
 
   &:hover {
     text-decoration: underline;
@@ -12,6 +13,7 @@
       color: var(--palette-#{$p}-text);
     }
   }
+
 }
 
 .links {

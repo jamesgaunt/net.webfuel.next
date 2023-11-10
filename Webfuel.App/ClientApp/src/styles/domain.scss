@@ -10,7 +10,18 @@
     margin-left: 6px;
   }
 
-  .advisers {
+  .footer {
+      margin-top: 0.5rem;
+  }
+
+  .date {
+    font-weight: var(--bold-if-light);
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid var(--palette-control-border);
+  }
+
+  .advisers, .teams {
     font-weight: var(--bold-if-light);
     display: flex;
     gap: 4px;
@@ -54,4 +65,19 @@
       }
     }
   }
+}
+
+.toggle-list {
+    a {
+        display: block;
+        border: 1px solid var(--palette-control-border);
+        background-color: var(--palette-control-background);
+        padding: 0.8rem;
+        margin-bottom: 0.5rem;
+
+        &.selected {
+            background-color: var(--palette-success-background);
+            color: var(--palette-success-foreground);
+        }
+    }
 }

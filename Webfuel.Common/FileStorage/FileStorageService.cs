@@ -12,13 +12,13 @@ namespace Webfuel.Common
     {
         Task<FileStorageGroup> CreateGroup();
 
-        Task<FileStorageEntry> UploadFile(Guid fileStorageGroupId, IFormFile formFile);
+        Task<QueryResult<FileStorageEntry>> QueryFiles(QueryFileStorageEntry query);
 
-        Task<List<FileStorageEntry>> ListFiles(Guid fileStorageGroupId);
-
-        Task<string> GenerateFileSasUri(Guid fileStorageEntryId);
+        Task<FileStorageEntry> UploadFile(UploadFileStorageEntry upload);
 
         Task DeleteFile(Guid fileStorageEntryId);
+
+        Task<string> GenerateFileSasUri(Guid fileStorageEntryId);
     }
 
     [Service(typeof(IFileStorageService))]
@@ -45,17 +45,20 @@ namespace Webfuel.Common
             return await _fileStorageGroupRepository.InsertFileStorageGroup(entity);
         }
 
-        public async Task<FileStorageEntry> UploadFile(Guid fileStorageGroupId, IFormFile formFile)
+        public async Task<FileStorageEntry> UploadFile(UploadFileStorageEntry upload)
         {
+            if (upload.FormFile == null)
+                throw new InvalidOperationException("No form file supplied to upload file");
+
             var entry = new FileStorageEntry
             {
-                FileName = formFile.FileName,
-                SizeBytes = formFile.Length,
-                FileStorageGroupId = fileStorageGroupId,
+                FileName = upload.FormFile.FileName,
+                SizeBytes = upload.FormFile.Length,
+                FileStorageGroupId = upload.FileStorageGroupId,
             };
             entry = await _fileStorageEntryRepository.InsertFileStorageEntry(entry);
 
-            using (var fs = formFile.OpenReadStream())
+            using (var fs = upload.FormFile.OpenReadStream())
             {
                 await BlobStorage.UploadBlobAsync(Path(entry), fs);
             }
@@ -64,9 +67,9 @@ namespace Webfuel.Common
             return await _fileStorageEntryRepository.UpdateFileStorageEntry(entry);
         }
 
-        public async Task<List<FileStorageEntry>> ListFiles(Guid fileStorageGroupId)
+        public async Task<QueryResult<FileStorageEntry>> QueryFiles(QueryFileStorageEntry query)
         {
-            return await _fileStorageEntryRepository.SelectFileStorageEntryByFileStorageGroupId(fileStorageGroupId);
+            return await _fileStorageEntryRepository.QueryFileStorageEntry(query.ApplyCustomFilters());
         }
 
         public async Task<string> GenerateFileSasUri(Guid fileStorageEntryId)

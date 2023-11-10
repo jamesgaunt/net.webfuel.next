@@ -5,6 +5,7 @@
     <Key Name="Id" Type="guid" />
     <Property Name="ProjectId" Type="Project" CascadeDelete="true" />
     <Property Name="Date" Type="Date" />
+    <Property Name="TeamIds" Type="Json:List{Guid}" />
     <Property Name="AdviserIds" Type="Json:List{Guid}" />
     <Property Name="SupportProvidedIds" Type="Json:List{Guid}" />
     <Property Name="Description" Type="meta:description" />

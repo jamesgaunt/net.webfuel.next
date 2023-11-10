@@ -135,6 +135,9 @@ namespace Webfuel.Domain
                     case nameof(Project.StatusId):
                         StatusId = (Guid)value!;
                         break;
+                    case nameof(Project.FileStorageGroupId):
+                        FileStorageGroupId = (Guid)value!;
+                        break;
                     case nameof(Project.IsQuantativeTeamContributionId):
                         IsQuantativeTeamContributionId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
@@ -192,9 +195,6 @@ namespace Webfuel.Domain
                     case nameof(Project.LeadApplicantEthnicityId):
                         LeadApplicantEthnicityId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
-                    case nameof(Project.FileStorageGroupId):
-                        FileStorageGroupId = (Guid)value!;
-                        break;
                 }
             }
         }
@@ -248,6 +248,7 @@ namespace Webfuel.Domain
         public string LeadApplicantORCID  { get; set; } = String.Empty;
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid StatusId { get; set; }
+        public Guid FileStorageGroupId { get; set; }
         public Guid? IsQuantativeTeamContributionId { get; set; }
         public Guid? IsCTUTeamContributionId { get; set; }
         public Guid? IsPPIEAndEDIContributionId { get; set; }
@@ -267,7 +268,6 @@ namespace Webfuel.Domain
         public Guid? LeadApplicantDisabilityId { get; set; }
         public Guid? LeadApplicantGenderId { get; set; }
         public Guid? LeadApplicantEthnicityId { get; set; }
-        public Guid FileStorageGroupId { get; set; }
         public Project Copy()
         {
             var entity = new Project();
@@ -310,6 +310,7 @@ namespace Webfuel.Domain
             entity.LeadApplicantORCID = LeadApplicantORCID;
             entity.CreatedAt = CreatedAt;
             entity.StatusId = StatusId;
+            entity.FileStorageGroupId = FileStorageGroupId;
             entity.IsQuantativeTeamContributionId = IsQuantativeTeamContributionId;
             entity.IsCTUTeamContributionId = IsCTUTeamContributionId;
             entity.IsPPIEAndEDIContributionId = IsPPIEAndEDIContributionId;
@@ -329,7 +330,6 @@ namespace Webfuel.Domain
             entity.LeadApplicantDisabilityId = LeadApplicantDisabilityId;
             entity.LeadApplicantGenderId = LeadApplicantGenderId;
             entity.LeadApplicantEthnicityId = LeadApplicantEthnicityId;
-            entity.FileStorageGroupId = FileStorageGroupId;
             return entity;
         }
     }

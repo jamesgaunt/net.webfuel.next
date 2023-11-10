@@ -42,14 +42,22 @@
       <div *ngIf="items !== null && items.length > 0" class="project-support-list">
         <div class="project-support" *ngFor="let projectSupport of items">
           <div class="header">
-            <div class="columns">
-              <div class="column advisers">
-                <span>{{ projectSupport.date | date: 'dd-MMM-yy' }}</span><span *ngFor="let id of projectSupport.adviserIds">&nbsp;|&nbsp;{{ (userLookup.get({ id: id }) | async)?.fullName }}</span>
+            <div class="date">
+              <div class="columns">
+                <div class="column">
+                  <span>{{ projectSupport.date | date: 'dd-MMM-yy' }}</span>
+                </div>
+                <div class="column is-right">
+                  <button class="button is-small is-primary" (click)="editProjectSupport(projectSupport)">edit</button>
+                  <button class="button is-small is-danger" (click)="deleteProjectSupport(projectSupport)">delete</button>
+                </div>
               </div>
-              <div class="column is-right">
-                <button class="button is-small is-primary" (click)="editProjectSupport(projectSupport)">edit</button>
-                <button class="button is-small is-danger" (click)="deleteProjectSupport(projectSupport)">delete</button>
-              </div>
+            </div>
+            <div class="teams">
+              <span *ngFor="let id of projectSupport.teamIds; index as i"><span *ngIf="i > 0">&nbsp;|&nbsp;</span>{{ (teamLookup.get({ id: id }) | async)?.name }}</span>
+            </div>
+            <div class="advisers">
+              <span *ngFor="let id of projectSupport.adviserIds; index as i"><span *ngIf="i > 0">&nbsp;|&nbsp;</span>{{ (userLookup.get({ id: id }) | async)?.fullName }}</span>
             </div>
             <div class="support-provided">
               <span class="tag" *ngFor="let id of projectSupport.supportProvidedIds">{{ (staticDataCache.supportProvided.get({ id: id }) | async)?.name }}</span>
