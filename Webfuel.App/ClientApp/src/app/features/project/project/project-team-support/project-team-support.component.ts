@@ -12,6 +12,7 @@ import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/c
 import _ from 'shared/common/underscore';
 import { SupportTeamApi } from '../../../../api/support-team.api';
 import { CompleteProjectTeamSupportDialog } from './complete-project-team-support/complete-project-team-support.dialog';
+import { UpdateProjectTeamSupportDialog } from './update-project-team-support/update-project-team-support.dialog';
 
 @Component({
   selector: 'project-team-support',
@@ -29,6 +30,7 @@ export class ProjectTeamSupportComponent implements OnInit {
     private supportTeamApi: SupportTeamApi,
     private confirmDeleteDialog: ConfirmDeleteDialog,
     private projectTeamSupportApi: ProjectTeamSupportApi,
+    private updateProjectTeamSupportDialog: UpdateProjectTeamSupportDialog,
     private completeProjectTeamSupportDialog: CompleteProjectTeamSupportDialog,
     public staticDataCache: StaticDataCache
   ) {
@@ -48,6 +50,13 @@ export class ProjectTeamSupportComponent implements OnInit {
 
   item!: Project;
 
+  openOnly = true;
+
+  toggleOpenOnly() {
+    this.openOnly = !this.openOnly;
+    this.loadProjectTeamSupport();
+  }
+
   reset(item: Project) {
     this.item = item;
   }
@@ -65,7 +74,7 @@ export class ProjectTeamSupportComponent implements OnInit {
   items: ProjectTeamSupport[] | null = null;
 
   loadProjectTeamSupport() {
-    this.projectTeamSupportApi.query({ projectId: this.item.id, skip: 0, take: 100 }).subscribe((result) => {
+    this.projectTeamSupportApi.query({ projectId: this.item.id, skip: 0, take: 100, openOnly: this.openOnly }).subscribe((result) => {
       this.items = result.items;
     })
   }
@@ -80,10 +89,14 @@ export class ProjectTeamSupportComponent implements OnInit {
     })
   }
 
+  editProjectTeamSupport(projectTeamSupport: ProjectTeamSupport) {
+    this.updateProjectTeamSupportDialog.open({ item: projectTeamSupport }).subscribe(() => {
+    });
+  }
+
   deleteProjectTeamSupport(projectTeamSupport: ProjectTeamSupport) {
     this.confirmDeleteDialog.open({ title: "Project Team Support" }).subscribe(() => {
       this.projectTeamSupportApi.delete({ id: projectTeamSupport.id }, { successGrowl: "Team Support Deleted" }).subscribe();
     });
   }
-
 }

@@ -22,7 +22,7 @@ namespace Webfuel.Domain
 
             projectTeamSupport.ProjectId = request.ProjectId;
             projectTeamSupport.SupportTeamId = request.SupportTeamId;
-            projectTeamSupport.CreatedNotes = request.Notes;
+            projectTeamSupport.CreatedNotes = request.CreatedNotes;
             projectTeamSupport.CreatedAt = DateTimeOffset.UtcNow;
 
             if(_identityAccessor.User != null)

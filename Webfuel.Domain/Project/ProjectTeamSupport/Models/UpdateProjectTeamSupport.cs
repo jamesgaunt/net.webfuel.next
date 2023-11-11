@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace Webfuel.Domain
 {
-    public class CompleteProjectTeamSupport : IRequest<ProjectTeamSupport>
+    public class UpdateProjectTeamSupport : IRequest<ProjectTeamSupport>
     {
         public required Guid Id { get; set; }
+
+        public required string CreatedNotes { get; set; }
 
         public required string CompletedNotes { get; set; }
 

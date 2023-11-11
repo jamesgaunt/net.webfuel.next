@@ -26,7 +26,7 @@ namespace Webfuel.Domain
             var updated = existing.Copy();
 
             updated.CompletedAt = DateTimeOffset.UtcNow;
-            updated.CompletedNotes = request.Notes;
+            updated.CompletedNotes = request.CompletedNotes;
 
             if(_identityAccessor.User != null)
                 updated.CompletedById = _identityAccessor.User.Id;

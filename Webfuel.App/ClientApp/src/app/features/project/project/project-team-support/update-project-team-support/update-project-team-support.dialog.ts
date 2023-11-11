@@ -9,24 +9,24 @@ import { DialogBase, DialogComponentBase } from 'shared/common/dialog-base';
 import _ from 'shared/common/underscore';
 import { SupportTeamApi } from '../../../../../api/support-team.api';
 
-export interface CreateProjectTeamSupportDialogData {
-  projectId: string
+export interface UpdateProjectTeamSupportDialogData {
+  item: ProjectTeamSupport
 }
 
 @Injectable()
-export class CreateProjectTeamSupportDialog extends DialogBase<ProjectTeamSupport, CreateProjectTeamSupportDialogData> {
-  open(data: CreateProjectTeamSupportDialogData) {
-    return this._open(CreateProjectTeamSupportDialogComponent, data, {
+export class UpdateProjectTeamSupportDialog extends DialogBase<ProjectTeamSupport, UpdateProjectTeamSupportDialogData> {
+  open(data: UpdateProjectTeamSupportDialogData) {
+    return this._open(UpdateProjectTeamSupportDialogComponent, data, {
       width: "1000px"
     });
   }
 }
 
 @Component({
-  selector: 'create-project-team-support-dialog',
-  templateUrl: './create-project-team-support.dialog.html'
+  selector: 'update-project-team-support-dialog',
+  templateUrl: './update-project-team-support.dialog.html'
 })
-export class CreateProjectTeamSupportDialogComponent extends DialogComponentBase<ProjectTeamSupport, CreateProjectTeamSupportDialogData> {
+export class UpdateProjectTeamSupportDialogComponent extends DialogComponentBase<ProjectTeamSupport, UpdateProjectTeamSupportDialogData> {
 
   constructor(
     private formService: FormService,
@@ -36,7 +36,7 @@ export class CreateProjectTeamSupportDialogComponent extends DialogComponentBase
     public staticDataCache: StaticDataCache,
   ) {
     super();
-    this.form.patchValue({ projectId: this.data.projectId });
+    this.form.patchValue(this.data.item);
   }
 
   minArrayLength(min: number): ValidatorFn {
@@ -48,16 +48,16 @@ export class CreateProjectTeamSupportDialogComponent extends DialogComponentBase
   }
 
   form = new FormGroup({
-    projectId: new FormControl<string>('', { nonNullable: true }),
-    supportTeamId: new FormControl<string>('', { nonNullable: true }),
-    createdNotes: new FormControl<string>('', { validators: [Validators.required], nonNullable: true })
+    id: new FormControl<string>('', { nonNullable: true }),
+    createdNotes: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    completedNotes: new FormControl<string>('', {  nonNullable: true }),
   });
 
   save() {
     if (this.formService.hasErrors(this.form))
       return;
 
-    this.projectTeamSupportApi.create(this.form.getRawValue(), { successGrowl: "Team Support Requested" }).subscribe((result) => {
+    this.projectTeamSupportApi.update(this.form.getRawValue(), { successGrowl: "Team Support Updated" }).subscribe((result) => {
       this._closeDialog(result);
     });
   }

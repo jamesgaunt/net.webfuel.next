@@ -561,16 +561,23 @@ export interface ProjectTeamSupport {
 export interface CreateProjectTeamSupport {
     projectId: string;
     supportTeamId: string;
-    notes: string;
+    createdNotes: string;
+}
+
+export interface UpdateProjectTeamSupport {
+    id: string;
+    createdNotes: string;
+    completedNotes: string;
 }
 
 export interface CompleteProjectTeamSupport {
     id: string;
-    notes: string;
+    completedNotes: string;
 }
 
 export interface QueryProjectTeamSupport extends Query {
     projectId: string;
+    openOnly: boolean;
     skip: number;
     take: number;
     projection?: Array<string>;

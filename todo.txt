@@ -3,18 +3,17 @@ NW:
 
 > Purhase and setup on new domain - send form code to ICL for their web administrators
 
-> Complete Team Support Request Loop and UI
+
+> Not sure about team support open only!
+> Make open requests clear? Warning border etc?
+
 > Feed Activity from Project Support 
 
-> Tidy up project support CSS - buttons on bottom, standardise text row, max height on a notes field? - standardize to card?
 > Shrink project support summary table
-
-> Css border rework - but more definition
 
 > Project Status Active etc.
 
 > Free Text Boxes
-> User Full Name remove title.
 
 KEY FEATURES:
 

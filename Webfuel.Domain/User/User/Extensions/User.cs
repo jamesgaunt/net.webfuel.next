@@ -8,6 +8,6 @@ namespace Webfuel.Domain
 {
     public partial class User
     {
-        public string FullName => Title + " " + FirstName + " " + LastName;
+        public string FullName => FirstName + " " + LastName;
     }
 }

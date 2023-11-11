@@ -13,7 +13,7 @@ namespace Webfuel.Domain
 
         public required Guid SupportTeamId { get; set; }
 
-        public required string Notes { get; set; }
+        public required string CreatedNotes { get; set; }
 
     }
 }

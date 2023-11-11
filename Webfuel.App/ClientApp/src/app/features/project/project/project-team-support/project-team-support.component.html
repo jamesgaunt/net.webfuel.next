@@ -7,10 +7,13 @@
   <project-tabs></project-tabs>
   <div class="columns">
     <div class="column">
-      <h3 style="margin-top: 0">Open Team Support Requests</h3>
+      <h3 style="margin-top: 0">Team Support Requests</h3>
     </div>
     <div class="column is-right">
-      <a class="link is-primary">show historic/completed requests</a>
+      <a class="link is-primary" (click)="toggleOpenOnly()">
+        <span *ngIf="openOnly">show completed requests</span>
+        <span *ngIf="!openOnly">hide completed requests</span>
+      </a>
     </div>
   </div>
   <div class="flex">
@@ -26,23 +29,24 @@
       <div *ngIf="items !== null && items.length > 0" class="project-support-list">
         <div class="card" *ngFor="let teamSupport of items">
           <div class="card-title">
-            {{ teamSupport.createdAt | date: 'dd-MMM-yy HH:mm' }}:
-            Support requested by
-            {{ (userLookup.get({ id: teamSupport.createdById }) | async)?.fullName }}
-            from
             {{ (teamLookup.get({ id: teamSupport.supportTeamId }) | async)?.name }}
+            support requested by
+            {{ (userLookup.get({ id: teamSupport.createdById }) | async)?.fullName }}
+            [{{ teamSupport.createdAt | date: 'dd-MMM-yy HH:mm' }}]
           </div>
           <pre class="card-narrative">{{ teamSupport.createdNotes }}</pre>
           <div class="card-title" *ngIf="teamSupport.completedAt !== null">
             <div class="teams">
-              {{ teamSupport.completedAt | date: 'dd-MMM-yy HH:mm' }}:
-              Marked as completed by
+              Marked as completed by 
               {{ (userLookup.get({ id: teamSupport.completedById || '' }) | async)?.fullName }}
+              [{{ teamSupport.completedAt | date: 'dd-MMM-yy HH:mm' }}]
             </div>
           </div>
           <pre class="card-narrative" *ngIf="teamSupport.completedNotes">{{ teamSupport.completedNotes }}</pre>
           <div class="card-buttons">
             <button class="button is-small is-primary" *ngIf="teamSupport.completedAt === null" (click)="completeProjectTeamSupport(teamSupport)">mark as complete</button>
+            <button class="button is-small is-primary" (click)="editProjectTeamSupport(teamSupport)">edit</button>
+
             <button class="button is-small is-danger" (click)="deleteProjectTeamSupport(teamSupport)">delete</button>
           </div>
         </div>

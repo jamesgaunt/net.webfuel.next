@@ -41,7 +41,7 @@ export class CompleteProjectTeamSupportDialogComponent extends DialogComponentBa
 
   form = new FormGroup({
     id: new FormControl<string>('', { nonNullable: true }),
-    notes: new FormControl<string>('', { nonNullable: true })
+    completedNotes: new FormControl<string>('', { nonNullable: true })
   });
 
   save() {
