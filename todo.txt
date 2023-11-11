@@ -1,11 +1,20 @@
 
 NW:
 
+> Purhase and setup on new domain - send form code to ICL for their web administrators
+
 > Complete Team Support Request Loop and UI
 > Feed Activity from Project Support 
 
 > Tidy up project support CSS - buttons on bottom, standardise text row, max height on a notes field? - standardize to card?
 > Shrink project support summary table
+
+> Css border rework - but more definition
+
+> Project Status Active etc.
+
+> Free Text Boxes
+> User Full Name remove title.
 
 KEY FEATURES:
 
@@ -19,6 +28,8 @@ KEY FEATURES:
 
 > Make rotating spinner actually spin on buttons
 > Put Google type indicators on login fields
+
+> Clean up field/reference names where I've been lazy!
 
 NEXT:
 

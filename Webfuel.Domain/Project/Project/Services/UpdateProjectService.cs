@@ -35,7 +35,6 @@ namespace Webfuel.Domain
             updated.IsQuantativeTeamContributionId = request.IsQuantativeTeamContributionId;
             updated.IsCTUTeamContributionId = request.IsCTUTeamContributionId;
             updated.IsPPIEAndEDIContributionId = request.IsPPIEAndEDIContributionId;
-            updated.SubmittedFundingStreamName = request.SubmittedFundingStreamName;
 
             updated.ProjectStartDate = request.ProjectStartDate;
             updated.RecruitmentTarget = request.RecruitmentTarget;
@@ -44,6 +43,7 @@ namespace Webfuel.Domain
 
             updated.SubmittedFundingStreamId = request.SubmittedFundingStreamId;
             updated.SubmittedFundingStreamFreeText = request.SubmittedFundingStreamFreeText;
+            updated.SubmittedFundingStreamName = request.SubmittedFundingStreamName;
 
             if (!staticData.FundingStream.HasFreeText(updated.SubmittedFundingStreamId))
                 updated.SubmittedFundingStreamFreeText = String.Empty;

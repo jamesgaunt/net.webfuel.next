@@ -39,7 +39,7 @@ body.dark-mode {
 
 @mixin form-input {
   background-color: var(--palette-control-background);
-  border: 1px solid var(--palette-control-border);
+  border: 2px solid var(--palette-control-border);
   color: var(--palette-control-text);
   box-shadow: none;
   outline: none;
@@ -62,7 +62,7 @@ body.dark-mode {
   }
 
   &:hover {
-    border: 1px solid var(--palette-control-border-hover);
+    border-color: var(--palette-control-border-hover);
     box-shadow: inset 0 0 2px var(--palette-control-border-hover);
   }
 

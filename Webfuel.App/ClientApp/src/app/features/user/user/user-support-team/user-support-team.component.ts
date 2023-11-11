@@ -69,11 +69,11 @@ export class UserSupportTeamComponent implements OnInit {
   toggleSupportTeam(supportTeam: SupportTeamEx) {
     supportTeam._processing = true;
     if (this.isSupportTeamSelected(supportTeam)) {
-      this.supportTeamUserApi.delete({ userId: this.item.id, supportTeamId: supportTeam.id }).subscribe(() => {
+      this.supportTeamUserApi.delete({ userId: this.item.id, supportTeamId: supportTeam.id }, { successGrowl: "Removed from support team" }).subscribe(() => {
         this.load();
       });
     } else {
-      this.supportTeamUserApi.insert({ userId: this.item.id, supportTeamId: supportTeam.id }).subscribe(() => {
+      this.supportTeamUserApi.insert({ userId: this.item.id, supportTeamId: supportTeam.id }, { successGrowl: "Added to support team" }).subscribe(() => {
         this.load();
       });
     }

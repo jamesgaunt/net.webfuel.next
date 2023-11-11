@@ -24,38 +24,26 @@
         </div>
       </div>
       <div *ngIf="items !== null && items.length > 0" class="project-support-list">
-        <div class="project-support" *ngFor="let teamSupport of items">
-          <div class="header">
-            <div class="date">
-              <div class="columns">
-                <div class="column">
-                  {{ teamSupport.createdAt | date: 'dd-MMM-yy HH:mm' }}:
-                  Support requested by
-                  {{ (userLookup.get({ id: teamSupport.createdById }) | async)?.fullName }}
-                  from
-                  {{ (teamLookup.get({ id: teamSupport.supportTeamId }) | async)?.name }}
-                </div>
-                <div class="column is-right">
-                  <button class="button is-small is-danger" (click)="deleteProjectTeamSupport(teamSupport)">delete</button>
-                </div>
-              </div>
-            </div>
+        <div class="card" *ngFor="let teamSupport of items">
+          <div class="card-title">
+            {{ teamSupport.createdAt | date: 'dd-MMM-yy HH:mm' }}:
+            Support requested by
+            {{ (userLookup.get({ id: teamSupport.createdById }) | async)?.fullName }}
+            from
+            {{ (teamLookup.get({ id: teamSupport.supportTeamId }) | async)?.name }}
           </div>
-          <pre class="description">{{ teamSupport.createdNotes }}</pre>
-          <div *ngIf="teamSupport.completedAt === null" class="footer">
-            <div class="columns">
-              <div class="column is-right">
-                <button class="button is-small is-primary" (click)="completeProjectTeamSupport(teamSupport)">mark as complete</button>
-              </div>
-            </div>
-          </div>
-          <div *ngIf="teamSupport.completedAt !== null" class="footer">
+          <pre class="card-narrative">{{ teamSupport.createdNotes }}</pre>
+          <div class="card-title" *ngIf="teamSupport.completedAt !== null">
             <div class="teams">
               {{ teamSupport.completedAt | date: 'dd-MMM-yy HH:mm' }}:
               Marked as completed by
               {{ (userLookup.get({ id: teamSupport.completedById || '' }) | async)?.fullName }}
             </div>
-            <pre *ngIf="teamSupport.completedNotes" class="description">{{ teamSupport.completedNotes }}</pre>
+          </div>
+          <pre class="card-narrative" *ngIf="teamSupport.completedNotes">{{ teamSupport.completedNotes }}</pre>
+          <div class="card-buttons">
+            <button class="button is-small is-primary" *ngIf="teamSupport.completedAt === null" (click)="completeProjectTeamSupport(teamSupport)">mark as complete</button>
+            <button class="button is-small is-danger" (click)="deleteProjectTeamSupport(teamSupport)">delete</button>
           </div>
         </div>
       </div>

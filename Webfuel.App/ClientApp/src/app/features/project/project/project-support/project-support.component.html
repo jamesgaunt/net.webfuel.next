@@ -40,36 +40,28 @@
         </div>
       </div>
       <div *ngIf="items !== null && items.length > 0" class="project-support-list">
-        <div class="project-support" *ngFor="let projectSupport of items">
-          <div class="header">
-            <div class="date">
-              <div class="columns">
-                <div class="column">
-                  <span>{{ projectSupport.date | date: 'dd-MMM-yy' }}</span>
-                </div>
-                <div class="column is-right">
-                  <button class="button is-small is-primary" (click)="editProjectSupport(projectSupport)">edit</button>
-                  <button class="button is-small is-danger" (click)="deleteProjectSupport(projectSupport)">delete</button>
-                </div>
-              </div>
-            </div>
-            <div class="teams">
-              <span *ngFor="let id of projectSupport.teamIds; index as i"><span *ngIf="i > 0">&nbsp;|&nbsp;</span>{{ (teamLookup.get({ id: id }) | async)?.name }}</span>
-            </div>
-            <div class="advisers">
-              <span *ngFor="let id of projectSupport.adviserIds; index as i"><span *ngIf="i > 0">&nbsp;|&nbsp;</span>{{ (userLookup.get({ id: id }) | async)?.fullName }}</span>
-            </div>
-            <div class="support-provided">
-              <span class="tag" *ngFor="let id of projectSupport.supportProvidedIds">{{ (staticDataCache.supportProvided.get({ id: id }) | async)?.name }}</span>
-            </div>
+        <div class="card" *ngFor="let projectSupport of items">
+          <div class="card-title">
+            <span>{{ projectSupport.date | date: 'dd-MMM-yy' }}</span>
+            <span *ngFor="let id of projectSupport.teamIds; index as i">&nbsp;|&nbsp;{{ (teamLookup.get({ id: id }) | async)?.name }}</span>
           </div>
-          <pre class="description">{{ projectSupport.description }}</pre>
+          <div class="card-title">
+            <span *ngFor="let id of projectSupport.adviserIds; index as i"><span *ngIf="i > 0">&nbsp;|&nbsp;</span>{{ (userLookup.get({ id: id }) | async)?.fullName }}</span>
+          </div>
+          <div class="card-title">
+            <span class="tag" *ngFor="let id of projectSupport.supportProvidedIds">{{ (staticDataCache.supportProvided.get({ id: id }) | async)?.name }}</span>
+          </div>
+          <pre class="card-narrative">{{ projectSupport.description }}</pre>
+          <div class="card-buttons">
+            <button class="button is-small is-primary" (click)="editProjectSupport(projectSupport)">edit</button>
+            <button class="button is-small is-danger" (click)="deleteProjectSupport(projectSupport)">delete</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  
+
   <div class="floating-buttons">
     <button class="button" (click)="cancel()">Close</button>
   </div>

@@ -58,7 +58,7 @@ $paletteAction: 'primary', 'secondary', 'success', 'warning', 'danger';
   --palette-control-background: #FFFFFF;
   --palette-control-background-alt: #F7F7F7;
   --palette-control-border: #dbdbdb;
-  --palette-control-border-hover: #ababab;
+  --palette-control-border-hover: #cbcbcb;
   --palette-control-border-focus: hsl(208, 10%, 41%);
   --palette-control-border-error: var(--palette-danger-text);
   --palette-control-shadow: RGBA(0, 0, 0, 0.3);
@@ -69,10 +69,11 @@ $paletteAction: 'primary', 'secondary', 'success', 'warning', 'danger';
 
 body.dark-mode {
   --palette-text: #fff;
+  --palette-primary-text: hsl(208, 56%, 66%);
   //--palette-control-text: #fff;
   //--palette-control-background: #555;
   //--palette-control-background-alt: #363636;
-  --palette-control-border: #525252;
+  --palette-control-border: #cccccc;
   --palette-control-shadow: RGBA(200, 200, 200, 0.2);
   --palette-body-text: #FFF;
   --palette-body-text-highlight: #67ACDB;

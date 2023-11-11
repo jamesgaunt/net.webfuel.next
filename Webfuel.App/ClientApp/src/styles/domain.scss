@@ -1,50 +1,6 @@
 @import 'config.scss';
 
 
-.project-support {
-  margin-bottom: calc(var(--gap) * 2);
-  border: 1px solid var(--palette-control-border);
-  padding: var(--gap);
-
-  .button {
-    margin-left: 6px;
-  }
-
-  .footer {
-      margin-top: 0.5rem;
-  }
-
-  .date {
-    font-weight: var(--bold-if-light);
-    padding-bottom: 0.5rem;
-    margin-bottom: 0.5rem;
-    border-bottom: 1px solid var(--palette-control-border);
-  }
-
-  .advisers, .teams {
-    font-weight: var(--bold-if-light);
-    display: flex;
-    gap: 4px;
-    margin-bottom: 8px;
-    flex-wrap: wrap;
-  }
-
-  .support-provided {
-    display: flex;
-    gap: 2px;
-    margin-bottom: 8px;
-    flex-wrap: wrap;
-  }
-
-  .description {
-    background-color: var(--palette-control-background);
-    color: var(--palette-control-text);
-    padding: var(--gap);
-    margin: 0;
-    line-height: 1.5;
-    white-space: pre-wrap;
-  }
-}
 
 .project-support-summary {
 
