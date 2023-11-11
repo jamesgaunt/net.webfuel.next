@@ -50,7 +50,7 @@ export class ProjectTeamSupportComponent implements OnInit {
 
   item!: Project;
 
-  openOnly = true;
+  openOnly = false;
 
   toggleOpenOnly() {
     this.openOnly = !this.openOnly;
