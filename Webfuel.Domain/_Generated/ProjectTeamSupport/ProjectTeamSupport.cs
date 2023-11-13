@@ -39,11 +39,11 @@ namespace Webfuel.Domain
                     case nameof(ProjectTeamSupport.SupportTeamId):
                         SupportTeamId = (Guid)value!;
                         break;
-                    case nameof(ProjectTeamSupport.CreatedById):
-                        CreatedById = (Guid)value!;
+                    case nameof(ProjectTeamSupport.CreatedByUserId):
+                        CreatedByUserId = (Guid)value!;
                         break;
-                    case nameof(ProjectTeamSupport.CompletedById):
-                        CompletedById = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                    case nameof(ProjectTeamSupport.CompletedByUserId):
+                        CompletedByUserId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
                 }
             }
@@ -55,8 +55,8 @@ namespace Webfuel.Domain
         public DateTimeOffset? CompletedAt  { get; set; } = null;
         public Guid ProjectId { get; set; }
         public Guid SupportTeamId { get; set; }
-        public Guid CreatedById { get; set; }
-        public Guid? CompletedById { get; set; }
+        public Guid CreatedByUserId { get; set; }
+        public Guid? CompletedByUserId { get; set; }
         public ProjectTeamSupport Copy()
         {
             var entity = new ProjectTeamSupport();
@@ -67,8 +67,8 @@ namespace Webfuel.Domain
             entity.CompletedAt = CompletedAt;
             entity.ProjectId = ProjectId;
             entity.SupportTeamId = SupportTeamId;
-            entity.CreatedById = CreatedById;
-            entity.CompletedById = CompletedById;
+            entity.CreatedByUserId = CreatedByUserId;
+            entity.CompletedByUserId = CompletedByUserId;
             return entity;
         }
     }

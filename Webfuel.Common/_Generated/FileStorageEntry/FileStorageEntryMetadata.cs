@@ -32,14 +32,14 @@ namespace Webfuel.Common
                     case nameof(FileStorageEntry.UploadedAt):
                         result.Add(new SqlParameter(nameof(FileStorageEntry.UploadedAt), entity.UploadedAt ?? (object?)DBNull.Value));
                         break;
-                    case nameof(FileStorageEntry.UploadedBy):
-                        result.Add(new SqlParameter(nameof(FileStorageEntry.UploadedBy), entity.UploadedBy));
-                        break;
                     case nameof(FileStorageEntry.Description):
                         result.Add(new SqlParameter(nameof(FileStorageEntry.Description), entity.Description));
                         break;
                     case nameof(FileStorageEntry.FileStorageGroupId):
                         result.Add(new SqlParameter(nameof(FileStorageEntry.FileStorageGroupId), entity.FileStorageGroupId));
+                        break;
+                    case nameof(FileStorageEntry.UploadedByUserId):
+                        result.Add(new SqlParameter(nameof(FileStorageEntry.UploadedByUserId), entity.UploadedByUserId ?? (object?)DBNull.Value));
                         break;
                 }
             }
@@ -71,9 +71,9 @@ namespace Webfuel.Common
                 yield return "FileName";
                 yield return "SizeBytes";
                 yield return "UploadedAt";
-                yield return "UploadedBy";
                 yield return "Description";
                 yield return "FileStorageGroupId";
+                yield return "UploadedByUserId";
             }
         }
         
@@ -85,9 +85,9 @@ namespace Webfuel.Common
                 yield return "FileName";
                 yield return "SizeBytes";
                 yield return "UploadedAt";
-                yield return "UploadedBy";
                 yield return "Description";
                 yield return "FileStorageGroupId";
+                yield return "UploadedByUserId";
             }
         }
         
@@ -98,9 +98,9 @@ namespace Webfuel.Common
                 yield return "FileName";
                 yield return "SizeBytes";
                 yield return "UploadedAt";
-                yield return "UploadedBy";
                 yield return "Description";
                 yield return "FileStorageGroupId";
+                yield return "UploadedByUserId";
             }
         }
         
@@ -110,8 +110,6 @@ namespace Webfuel.Common
         {
             entity.FileName = entity.FileName ?? String.Empty;
             entity.FileName = entity.FileName.Trim();
-            entity.UploadedBy = entity.UploadedBy ?? String.Empty;
-            entity.UploadedBy = entity.UploadedBy.Trim();
             entity.Description = entity.Description ?? String.Empty;
             entity.Description = entity.Description.Trim();
             Validator.ValidateAndThrow(entity);
@@ -120,7 +118,6 @@ namespace Webfuel.Common
         public static FileStorageEntryRepositoryValidator Validator { get; } = new FileStorageEntryRepositoryValidator();
         
         public const int FileName_MaxLength = 64;
-        public const int UploadedBy_MaxLength = 64;
         public const int Description_MaxLength = 64;
         
         public static void FileName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
@@ -128,13 +125,6 @@ namespace Webfuel.Common
             ruleBuilder
                 .NotNull()
                 .MaximumLength(FileName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
-        }
-        
-        public static void UploadedBy_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
-        {
-            ruleBuilder
-                .NotNull()
-                .MaximumLength(UploadedBy_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
         public static void Description_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
@@ -150,7 +140,6 @@ namespace Webfuel.Common
         public FileStorageEntryRepositoryValidator()
         {
             RuleFor(x => x.FileName).Use(FileStorageEntryMetadata.FileName_ValidationRules);
-            RuleFor(x => x.UploadedBy).Use(FileStorageEntryMetadata.UploadedBy_ValidationRules);
             RuleFor(x => x.Description).Use(FileStorageEntryMetadata.Description_ValidationRules);
             Validation();
         }

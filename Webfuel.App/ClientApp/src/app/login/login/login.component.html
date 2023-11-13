@@ -12,10 +12,10 @@
       </p>
       <div class="grid">
         <div class="field">
-          <input name="email" type="text" class="input" placeholder="Email Address" formControlName="email" />
+          <input id="username" name="email" type="text" class="input" placeholder="Email Address" formControlName="email" autocomplete="username" />
         </div>
         <div class="field">
-          <input name="password" type="password" class="input" placeholder="Password" formControlName="password" />
+          <input id="current-password" name="password" type="password" class="input" placeholder="Password" formControlName="password" autocomplete="current-password" />
         </div>
       </div>
       <div *ngIf="errorMessage" class="message is-danger">
@@ -27,7 +27,7 @@
             Login
           </span>
           <span class="spin">
-            <i class="far fa-sync-alt"></i>
+            <i class="far fa-spin fa-sync-alt"></i>
           </span>
         </button>
         &nbsp;&nbsp;

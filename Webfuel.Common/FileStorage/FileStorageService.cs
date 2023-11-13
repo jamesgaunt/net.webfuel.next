@@ -67,9 +67,7 @@ namespace Webfuel.Common
             }
 
             entry.UploadedAt = DateTimeOffset.UtcNow;
-
-            if(_identityAccessor.User != null)
-                entry.UploadedBy = _identityAccessor.User.FirstName + " " + _identityAccessor.User.LastName;
+            entry.UploadedByUserId = _identityAccessor.User?.Id;
 
             return await _fileStorageEntryRepository.UpdateFileStorageEntry(entry);
         }

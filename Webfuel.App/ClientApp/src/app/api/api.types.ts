@@ -53,9 +53,9 @@ export interface FileStorageEntry {
     fileName: string;
     sizeBytes: number;
     uploadedAt: string | null | null;
-    uploadedBy: string;
     description: string;
     fileStorageGroupId: string;
+    uploadedByUserId: string | null | null;
 }
 
 export interface QueryFileStorageEntry extends Query {
@@ -552,8 +552,8 @@ export interface ProjectTeamSupport {
     completedAt: string | null | null;
     projectId: string;
     supportTeamId: string;
-    createdById: string;
-    completedById: string | null | null;
+    createdByUserId: string;
+    completedByUserId: string | null | null;
 }
 
 export interface CreateProjectTeamSupport {

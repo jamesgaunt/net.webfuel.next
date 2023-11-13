@@ -26,7 +26,7 @@ namespace Webfuel.Domain
             projectTeamSupport.CreatedAt = DateTimeOffset.UtcNow;
 
             if(_identityAccessor.User != null)
-                projectTeamSupport.CreatedById = _identityAccessor.User.Id;
+                projectTeamSupport.CreatedByUserId = _identityAccessor.User.Id;
 
             return await _projectTeamSupportRepository.InsertProjectTeamSupport(projectTeamSupport);
         }

@@ -96,6 +96,8 @@ export class SupportRequestFormComponent {
 
   submitting = false;
 
+  progress: number | null = null;
+
   errorMessage = "";
 
   submit() {
@@ -114,20 +116,18 @@ export class SupportRequestFormComponent {
       next:
         (event) => {
           if (event.type === HttpEventType.UploadProgress && event.total) {
-            var progress = Math.round((100 * event.loaded) / event.total);
-            console.log("Progress: " + progress);
+            this.progress = Math.round((100 * event.loaded) / event.total);
           }
           if (event.type === HttpEventType.Response) {
-            console.log("Response: ", event.body);
             this.stage = 'submitted';
           }
         },
       error: (err) => {
-        console.log("Error: ", err);
+        console.log("Form Submission Error: ", err);
         this.stage = 'error';
       },
       complete: () => {
-        console.log("Complete");
+        this.progress = null;
         setTimeout(() => this.submitting = false, 1000);
       }
     });

@@ -41,11 +41,11 @@ namespace Webfuel.Domain
                     case nameof(ProjectTeamSupport.SupportTeamId):
                         result.Add(new SqlParameter(nameof(ProjectTeamSupport.SupportTeamId), entity.SupportTeamId));
                         break;
-                    case nameof(ProjectTeamSupport.CreatedById):
-                        result.Add(new SqlParameter(nameof(ProjectTeamSupport.CreatedById), entity.CreatedById));
+                    case nameof(ProjectTeamSupport.CreatedByUserId):
+                        result.Add(new SqlParameter(nameof(ProjectTeamSupport.CreatedByUserId), entity.CreatedByUserId));
                         break;
-                    case nameof(ProjectTeamSupport.CompletedById):
-                        result.Add(new SqlParameter(nameof(ProjectTeamSupport.CompletedById), entity.CompletedById ?? (object?)DBNull.Value));
+                    case nameof(ProjectTeamSupport.CompletedByUserId):
+                        result.Add(new SqlParameter(nameof(ProjectTeamSupport.CompletedByUserId), entity.CompletedByUserId ?? (object?)DBNull.Value));
                         break;
                 }
             }
@@ -80,8 +80,8 @@ namespace Webfuel.Domain
                 yield return "CompletedAt";
                 yield return "ProjectId";
                 yield return "SupportTeamId";
-                yield return "CreatedById";
-                yield return "CompletedById";
+                yield return "CreatedByUserId";
+                yield return "CompletedByUserId";
             }
         }
         
@@ -96,8 +96,8 @@ namespace Webfuel.Domain
                 yield return "CompletedAt";
                 yield return "ProjectId";
                 yield return "SupportTeamId";
-                yield return "CreatedById";
-                yield return "CompletedById";
+                yield return "CreatedByUserId";
+                yield return "CompletedByUserId";
             }
         }
         
@@ -111,8 +111,8 @@ namespace Webfuel.Domain
                 yield return "CompletedAt";
                 yield return "ProjectId";
                 yield return "SupportTeamId";
-                yield return "CreatedById";
-                yield return "CompletedById";
+                yield return "CreatedByUserId";
+                yield return "CompletedByUserId";
             }
         }
         

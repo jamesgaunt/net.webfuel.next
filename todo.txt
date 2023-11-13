@@ -11,7 +11,6 @@ NW:
 
 KEY FEATURES:
 
-> Centralise custom validators
 > Permissions => Claims Based (look again at asp.net core infrastructure) [2D]
 
 > Reporting/Exporting (Scribble) => Needs Design
@@ -19,10 +18,7 @@ KEY FEATURES:
 > Workflow
 > Additional Data Changes
 
-> Make rotating spinner actually spin on buttons
-> Put Google type indicators on login fields
-
-> Clean up field/reference names where I've been lazy!
+> Clean up field/reference names where I've been lazy! (???)
 
 NEXT:
 

@@ -1,12 +1,11 @@
 import { Component, Injectable } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ProjectTeamSupport } from 'api/api.types';
 import { ProjectTeamSupportApi } from 'api/project-team-support.api';
 import { StaticDataCache } from 'api/static-data.cache';
 import { UserApi } from 'api/user.api';
 import { FormService } from 'core/form.service';
 import { DialogBase, DialogComponentBase } from 'shared/common/dialog-base';
-import _ from 'shared/common/underscore';
 import { SupportTeamApi } from '../../../../../api/support-team.api';
 
 export interface CompleteProjectTeamSupportDialogData {

@@ -15,7 +15,16 @@
       </ng-template>
     </grid-column>
     <grid-datetime-column name="uploadedAt" />
-    <grid-column name="uploadedBy" />
+    <grid-column name="uploadedBy">
+      <ng-template #itemTemplate let-item>
+        <div *ngIf="item.uploadedByUserId === null">
+          <i>Support Request Form</i>
+        </div>
+        <div *ngIf="item.uploadedByUserId !== null">
+          {{ (userLookup.get({ id: item.uploadedByUserId }) | async)?.fullName }}
+        </div>
+      </ng-template>
+    </grid-column>
     <grid-column justify="right">
       <ng-template #itemTemplate let-item>
         <a class="link is-danger" (click)="deleteFile(item)">delete</a>

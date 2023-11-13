@@ -8,7 +8,7 @@
         <label class="label">Notes (from support requester to support team)</label>
         <textarea style="height: 200px" class="textarea" formControlName="createdNotes" placeholder="required"></textarea>
       </div>
-      <div *ngIf="data.item.completedById !== null" class="field">
+      <div *ngIf="data.item.completedByUserId !== null" class="field">
         <label class="label">Notes (from support team upon completion of support)</label>
         <textarea style="height: 200px" class="textarea" formControlName="completedNotes" placeholder="optional"></textarea>
       </div>

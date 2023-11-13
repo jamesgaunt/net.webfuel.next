@@ -38,9 +38,7 @@ namespace Webfuel.Domain
             return new StringResult(await _identityTokenService.GenerateToken(new IdentityUser
             {
                 Id = user.Id,
-                Email = user.Email,
-                FirstName = user.FirstName,
-                LastName = user.LastName
+                Email = user.Email
             }));
         }
 

@@ -12,7 +12,7 @@
     <Property Name="FileName" Type="meta:name" />
     <Property Name="SizeBytes" Type="Int64" />
     <Property Name="UploadedAt" Type="DateTime?" />
-    <Property Name="UploadedBy" Type="meta:name" />
+    <Property Name="UploadedByUserId" Type="User?" />
     <Property Name="Description" Type="meta:name" />
     <Index Unique="false">
       <Member Name="FileStorageGroupId" />

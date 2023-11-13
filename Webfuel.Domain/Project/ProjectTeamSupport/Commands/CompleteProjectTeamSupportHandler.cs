@@ -29,7 +29,7 @@ namespace Webfuel.Domain
             updated.CompletedNotes = request.CompletedNotes;
 
             if(_identityAccessor.User != null)
-                updated.CompletedById = _identityAccessor.User.Id;
+                updated.CompletedByUserId = _identityAccessor.User.Id;
 
             return await _projectTeamSupportRepository.UpdateProjectTeamSupport(updated: updated, original: existing);
         }

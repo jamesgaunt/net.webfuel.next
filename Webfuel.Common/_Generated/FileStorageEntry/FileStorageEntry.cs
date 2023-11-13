@@ -30,14 +30,14 @@ namespace Webfuel.Common
                     case nameof(FileStorageEntry.UploadedAt):
                         UploadedAt = value == DBNull.Value ? (DateTimeOffset?)null : (DateTimeOffset?)value;
                         break;
-                    case nameof(FileStorageEntry.UploadedBy):
-                        UploadedBy = (string)value!;
-                        break;
                     case nameof(FileStorageEntry.Description):
                         Description = (string)value!;
                         break;
                     case nameof(FileStorageEntry.FileStorageGroupId):
                         FileStorageGroupId = (Guid)value!;
+                        break;
+                    case nameof(FileStorageEntry.UploadedByUserId):
+                        UploadedByUserId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
                 }
             }
@@ -46,9 +46,9 @@ namespace Webfuel.Common
         public string FileName  { get; set; } = String.Empty;
         public Int64 SizeBytes  { get; set; } = 0L;
         public DateTimeOffset? UploadedAt  { get; set; } = null;
-        public string UploadedBy  { get; set; } = String.Empty;
         public string Description  { get; set; } = String.Empty;
         public Guid FileStorageGroupId { get; set; }
+        public Guid? UploadedByUserId { get; set; }
         public FileStorageEntry Copy()
         {
             var entity = new FileStorageEntry();
@@ -56,9 +56,9 @@ namespace Webfuel.Common
             entity.FileName = FileName;
             entity.SizeBytes = SizeBytes;
             entity.UploadedAt = UploadedAt;
-            entity.UploadedBy = UploadedBy;
             entity.Description = Description;
             entity.FileStorageGroupId = FileStorageGroupId;
+            entity.UploadedByUserId = UploadedByUserId;
             return entity;
         }
     }

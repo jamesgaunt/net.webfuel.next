@@ -16,6 +16,7 @@
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Content Remove="$(SpaRoot)**" />
   </ItemGroup>
+
   <ItemGroup>
     <Content Include="ClientApp\angular.json" />
     <Content Include="ClientApp\package-lock.json" />
