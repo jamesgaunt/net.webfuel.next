@@ -24,6 +24,9 @@ namespace Webfuel.Domain
                     case nameof(ProjectSupport.Date):
                         Date = DateOnly.FromDateTime((DateTime)value!);
                         break;
+                    case nameof(ProjectSupport.Description):
+                        Description = (string)value!;
+                        break;
                     case nameof(ProjectSupport.TeamIds):
                         TeamIdsJson = (string)value!;
                         break;
@@ -33,9 +36,6 @@ namespace Webfuel.Domain
                     case nameof(ProjectSupport.SupportProvidedIds):
                         SupportProvidedIdsJson = (string)value!;
                         break;
-                    case nameof(ProjectSupport.Description):
-                        Description = (string)value!;
-                        break;
                     case nameof(ProjectSupport.ProjectId):
                         ProjectId = (Guid)value!;
                         break;
@@ -44,6 +44,7 @@ namespace Webfuel.Domain
         }
         public Guid Id  { get; set; } = Guid.Empty;
         public DateOnly Date  { get; set; } = new DateOnly(1900, 1, 1);
+        public string Description  { get; set; } = String.Empty;
         public List<Guid> TeamIds
         {
             get { return _TeamIds ?? (_TeamIds = SafeJsonSerializer.Deserialize<List<Guid>>(_TeamIdsJson)); }
@@ -80,17 +81,16 @@ namespace Webfuel.Domain
             set { _SupportProvidedIdsJson = value; _SupportProvidedIds = null; }
         }
         string _SupportProvidedIdsJson = String.Empty;
-        public string Description  { get; set; } = String.Empty;
         public Guid ProjectId { get; set; }
         public ProjectSupport Copy()
         {
             var entity = new ProjectSupport();
             entity.Id = Id;
             entity.Date = Date;
+            entity.Description = Description;
             entity.TeamIdsJson = TeamIdsJson;
             entity.AdviserIdsJson = AdviserIdsJson;
             entity.SupportProvidedIdsJson = SupportProvidedIdsJson;
-            entity.Description = Description;
             entity.ProjectId = ProjectId;
             return entity;
         }

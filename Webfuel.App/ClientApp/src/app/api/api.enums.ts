@@ -84,4 +84,12 @@ export enum SupportRequestStatusEnum {
     ReferredToNIHRRSSExpertTeams = "c22df21d-30ed-49d5-bee0-0f304b74a365",
 }
 
+export enum SupportTeamEnum {
+    TriageTeam = "4b013d8c-7aad-4100-9586-83054ef15bac",
+    CTUTeam = "9d4b32b9-7e7e-42c5-8f08-82de256fbcf0",
+    PPIETeam = "662067e9-875c-47f7-8427-26ac98078c20",
+    ExpertQuantitativeTeam = "5283e9be-faf3-45f5-83b2-4c5288c090c3",
+    ExpertQualitativeTeam = "b1bdcae3-7df9-404a-aad7-a9265392b5aa",
+}
+
 

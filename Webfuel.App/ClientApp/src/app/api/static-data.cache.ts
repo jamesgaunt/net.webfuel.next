@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IDataSource, IDataSourceWithGet } from 'shared/common/data-source';
 import { StaticDataService } from '../core/static-data.service';
-import { AgeRange, ApplicationStage, Disability, Ethnicity, FundingBody, FundingCallType, FundingStream, Gender, HowDidYouFindUs, IsCTUTeamContribution, IsFellowship, IsInternationalMultiSiteStudy, IsLeadApplicantNHS, IsPPIEAndEDIContribution, IsQuantativeTeamContribution, IsResubmission, IsTeamMembersConsulted, ProjectStatus, ResearcherOrganisationType, ResearcherRole, ResearchMethodology, Site, SubmissionOutcome, SubmissionStage, SupportProvided, SupportRequestStatus, Title, UserDiscipline, WorkActivity } from './api.types';
+import { AgeRange, ApplicationStage, Disability, Ethnicity, FundingBody, FundingCallType, FundingStream, Gender, HowDidYouFindUs, IsCTUTeamContribution, IsFellowship, IsInternationalMultiSiteStudy, IsLeadApplicantNHS, IsPPIEAndEDIContribution, IsQuantativeTeamContribution, IsResubmission, IsTeamMembersConsulted, ProjectStatus, ResearcherOrganisationType, ResearcherRole, ResearchMethodology, Site, SubmissionOutcome, SubmissionStage, SupportProvided, SupportRequestStatus, SupportTeam, Title, UserDiscipline, WorkActivity } from './api.types';
 
 @Injectable()
 export class StaticDataCache {
@@ -137,6 +137,11 @@ export class StaticDataCache {
     supportRequestStatus: IDataSourceWithGet<SupportRequestStatus> = {
         query: (query) => this.staticDataService.queryFactory(query, s => s.supportRequestStatus),
         get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.supportRequestStatus),
+    };
+    
+    supportTeam: IDataSourceWithGet<SupportTeam> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.supportTeam),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.supportTeam),
     };
     
     title: IDataSourceWithGet<Title> = {

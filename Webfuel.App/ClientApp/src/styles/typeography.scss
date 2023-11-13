@@ -14,6 +14,8 @@ p {
 
 .text {
 
+  line-height: 1.6;
+
   @each $p in $paletteAction {
     &.is-#{$p} {
       color: var(--palette-#{$p}-text);

@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Project } from 'api/api.types';
 import { ProjectApi } from 'api/project.api';
 import { StaticDataCache } from 'api/static-data.cache';
-import { CreateProjectDialog } from '../dialogs/create-project/create-project.dialog';
 import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
 import { FormControl, FormGroup } from '@angular/forms';
 
@@ -16,7 +15,6 @@ export class ProjectListComponent {
     private router: Router,
     public projectApi: ProjectApi,
     public staticDataCache: StaticDataCache,
-    private createProjectDialog: CreateProjectDialog,
     private confirmDeleteDialog: ConfirmDeleteDialog
   ) {
   }
@@ -39,10 +37,6 @@ export class ProjectListComponent {
       fundingStreamId: null,
       title: ''
     })
-  }
-
-  add() {
-    this.createProjectDialog.open();
   }
 
   edit(item: Project) {

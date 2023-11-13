@@ -33,6 +33,7 @@ namespace Webfuel.Domain.StaticData
         public async Task<Disability> InsertDisability(Disability entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            DisabilityMetadata.Validate(entity);
             var sql = DisabilityMetadata.InsertSQL();
             var parameters = DisabilityMetadata.ExtractParameters(entity, DisabilityMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -40,6 +41,7 @@ namespace Webfuel.Domain.StaticData
         }
         public async Task<Disability> UpdateDisability(Disability entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            DisabilityMetadata.Validate(entity);
             var sql = DisabilityMetadata.UpdateSQL();
             var parameters = DisabilityMetadata.ExtractParameters(entity, DisabilityMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

@@ -33,9 +33,6 @@ namespace Webfuel.Domain
                     case nameof(Project.ClosureDate):
                         ClosureDate = value == DBNull.Value ? (DateOnly?)null : DateOnly.FromDateTime((DateTime)value!);
                         break;
-                    case nameof(Project.NIHRRSSMemberCollaboratorIds):
-                        NIHRRSSMemberCollaboratorIdsJson = (string)value!;
-                        break;
                     case nameof(Project.SubmittedFundingStreamFreeText):
                         SubmittedFundingStreamFreeText = (string)value!;
                         break;
@@ -138,15 +135,6 @@ namespace Webfuel.Domain
                     case nameof(Project.FileStorageGroupId):
                         FileStorageGroupId = (Guid)value!;
                         break;
-                    case nameof(Project.IsQuantativeTeamContributionId):
-                        IsQuantativeTeamContributionId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
-                        break;
-                    case nameof(Project.IsCTUTeamContributionId):
-                        IsCTUTeamContributionId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
-                        break;
-                    case nameof(Project.IsPPIEAndEDIContributionId):
-                        IsPPIEAndEDIContributionId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
-                        break;
                     case nameof(Project.SubmittedFundingStreamId):
                         SubmittedFundingStreamId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
@@ -203,18 +191,6 @@ namespace Webfuel.Domain
         public string PrefixedNumber  { get; set; } = String.Empty;
         public Guid? SupportRequestId  { get; set; } = null;
         public DateOnly? ClosureDate  { get; set; } = null;
-        public List<Guid> NIHRRSSMemberCollaboratorIds
-        {
-            get { return _NIHRRSSMemberCollaboratorIds ?? (_NIHRRSSMemberCollaboratorIds = SafeJsonSerializer.Deserialize<List<Guid>>(_NIHRRSSMemberCollaboratorIdsJson)); }
-            set { _NIHRRSSMemberCollaboratorIds = value; }
-        }
-        List<Guid>? _NIHRRSSMemberCollaboratorIds = null;
-        internal string NIHRRSSMemberCollaboratorIdsJson
-        {
-            get { var result = _NIHRRSSMemberCollaboratorIds == null ? _NIHRRSSMemberCollaboratorIdsJson : (_NIHRRSSMemberCollaboratorIdsJson = SafeJsonSerializer.Serialize(_NIHRRSSMemberCollaboratorIds)); _NIHRRSSMemberCollaboratorIds = null; return result; }
-            set { _NIHRRSSMemberCollaboratorIdsJson = value; _NIHRRSSMemberCollaboratorIds = null; }
-        }
-        string _NIHRRSSMemberCollaboratorIdsJson = String.Empty;
         public string SubmittedFundingStreamFreeText  { get; set; } = String.Empty;
         public string SubmittedFundingStreamName  { get; set; } = String.Empty;
         public DateOnly? ProjectStartDate  { get; set; } = null;
@@ -249,9 +225,6 @@ namespace Webfuel.Domain
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid StatusId { get; set; }
         public Guid FileStorageGroupId { get; set; }
-        public Guid? IsQuantativeTeamContributionId { get; set; }
-        public Guid? IsCTUTeamContributionId { get; set; }
-        public Guid? IsPPIEAndEDIContributionId { get; set; }
         public Guid? SubmittedFundingStreamId { get; set; }
         public Guid? IsInternationalMultiSiteStudyId { get; set; }
         public Guid? IsFellowshipId { get; set; }
@@ -276,7 +249,6 @@ namespace Webfuel.Domain
             entity.PrefixedNumber = PrefixedNumber;
             entity.SupportRequestId = SupportRequestId;
             entity.ClosureDate = ClosureDate;
-            entity.NIHRRSSMemberCollaboratorIdsJson = NIHRRSSMemberCollaboratorIdsJson;
             entity.SubmittedFundingStreamFreeText = SubmittedFundingStreamFreeText;
             entity.SubmittedFundingStreamName = SubmittedFundingStreamName;
             entity.ProjectStartDate = ProjectStartDate;
@@ -311,9 +283,6 @@ namespace Webfuel.Domain
             entity.CreatedAt = CreatedAt;
             entity.StatusId = StatusId;
             entity.FileStorageGroupId = FileStorageGroupId;
-            entity.IsQuantativeTeamContributionId = IsQuantativeTeamContributionId;
-            entity.IsCTUTeamContributionId = IsCTUTeamContributionId;
-            entity.IsPPIEAndEDIContributionId = IsPPIEAndEDIContributionId;
             entity.SubmittedFundingStreamId = SubmittedFundingStreamId;
             entity.IsInternationalMultiSiteStudyId = IsInternationalMultiSiteStudyId;
             entity.IsFellowshipId = IsFellowshipId;

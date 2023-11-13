@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,6 @@ namespace Webfuel.Domain
 {
     public interface ICreateProjectService
     {
-        Task<Project> CreateProject(CreateProject command);
-
         Task<Project> CreateProject(SupportRequest supportRequest);
     }
 
@@ -22,15 +21,12 @@ namespace Webfuel.Domain
         private readonly IProjectRepository _projectRepository;
         private readonly IConfigurationService _configurationService;
 
-        public CreateProjectService(IProjectRepository projectRepository, IConfigurationService configurationService)
+        public CreateProjectService(
+            IProjectRepository projectRepository, 
+            IConfigurationService configurationService)
         {
             _projectRepository = projectRepository;
             _configurationService = configurationService;
-        }
-
-        public Task<Project> CreateProject(CreateProject request)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<Project> CreateProject(SupportRequest supportRequest)

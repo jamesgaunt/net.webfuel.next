@@ -32,7 +32,6 @@ export class UpdateProjectSupportDialogComponent extends DialogComponentBase<Pro
     private formService: FormService,
     private projectSupportApi: ProjectSupportApi,
     public userApi: UserApi,
-    public supportTeamApi: SupportTeamApi,
     public staticDataCache: StaticDataCache,
   ) {
     super();

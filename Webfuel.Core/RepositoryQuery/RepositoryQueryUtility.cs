@@ -31,7 +31,7 @@ namespace Webfuel
         {
             if (query.Skip == 0 && query.Take == 0)
                 return String.Empty;
-            return $"OFFSET {query.Skip} ROWS FETCH NEXT {(query.Take > 0 ? query.Take : 99999999)} ROWS ONLY";
+            return $"OFFSET {query.Skip} ROWS FETCH NEXT {(query.Take > 0 ? query.Take : 1000)} ROWS ONLY";
         }
 
         public static string Field(string field)

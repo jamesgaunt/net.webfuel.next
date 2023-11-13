@@ -21,6 +21,11 @@ namespace Webfuel.Domain
             updated.WorkActivityId = request.WorkActivityId;
             updated.Description = request.Description;
 
+            // Ensure project activity is cleared
+            updated.ProjectId = null;
+            updated.ProjectPrefixedNumber = String.Empty;
+            updated.ProjectSupportProvidedIds.Clear();
+
             return await _userActivityRepository.UpdateUserActivity(updated: updated, original: userActivity);
         }
     }

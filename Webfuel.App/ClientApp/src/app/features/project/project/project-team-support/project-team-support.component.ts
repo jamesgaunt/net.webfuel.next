@@ -50,13 +50,6 @@ export class ProjectTeamSupportComponent implements OnInit {
 
   item!: Project;
 
-  openOnly = false;
-
-  toggleOpenOnly() {
-    this.openOnly = !this.openOnly;
-    this.loadProjectTeamSupport();
-  }
-
   reset(item: Project) {
     this.item = item;
   }
@@ -74,7 +67,7 @@ export class ProjectTeamSupportComponent implements OnInit {
   items: ProjectTeamSupport[] | null = null;
 
   loadProjectTeamSupport() {
-    this.projectTeamSupportApi.query({ projectId: this.item.id, skip: 0, take: 100, openOnly: this.openOnly }).subscribe((result) => {
+    this.projectTeamSupportApi.query({ projectId: this.item.id, skip: 0, take: 100 }).subscribe((result) => {
       this.items = result.items;
     })
   }

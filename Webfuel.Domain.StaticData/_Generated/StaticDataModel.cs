@@ -30,6 +30,7 @@ namespace Webfuel.Domain.StaticData
         IReadOnlyList<SubmissionStage> SubmissionStage { get; }
         IReadOnlyList<SupportProvided> SupportProvided { get; }
         IReadOnlyList<SupportRequestStatus> SupportRequestStatus { get; }
+        IReadOnlyList<SupportTeam> SupportTeam { get; }
         IReadOnlyList<Title> Title { get; }
         IReadOnlyList<UserDiscipline> UserDiscipline { get; }
         IReadOnlyList<WorkActivity> WorkActivity { get; }
@@ -63,6 +64,7 @@ namespace Webfuel.Domain.StaticData
         public required IReadOnlyList<SubmissionStage> SubmissionStage { get; init; }
         public required IReadOnlyList<SupportProvided> SupportProvided { get; init; }
         public required IReadOnlyList<SupportRequestStatus> SupportRequestStatus { get; init; }
+        public required IReadOnlyList<SupportTeam> SupportTeam { get; init; }
         public required IReadOnlyList<Title> Title { get; init; }
         public required IReadOnlyList<UserDiscipline> UserDiscipline { get; init; }
         public required IReadOnlyList<WorkActivity> WorkActivity { get; init; }
@@ -98,6 +100,7 @@ namespace Webfuel.Domain.StaticData
                 SubmissionStage = await serviceProvider.GetRequiredService<ISubmissionStageRepository>().SelectSubmissionStage(),
                 SupportProvided = await serviceProvider.GetRequiredService<ISupportProvidedRepository>().SelectSupportProvided(),
                 SupportRequestStatus = await serviceProvider.GetRequiredService<ISupportRequestStatusRepository>().SelectSupportRequestStatus(),
+                SupportTeam = await serviceProvider.GetRequiredService<ISupportTeamRepository>().SelectSupportTeam(),
                 Title = await serviceProvider.GetRequiredService<ITitleRepository>().SelectTitle(),
                 UserDiscipline = await serviceProvider.GetRequiredService<IUserDisciplineRepository>().SelectUserDiscipline(),
                 WorkActivity = await serviceProvider.GetRequiredService<IWorkActivityRepository>().SelectWorkActivity(),

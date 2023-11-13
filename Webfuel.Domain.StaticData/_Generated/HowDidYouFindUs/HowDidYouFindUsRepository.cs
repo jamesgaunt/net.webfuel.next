@@ -33,6 +33,7 @@ namespace Webfuel.Domain.StaticData
         public async Task<HowDidYouFindUs> InsertHowDidYouFindUs(HowDidYouFindUs entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            HowDidYouFindUsMetadata.Validate(entity);
             var sql = HowDidYouFindUsMetadata.InsertSQL();
             var parameters = HowDidYouFindUsMetadata.ExtractParameters(entity, HowDidYouFindUsMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -40,6 +41,7 @@ namespace Webfuel.Domain.StaticData
         }
         public async Task<HowDidYouFindUs> UpdateHowDidYouFindUs(HowDidYouFindUs entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            HowDidYouFindUsMetadata.Validate(entity);
             var sql = HowDidYouFindUsMetadata.UpdateSQL();
             var parameters = HowDidYouFindUsMetadata.ExtractParameters(entity, HowDidYouFindUsMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

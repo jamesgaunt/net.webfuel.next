@@ -120,6 +120,7 @@ export interface IStaticDataModel {
     submissionStage: Array<SubmissionStage>;
     supportProvided: Array<SupportProvided>;
     supportRequestStatus: Array<SupportRequestStatus>;
+    supportTeam: Array<SupportTeam>;
     title: Array<Title>;
     userDiscipline: Array<UserDiscipline>;
     workActivity: Array<WorkActivity>;
@@ -350,6 +351,14 @@ export interface SupportRequestStatus extends IStaticData {
     freeText: boolean;
 }
 
+export interface SupportTeam extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+}
+
 export interface Title extends IStaticData {
     id: string;
     name: string;
@@ -381,7 +390,6 @@ export interface Project {
     prefixedNumber: string;
     supportRequestId: string | null | null;
     closureDate: string | null | null;
-    nihrrssMemberCollaboratorIds: Array<string>;
     submittedFundingStreamFreeText: string;
     submittedFundingStreamName: string;
     projectStartDate: string | null | null;
@@ -416,9 +424,6 @@ export interface Project {
     createdAt: string;
     statusId: string;
     fileStorageGroupId: string;
-    isQuantativeTeamContributionId: string | null | null;
-    isCTUTeamContributionId: string | null | null;
-    isPPIEAndEDIContributionId: string | null | null;
     submittedFundingStreamId: string | null | null;
     isInternationalMultiSiteStudyId: string | null | null;
     isFellowshipId: string | null | null;
@@ -437,15 +442,8 @@ export interface Project {
     leadApplicantEthnicityId: string | null | null;
 }
 
-export interface CreateProject {
-    title: string;
-}
-
 export interface UpdateProject {
     id: string;
-    isQuantativeTeamContributionId: string | null | null;
-    isCTUTeamContributionId: string | null | null;
-    isPPIEAndEDIContributionId: string | null | null;
     submittedFundingStreamId: string | null | null;
     submittedFundingStreamFreeText: string;
     submittedFundingStreamName: string;
@@ -511,10 +509,10 @@ export interface QueryProjectSubmission extends Query {
 export interface ProjectSupport {
     id: string;
     date: string;
+    description: string;
     teamIds: Array<string>;
     adviserIds: Array<string>;
     supportProvidedIds: Array<string>;
-    description: string;
     projectId: string;
 }
 
@@ -577,7 +575,6 @@ export interface CompleteProjectTeamSupport {
 
 export interface QueryProjectTeamSupport extends Query {
     projectId: string;
-    openOnly: boolean;
     skip: number;
     take: number;
     projection?: Array<string>;
@@ -710,6 +707,8 @@ export interface UpdateSupportRequestResearcher {
 export interface TriageSupportRequest {
     id: string;
     statusId: string;
+    supportProvidedIds: Array<string>;
+    description: string;
 }
 
 export interface QuerySupportRequest extends Query {
@@ -718,34 +717,6 @@ export interface QuerySupportRequest extends Query {
     fromDate: string | null | null;
     toDate: string | null | null;
     statusId: string | null | null;
-    skip: number;
-    take: number;
-    projection?: Array<string>;
-    filters?: Array<QueryFilter>;
-    sort?: Array<QuerySort>;
-    search?: string;
-}
-
-export interface SupportTeam {
-    id: string;
-    name: string;
-    sortOrder: number;
-}
-
-export interface CreateSupportTeam {
-    name: string;
-}
-
-export interface UpdateSupportTeam {
-    id: string;
-    name: string;
-}
-
-export interface SortSupportTeam {
-    ids: Array<string>;
-}
-
-export interface QuerySupportTeam extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;
@@ -782,11 +753,16 @@ export interface QuerySupportTeamUser extends Query {
 }
 
 export interface UserActivity {
+    isProjectActivity: boolean;
     id: string;
     date: string;
     description: string;
+    projectPrefixedNumber: string;
+    projectSupportProvidedIds: Array<string>;
     userId: string;
-    workActivityId: string;
+    workActivityId: string | null | null;
+    projectId: string | null | null;
+    projectSupportId: string | null | null;
 }
 
 export interface CreateUserActivity {
@@ -1415,6 +1391,15 @@ export interface QuerySupportProvided extends Query {
 }
 
 export interface QuerySupportRequestStatus extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface QuerySupportTeam extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;

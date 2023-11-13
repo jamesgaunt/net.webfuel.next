@@ -104,6 +104,7 @@ namespace Webfuel.Tools.Datafuel
             using (sb.OpenBrace($"public async Task<{entity.Name}> Insert{entity.Name}({entity.Name} entity, RepositoryCommandBuffer? commandBuffer = null)"))
             {
                 sb.WriteLine($"if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();");
+                sb.WriteLine($"{entity.Name}Metadata.Validate(entity);");
                 sb.WriteLine($"var sql = {entity.Name}Metadata.InsertSQL();");
                 sb.WriteLine($"var parameters = {entity.Name}Metadata.ExtractParameters(entity, {entity.Name}Metadata.InsertProperties);");
                 sb.WriteLine($"await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);");
@@ -115,6 +116,7 @@ namespace Webfuel.Tools.Datafuel
         {
             using (sb.OpenBrace($"public async Task<{entity.Name}> Update{entity.Name}({entity.Name} entity, RepositoryCommandBuffer? commandBuffer = null)"))
             {
+                sb.WriteLine($"{entity.Name}Metadata.Validate(entity);");
                 sb.WriteLine($"var sql = {entity.Name}Metadata.UpdateSQL();");
                 sb.WriteLine($"var parameters = {entity.Name}Metadata.ExtractParameters(entity, {entity.Name}Metadata.UpdateProperties);");
                 sb.WriteLine($"await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);");

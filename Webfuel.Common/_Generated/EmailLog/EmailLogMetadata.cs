@@ -191,20 +191,23 @@ namespace Webfuel.Common
             ruleBuilder
                 .NotNull();
         }
-        
-        public class EmailLogRepositoryValidator: AbstractValidator<EmailLog>
+    }
+    
+    public partial class EmailLogRepositoryValidator: AbstractValidator<EmailLog>
+    {
+        public EmailLogRepositoryValidator()
         {
-            public EmailLogRepositoryValidator()
-            {
-                RuleFor(x => x.SendTo).Use(SendTo_ValidationRules);
-                RuleFor(x => x.SendCc).Use(SendCc_ValidationRules);
-                RuleFor(x => x.SendBcc).Use(SendBcc_ValidationRules);
-                RuleFor(x => x.SentBy).Use(SentBy_ValidationRules);
-                RuleFor(x => x.ReplyTo).Use(ReplyTo_ValidationRules);
-                RuleFor(x => x.Subject).Use(Subject_ValidationRules);
-                RuleFor(x => x.HtmlBody).Use(HtmlBody_ValidationRules);
-            }
+            RuleFor(x => x.SendTo).Use(EmailLogMetadata.SendTo_ValidationRules);
+            RuleFor(x => x.SendCc).Use(EmailLogMetadata.SendCc_ValidationRules);
+            RuleFor(x => x.SendBcc).Use(EmailLogMetadata.SendBcc_ValidationRules);
+            RuleFor(x => x.SentBy).Use(EmailLogMetadata.SentBy_ValidationRules);
+            RuleFor(x => x.ReplyTo).Use(EmailLogMetadata.ReplyTo_ValidationRules);
+            RuleFor(x => x.Subject).Use(EmailLogMetadata.Subject_ValidationRules);
+            RuleFor(x => x.HtmlBody).Use(EmailLogMetadata.HtmlBody_ValidationRules);
+            Validation();
         }
+        
+        partial void Validation();
     }
 }
 

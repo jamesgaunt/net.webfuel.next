@@ -11,9 +11,6 @@ namespace Webfuel.Domain
     {
         public required Guid Id { get; set; }
 
-        public Guid? IsQuantativeTeamContributionId { get; set; }
-        public Guid? IsCTUTeamContributionId { get; set; }
-        public Guid? IsPPIEAndEDIContributionId { get; set; }
         public Guid? SubmittedFundingStreamId { get; set; }
         public string SubmittedFundingStreamFreeText { get; set; } = String.Empty;
         public string SubmittedFundingStreamName { get; set; } = String.Empty;

@@ -33,6 +33,7 @@ namespace Webfuel.Domain.StaticData
         public async Task<ResearcherOrganisationType> InsertResearcherOrganisationType(ResearcherOrganisationType entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            ResearcherOrganisationTypeMetadata.Validate(entity);
             var sql = ResearcherOrganisationTypeMetadata.InsertSQL();
             var parameters = ResearcherOrganisationTypeMetadata.ExtractParameters(entity, ResearcherOrganisationTypeMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -40,6 +41,7 @@ namespace Webfuel.Domain.StaticData
         }
         public async Task<ResearcherOrganisationType> UpdateResearcherOrganisationType(ResearcherOrganisationType entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            ResearcherOrganisationTypeMetadata.Validate(entity);
             var sql = ResearcherOrganisationTypeMetadata.UpdateSQL();
             var parameters = ResearcherOrganisationTypeMetadata.ExtractParameters(entity, ResearcherOrganisationTypeMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

@@ -137,16 +137,19 @@ namespace Webfuel.Common
                 .NotNull()
                 .MaximumLength(ReplyTo_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
-        
-        public class ConfigurationRepositoryValidator: AbstractValidator<Configuration>
+    }
+    
+    public partial class ConfigurationRepositoryValidator: AbstractValidator<Configuration>
+    {
+        public ConfigurationRepositoryValidator()
         {
-            public ConfigurationRepositoryValidator()
-            {
-                RuleFor(x => x.Prefix).Use(Prefix_ValidationRules);
-                RuleFor(x => x.DomainName).Use(DomainName_ValidationRules);
-                RuleFor(x => x.ReplyTo).Use(ReplyTo_ValidationRules);
-            }
+            RuleFor(x => x.Prefix).Use(ConfigurationMetadata.Prefix_ValidationRules);
+            RuleFor(x => x.DomainName).Use(ConfigurationMetadata.DomainName_ValidationRules);
+            RuleFor(x => x.ReplyTo).Use(ConfigurationMetadata.ReplyTo_ValidationRules);
+            Validation();
         }
+        
+        partial void Validation();
     }
 }
 

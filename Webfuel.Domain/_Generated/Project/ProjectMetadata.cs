@@ -35,9 +35,6 @@ namespace Webfuel.Domain
                     case nameof(Project.ClosureDate):
                         result.Add(new SqlParameter(nameof(Project.ClosureDate), entity.ClosureDate ?? (object?)DBNull.Value));
                         break;
-                    case nameof(Project.NIHRRSSMemberCollaboratorIds):
-                        result.Add(new SqlParameter(nameof(Project.NIHRRSSMemberCollaboratorIds), entity.NIHRRSSMemberCollaboratorIdsJson));
-                        break;
                     case nameof(Project.SubmittedFundingStreamFreeText):
                         result.Add(new SqlParameter(nameof(Project.SubmittedFundingStreamFreeText), entity.SubmittedFundingStreamFreeText));
                         break;
@@ -140,15 +137,6 @@ namespace Webfuel.Domain
                     case nameof(Project.FileStorageGroupId):
                         result.Add(new SqlParameter(nameof(Project.FileStorageGroupId), entity.FileStorageGroupId));
                         break;
-                    case nameof(Project.IsQuantativeTeamContributionId):
-                        result.Add(new SqlParameter(nameof(Project.IsQuantativeTeamContributionId), entity.IsQuantativeTeamContributionId ?? (object?)DBNull.Value));
-                        break;
-                    case nameof(Project.IsCTUTeamContributionId):
-                        result.Add(new SqlParameter(nameof(Project.IsCTUTeamContributionId), entity.IsCTUTeamContributionId ?? (object?)DBNull.Value));
-                        break;
-                    case nameof(Project.IsPPIEAndEDIContributionId):
-                        result.Add(new SqlParameter(nameof(Project.IsPPIEAndEDIContributionId), entity.IsPPIEAndEDIContributionId ?? (object?)DBNull.Value));
-                        break;
                     case nameof(Project.SubmittedFundingStreamId):
                         result.Add(new SqlParameter(nameof(Project.SubmittedFundingStreamId), entity.SubmittedFundingStreamId ?? (object?)DBNull.Value));
                         break;
@@ -228,7 +216,6 @@ namespace Webfuel.Domain
                 yield return "PrefixedNumber";
                 yield return "SupportRequestId";
                 yield return "ClosureDate";
-                yield return "NIHRRSSMemberCollaboratorIds";
                 yield return "SubmittedFundingStreamFreeText";
                 yield return "SubmittedFundingStreamName";
                 yield return "ProjectStartDate";
@@ -263,9 +250,6 @@ namespace Webfuel.Domain
                 yield return "CreatedAt";
                 yield return "StatusId";
                 yield return "FileStorageGroupId";
-                yield return "IsQuantativeTeamContributionId";
-                yield return "IsCTUTeamContributionId";
-                yield return "IsPPIEAndEDIContributionId";
                 yield return "SubmittedFundingStreamId";
                 yield return "IsInternationalMultiSiteStudyId";
                 yield return "IsFellowshipId";
@@ -294,7 +278,6 @@ namespace Webfuel.Domain
                 yield return "PrefixedNumber";
                 yield return "SupportRequestId";
                 yield return "ClosureDate";
-                yield return "NIHRRSSMemberCollaboratorIds";
                 yield return "SubmittedFundingStreamFreeText";
                 yield return "SubmittedFundingStreamName";
                 yield return "ProjectStartDate";
@@ -329,9 +312,6 @@ namespace Webfuel.Domain
                 yield return "CreatedAt";
                 yield return "StatusId";
                 yield return "FileStorageGroupId";
-                yield return "IsQuantativeTeamContributionId";
-                yield return "IsCTUTeamContributionId";
-                yield return "IsPPIEAndEDIContributionId";
                 yield return "SubmittedFundingStreamId";
                 yield return "IsInternationalMultiSiteStudyId";
                 yield return "IsFellowshipId";
@@ -359,7 +339,6 @@ namespace Webfuel.Domain
                 yield return "PrefixedNumber";
                 yield return "SupportRequestId";
                 yield return "ClosureDate";
-                yield return "NIHRRSSMemberCollaboratorIds";
                 yield return "SubmittedFundingStreamFreeText";
                 yield return "SubmittedFundingStreamName";
                 yield return "ProjectStartDate";
@@ -394,9 +373,6 @@ namespace Webfuel.Domain
                 yield return "CreatedAt";
                 yield return "StatusId";
                 yield return "FileStorageGroupId";
-                yield return "IsQuantativeTeamContributionId";
-                yield return "IsCTUTeamContributionId";
-                yield return "IsPPIEAndEDIContributionId";
                 yield return "SubmittedFundingStreamId";
                 yield return "IsInternationalMultiSiteStudyId";
                 yield return "IsFellowshipId";
@@ -675,38 +651,41 @@ namespace Webfuel.Domain
                 .NotNull()
                 .MaximumLength(LeadApplicantORCID_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
-        
-        public class ProjectRepositoryValidator: AbstractValidator<Project>
+    }
+    
+    public partial class ProjectRepositoryValidator: AbstractValidator<Project>
+    {
+        public ProjectRepositoryValidator()
         {
-            public ProjectRepositoryValidator()
-            {
-                RuleFor(x => x.PrefixedNumber).Use(PrefixedNumber_ValidationRules);
-                RuleFor(x => x.SubmittedFundingStreamFreeText).Use(SubmittedFundingStreamFreeText_ValidationRules);
-                RuleFor(x => x.SubmittedFundingStreamName).Use(SubmittedFundingStreamName_ValidationRules);
-                RuleFor(x => x.Title).Use(Title_ValidationRules);
-                RuleFor(x => x.ProposedFundingStreamName).Use(ProposedFundingStreamName_ValidationRules);
-                RuleFor(x => x.ExperienceOfResearchAwards).Use(ExperienceOfResearchAwards_ValidationRules);
-                RuleFor(x => x.BriefDescription).Use(BriefDescription_ValidationRules);
-                RuleFor(x => x.SupportRequested).Use(SupportRequested_ValidationRules);
-                RuleFor(x => x.TeamContactTitle).Use(TeamContactTitle_ValidationRules);
-                RuleFor(x => x.TeamContactFirstName).Use(TeamContactFirstName_ValidationRules);
-                RuleFor(x => x.TeamContactLastName).Use(TeamContactLastName_ValidationRules);
-                RuleFor(x => x.TeamContactEmail).Use(TeamContactEmail_ValidationRules);
-                RuleFor(x => x.LeadApplicantTitle).Use(LeadApplicantTitle_ValidationRules);
-                RuleFor(x => x.LeadApplicantFirstName).Use(LeadApplicantFirstName_ValidationRules);
-                RuleFor(x => x.LeadApplicantLastName).Use(LeadApplicantLastName_ValidationRules);
-                RuleFor(x => x.LeadApplicantJobRole).Use(LeadApplicantJobRole_ValidationRules);
-                RuleFor(x => x.LeadApplicantOrganisation).Use(LeadApplicantOrganisation_ValidationRules);
-                RuleFor(x => x.LeadApplicantDepartment).Use(LeadApplicantDepartment_ValidationRules);
-                RuleFor(x => x.LeadApplicantAddressLine1).Use(LeadApplicantAddressLine1_ValidationRules);
-                RuleFor(x => x.LeadApplicantAddressLine2).Use(LeadApplicantAddressLine2_ValidationRules);
-                RuleFor(x => x.LeadApplicantAddressTown).Use(LeadApplicantAddressTown_ValidationRules);
-                RuleFor(x => x.LeadApplicantAddressCounty).Use(LeadApplicantAddressCounty_ValidationRules);
-                RuleFor(x => x.LeadApplicantAddressCountry).Use(LeadApplicantAddressCountry_ValidationRules);
-                RuleFor(x => x.LeadApplicantAddressPostcode).Use(LeadApplicantAddressPostcode_ValidationRules);
-                RuleFor(x => x.LeadApplicantORCID).Use(LeadApplicantORCID_ValidationRules);
-            }
+            RuleFor(x => x.PrefixedNumber).Use(ProjectMetadata.PrefixedNumber_ValidationRules);
+            RuleFor(x => x.SubmittedFundingStreamFreeText).Use(ProjectMetadata.SubmittedFundingStreamFreeText_ValidationRules);
+            RuleFor(x => x.SubmittedFundingStreamName).Use(ProjectMetadata.SubmittedFundingStreamName_ValidationRules);
+            RuleFor(x => x.Title).Use(ProjectMetadata.Title_ValidationRules);
+            RuleFor(x => x.ProposedFundingStreamName).Use(ProjectMetadata.ProposedFundingStreamName_ValidationRules);
+            RuleFor(x => x.ExperienceOfResearchAwards).Use(ProjectMetadata.ExperienceOfResearchAwards_ValidationRules);
+            RuleFor(x => x.BriefDescription).Use(ProjectMetadata.BriefDescription_ValidationRules);
+            RuleFor(x => x.SupportRequested).Use(ProjectMetadata.SupportRequested_ValidationRules);
+            RuleFor(x => x.TeamContactTitle).Use(ProjectMetadata.TeamContactTitle_ValidationRules);
+            RuleFor(x => x.TeamContactFirstName).Use(ProjectMetadata.TeamContactFirstName_ValidationRules);
+            RuleFor(x => x.TeamContactLastName).Use(ProjectMetadata.TeamContactLastName_ValidationRules);
+            RuleFor(x => x.TeamContactEmail).Use(ProjectMetadata.TeamContactEmail_ValidationRules);
+            RuleFor(x => x.LeadApplicantTitle).Use(ProjectMetadata.LeadApplicantTitle_ValidationRules);
+            RuleFor(x => x.LeadApplicantFirstName).Use(ProjectMetadata.LeadApplicantFirstName_ValidationRules);
+            RuleFor(x => x.LeadApplicantLastName).Use(ProjectMetadata.LeadApplicantLastName_ValidationRules);
+            RuleFor(x => x.LeadApplicantJobRole).Use(ProjectMetadata.LeadApplicantJobRole_ValidationRules);
+            RuleFor(x => x.LeadApplicantOrganisation).Use(ProjectMetadata.LeadApplicantOrganisation_ValidationRules);
+            RuleFor(x => x.LeadApplicantDepartment).Use(ProjectMetadata.LeadApplicantDepartment_ValidationRules);
+            RuleFor(x => x.LeadApplicantAddressLine1).Use(ProjectMetadata.LeadApplicantAddressLine1_ValidationRules);
+            RuleFor(x => x.LeadApplicantAddressLine2).Use(ProjectMetadata.LeadApplicantAddressLine2_ValidationRules);
+            RuleFor(x => x.LeadApplicantAddressTown).Use(ProjectMetadata.LeadApplicantAddressTown_ValidationRules);
+            RuleFor(x => x.LeadApplicantAddressCounty).Use(ProjectMetadata.LeadApplicantAddressCounty_ValidationRules);
+            RuleFor(x => x.LeadApplicantAddressCountry).Use(ProjectMetadata.LeadApplicantAddressCountry_ValidationRules);
+            RuleFor(x => x.LeadApplicantAddressPostcode).Use(ProjectMetadata.LeadApplicantAddressPostcode_ValidationRules);
+            RuleFor(x => x.LeadApplicantORCID).Use(ProjectMetadata.LeadApplicantORCID_ValidationRules);
+            Validation();
         }
+        
+        partial void Validation();
     }
 }
 

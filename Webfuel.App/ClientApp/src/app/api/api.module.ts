@@ -9,7 +9,6 @@ import { ProjectSupportApi } from './project-support.api';
 import { ProjectTeamSupportApi } from './project-team-support.api';
 import { ResearcherApi } from './researcher.api';
 import { SupportRequestApi } from './support-request.api';
-import { SupportTeamApi } from './support-team.api';
 import { SupportTeamUserApi } from './support-team-user.api';
 import { UserActivityApi } from './user-activity.api';
 import { UserApi } from './user.api';
@@ -41,6 +40,7 @@ import { SubmissionOutcomeApi } from './submission-outcome.api';
 import { SubmissionStageApi } from './submission-stage.api';
 import { SupportProvidedApi } from './support-provided.api';
 import { SupportRequestStatusApi } from './support-request-status.api';
+import { SupportTeamApi } from './support-team.api';
 import { TitleApi } from './title.api';
 import { UserDisciplineApi } from './user-discipline.api';
 import { WorkActivityApi } from './work-activity.api';
@@ -58,7 +58,6 @@ import { StaticDataCache } from './static-data.cache';
         ProjectTeamSupportApi,
         ResearcherApi,
         SupportRequestApi,
-        SupportTeamApi,
         SupportTeamUserApi,
         UserActivityApi,
         UserApi,
@@ -90,6 +89,7 @@ import { StaticDataCache } from './static-data.cache';
         SubmissionStageApi,
         SupportProvidedApi,
         SupportRequestStatusApi,
+        SupportTeamApi,
         TitleApi,
         UserDisciplineApi,
         WorkActivityApi,

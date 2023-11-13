@@ -38,6 +38,24 @@ namespace Webfuel.Tools.Datafuel
                 {
                     Metadata(sb, entity);  
                 }
+
+                sb.WriteLine();
+                using (sb.OpenBrace($"public partial class {entity.Name}RepositoryValidator: AbstractValidator<{entity.Name}>"))
+                {
+                    using (sb.OpenBrace($"public {entity.Name}RepositoryValidator()"))
+                    {
+                        foreach (var member in entity.Members)
+                        {
+                            if (member.GenerateValidationRules().Count() == 0)
+                                continue;
+
+                            sb.WriteLine($"RuleFor(x => x.{member.Name}).Use({entity.Name}Metadata.{member.Name}_ValidationRules);");
+                        }
+                        sb.WriteLine("Validation();");
+                    }
+                    sb.WriteLine();
+                    sb.WriteLine("partial void Validation();");
+                }
             }
 
             return sb.ToString();
@@ -177,20 +195,7 @@ namespace Webfuel.Tools.Datafuel
                 }
             }
 
-            sb.WriteLine();
-            using (sb.OpenBrace($"public class {entity.Name}RepositoryValidator: AbstractValidator<{entity.Name}>"))
-            {
-                using (sb.OpenBrace($"public {entity.Name}RepositoryValidator()"))
-                {
-                    foreach (var member in entity.Members)
-                    {
-                        if (member.GenerateValidationRules().Count() == 0)
-                            continue;
 
-                        sb.WriteLine($"RuleFor(x => x.{member.Name}).Use({member.Name}_ValidationRules);");
-                    }
-                }
-            }
         }
     }
 }

@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Net;
+using System.Text.Json.Serialization;
 
 namespace Webfuel
 {
     [ApiType]
+    [JsonDerivedType(typeof(ValidationProblemDetails))]
     public class ProblemDetails
     {
         public string Type { get; set; } = String.Empty;

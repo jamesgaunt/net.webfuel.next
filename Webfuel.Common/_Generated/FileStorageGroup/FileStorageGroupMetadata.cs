@@ -83,13 +83,16 @@ namespace Webfuel.Common
         
         public static FileStorageGroupRepositoryValidator Validator { get; } = new FileStorageGroupRepositoryValidator();
         
-        
-        public class FileStorageGroupRepositoryValidator: AbstractValidator<FileStorageGroup>
+    }
+    
+    public partial class FileStorageGroupRepositoryValidator: AbstractValidator<FileStorageGroup>
+    {
+        public FileStorageGroupRepositoryValidator()
         {
-            public FileStorageGroupRepositoryValidator()
-            {
-            }
+            Validation();
         }
+        
+        partial void Validation();
     }
 }
 

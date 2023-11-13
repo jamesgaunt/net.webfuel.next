@@ -29,7 +29,12 @@ export class UpdateUserActivityDialogComponent extends DialogComponentBase<UserA
     public staticDataCache: StaticDataCache,
   ) {
     super();
-    this.form.patchValue(this. data.userActivity);
+    this.form.patchValue({
+      id: this.data.userActivity.id,
+      date: this.data.userActivity.date,
+      workActivityId: this.data.userActivity.workActivityId!,
+      description: this.data.userActivity.description
+    });
   }
 
   form = new FormGroup({

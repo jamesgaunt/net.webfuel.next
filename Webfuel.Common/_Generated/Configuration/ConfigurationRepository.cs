@@ -31,6 +31,7 @@ namespace Webfuel.Common
         public async Task<Configuration> InsertConfiguration(Configuration entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            ConfigurationMetadata.Validate(entity);
             var sql = ConfigurationMetadata.InsertSQL();
             var parameters = ConfigurationMetadata.ExtractParameters(entity, ConfigurationMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -38,6 +39,7 @@ namespace Webfuel.Common
         }
         public async Task<Configuration> UpdateConfiguration(Configuration entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            ConfigurationMetadata.Validate(entity);
             var sql = ConfigurationMetadata.UpdateSQL();
             var parameters = ConfigurationMetadata.ExtractParameters(entity, ConfigurationMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

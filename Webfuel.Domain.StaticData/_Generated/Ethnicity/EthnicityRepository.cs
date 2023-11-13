@@ -33,6 +33,7 @@ namespace Webfuel.Domain.StaticData
         public async Task<Ethnicity> InsertEthnicity(Ethnicity entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            EthnicityMetadata.Validate(entity);
             var sql = EthnicityMetadata.InsertSQL();
             var parameters = EthnicityMetadata.ExtractParameters(entity, EthnicityMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -40,6 +41,7 @@ namespace Webfuel.Domain.StaticData
         }
         public async Task<Ethnicity> UpdateEthnicity(Ethnicity entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            EthnicityMetadata.Validate(entity);
             var sql = EthnicityMetadata.UpdateSQL();
             var parameters = EthnicityMetadata.ExtractParameters(entity, EthnicityMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

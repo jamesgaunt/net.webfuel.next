@@ -26,6 +26,9 @@ namespace Webfuel.Domain
                     case nameof(ProjectSupport.Date):
                         result.Add(new SqlParameter(nameof(ProjectSupport.Date), entity.Date));
                         break;
+                    case nameof(ProjectSupport.Description):
+                        result.Add(new SqlParameter(nameof(ProjectSupport.Description), entity.Description));
+                        break;
                     case nameof(ProjectSupport.TeamIds):
                         result.Add(new SqlParameter(nameof(ProjectSupport.TeamIds), entity.TeamIdsJson));
                         break;
@@ -34,9 +37,6 @@ namespace Webfuel.Domain
                         break;
                     case nameof(ProjectSupport.SupportProvidedIds):
                         result.Add(new SqlParameter(nameof(ProjectSupport.SupportProvidedIds), entity.SupportProvidedIdsJson));
-                        break;
-                    case nameof(ProjectSupport.Description):
-                        result.Add(new SqlParameter(nameof(ProjectSupport.Description), entity.Description));
                         break;
                     case nameof(ProjectSupport.ProjectId):
                         result.Add(new SqlParameter(nameof(ProjectSupport.ProjectId), entity.ProjectId));
@@ -69,10 +69,10 @@ namespace Webfuel.Domain
             {
                 yield return "Id";
                 yield return "Date";
+                yield return "Description";
                 yield return "TeamIds";
                 yield return "AdviserIds";
                 yield return "SupportProvidedIds";
-                yield return "Description";
                 yield return "ProjectId";
             }
         }
@@ -83,10 +83,10 @@ namespace Webfuel.Domain
             {
                 yield return "Id";
                 yield return "Date";
+                yield return "Description";
                 yield return "TeamIds";
                 yield return "AdviserIds";
                 yield return "SupportProvidedIds";
-                yield return "Description";
                 yield return "ProjectId";
             }
         }
@@ -96,10 +96,10 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Date";
+                yield return "Description";
                 yield return "TeamIds";
                 yield return "AdviserIds";
                 yield return "SupportProvidedIds";
-                yield return "Description";
                 yield return "ProjectId";
             }
         }
@@ -123,14 +123,17 @@ namespace Webfuel.Domain
                 .NotNull()
                 .MaximumLength(Description_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
-        
-        public class ProjectSupportRepositoryValidator: AbstractValidator<ProjectSupport>
+    }
+    
+    public partial class ProjectSupportRepositoryValidator: AbstractValidator<ProjectSupport>
+    {
+        public ProjectSupportRepositoryValidator()
         {
-            public ProjectSupportRepositoryValidator()
-            {
-                RuleFor(x => x.Description).Use(Description_ValidationRules);
-            }
+            RuleFor(x => x.Description).Use(ProjectSupportMetadata.Description_ValidationRules);
+            Validation();
         }
+        
+        partial void Validation();
     }
 }
 

@@ -583,36 +583,39 @@ namespace Webfuel.Domain
                 .NotNull()
                 .MaximumLength(LeadApplicantORCID_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
-        
-        public class SupportRequestRepositoryValidator: AbstractValidator<SupportRequest>
+    }
+    
+    public partial class SupportRequestRepositoryValidator: AbstractValidator<SupportRequest>
+    {
+        public SupportRequestRepositoryValidator()
         {
-            public SupportRequestRepositoryValidator()
-            {
-                RuleFor(x => x.PrefixedNumber).Use(PrefixedNumber_ValidationRules);
-                RuleFor(x => x.Title).Use(Title_ValidationRules);
-                RuleFor(x => x.ProposedFundingStreamName).Use(ProposedFundingStreamName_ValidationRules);
-                RuleFor(x => x.ExperienceOfResearchAwards).Use(ExperienceOfResearchAwards_ValidationRules);
-                RuleFor(x => x.BriefDescription).Use(BriefDescription_ValidationRules);
-                RuleFor(x => x.SupportRequested).Use(SupportRequested_ValidationRules);
-                RuleFor(x => x.TeamContactTitle).Use(TeamContactTitle_ValidationRules);
-                RuleFor(x => x.TeamContactFirstName).Use(TeamContactFirstName_ValidationRules);
-                RuleFor(x => x.TeamContactLastName).Use(TeamContactLastName_ValidationRules);
-                RuleFor(x => x.TeamContactEmail).Use(TeamContactEmail_ValidationRules);
-                RuleFor(x => x.LeadApplicantTitle).Use(LeadApplicantTitle_ValidationRules);
-                RuleFor(x => x.LeadApplicantFirstName).Use(LeadApplicantFirstName_ValidationRules);
-                RuleFor(x => x.LeadApplicantLastName).Use(LeadApplicantLastName_ValidationRules);
-                RuleFor(x => x.LeadApplicantJobRole).Use(LeadApplicantJobRole_ValidationRules);
-                RuleFor(x => x.LeadApplicantOrganisation).Use(LeadApplicantOrganisation_ValidationRules);
-                RuleFor(x => x.LeadApplicantDepartment).Use(LeadApplicantDepartment_ValidationRules);
-                RuleFor(x => x.LeadApplicantAddressLine1).Use(LeadApplicantAddressLine1_ValidationRules);
-                RuleFor(x => x.LeadApplicantAddressLine2).Use(LeadApplicantAddressLine2_ValidationRules);
-                RuleFor(x => x.LeadApplicantAddressTown).Use(LeadApplicantAddressTown_ValidationRules);
-                RuleFor(x => x.LeadApplicantAddressCounty).Use(LeadApplicantAddressCounty_ValidationRules);
-                RuleFor(x => x.LeadApplicantAddressCountry).Use(LeadApplicantAddressCountry_ValidationRules);
-                RuleFor(x => x.LeadApplicantAddressPostcode).Use(LeadApplicantAddressPostcode_ValidationRules);
-                RuleFor(x => x.LeadApplicantORCID).Use(LeadApplicantORCID_ValidationRules);
-            }
+            RuleFor(x => x.PrefixedNumber).Use(SupportRequestMetadata.PrefixedNumber_ValidationRules);
+            RuleFor(x => x.Title).Use(SupportRequestMetadata.Title_ValidationRules);
+            RuleFor(x => x.ProposedFundingStreamName).Use(SupportRequestMetadata.ProposedFundingStreamName_ValidationRules);
+            RuleFor(x => x.ExperienceOfResearchAwards).Use(SupportRequestMetadata.ExperienceOfResearchAwards_ValidationRules);
+            RuleFor(x => x.BriefDescription).Use(SupportRequestMetadata.BriefDescription_ValidationRules);
+            RuleFor(x => x.SupportRequested).Use(SupportRequestMetadata.SupportRequested_ValidationRules);
+            RuleFor(x => x.TeamContactTitle).Use(SupportRequestMetadata.TeamContactTitle_ValidationRules);
+            RuleFor(x => x.TeamContactFirstName).Use(SupportRequestMetadata.TeamContactFirstName_ValidationRules);
+            RuleFor(x => x.TeamContactLastName).Use(SupportRequestMetadata.TeamContactLastName_ValidationRules);
+            RuleFor(x => x.TeamContactEmail).Use(SupportRequestMetadata.TeamContactEmail_ValidationRules);
+            RuleFor(x => x.LeadApplicantTitle).Use(SupportRequestMetadata.LeadApplicantTitle_ValidationRules);
+            RuleFor(x => x.LeadApplicantFirstName).Use(SupportRequestMetadata.LeadApplicantFirstName_ValidationRules);
+            RuleFor(x => x.LeadApplicantLastName).Use(SupportRequestMetadata.LeadApplicantLastName_ValidationRules);
+            RuleFor(x => x.LeadApplicantJobRole).Use(SupportRequestMetadata.LeadApplicantJobRole_ValidationRules);
+            RuleFor(x => x.LeadApplicantOrganisation).Use(SupportRequestMetadata.LeadApplicantOrganisation_ValidationRules);
+            RuleFor(x => x.LeadApplicantDepartment).Use(SupportRequestMetadata.LeadApplicantDepartment_ValidationRules);
+            RuleFor(x => x.LeadApplicantAddressLine1).Use(SupportRequestMetadata.LeadApplicantAddressLine1_ValidationRules);
+            RuleFor(x => x.LeadApplicantAddressLine2).Use(SupportRequestMetadata.LeadApplicantAddressLine2_ValidationRules);
+            RuleFor(x => x.LeadApplicantAddressTown).Use(SupportRequestMetadata.LeadApplicantAddressTown_ValidationRules);
+            RuleFor(x => x.LeadApplicantAddressCounty).Use(SupportRequestMetadata.LeadApplicantAddressCounty_ValidationRules);
+            RuleFor(x => x.LeadApplicantAddressCountry).Use(SupportRequestMetadata.LeadApplicantAddressCountry_ValidationRules);
+            RuleFor(x => x.LeadApplicantAddressPostcode).Use(SupportRequestMetadata.LeadApplicantAddressPostcode_ValidationRules);
+            RuleFor(x => x.LeadApplicantORCID).Use(SupportRequestMetadata.LeadApplicantORCID_ValidationRules);
+            Validation();
         }
+        
+        partial void Validation();
     }
 }
 

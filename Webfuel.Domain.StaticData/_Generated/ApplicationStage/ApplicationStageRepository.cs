@@ -33,6 +33,7 @@ namespace Webfuel.Domain.StaticData
         public async Task<ApplicationStage> InsertApplicationStage(ApplicationStage entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            ApplicationStageMetadata.Validate(entity);
             var sql = ApplicationStageMetadata.InsertSQL();
             var parameters = ApplicationStageMetadata.ExtractParameters(entity, ApplicationStageMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -40,6 +41,7 @@ namespace Webfuel.Domain.StaticData
         }
         public async Task<ApplicationStage> UpdateApplicationStage(ApplicationStage entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            ApplicationStageMetadata.Validate(entity);
             var sql = ApplicationStageMetadata.UpdateSQL();
             var parameters = ApplicationStageMetadata.ExtractParameters(entity, ApplicationStageMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

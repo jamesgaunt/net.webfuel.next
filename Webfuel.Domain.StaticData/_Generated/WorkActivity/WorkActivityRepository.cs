@@ -33,6 +33,7 @@ namespace Webfuel.Domain.StaticData
         public async Task<WorkActivity> InsertWorkActivity(WorkActivity entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            WorkActivityMetadata.Validate(entity);
             var sql = WorkActivityMetadata.InsertSQL();
             var parameters = WorkActivityMetadata.ExtractParameters(entity, WorkActivityMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -40,6 +41,7 @@ namespace Webfuel.Domain.StaticData
         }
         public async Task<WorkActivity> UpdateWorkActivity(WorkActivity entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            WorkActivityMetadata.Validate(entity);
             var sql = WorkActivityMetadata.UpdateSQL();
             var parameters = WorkActivityMetadata.ExtractParameters(entity, WorkActivityMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

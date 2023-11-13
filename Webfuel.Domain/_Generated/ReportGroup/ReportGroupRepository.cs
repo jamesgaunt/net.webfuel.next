@@ -31,6 +31,7 @@ namespace Webfuel.Domain
         public async Task<ReportGroup> InsertReportGroup(ReportGroup entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            ReportGroupMetadata.Validate(entity);
             var sql = ReportGroupMetadata.InsertSQL();
             var parameters = ReportGroupMetadata.ExtractParameters(entity, ReportGroupMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -38,6 +39,7 @@ namespace Webfuel.Domain
         }
         public async Task<ReportGroup> UpdateReportGroup(ReportGroup entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            ReportGroupMetadata.Validate(entity);
             var sql = ReportGroupMetadata.UpdateSQL();
             var parameters = ReportGroupMetadata.ExtractParameters(entity, ReportGroupMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

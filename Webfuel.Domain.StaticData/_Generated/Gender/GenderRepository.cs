@@ -33,6 +33,7 @@ namespace Webfuel.Domain.StaticData
         public async Task<Gender> InsertGender(Gender entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            GenderMetadata.Validate(entity);
             var sql = GenderMetadata.InsertSQL();
             var parameters = GenderMetadata.ExtractParameters(entity, GenderMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -40,6 +41,7 @@ namespace Webfuel.Domain.StaticData
         }
         public async Task<Gender> UpdateGender(Gender entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            GenderMetadata.Validate(entity);
             var sql = GenderMetadata.UpdateSQL();
             var parameters = GenderMetadata.ExtractParameters(entity, GenderMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

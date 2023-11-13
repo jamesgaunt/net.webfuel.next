@@ -9,12 +9,6 @@
     <div class="column">
       <h3 style="margin-top: 0">Team Support Requests</h3>
     </div>
-    <div class="column is-right">
-      <a class="link is-primary" (click)="toggleOpenOnly()">
-        <span *ngIf="openOnly">show completed requests</span>
-        <span *ngIf="!openOnly">hide completed requests</span>
-      </a>
-    </div>
   </div>
   <div class="flex">
     <div class="is-12">
@@ -29,6 +23,9 @@
       <div *ngIf="items !== null && items.length > 0" class="project-support-list">
         <div class="card" *ngFor="let teamSupport of items">
           <div class="card-title">
+            <div  *ngIf="teamSupport.completedAt === null" class="tag is-warning is-small">open</div>
+            <div  *ngIf="teamSupport.completedAt !== null" class="tag is-success is-small">complete</div>
+
             {{ (teamLookup.get({ id: teamSupport.supportTeamId }) | async)?.name }}
             support requested by
             {{ (userLookup.get({ id: teamSupport.createdById }) | async)?.fullName }}
@@ -37,7 +34,7 @@
           <pre class="card-narrative">{{ teamSupport.createdNotes }}</pre>
           <div class="card-title" *ngIf="teamSupport.completedAt !== null">
             <div class="teams">
-              Marked as completed by 
+              Marked as complete by 
               {{ (userLookup.get({ id: teamSupport.completedById || '' }) | async)?.fullName }}
               [{{ teamSupport.completedAt | date: 'dd-MMM-yy HH:mm' }}]
             </div>

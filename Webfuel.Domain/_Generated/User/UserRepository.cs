@@ -33,6 +33,7 @@ namespace Webfuel.Domain
         public async Task<User> InsertUser(User entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            UserMetadata.Validate(entity);
             var sql = UserMetadata.InsertSQL();
             var parameters = UserMetadata.ExtractParameters(entity, UserMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -40,6 +41,7 @@ namespace Webfuel.Domain
         }
         public async Task<User> UpdateUser(User entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            UserMetadata.Validate(entity);
             var sql = UserMetadata.UpdateSQL();
             var parameters = UserMetadata.ExtractParameters(entity, UserMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

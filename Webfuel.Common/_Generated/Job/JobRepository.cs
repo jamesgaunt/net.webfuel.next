@@ -31,6 +31,7 @@ namespace Webfuel.Common
         public async Task<Job> InsertJob(Job entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            JobMetadata.Validate(entity);
             var sql = JobMetadata.InsertSQL();
             var parameters = JobMetadata.ExtractParameters(entity, JobMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -38,6 +39,7 @@ namespace Webfuel.Common
         }
         public async Task<Job> UpdateJob(Job entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            JobMetadata.Validate(entity);
             var sql = JobMetadata.UpdateSQL();
             var parameters = JobMetadata.ExtractParameters(entity, JobMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

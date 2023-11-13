@@ -135,16 +135,19 @@ namespace Webfuel.Common
                 .NotNull()
                 .MaximumLength(CreatedBy_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
-        
-        public class ActivityLogRepositoryValidator: AbstractValidator<ActivityLog>
+    }
+    
+    public partial class ActivityLogRepositoryValidator: AbstractValidator<ActivityLog>
+    {
+        public ActivityLogRepositoryValidator()
         {
-            public ActivityLogRepositoryValidator()
-            {
-                RuleFor(x => x.Summary).Use(Summary_ValidationRules);
-                RuleFor(x => x.Message).Use(Message_ValidationRules);
-                RuleFor(x => x.CreatedBy).Use(CreatedBy_ValidationRules);
-            }
+            RuleFor(x => x.Summary).Use(ActivityLogMetadata.Summary_ValidationRules);
+            RuleFor(x => x.Message).Use(ActivityLogMetadata.Message_ValidationRules);
+            RuleFor(x => x.CreatedBy).Use(ActivityLogMetadata.CreatedBy_ValidationRules);
+            Validation();
         }
+        
+        partial void Validation();
     }
 }
 

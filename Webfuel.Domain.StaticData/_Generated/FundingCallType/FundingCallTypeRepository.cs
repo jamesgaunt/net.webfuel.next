@@ -33,6 +33,7 @@ namespace Webfuel.Domain.StaticData
         public async Task<FundingCallType> InsertFundingCallType(FundingCallType entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            FundingCallTypeMetadata.Validate(entity);
             var sql = FundingCallTypeMetadata.InsertSQL();
             var parameters = FundingCallTypeMetadata.ExtractParameters(entity, FundingCallTypeMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -40,6 +41,7 @@ namespace Webfuel.Domain.StaticData
         }
         public async Task<FundingCallType> UpdateFundingCallType(FundingCallType entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            FundingCallTypeMetadata.Validate(entity);
             var sql = FundingCallTypeMetadata.UpdateSQL();
             var parameters = FundingCallTypeMetadata.ExtractParameters(entity, FundingCallTypeMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

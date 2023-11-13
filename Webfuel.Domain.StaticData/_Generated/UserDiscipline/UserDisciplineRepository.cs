@@ -33,6 +33,7 @@ namespace Webfuel.Domain.StaticData
         public async Task<UserDiscipline> InsertUserDiscipline(UserDiscipline entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            UserDisciplineMetadata.Validate(entity);
             var sql = UserDisciplineMetadata.InsertSQL();
             var parameters = UserDisciplineMetadata.ExtractParameters(entity, UserDisciplineMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -40,6 +41,7 @@ namespace Webfuel.Domain.StaticData
         }
         public async Task<UserDiscipline> UpdateUserDiscipline(UserDiscipline entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            UserDisciplineMetadata.Validate(entity);
             var sql = UserDisciplineMetadata.UpdateSQL();
             var parameters = UserDisciplineMetadata.ExtractParameters(entity, UserDisciplineMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

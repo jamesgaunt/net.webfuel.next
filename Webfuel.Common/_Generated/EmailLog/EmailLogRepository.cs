@@ -32,6 +32,7 @@ namespace Webfuel.Common
         public async Task<EmailLog> InsertEmailLog(EmailLog entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            EmailLogMetadata.Validate(entity);
             var sql = EmailLogMetadata.InsertSQL();
             var parameters = EmailLogMetadata.ExtractParameters(entity, EmailLogMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -39,6 +40,7 @@ namespace Webfuel.Common
         }
         public async Task<EmailLog> UpdateEmailLog(EmailLog entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            EmailLogMetadata.Validate(entity);
             var sql = EmailLogMetadata.UpdateSQL();
             var parameters = EmailLogMetadata.ExtractParameters(entity, EmailLogMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

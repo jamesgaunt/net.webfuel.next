@@ -54,11 +54,6 @@ const routes: Routes = [
     canActivate: [isAuthenticated]
   },
   {
-    path: 'support-team',
-    loadChildren: () => import('./features/support-team/support-team.module').then(m => m.SupportTeamModule),
-    canActivate: [isAuthenticated]
-  },
-  {
     path: 'researcher',
     loadChildren: () => import('./features/researcher/researcher.module').then(m => m.ResearcherModule),
     canActivate: [isAuthenticated]

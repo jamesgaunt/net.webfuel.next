@@ -33,6 +33,7 @@ namespace Webfuel.Domain
         public async Task<ProjectSupport> InsertProjectSupport(ProjectSupport entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            ProjectSupportMetadata.Validate(entity);
             var sql = ProjectSupportMetadata.InsertSQL();
             var parameters = ProjectSupportMetadata.ExtractParameters(entity, ProjectSupportMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -40,6 +41,7 @@ namespace Webfuel.Domain
         }
         public async Task<ProjectSupport> UpdateProjectSupport(ProjectSupport entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            ProjectSupportMetadata.Validate(entity);
             var sql = ProjectSupportMetadata.UpdateSQL();
             var parameters = ProjectSupportMetadata.ExtractParameters(entity, ProjectSupportMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

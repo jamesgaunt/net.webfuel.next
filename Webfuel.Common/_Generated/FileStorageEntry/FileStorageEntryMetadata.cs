@@ -143,16 +143,19 @@ namespace Webfuel.Common
                 .NotNull()
                 .MaximumLength(Description_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
-        
-        public class FileStorageEntryRepositoryValidator: AbstractValidator<FileStorageEntry>
+    }
+    
+    public partial class FileStorageEntryRepositoryValidator: AbstractValidator<FileStorageEntry>
+    {
+        public FileStorageEntryRepositoryValidator()
         {
-            public FileStorageEntryRepositoryValidator()
-            {
-                RuleFor(x => x.FileName).Use(FileName_ValidationRules);
-                RuleFor(x => x.UploadedBy).Use(UploadedBy_ValidationRules);
-                RuleFor(x => x.Description).Use(Description_ValidationRules);
-            }
+            RuleFor(x => x.FileName).Use(FileStorageEntryMetadata.FileName_ValidationRules);
+            RuleFor(x => x.UploadedBy).Use(FileStorageEntryMetadata.UploadedBy_ValidationRules);
+            RuleFor(x => x.Description).Use(FileStorageEntryMetadata.Description_ValidationRules);
+            Validation();
         }
+        
+        partial void Validation();
     }
 }
 

@@ -93,14 +93,17 @@ namespace Webfuel.Common
                 .NotNull()
                 .MaximumLength(Name_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
-        
-        public class JobRepositoryValidator: AbstractValidator<Job>
+    }
+    
+    public partial class JobRepositoryValidator: AbstractValidator<Job>
+    {
+        public JobRepositoryValidator()
         {
-            public JobRepositoryValidator()
-            {
-                RuleFor(x => x.Name).Use(Name_ValidationRules);
-            }
+            RuleFor(x => x.Name).Use(JobMetadata.Name_ValidationRules);
+            Validation();
         }
+        
+        partial void Validation();
     }
 }
 

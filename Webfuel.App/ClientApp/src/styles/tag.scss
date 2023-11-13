@@ -22,6 +22,20 @@
       color: var(--palette-warning-text);
     }
   }
+
+  &.is-small {
+    font-size: 0.7em;
+    padding: 0 0.5em 0 0.5em;
+    min-height: auto;
+  }
+
+  @each $p in $paletteAction {
+    &.is-#{$p} {
+      color: var(--palette-#{$p}-foreground);
+      background-color: var(--palette-#{$p}-background);
+      border-color: var(--palette-#{$p}-background);
+    }
+  }
 }
 
 .tag-input {

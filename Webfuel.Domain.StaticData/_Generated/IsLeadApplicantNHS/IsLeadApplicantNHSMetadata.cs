@@ -105,14 +105,17 @@ namespace Webfuel.Domain.StaticData
                 .NotNull()
                 .MaximumLength(Name_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
-        
-        public class IsLeadApplicantNHSRepositoryValidator: AbstractValidator<IsLeadApplicantNHS>
+    }
+    
+    public partial class IsLeadApplicantNHSRepositoryValidator: AbstractValidator<IsLeadApplicantNHS>
+    {
+        public IsLeadApplicantNHSRepositoryValidator()
         {
-            public IsLeadApplicantNHSRepositoryValidator()
-            {
-                RuleFor(x => x.Name).Use(Name_ValidationRules);
-            }
+            RuleFor(x => x.Name).Use(IsLeadApplicantNHSMetadata.Name_ValidationRules);
+            Validation();
         }
+        
+        partial void Validation();
     }
 }
 

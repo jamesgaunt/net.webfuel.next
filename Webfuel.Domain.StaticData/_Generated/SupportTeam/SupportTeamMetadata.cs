@@ -2,7 +2,7 @@ using FluentValidation;
 using Microsoft.Data.SqlClient;
 using System.Text.Json.Serialization;
 
-namespace Webfuel.Domain
+namespace Webfuel.Domain.StaticData
 {
     public partial class SupportTeamMetadata: IRepositoryMetadata<SupportTeam>
     {
@@ -28,6 +28,12 @@ namespace Webfuel.Domain
                         break;
                     case nameof(SupportTeam.SortOrder):
                         result.Add(new SqlParameter(nameof(SupportTeam.SortOrder), entity.SortOrder));
+                        break;
+                    case nameof(SupportTeam.Default):
+                        result.Add(new SqlParameter(nameof(SupportTeam.Default), entity.Default));
+                        break;
+                    case nameof(SupportTeam.Hidden):
+                        result.Add(new SqlParameter(nameof(SupportTeam.Hidden), entity.Hidden));
                         break;
                 }
             }
@@ -58,6 +64,8 @@ namespace Webfuel.Domain
                 yield return "Id";
                 yield return "Name";
                 yield return "SortOrder";
+                yield return "Default";
+                yield return "Hidden";
             }
         }
         
@@ -68,6 +76,8 @@ namespace Webfuel.Domain
                 yield return "Id";
                 yield return "Name";
                 yield return "SortOrder";
+                yield return "Default";
+                yield return "Hidden";
             }
         }
         
@@ -77,6 +87,8 @@ namespace Webfuel.Domain
             {
                 yield return "Name";
                 yield return "SortOrder";
+                yield return "Default";
+                yield return "Hidden";
             }
         }
         
@@ -99,14 +111,17 @@ namespace Webfuel.Domain
                 .NotNull()
                 .MaximumLength(Name_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
-        
-        public class SupportTeamRepositoryValidator: AbstractValidator<SupportTeam>
+    }
+    
+    public partial class SupportTeamRepositoryValidator: AbstractValidator<SupportTeam>
+    {
+        public SupportTeamRepositoryValidator()
         {
-            public SupportTeamRepositoryValidator()
-            {
-                RuleFor(x => x.Name).Use(Name_ValidationRules);
-            }
+            RuleFor(x => x.Name).Use(SupportTeamMetadata.Name_ValidationRules);
+            Validation();
         }
+        
+        partial void Validation();
     }
 }
 

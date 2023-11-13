@@ -32,6 +32,7 @@ namespace Webfuel.Common
         public async Task<ActivityLog> InsertActivityLog(ActivityLog entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            ActivityLogMetadata.Validate(entity);
             var sql = ActivityLogMetadata.InsertSQL();
             var parameters = ActivityLogMetadata.ExtractParameters(entity, ActivityLogMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -39,6 +40,7 @@ namespace Webfuel.Common
         }
         public async Task<ActivityLog> UpdateActivityLog(ActivityLog entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            ActivityLogMetadata.Validate(entity);
             var sql = ActivityLogMetadata.UpdateSQL();
             var parameters = ActivityLogMetadata.ExtractParameters(entity, ActivityLogMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

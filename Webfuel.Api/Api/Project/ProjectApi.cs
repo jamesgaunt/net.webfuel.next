@@ -12,9 +12,6 @@ namespace Webfuel.App
         {
             // Commands
 
-            app.MapPost("api/project", Create)
-                .RequireIdentity();
-
             app.MapPut("api/project", Update)
                 .RequireIdentity();
 
@@ -28,11 +25,6 @@ namespace Webfuel.App
 
             app.MapGet("api/project/{id:guid}", Get)
                 .RequireIdentity();
-        }
-
-        public static Task<Project> Create([FromBody] CreateProject command, IMediator mediator)
-        {
-            return mediator.Send(command);
         }
 
         public static Task<Project> Update([FromBody] UpdateProject command, IMediator mediator)

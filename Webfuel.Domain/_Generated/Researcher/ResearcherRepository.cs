@@ -33,6 +33,7 @@ namespace Webfuel.Domain
         public async Task<Researcher> InsertResearcher(Researcher entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            ResearcherMetadata.Validate(entity);
             var sql = ResearcherMetadata.InsertSQL();
             var parameters = ResearcherMetadata.ExtractParameters(entity, ResearcherMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -40,6 +41,7 @@ namespace Webfuel.Domain
         }
         public async Task<Researcher> UpdateResearcher(Researcher entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            ResearcherMetadata.Validate(entity);
             var sql = ResearcherMetadata.UpdateSQL();
             var parameters = ResearcherMetadata.ExtractParameters(entity, ResearcherMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

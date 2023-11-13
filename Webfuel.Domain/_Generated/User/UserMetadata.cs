@@ -321,23 +321,26 @@ namespace Webfuel.Domain
                 .NotNull()
                 .MaximumLength(PasswordSalt_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
-        
-        public class UserRepositoryValidator: AbstractValidator<User>
+    }
+    
+    public partial class UserRepositoryValidator: AbstractValidator<User>
+    {
+        public UserRepositoryValidator()
         {
-            public UserRepositoryValidator()
-            {
-                RuleFor(x => x.Email).Use(Email_ValidationRules);
-                RuleFor(x => x.Title).Use(Title_ValidationRules);
-                RuleFor(x => x.FirstName).Use(FirstName_ValidationRules);
-                RuleFor(x => x.LastName).Use(LastName_ValidationRules);
-                RuleFor(x => x.RSSJobTitle).Use(RSSJobTitle_ValidationRules);
-                RuleFor(x => x.UniversityJobTitle).Use(UniversityJobTitle_ValidationRules);
-                RuleFor(x => x.ProfessionalBackground).Use(ProfessionalBackground_ValidationRules);
-                RuleFor(x => x.Specialisation).Use(Specialisation_ValidationRules);
-                RuleFor(x => x.PasswordHash).Use(PasswordHash_ValidationRules);
-                RuleFor(x => x.PasswordSalt).Use(PasswordSalt_ValidationRules);
-            }
+            RuleFor(x => x.Email).Use(UserMetadata.Email_ValidationRules);
+            RuleFor(x => x.Title).Use(UserMetadata.Title_ValidationRules);
+            RuleFor(x => x.FirstName).Use(UserMetadata.FirstName_ValidationRules);
+            RuleFor(x => x.LastName).Use(UserMetadata.LastName_ValidationRules);
+            RuleFor(x => x.RSSJobTitle).Use(UserMetadata.RSSJobTitle_ValidationRules);
+            RuleFor(x => x.UniversityJobTitle).Use(UserMetadata.UniversityJobTitle_ValidationRules);
+            RuleFor(x => x.ProfessionalBackground).Use(UserMetadata.ProfessionalBackground_ValidationRules);
+            RuleFor(x => x.Specialisation).Use(UserMetadata.Specialisation_ValidationRules);
+            RuleFor(x => x.PasswordHash).Use(UserMetadata.PasswordHash_ValidationRules);
+            RuleFor(x => x.PasswordSalt).Use(UserMetadata.PasswordSalt_ValidationRules);
+            Validation();
         }
+        
+        partial void Validation();
     }
 }
 

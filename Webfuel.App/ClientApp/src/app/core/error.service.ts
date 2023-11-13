@@ -3,6 +3,7 @@ import { GrowlService } from './growl.service';
 import _ from 'shared/common/underscore';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ValidationError, ValidationProblemDetails } from '../api/api.types';
 
 interface IError {
   type: string;
@@ -36,6 +37,16 @@ export class ErrorService {
     if (error.type == "/not-authorized") {
       this.router.navigateByUrl("/login");
       return;
+    }
+
+    if (error.type == "/validation-errors") {
+      const e = <ValidationProblemDetails>error;
+      if (e.validationErrors.length > 0) {
+        _.forEach(e.validationErrors, (v) => {
+          this.growlService.growlDanger(v.message);
+        });
+        return;
+      }
     }
 
     this.growlService.growlDanger(error.title);

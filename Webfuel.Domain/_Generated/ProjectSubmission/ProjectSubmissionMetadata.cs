@@ -123,14 +123,17 @@ namespace Webfuel.Domain
                 .NotNull()
                 .MaximumLength(NIHRReference_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
-        
-        public class ProjectSubmissionRepositoryValidator: AbstractValidator<ProjectSubmission>
+    }
+    
+    public partial class ProjectSubmissionRepositoryValidator: AbstractValidator<ProjectSubmission>
+    {
+        public ProjectSubmissionRepositoryValidator()
         {
-            public ProjectSubmissionRepositoryValidator()
-            {
-                RuleFor(x => x.NIHRReference).Use(NIHRReference_ValidationRules);
-            }
+            RuleFor(x => x.NIHRReference).Use(ProjectSubmissionMetadata.NIHRReference_ValidationRules);
+            Validation();
         }
+        
+        partial void Validation();
     }
 }
 

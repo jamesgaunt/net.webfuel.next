@@ -19,6 +19,8 @@ namespace Webfuel.Domain
         Task<List<UserActivity>> SelectUserActivity();
         Task<List<UserActivity>> SelectUserActivityWithPage(int skip, int take);
         Task<List<UserActivity>> SelectUserActivityByDate(DateOnly date);
+        Task<List<UserActivity>> SelectUserActivityByProjectSupportId(Guid? projectSupportId);
+        Task<List<UserActivity>> SelectUserActivityByProjectId(Guid? projectId);
         Task<List<UserActivity>> SelectUserActivityByUserId(Guid userId);
     }
     [Service(typeof(IUserActivityRepository))]
@@ -33,6 +35,7 @@ namespace Webfuel.Domain
         public async Task<UserActivity> InsertUserActivity(UserActivity entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            UserActivityMetadata.Validate(entity);
             var sql = UserActivityMetadata.InsertSQL();
             var parameters = UserActivityMetadata.ExtractParameters(entity, UserActivityMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -40,6 +43,7 @@ namespace Webfuel.Domain
         }
         public async Task<UserActivity> UpdateUserActivity(UserActivity entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            UserActivityMetadata.Validate(entity);
             var sql = UserActivityMetadata.UpdateSQL();
             var parameters = UserActivityMetadata.ExtractParameters(entity, UserActivityMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -99,6 +103,24 @@ namespace Webfuel.Domain
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Date", date),
+            };
+            return await _connection.ExecuteReader<UserActivity, UserActivityMetadata>(sql, parameters);
+        }
+        public async Task<List<UserActivity>> SelectUserActivityByProjectSupportId(Guid? projectSupportId)
+        {
+            var sql = @"SELECT * FROM [UserActivity] WHERE ((ProjectSupportId = @ProjectSupportId) OR (ProjectSupportId IS NULL AND @ProjectSupportId IS NULL)) ORDER BY Date DESC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@ProjectSupportId", (object?)projectSupportId ?? DBNull.Value),
+            };
+            return await _connection.ExecuteReader<UserActivity, UserActivityMetadata>(sql, parameters);
+        }
+        public async Task<List<UserActivity>> SelectUserActivityByProjectId(Guid? projectId)
+        {
+            var sql = @"SELECT * FROM [UserActivity] WHERE ((ProjectId = @ProjectId) OR (ProjectId IS NULL AND @ProjectId IS NULL)) ORDER BY Date DESC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@ProjectId", (object?)projectId ?? DBNull.Value),
             };
             return await _connection.ExecuteReader<UserActivity, UserActivityMetadata>(sql, parameters);
         }

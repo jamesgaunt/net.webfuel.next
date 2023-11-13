@@ -3,9 +3,6 @@ NW:
 
 > Purhase and setup on new domain - send form code to ICL for their web administrators
 
-> Not sure about team support open only. Change this to load more?
-> Make open requests clear? Warning border etc?
-
 > Feed Activity from Project Support 
 
 > Shrink project support summary table

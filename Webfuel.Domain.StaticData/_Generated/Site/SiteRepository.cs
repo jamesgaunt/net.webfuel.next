@@ -33,6 +33,7 @@ namespace Webfuel.Domain.StaticData
         public async Task<Site> InsertSite(Site entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            SiteMetadata.Validate(entity);
             var sql = SiteMetadata.InsertSQL();
             var parameters = SiteMetadata.ExtractParameters(entity, SiteMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -40,6 +41,7 @@ namespace Webfuel.Domain.StaticData
         }
         public async Task<Site> UpdateSite(Site entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            SiteMetadata.Validate(entity);
             var sql = SiteMetadata.UpdateSQL();
             var parameters = SiteMetadata.ExtractParameters(entity, SiteMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

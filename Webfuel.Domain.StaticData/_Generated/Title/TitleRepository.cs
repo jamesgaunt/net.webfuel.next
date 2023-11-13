@@ -33,6 +33,7 @@ namespace Webfuel.Domain.StaticData
         public async Task<Title> InsertTitle(Title entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            TitleMetadata.Validate(entity);
             var sql = TitleMetadata.InsertSQL();
             var parameters = TitleMetadata.ExtractParameters(entity, TitleMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -40,6 +41,7 @@ namespace Webfuel.Domain.StaticData
         }
         public async Task<Title> UpdateTitle(Title entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            TitleMetadata.Validate(entity);
             var sql = TitleMetadata.UpdateSQL();
             var parameters = TitleMetadata.ExtractParameters(entity, TitleMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

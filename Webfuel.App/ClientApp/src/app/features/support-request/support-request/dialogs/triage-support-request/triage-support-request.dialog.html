@@ -3,12 +3,20 @@
     Triage Support Request
   </div>
   <div class="dialog-body">
-
-    <div class="field">
-      <label class="label">Please select outcome of triage</label>
-      <dropdown-select placeholder="required" formControlName="statusId" [dataSource]="staticDataCache.supportRequestStatus" (filter)="filterStatus($event)"></dropdown-select>
+    <div class="grid">
+      <div class="field">
+        <label class="label">Please select outcome of triage</label>
+        <dropdown-select placeholder="required" formControlName="statusId" [dataSource]="staticDataCache.supportRequestStatus" (filter)="filterStatus($event)"></dropdown-select>
+      </div>
+      <div *ngIf="referring" class="field">
+        <label class="label">Support provided (include all types of support provided)</label>
+        <dropdown-multi-select [dataSource]="staticDataCache.supportProvided" placeholder="optional" formControlName="supportProvidedIds"></dropdown-multi-select>
+      </div>
+      <div *ngIf="referring" class="field">
+        <label class="label">Description of support</label>
+        <textarea style="height: 200px" class="textarea" formControlName="description" placeholder="optional"></textarea>
+      </div>
     </div>
-
   </div>
   <div class="dialog-buttons">
     <button type="submit" class="is-success" (click)="save()">Save</button>

@@ -117,14 +117,17 @@ namespace Webfuel.Domain.StaticData
                 .NotNull()
                 .MaximumLength(Name_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
-        
-        public class UserDisciplineRepositoryValidator: AbstractValidator<UserDiscipline>
+    }
+    
+    public partial class UserDisciplineRepositoryValidator: AbstractValidator<UserDiscipline>
+    {
+        public UserDisciplineRepositoryValidator()
         {
-            public UserDisciplineRepositoryValidator()
-            {
-                RuleFor(x => x.Name).Use(Name_ValidationRules);
-            }
+            RuleFor(x => x.Name).Use(UserDisciplineMetadata.Name_ValidationRules);
+            Validation();
         }
+        
+        partial void Validation();
     }
 }
 

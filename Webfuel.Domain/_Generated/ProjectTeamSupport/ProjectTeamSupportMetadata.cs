@@ -145,15 +145,18 @@ namespace Webfuel.Domain
                 .NotNull()
                 .MaximumLength(CompletedNotes_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
-        
-        public class ProjectTeamSupportRepositoryValidator: AbstractValidator<ProjectTeamSupport>
+    }
+    
+    public partial class ProjectTeamSupportRepositoryValidator: AbstractValidator<ProjectTeamSupport>
+    {
+        public ProjectTeamSupportRepositoryValidator()
         {
-            public ProjectTeamSupportRepositoryValidator()
-            {
-                RuleFor(x => x.CreatedNotes).Use(CreatedNotes_ValidationRules);
-                RuleFor(x => x.CompletedNotes).Use(CompletedNotes_ValidationRules);
-            }
+            RuleFor(x => x.CreatedNotes).Use(ProjectTeamSupportMetadata.CreatedNotes_ValidationRules);
+            RuleFor(x => x.CompletedNotes).Use(ProjectTeamSupportMetadata.CompletedNotes_ValidationRules);
+            Validation();
         }
+        
+        partial void Validation();
     }
 }
 

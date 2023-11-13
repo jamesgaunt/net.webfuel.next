@@ -33,6 +33,7 @@ namespace Webfuel.Domain.StaticData
         public async Task<AgeRange> InsertAgeRange(AgeRange entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            AgeRangeMetadata.Validate(entity);
             var sql = AgeRangeMetadata.InsertSQL();
             var parameters = AgeRangeMetadata.ExtractParameters(entity, AgeRangeMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -40,6 +41,7 @@ namespace Webfuel.Domain.StaticData
         }
         public async Task<AgeRange> UpdateAgeRange(AgeRange entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            AgeRangeMetadata.Validate(entity);
             var sql = AgeRangeMetadata.UpdateSQL();
             var parameters = AgeRangeMetadata.ExtractParameters(entity, AgeRangeMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

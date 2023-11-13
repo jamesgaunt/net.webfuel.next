@@ -6,11 +6,31 @@
     <Property Name="UserId" Type="User" />
 
     <Property Name="Date" Type="Date" />
-    <Property Name="WorkActivityId" Type="WorkActivity" />
     <Property Name="Description" Type="meta:description" />
+
+    <!-- === Only one of these sections should be populated === -->
+    
+    <!-- Work Activity -->
+    <Property Name="WorkActivityId" Type="WorkActivity?" />
+    <!-- /Work Activity -->
+
+    <!-- Project Activity -->
+    <Property Name="ProjectId" Type="Project?" />
+    <Property Name="ProjectSupportId" Type="ProjectSupport?" />
+    <Property Name="ProjectPrefixedNumber" Type="meta:name" />
+    <Property Name="ProjectSupportProvidedIds" Type="Json:List{Guid}" />
+    <!-- /Project Activity -->
+
+    <!-- === /Only one of these sections should be populated === -->
 
     <Index Unique="false">
       <Member Name="UserId" />
+    </Index>
+    <Index Unique="false">
+      <Member Name="ProjectId" />
+    </Index>
+    <Index Unique="false">
+      <Member Name="ProjectSupportId" />
     </Index>
     <Index Unique="false">
       <Member Name="Date" />

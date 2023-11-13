@@ -4,14 +4,10 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 
-namespace Webfuel.Domain
+namespace Webfuel.Domain.StaticData
 {
     internal partial interface ISupportTeamRepository
     {
-        Task<SupportTeam> InsertSupportTeam(SupportTeam entity, RepositoryCommandBuffer? commandBuffer = null);
-        Task<SupportTeam> UpdateSupportTeam(SupportTeam entity, RepositoryCommandBuffer? commandBuffer = null);
-        Task<SupportTeam> UpdateSupportTeam(SupportTeam updated, SupportTeam original, RepositoryCommandBuffer? commandBuffer = null);
-        Task DeleteSupportTeam(Guid key, RepositoryCommandBuffer? commandBuffer = null);
         Task<QueryResult<SupportTeam>> QuerySupportTeam(Query query);
         Task<SupportTeam?> GetSupportTeam(Guid id);
         Task<SupportTeam> RequireSupportTeam(Guid id);
@@ -29,32 +25,6 @@ namespace Webfuel.Domain
         public SupportTeamRepository(IRepositoryConnection connection)
         {
             _connection = connection;
-        }
-        public async Task<SupportTeam> InsertSupportTeam(SupportTeam entity, RepositoryCommandBuffer? commandBuffer = null)
-        {
-            if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
-            var sql = SupportTeamMetadata.InsertSQL();
-            var parameters = SupportTeamMetadata.ExtractParameters(entity, SupportTeamMetadata.InsertProperties);
-            await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
-            return entity;
-        }
-        public async Task<SupportTeam> UpdateSupportTeam(SupportTeam entity, RepositoryCommandBuffer? commandBuffer = null)
-        {
-            var sql = SupportTeamMetadata.UpdateSQL();
-            var parameters = SupportTeamMetadata.ExtractParameters(entity, SupportTeamMetadata.UpdateProperties);
-            await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
-            return entity;
-        }
-        public async Task<SupportTeam> UpdateSupportTeam(SupportTeam updated, SupportTeam original, RepositoryCommandBuffer? commandBuffer = null)
-        {
-            await UpdateSupportTeam(updated, commandBuffer);
-            return updated;
-        }
-        public async Task DeleteSupportTeam(Guid id, RepositoryCommandBuffer? commandBuffer = null)
-        {
-            var sql = SupportTeamMetadata.DeleteSQL();
-            var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
-            await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
         public async Task<QueryResult<SupportTeam>> QuerySupportTeam(Query query)
         {

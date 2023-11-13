@@ -99,14 +99,17 @@ namespace Webfuel.Domain
                 .NotNull()
                 .MaximumLength(Email_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
-        
-        public class ResearcherRepositoryValidator: AbstractValidator<Researcher>
+    }
+    
+    public partial class ResearcherRepositoryValidator: AbstractValidator<Researcher>
+    {
+        public ResearcherRepositoryValidator()
         {
-            public ResearcherRepositoryValidator()
-            {
-                RuleFor(x => x.Email).Use(Email_ValidationRules);
-            }
+            RuleFor(x => x.Email).Use(ResearcherMetadata.Email_ValidationRules);
+            Validation();
         }
+        
+        partial void Validation();
     }
 }
 

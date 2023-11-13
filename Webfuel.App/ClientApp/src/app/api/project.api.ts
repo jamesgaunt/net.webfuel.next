@@ -3,15 +3,11 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { CreateProject, Project, UpdateProject, QueryProject, QueryResult } from './api.types';
+import { UpdateProject, Project, QueryProject, QueryResult } from './api.types';
 
 @Injectable()
-export class ProjectApi implements IDataSource<Project, QueryProject, CreateProject, UpdateProject> {
+export class ProjectApi implements IDataSource<Project, QueryProject, any, UpdateProject> {
     constructor(private apiService: ApiService) { }
-    
-    public create (body: CreateProject, options?: ApiOptions): Observable<Project> {
-        return this.apiService.request<CreateProject, Project>("POST", "api/project", body, options).pipe(tap(_ => this.changed.emit()));
-    }
     
     public update (body: UpdateProject, options?: ApiOptions): Observable<Project> {
         return this.apiService.request<UpdateProject, Project>("PUT", "api/project", body, options).pipe(tap(_ => this.changed.emit()));

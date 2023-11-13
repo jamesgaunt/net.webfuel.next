@@ -11,12 +11,9 @@ namespace Webfuel.Domain
     {
         public required Guid ProjectId { get; set; }
 
-        public bool OpenOnly { get; set; }
-
         public Query ApplyCustomFilters()
         {
             this.Equal(nameof(ProjectTeamSupport.ProjectId), ProjectId);
-            this.Equal(nameof(ProjectTeamSupport.CompletedById), null, OpenOnly);
             return this;
         }
     }

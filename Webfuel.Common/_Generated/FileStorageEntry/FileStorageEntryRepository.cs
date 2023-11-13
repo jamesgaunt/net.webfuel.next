@@ -32,6 +32,7 @@ namespace Webfuel.Common
         public async Task<FileStorageEntry> InsertFileStorageEntry(FileStorageEntry entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            FileStorageEntryMetadata.Validate(entity);
             var sql = FileStorageEntryMetadata.InsertSQL();
             var parameters = FileStorageEntryMetadata.ExtractParameters(entity, FileStorageEntryMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -39,6 +40,7 @@ namespace Webfuel.Common
         }
         public async Task<FileStorageEntry> UpdateFileStorageEntry(FileStorageEntry entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            FileStorageEntryMetadata.Validate(entity);
             var sql = FileStorageEntryMetadata.UpdateSQL();
             var parameters = FileStorageEntryMetadata.ExtractParameters(entity, FileStorageEntryMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

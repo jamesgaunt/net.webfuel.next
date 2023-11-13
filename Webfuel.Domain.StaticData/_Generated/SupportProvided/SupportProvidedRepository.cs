@@ -33,6 +33,7 @@ namespace Webfuel.Domain.StaticData
         public async Task<SupportProvided> InsertSupportProvided(SupportProvided entity, RepositoryCommandBuffer? commandBuffer = null)
         {
             if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
+            SupportProvidedMetadata.Validate(entity);
             var sql = SupportProvidedMetadata.InsertSQL();
             var parameters = SupportProvidedMetadata.ExtractParameters(entity, SupportProvidedMetadata.InsertProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
@@ -40,6 +41,7 @@ namespace Webfuel.Domain.StaticData
         }
         public async Task<SupportProvided> UpdateSupportProvided(SupportProvided entity, RepositoryCommandBuffer? commandBuffer = null)
         {
+            SupportProvidedMetadata.Validate(entity);
             var sql = SupportProvidedMetadata.UpdateSQL();
             var parameters = SupportProvidedMetadata.ExtractParameters(entity, SupportProvidedMetadata.UpdateProperties);
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);

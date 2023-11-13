@@ -1,7 +1,7 @@
 import { Component, Injectable } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { QueryOp } from 'api/api.enums';
+import { QueryOp, SupportRequestStatusEnum } from 'api/api.enums';
 import { Project, Query } from 'api/api.types';
 import { StaticDataCache } from 'api/static-data.cache';
 import { SupportRequestApi } from 'api/support-request.api';
@@ -37,8 +37,14 @@ export class TriageSupportRequestDialogComponent extends DialogComponentBase<Pro
 
   form = new FormGroup({
     id: new FormControl<string>('', { validators: Validators.required, nonNullable: true }),
-    statusId: new FormControl<string>(null!, { validators: Validators.required, nonNullable: true })
+    statusId: new FormControl<string>(null!, { validators: Validators.required, nonNullable: true }),
+    supportProvidedIds: new FormControl<string[]>([], { nonNullable: true }),
+    description: new FormControl<string>('', { nonNullable: true })
   });
+
+  get referring() {
+    return this.form.value.statusId == SupportRequestStatusEnum.ReferredToNIHRRSSExpertTeams;
+  }
 
   save() {
     if (this.formService.hasErrors(this.form))

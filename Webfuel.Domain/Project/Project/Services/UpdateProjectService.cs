@@ -32,10 +32,6 @@ namespace Webfuel.Domain
 
             var updated = original.Copy();
 
-            updated.IsQuantativeTeamContributionId = request.IsQuantativeTeamContributionId;
-            updated.IsCTUTeamContributionId = request.IsCTUTeamContributionId;
-            updated.IsPPIEAndEDIContributionId = request.IsPPIEAndEDIContributionId;
-
             updated.ProjectStartDate = request.ProjectStartDate;
             updated.RecruitmentTarget = request.RecruitmentTarget;
             updated.NumberOfProjectSites = request.NumberOfProjectSites;

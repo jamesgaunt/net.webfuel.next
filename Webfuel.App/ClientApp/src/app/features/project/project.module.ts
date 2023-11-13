@@ -14,8 +14,6 @@ import { ProjectFilesComponent } from './project/project-files/project-files.com
 import { ProjectHistoryComponent } from './project/project-history/project-history.component';
 import { ProjectTeamSupportComponent } from './project/project-team-support/project-team-support.component';
 
-import { CreateProjectDialog, CreateProjectDialogComponent } from './project/dialogs/create-project/create-project.dialog';
-
 import { CreateProjectSupportDialog, CreateProjectSupportDialogComponent } from './project/project-support/create-project-support/create-project-support.dialog';
 import { UpdateProjectSupportDialog, UpdateProjectSupportDialogComponent } from './project/project-support/update-project-support/update-project-support.dialog';
 
@@ -43,7 +41,6 @@ import { UpdateProjectTeamSupportDialog, UpdateProjectTeamSupportDialogComponent
     ProjectFilesComponent,
     ProjectTabsComponent,
 
-    CreateProjectDialogComponent,
     CreateProjectSupportDialogComponent,
     CreateProjectSubmissionDialogComponent,
     UpdateProjectSupportDialogComponent,
@@ -53,7 +50,6 @@ import { UpdateProjectTeamSupportDialog, UpdateProjectTeamSupportDialogComponent
     UpdateProjectTeamSupportDialogComponent,
   ],
   providers: [
-    CreateProjectDialog,
     CreateProjectSupportDialog,
     CreateProjectSubmissionDialog,
     UpdateProjectSupportDialog,

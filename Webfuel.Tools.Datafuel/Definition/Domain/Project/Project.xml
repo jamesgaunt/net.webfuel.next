@@ -10,12 +10,6 @@
     
     <Property Name="SupportRequestId" Type="Guid?" />
     <Property Name="ClosureDate" Type="Date?" />
-    
-    <Property Name="IsQuantativeTeamContributionId" Type="IsQuantativeTeamContribution?" />
-    <Property Name="IsCTUTeamContributionId" Type="IsCTUTeamContribution?" />
-    <Property Name="IsPPIEAndEDIContributionId" Type="IsPPIEAndEDIContribution?" />
-
-    <Property Name="NIHRRSSMemberCollaboratorIds" Type="Json:List{Guid}" />
 
     <Property Name="SubmittedFundingStreamId" Type="FundingStream?" />
     <Property Name="SubmittedFundingStreamFreeText" Type="meta:name" />

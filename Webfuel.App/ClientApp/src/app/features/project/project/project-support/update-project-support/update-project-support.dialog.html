@@ -10,7 +10,7 @@
       </div>
       <div class="field">
         <label class="label">Teams (include all teams providing support)</label>
-        <dropdown-multi-select [dataSource]="supportTeamApi" placeholder="required" formControlName="teamIds">
+        <dropdown-multi-select [dataSource]="staticDataCache.supportTeam" placeholder="required" formControlName="teamIds">
           <ng-template #optionTemplate let-item>
             {{ item.name }}
           </ng-template>

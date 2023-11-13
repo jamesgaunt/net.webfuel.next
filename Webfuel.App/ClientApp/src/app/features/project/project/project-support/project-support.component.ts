@@ -26,14 +26,12 @@ export class ProjectSupportComponent implements OnInit {
     private router: Router,
     private formService: FormService,
     private userApi: UserApi,
-    private supportTeamApi: SupportTeamApi,
     private confirmDeleteDialog: ConfirmDeleteDialog,
     private updateProjectSupportDialog: UpdateProjectSupportDialog,
     private projectSupportApi: ProjectSupportApi,
     public staticDataCache: StaticDataCache
   ) {
     this.userLookup = new DataSourceLookup(userApi);
-    this.teamLookup = new DataSourceLookup(supportTeamApi)
   }
 
   ngOnInit() {
@@ -73,8 +71,6 @@ export class ProjectSupportComponent implements OnInit {
   }
 
   userLookup: DataSourceLookup<User>;
-
-  teamLookup: DataSourceLookup<SupportTeam>;
 
   editProjectSupport(projectSupport: ProjectSupport) {
     this.updateProjectSupportDialog.open({ projectSupport: projectSupport });

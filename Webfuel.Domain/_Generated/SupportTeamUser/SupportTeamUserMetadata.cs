@@ -89,13 +89,16 @@ namespace Webfuel.Domain
         
         public static SupportTeamUserRepositoryValidator Validator { get; } = new SupportTeamUserRepositoryValidator();
         
-        
-        public class SupportTeamUserRepositoryValidator: AbstractValidator<SupportTeamUser>
+    }
+    
+    public partial class SupportTeamUserRepositoryValidator: AbstractValidator<SupportTeamUser>
+    {
+        public SupportTeamUserRepositoryValidator()
         {
-            public SupportTeamUserRepositoryValidator()
-            {
-            }
+            Validation();
         }
+        
+        partial void Validation();
     }
 }
 

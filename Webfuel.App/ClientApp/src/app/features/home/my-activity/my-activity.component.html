@@ -16,15 +16,38 @@
 
   <grid [dataSource]="userActivityApi" (filter)="filter($event)">
     <grid-date-column name="date" />
-    <grid-reference-column name="workActivityId" [dataSource]="staticDataCache.workActivity" />
+
+    <grid-column name="Activity">
+      <ng-template #itemTemplate let-item>
+        <div *ngIf="item.isProjectActivity">
+          <div class="text" *ngFor="let supportProvidedId of item.projectSupportProvidedIds">
+            {{ (staticDataCache.supportProvided.get({ id: supportProvidedId }) | async)?.name }}
+          </div>
+        </div>
+        <div *ngIf="!item.isProjectActivity">
+          {{ (staticDataCache.workActivity.get({ id: item.workActivityId }) | async)?.name }}
+        </div>
+      </ng-template>
+    </grid-column>
+
     <grid-column name="description">
       <ng-template #itemTemplate let-item>
         <pre class="grid-pre">{{ item.description }}</pre>
       </ng-template>
     </grid-column>
-    <grid-action-column [canAdd]="false" (edit)="edit($event)" (delete)="delete($event)" />
+
+    <grid-column justify="right">
+      <ng-template #itemTemplate let-item>
+        <div *ngIf="item.isProjectActivity">
+          <a target="_blank" class="link is-primary" href="/project/project-support/{{ item.projectId }}"><i class="fas fa-external-link"></i> {{ item.projectPrefixedNumber }}</a>
+        </div>
+        <div *ngIf="!item.isProjectActivity">
+          <a class="link is-primary" (click)="edit(item)">edit</a>
+          &nbsp;
+          <a class="link is-danger" (click)="delete(item)">delete</a>
+        </div>
+      </ng-template>
+    </grid-column>
   </grid>
-
-
 
 </div>
