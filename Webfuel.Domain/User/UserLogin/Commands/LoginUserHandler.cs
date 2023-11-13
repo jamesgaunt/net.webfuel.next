@@ -35,7 +35,13 @@ namespace Webfuel.Domain
             if (!validated)
                 throw new DomainException("Invalid username or password");
 
-            return new StringResult(await _identityTokenService.GenerateToken(new IdentityUser { Id = user.Id, Email = user.Email }));
+            return new StringResult(await _identityTokenService.GenerateToken(new IdentityUser
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName
+            }));
         }
 
         async Task<User> BootstrapDeveloperUser(string email)

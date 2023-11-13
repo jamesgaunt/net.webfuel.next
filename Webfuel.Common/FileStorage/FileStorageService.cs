@@ -27,15 +27,18 @@ namespace Webfuel.Common
         private readonly IFileStorageConfiguration _configuration;
         private readonly IFileStorageGroupRepository _fileStorageGroupRepository;
         private readonly IFileStorageEntryRepository _fileStorageEntryRepository;
+        private readonly IIdentityAccessor _identityAccessor;
 
         public FileStorageService(
             IFileStorageConfiguration configuration,
             IFileStorageGroupRepository fileStorageGroupRepository,
-            IFileStorageEntryRepository fileStorageEntryRepository)
+            IFileStorageEntryRepository fileStorageEntryRepository,
+            IIdentityAccessor identityAccessor)
         {
             _configuration = configuration;
             _fileStorageGroupRepository = fileStorageGroupRepository;
             _fileStorageEntryRepository = fileStorageEntryRepository;
+            _identityAccessor = identityAccessor;
         }
 
         public async Task<FileStorageGroup> CreateGroup()
@@ -64,6 +67,10 @@ namespace Webfuel.Common
             }
 
             entry.UploadedAt = DateTimeOffset.UtcNow;
+
+            if(_identityAccessor.User != null)
+                entry.UploadedBy = _identityAccessor.User.FirstName + " " + _identityAccessor.User.LastName;
+
             return await _fileStorageEntryRepository.UpdateFileStorageEntry(entry);
         }
 

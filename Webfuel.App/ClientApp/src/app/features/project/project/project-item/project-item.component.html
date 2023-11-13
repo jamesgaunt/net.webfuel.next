@@ -11,18 +11,8 @@
         <label class="label">Status</label>
         <dropdown-select [dataSource]="staticDataCache.projectStatus" placeholder="required" formControlName="statusId"></dropdown-select>
       </div>
-      <div class="field is-3">
-        <label class="label">Quantative team contribution</label>
-        <dropdown-select [dataSource]="staticDataCache.isQuantativeTeamContribution" placeholder="optional" formControlName="isQuantativeTeamContributionId"></dropdown-select>
-      </div>
-      <div class="field is-3">
-        <label class="label">CTU team contribution</label>
-        <dropdown-select [dataSource]="staticDataCache.isCTUTeamContribution" placeholder="optional" formControlName="isCTUTeamContributionId"></dropdown-select>
-      </div>
-      <div class="field is-3">
-        <label class="label">PPIE and EDI contribution</label>
-        <dropdown-select [dataSource]="staticDataCache.isPPIEAndEDIContribution" placeholder="optional" formControlName="isPPIEAndEDIContributionId"></dropdown-select>
-      </div>
+    </div>
+    <div class="flex">
       <div class="field is-6">
         <label class="label">Funding stream submitted to</label>
         <dropdown-select [dataSource]="staticDataCache.fundingStream" placeholder="optional" formControlName="submittedFundingStreamId"></dropdown-select>
@@ -34,7 +24,7 @@
       </div>
     </div>
 
-    <hr/>
+    <hr />
     <h3>For Clinical Trial Submissions</h3>
 
     <div class="flex">
