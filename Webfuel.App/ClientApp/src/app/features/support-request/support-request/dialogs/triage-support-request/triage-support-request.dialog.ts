@@ -7,7 +7,7 @@ import { StaticDataCache } from 'api/static-data.cache';
 import { SupportRequestApi } from 'api/support-request.api';
 import { FormService } from 'core/form.service';
 import { DialogBase, DialogComponentBase } from 'shared/common/dialog-base';
-
+import _ from 'shared/common/underscore';
 export interface TriageSupportRequestDialogData {
   id: string;
 }
@@ -33,6 +33,10 @@ export class TriageSupportRequestDialogComponent extends DialogComponentBase<Pro
   ) {
     super();
     this.form.patchValue({ id: this.data.id });
+
+    this.staticDataCache.supportProvided.query({ skip: 0, take: 100 }).subscribe((result) => {
+      this.form.patchValue({ supportProvidedIds : _.map(_.filter(result.items, (p) => p.default), q => q.id) });
+    })
   }
 
   form = new FormGroup({

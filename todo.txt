@@ -3,8 +3,6 @@ NW:
 
 > Purhase and setup on new domain - send form code to ICL for their web administrators
 
-> Feed Activity from Project Support 
-
 > Shrink project support summary table
 
 > Project Status Active etc.
