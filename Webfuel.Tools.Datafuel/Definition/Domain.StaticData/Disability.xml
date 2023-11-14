@@ -12,7 +12,6 @@
       <Member Name="Name" />
     </Index>
     <Data>
-      <Row Id="d94327d9-b1f6-4a9f-8d80-0b520d244791" Name="(list of options required)" />
       <Row Id="830fbd18-04cd-4c42-b7b0-1d98542fecda" Name="Prefer not to say" />
     </Data>
   </Entity>

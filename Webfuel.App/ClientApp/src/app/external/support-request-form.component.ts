@@ -73,7 +73,7 @@ export class SupportRequestFormComponent {
     leadApplicantJobRole: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     leadApplicantOrganisationTypeId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     leadApplicantOrganisation: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
-    leadApplicantDepartment: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    leadApplicantDepartment: new FormControl<string>('', { nonNullable: true }),
 
     leadApplicantAddressLine1: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     leadApplicantAddressLine2: new FormControl<string>('', { nonNullable: true }),
@@ -82,11 +82,10 @@ export class SupportRequestFormComponent {
     leadApplicantAddressCountry: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     leadApplicantAddressPostcode: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
 
-    leadApplicantORCID: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    leadApplicantORCID: new FormControl<string>('', { nonNullable: true }),
     isLeadApplicantNHSId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
 
     leadApplicantAgeRangeId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
-    leadApplicantDisabilityId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     leadApplicantGenderId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     leadApplicantEthnicityId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
 

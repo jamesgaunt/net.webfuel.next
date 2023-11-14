@@ -13,6 +13,8 @@ namespace Webfuel.Domain
 
         public required Guid WorkActivityId { get; set; }
 
+        public required Decimal WorkTimeInHours { get; set; }
+
         public required string Description { get; set; }
     }
 }

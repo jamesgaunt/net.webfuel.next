@@ -12,6 +12,7 @@
     
     <!-- Work Activity -->
     <Property Name="WorkActivityId" Type="WorkActivity?" />
+    <Property Name="WorkTimeInHours" Type="decimal?" />
     <!-- /Work Activity -->
 
     <!-- Project Activity -->

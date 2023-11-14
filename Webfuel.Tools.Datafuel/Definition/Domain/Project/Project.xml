@@ -70,7 +70,6 @@
     <Property Name="IsLeadApplicantNHSId" Type="IsLeadApplicantNHS?" />
 
     <Property Name="LeadApplicantAgeRangeId" Type="AgeRange?" />
-    <Property Name="LeadApplicantDisabilityId" Type="Disability?" />
     <Property Name="LeadApplicantGenderId" Type="Gender?" />
     <Property Name="LeadApplicantEthnicityId" Type="Ethnicity?" />
 

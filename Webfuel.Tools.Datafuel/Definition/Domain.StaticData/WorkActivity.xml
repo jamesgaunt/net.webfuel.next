@@ -3,7 +3,7 @@
 <Schema>
   <Entity Name="WorkActivity" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
     <Key Name="Id" Type="guid" />
-    <Property Name="Name" Type="meta:name" />
+    <Property Name="Name" Type="string[128]" />
     <Property Name="SortOrder" Type="Int32" />
     <Property Name="Default" Type="boolean" />
     <Property Name="Hidden" Type="boolean" />
@@ -12,18 +12,14 @@
       <Member Name="Name" />
     </Index>
     <Data>
-      <Row Id="2ec85064-aaf1-41ef-8159-01bee8fae82a" Name="NIHR RSS resource article development (1 written article)" />
-      <Row Id="879a35d6-94a0-47fc-ae05-0dcea250b789" Name="NIHR RSS resource article development (1 recorded)" />
-      <Row Id="bb3b0251-1d4d-4b02-8d26-32e19d18a5b0" Name="NIHR RSS resource article development (1 animated)" />
-      <Row Id="1cff481e-96ae-4888-8a7e-740f317e39fa" Name="Short Course (&lt;=2 hours) development" />
-      <Row Id="82cf2ba5-1395-4f75-9d41-c20f55f4179d" Name="Short Course (&lt;=2 hours) delivery" />
-      <Row Id="6c8ac20e-b182-44f4-8336-7293d2624e96" Name="Half day course (2-4 hours) development" />
-      <Row Id="ca653632-7bee-4535-a8c6-463eb3b96406" Name="Half day course (2-4 hours) delivery" />
-      <Row Id="f3d4750f-d5b4-4bb0-9752-5a762135396b" Name="Full day course (&gt;=4-8 hours) development" />
-      <Row Id="5f39c39f-e9f3-434d-97a8-6fd1a2e6a313" Name="Full day course (&gt;=4-8 hours) delivery" />
-      <Row Id="d5398de9-3ac3-473b-8596-e5b593ca7a68" Name="NIHR RSS methods academy research activity (4 hrs)" />
-      <Row Id="f94205ca-5346-47fa-99af-0dd062490896" Name="NIHR RSS methods academy research activity (8 hrs)" />
-      <Row Id="79699038-412d-475a-9ed7-e51838863115" Name="Other" />
+      <Row Id="2ec85064-aaf1-41ef-8159-01bee8fae82a" Name="NIHR RSS resource article development (written/recorded/animated)" />
+      <Row Id="1cff481e-96ae-4888-8a7e-740f317e39fa" Name="Course or workshop development" />
+      <Row Id="82cf2ba5-1395-4f75-9d41-c20f55f4179d" Name="Course or workship delivery" />
+      <Row Id="fe4f8faf-ff96-4271-9f48-0af17d936a75" Name="RSS Training/Mentoring/Supervision session etc" />
+      <Row Id="1ac14113-5994-4c32-9914-dafb1c23cb22" Name="RSS publication" />
+      <Row Id="d5398de9-3ac3-473b-8596-e5b593ca7a68" Name="NIHR RSS methods academy research activity" />
+      <Row Id="e85c7de3-7827-437c-a36c-a2d22ae2a05e" Name="NIHR RSS methods academy research time" />
+      <Row Id="79699038-412d-475a-9ed7-e51838863115" Name="Other" FreeText="true" />
     </Data>
   </Entity>
 </Schema>

@@ -152,9 +152,6 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.LeadApplicantAgeRangeId):
                         result.Add(new SqlParameter(nameof(SupportRequest.LeadApplicantAgeRangeId), entity.LeadApplicantAgeRangeId ?? (object?)DBNull.Value));
                         break;
-                    case nameof(SupportRequest.LeadApplicantDisabilityId):
-                        result.Add(new SqlParameter(nameof(SupportRequest.LeadApplicantDisabilityId), entity.LeadApplicantDisabilityId ?? (object?)DBNull.Value));
-                        break;
                     case nameof(SupportRequest.LeadApplicantGenderId):
                         result.Add(new SqlParameter(nameof(SupportRequest.LeadApplicantGenderId), entity.LeadApplicantGenderId ?? (object?)DBNull.Value));
                         break;
@@ -231,7 +228,6 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantOrganisationTypeId";
                 yield return "IsLeadApplicantNHSId";
                 yield return "LeadApplicantAgeRangeId";
-                yield return "LeadApplicantDisabilityId";
                 yield return "LeadApplicantGenderId";
                 yield return "LeadApplicantEthnicityId";
             }
@@ -285,7 +281,6 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantOrganisationTypeId";
                 yield return "IsLeadApplicantNHSId";
                 yield return "LeadApplicantAgeRangeId";
-                yield return "LeadApplicantDisabilityId";
                 yield return "LeadApplicantGenderId";
                 yield return "LeadApplicantEthnicityId";
             }
@@ -338,7 +333,6 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantOrganisationTypeId";
                 yield return "IsLeadApplicantNHSId";
                 yield return "LeadApplicantAgeRangeId";
-                yield return "LeadApplicantDisabilityId";
                 yield return "LeadApplicantGenderId";
                 yield return "LeadApplicantEthnicityId";
             }

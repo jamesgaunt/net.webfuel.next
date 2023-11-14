@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Webfuel.Domain.StaticData
 {
-    public partial class ResearcherRole: IStaticData
+    public partial class ResearcherRole: IStaticData, IStaticDataWithFreeText
     {
         public ResearcherRole() { }
         
@@ -33,6 +33,9 @@ namespace Webfuel.Domain.StaticData
                     case nameof(ResearcherRole.Hidden):
                         Hidden = (bool)value!;
                         break;
+                    case nameof(ResearcherRole.FreeText):
+                        FreeText = (bool)value!;
+                        break;
                 }
             }
         }
@@ -41,6 +44,7 @@ namespace Webfuel.Domain.StaticData
         public int SortOrder  { get; internal set; } = 0;
         public bool Default  { get; internal set; } = false;
         public bool Hidden  { get; internal set; } = false;
+        public bool FreeText  { get; internal set; } = false;
         public ResearcherRole Copy()
         {
             var entity = new ResearcherRole();
@@ -49,6 +53,7 @@ namespace Webfuel.Domain.StaticData
             entity.SortOrder = SortOrder;
             entity.Default = Default;
             entity.Hidden = Hidden;
+            entity.FreeText = FreeText;
             return entity;
         }
     }

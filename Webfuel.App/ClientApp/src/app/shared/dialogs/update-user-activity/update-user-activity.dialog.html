@@ -11,6 +11,10 @@
       <div class="field">
         <label class="label">Work Activity</label>
         <dropdown-select [dataSource]="staticDataCache.workActivity" placeholder="required" formControlName="workActivityId"></dropdown-select>
+     </div>
+      <div class="field">
+        <label class="label">Time in hours (0 - 8)</label>
+        <input class="input" type="number" min="0" max="8" formControlName="workTimeInHours" placeholder="required" />
       </div>
       <div class="field">
         <label class="label">

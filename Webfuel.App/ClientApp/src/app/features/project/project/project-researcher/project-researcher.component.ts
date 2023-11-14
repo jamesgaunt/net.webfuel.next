@@ -73,7 +73,6 @@ export class ProjectResearcherComponent implements OnInit {
     isLeadApplicantNHSId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
 
     leadApplicantAgeRangeId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
-    leadApplicantDisabilityId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
     leadApplicantGenderId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
     leadApplicantEthnicityId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
   });

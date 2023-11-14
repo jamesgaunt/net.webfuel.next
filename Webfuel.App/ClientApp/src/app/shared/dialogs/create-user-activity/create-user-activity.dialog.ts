@@ -1,10 +1,12 @@
-import { Component, Injectable } from '@angular/core';
+import { Component, DestroyRef, Injectable, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserActivity } from 'api/api.types';
 import { StaticDataCache } from 'api/static-data.cache';
 import { UserActivityApi } from 'api/user-activity.api';
 import { FormService } from 'core/form.service';
 import { DialogBase, DialogComponentBase } from '../../common/dialog-base';
+import { debounceTime } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable()
 export class CreateUserActivityDialog extends DialogBase<UserActivity> {
@@ -30,6 +32,7 @@ export class CreateUserActivityDialogComponent extends DialogComponentBase<UserA
   form = new FormGroup({
     date: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     workActivityId: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    workTimeInHours: new FormControl<number>(null!, { validators: [Validators.required, Validators.min(0), Validators.max(8)], nonNullable: true }),
     description: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
   });
 

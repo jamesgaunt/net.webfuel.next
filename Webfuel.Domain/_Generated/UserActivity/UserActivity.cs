@@ -27,6 +27,9 @@ namespace Webfuel.Domain
                     case nameof(UserActivity.Description):
                         Description = (string)value!;
                         break;
+                    case nameof(UserActivity.WorkTimeInHours):
+                        WorkTimeInHours = value == DBNull.Value ? (Decimal?)null : (Decimal?)value;
+                        break;
                     case nameof(UserActivity.ProjectPrefixedNumber):
                         ProjectPrefixedNumber = (string)value!;
                         break;
@@ -51,6 +54,7 @@ namespace Webfuel.Domain
         public Guid Id  { get; set; } = Guid.Empty;
         public DateOnly Date  { get; set; } = new DateOnly(1900, 1, 1);
         public string Description  { get; set; } = String.Empty;
+        public Decimal? WorkTimeInHours  { get; set; } = null;
         public string ProjectPrefixedNumber  { get; set; } = String.Empty;
         public List<Guid> ProjectSupportProvidedIds
         {
@@ -74,6 +78,7 @@ namespace Webfuel.Domain
             entity.Id = Id;
             entity.Date = Date;
             entity.Description = Description;
+            entity.WorkTimeInHours = WorkTimeInHours;
             entity.ProjectPrefixedNumber = ProjectPrefixedNumber;
             entity.ProjectSupportProvidedIdsJson = ProjectSupportProvidedIdsJson;
             entity.UserId = UserId;

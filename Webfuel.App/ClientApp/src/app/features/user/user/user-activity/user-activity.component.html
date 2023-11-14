@@ -13,7 +13,7 @@
 
   <grid [dataSource]="userActivityApi" (filter)="filter($event)">
     <grid-date-column name="date" />
-
+    <grid-number-column name="workTimeInHours" label="Hours" />
     <grid-column name="Activity">
       <ng-template #itemTemplate let-item>
         <div *ngIf="item.isProjectActivity">

@@ -291,12 +291,13 @@ export interface ResearcherOrganisationType extends IStaticData, IStaticDataWith
     freeText: boolean;
 }
 
-export interface ResearcherRole extends IStaticData {
+export interface ResearcherRole extends IStaticData, IStaticDataWithFreeText {
     id: string;
     name: string;
     sortOrder: number;
     default: boolean;
     hidden: boolean;
+    freeText: boolean;
 }
 
 export interface ResearchMethodology extends IStaticData {
@@ -437,7 +438,6 @@ export interface Project {
     leadApplicantOrganisationTypeId: string | null | null;
     isLeadApplicantNHSId: string | null | null;
     leadApplicantAgeRangeId: string | null | null;
-    leadApplicantDisabilityId: string | null | null;
     leadApplicantGenderId: string | null | null;
     leadApplicantEthnicityId: string | null | null;
 }
@@ -652,7 +652,6 @@ export interface SupportRequest {
     leadApplicantOrganisationTypeId: string | null | null;
     isLeadApplicantNHSId: string | null | null;
     leadApplicantAgeRangeId: string | null | null;
-    leadApplicantDisabilityId: string | null | null;
     leadApplicantGenderId: string | null | null;
     leadApplicantEthnicityId: string | null | null;
 }
@@ -699,7 +698,6 @@ export interface UpdateSupportRequestResearcher {
     leadApplicantORCID: string;
     isLeadApplicantNHSId: string | null | null;
     leadApplicantAgeRangeId: string | null | null;
-    leadApplicantDisabilityId: string | null | null;
     leadApplicantGenderId: string | null | null;
     leadApplicantEthnicityId: string | null | null;
 }
@@ -757,6 +755,7 @@ export interface UserActivity {
     id: string;
     date: string;
     description: string;
+    workTimeInHours: number | null | null;
     projectPrefixedNumber: string;
     projectSupportProvidedIds: Array<string>;
     userId: string;
@@ -768,6 +767,7 @@ export interface UserActivity {
 export interface CreateUserActivity {
     date: string;
     workActivityId: string;
+    workTimeInHours: number;
     description: string;
 }
 
@@ -775,6 +775,7 @@ export interface UpdateUserActivity {
     id: string;
     date: string;
     workActivityId: string;
+    workTimeInHours: number;
     description: string;
 }
 
@@ -1270,6 +1271,7 @@ export interface CreateResearcherRole {
     name: string;
     default: boolean;
     hidden: boolean;
+    freeText: boolean;
 }
 
 export interface UpdateResearcherRole {
@@ -1277,6 +1279,7 @@ export interface UpdateResearcherRole {
     name: string;
     default: boolean;
     hidden: boolean;
+    freeText: boolean;
 }
 
 export interface SortResearcherRole {

@@ -12,7 +12,11 @@
       <Member Name="Name" />
     </Index>
     <Data>
-      <Row Id="3fcb29e0-b04b-4571-9f96-e12dbaaf90bc" Name="(list of options required)" />
+      <Row Id="412343a7-5fcb-4def-9e53-dac0df5936dc" Name="Asian, Asian British, Asian Welsh" />
+      <Row Id="79fbdf64-68a1-456f-bd36-96e0dfb05b7c" Name="Black, Black British, Black Welsh, Caribbean or African" />
+      <Row Id="3b32aac7-320b-47df-a7bb-512dbd845ef2" Name="Mixed or Multiple" />
+      <Row Id="bdfdafb2-3680-40f9-b698-88855b3b1f22" Name="White" />
+      <Row Id="07876833-8dcd-47ba-8e39-784d7fc3069c" Name="Other ethnic group" />
       <Row Id="40582e03-e884-48f8-99eb-ef591822563f" Name="Prefer not to say" />
     </Data>
   </Entity>

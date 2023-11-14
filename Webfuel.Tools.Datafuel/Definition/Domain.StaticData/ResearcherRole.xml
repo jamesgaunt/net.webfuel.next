@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Schema>
-  <Entity Name="ResearcherRole" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
+  <Entity Name="ResearcherRole" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData, IStaticDataWithFreeText">
     <Key Name="Id" Type="guid" />
     <Property Name="Name" Type="meta:name" />
     <Property Name="SortOrder" Type="Int32" />
     <Property Name="Default" Type="boolean" />
     <Property Name="Hidden" Type="boolean" />
+    <Property Name="FreeText" Type="boolean" />
     <Index Unique="true">
       <Member Name="Name" />
     </Index>
@@ -15,6 +16,7 @@
       <Row Id="1c4b0501-821c-4a62-a560-f50b42d55657" Name="Research Fellow/Associate" />
       <Row Id="93a1de9c-ccbe-4bc4-8896-e34e97d217af" Name="Co-investogator" />
       <Row Id="c26a348a-1581-4678-8d69-aa218d11bb36" Name="Administator " />
+      <Row Id="45013058-6dc8-4a3c-90e4-49a4da46efc8" Name="Other" FreeText="true" />
     </Data>
   </Entity>
 </Schema>

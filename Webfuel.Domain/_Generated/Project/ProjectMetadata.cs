@@ -176,9 +176,6 @@ namespace Webfuel.Domain
                     case nameof(Project.LeadApplicantAgeRangeId):
                         result.Add(new SqlParameter(nameof(Project.LeadApplicantAgeRangeId), entity.LeadApplicantAgeRangeId ?? (object?)DBNull.Value));
                         break;
-                    case nameof(Project.LeadApplicantDisabilityId):
-                        result.Add(new SqlParameter(nameof(Project.LeadApplicantDisabilityId), entity.LeadApplicantDisabilityId ?? (object?)DBNull.Value));
-                        break;
                     case nameof(Project.LeadApplicantGenderId):
                         result.Add(new SqlParameter(nameof(Project.LeadApplicantGenderId), entity.LeadApplicantGenderId ?? (object?)DBNull.Value));
                         break;
@@ -263,7 +260,6 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantOrganisationTypeId";
                 yield return "IsLeadApplicantNHSId";
                 yield return "LeadApplicantAgeRangeId";
-                yield return "LeadApplicantDisabilityId";
                 yield return "LeadApplicantGenderId";
                 yield return "LeadApplicantEthnicityId";
             }
@@ -325,7 +321,6 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantOrganisationTypeId";
                 yield return "IsLeadApplicantNHSId";
                 yield return "LeadApplicantAgeRangeId";
-                yield return "LeadApplicantDisabilityId";
                 yield return "LeadApplicantGenderId";
                 yield return "LeadApplicantEthnicityId";
             }
@@ -386,7 +381,6 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantOrganisationTypeId";
                 yield return "IsLeadApplicantNHSId";
                 yield return "LeadApplicantAgeRangeId";
-                yield return "LeadApplicantDisabilityId";
                 yield return "LeadApplicantGenderId";
                 yield return "LeadApplicantEthnicityId";
             }

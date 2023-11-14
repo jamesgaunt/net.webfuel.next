@@ -43,7 +43,6 @@ namespace Webfuel.Domain
         public Guid? IsLeadApplicantNHSId { get; set; }
 
         public Guid? LeadApplicantAgeRangeId { get; set; }
-        public Guid? LeadApplicantDisabilityId { get; set; }
         public Guid? LeadApplicantGenderId { get; set; }
         public Guid? LeadApplicantEthnicityId { get; set; }
 

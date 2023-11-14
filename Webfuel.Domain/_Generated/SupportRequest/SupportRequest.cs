@@ -150,9 +150,6 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.LeadApplicantAgeRangeId):
                         LeadApplicantAgeRangeId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
-                    case nameof(SupportRequest.LeadApplicantDisabilityId):
-                        LeadApplicantDisabilityId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
-                        break;
                     case nameof(SupportRequest.LeadApplicantGenderId):
                         LeadApplicantGenderId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
@@ -206,7 +203,6 @@ namespace Webfuel.Domain
         public Guid? LeadApplicantOrganisationTypeId { get; set; }
         public Guid? IsLeadApplicantNHSId { get; set; }
         public Guid? LeadApplicantAgeRangeId { get; set; }
-        public Guid? LeadApplicantDisabilityId { get; set; }
         public Guid? LeadApplicantGenderId { get; set; }
         public Guid? LeadApplicantEthnicityId { get; set; }
         public SupportRequest Copy()
@@ -256,7 +252,6 @@ namespace Webfuel.Domain
             entity.LeadApplicantOrganisationTypeId = LeadApplicantOrganisationTypeId;
             entity.IsLeadApplicantNHSId = IsLeadApplicantNHSId;
             entity.LeadApplicantAgeRangeId = LeadApplicantAgeRangeId;
-            entity.LeadApplicantDisabilityId = LeadApplicantDisabilityId;
             entity.LeadApplicantGenderId = LeadApplicantGenderId;
             entity.LeadApplicantEthnicityId = LeadApplicantEthnicityId;
             return entity;
