@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="UserLogin" OrderBy="-Id">
+    <Key Name="Id" Type="guid" />
+    <Property Name="UserId" Type="guid" />
+    <Property Name="Email" Type="meta:name" />
+    <Property Name="IPAddress" Type="meta:name" />
+    <Property Name="Successful" Type="boolean" />
+    <Property Name="Reason" Type="meta:name" />
+    <Property Name="CreatedAt" Type="DateTime" />
+  </Entity>
+</Schema>

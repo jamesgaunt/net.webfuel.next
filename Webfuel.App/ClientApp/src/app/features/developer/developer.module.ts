@@ -4,6 +4,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { DeveloperRoutingModule } from './developer-routing.module';
 
 import { TestComponent } from './test/test.component';
+import { UserLoginComponent } from './user-login/user-login.component';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { TestComponent } from './test/test.component';
     DeveloperRoutingModule
   ],
   declarations: [
-    TestComponent
+    TestComponent,
+    UserLoginComponent
   ]
 })
 export class DeveloperModule { }

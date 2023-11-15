@@ -33,7 +33,10 @@ namespace Webfuel.Common
             // Settings Menu
 
             clientConfiguration.SettingsMenu.AddChild(name: "User Groups", action: "/user/user-group-list", icon: "fas fa-users-cog");
-         
+
+            if(_identityAccessor.Claims.Developer)
+                clientConfiguration.SettingsMenu.AddChild(name: "User Logins", action: "/developer/user-login", icon: "fas fa-sign-in");
+
             return Task.CompletedTask;
         }
     }

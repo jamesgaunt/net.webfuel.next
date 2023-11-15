@@ -21,6 +21,9 @@ namespace Webfuel.Tools.Datafuel
             {
                 EntityGenerator.GenerateEntity(entity);
                 MetadataGenerator.GenerateMetadata(entity);
+
+                if(entity.ChangeLog)
+                    ChangeLoggerGenerator.GenerateChangeLogger(entity);
             }
 
             // Static Data Features

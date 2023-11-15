@@ -191,7 +191,7 @@ namespace Webfuel.Tools.Datafuel
 
         public bool ReadOnly => HasTag("ReadOnly") || Enum;
 
-        // public bool ReadOnly => HasTag("ReadOnly");
+        public bool ChangeLog => HasTag("ChangeLog");
 
         // Methods
 

@@ -5,6 +5,7 @@ using Webfuel.Domain;
 namespace Webfuel.App
 {
     [ApiService]
+    [ApiDataSource]
     public static class UserLoginApi
     {
         public static void RegisterEndpoints(IEndpointRouteBuilder app)
@@ -22,6 +23,11 @@ namespace Webfuel.App
             app.MapPost("api/user/send-password-reset-email", SendPasswordResetEmail);
 
             app.MapPost("api/user/reset-password", ResetPassword);
+
+            // Querys
+
+            app.MapPost("api/user/login/query", Query)
+                .RequireIdentity();
         }
 
         public static Task<StringResult> Login([FromBody] LoginUser command, IMediator mediator)
@@ -45,6 +51,11 @@ namespace Webfuel.App
         }
 
         public static Task ResetPassword([FromBody] ResetUserPassword command, IMediator mediator)
+        {
+            return mediator.Send(command);
+        }
+
+        public static Task<QueryResult<UserLogin>> Query([FromBody] QueryUserLogin command, IMediator mediator)
         {
             return mediator.Send(command);
         }

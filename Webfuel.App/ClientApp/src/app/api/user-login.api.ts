@@ -3,10 +3,10 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { LoginUser, StringResult, ChangeUserPassword, UpdateUserPassword, SendUserPasswordResetEmail, ResetUserPassword } from './api.types';
+import { LoginUser, StringResult, ChangeUserPassword, UpdateUserPassword, SendUserPasswordResetEmail, ResetUserPassword, QueryUserLogin, QueryResult, UserLogin } from './api.types';
 
 @Injectable()
-export class UserLoginApi {
+export class UserLoginApi implements IDataSource<UserLogin, QueryUserLogin, any, any> {
     constructor(private apiService: ApiService) { }
     
     public login (body: LoginUser, options?: ApiOptions): Observable<StringResult> {
@@ -28,5 +28,11 @@ export class UserLoginApi {
     public resetPassword (body: ResetUserPassword, options?: ApiOptions): Observable<any> {
         return this.apiService.request<ResetUserPassword, any>("POST", "api/user/reset-password", body, options);
     }
+    
+    public query (body: QueryUserLogin, options?: ApiOptions): Observable<QueryResult<UserLogin>> {
+        return this.apiService.request<QueryUserLogin, QueryResult<UserLogin>>("POST", "api/user/login/query", body, options);
+    }
+    
+    changed = new EventEmitter<any>();
 }
 

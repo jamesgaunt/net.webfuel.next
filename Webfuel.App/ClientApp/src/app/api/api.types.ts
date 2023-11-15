@@ -932,6 +932,25 @@ export interface ResetUserPassword {
     confirmNewPassword: string;
 }
 
+export interface UserLogin {
+    id: string;
+    userId: string;
+    email: string;
+    ipAddress: string;
+    successful: boolean;
+    reason: string;
+    createdAt: string;
+}
+
+export interface QueryUserLogin extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
 export interface CreateAgeRange {
     name: string;
     default: boolean;

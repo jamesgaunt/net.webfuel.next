@@ -1,0 +1,18 @@
+<ul class="breadcrumbs">
+  <li><a routerLink="/home">Home</a></li>
+</ul>
+<div class="container">
+  <h1 class="title">User Login</h1>
+</div>
+
+<div class="container">
+
+  <grid [dataSource]="userLoginApi" [search]="true">
+    <grid-datetime-column name="createdAt" />
+    <grid-column name="email" />
+    <grid-column name="ipAddress" label="IP Address" />
+    <grid-boolean-column name="successful" />
+    <grid-column name="reason" />
+  </grid>
+
+</div>

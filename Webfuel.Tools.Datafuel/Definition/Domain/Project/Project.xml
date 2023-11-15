@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Schema>
-  <Entity Name="Project" OrderBy="-Number">
+  <Entity Name="Project" OrderBy="-Number" Tags="ChangeLog">
     <Key Name="Id" Type="guid" />
     <Property Name="Number" Type="Int32" />
     <Property Name="PrefixedNumber" Type="meta:name" />

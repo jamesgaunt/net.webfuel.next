@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using System.Data;
 
 namespace Webfuel.Domain
@@ -7,41 +8,77 @@ namespace Webfuel.Domain
     {
         private readonly IUserRepository _userRepository;
         private readonly IUserGroupRepository _userGroupRepository;
+        private readonly IUserLoginRepository _userLoginRepository;
         private readonly IIdentityTokenService _identityTokenService;
-        private readonly IMediator _mediator;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public LoginUserHandler(IUserRepository userRepository, IUserGroupRepository userGroupRepository, IIdentityTokenService identityTokenService, IMediator mediator)
+        public LoginUserHandler(
+            IUserRepository userRepository,
+            IUserGroupRepository userGroupRepository,
+            IUserLoginRepository userLoginRepository,
+            IIdentityTokenService identityTokenService,
+            IHttpContextAccessor httpContextAccessor)
         {
             _userRepository = userRepository;
             _identityTokenService = identityTokenService;
-            _mediator = mediator;
             _userGroupRepository = userGroupRepository;
+            _userLoginRepository = userLoginRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<StringResult> Handle(LoginUser request, CancellationToken cancellationToken)
         {
-            await Sanitize(request);
-
-            var user = await _userRepository.GetUserByEmail(request.Email);
-            if (user == null)
+            var userLogin = new UserLogin
             {
-                if (request.Email != "james.gaunt@webfuel.com")
+                Email = request.Email,
+                CreatedAt = DateTimeOffset.UtcNow,
+                IPAddress = _httpContextAccessor.HttpContext?.Connection.RemoteIpAddress?.ToString() ?? String.Empty
+            };
+
+            try
+            {
+                await Sanitize(request);
+
+                var user = await _userRepository.GetUserByEmail(request.Email);
+                if (user == null)
+                {
+                    if (request.Email != "james.gaunt@webfuel.com")
+                        throw new DomainException("Invalid username or password");
+                    user = await BootstrapDeveloperUser("james.gaunt@webfuel.com");
+                }
+
+                userLogin.UserId = user.Id;
+
+
+                if (user == null || user.Disabled)
                     throw new DomainException("Invalid username or password");
-                user = await BootstrapDeveloperUser("james.gaunt@webfuel.com");
+
+                var validated = AuthenticationUtility.ValidatePassword(request.Password, user.PasswordHash, user.PasswordSalt);
+                if (!validated)
+                    throw new DomainException("Invalid username or password");
+
+                userLogin.Successful = true;
+
+                return new StringResult(await _identityTokenService.GenerateToken(new IdentityUser
+                {
+                    Id = user.Id,
+                    Email = user.Email
+                }));
             }
-
-            if (user == null || user.Disabled)
-                throw new DomainException("Invalid username or password");
-
-            var validated = AuthenticationUtility.ValidatePassword(request.Password, user.PasswordHash, user.PasswordSalt);
-            if (!validated)
-                throw new DomainException("Invalid username or password");
-
-            return new StringResult(await _identityTokenService.GenerateToken(new IdentityUser
+            catch (Exception e)
             {
-                Id = user.Id,
-                Email = user.Email
-            }));
+                userLogin.Successful = false;
+                userLogin.Reason = e.Message;
+                throw;
+            }
+            finally
+            {
+                try
+                {
+                    await _userLoginRepository.InsertUserLogin(userLogin);
+                }
+                catch { /* GULP */ }
+            }
         }
 
         async Task<User> BootstrapDeveloperUser(string email)
