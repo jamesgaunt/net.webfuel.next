@@ -41,6 +41,12 @@ namespace Webfuel.Domain
                     case nameof(Project.SubmittedFundingStreamName):
                         result.Add(new SqlParameter(nameof(Project.SubmittedFundingStreamName), entity.SubmittedFundingStreamName));
                         break;
+                    case nameof(Project.Locked):
+                        result.Add(new SqlParameter(nameof(Project.Locked), entity.Locked));
+                        break;
+                    case nameof(Project.Discarded):
+                        result.Add(new SqlParameter(nameof(Project.Discarded), entity.Discarded));
+                        break;
                     case nameof(Project.ProjectStartDate):
                         result.Add(new SqlParameter(nameof(Project.ProjectStartDate), entity.ProjectStartDate ?? (object?)DBNull.Value));
                         break;
@@ -55,6 +61,9 @@ namespace Webfuel.Domain
                         break;
                     case nameof(Project.Title):
                         result.Add(new SqlParameter(nameof(Project.Title), entity.Title));
+                        break;
+                    case nameof(Project.ApplicationStageFreeText):
+                        result.Add(new SqlParameter(nameof(Project.ApplicationStageFreeText), entity.ApplicationStageFreeText));
                         break;
                     case nameof(Project.ProposedFundingStreamName):
                         result.Add(new SqlParameter(nameof(Project.ProposedFundingStreamName), entity.ProposedFundingStreamName));
@@ -71,6 +80,9 @@ namespace Webfuel.Domain
                     case nameof(Project.SupportRequested):
                         result.Add(new SqlParameter(nameof(Project.SupportRequested), entity.SupportRequested));
                         break;
+                    case nameof(Project.HowDidYouFindUsFreeText):
+                        result.Add(new SqlParameter(nameof(Project.HowDidYouFindUsFreeText), entity.HowDidYouFindUsFreeText));
+                        break;
                     case nameof(Project.TeamContactTitle):
                         result.Add(new SqlParameter(nameof(Project.TeamContactTitle), entity.TeamContactTitle));
                         break;
@@ -82,6 +94,9 @@ namespace Webfuel.Domain
                         break;
                     case nameof(Project.TeamContactEmail):
                         result.Add(new SqlParameter(nameof(Project.TeamContactEmail), entity.TeamContactEmail));
+                        break;
+                    case nameof(Project.TeamContactRoleFreeText):
+                        result.Add(new SqlParameter(nameof(Project.TeamContactRoleFreeText), entity.TeamContactRoleFreeText));
                         break;
                     case nameof(Project.TeamContactMailingPermission):
                         result.Add(new SqlParameter(nameof(Project.TeamContactMailingPermission), entity.TeamContactMailingPermission));
@@ -131,14 +146,14 @@ namespace Webfuel.Domain
                     case nameof(Project.CreatedAt):
                         result.Add(new SqlParameter(nameof(Project.CreatedAt), entity.CreatedAt));
                         break;
-                    case nameof(Project.StatusId):
-                        result.Add(new SqlParameter(nameof(Project.StatusId), entity.StatusId));
-                        break;
                     case nameof(Project.FileStorageGroupId):
                         result.Add(new SqlParameter(nameof(Project.FileStorageGroupId), entity.FileStorageGroupId));
                         break;
                     case nameof(Project.SubmittedFundingStreamId):
                         result.Add(new SqlParameter(nameof(Project.SubmittedFundingStreamId), entity.SubmittedFundingStreamId ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(Project.StatusId):
+                        result.Add(new SqlParameter(nameof(Project.StatusId), entity.StatusId));
                         break;
                     case nameof(Project.IsInternationalMultiSiteStudyId):
                         result.Add(new SqlParameter(nameof(Project.IsInternationalMultiSiteStudyId), entity.IsInternationalMultiSiteStudyId ?? (object?)DBNull.Value));
@@ -215,20 +230,25 @@ namespace Webfuel.Domain
                 yield return "ClosureDate";
                 yield return "SubmittedFundingStreamFreeText";
                 yield return "SubmittedFundingStreamName";
+                yield return "Locked";
+                yield return "Discarded";
                 yield return "ProjectStartDate";
                 yield return "RecruitmentTarget";
                 yield return "NumberOfProjectSites";
                 yield return "DateOfRequest";
                 yield return "Title";
+                yield return "ApplicationStageFreeText";
                 yield return "ProposedFundingStreamName";
                 yield return "TargetSubmissionDate";
                 yield return "ExperienceOfResearchAwards";
                 yield return "BriefDescription";
                 yield return "SupportRequested";
+                yield return "HowDidYouFindUsFreeText";
                 yield return "TeamContactTitle";
                 yield return "TeamContactFirstName";
                 yield return "TeamContactLastName";
                 yield return "TeamContactEmail";
+                yield return "TeamContactRoleFreeText";
                 yield return "TeamContactMailingPermission";
                 yield return "TeamContactPrivacyStatementRead";
                 yield return "LeadApplicantTitle";
@@ -245,9 +265,9 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantAddressPostcode";
                 yield return "LeadApplicantORCID";
                 yield return "CreatedAt";
-                yield return "StatusId";
                 yield return "FileStorageGroupId";
                 yield return "SubmittedFundingStreamId";
+                yield return "StatusId";
                 yield return "IsInternationalMultiSiteStudyId";
                 yield return "IsFellowshipId";
                 yield return "ApplicationStageId";
@@ -276,20 +296,25 @@ namespace Webfuel.Domain
                 yield return "ClosureDate";
                 yield return "SubmittedFundingStreamFreeText";
                 yield return "SubmittedFundingStreamName";
+                yield return "Locked";
+                yield return "Discarded";
                 yield return "ProjectStartDate";
                 yield return "RecruitmentTarget";
                 yield return "NumberOfProjectSites";
                 yield return "DateOfRequest";
                 yield return "Title";
+                yield return "ApplicationStageFreeText";
                 yield return "ProposedFundingStreamName";
                 yield return "TargetSubmissionDate";
                 yield return "ExperienceOfResearchAwards";
                 yield return "BriefDescription";
                 yield return "SupportRequested";
+                yield return "HowDidYouFindUsFreeText";
                 yield return "TeamContactTitle";
                 yield return "TeamContactFirstName";
                 yield return "TeamContactLastName";
                 yield return "TeamContactEmail";
+                yield return "TeamContactRoleFreeText";
                 yield return "TeamContactMailingPermission";
                 yield return "TeamContactPrivacyStatementRead";
                 yield return "LeadApplicantTitle";
@@ -306,9 +331,9 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantAddressPostcode";
                 yield return "LeadApplicantORCID";
                 yield return "CreatedAt";
-                yield return "StatusId";
                 yield return "FileStorageGroupId";
                 yield return "SubmittedFundingStreamId";
+                yield return "StatusId";
                 yield return "IsInternationalMultiSiteStudyId";
                 yield return "IsFellowshipId";
                 yield return "ApplicationStageId";
@@ -336,20 +361,25 @@ namespace Webfuel.Domain
                 yield return "ClosureDate";
                 yield return "SubmittedFundingStreamFreeText";
                 yield return "SubmittedFundingStreamName";
+                yield return "Locked";
+                yield return "Discarded";
                 yield return "ProjectStartDate";
                 yield return "RecruitmentTarget";
                 yield return "NumberOfProjectSites";
                 yield return "DateOfRequest";
                 yield return "Title";
+                yield return "ApplicationStageFreeText";
                 yield return "ProposedFundingStreamName";
                 yield return "TargetSubmissionDate";
                 yield return "ExperienceOfResearchAwards";
                 yield return "BriefDescription";
                 yield return "SupportRequested";
+                yield return "HowDidYouFindUsFreeText";
                 yield return "TeamContactTitle";
                 yield return "TeamContactFirstName";
                 yield return "TeamContactLastName";
                 yield return "TeamContactEmail";
+                yield return "TeamContactRoleFreeText";
                 yield return "TeamContactMailingPermission";
                 yield return "TeamContactPrivacyStatementRead";
                 yield return "LeadApplicantTitle";
@@ -366,9 +396,9 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantAddressPostcode";
                 yield return "LeadApplicantORCID";
                 yield return "CreatedAt";
-                yield return "StatusId";
                 yield return "FileStorageGroupId";
                 yield return "SubmittedFundingStreamId";
+                yield return "StatusId";
                 yield return "IsInternationalMultiSiteStudyId";
                 yield return "IsFellowshipId";
                 yield return "ApplicationStageId";
@@ -398,6 +428,8 @@ namespace Webfuel.Domain
             entity.SubmittedFundingStreamName = entity.SubmittedFundingStreamName.Trim();
             entity.Title = entity.Title ?? String.Empty;
             entity.Title = entity.Title.Trim();
+            entity.ApplicationStageFreeText = entity.ApplicationStageFreeText ?? String.Empty;
+            entity.ApplicationStageFreeText = entity.ApplicationStageFreeText.Trim();
             entity.ProposedFundingStreamName = entity.ProposedFundingStreamName ?? String.Empty;
             entity.ProposedFundingStreamName = entity.ProposedFundingStreamName.Trim();
             entity.ExperienceOfResearchAwards = entity.ExperienceOfResearchAwards ?? String.Empty;
@@ -406,6 +438,8 @@ namespace Webfuel.Domain
             entity.BriefDescription = entity.BriefDescription.Trim();
             entity.SupportRequested = entity.SupportRequested ?? String.Empty;
             entity.SupportRequested = entity.SupportRequested.Trim();
+            entity.HowDidYouFindUsFreeText = entity.HowDidYouFindUsFreeText ?? String.Empty;
+            entity.HowDidYouFindUsFreeText = entity.HowDidYouFindUsFreeText.Trim();
             entity.TeamContactTitle = entity.TeamContactTitle ?? String.Empty;
             entity.TeamContactTitle = entity.TeamContactTitle.Trim();
             entity.TeamContactFirstName = entity.TeamContactFirstName ?? String.Empty;
@@ -414,6 +448,8 @@ namespace Webfuel.Domain
             entity.TeamContactLastName = entity.TeamContactLastName.Trim();
             entity.TeamContactEmail = entity.TeamContactEmail ?? String.Empty;
             entity.TeamContactEmail = entity.TeamContactEmail.Trim();
+            entity.TeamContactRoleFreeText = entity.TeamContactRoleFreeText ?? String.Empty;
+            entity.TeamContactRoleFreeText = entity.TeamContactRoleFreeText.Trim();
             entity.LeadApplicantTitle = entity.LeadApplicantTitle ?? String.Empty;
             entity.LeadApplicantTitle = entity.LeadApplicantTitle.Trim();
             entity.LeadApplicantFirstName = entity.LeadApplicantFirstName ?? String.Empty;
@@ -449,14 +485,17 @@ namespace Webfuel.Domain
         public const int SubmittedFundingStreamFreeText_MaxLength = 64;
         public const int SubmittedFundingStreamName_MaxLength = 64;
         public const int Title_MaxLength = 1000;
+        public const int ApplicationStageFreeText_MaxLength = 64;
         public const int ProposedFundingStreamName_MaxLength = 64;
         public const int ExperienceOfResearchAwards_MaxLength = 1000;
         public const int BriefDescription_MaxLength = 5000;
         public const int SupportRequested_MaxLength = 2000;
+        public const int HowDidYouFindUsFreeText_MaxLength = 64;
         public const int TeamContactTitle_MaxLength = 64;
         public const int TeamContactFirstName_MaxLength = 64;
         public const int TeamContactLastName_MaxLength = 64;
         public const int TeamContactEmail_MaxLength = 64;
+        public const int TeamContactRoleFreeText_MaxLength = 64;
         public const int LeadApplicantTitle_MaxLength = 64;
         public const int LeadApplicantFirstName_MaxLength = 64;
         public const int LeadApplicantLastName_MaxLength = 64;
@@ -499,6 +538,13 @@ namespace Webfuel.Domain
                 .MaximumLength(Title_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
+        public static void ApplicationStageFreeText_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(ApplicationStageFreeText_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
         public static void ProposedFundingStreamName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
@@ -527,6 +573,13 @@ namespace Webfuel.Domain
                 .MaximumLength(SupportRequested_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
+        public static void HowDidYouFindUsFreeText_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(HowDidYouFindUsFreeText_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
         public static void TeamContactTitle_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
@@ -553,6 +606,13 @@ namespace Webfuel.Domain
             ruleBuilder
                 .NotNull()
                 .MaximumLength(TeamContactEmail_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void TeamContactRoleFreeText_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(TeamContactRoleFreeText_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
         public static void LeadApplicantTitle_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
@@ -655,14 +715,17 @@ namespace Webfuel.Domain
             RuleFor(x => x.SubmittedFundingStreamFreeText).Use(ProjectMetadata.SubmittedFundingStreamFreeText_ValidationRules);
             RuleFor(x => x.SubmittedFundingStreamName).Use(ProjectMetadata.SubmittedFundingStreamName_ValidationRules);
             RuleFor(x => x.Title).Use(ProjectMetadata.Title_ValidationRules);
+            RuleFor(x => x.ApplicationStageFreeText).Use(ProjectMetadata.ApplicationStageFreeText_ValidationRules);
             RuleFor(x => x.ProposedFundingStreamName).Use(ProjectMetadata.ProposedFundingStreamName_ValidationRules);
             RuleFor(x => x.ExperienceOfResearchAwards).Use(ProjectMetadata.ExperienceOfResearchAwards_ValidationRules);
             RuleFor(x => x.BriefDescription).Use(ProjectMetadata.BriefDescription_ValidationRules);
             RuleFor(x => x.SupportRequested).Use(ProjectMetadata.SupportRequested_ValidationRules);
+            RuleFor(x => x.HowDidYouFindUsFreeText).Use(ProjectMetadata.HowDidYouFindUsFreeText_ValidationRules);
             RuleFor(x => x.TeamContactTitle).Use(ProjectMetadata.TeamContactTitle_ValidationRules);
             RuleFor(x => x.TeamContactFirstName).Use(ProjectMetadata.TeamContactFirstName_ValidationRules);
             RuleFor(x => x.TeamContactLastName).Use(ProjectMetadata.TeamContactLastName_ValidationRules);
             RuleFor(x => x.TeamContactEmail).Use(ProjectMetadata.TeamContactEmail_ValidationRules);
+            RuleFor(x => x.TeamContactRoleFreeText).Use(ProjectMetadata.TeamContactRoleFreeText_ValidationRules);
             RuleFor(x => x.LeadApplicantTitle).Use(ProjectMetadata.LeadApplicantTitle_ValidationRules);
             RuleFor(x => x.LeadApplicantFirstName).Use(ProjectMetadata.LeadApplicantFirstName_ValidationRules);
             RuleFor(x => x.LeadApplicantLastName).Use(ProjectMetadata.LeadApplicantLastName_ValidationRules);

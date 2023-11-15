@@ -42,10 +42,4 @@ export class ProjectListComponent {
   edit(item: Project) {
     this.router.navigate(['project/project-item', item.id]);
   }
-
-  delete(item: Project) {
-    this.confirmDeleteDialog.open({ title: "Project" }).subscribe((result) => {
-      this.projectApi.delete({ id: item.id }, { successGrowl: "Project Deleted" }).subscribe();
-    });
-  }
 }

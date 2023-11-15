@@ -33,6 +33,9 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.Title):
                         Title = (string)value!;
                         break;
+                    case nameof(SupportRequest.ApplicationStageFreeText):
+                        ApplicationStageFreeText = (string)value!;
+                        break;
                     case nameof(SupportRequest.ProposedFundingStreamName):
                         ProposedFundingStreamName = (string)value!;
                         break;
@@ -48,6 +51,9 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.SupportRequested):
                         SupportRequested = (string)value!;
                         break;
+                    case nameof(SupportRequest.HowDidYouFindUsFreeText):
+                        HowDidYouFindUsFreeText = (string)value!;
+                        break;
                     case nameof(SupportRequest.TeamContactTitle):
                         TeamContactTitle = (string)value!;
                         break;
@@ -59,6 +65,9 @@ namespace Webfuel.Domain
                         break;
                     case nameof(SupportRequest.TeamContactEmail):
                         TeamContactEmail = (string)value!;
+                        break;
+                    case nameof(SupportRequest.TeamContactRoleFreeText):
+                        TeamContactRoleFreeText = (string)value!;
                         break;
                     case nameof(SupportRequest.TeamContactMailingPermission):
                         TeamContactMailingPermission = (bool)value!;
@@ -111,11 +120,11 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.CreatedAt):
                         CreatedAt = (DateTimeOffset)value!;
                         break;
-                    case nameof(SupportRequest.StatusId):
-                        StatusId = (Guid)value!;
-                        break;
                     case nameof(SupportRequest.FileStorageGroupId):
                         FileStorageGroupId = (Guid)value!;
+                        break;
+                    case nameof(SupportRequest.StatusId):
+                        StatusId = (Guid)value!;
                         break;
                     case nameof(SupportRequest.IsFellowshipId):
                         IsFellowshipId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
@@ -164,15 +173,18 @@ namespace Webfuel.Domain
         public string PrefixedNumber  { get; set; } = String.Empty;
         public DateOnly DateOfRequest  { get; set; } = new DateOnly(1900, 1, 1);
         public string Title  { get; set; } = String.Empty;
+        public string ApplicationStageFreeText  { get; set; } = String.Empty;
         public string ProposedFundingStreamName  { get; set; } = String.Empty;
         public DateOnly? TargetSubmissionDate  { get; set; } = null;
         public string ExperienceOfResearchAwards  { get; set; } = String.Empty;
         public string BriefDescription  { get; set; } = String.Empty;
         public string SupportRequested  { get; set; } = String.Empty;
+        public string HowDidYouFindUsFreeText  { get; set; } = String.Empty;
         public string TeamContactTitle  { get; set; } = String.Empty;
         public string TeamContactFirstName  { get; set; } = String.Empty;
         public string TeamContactLastName  { get; set; } = String.Empty;
         public string TeamContactEmail  { get; set; } = String.Empty;
+        public string TeamContactRoleFreeText  { get; set; } = String.Empty;
         public bool TeamContactMailingPermission  { get; set; } = false;
         public bool TeamContactPrivacyStatementRead  { get; set; } = false;
         public string LeadApplicantTitle  { get; set; } = String.Empty;
@@ -190,8 +202,8 @@ namespace Webfuel.Domain
         public string LeadApplicantORCID  { get; set; } = String.Empty;
         public Guid? ProjectId  { get; set; } = null;
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
-        public Guid StatusId { get; set; }
         public Guid FileStorageGroupId { get; set; }
+        public Guid StatusId { get; set; }
         public Guid? IsFellowshipId { get; set; }
         public Guid? ApplicationStageId { get; set; }
         public Guid? ProposedFundingCallTypeId { get; set; }
@@ -213,15 +225,18 @@ namespace Webfuel.Domain
             entity.PrefixedNumber = PrefixedNumber;
             entity.DateOfRequest = DateOfRequest;
             entity.Title = Title;
+            entity.ApplicationStageFreeText = ApplicationStageFreeText;
             entity.ProposedFundingStreamName = ProposedFundingStreamName;
             entity.TargetSubmissionDate = TargetSubmissionDate;
             entity.ExperienceOfResearchAwards = ExperienceOfResearchAwards;
             entity.BriefDescription = BriefDescription;
             entity.SupportRequested = SupportRequested;
+            entity.HowDidYouFindUsFreeText = HowDidYouFindUsFreeText;
             entity.TeamContactTitle = TeamContactTitle;
             entity.TeamContactFirstName = TeamContactFirstName;
             entity.TeamContactLastName = TeamContactLastName;
             entity.TeamContactEmail = TeamContactEmail;
+            entity.TeamContactRoleFreeText = TeamContactRoleFreeText;
             entity.TeamContactMailingPermission = TeamContactMailingPermission;
             entity.TeamContactPrivacyStatementRead = TeamContactPrivacyStatementRead;
             entity.LeadApplicantTitle = LeadApplicantTitle;
@@ -239,8 +254,8 @@ namespace Webfuel.Domain
             entity.LeadApplicantORCID = LeadApplicantORCID;
             entity.ProjectId = ProjectId;
             entity.CreatedAt = CreatedAt;
-            entity.StatusId = StatusId;
             entity.FileStorageGroupId = FileStorageGroupId;
+            entity.StatusId = StatusId;
             entity.IsFellowshipId = IsFellowshipId;
             entity.ApplicationStageId = ApplicationStageId;
             entity.ProposedFundingCallTypeId = ProposedFundingCallTypeId;

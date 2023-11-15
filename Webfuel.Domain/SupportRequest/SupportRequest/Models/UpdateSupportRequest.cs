@@ -20,8 +20,10 @@ namespace Webfuel.Domain
         public Guid? IsTeamMembersConsultedId { get; set; }
         public Guid? IsResubmissionId { get; set; }
         public Guid? ApplicationStageId { get; set; }
+        public string ApplicationStageFreeText { get; set; } = String.Empty;
         public Guid? ProposedFundingStreamId { get; set; }
         public Guid? ProposedFundingCallTypeId { get; set; }
         public Guid? HowDidYouFindUsId { get; set; }
+        public string HowDidYouFindUsFreeText { get; set; } = String.Empty;
     }
 }

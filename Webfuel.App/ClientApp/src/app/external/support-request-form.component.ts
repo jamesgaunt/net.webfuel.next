@@ -50,9 +50,11 @@ export class SupportRequestFormComponent {
     briefDescription: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     supportRequested: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     applicationStageId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
+    applicationStageFreeText: new FormControl<string>('', { nonNullable: true }),
     proposedFundingStreamId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     proposedFundingCallTypeId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     howDidYouFindUsId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
+    howDidYouFindUsFreeText: new FormControl<string>('', { nonNullable: true }),
 
     // Team Contact Details
 
@@ -61,6 +63,7 @@ export class SupportRequestFormComponent {
     teamContactLastName: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     teamContactEmail: new FormControl<string>('', { validators: [Validators.required, Validators.email], nonNullable: true }),
     teamContactRoleId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
+    teamContactRoleFreeText: new FormControl<string>('', { nonNullable: true }),
     teamContactMailingPermission: new FormControl<boolean>(false, { validators: [Validators.requiredTrue], nonNullable: true }),
     teamContactPrivacyStatementRead: new FormControl<boolean>(false, { validators: [Validators.requiredTrue], nonNullable: true }),
 

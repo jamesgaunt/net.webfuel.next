@@ -4,19 +4,26 @@
   <li><a routerLink="/project/project-item/{{ item.id }}">Project</a></li>
 </ul>
 <div class="container">
+  <div class="columns">
+    <div class="column">
+      <h1 class="title">Project {{ item.prefixedNumber }}</h1>
+    </div>
+  </div>
   <project-tabs></project-tabs>
   <form class="form" [formGroup]="form">
     <div class="flex">
       <div class="field is-3">
-        <label class="label">Status</label>
+        <label class="label">
+          Status
+          <span class="text is-warning" *ngIf="projectStatus && projectStatus.id != form.value.statusId">(changing from {{ projectStatus.name }})</span>
+        </label>
         <dropdown-select [dataSource]="staticDataCache.projectStatus" placeholder="required" formControlName="statusId"></dropdown-select>
       </div>
     </div>
     <div class="flex">
       <div class="field is-6">
         <label class="label">Funding stream submitted to</label>
-        <dropdown-select [dataSource]="staticDataCache.fundingStream" placeholder="optional" formControlName="submittedFundingStreamId"></dropdown-select>
-        <input *ngIf="showSubmittedFundingStreamFreeText" class="input" type="text" placeholder="please specify other..." formControlName="submittedFundingStreamFreeText" />
+        <dropdown-select [dataSource]="staticDataCache.fundingStream" [freeTextControl]="form.controls.submittedFundingStreamFreeText" placeholder="optional" formControlName="submittedFundingStreamId"></dropdown-select>
       </div>
       <div class="field is-6">
         <label class="label">Funding stream name</label>
@@ -46,11 +53,20 @@
       </div>
     </div>
 
-    <div class="floating-buttons">
+    <div *ngIf="!locked" class="floating-buttons">
       <button class="button is-success" (click)="save(false)">Save</button>
       <button class="button is-success" (click)="save(true)">Save &amp; Close</button>
       <button class="button" (click)="cancel()">Cancel</button>
     </div>
+    <div *ngIf="locked" class="floating-buttons">
+      <button class="button is-warning" (click)="unlock()">Unlock</button>
+      <button class="button" (click)="cancel()">Close</button>
+    </div>
+
   </form>
-  <p>Created {{ item.createdAt | date: 'dd MMM yy HH:mm'}}</p>
+  <p>
+    <span>Created {{ item.createdAt | date: 'dd MMM yy'}}.</span>
+    <span *ngIf="item.closureDate">&nbsp;&nbsp;Closed {{ item.closureDate | date: 'dd MMM yy' }}.</span>
+  </p>
 </div>
+

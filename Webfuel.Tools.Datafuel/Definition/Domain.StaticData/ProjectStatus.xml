@@ -7,15 +7,18 @@
     <Property Name="SortOrder" Type="Int32" />
     <Property Name="Default" Type="boolean" />
     <Property Name="Hidden" Type="boolean" />
-    <Property Name="FreeText" Type="boolean" />
+
+    <!-- Behaviour Flags-->
+    <Property Name="Locked" Type="boolean" />
+    <Property Name="Discarded" Type="boolean" />
+    
     <Index Unique="true">
       <Member Name="Name" />
     </Index>
     <Data>
       <Row Id="6c83e9e4-617b-4386-b087-16a11f6b24af" Name="Active" Default="true" />
-      <Row Id="15787677-fc83-4071-961a-1da5b5f41018" Name="Inactive" />
-      <Row Id="ed4845b0-1f4c-4df3-b4ec-46e5ce94c275" Name="Closed" />
-      <Row Id="164fdeee-8d6f-42fa-a23b-fbab0ef3ba93" Name="Discarded" />
+      <Row Id="ed4845b0-1f4c-4df3-b4ec-46e5ce94c275" Name="Closed" Locked="true"/>
+      <Row Id="164fdeee-8d6f-42fa-a23b-fbab0ef3ba93" Name="Discarded" Locked="true" Discarded="true" />
     </Data>
   </Entity>
 </Schema>

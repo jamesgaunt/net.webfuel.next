@@ -6,32 +6,19 @@ import { StaticDataCache } from 'api/static-data.cache';
 import { SupportRequestApi } from 'api/support-request.api';
 import { FormService } from 'core/form.service';
 import { TriageSupportRequestDialog } from '../dialogs/triage-support-request/triage-support-request.dialog';
+import { SupportRequestComponentBase } from '../shared/support-request-component-base';
 
 @Component({
   selector: 'support-request-files',
   templateUrl: './support-request-files.component.html'
 })
-export class SupportRequestFilesComponent implements OnInit {
+export class SupportRequestFilesComponent extends SupportRequestComponentBase {
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
     private formService: FormService,
-    public staticDataCache: StaticDataCache,
     public supportRequestApi: SupportRequestApi
   ) {
-  }
-
-  ngOnInit() {
-    this.reset(this.route.snapshot.data.supportRequest);
-  }
-
-  item!: SupportRequest;
-
-  reset(item: SupportRequest) {
-    this.item = item;
-    this.form.patchValue(item);
-    this.form.markAsPristine();
+    super();
   }
 
   form = new FormGroup({

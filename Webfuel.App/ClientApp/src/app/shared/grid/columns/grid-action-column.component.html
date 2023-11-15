@@ -3,6 +3,8 @@
 
 <ng-template #itemTemplate let-item>
   <a *ngIf="canEdit" (click)="onEdit(item)" class="link is-primary">edit</a>
-  &nbsp;
-  <a *ngIf="canDelete" (click)="onDelete(item)" class="link is-danger">delete</a>
+  <span *ngIf="canDelete">
+    &nbsp;
+    <a (click)="onDelete(item)" class="link is-danger">delete</a>
+  </span>
 </ng-template>

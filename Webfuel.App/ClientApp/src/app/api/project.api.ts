@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { UpdateProject, Project, QueryProject, QueryResult } from './api.types';
+import { UpdateProject, Project, UpdateProjectStatus, QueryProject, QueryResult } from './api.types';
 
 @Injectable()
 export class ProjectApi implements IDataSource<Project, QueryProject, any, UpdateProject> {
@@ -11,6 +11,10 @@ export class ProjectApi implements IDataSource<Project, QueryProject, any, Updat
     
     public update (body: UpdateProject, options?: ApiOptions): Observable<Project> {
         return this.apiService.request<UpdateProject, Project>("PUT", "api/project", body, options).pipe(tap(_ => this.changed.emit()));
+    }
+    
+    public updateStatus (body: UpdateProjectStatus, options?: ApiOptions): Observable<Project> {
+        return this.apiService.request<UpdateProjectStatus, Project>("PUT", "api/project/status", body, options);
     }
     
     public delete (params: { id: string }, options?: ApiOptions): Observable<any> {

@@ -6,34 +6,35 @@ import { StaticDataCache } from 'api/static-data.cache';
 import { SupportRequestApi } from 'api/support-request.api';
 import { FormService } from 'core/form.service';
 import { TriageSupportRequestDialog } from '../dialogs/triage-support-request/triage-support-request.dialog';
+import { SupportRequestComponentBase } from '../shared/support-request-component-base';
+import { AlertDialog } from '../../../../shared/dialogs/alert/alert.dialog';
 
 @Component({
   selector: 'support-request-item',
   templateUrl: './support-request-item.component.html'
 })
-export class SupportRequestItemComponent implements OnInit {
+export class SupportRequestItemComponent extends SupportRequestComponentBase {
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
     private formService: FormService,
+    private alertDialog: AlertDialog,
     private triageSupportRequestDialog: TriageSupportRequestDialog,
-    public staticDataCache: StaticDataCache,
-    public supportRequestApi: SupportRequestApi,
-   
   ) {
+    super();
   }
-
-  ngOnInit() {
-    this.reset(this.route.snapshot.data.supportRequest);
-  }
-
-  item!: SupportRequest;
 
   reset(item: SupportRequest) {
-    this.item = item;
+    super.reset(item);
     this.form.patchValue(item);
     this.form.markAsPristine();
+  }
+
+  applyLock() {
+    this.form.disable();
+  }
+
+  clearLock() {
+    this.form.enable();
   }
 
   form = new FormGroup({
@@ -48,9 +49,11 @@ export class SupportRequestItemComponent implements OnInit {
     briefDescription: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     supportRequested: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     applicationStageId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
+    applicationStageFreeText: new FormControl<string>('', { nonNullable: true }),
     proposedFundingStreamId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
     proposedFundingCallTypeId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
     howDidYouFindUsId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
+    howDidYouFindUsFreeText: new FormControl<string>('', { nonNullable: true }),
   });
 
   save(close: boolean) {
@@ -70,6 +73,14 @@ export class SupportRequestItemComponent implements OnInit {
   }
 
   triage() {
-    this.triageSupportRequestDialog.open({ id: this.item.id });
+
+    if (!this.form.pristine) {
+      this.alertDialog.open({ title: "Warning", message: "Please save unsaved changes before triaging" });
+      return;
+    }
+
+    this.triageSupportRequestDialog.open({ id: this.item.id }).subscribe((result) => {
+      this.reset(result);
+    });
   }
 }

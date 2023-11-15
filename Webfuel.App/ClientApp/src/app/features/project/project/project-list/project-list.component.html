@@ -41,7 +41,7 @@
     <grid-reference-column [dataSource]="staticDataCache.projectStatus" name="statusId" />
     <grid-column name="title" />
     <grid-reference-column [dataSource]="staticDataCache.fundingStream" name="submittedFundingStreamId" label="Funding Stream" />
-    <grid-action-column [canAdd]="false" (edit)="edit($event)" (delete)="delete($event)" />
+    <grid-action-column [canAdd]="false" [canDelete]="false" (edit)="edit($event)" />
   </grid>
 </div>
 

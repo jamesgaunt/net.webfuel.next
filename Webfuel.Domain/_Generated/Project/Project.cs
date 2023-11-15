@@ -39,6 +39,12 @@ namespace Webfuel.Domain
                     case nameof(Project.SubmittedFundingStreamName):
                         SubmittedFundingStreamName = (string)value!;
                         break;
+                    case nameof(Project.Locked):
+                        Locked = (bool)value!;
+                        break;
+                    case nameof(Project.Discarded):
+                        Discarded = (bool)value!;
+                        break;
                     case nameof(Project.ProjectStartDate):
                         ProjectStartDate = value == DBNull.Value ? (DateOnly?)null : DateOnly.FromDateTime((DateTime)value!);
                         break;
@@ -53,6 +59,9 @@ namespace Webfuel.Domain
                         break;
                     case nameof(Project.Title):
                         Title = (string)value!;
+                        break;
+                    case nameof(Project.ApplicationStageFreeText):
+                        ApplicationStageFreeText = (string)value!;
                         break;
                     case nameof(Project.ProposedFundingStreamName):
                         ProposedFundingStreamName = (string)value!;
@@ -69,6 +78,9 @@ namespace Webfuel.Domain
                     case nameof(Project.SupportRequested):
                         SupportRequested = (string)value!;
                         break;
+                    case nameof(Project.HowDidYouFindUsFreeText):
+                        HowDidYouFindUsFreeText = (string)value!;
+                        break;
                     case nameof(Project.TeamContactTitle):
                         TeamContactTitle = (string)value!;
                         break;
@@ -80,6 +92,9 @@ namespace Webfuel.Domain
                         break;
                     case nameof(Project.TeamContactEmail):
                         TeamContactEmail = (string)value!;
+                        break;
+                    case nameof(Project.TeamContactRoleFreeText):
+                        TeamContactRoleFreeText = (string)value!;
                         break;
                     case nameof(Project.TeamContactMailingPermission):
                         TeamContactMailingPermission = (bool)value!;
@@ -129,14 +144,14 @@ namespace Webfuel.Domain
                     case nameof(Project.CreatedAt):
                         CreatedAt = (DateTimeOffset)value!;
                         break;
-                    case nameof(Project.StatusId):
-                        StatusId = (Guid)value!;
-                        break;
                     case nameof(Project.FileStorageGroupId):
                         FileStorageGroupId = (Guid)value!;
                         break;
                     case nameof(Project.SubmittedFundingStreamId):
                         SubmittedFundingStreamId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(Project.StatusId):
+                        StatusId = (Guid)value!;
                         break;
                     case nameof(Project.IsInternationalMultiSiteStudyId):
                         IsInternationalMultiSiteStudyId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
@@ -190,20 +205,25 @@ namespace Webfuel.Domain
         public DateOnly? ClosureDate  { get; set; } = null;
         public string SubmittedFundingStreamFreeText  { get; set; } = String.Empty;
         public string SubmittedFundingStreamName  { get; set; } = String.Empty;
+        public bool Locked  { get; set; } = false;
+        public bool Discarded  { get; set; } = false;
         public DateOnly? ProjectStartDate  { get; set; } = null;
         public int? RecruitmentTarget  { get; set; } = null;
         public int? NumberOfProjectSites  { get; set; } = null;
         public DateOnly DateOfRequest  { get; set; } = new DateOnly(1900, 1, 1);
         public string Title  { get; set; } = String.Empty;
+        public string ApplicationStageFreeText  { get; set; } = String.Empty;
         public string ProposedFundingStreamName  { get; set; } = String.Empty;
         public DateOnly? TargetSubmissionDate  { get; set; } = null;
         public string ExperienceOfResearchAwards  { get; set; } = String.Empty;
         public string BriefDescription  { get; set; } = String.Empty;
         public string SupportRequested  { get; set; } = String.Empty;
+        public string HowDidYouFindUsFreeText  { get; set; } = String.Empty;
         public string TeamContactTitle  { get; set; } = String.Empty;
         public string TeamContactFirstName  { get; set; } = String.Empty;
         public string TeamContactLastName  { get; set; } = String.Empty;
         public string TeamContactEmail  { get; set; } = String.Empty;
+        public string TeamContactRoleFreeText  { get; set; } = String.Empty;
         public bool TeamContactMailingPermission  { get; set; } = false;
         public bool TeamContactPrivacyStatementRead  { get; set; } = false;
         public string LeadApplicantTitle  { get; set; } = String.Empty;
@@ -220,9 +240,9 @@ namespace Webfuel.Domain
         public string LeadApplicantAddressPostcode  { get; set; } = String.Empty;
         public string LeadApplicantORCID  { get; set; } = String.Empty;
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
-        public Guid StatusId { get; set; }
         public Guid FileStorageGroupId { get; set; }
         public Guid? SubmittedFundingStreamId { get; set; }
+        public Guid StatusId { get; set; }
         public Guid? IsInternationalMultiSiteStudyId { get; set; }
         public Guid? IsFellowshipId { get; set; }
         public Guid? ApplicationStageId { get; set; }
@@ -247,20 +267,25 @@ namespace Webfuel.Domain
             entity.ClosureDate = ClosureDate;
             entity.SubmittedFundingStreamFreeText = SubmittedFundingStreamFreeText;
             entity.SubmittedFundingStreamName = SubmittedFundingStreamName;
+            entity.Locked = Locked;
+            entity.Discarded = Discarded;
             entity.ProjectStartDate = ProjectStartDate;
             entity.RecruitmentTarget = RecruitmentTarget;
             entity.NumberOfProjectSites = NumberOfProjectSites;
             entity.DateOfRequest = DateOfRequest;
             entity.Title = Title;
+            entity.ApplicationStageFreeText = ApplicationStageFreeText;
             entity.ProposedFundingStreamName = ProposedFundingStreamName;
             entity.TargetSubmissionDate = TargetSubmissionDate;
             entity.ExperienceOfResearchAwards = ExperienceOfResearchAwards;
             entity.BriefDescription = BriefDescription;
             entity.SupportRequested = SupportRequested;
+            entity.HowDidYouFindUsFreeText = HowDidYouFindUsFreeText;
             entity.TeamContactTitle = TeamContactTitle;
             entity.TeamContactFirstName = TeamContactFirstName;
             entity.TeamContactLastName = TeamContactLastName;
             entity.TeamContactEmail = TeamContactEmail;
+            entity.TeamContactRoleFreeText = TeamContactRoleFreeText;
             entity.TeamContactMailingPermission = TeamContactMailingPermission;
             entity.TeamContactPrivacyStatementRead = TeamContactPrivacyStatementRead;
             entity.LeadApplicantTitle = LeadApplicantTitle;
@@ -277,9 +302,9 @@ namespace Webfuel.Domain
             entity.LeadApplicantAddressPostcode = LeadApplicantAddressPostcode;
             entity.LeadApplicantORCID = LeadApplicantORCID;
             entity.CreatedAt = CreatedAt;
-            entity.StatusId = StatusId;
             entity.FileStorageGroupId = FileStorageGroupId;
             entity.SubmittedFundingStreamId = SubmittedFundingStreamId;
+            entity.StatusId = StatusId;
             entity.IsInternationalMultiSiteStudyId = IsInternationalMultiSiteStudyId;
             entity.IsFellowshipId = IsFellowshipId;
             entity.ApplicationStageId = ApplicationStageId;

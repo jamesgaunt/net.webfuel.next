@@ -4,6 +4,16 @@
   <li><a routerLink="/project/project-item/{{ item.id }}">Project</a></li>
 </ul>
 <div class="container">
+  <div class="columns">
+    <div class="column">
+      <h1 class="title">Project {{ item.prefixedNumber }}</h1>
+    </div>
+    <div class="column" *ngIf="!locked">
+      <div class="header-buttons">
+        <button class="button is-primary" (click)="addProjectSupport()">Add Support</button>
+      </div>
+    </div>
+  </div>
   <project-tabs></project-tabs>
   <div class="flex">
     <div class="is-5">
@@ -52,7 +62,7 @@
             <span class="tag" *ngFor="let id of projectSupport.supportProvidedIds">{{ (staticDataCache.supportProvided.get({ id: id }) | async)?.name }}</span>
           </div>
           <pre class="card-narrative">{{ projectSupport.description }}</pre>
-          <div class="card-buttons">
+          <div class="card-buttons" *ngIf="!locked">
             <button class="button is-small is-primary" (click)="editProjectSupport(projectSupport)">edit</button>
             <button class="button is-small is-danger" (click)="deleteProjectSupport(projectSupport)">delete</button>
           </div>

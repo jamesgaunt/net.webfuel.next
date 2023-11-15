@@ -29,7 +29,7 @@ namespace Webfuel.Tools.Datafuel
                 StaticDataCommandGenerator.GenerateStaticDataCommands(schema);
 
                 StaticDataModelGenerator.GenerateStaticDataModel(schema);
-                //StaticDataCacheGenerator.GenerateStaticDataCache(schema);
+                StaticDataServiceGenerator.GenerateStaticDataService(schema);
             }
 
             DatabaseGenerator.GenerateDatabase(schema);

@@ -28,6 +28,8 @@ namespace Webfuel.Domain
 
         public required List<Guid> DisciplineIds { get; set; }  
 
+        public required string DisciplineFreeText { get; set; }
+
         public required DateOnly? StartDateForRSS { get; set; } 
 
         public required DateOnly? EndDateForRSS { get; set; }

@@ -4,6 +4,11 @@
   <li><a routerLink="/project/project-item/{{ item.id }}">Project</a></li>
 </ul>
 <div class="container">
+  <div class="columns">
+    <div class="column">
+      <h1 class="title">Project {{ item.prefixedNumber }}</h1>
+    </div>
+  </div>
   <project-tabs></project-tabs>
-  <file-browser [fileStorageGroupId]="item.fileStorageGroupId" />
+  <file-browser [fileStorageGroupId]="item.fileStorageGroupId" [locked]="locked" />
 </div>

@@ -15,14 +15,17 @@ namespace Webfuel.Domain
 
 
         [MapperIgnoreTarget(nameof(SupportRequest.Id))]
+        [MapperIgnoreTarget(nameof(SupportRequest.StatusId))]
         public partial void  Apply(UpdateSupportRequest request, SupportRequest existing);
 
 
         [MapperIgnoreTarget(nameof(SupportRequest.Id))]
+        [MapperIgnoreTarget(nameof(SupportRequest.StatusId))]
         public partial void Apply(UpdateSupportRequestResearcher request, SupportRequest existing);
 
 
         [MapperIgnoreTarget(nameof(Project.Id))]
+        [MapperIgnoreTarget(nameof(Project.StatusId))]
         public partial void Apply(SupportRequest request, Project existing);
     }
 }

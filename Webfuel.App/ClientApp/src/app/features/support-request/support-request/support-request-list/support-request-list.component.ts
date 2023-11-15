@@ -44,10 +44,4 @@ export class SupportRequestListComponent {
   edit(item: SupportRequest) {
     this.router.navigate(['support-request/support-request-item', item.id]);
   }
-
-  delete(item: SupportRequest) {
-    this.confirmDeleteDialog.open({ title: "Support Request" }).subscribe(() => {
-      this.supportRequestApi.delete({ id: item.id }, { successGrowl: "Support Request Deleted" }).subscribe();
-    });
-  }
 }

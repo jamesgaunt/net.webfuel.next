@@ -1,6 +1,6 @@
 
 <div class="file-list">
-  <form [formGroup]="form">
+  <form [formGroup]="form" *ngIf="!locked">
     <file-input formControlName="files" [showFiles]="false" [progress]="progress"></file-input>
   </form>
   <grid [dataSource]="fileStorageEntryApi" (filter)="filter($event)" [search]="true">
@@ -27,7 +27,7 @@
     </grid-column>
     <grid-column justify="right">
       <ng-template #itemTemplate let-item>
-        <a class="link is-danger" (click)="deleteFile(item)">delete</a>
+        <a *ngIf="!locked" class="link is-danger" (click)="deleteFile(item)">delete</a>
       </ng-template>
     </grid-column>
   </grid>

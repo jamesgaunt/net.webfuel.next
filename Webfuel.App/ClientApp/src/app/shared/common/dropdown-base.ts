@@ -1,4 +1,4 @@
-import { Observable, noop } from 'rxjs';
+import { Observable, debounceTime, noop } from 'rxjs';
 import { Query, QueryFilter, QueryResult } from '../../api/api.types';
 import { ChangeDetectorRef, Component, ContentChild, DestroyRef, ElementRef, EventEmitter, HostBinding, HostListener, Input, Output, TemplateRef, ViewChild, ViewContainerRef, inject } from '@angular/core';
 import { IDataSource } from './data-source';
@@ -6,6 +6,8 @@ import _ from 'shared/common/underscore';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { QueryOp } from '../../api/api.enums';
+import { FormControl } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   template: ''
@@ -141,7 +143,6 @@ export class DropDownBase<TItem> {
         this.pickedItems = [];
       this.pushPickedItems(response.items);
     });
-
     this.cd.detectChanges();
   }
 
@@ -156,6 +157,20 @@ export class DropDownBase<TItem> {
         this.pickedItems.push(item);
     });
     this.cd.detectChanges();
+  }
+
+  // Free Text
+
+  @Input()
+  freeTextControl: FormControl | null = null;
+
+  get pickedFreeText() {
+    return _.some(this.pickedItems, (p: any) => p.freeText);
+  }
+
+  checkFreeText() {
+    if (this.freeTextControl != null && !this.pickedFreeText)
+      this.freeTextControl.setValue("");
   }
 
   // Popup

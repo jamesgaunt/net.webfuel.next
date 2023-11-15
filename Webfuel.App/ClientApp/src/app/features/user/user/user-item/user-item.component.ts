@@ -41,7 +41,7 @@ export class UserItemComponent implements OnInit {
   form = new FormGroup({
     id: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     email: new FormControl('', { validators: [Validators.required], nonNullable: true }),
-    title: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+    title: new FormControl('', { nonNullable: true }),
     firstName: new FormControl('', { validators: [Validators.required], nonNullable: true }),
     lastName: new FormControl('', { validators: [Validators.required], nonNullable: true }),
     userGroupId: new FormControl('', { validators: [Validators.required], nonNullable: true }),
@@ -51,6 +51,7 @@ export class UserItemComponent implements OnInit {
     professionalBackground: new FormControl('', {  nonNullable: true }),
     specialisation: new FormControl('', { nonNullable: true }),
     disciplineIds: new FormControl<string[]>([], { nonNullable: true }),
+    disciplineFreeText: new FormControl('', { nonNullable: true }),
 
     startDateForRSS: new FormControl<string | null>(null),
     endDateForRSS: new FormControl<string | null>(null),

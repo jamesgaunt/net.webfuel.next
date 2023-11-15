@@ -10,8 +10,8 @@
     </div>
   </div>
   <support-request-tabs></support-request-tabs>
+  <div class="message is-primary">{{ supportRequestStatus?.name }}</div>
   <form class="form" [formGroup]="form">
-
     <h2>Contact Details</h2>
     <div class="flex">
       <div class="field is-4">
@@ -32,7 +32,7 @@
       </div>
       <div class="field is-4">
         <label class="label">Role in application</label>
-        <dropdown-select [dataSource]="staticDataCache.researcherRole" placeholder="required" formControlName="teamContactRoleId"></dropdown-select>
+        <dropdown-select [dataSource]="staticDataCache.researcherRole" [freeTextControl]="form.controls.teamContactRoleFreeText" placeholder="required" formControlName="teamContactRoleId"></dropdown-select>
       </div>
       <div class="field is-12">
         <div class="checkbox">
@@ -137,10 +137,14 @@
       </div>
     </div>
 
-    <div class="floating-buttons">
+    <div class="floating-buttons" *ngIf="!locked">
       <button class="button is-success" (click)="save(false)">Save</button>
       <button class="button is-success" (click)="save(true)">Save &amp; Close</button>
       <button class="button" (click)="cancel()">Cancel</button>
+    </div>
+    <div class="floating-buttons" *ngIf="locked">
+      <button *ngIf="!referred" class="button is-warning" (click)="unlock()">Unlock</button>
+      <button class="button" (click)="cancel()">Close</button>
     </div>
   </form>
   <p>Created {{ item.createdAt | date: 'dd MMM yy HH:mm'}}</p>

@@ -10,6 +10,8 @@ namespace Webfuel.Domain
     public class UpdateProject: IRequest<Project>
     {
         public required Guid Id { get; set; }
+        public required Guid StatusId { get; set; }
+
 
         public Guid? SubmittedFundingStreamId { get; set; }
         public string SubmittedFundingStreamFreeText { get; set; } = String.Empty;

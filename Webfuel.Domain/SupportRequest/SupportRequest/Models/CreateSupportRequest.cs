@@ -26,9 +26,11 @@ namespace Webfuel.Domain
         public Guid? IsTeamMembersConsultedId { get; set; }
         public Guid? IsResubmissionId { get; set; }
         public Guid? ApplicationStageId { get; set; }
+        public string ApplicationStageFreeText { get; set; } = String.Empty;
         public Guid? ProposedFundingStreamId { get; set; }
         public Guid? ProposedFundingCallTypeId { get; set; }
         public Guid? HowDidYouFindUsId { get; set; }
+        public string HowDidYouFindUsFreeText { get; set; } = String.Empty;
 
         // Team Contact Details
 
@@ -37,6 +39,7 @@ namespace Webfuel.Domain
         public string TeamContactLastName { get; set;} = String.Empty;
         public string TeamContactEmail { get;set; } = String.Empty;
         public Guid? TeamContactRoleId { get; set;}
+        public string TeamContactRoleFreeText { get; set; } = String.Empty;
         public bool TeamContactMailingPermission { get; set; }
         public bool TeamContactPrivacyStatementRead { get; set; }
 

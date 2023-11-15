@@ -8,13 +8,14 @@
     <div class="column">
       <h1 class="title">Support Request</h1>
     </div>
-    <div class="column">
+    <div class="column" *ngIf="!locked">
       <div class="header-buttons">
         <button class="button is-warning" (click)="triage()">Triage</button>
       </div>
     </div>
   </div>
   <support-request-tabs></support-request-tabs>
+  <div class="message is-primary">{{ supportRequestStatus?.name }}</div>
   <form class="form" [formGroup]="form">
     <div class="flex">
       <div class="field is-12">
@@ -23,7 +24,7 @@
       </div>
       <div class="field is-6">
         <label class="label">Stage of application</label>
-        <dropdown-select [dataSource]="staticDataCache.applicationStage" placeholder="required" formControlName="applicationStageId"></dropdown-select>
+        <dropdown-select [dataSource]="staticDataCache.applicationStage" [freeTextControl]="form.controls.applicationStageFreeText" placeholder="required" formControlName="applicationStageId"></dropdown-select>
       </div>
       <div class="field is-6">
         <label class="label">Is this application for a fellowship?</label>
@@ -55,7 +56,7 @@
       </div>
       <div class="field is-6">
         <label class="label">How did you hear about our hub?</label>
-        <dropdown-select [dataSource]="staticDataCache.howDidYouFindUs" placeholder="required" formControlName="howDidYouFindUsId"></dropdown-select>
+        <dropdown-select [dataSource]="staticDataCache.howDidYouFindUs" [freeTextControl]="form.controls.howDidYouFindUsFreeText" placeholder="required" formControlName="howDidYouFindUsId"></dropdown-select>
       </div>
       <div class="field is-12">
         <label class="label">What is your (or the CIs)  experience of securing funding awards?</label>
@@ -74,10 +75,14 @@
         <textarea class="textarea" formControlName="supportRequested" placeholder="required"></textarea>
       </div>
     </div>
-    <div class="floating-buttons">
+    <div class="floating-buttons" *ngIf="!locked">
       <button class="button is-success" (click)="save(false)">Save</button>
       <button class="button is-success" (click)="save(true)">Save &amp; Close</button>
       <button class="button" (click)="cancel()">Cancel</button>
+    </div>
+    <div class="floating-buttons" *ngIf="locked">
+      <button *ngIf="!referred" class="button is-warning" (click)="unlock()">Unlock</button>
+      <button class="button" (click)="cancel()">Close</button>
     </div>
   </form>
   <p>Created {{ item.createdAt | date: 'dd MMM yy HH:mm'}}</p>

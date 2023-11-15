@@ -5,32 +5,21 @@ import { Project } from 'api/api.types';
 import { StaticDataCache } from 'api/static-data.cache';
 import { FormService } from 'core/form.service';
 import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
+import { ProjectComponentBase } from '../shared/project-component-base';
 
 @Component({
   selector: 'project-files',
   templateUrl: './project-files.component.html'
 })
-export class ProjectFilesComponent implements OnInit {
+export class ProjectFilesComponent extends ProjectComponentBase {
 
   destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
     private formService: FormService,
     private confirmDeleteDialog: ConfirmDeleteDialog,
-    public staticDataCache: StaticDataCache
   ) {
-  }
-
-  ngOnInit() {
-    this.reset(this.route.snapshot.data.project);
-  }
-
-  item!: Project;
-
-  reset(item: Project) {
-    this.item = item;
+    super();
   }
 
   form = new FormGroup({
@@ -40,5 +29,4 @@ export class ProjectFilesComponent implements OnInit {
     this.reset(this.item);
     this.router.navigate(['project/project-list']);
   }
-
 }

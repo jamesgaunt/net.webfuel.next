@@ -6,34 +6,34 @@ import { StaticDataCache } from 'api/static-data.cache';
 import { SupportRequestApi } from 'api/support-request.api';
 import { FormService } from 'core/form.service';
 import { TriageSupportRequestDialog } from '../dialogs/triage-support-request/triage-support-request.dialog';
+import { SupportRequestComponentBase } from '../shared/support-request-component-base';
 
 @Component({
   selector: 'support-request-researcher',
   templateUrl: './support-request-researcher.component.html'
 })
-export class SupportRequestResearcherComponent implements OnInit {
+export class SupportRequestResearcherComponent extends SupportRequestComponentBase {
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
     private formService: FormService,
-    private triageSupportRequestDialog: TriageSupportRequestDialog,
-    public staticDataCache: StaticDataCache,
     public supportRequestApi: SupportRequestApi,
    
   ) {
+    super();
   }
-
-  ngOnInit() {
-    this.reset(this.route.snapshot.data.supportRequest);
-  }
-
-  item!: SupportRequest;
 
   reset(item: SupportRequest) {
-    this.item = item;
+    super.reset(item);
     this.form.patchValue(item);
     this.form.markAsPristine();
+  }
+
+  applyLock() {
+    this.form.disable();
+  }
+
+  clearLock() {
+    this.form.enable();
   }
 
   form = new FormGroup({
@@ -46,6 +46,7 @@ export class SupportRequestResearcherComponent implements OnInit {
     teamContactLastName: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     teamContactEmail: new FormControl<string>('', { validators: [Validators.required, Validators.email], nonNullable: true }),
     teamContactRoleId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
+    teamContactRoleFreeText: new FormControl<string>('', { nonNullable: true }),
     teamContactMailingPermission: new FormControl<boolean>(false, { validators: [Validators.requiredTrue], nonNullable: true }),
     teamContactPrivacyStatementRead: new FormControl<boolean>(false, { validators: [Validators.requiredTrue], nonNullable: true }),
 

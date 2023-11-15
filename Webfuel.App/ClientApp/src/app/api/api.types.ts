@@ -279,7 +279,8 @@ export interface ProjectStatus extends IStaticData {
     sortOrder: number;
     default: boolean;
     hidden: boolean;
-    freeText: boolean;
+    locked: boolean;
+    discarded: boolean;
 }
 
 export interface ResearcherOrganisationType extends IStaticData, IStaticDataWithFreeText {
@@ -393,20 +394,25 @@ export interface Project {
     closureDate: string | null | null;
     submittedFundingStreamFreeText: string;
     submittedFundingStreamName: string;
+    locked: boolean;
+    discarded: boolean;
     projectStartDate: string | null | null;
     recruitmentTarget: number | null | null;
     numberOfProjectSites: number | null | null;
     dateOfRequest: string;
     title: string;
+    applicationStageFreeText: string;
     proposedFundingStreamName: string;
     targetSubmissionDate: string | null | null;
     experienceOfResearchAwards: string;
     briefDescription: string;
     supportRequested: string;
+    howDidYouFindUsFreeText: string;
     teamContactTitle: string;
     teamContactFirstName: string;
     teamContactLastName: string;
     teamContactEmail: string;
+    teamContactRoleFreeText: string;
     teamContactMailingPermission: boolean;
     teamContactPrivacyStatementRead: boolean;
     leadApplicantTitle: string;
@@ -423,9 +429,9 @@ export interface Project {
     leadApplicantAddressPostcode: string;
     leadApplicantORCID: string;
     createdAt: string;
-    statusId: string;
     fileStorageGroupId: string;
     submittedFundingStreamId: string | null | null;
+    statusId: string;
     isInternationalMultiSiteStudyId: string | null | null;
     isFellowshipId: string | null | null;
     applicationStageId: string | null | null;
@@ -444,6 +450,7 @@ export interface Project {
 
 export interface UpdateProject {
     id: string;
+    statusId: string;
     submittedFundingStreamId: string | null | null;
     submittedFundingStreamFreeText: string;
     submittedFundingStreamName: string;
@@ -451,6 +458,11 @@ export interface UpdateProject {
     recruitmentTarget: number | null | null;
     numberOfProjectSites: number | null | null;
     isInternationalMultiSiteStudyId: string | null | null;
+}
+
+export interface UpdateProjectStatus {
+    id: string;
+    statusId: string;
 }
 
 export interface QueryProject extends Query {
@@ -613,15 +625,18 @@ export interface SupportRequest {
     prefixedNumber: string;
     dateOfRequest: string;
     title: string;
+    applicationStageFreeText: string;
     proposedFundingStreamName: string;
     targetSubmissionDate: string | null | null;
     experienceOfResearchAwards: string;
     briefDescription: string;
     supportRequested: string;
+    howDidYouFindUsFreeText: string;
     teamContactTitle: string;
     teamContactFirstName: string;
     teamContactLastName: string;
     teamContactEmail: string;
+    teamContactRoleFreeText: string;
     teamContactMailingPermission: boolean;
     teamContactPrivacyStatementRead: boolean;
     leadApplicantTitle: string;
@@ -639,8 +654,8 @@ export interface SupportRequest {
     leadApplicantORCID: string;
     projectId: string | null | null;
     createdAt: string;
-    statusId: string;
     fileStorageGroupId: string;
+    statusId: string;
     isFellowshipId: string | null | null;
     applicationStageId: string | null | null;
     proposedFundingCallTypeId: string | null | null;
@@ -668,9 +683,11 @@ export interface UpdateSupportRequest {
     isTeamMembersConsultedId: string | null | null;
     isResubmissionId: string | null | null;
     applicationStageId: string | null | null;
+    applicationStageFreeText: string;
     proposedFundingStreamId: string | null | null;
     proposedFundingCallTypeId: string | null | null;
     howDidYouFindUsId: string | null | null;
+    howDidYouFindUsFreeText: string;
 }
 
 export interface UpdateSupportRequestResearcher {
@@ -680,6 +697,7 @@ export interface UpdateSupportRequestResearcher {
     teamContactLastName: string;
     teamContactEmail: string;
     teamContactRoleId: string | null | null;
+    teamContactRoleFreeText: string;
     teamContactMailingPermission: boolean;
     teamContactPrivacyStatementRead: boolean;
     leadApplicantTitle: string;
@@ -702,7 +720,7 @@ export interface UpdateSupportRequestResearcher {
     leadApplicantEthnicityId: string | null | null;
 }
 
-export interface TriageSupportRequest {
+export interface UpdateSupportRequestStatus {
     id: string;
     statusId: string;
     supportProvidedIds: Array<string>;
@@ -802,6 +820,7 @@ export interface User {
     professionalBackground: string;
     specialisation: string;
     disciplineIds: Array<string>;
+    disciplineFreeText: string;
     startDateForRSS: string | null | null;
     endDateForRSS: string | null | null;
     fullTimeEquivalentForRSS: number | null | null;
@@ -833,6 +852,7 @@ export interface UpdateUser {
     professionalBackground: string;
     specialisation: string;
     disciplineIds: Array<string>;
+    disciplineFreeText: string;
     startDateForRSS: string | null | null;
     endDateForRSS: string | null | null;
     fullTimeEquivalentForRSS: number | null | null;

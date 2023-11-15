@@ -20,6 +20,8 @@ namespace Webfuel.Domain
 
         public async Task<StringResult> Handle(LoginUser request, CancellationToken cancellationToken)
         {
+            await Sanitize(request);
+
             var user = await _userRepository.GetUserByEmail(request.Email);
             if (user == null)
             {
@@ -55,6 +57,13 @@ namespace Webfuel.Domain
                 Developer = true,
                 CreatedAt = DateTimeOffset.UtcNow,
             });
+        }
+
+        Task Sanitize(LoginUser request)
+        {
+            request.Email = request.Email.Trim();
+            request.Password = request.Password.Trim();
+            return Task.CompletedTask;
         }
     }
 }

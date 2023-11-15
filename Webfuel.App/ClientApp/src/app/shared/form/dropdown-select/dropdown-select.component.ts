@@ -84,6 +84,8 @@ export class DropDownSelectComponent<TItem>
       this.onChange(null);
     else
       this.onChange(this.getId(this.pickedItems[0]));
+
+    this.checkFreeText();
   }
 
   onChange: (value: string | null) => void = noop;

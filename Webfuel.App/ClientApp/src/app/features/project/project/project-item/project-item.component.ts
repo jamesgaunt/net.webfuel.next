@@ -1,45 +1,47 @@
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Project } from 'api/api.types';
+import { Project, ProjectStatus } from 'api/api.types';
 import { ProjectApi } from 'api/project.api';
 import { StaticDataCache } from 'api/static-data.cache';
 import { FormService } from 'core/form.service';
 import { Observable, debounceTime, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ProjectStatusEnum } from '../../../../api/api.enums';
+import { ConfirmDialog } from '../../../../shared/dialogs/confirm/confirm.dialog';
+import { ProjectComponentBase } from '../shared/project-component-base';
 
 @Component({
   selector: 'project-item',
   templateUrl: './project-item.component.html'
 })
-export class ProjectItemComponent implements OnInit {
+export class ProjectItemComponent extends ProjectComponentBase {
 
   destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    public projectApi: ProjectApi,
     private formService: FormService,
-    public staticDataCache: StaticDataCache
   ) {
+    super();
   }
 
   ngOnInit() {
-    this.reset(this.route.snapshot.data.project);
-    this.form.valueChanges.pipe(
-      debounceTime(200),
-      takeUntilDestroyed(this.destroyRef)
-    ).subscribe(() => this.toggleFreeText());
+    super.ngOnInit();
   }
 
-  item!: Project;
-
   reset(item: Project) {
-    this.item = item;
+    super.reset(item);
+
     this.form.patchValue(item);
     this.form.markAsPristine();
-    this.toggleFreeText()
+  }
+
+  protected applyLock() {
+    this.form.disable();
+  }
+
+  protected clearLock() {
+    this.form.enable();
   }
 
   form = new FormGroup({
@@ -64,9 +66,20 @@ export class ProjectItemComponent implements OnInit {
     if (this.formService.hasErrors(this.form))
       return;
 
+    if (this.form.value.statusId != this.item.statusId) {
+      this.confirmDialog.open({ title: "Status Changing", message: "Are you sure you want to change the status of this project?" }).subscribe(() => {
+        this._save(close);
+      });
+    }
+    else { 
+      this._save(close);
+    }
+  }
+
+  private _save(close: boolean) {
     this.projectApi.update(this.form.getRawValue(), { successGrowl: "Project Updated" }).subscribe((result) => {
       this.reset(result);
-      if(close)
+      if (close)
         this.router.navigate(['project/project-list']);
     });
   }
@@ -75,13 +88,4 @@ export class ProjectItemComponent implements OnInit {
     this.reset(this.item);
     this.router.navigate(['project/project-list']);
   }
-
-  // Free Text Toggles
-
-  toggleFreeText() {
-    this.staticDataCache.fundingStream.get({ id: this.form.value.submittedFundingStreamId || '' })
-      .subscribe((result) => this.showSubmittedFundingStreamFreeText = (result?.freeText ?? false));
-  }
-
-  showSubmittedFundingStreamFreeText = false;
 }

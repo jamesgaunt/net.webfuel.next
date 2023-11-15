@@ -5,8 +5,8 @@
     <Key Name="Id" Type="guid" />
     <Property Name="Number" Type="Int32" />
     <Property Name="PrefixedNumber" Type="meta:name" />
-    <Property Name="StatusId" Type="SupportRequestStatus" />
     <Property Name="FileStorageGroupId" Type="FileStorageGroup" />
+    <Property Name="StatusId" Type="SupportRequestStatus" />
 
     <!-- Project Details -->
 
@@ -14,6 +14,7 @@
     <Property Name="Title" Type="string[1000]" />
     <Property Name="IsFellowshipId" Type="IsFellowship?" />
     <Property Name="ApplicationStageId" Type="ApplicationStage?" />
+    <Property Name="ApplicationStageFreeText" Type="meta:name" />
     <Property Name="ProposedFundingCallTypeId" Type="FundingCallType?" />
     <Property Name="ProposedFundingStreamId" Type="FundingStream?" />
     <Property Name="ProposedFundingStreamName" Type="meta:name" />
@@ -24,6 +25,7 @@
     <Property Name="BriefDescription" Type="string[5000]" />
     <Property Name="SupportRequested" Type="string[2000]" />
     <Property Name="HowDidYouFindUsId" Type="HowDidYouFindUs?" />
+    <Property Name="HowDidYouFindUsFreeText" Type="meta:name" />
 
     <!-- Team Contact Details -->
 
@@ -32,6 +34,7 @@
     <Property Name="TeamContactLastName" Type="meta:name" />
     <Property Name="TeamContactEmail" Type="meta:name" />
     <Property Name="TeamContactRoleId" Type="ResearcherRole?" />
+    <Property Name="TeamContactRoleFreeText" Type="meta:name" />
     <Property Name="TeamContactMailingPermission" Type="boolean" />
     <Property Name="TeamContactPrivacyStatementRead" Type="boolean" />
 

@@ -51,6 +51,9 @@ namespace Webfuel.Domain
                     case nameof(User.DisciplineIds):
                         DisciplineIdsJson = (string)value!;
                         break;
+                    case nameof(User.DisciplineFreeText):
+                        DisciplineFreeText = (string)value!;
+                        break;
                     case nameof(User.StartDateForRSS):
                         StartDateForRSS = value == DBNull.Value ? (DateOnly?)null : DateOnly.FromDateTime((DateTime)value!);
                         break;
@@ -118,6 +121,7 @@ namespace Webfuel.Domain
             set { _DisciplineIdsJson = value; _DisciplineIds = null; }
         }
         string _DisciplineIdsJson = String.Empty;
+        public string DisciplineFreeText  { get; set; } = String.Empty;
         public DateOnly? StartDateForRSS  { get; set; } = null;
         public DateOnly? EndDateForRSS  { get; set; } = null;
         public Decimal? FullTimeEquivalentForRSS  { get; set; } = null;
@@ -151,6 +155,7 @@ namespace Webfuel.Domain
             entity.ProfessionalBackground = ProfessionalBackground;
             entity.Specialisation = Specialisation;
             entity.DisciplineIdsJson = DisciplineIdsJson;
+            entity.DisciplineFreeText = DisciplineFreeText;
             entity.StartDateForRSS = StartDateForRSS;
             entity.EndDateForRSS = EndDateForRSS;
             entity.FullTimeEquivalentForRSS = FullTimeEquivalentForRSS;

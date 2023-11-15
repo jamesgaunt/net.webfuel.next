@@ -78,9 +78,8 @@ export class DropDownMultiSelectComponent<TItem>
   // ControlValueAccessor API
 
   doChangeCallback() {
-    if (this.pickedItems.length === 0)
-      this.onChange(null);
     this.onChange(_.map(this.pickedItems, (p) => this.getId(p)));
+    this.checkFreeText();
   }
 
   onChange: (value: string[] | null) => void = noop;

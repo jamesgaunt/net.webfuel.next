@@ -2,9 +2,29 @@ TODO:
 
 > Purchase and setup on new domain - send form code to ICL for their web administrators
 
-> Project Status Active etc.
-
-> Free Text Boxes
+> Free Text Boxes (integrate into select somehow - should be able to compartmentalise a lot of logic)
+	- presence of FreeText on the selected item
+	- presence of FreeTextFormControl
 
 > Permissions (look again at asp.net core infrastructure)
+
+> Tab selection of controls (think it's kinda important now)
+
+> Can we wrap/encapsulate any more controller behaviours? 
+
+> Repository entity pristene tracking?
+
+----- Future ------
+
+Integrate Scribble
+
+Integrate Excel Generation (start with ClosedXML - but fully wrapped)
+
+Prototype Report Generation
+
+User Login Log
+
+Activity/History Log
+
+Email Template / Test Email Distribution
 

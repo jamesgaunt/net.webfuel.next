@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { SupportRequest, UpdateSupportRequest, UpdateSupportRequestResearcher, TriageSupportRequest, Project, QuerySupportRequest, QueryResult } from './api.types';
+import { SupportRequest, UpdateSupportRequest, UpdateSupportRequestResearcher, UpdateSupportRequestStatus, QuerySupportRequest, QueryResult } from './api.types';
 
 @Injectable()
 export class SupportRequestApi implements IDataSource<SupportRequest, QuerySupportRequest, any, UpdateSupportRequest> {
@@ -21,8 +21,8 @@ export class SupportRequestApi implements IDataSource<SupportRequest, QuerySuppo
         return this.apiService.request<UpdateSupportRequestResearcher, SupportRequest>("PUT", "api/support-request/researcher", body, options);
     }
     
-    public triage (body: TriageSupportRequest, options?: ApiOptions): Observable<Project> {
-        return this.apiService.request<TriageSupportRequest, Project>("POST", "api/support-request/triage", body, options);
+    public updateStatus (body: UpdateSupportRequestStatus, options?: ApiOptions): Observable<SupportRequest> {
+        return this.apiService.request<UpdateSupportRequestStatus, SupportRequest>("POST", "api/support-request/status", body, options);
     }
     
     public delete (params: { id: string }, options?: ApiOptions): Observable<any> {

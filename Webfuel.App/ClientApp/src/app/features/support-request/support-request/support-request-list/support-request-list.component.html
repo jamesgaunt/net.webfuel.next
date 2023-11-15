@@ -38,7 +38,7 @@
     <grid-reference-column [dataSource]="staticDataCache.supportRequestStatus" name="statusId" />
     <grid-column name="title" />
     <grid-date-column name="targetSubmissionDate" label="Target Submission Date" />
-    <grid-action-column (add)="add()" (edit)="edit($event)" (delete)="delete($event)" />
+    <grid-action-column [canDelete]="false" (add)="add()" (edit)="edit($event)" />
   </grid>
 </div>
 

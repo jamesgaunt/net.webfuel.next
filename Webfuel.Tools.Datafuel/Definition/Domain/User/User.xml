@@ -16,6 +16,7 @@
     <Property Name="ProfessionalBackground" Type="meta:name" />
     <Property Name="Specialisation" Type="meta:name" />
     <Property Name="DisciplineIds" Type="Json:List{Guid}" Default="[]" />
+    <Property Name="DisciplineFreeText" Type="meta:description" />
     <Property Name="SiteId" Type="Site?" />
     
     <Property Name="StartDateForRSS" Type="Date?" />

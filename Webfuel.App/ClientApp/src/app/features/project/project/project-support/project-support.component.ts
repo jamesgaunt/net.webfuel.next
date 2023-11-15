@@ -12,44 +12,38 @@ import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/c
 import { UpdateProjectSupportDialog } from '../project-support/update-project-support/update-project-support.dialog';
 import _ from 'shared/common/underscore';
 import { SupportTeamApi } from '../../../../api/support-team.api';
+import { ProjectComponentBase } from '../shared/project-component-base';
+import { CreateProjectSupportDialog } from './create-project-support/create-project-support.dialog';
 
 @Component({
   selector: 'project-support',
   templateUrl: './project-support.component.html'
 })
-export class ProjectSupportComponent implements OnInit {
+export class ProjectSupportComponent extends ProjectComponentBase {
 
   destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
     private formService: FormService,
     private userApi: UserApi,
     private confirmDeleteDialog: ConfirmDeleteDialog,
+    private createProjectSupportDialog: CreateProjectSupportDialog,
     private updateProjectSupportDialog: UpdateProjectSupportDialog,
     private projectSupportApi: ProjectSupportApi,
-    public staticDataCache: StaticDataCache
   ) {
+    super();
     this.userLookup = new DataSourceLookup(userApi);
   }
 
   ngOnInit() {
-    this.reset(this.route.snapshot.data.project);
-    this.loadProjectSupport();
+    super.ngOnInit();
 
+    this.loadProjectSupport();
     this.projectSupportApi.changed.pipe(
       takeUntilDestroyed(this.destroyRef)
     )
-      .subscribe(() => this.loadProjectSupport());
-
+   .subscribe(() => this.loadProjectSupport());
     this.staticDataCache.supportProvided.query({ skip: 0, take: 100 }).subscribe((result) => this.categories = result.items);
-  }
-
-  item!: Project;
-
-  reset(item: Project) {
-    this.item = item;
   }
 
   form = new FormGroup({
@@ -72,11 +66,18 @@ export class ProjectSupportComponent implements OnInit {
 
   userLookup: DataSourceLookup<User>;
 
+  addProjectSupport() {
+    if (this.locked) return;
+    this.createProjectSupportDialog.open({ projectId: this.item.id });
+  }
+
   editProjectSupport(projectSupport: ProjectSupport) {
+    if (this.locked) return;
     this.updateProjectSupportDialog.open({ projectSupport: projectSupport });
   }
 
   deleteProjectSupport(projectSupport: ProjectSupport) {
+    if (this.locked) return;
     this.confirmDeleteDialog.open({ title: "Project Support" }).subscribe(() => {
       this.projectSupportApi.delete({ id: projectSupport.id }, { successGrowl: "Project Support Deleted" }).subscribe();
     });
@@ -89,5 +90,4 @@ export class ProjectSupportComponent implements OnInit {
   containsCategory(category: SupportProvided) {
     return _.some(this.items || [], (p) => _.some(p.supportProvidedIds, (s) => s == category.id));
   }
-
 }

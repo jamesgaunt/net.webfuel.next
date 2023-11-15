@@ -10,5 +10,6 @@
     </div>
   </div>
   <support-request-tabs></support-request-tabs>
-  <file-browser [fileStorageGroupId]="item.fileStorageGroupId" />
+  <div class="message is-primary">{{ supportRequestStatus?.name }}</div>
+  <file-browser [fileStorageGroupId]="item.fileStorageGroupId" [locked]="locked" />
 </div>

@@ -7,14 +7,9 @@ using System.Threading.Tasks;
 
 namespace Webfuel.Domain
 {
-    public class TriageSupportRequest : IRequest<Project?>
+    public class UpdateProjectStatus: IRequest<Project>
     {
         public required Guid Id { get; set; }
-
         public required Guid StatusId { get; set; }
-
-        public required List<Guid> SupportProvidedIds { get; set; }
-
-        public string Description { get; set; } = String.Empty;
     }
 }

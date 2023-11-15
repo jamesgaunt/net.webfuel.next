@@ -12,7 +12,7 @@
         </div>
         <div class="field is-6">
           <label class="label">Stage of application</label>
-          <dropdown-select [dataSource]="staticDataCache.applicationStage" placeholder="required" formControlName="applicationStageId"></dropdown-select>
+          <dropdown-select [dataSource]="staticDataCache.applicationStage" [freeTextControl]="form.controls.applicationStageFreeText" placeholder="required" formControlName="applicationStageId"></dropdown-select>
         </div>
         <div class="field is-6">
           <label class="label">Is this application for a fellowship?</label>
@@ -44,7 +44,7 @@
         </div>
         <div class="field is-6">
           <label class="label">How did you hear about our hub?</label>
-          <dropdown-select [dataSource]="staticDataCache.howDidYouFindUs" placeholder="required" formControlName="howDidYouFindUsId"></dropdown-select>
+          <dropdown-select [dataSource]="staticDataCache.howDidYouFindUs" [freeTextControl]="form.controls.howDidYouFindUsFreeText" placeholder="required" formControlName="howDidYouFindUsId"></dropdown-select>
         </div>
         <div class="field is-12">
           <label class="label">What is your (or the CIs)  experience of securing funding awards?</label>
@@ -87,7 +87,7 @@
         </div>
         <div class="field is-4">
           <label class="label">Role in application</label>
-          <dropdown-select [dataSource]="staticDataCache.researcherRole" placeholder="required" formControlName="teamContactRoleId"></dropdown-select>
+          <dropdown-select [dataSource]="staticDataCache.researcherRole" [freeTextControl]="form.controls.teamContactRoleFreeText" placeholder="required" formControlName="teamContactRoleId"></dropdown-select>
         </div>
         <div class="field is-12">
           <div class="checkbox">

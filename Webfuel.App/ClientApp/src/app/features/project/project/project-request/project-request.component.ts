@@ -46,9 +46,11 @@ export class ProjectRequestComponent implements OnInit {
     briefDescription: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     supportRequested: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     applicationStageId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
+    applicationStageFreeText: new FormControl<string>('', { nonNullable: true }),
     proposedFundingStreamId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
     proposedFundingCallTypeId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
     howDidYouFindUsId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
+    howDidYouFindUsFreeText: new FormControl<string>('', { nonNullable: true }),
   });
 
   cancel() {

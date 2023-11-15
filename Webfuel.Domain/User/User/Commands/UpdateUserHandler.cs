@@ -27,6 +27,7 @@ namespace Webfuel.Domain
             updated.ProfessionalBackground = request.ProfessionalBackground;
             updated.Specialisation = request.Specialisation;
             updated.DisciplineIds = request.DisciplineIds;
+            updated.DisciplineFreeText = request.DisciplineFreeText;
             updated.SiteId = request.SiteId;
 
             updated.StartDateForRSS= request.StartDateForRSS;

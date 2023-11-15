@@ -1,15 +1,3 @@
-<div class="columns">
-  <div class="column">
-    <h1 class="title">Project {{ item.prefixedNumber }}</h1>
-  </div>
-  <div class="column">
-    <div class="header-buttons">
-      <button class="button is-primary" (click)="addSupport()">Add Support</button>
-      <button class="button is-primary" (click)="addSubmission()">Add Submission</button>
-      <button class="button is-warning" (click)="addTeamSupport()">Request Team Support</button>
-    </div>
-  </div>
-</div>
 <div class="tabs">
   <ul>
     <li routerLinkActive="is-active"><a routerLink="../../project-item/{{ item.id }}">Project</a></li>

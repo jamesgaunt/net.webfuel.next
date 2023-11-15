@@ -42,6 +42,7 @@ import { DatePickerDialog, DatePickerDialogComponent } from './dialogs/date-pick
 import { CreateUserActivityDialog, CreateUserActivityDialogComponent } from './dialogs/create-user-activity/create-user-activity.dialog';
 import { UpdateUserActivityDialog, UpdateUserActivityDialogComponent } from './dialogs/update-user-activity/update-user-activity.dialog';
 import { FileViewerDialog, FileViewerDialogComponent } from './dialogs/file-viewer/file-viewer.dialog';
+import { AlertDialog, AlertDialogComponent } from './dialogs/alert/alert.dialog';
 
 // Misc
 import { FileBrowserComponent } from './file-browser/file-browser.component';
@@ -93,6 +94,7 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
     CreateUserActivityDialogComponent,
     UpdateUserActivityDialogComponent,
     FileViewerDialogComponent,
+    AlertDialogComponent,
 
     // Misc
     FileBrowserComponent
@@ -140,6 +142,7 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
     CreateUserActivityDialogComponent,
     UpdateUserActivityDialogComponent,
     FileViewerDialogComponent,
+    AlertDialogComponent,
 
     // Misc
     FileBrowserComponent
@@ -153,6 +156,7 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
     CreateUserActivityDialog,
     UpdateUserActivityDialog,
     FileViewerDialog,
+    AlertDialog,
   ]
 })
 export class SharedModule { }

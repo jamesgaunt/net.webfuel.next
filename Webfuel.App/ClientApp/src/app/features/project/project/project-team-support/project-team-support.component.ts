@@ -13,45 +13,41 @@ import _ from 'shared/common/underscore';
 import { SupportTeamApi } from '../../../../api/support-team.api';
 import { CompleteProjectTeamSupportDialog } from './complete-project-team-support/complete-project-team-support.dialog';
 import { UpdateProjectTeamSupportDialog } from './update-project-team-support/update-project-team-support.dialog';
+import { ProjectComponentBase } from '../shared/project-component-base';
+import { CreateProjectTeamSupportDialog } from './create-project-team-support/create-project-team-support.dialog';
 
 @Component({
   selector: 'project-team-support',
   templateUrl: './project-team-support.component.html'
 })
-export class ProjectTeamSupportComponent implements OnInit {
+export class ProjectTeamSupportComponent extends ProjectComponentBase {
 
   destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
     private formService: FormService,
     private userApi: UserApi,
     private supportTeamApi: SupportTeamApi,
     private confirmDeleteDialog: ConfirmDeleteDialog,
     private projectTeamSupportApi: ProjectTeamSupportApi,
+
+    private createProjectTeamSupportDialog: CreateProjectTeamSupportDialog,
     private updateProjectTeamSupportDialog: UpdateProjectTeamSupportDialog,
     private completeProjectTeamSupportDialog: CompleteProjectTeamSupportDialog,
-    public staticDataCache: StaticDataCache
   ) {
+    super();
     this.userLookup = new DataSourceLookup(userApi);
     this.teamLookup = new DataSourceLookup(supportTeamApi)
   }
 
   ngOnInit() {
-    this.reset(this.route.snapshot.data.project);
-    this.loadProjectTeamSupport();
+    super.ngOnInit();
 
+    this.loadProjectTeamSupport();
     this.projectTeamSupportApi.changed.pipe(
       takeUntilDestroyed(this.destroyRef)
     )
-      .subscribe(() => this.loadProjectTeamSupport());
-  }
-
-  item!: Project;
-
-  reset(item: Project) {
-    this.item = item;
+    .subscribe(() => this.loadProjectTeamSupport());
   }
 
   form = new FormGroup({
@@ -75,6 +71,11 @@ export class ProjectTeamSupportComponent implements OnInit {
   userLookup: DataSourceLookup<User>;
 
   teamLookup: DataSourceLookup<SupportTeam>;
+
+  addTeamSupport() {
+    if (this.locked) return;
+    this.createProjectTeamSupportDialog.open({ projectId: this.item.id });
+  }
 
   completeProjectTeamSupport(projectTeamSupport: ProjectTeamSupport) {
     this.completeProjectTeamSupportDialog.open({ id: projectTeamSupport.id }).subscribe(() => {

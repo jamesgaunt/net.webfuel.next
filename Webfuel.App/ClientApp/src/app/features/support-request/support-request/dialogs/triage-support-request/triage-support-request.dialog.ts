@@ -2,7 +2,7 @@ import { Component, Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { QueryOp, SupportRequestStatusEnum } from 'api/api.enums';
-import { Project, Query } from 'api/api.types';
+import { Project, Query, SupportRequest } from 'api/api.types';
 import { StaticDataCache } from 'api/static-data.cache';
 import { SupportRequestApi } from 'api/support-request.api';
 import { FormService } from 'core/form.service';
@@ -13,7 +13,7 @@ export interface TriageSupportRequestDialogData {
 }
 
 @Injectable()
-export class TriageSupportRequestDialog extends DialogBase<Project, TriageSupportRequestDialogData>  {
+export class TriageSupportRequestDialog extends DialogBase<SupportRequest, TriageSupportRequestDialogData>  {
   open(data: TriageSupportRequestDialogData) {
     return this._open(TriageSupportRequestDialogComponent, data);
   }
@@ -23,7 +23,7 @@ export class TriageSupportRequestDialog extends DialogBase<Project, TriageSuppor
   selector: 'triage-support-request-dialog',
   templateUrl: './triage-support-request.dialog.html'
 })
-export class TriageSupportRequestDialogComponent extends DialogComponentBase<Project, TriageSupportRequestDialogData>  {
+export class TriageSupportRequestDialogComponent extends DialogComponentBase<SupportRequest, TriageSupportRequestDialogData>  {
 
   constructor(
     private router: Router,
@@ -54,14 +54,10 @@ export class TriageSupportRequestDialogComponent extends DialogComponentBase<Pro
     if (this.formService.hasErrors(this.form))
       return;
 
-    this.supportRequestApi.triage(this.form.getRawValue()).subscribe((result) => {
-      if (result == null) {
-        this.cancel();
-        return;
-      }
-
+    this.supportRequestApi.updateStatus(this.form.getRawValue()).subscribe((result) => {
       this._closeDialog(result);
-      this.router.navigateByUrl(`/project/project-item/${result.id}`);
+      if (result.projectId != null)
+        this.router.navigateByUrl(`/project/project-item/${result.projectId}`);
     })
   }
 

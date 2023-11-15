@@ -13,10 +13,6 @@ export class ProjectTabsComponent implements OnInit  {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
-    private createProjectSupportDialog: CreateProjectSupportDialog,
-    private createProjectSubmissionDialog: CreateProjectSubmissionDialog,
-    private createProjectTeamSupportDialog: CreateProjectTeamSupportDialog
   ) {
   }
 
@@ -28,17 +24,5 @@ export class ProjectTabsComponent implements OnInit  {
 
   reset(item: Project) {
     this.item = item;
-  }
-
-  addSupport() {
-    this.createProjectSupportDialog.open({ projectId: this.item.id });
-  }
-
-  addSubmission() {
-    this.createProjectSubmissionDialog.open({ projectId: this.item.id });
-  }
-
-  addTeamSupport() {
-    this.createProjectTeamSupportDialog.open({ projectId: this.item.id });
   }
 }

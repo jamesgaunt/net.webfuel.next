@@ -10,8 +10,8 @@ namespace Webfuel.Domain
     [Mapper]
     internal partial class ProjectMapper
     {
+        [MapperIgnoreTarget(nameof(Project.Id))]
+        [MapperIgnoreTarget(nameof(Project.StatusId))]
         public partial Project Map(CreateProject request);
-
-        public partial void  Apply(Project existing, UpdateProject request);
     }
 }

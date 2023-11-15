@@ -4,11 +4,15 @@
   <li><a routerLink="/project/project-item/{{ item.id }}">Project</a></li>
 </ul>
 <div class="container">
+  <div class="columns">
+    <div class="column">
+      <h1 class="title">Project {{ item.prefixedNumber }}</h1>
+    </div>
+  </div>
   <project-tabs></project-tabs>
   <div class="message is-warning">
     Coming Soon: History of changes made to this project.
   </div>
-
   <div class="floating-buttons">
     <button class="button" (click)="cancel()">Close</button>
   </div>

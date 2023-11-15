@@ -44,6 +44,9 @@ export class FileBrowserComponent implements OnInit {
   @Input({ required: true })
   fileStorageGroupId!: string;
 
+  @Input()
+  locked = false;
+
   // Grid
 
   filter(query: QueryFileStorageEntry) {
@@ -70,6 +73,9 @@ export class FileBrowserComponent implements OnInit {
   })
 
   uploadFiles() {
+    if (this.locked)
+      return;
+
     if (!this.form.value.files || this.form.value.files.length == 0)
       return;
 
@@ -122,6 +128,9 @@ export class FileBrowserComponent implements OnInit {
   }
 
   deleteFile(file: FileStorageEntry) {
+    if (this.locked)
+      return;
+
     this.confirmDeleteDialog.open({ title: file.fileName }).subscribe((result) => {
       this.fileStorageEntryApi.delete({ id: file.id }, { successGrowl: "File Deleted" }).subscribe(() => {
       });

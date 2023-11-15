@@ -53,6 +53,9 @@ namespace Webfuel.Domain
                     case nameof(User.DisciplineIds):
                         result.Add(new SqlParameter(nameof(User.DisciplineIds), entity.DisciplineIdsJson));
                         break;
+                    case nameof(User.DisciplineFreeText):
+                        result.Add(new SqlParameter(nameof(User.DisciplineFreeText), entity.DisciplineFreeText));
+                        break;
                     case nameof(User.StartDateForRSS):
                         result.Add(new SqlParameter(nameof(User.StartDateForRSS), entity.StartDateForRSS ?? (object?)DBNull.Value));
                         break;
@@ -132,6 +135,7 @@ namespace Webfuel.Domain
                 yield return "ProfessionalBackground";
                 yield return "Specialisation";
                 yield return "DisciplineIds";
+                yield return "DisciplineFreeText";
                 yield return "StartDateForRSS";
                 yield return "EndDateForRSS";
                 yield return "FullTimeEquivalentForRSS";
@@ -164,6 +168,7 @@ namespace Webfuel.Domain
                 yield return "ProfessionalBackground";
                 yield return "Specialisation";
                 yield return "DisciplineIds";
+                yield return "DisciplineFreeText";
                 yield return "StartDateForRSS";
                 yield return "EndDateForRSS";
                 yield return "FullTimeEquivalentForRSS";
@@ -195,6 +200,7 @@ namespace Webfuel.Domain
                 yield return "ProfessionalBackground";
                 yield return "Specialisation";
                 yield return "DisciplineIds";
+                yield return "DisciplineFreeText";
                 yield return "StartDateForRSS";
                 yield return "EndDateForRSS";
                 yield return "FullTimeEquivalentForRSS";
@@ -232,6 +238,8 @@ namespace Webfuel.Domain
             entity.ProfessionalBackground = entity.ProfessionalBackground.Trim();
             entity.Specialisation = entity.Specialisation ?? String.Empty;
             entity.Specialisation = entity.Specialisation.Trim();
+            entity.DisciplineFreeText = entity.DisciplineFreeText ?? String.Empty;
+            entity.DisciplineFreeText = entity.DisciplineFreeText.Trim();
             entity.PasswordHash = entity.PasswordHash ?? String.Empty;
             entity.PasswordHash = entity.PasswordHash.Trim();
             entity.PasswordSalt = entity.PasswordSalt ?? String.Empty;
@@ -249,6 +257,7 @@ namespace Webfuel.Domain
         public const int UniversityJobTitle_MaxLength = 64;
         public const int ProfessionalBackground_MaxLength = 64;
         public const int Specialisation_MaxLength = 64;
+        public const int DisciplineFreeText_MaxLength = 1024;
         public const int PasswordHash_MaxLength = 256;
         public const int PasswordSalt_MaxLength = 256;
         
@@ -308,6 +317,13 @@ namespace Webfuel.Domain
                 .MaximumLength(Specialisation_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
+        public static void DisciplineFreeText_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(DisciplineFreeText_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
         public static void PasswordHash_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
@@ -335,6 +351,7 @@ namespace Webfuel.Domain
             RuleFor(x => x.UniversityJobTitle).Use(UserMetadata.UniversityJobTitle_ValidationRules);
             RuleFor(x => x.ProfessionalBackground).Use(UserMetadata.ProfessionalBackground_ValidationRules);
             RuleFor(x => x.Specialisation).Use(UserMetadata.Specialisation_ValidationRules);
+            RuleFor(x => x.DisciplineFreeText).Use(UserMetadata.DisciplineFreeText_ValidationRules);
             RuleFor(x => x.PasswordHash).Use(UserMetadata.PasswordHash_ValidationRules);
             RuleFor(x => x.PasswordSalt).Use(UserMetadata.PasswordSalt_ValidationRules);
             Validation();

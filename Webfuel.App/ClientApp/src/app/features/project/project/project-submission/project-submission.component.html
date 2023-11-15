@@ -4,17 +4,25 @@
   <li><a routerLink="/project/project-item/{{ item.id }}">Project</a></li>
 </ul>
 <div class="container">
+  <div class="columns">
+    <div class="column">
+      <h1 class="title">Project {{ item.prefixedNumber }}</h1>
+    </div>
+    <div class="column" *ngIf="!locked">
+      <div class="header-buttons">
+        <button class="button is-primary" (click)="add()">Add Submission</button>
+      </div>
+    </div>
+  </div>
   <project-tabs></project-tabs>
-
   <grid [dataSource]="projectSubmissionApi" (filter)="filter($event)">
     <grid-date-column name="submissionDate" />
     <grid-column name="nihrReference" label="NIHR Reference" />
     <grid-reference-column name="submissionStageId" [dataSource]="staticDataCache.submissionStage" label="Stage" />
     <grid-number-column name="fundingAmountOnSubmission" label="Funding Amount" prefix="£" />
     <grid-reference-column name="submissionOutcomeId" [dataSource]="staticDataCache.submissionOutcome" label="Outcome" />
-    <grid-action-column [canAdd]="false" (edit)="edit($event)" (delete)="delete($event)" />
+    <grid-action-column [canAdd]="false" [canEdit]="!locked" [canDelete]="!locked" (edit)="edit($event)" (delete)="delete($event)" />
   </grid>
-
   <div class="floating-buttons">
     <button class="button" (click)="cancel()">Close</button>
   </div>

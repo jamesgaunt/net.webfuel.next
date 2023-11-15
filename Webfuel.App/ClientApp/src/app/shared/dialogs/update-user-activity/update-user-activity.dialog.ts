@@ -38,7 +38,6 @@ export class UpdateUserActivityDialogComponent extends DialogComponentBase<UserA
       workTimeInHours: this.data.userActivity.workTimeInHours!,
       description: this.data.userActivity.description
     });
-    this.toggleFreeText();
   }
 
   form = new FormGroup({
