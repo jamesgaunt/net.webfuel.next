@@ -48,6 +48,7 @@ namespace Webfuel.Api
                                 "https://www.webfuel.com",
                                 "http://localhost:4200",
                                 "https://localhost:44426",
+                                "https://db.rssimperialpartners.org.uk",
                                 "https://webfuel-rss-icl.azurewebsites.net");
 
                             policy.WithHeaders(
