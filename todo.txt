@@ -6,6 +6,14 @@ TODO:
 
 > Tab selection of controls (think it's kinda important now)
 
+> Project Metrics Calculation (Lazy?)
+
+> Client side user identity cache
+
+> Change Log Utility : Format Primative (NULL -> (NONE) + on empty strings)
+
+> Something to go on the dashboard?
+
 ----- Future ------
 
 Integrate Scribble
@@ -23,3 +31,11 @@ Email Template / Test Email Distribution
 > Can we wrap/encapsulate any more controller behaviours? 
 
 > Repository entity pristene tracking?
+
+====== TODO ======
+
+Update to .net 8
+
+Update to Angular 17
+
+Transition to standalone components

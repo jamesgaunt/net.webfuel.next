@@ -40,6 +40,16 @@ namespace Webfuel.Tools.Datafuel
 
         public bool InternalSet => HasTag("InternalSet") || Entity.StaticData;
 
+        public string TagParameter(string tagPrefix)
+        {
+            foreach(var tag in Tags)
+            {
+                if (tag.StartsWith(tagPrefix + ":"))
+                    return tag.Substring(tagPrefix.Length + 1);
+            }
+            return String.Empty;
+        }
+
         // Type
 
         public abstract string CLRType { get; }

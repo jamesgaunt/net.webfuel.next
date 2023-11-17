@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,31 +34,28 @@ namespace Webfuel.Tools.Datafuel
             Usings(sb, entity);
             using (sb.OpenBrace($"namespace {entity.Namespace}"))
             {
-                using(sb.OpenBrace($"public partial interface I{entity.Name}ChangeLogService"))
-                {
-
-                }
-                sb.WriteLine();
-
-                sb.WriteLine($"[Service(typeof(I{entity.Name}ChangeLogService))]");
                 using (sb.OpenBrace($"internal partial class {entity.Name}ChangeLogService: I{entity.Name}ChangeLogService"))
                 {
-                    sb.WriteLine("private readonly IStaticDataService _staticDataService;");
-                    sb.WriteLine("private readonly IUserRepository _userRepository;");
-                    sb.WriteLine();
-
-                    using (sb.OpenBrace($"public {entity.Name}ChangeLogService(IStaticDataService staticDataService, IUserRepository userRepository)"))
-                    {
-                        sb.WriteLine("_staticDataService = staticDataService;");
-                        sb.WriteLine("_userRepository = userRepository;");
-                    }
-                    sb.WriteLine();
-
                     using (sb.OpenBrace(@$"public async Task<string> GenerateChangeLog({entity.Name} original, {entity.Name} updated, string delimiter = ""\n"")"))
                     {
                         sb.WriteLine(@"var staticData = await _staticDataService.GetStaticData();");
                         sb.WriteLine(@"var sb = new StringBuilder();");
                         sb.WriteLine();
+
+                        foreach (var member in entity.Members)
+                        {
+                            if (!MemberIncluded(member))
+                                continue;
+
+                            var renderer = MemberRenderer(member);
+                            if (renderer == null)
+                                continue;
+
+                            using (sb.OpenBrace($@"if({member.GenerateComparisonGetter("original")} != {member.GenerateComparisonGetter("updated")})"))
+                            {
+                                renderer.Render(sb);
+                            }
+                        }
 
                         sb.WriteLine(@"return sb.ToString();");
                     }
@@ -65,6 +63,88 @@ namespace Webfuel.Tools.Datafuel
             }
 
             return sb.ToString();
+        }
+
+        public static bool MemberIncluded(SchemaEntityMember member)
+        {
+            if (member.IsKey)
+                return false;
+
+            if (member.TagParameter("ChangeLog") == "Ignore")
+                return false;
+
+            return true;
+        }
+
+        public static string MemberName(SchemaEntityMember member)
+        {
+            var name = member.TagParameter("ChangeLogName");
+            if (!String.IsNullOrEmpty(name))
+                return name;
+
+            name =  System.Text.RegularExpressions.Regex.Replace(member.Name, "([A-Z])", " $1", System.Text.RegularExpressions.RegexOptions.Compiled).Trim();
+
+            if (name.EndsWith(" Id"))
+                name = name.Substring(0, name.Length - 3);
+
+            if (name.EndsWith(" Ids"))
+                name = name.Substring(0, name.Length - 4);
+
+            return name;
+        }
+
+        public static ChangeLogRenderer? MemberRenderer(SchemaEntityMember member)
+        {
+            if (member is SchemaEntityReference reference)
+            {
+                if (reference.ReferenceEntity.StaticData)
+                    return new StaticDataReferenceChangeLogRenderer { Member = member, StaticDataType = reference.ReferenceEntity };
+            }
+
+            return new PrimativeChangeLogRenderer { Member = member };
+        }
+    }
+
+    abstract class ChangeLogRenderer
+    {
+        public string Original { get; set; } = "original";
+
+        public string Updated { get; set; } = "updated";
+
+        public required SchemaEntityMember Member { get; init; }
+
+        public abstract void Render(ScriptBuilder sb);
+    }
+
+    class PrimativeChangeLogRenderer : ChangeLogRenderer
+    {
+        public override void Render(ScriptBuilder sb)
+        {
+            if (Member.Nullable)
+                sb.WriteLine($@"sb.Append(""{ChangeLoggerGenerator.MemberName(Member)}: "").Append({Original}.{Member.Name}?.ToString() ?? ""NULL"").Append("" -> "").Append({Updated}.{Member.Name}?.ToString() ?? ""NULL"").Append(delimiter);");
+            else
+                sb.WriteLine($@"sb.Append(""{ChangeLoggerGenerator.MemberName(Member)}: "").Append({Original}.{Member.Name}).Append("" -> "").Append({Updated}.{Member.Name}).Append(delimiter);");
+        }
+    }
+
+    class StaticDataReferenceChangeLogRenderer : ChangeLogRenderer
+    {
+        public required SchemaEntity StaticDataType { get; init; }
+
+        public override void Render(ScriptBuilder sb)
+        {
+            if (Member.Nullable)
+            {
+                sb.WriteLine($@"var o = {Original}.{Member.Name}.HasValue ? (await _staticDataService.Get{StaticDataType.Name}({Original}.{Member.Name}.Value))?.Name ?? ""UNKNOWN"" : ""NULL"";");
+                sb.WriteLine($@"var u = {Updated}.{Member.Name}.HasValue ? (await _staticDataService.Get{StaticDataType.Name}({Updated}.{Member.Name}.Value))?.Name ?? ""UNKNOWN"" : ""NULL"";");
+            }
+            else
+            {
+                sb.WriteLine($@"var o = (await _staticDataService.Get{StaticDataType.Name}({Original}.{Member.Name}))?.Name ?? ""UNKNOWN"";");
+                sb.WriteLine($@"var u = (await _staticDataService.Get{StaticDataType.Name}({Updated}.{Member.Name}))?.Name ?? ""UNKNOWN"";");
+            }
+
+            sb.WriteLine($@"sb.Append(""{ChangeLoggerGenerator.MemberName(Member)}: "").Append(o).Append("" -> "").Append(u).Append(delimiter);");
         }
     }
 }

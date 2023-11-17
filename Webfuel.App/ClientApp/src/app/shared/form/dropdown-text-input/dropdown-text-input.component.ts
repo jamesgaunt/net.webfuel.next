@@ -19,78 +19,43 @@ import { DropDownBase } from '../../common/dropdown-base';
     }
   ]
 })
-export class DropDownTextInputComponent<TItem>
-  extends DropDownBase<TItem> implements ControlValueAccessor, OnInit {
-
-  formControl: FormControl = new FormControl<string>('');
-
-  ngOnInit(): void {
-    this.formControl.valueChanges
-      .pipe(
-        debounceTime(200),
-        tap(value => this.onChange(value)),
-        takeUntilDestroyed(this.destroyRef),
-      )
-      .subscribe();
-  }
-
-  @Input()
-  enableClear: boolean = false;
+export class DropDownTextInputComponent<TItem> extends DropDownBase<TItem> implements ControlValueAccessor {
 
   // Client Events
 
-  pickItem(item: TItem, $event: Event) {
-    $event.preventDefault();
-    $event.stopPropagation();
+  pickItem(item: TItem) {
     if (this._isDisabled)
       return;
 
     this.closePopup();
-    this.formControl.setValue((<any>item).name);
+    this.focusControl.setValue((<any>item).name);
     this.cd.detectChanges();
   }
 
-  clear($event: Event) {
-    $event.preventDefault();
-    $event.stopPropagation();
+  clear() {
     if (this._isDisabled)
       return;
 
     this.closePopup();
-    this.formControl.setValue('');
+    this.focusControl.setValue('');
     this.cd.detectChanges();
   }
 
-  togglePopup($event: Event, $textInput: HTMLElement) {
-    $event.preventDefault();
-    $event.stopPropagation();
-    if (this._isDisabled)
-      return;
+  doChangeCallback() {
+  }
 
-    if (this.popupOpen) {
-      this.closePopup()
-    }
-    else {
-      this.openPopup();
-      $textInput.focus();
-    }
+  onFocusControlChange(value: string | null) {
+    this.onChange(value);
   }
 
   // ControlValueAccessor API
 
-  onChange: (value: string | null) => void = noop;
-
   public writeValue(value: string | null): void {
-    this.formControl.setValue(value, { emitEvent: false });
+    this.focusControl.setValue(value, { emitEvent: false });
   }
 
   public registerOnChange(fn: (value: string | null) => void): void {
     this.onChange = fn;
   }
-
-  public setDisabledState?(isDisabled: boolean): void {
-    this._isDisabled = isDisabled;
-    this.cd.detectChanges();
-  }
-  public _isDisabled = false;
+  onChange: (value: string | null) => void = noop;
 }

@@ -18,6 +18,7 @@ import { StaticDataService } from './static-data.service';
 import { ConfigurationService } from './configuration.service';
 import { LoginService } from './login.service';
 import { QueryService } from './query.service';
+import { UserService } from './user.service';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import { QueryService } from './query.service';
     FormService,
     ErrorService,
     QueryService,
+    UserService,
     DeactivateService,
     {
       provide: HTTP_INTERCEPTORS,

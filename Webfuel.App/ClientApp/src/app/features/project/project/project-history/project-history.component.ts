@@ -1,10 +1,12 @@
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Project } from 'api/api.types';
+import { Project, QueryProjectChangeLog } from 'api/api.types';
 import { StaticDataCache } from 'api/static-data.cache';
 import { FormService } from 'core/form.service';
 import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
+import { ProjectChangeLogApi } from '../../../../api/project-change-log.api';
+import { UserService } from '../../../../core/user.service';
 
 @Component({
   selector: 'project-history',
@@ -18,8 +20,9 @@ export class ProjectHistoryComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formService: FormService,
-    private confirmDeleteDialog: ConfirmDeleteDialog,
-    public staticDataCache: StaticDataCache
+    public projectChangeLogApi: ProjectChangeLogApi,
+    public staticDataCache: StaticDataCache,
+    public userService: UserService,
   ) {
   }
 
@@ -31,6 +34,10 @@ export class ProjectHistoryComponent implements OnInit {
 
   reset(item: Project) {
     this.item = item;
+  }
+
+  filter(query: QueryProjectChangeLog) {
+    query.projectId = this.item.id;
   }
 
   form = new FormGroup({

@@ -1,17 +1,14 @@
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormControl, FormGroup } from '@angular/forms';
+import { debounceTime } from 'rxjs';
 import _ from 'shared/common/underscore';
 import { environment } from '../../../environments/environment';
-import { FileStorageEntry, QueryFileStorageEntry, User } from '../../api/api.types';
+import { FileStorageEntry, QueryFileStorageEntry } from '../../api/api.types';
 import { FileStorageEntryApi } from '../../api/file-storage-entry.api';
-import { FormControl, FormGroup } from '@angular/forms';
-import { debounceTime, tap } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { HttpClient, HttpEventType } from '@angular/common/http';
+import { UserService } from '../../core/user.service';
 import { ConfirmDeleteDialog } from '../dialogs/confirm-delete/confirm-delete.dialog';
-import { GrowlService } from '../../core/growl.service';
-import { DataSourceLookup } from '../common/data-source';
-import { DataSource } from '@angular/cdk/collections';
-import { UserApi } from '../../api/user.api';
 
 @Component({
   selector: 'file-browser',
@@ -25,9 +22,8 @@ export class FileBrowserComponent implements OnInit {
     private httpClient: HttpClient,
     private confirmDeleteDialog: ConfirmDeleteDialog,
     public fileStorageEntryApi: FileStorageEntryApi,
-    private userApi: UserApi
+    public userService: UserService
   ) {
-    this.userLookup = new DataSourceLookup(userApi);
   }
 
   ngOnInit(): void {
@@ -60,8 +56,6 @@ export class FileBrowserComponent implements OnInit {
   sasRedirect(file: FileStorageEntry) {
     return environment.apiHost + "api/file-storage-entry/sas-redirect/" + file.id;
   }
-
-  userLookup: DataSourceLookup<User>;
 
   // Upload
 

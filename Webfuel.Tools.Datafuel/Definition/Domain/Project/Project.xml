@@ -3,11 +3,11 @@
 <Schema>
   <Entity Name="Project" OrderBy="-Number" Tags="ChangeLog">
     <Key Name="Id" Type="guid" />
-    <Property Name="Number" Type="Int32" />
+    <Property Name="Number" Type="Int32" Tags="ChangeLog:Ignore" />
     <Property Name="PrefixedNumber" Type="meta:name" />
-    <Property Name="FileStorageGroupId" Type="FileStorageGroup" />
+    <Property Name="FileStorageGroupId" Type="FileStorageGroup" Tags="ChangeLog:Ignore" />
     
-    <Property Name="SupportRequestId" Type="Guid?" />
+    <Property Name="SupportRequestId" Type="Guid?" Tags="ChangeLog:Ignore" />
     <Property Name="ClosureDate" Type="Date?" />
 
     <Property Name="SubmittedFundingStreamId" Type="FundingStream?" />
@@ -16,8 +16,8 @@
 
     <!-- Status Behaviour Flags -->
     <Property Name="StatusId" Type="ProjectStatus" />
-    <Property Name="Locked" Type="boolean" />
-    <Property Name="Discarded" Type="boolean" />
+    <Property Name="Locked" Type="boolean" Tags="ChangeLog:Ignore" />
+    <Property Name="Discarded" Type="boolean" Tags="ChangeLog:Ignore" />
 
     <!-- For clinical trial submissions -->
     <Property Name="ProjectStartDate" Type="Date?" />
@@ -83,7 +83,7 @@
     <!-- ========== /Replicated from Support Request (Keep All Field Names Identical) ========== -->
     
     <!-- Audit -->
-    <Property Name="CreatedAt" Type="DateTime" />
+    <Property Name="CreatedAt" Type="DateTime" Tags="ChangeLog:Ignore" />
     
     <!-- Indexes -->
     <Index Unique="false">

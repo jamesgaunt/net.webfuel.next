@@ -480,6 +480,24 @@ export interface QueryProject extends Query {
     search?: string;
 }
 
+export interface ProjectChangeLog {
+    id: string;
+    message: string;
+    createdAt: string;
+    projectId: string;
+    createdByUserId: string | null | null;
+}
+
+export interface QueryProjectChangeLog extends Query {
+    projectId: string;
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
 export interface ProjectSubmission {
     id: string;
     nihrReference: string;
@@ -733,6 +751,24 @@ export interface QuerySupportRequest extends Query {
     fromDate: string | null | null;
     toDate: string | null | null;
     statusId: string | null | null;
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface SupportRequestChangeLog {
+    id: string;
+    message: string;
+    createdAt: string;
+    supportRequestId: string;
+    createdByUserId: string | null | null;
+}
+
+export interface QuerySupportRequestChangeLog extends Query {
+    supportRequestId: string;
     skip: number;
     take: number;
     projection?: Array<string>;

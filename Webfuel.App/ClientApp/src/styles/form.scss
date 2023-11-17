@@ -1,5 +1,22 @@
 @import 'config.scss';
 
+.focus-input {
+    height: 0;
+    width: 0;
+    font-size: 0;
+    line-height: 0;
+    opacity: 0;
+}
+
+.search-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 10;
+}
+
 .external-form-divider {
   border-top: 12px solid #ccc;
   margin: calc(var(--gap) * 2) 0 calc(var(--gap) * 2) 0;
@@ -106,10 +123,12 @@
   display: block;
   width: 100%;
   overflow: hidden;
+  scroll-behavior: auto;
 
   .items {
     max-height: 16em;
     overflow: auto;
+    scroll-behavior: auto;
   }
 
   input {
@@ -126,7 +145,11 @@
     padding: 8px 10px 8px 10px;
     cursor: pointer;
 
-    &:hover {
+    &.picked {
+        background-color: var(--palette-control-background-alt);
+    }
+
+    &.active {
       color: var(--palette-primary-foreground);
       background-color: var(--palette-primary-background);
     }

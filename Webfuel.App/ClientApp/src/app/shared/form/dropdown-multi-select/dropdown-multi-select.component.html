@@ -1,14 +1,17 @@
 <div #popupAnchor class="control">
-  <div class="input placeholder" *ngIf="pickedItems.length === 0" (click)="togglePopup($event)">
-    {{ placeholder || "&nbsp;" }}
-  </div>
-  <div class="tag-input" *ngIf="pickedItems.length !== 0" (click)="togglePopup($event)">
-    <span class="tag" *ngFor="let item of pickedItems">
-      <span class="text"><ng-container *ngTemplateOutlet="_pickedTemplate;context: { $implicit: item }"></ng-container></span><span (click)="removeItem(item, $event)" class="closer"><i class="fas fa-times"></i></span>
+  <div class="input" (click)="FocusInput.focus()" [class.tags-input]="pickedItems.length > 0">
+    <span *ngIf="pickedItems.length == 0">
+      {{ placeholder || "&nbsp;" }}
     </span>
+    <div class="tags" *ngIf="pickedItems.length !== 0">
+      <span class="tag" *ngFor="let item of pickedItems">
+        <span class="text"><ng-container *ngTemplateOutlet="_pickedTemplate;context: { $implicit: item }"></ng-container></span><span (click)="stop($event); removeItem(item);" class="closer"><i class="fas fa-times"></i></span>
+      </span>
+    </div>
+    <input #FocusInput [class]="focusInputClass" [formControl]="focusControl" type="text" placeholder="search..." (keyup)="focusKeyUp($event)" (keypress)="focusKeyPress($event)" (focus)="focus()" (blur)="blur()" />
   </div>
   <!-- Clear Icon -->
-  <div *ngIf="!_isDisabled && enableClear && pickedItems.length !== 0" class="icon is-secondary" (click)="clear($event)">
+  <div *ngIf="!_isDisabled && enableClear && pickedItems.length !== 0" class="icon is-secondary" (click)="stop($event); clear();">
     <i class="fas fa-times"></i>
   </div>
   <!-- Open Icon -->
@@ -28,9 +31,8 @@
 
 <ng-template #popupTemplate>
   <div class="dropdown-popup">
-    <input placeholder="search" />
     <div class="items" (scroll)="onDropDownScroll($event)">
-      <div *ngFor="let item of optionItems" class="dropdown-item" (click)="pickItem(item)">
+      <div *ngFor="let item of optionItems; index as i" class="dropdown-item" (mousedown)="pickItem(item)" [class.active]="i == activeIndex" [class.picked]="picked(item)" (mouseover)="setActiveIndex(i)" (mouseenter)="setActiveIndex(i)">
         <ng-container *ngTemplateOutlet="_optionTemplate;context: { $implicit: item }"></ng-container>
       </div>
       <div *ngIf="optionItemsCallback && optionItems.length == 0" class="dropdown-loading">

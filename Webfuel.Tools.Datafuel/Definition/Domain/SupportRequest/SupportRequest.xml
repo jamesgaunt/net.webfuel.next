@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Schema>
-  <Entity Name="SupportRequest" OrderBy="-Number">
+  <Entity Name="SupportRequest" OrderBy="-Number" Tags="ChangeLog">
     <Key Name="Id" Type="guid" />
-    <Property Name="Number" Type="Int32" />
+    <Property Name="Number" Type="Int32" Tags="ChangeLog:Ignore" />
     <Property Name="PrefixedNumber" Type="meta:name" />
-    <Property Name="FileStorageGroupId" Type="FileStorageGroup" />
+    <Property Name="FileStorageGroupId" Type="FileStorageGroup" Tags="ChangeLog:Ignore" />
     <Property Name="StatusId" Type="SupportRequestStatus" />
 
     <!-- Project Details -->
@@ -64,17 +64,16 @@
     <Property Name="LeadApplicantEthnicityId" Type="Ethnicity?" />
     
     <!-- Replicated from Project -->
-    <Property Name="ProjectId" Type="Guid?" />
+    
+    <Property Name="ProjectId" Type="Guid?" Tags="ChangeLog:Ignore" />
 
     <!-- Audit -->
-    <Property Name="CreatedAt" Type="DateTime" />
+    <Property Name="CreatedAt" Type="DateTime" Tags="ChangeLog:Ignore" />
 
     <!-- Indexes -->
-
     <Index Unique="false">
       <Member Name="Number" />
     </Index>
-
   </Entity>
 </Schema>
 

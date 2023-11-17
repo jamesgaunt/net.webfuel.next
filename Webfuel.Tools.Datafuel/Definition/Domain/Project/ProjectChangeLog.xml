@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="ProjectChangeLog" OrderBy="-Id">
+    <Key Name="Id" Type="guid" />
+    <Property Name="ProjectId" Type="Project" CascadeDelete="true" />
+    <Property Name="Message" Type="string" />
+    <Property Name="CreatedAt" Type="DateTime" />
+    <Property Name="CreatedByUserId" Type="User?" />
+    <Index Unique="false">
+      <Member Name="ProjectId" />
+    </Index>
+  </Entity>
+</Schema>

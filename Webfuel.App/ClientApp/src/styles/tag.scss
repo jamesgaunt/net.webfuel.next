@@ -38,13 +38,16 @@
   }
 }
 
-.tag-input {
+.tags {
   display: flex;
   flex-wrap: wrap;
   padding: 2px;
   gap: 2px;
 }
 
+.tags-input {
+  padding: 0;
+}
 
 .message {
   margin: var(--gap) 0 var(--gap) 0;

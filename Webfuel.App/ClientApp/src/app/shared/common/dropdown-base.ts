@@ -1,4 +1,4 @@
-import { Observable, debounceTime, noop } from 'rxjs';
+import { Observable, debounceTime, noop, tap } from 'rxjs';
 import { Query, QueryFilter, QueryResult } from '../../api/api.types';
 import { ChangeDetectorRef, Component, ContentChild, DestroyRef, ElementRef, EventEmitter, HostBinding, HostListener, Input, Output, TemplateRef, ViewChild, ViewContainerRef, inject } from '@angular/core';
 import { IDataSource } from './data-source';
@@ -12,14 +12,25 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 @Component({
   template: ''
 })
-export class DropDownBase<TItem> {
+export abstract class DropDownBase<TItem> {
 
   @HostBinding('class.control-host') host = true;
 
   destroyRef: DestroyRef = inject(DestroyRef);
+  hostRef: ElementRef = inject(ElementRef);
   overlay: Overlay = inject(Overlay);
   viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
   cd: ChangeDetectorRef = inject(ChangeDetectorRef);
+
+  ngOnInit(): void {
+    this.focusControl.valueChanges
+      .pipe(
+        debounceTime(200),
+        tap(value => this.onFocusControlChange(value)),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe();
+  }
 
   id = "id";
 
@@ -32,6 +43,12 @@ export class DropDownBase<TItem> {
 
   @Input()
   filterHidden = false;
+
+  @Input()
+  enableClear: boolean = false;
+
+  @Input()
+  enableSearch: boolean = false;
 
   @Output()
   filter = new EventEmitter<Query>();
@@ -75,6 +92,9 @@ export class DropDownBase<TItem> {
       q.filters!.push({ field: 'hidden', op: QueryOp.NotEqual, value: true });
     }
 
+    if (this.enableSearch && this.focusControl.getRawValue())
+      q.search = this.focusControl.getRawValue() || "";
+
     if (this.filter.observed)
       this.filter.emit(q);
 
@@ -92,7 +112,7 @@ export class DropDownBase<TItem> {
         }
         this.cd.detectChanges();
       },
-      error: (error) =>{
+      error: (error) => {
         console.log("Error fetching data in dropdown-base: " + error);
       }
     })
@@ -102,9 +122,24 @@ export class DropDownBase<TItem> {
 
   public pickedItems: TItem[] = [];
 
+  clear() {
+    if (this._isDisabled)
+      return;
+
+    this.clearPickedItems();
+    this.closePopup();
+    this.doChangeCallback();
+  }
+
   clearPickedItems() {
     this.pickedItems = [];
     this.cd.detectChanges();
+  }
+
+  abstract pickItem(item: TItem): void;
+
+  picked(item: TItem) {
+    return _.some(this.pickedItems, (p) => this.getId(p) == this.getId(item));
   }
 
   pickItems(ids: string[], clear: boolean) {
@@ -183,6 +218,36 @@ export class DropDownBase<TItem> {
 
   popupRef: OverlayRef | null = null;
 
+  // Active Index
+
+  activeIndex: number | null = null;
+
+  setActiveIndex(index: number | null) {
+    if (this.activeIndex == index)
+      return;
+
+    if (this.optionItems.length == 0 || index == null)
+      index = null;
+    else if (index < 0)
+      index = 0;
+    else if (index >= this.optionItems.length)
+      index = this.optionItems.length - 1;
+
+    this.activeIndex = index;
+    this.cd.detectChanges();
+    this.scrollActiveIntoView();
+  }
+
+  scrollActiveIntoView() {
+    setTimeout(() => {
+      if (this.activeIndex == null)
+        return;
+      var active = document.querySelector('.dropdown-popup .active');
+      if (active)
+        active.scrollIntoView({ block: "nearest" });
+    });
+  }
+
   get popupOpen() {
     return this.popupRef !== null;
   }
@@ -190,6 +255,11 @@ export class DropDownBase<TItem> {
   openPopup() {
     if (this.popupRef)
       return;
+
+    this.setActiveIndex(null);
+
+    if (this.enableSearch)
+      this.focusControl.setValue('');
 
     this.popupRef = this.overlay.create({
       scrollStrategy: this.overlay.scrollStrategies.reposition({
@@ -201,9 +271,7 @@ export class DropDownBase<TItem> {
         { originX: 'end', originY: 'bottom', overlayX: 'end', overlayY: 'top' },
         { originX: 'end', originY: 'top', overlayX: 'end', overlayY: 'bottom' },
       ]).withFlexibleDimensions(true).withPush(false),
-      hasBackdrop: true,
     });
-    this.popupRef.backdropClick().subscribe(() => this.closePopup());
     const portal = new TemplatePortal(this.popupTemplate, this.viewContainerRef);
     this.popupRef.attach(portal);
     this.syncPopupWidth();
@@ -213,13 +281,19 @@ export class DropDownBase<TItem> {
   closePopup() {
     if (!this.popupOpen)
       return;
+
     this.popupRef!.detach();
     this.popupRef = null;
     this.onTouched();
   }
 
-  delayedClosePopup() {
-    setTimeout(() => this.closePopup(), 200);
+  togglePopup($event: Event) {
+    $event.preventDefault();
+    $event.stopPropagation();
+    if (this._isDisabled)
+      return;
+
+    this.popupOpen ? this.closePopup() : this.openPopup();
   }
 
   @HostListener('window:resize')
@@ -228,6 +302,95 @@ export class DropDownBase<TItem> {
       return;
     const refRect = this.popupAnchor!.nativeElement.getBoundingClientRect();
     this.popupRef!.updateSize({ width: refRect.width });
+  }
+
+  // Focus Input
+
+  @ViewChild('FocusInput', { static: false })
+  private focusInput!: ElementRef<any>;
+
+  focusControl = new FormControl<string>('');
+
+  onFocusControlChange(value: string | null) {
+    console.log("CHANGE");
+    if (this.enableSearch) {
+      console.log("FETCH");
+      this.fetch(true);
+    }
+  }
+  get focusInputClass() {
+    if (this.popupOpen && this.enableSearch)
+      return "search-input";
+    return "focus-input";
+  }
+
+  focus() {
+    this.openPopup();
+  }
+
+  blur() {
+    this.closePopup();
+  }
+
+  focusKeyUp($event: KeyboardEvent) {
+
+    console.log($event.key);
+
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    if (!this.popupOpen) {
+      this.openPopup();
+      return;
+    }
+
+    /*
+    if (($event.key == "Backspace" || $event.key == "Delete") && this.enableClear) {
+      this.clearPickedItems();
+      this.doChangeCallback();
+      this.closePopup();
+      return;
+    }
+    */
+
+    if ($event.key == "Escape") {
+      this.closePopup();
+      return;
+    }
+
+    if ($event.key == 'Enter') {
+      if (this.activeIndex !== null) {
+        this.pickItem(this.optionItems[this.activeIndex]);
+      }
+      else {
+        this.closePopup();
+      }
+      return;
+    }
+
+    if ($event.key == 'ArrowDown') {
+      if (this.activeIndex == null)
+        this.setActiveIndex(0);
+      else
+        this.setActiveIndex(this.activeIndex + 1);
+      return;
+    }
+
+    if ($event.key == 'ArrowUp') {
+      if (this.activeIndex != null) {
+        this.setActiveIndex(this.activeIndex - 1);
+        if (this.activeIndex < 0)
+          this.setActiveIndex(0);
+      }
+      return;
+    }
+  }
+
+  focusKeyPress($event: KeyboardEvent) {
+    if ($event.key == "Enter") {
+      $event.stopPropagation();
+      $event.preventDefault();
+    }
   }
 
   // Drop Down Scroll Handler
@@ -269,13 +432,25 @@ export class DropDownBase<TItem> {
     return this.pickedTemplate || this.defaultPickedTemplate;
   }
 
-  // Touched
+  // Misc
 
-
-  onTouched: () => void = noop;
-
-  public registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
+  stop($event: Event) {
+    $event.stopPropagation();
+    $event.preventDefault();
   }
 
+  abstract doChangeCallback(): void;
+
+  // ControlValueAccessor API
+
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+  onTouched: () => void = noop;
+
+  setDisabledState?(isDisabled: boolean): void {
+    this._isDisabled = isDisabled;
+    this.cd.detectChanges();
+  }
+  public _isDisabled = false;
 }

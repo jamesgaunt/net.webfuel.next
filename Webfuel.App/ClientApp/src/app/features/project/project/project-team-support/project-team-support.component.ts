@@ -1,20 +1,16 @@
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Project, ProjectTeamSupport, SupportProvided, SupportTeam, User } from 'api/api.types';
+import { ProjectTeamSupport } from 'api/api.types';
 import { ProjectTeamSupportApi } from 'api/project-team-support.api';
 import { StaticDataCache } from 'api/static-data.cache';
-import { UserApi } from 'api/user.api';
 import { FormService } from 'core/form.service';
-import { DataSourceLookup } from 'shared/common/data-source';
+import { UserService } from '../../../../core/user.service';
 import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
-import _ from 'shared/common/underscore';
-import { SupportTeamApi } from '../../../../api/support-team.api';
-import { CompleteProjectTeamSupportDialog } from './complete-project-team-support/complete-project-team-support.dialog';
-import { UpdateProjectTeamSupportDialog } from './update-project-team-support/update-project-team-support.dialog';
 import { ProjectComponentBase } from '../shared/project-component-base';
+import { CompleteProjectTeamSupportDialog } from './complete-project-team-support/complete-project-team-support.dialog';
 import { CreateProjectTeamSupportDialog } from './create-project-team-support/create-project-team-support.dialog';
+import { UpdateProjectTeamSupportDialog } from './update-project-team-support/update-project-team-support.dialog';
 
 @Component({
   selector: 'project-team-support',
@@ -26,18 +22,15 @@ export class ProjectTeamSupportComponent extends ProjectComponentBase {
 
   constructor(
     private formService: FormService,
-    private userApi: UserApi,
-    private supportTeamApi: SupportTeamApi,
+    public userService: UserService,
     private confirmDeleteDialog: ConfirmDeleteDialog,
     private projectTeamSupportApi: ProjectTeamSupportApi,
-
     private createProjectTeamSupportDialog: CreateProjectTeamSupportDialog,
     private updateProjectTeamSupportDialog: UpdateProjectTeamSupportDialog,
     private completeProjectTeamSupportDialog: CompleteProjectTeamSupportDialog,
+    public staticDataCache: StaticDataCache,
   ) {
     super();
-    this.userLookup = new DataSourceLookup(userApi);
-    this.teamLookup = new DataSourceLookup(supportTeamApi)
   }
 
   ngOnInit() {
@@ -67,10 +60,6 @@ export class ProjectTeamSupportComponent extends ProjectComponentBase {
       this.items = result.items;
     })
   }
-
-  userLookup: DataSourceLookup<User>;
-
-  teamLookup: DataSourceLookup<SupportTeam>;
 
   addTeamSupport() {
     if (this.locked) return;

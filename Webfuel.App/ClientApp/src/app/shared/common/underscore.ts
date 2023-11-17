@@ -175,7 +175,6 @@ export default class Underscore {
     return { ..._0, ..._1, ..._2 };
   }
 
-
   // String
 
   static compareInsensitive(string1: string, string2: string) {

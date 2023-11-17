@@ -25,50 +25,58 @@ namespace Webfuel.Domain
         private readonly IMediator _mediator;
         private readonly IIdentityAccessor _identityAccessor;
         private readonly IStaticDataService _staticDataService;
+        private readonly ISupportRequestChangeLogService _supportRequestChangeLogService;
 
         public UpdateSupportRequestService(
             ISupportRequestRepository supportRequestRepository,
             ICreateProjectService createProjectService,
             IMediator mediator,
             IIdentityAccessor identityAccessor,
-            IStaticDataService staticDataService)
+            IStaticDataService staticDataService,
+            ISupportRequestChangeLogService supportRequestChangeLogService)
         {
             _supportRequestRepository = supportRequestRepository;
             _createProjectService = createProjectService;
             _mediator = mediator;
             _identityAccessor = identityAccessor;
             _staticDataService = staticDataService;
+            _supportRequestChangeLogService = supportRequestChangeLogService;
         }
 
         public async Task<SupportRequest> UpdateSupportRequest(UpdateSupportRequest request)
         {
             var original = await _supportRequestRepository.RequireSupportRequest(request.Id);
-
             var updated = original.Copy();
-
             new SupportRequestMapper().Apply(request, updated);
-
             updated = await _supportRequestRepository.UpdateSupportRequest(original: original, updated: updated);
 
+            await _supportRequestChangeLogService.InsertChangeLog(original: original, updated: updated);
             return updated;
         }
 
         public async Task<SupportRequest> UpdateSupportRequestResearcher(UpdateSupportRequestResearcher request)
         {
             var original = await _supportRequestRepository.RequireSupportRequest(request.Id);
-
             var updated = original.Copy();
-
             new SupportRequestMapper().Apply(request, updated);
+            updated = await _supportRequestRepository.UpdateSupportRequest(original: original, updated: updated);
 
-            return await _supportRequestRepository.UpdateSupportRequest(original: original, updated: updated);
+            await _supportRequestChangeLogService.InsertChangeLog(original: original, updated: updated);
+            return updated;
         }
 
         public async Task<SupportRequest> UpdateSupportRequestStatus(UpdateSupportRequestStatus request)
         {
-            var supportRequest = await _supportRequestRepository.RequireSupportRequest(request.Id);
-            return await UpdateSupportRequestStatus(supportRequest, request);
+            var original = await _supportRequestRepository.RequireSupportRequest(request.Id);
+            var updated = original.Copy();
+
+            updated = await UpdateSupportRequestStatus(updated, request);
+
+            await _supportRequestChangeLogService.InsertChangeLog(original: original, updated: updated);
+            return updated;
         }
+
+        // Implementation
 
         async Task<SupportRequest> UpdateSupportRequestStatus(SupportRequest supportRequest, UpdateSupportRequestStatus request)
         {

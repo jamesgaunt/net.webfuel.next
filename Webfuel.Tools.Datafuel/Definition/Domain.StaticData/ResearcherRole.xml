@@ -14,7 +14,8 @@
     <Data>
       <Row Id="4c6fbfca-3601-4c24-81aa-d372e0d0320e" Name="Chief Investigator" />
       <Row Id="1c4b0501-821c-4a62-a560-f50b42d55657" Name="Research Fellow/Associate" />
-      <Row Id="93a1de9c-ccbe-4bc4-8896-e34e97d217af" Name="Co-investogator" />
+      <Row Id="d2791155-7b9e-416f-a169-9ecc7b1aa0cc" Name="Fellowship Applicant " />
+      <Row Id="93a1de9c-ccbe-4bc4-8896-e34e97d217af" Name="Co-investigator" />
       <Row Id="c26a348a-1581-4678-8d69-aa218d11bb36" Name="Administator " />
       <Row Id="45013058-6dc8-4a3c-90e4-49a4da46efc8" Name="Other" FreeText="true" />
     </Data>

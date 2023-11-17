@@ -19,17 +19,7 @@ import { Query } from '../../../api/api.types';
     }
   ]
 })
-export class DropDownMultiSelectComponent<TItem>
-  extends DropDownBase<TItem> implements ControlValueAccessor, OnInit {
-
-  ngOnInit(): void {
-  }
-
-  @Input()
-  enableClear: boolean = false;
-
-  @Input()
-  enableSearch: boolean = true;
+export class DropDownMultiSelectComponent<TItem> extends DropDownBase<TItem> implements ControlValueAccessor {
 
   // Client Events
 
@@ -41,13 +31,10 @@ export class DropDownMultiSelectComponent<TItem>
     this.pickItems([id], false);
     this.closePopup();
     this.doChangeCallback();
+    this.cd.detectChanges();
   }
 
-  removeItem(item: any, $event: Event) {
-    if ($event) {
-      $event.preventDefault();
-      $event.stopPropagation();
-    }
+  removeItem(item: any) {
     if (this._isDisabled)
       return;
 
@@ -55,32 +42,12 @@ export class DropDownMultiSelectComponent<TItem>
     this.doChangeCallback();
   }
 
-  clear($event: Event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-    if (this._isDisabled)
-      return;
-
-    this.clearPickedItems();
-    this.closePopup();
-    this.doChangeCallback();
-  }
-
-  togglePopup($event: Event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-    if (this._isDisabled)
-      return;
-
-    this.popupOpen ? this.closePopup() : this.openPopup();
-  }
-
-  // ControlValueAccessor API
-
   doChangeCallback() {
     this.onChange(_.map(this.pickedItems, (p) => this.getId(p)));
     this.checkFreeText();
   }
+
+  // ControlValueAccessor API
 
   onChange: (value: string[] | null) => void = noop;
 
@@ -91,10 +58,4 @@ export class DropDownMultiSelectComponent<TItem>
   public registerOnChange(fn: (value: string[] | null) => void): void {
     this.onChange = fn;
   }
-
-  public setDisabledState?(isDisabled: boolean): void {
-    this._isDisabled = isDisabled;
-    this.cd.detectChanges();
-  }
-  public _isDisabled = false;
 }

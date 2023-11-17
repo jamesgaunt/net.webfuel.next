@@ -19,11 +19,16 @@ namespace Webfuel.Domain
     {
         private readonly IProjectRepository _projectRepository;
         private readonly IStaticDataService _staticDataService;
+        private readonly IProjectChangeLogService _projectChangeLogService;
 
-        public UpdateProjectService(IProjectRepository projectRepository, IStaticDataService staticDataService)
+        public UpdateProjectService(
+            IProjectRepository projectRepository, 
+            IStaticDataService staticDataService,
+            IProjectChangeLogService projectChangeLogService)
         {
             _projectRepository = projectRepository;
             _staticDataService = staticDataService;
+            _projectChangeLogService = projectChangeLogService;
         }
 
         public async Task<Project> UpdateProject(UpdateProject request)
@@ -54,14 +59,22 @@ namespace Webfuel.Domain
                 });
             }
 
+            await _projectChangeLogService.InsertChangeLog(original: original, updated: updated);
             return updated;
         }
 
         public async Task<Project> UpdateProjectStatus(UpdateProjectStatus request)
         {
-            var project = await _projectRepository.RequireProject(request.Id);
-            return await UpdateProjectStatus(project, request);
+            var original = await _projectRepository.RequireProject(request.Id);
+            var updated = original.Copy();
+
+            updated = await UpdateProjectStatus(updated, request);
+
+            await _projectChangeLogService.InsertChangeLog(original: original, updated: updated);
+            return updated;
         }
+
+        // Implementation
 
         async Task<Project> UpdateProjectStatus(Project project, UpdateProjectStatus request)
         {

@@ -4,11 +4,13 @@ import { FileStorageEntryApi } from './file-storage-entry.api';
 import { PingApi } from './ping.api';
 import { StaticDataApi } from './static-data.api';
 import { ProjectApi } from './project.api';
+import { ProjectChangeLogApi } from './project-change-log.api';
 import { ProjectSubmissionApi } from './project-submission.api';
 import { ProjectSupportApi } from './project-support.api';
 import { ProjectTeamSupportApi } from './project-team-support.api';
 import { ResearcherApi } from './researcher.api';
 import { SupportRequestApi } from './support-request.api';
+import { SupportRequestChangeLogApi } from './support-request-change-log.api';
 import { SupportTeamUserApi } from './support-team-user.api';
 import { UserActivityApi } from './user-activity.api';
 import { UserApi } from './user.api';
@@ -53,11 +55,13 @@ import { StaticDataCache } from './static-data.cache';
         PingApi,
         StaticDataApi,
         ProjectApi,
+        ProjectChangeLogApi,
         ProjectSubmissionApi,
         ProjectSupportApi,
         ProjectTeamSupportApi,
         ResearcherApi,
         SupportRequestApi,
+        SupportRequestChangeLogApi,
         SupportTeamUserApi,
         UserActivityApi,
         UserApi,

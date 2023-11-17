@@ -36,16 +36,16 @@
             <div *ngIf="teamSupport.completedAt === null" class="tag is-warning is-small">open</div>
             <div *ngIf="teamSupport.completedAt !== null" class="tag is-success is-small">complete</div>
 
-            {{ (teamLookup.get({ id: teamSupport.supportTeamId }) | async)?.name }}
+            {{ (staticDataCache.supportTeam.get({ id: teamSupport.supportTeamId }) | async)?.name }}
             support requested by
-            {{ (userLookup.get({ id: teamSupport.createdByUserId }) | async)?.fullName }}
+            {{ userService.formatUser(teamSupport.createdByUserId) | async }}
             [{{ teamSupport.createdAt | date: 'dd-MMM-yy HH:mm' }}]
           </div>
           <pre class="card-narrative">{{ teamSupport.createdNotes }}</pre>
           <div class="card-title" *ngIf="teamSupport.completedAt !== null">
             <div class="teams">
               Marked as complete by
-              {{ (userLookup.get({ id: teamSupport.completedByUserId || '' }) | async)?.fullName }}
+              {{ userService.formatUser(teamSupport.completedByUserId) | async }}
               [{{ teamSupport.completedAt | date: 'dd-MMM-yy HH:mm' }}]
             </div>
           </div>

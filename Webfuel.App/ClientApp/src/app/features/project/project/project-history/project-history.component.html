@@ -10,9 +10,19 @@
     </div>
   </div>
   <project-tabs></project-tabs>
-  <div class="message is-warning">
-    Coming Soon: History of changes made to this project.
-  </div>
+  <grid [dataSource]="projectChangeLogApi" (filter)="filter($event)">
+    <grid-datetime-column name="createdAt" />
+    <grid-column name="createdBy">
+      <ng-template #itemTemplate let-item>
+        {{ userService.formatUser(item.createdByUserId) | async }}
+      </ng-template>
+    </grid-column>
+    <grid-column name="message">
+      <ng-template #itemTemplate let-item>
+        <pre class="grid-pre">{{ item.message }}</pre>
+      </ng-template>
+    </grid-column>
+  </grid>
   <div class="floating-buttons">
     <button class="button" (click)="cancel()">Close</button>
   </div>
