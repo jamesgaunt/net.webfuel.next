@@ -11,11 +11,13 @@ namespace Webfuel.Domain.StaticData
     internal class UpdateTitleHandler : IRequestHandler<UpdateTitle, Title>
     {
         private readonly ITitleRepository _titleRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public UpdateTitleHandler(ITitleRepository titleRepository)
+        public UpdateTitleHandler(ITitleRepository titleRepository, IStaticDataCache staticDataCache)
         {
             _titleRepository = titleRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<Title> Handle(UpdateTitle request, CancellationToken cancellationToken)
@@ -26,7 +28,9 @@ namespace Webfuel.Domain.StaticData
             updated.Name = request.Name;
             updated.Default = request.Default;
             
-            return await _titleRepository.UpdateTitle(original: original, updated: updated);
+            updated = await _titleRepository.UpdateTitle(original: original, updated: updated);
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

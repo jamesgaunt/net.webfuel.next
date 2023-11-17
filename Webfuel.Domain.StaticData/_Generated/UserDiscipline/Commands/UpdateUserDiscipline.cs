@@ -13,11 +13,13 @@ namespace Webfuel.Domain.StaticData
     internal class UpdateUserDisciplineHandler : IRequestHandler<UpdateUserDiscipline, UserDiscipline>
     {
         private readonly IUserDisciplineRepository _userDisciplineRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public UpdateUserDisciplineHandler(IUserDisciplineRepository userDisciplineRepository)
+        public UpdateUserDisciplineHandler(IUserDisciplineRepository userDisciplineRepository, IStaticDataCache staticDataCache)
         {
             _userDisciplineRepository = userDisciplineRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<UserDiscipline> Handle(UpdateUserDiscipline request, CancellationToken cancellationToken)
@@ -30,7 +32,9 @@ namespace Webfuel.Domain.StaticData
             updated.Hidden = request.Hidden;
             updated.FreeText = request.FreeText;
             
-            return await _userDisciplineRepository.UpdateUserDiscipline(original: original, updated: updated);
+            updated = await _userDisciplineRepository.UpdateUserDiscipline(original: original, updated: updated);
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

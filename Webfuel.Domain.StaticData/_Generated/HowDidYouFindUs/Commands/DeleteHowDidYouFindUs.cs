@@ -9,16 +9,19 @@ namespace Webfuel.Domain.StaticData
     internal class DeleteHowDidYouFindUsHandler : IRequestHandler<DeleteHowDidYouFindUs>
     {
         private readonly IHowDidYouFindUsRepository _howDidYouFindUsRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public DeleteHowDidYouFindUsHandler(IHowDidYouFindUsRepository howDidYouFindUsRepository)
+        public DeleteHowDidYouFindUsHandler(IHowDidYouFindUsRepository howDidYouFindUsRepository, IStaticDataCache staticDataCache)
         {
             _howDidYouFindUsRepository = howDidYouFindUsRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task Handle(DeleteHowDidYouFindUs request, CancellationToken cancellationToken)
         {
             await _howDidYouFindUsRepository.DeleteHowDidYouFindUs(request.Id);
+            _staticDataCache.FlushStaticData();
         }
     }
 }

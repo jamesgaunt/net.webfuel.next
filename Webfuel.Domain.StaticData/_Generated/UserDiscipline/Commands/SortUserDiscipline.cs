@@ -9,11 +9,13 @@ namespace Webfuel.Domain.StaticData
     internal class SortUserDisciplineHandler : IRequestHandler<SortUserDiscipline>
     {
         private readonly IUserDisciplineRepository _userDisciplineRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public SortUserDisciplineHandler(IUserDisciplineRepository userDisciplineRepository)
+        public SortUserDisciplineHandler(IUserDisciplineRepository userDisciplineRepository, IStaticDataCache staticDataCache)
         {
             _userDisciplineRepository = userDisciplineRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task Handle(SortUserDiscipline request, CancellationToken cancellationToken)
@@ -32,6 +34,7 @@ namespace Webfuel.Domain.StaticData
                 }
                 index++;
             }
+            _staticDataCache.FlushStaticData();
         }
     }
 }

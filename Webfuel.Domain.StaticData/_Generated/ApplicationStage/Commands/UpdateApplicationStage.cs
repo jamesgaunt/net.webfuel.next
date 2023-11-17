@@ -13,11 +13,13 @@ namespace Webfuel.Domain.StaticData
     internal class UpdateApplicationStageHandler : IRequestHandler<UpdateApplicationStage, ApplicationStage>
     {
         private readonly IApplicationStageRepository _applicationStageRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public UpdateApplicationStageHandler(IApplicationStageRepository applicationStageRepository)
+        public UpdateApplicationStageHandler(IApplicationStageRepository applicationStageRepository, IStaticDataCache staticDataCache)
         {
             _applicationStageRepository = applicationStageRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<ApplicationStage> Handle(UpdateApplicationStage request, CancellationToken cancellationToken)
@@ -30,7 +32,9 @@ namespace Webfuel.Domain.StaticData
             updated.Hidden = request.Hidden;
             updated.FreeText = request.FreeText;
             
-            return await _applicationStageRepository.UpdateApplicationStage(original: original, updated: updated);
+            updated = await _applicationStageRepository.UpdateApplicationStage(original: original, updated: updated);
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

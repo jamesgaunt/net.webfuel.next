@@ -11,21 +11,26 @@ namespace Webfuel.Domain.StaticData
     internal class CreateFundingCallTypeHandler : IRequestHandler<CreateFundingCallType, FundingCallType>
     {
         private readonly IFundingCallTypeRepository _fundingCallTypeRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public CreateFundingCallTypeHandler(IFundingCallTypeRepository fundingCallTypeRepository)
+        public CreateFundingCallTypeHandler(IFundingCallTypeRepository fundingCallTypeRepository, IStaticDataCache staticDataCache)
         {
             _fundingCallTypeRepository = fundingCallTypeRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<FundingCallType> Handle(CreateFundingCallType request, CancellationToken cancellationToken)
         {
-            return await _fundingCallTypeRepository.InsertFundingCallType(new FundingCallType {
+            var updated = await _fundingCallTypeRepository.InsertFundingCallType(new FundingCallType {
                     Name = request.Name,
                     Default = request.Default,
                     Hidden = request.Hidden,
                     SortOrder = await _fundingCallTypeRepository.CountFundingCallType(),
                 });
+            
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

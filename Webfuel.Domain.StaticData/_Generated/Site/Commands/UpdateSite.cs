@@ -11,11 +11,13 @@ namespace Webfuel.Domain.StaticData
     internal class UpdateSiteHandler : IRequestHandler<UpdateSite, Site>
     {
         private readonly ISiteRepository _siteRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public UpdateSiteHandler(ISiteRepository siteRepository)
+        public UpdateSiteHandler(ISiteRepository siteRepository, IStaticDataCache staticDataCache)
         {
             _siteRepository = siteRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<Site> Handle(UpdateSite request, CancellationToken cancellationToken)
@@ -26,7 +28,9 @@ namespace Webfuel.Domain.StaticData
             updated.Name = request.Name;
             updated.Default = request.Default;
             
-            return await _siteRepository.UpdateSite(original: original, updated: updated);
+            updated = await _siteRepository.UpdateSite(original: original, updated: updated);
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

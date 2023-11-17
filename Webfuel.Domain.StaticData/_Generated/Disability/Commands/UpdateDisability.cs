@@ -13,11 +13,13 @@ namespace Webfuel.Domain.StaticData
     internal class UpdateDisabilityHandler : IRequestHandler<UpdateDisability, Disability>
     {
         private readonly IDisabilityRepository _disabilityRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public UpdateDisabilityHandler(IDisabilityRepository disabilityRepository)
+        public UpdateDisabilityHandler(IDisabilityRepository disabilityRepository, IStaticDataCache staticDataCache)
         {
             _disabilityRepository = disabilityRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<Disability> Handle(UpdateDisability request, CancellationToken cancellationToken)
@@ -30,7 +32,9 @@ namespace Webfuel.Domain.StaticData
             updated.Hidden = request.Hidden;
             updated.FreeText = request.FreeText;
             
-            return await _disabilityRepository.UpdateDisability(original: original, updated: updated);
+            updated = await _disabilityRepository.UpdateDisability(original: original, updated: updated);
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

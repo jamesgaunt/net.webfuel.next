@@ -13,11 +13,13 @@ namespace Webfuel.Domain.StaticData
     internal class UpdateResearchMethodologyHandler : IRequestHandler<UpdateResearchMethodology, ResearchMethodology>
     {
         private readonly IResearchMethodologyRepository _researchMethodologyRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public UpdateResearchMethodologyHandler(IResearchMethodologyRepository researchMethodologyRepository)
+        public UpdateResearchMethodologyHandler(IResearchMethodologyRepository researchMethodologyRepository, IStaticDataCache staticDataCache)
         {
             _researchMethodologyRepository = researchMethodologyRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<ResearchMethodology> Handle(UpdateResearchMethodology request, CancellationToken cancellationToken)
@@ -30,7 +32,9 @@ namespace Webfuel.Domain.StaticData
             updated.Hidden = request.Hidden;
             updated.FreeText = request.FreeText;
             
-            return await _researchMethodologyRepository.UpdateResearchMethodology(original: original, updated: updated);
+            updated = await _researchMethodologyRepository.UpdateResearchMethodology(original: original, updated: updated);
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

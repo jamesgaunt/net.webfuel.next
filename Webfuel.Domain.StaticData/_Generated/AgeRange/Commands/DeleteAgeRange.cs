@@ -9,16 +9,19 @@ namespace Webfuel.Domain.StaticData
     internal class DeleteAgeRangeHandler : IRequestHandler<DeleteAgeRange>
     {
         private readonly IAgeRangeRepository _ageRangeRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public DeleteAgeRangeHandler(IAgeRangeRepository ageRangeRepository)
+        public DeleteAgeRangeHandler(IAgeRangeRepository ageRangeRepository, IStaticDataCache staticDataCache)
         {
             _ageRangeRepository = ageRangeRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task Handle(DeleteAgeRange request, CancellationToken cancellationToken)
         {
             await _ageRangeRepository.DeleteAgeRange(request.Id);
+            _staticDataCache.FlushStaticData();
         }
     }
 }

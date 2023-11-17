@@ -10,20 +10,25 @@ namespace Webfuel.Domain.StaticData
     internal class CreateTitleHandler : IRequestHandler<CreateTitle, Title>
     {
         private readonly ITitleRepository _titleRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public CreateTitleHandler(ITitleRepository titleRepository)
+        public CreateTitleHandler(ITitleRepository titleRepository, IStaticDataCache staticDataCache)
         {
             _titleRepository = titleRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<Title> Handle(CreateTitle request, CancellationToken cancellationToken)
         {
-            return await _titleRepository.InsertTitle(new Title {
+            var updated = await _titleRepository.InsertTitle(new Title {
                     Name = request.Name,
                     Default = request.Default,
                     SortOrder = await _titleRepository.CountTitle(),
                 });
+            
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

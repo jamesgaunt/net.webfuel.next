@@ -13,11 +13,13 @@ namespace Webfuel.Domain.StaticData
     internal class UpdateEthnicityHandler : IRequestHandler<UpdateEthnicity, Ethnicity>
     {
         private readonly IEthnicityRepository _ethnicityRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public UpdateEthnicityHandler(IEthnicityRepository ethnicityRepository)
+        public UpdateEthnicityHandler(IEthnicityRepository ethnicityRepository, IStaticDataCache staticDataCache)
         {
             _ethnicityRepository = ethnicityRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<Ethnicity> Handle(UpdateEthnicity request, CancellationToken cancellationToken)
@@ -30,7 +32,9 @@ namespace Webfuel.Domain.StaticData
             updated.Hidden = request.Hidden;
             updated.FreeText = request.FreeText;
             
-            return await _ethnicityRepository.UpdateEthnicity(original: original, updated: updated);
+            updated = await _ethnicityRepository.UpdateEthnicity(original: original, updated: updated);
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

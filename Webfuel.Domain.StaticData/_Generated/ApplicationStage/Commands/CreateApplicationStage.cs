@@ -12,22 +12,27 @@ namespace Webfuel.Domain.StaticData
     internal class CreateApplicationStageHandler : IRequestHandler<CreateApplicationStage, ApplicationStage>
     {
         private readonly IApplicationStageRepository _applicationStageRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public CreateApplicationStageHandler(IApplicationStageRepository applicationStageRepository)
+        public CreateApplicationStageHandler(IApplicationStageRepository applicationStageRepository, IStaticDataCache staticDataCache)
         {
             _applicationStageRepository = applicationStageRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<ApplicationStage> Handle(CreateApplicationStage request, CancellationToken cancellationToken)
         {
-            return await _applicationStageRepository.InsertApplicationStage(new ApplicationStage {
+            var updated = await _applicationStageRepository.InsertApplicationStage(new ApplicationStage {
                     Name = request.Name,
                     Default = request.Default,
                     Hidden = request.Hidden,
                     FreeText = request.FreeText,
                     SortOrder = await _applicationStageRepository.CountApplicationStage(),
                 });
+            
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

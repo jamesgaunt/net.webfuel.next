@@ -12,22 +12,27 @@ namespace Webfuel.Domain.StaticData
     internal class CreateDisabilityHandler : IRequestHandler<CreateDisability, Disability>
     {
         private readonly IDisabilityRepository _disabilityRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public CreateDisabilityHandler(IDisabilityRepository disabilityRepository)
+        public CreateDisabilityHandler(IDisabilityRepository disabilityRepository, IStaticDataCache staticDataCache)
         {
             _disabilityRepository = disabilityRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<Disability> Handle(CreateDisability request, CancellationToken cancellationToken)
         {
-            return await _disabilityRepository.InsertDisability(new Disability {
+            var updated = await _disabilityRepository.InsertDisability(new Disability {
                     Name = request.Name,
                     Default = request.Default,
                     Hidden = request.Hidden,
                     FreeText = request.FreeText,
                     SortOrder = await _disabilityRepository.CountDisability(),
                 });
+            
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

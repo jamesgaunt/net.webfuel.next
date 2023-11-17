@@ -9,11 +9,13 @@ namespace Webfuel.Domain.StaticData
     internal class SortFundingCallTypeHandler : IRequestHandler<SortFundingCallType>
     {
         private readonly IFundingCallTypeRepository _fundingCallTypeRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public SortFundingCallTypeHandler(IFundingCallTypeRepository fundingCallTypeRepository)
+        public SortFundingCallTypeHandler(IFundingCallTypeRepository fundingCallTypeRepository, IStaticDataCache staticDataCache)
         {
             _fundingCallTypeRepository = fundingCallTypeRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task Handle(SortFundingCallType request, CancellationToken cancellationToken)
@@ -32,6 +34,7 @@ namespace Webfuel.Domain.StaticData
                 }
                 index++;
             }
+            _staticDataCache.FlushStaticData();
         }
     }
 }

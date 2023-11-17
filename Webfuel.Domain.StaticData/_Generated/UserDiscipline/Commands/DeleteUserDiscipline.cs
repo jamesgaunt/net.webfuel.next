@@ -9,16 +9,19 @@ namespace Webfuel.Domain.StaticData
     internal class DeleteUserDisciplineHandler : IRequestHandler<DeleteUserDiscipline>
     {
         private readonly IUserDisciplineRepository _userDisciplineRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public DeleteUserDisciplineHandler(IUserDisciplineRepository userDisciplineRepository)
+        public DeleteUserDisciplineHandler(IUserDisciplineRepository userDisciplineRepository, IStaticDataCache staticDataCache)
         {
             _userDisciplineRepository = userDisciplineRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task Handle(DeleteUserDiscipline request, CancellationToken cancellationToken)
         {
             await _userDisciplineRepository.DeleteUserDiscipline(request.Id);
+            _staticDataCache.FlushStaticData();
         }
     }
 }

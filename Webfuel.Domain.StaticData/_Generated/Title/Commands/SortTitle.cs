@@ -9,11 +9,13 @@ namespace Webfuel.Domain.StaticData
     internal class SortTitleHandler : IRequestHandler<SortTitle>
     {
         private readonly ITitleRepository _titleRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public SortTitleHandler(ITitleRepository titleRepository)
+        public SortTitleHandler(ITitleRepository titleRepository, IStaticDataCache staticDataCache)
         {
             _titleRepository = titleRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task Handle(SortTitle request, CancellationToken cancellationToken)
@@ -32,6 +34,7 @@ namespace Webfuel.Domain.StaticData
                 }
                 index++;
             }
+            _staticDataCache.FlushStaticData();
         }
     }
 }

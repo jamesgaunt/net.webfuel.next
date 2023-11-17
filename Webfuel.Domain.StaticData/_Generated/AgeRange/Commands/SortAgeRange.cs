@@ -9,11 +9,13 @@ namespace Webfuel.Domain.StaticData
     internal class SortAgeRangeHandler : IRequestHandler<SortAgeRange>
     {
         private readonly IAgeRangeRepository _ageRangeRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public SortAgeRangeHandler(IAgeRangeRepository ageRangeRepository)
+        public SortAgeRangeHandler(IAgeRangeRepository ageRangeRepository, IStaticDataCache staticDataCache)
         {
             _ageRangeRepository = ageRangeRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task Handle(SortAgeRange request, CancellationToken cancellationToken)
@@ -32,6 +34,7 @@ namespace Webfuel.Domain.StaticData
                 }
                 index++;
             }
+            _staticDataCache.FlushStaticData();
         }
     }
 }

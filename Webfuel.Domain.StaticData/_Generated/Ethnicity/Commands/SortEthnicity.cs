@@ -9,11 +9,13 @@ namespace Webfuel.Domain.StaticData
     internal class SortEthnicityHandler : IRequestHandler<SortEthnicity>
     {
         private readonly IEthnicityRepository _ethnicityRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public SortEthnicityHandler(IEthnicityRepository ethnicityRepository)
+        public SortEthnicityHandler(IEthnicityRepository ethnicityRepository, IStaticDataCache staticDataCache)
         {
             _ethnicityRepository = ethnicityRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task Handle(SortEthnicity request, CancellationToken cancellationToken)
@@ -32,6 +34,7 @@ namespace Webfuel.Domain.StaticData
                 }
                 index++;
             }
+            _staticDataCache.FlushStaticData();
         }
     }
 }

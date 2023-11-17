@@ -12,22 +12,27 @@ namespace Webfuel.Domain.StaticData
     internal class CreateResearchMethodologyHandler : IRequestHandler<CreateResearchMethodology, ResearchMethodology>
     {
         private readonly IResearchMethodologyRepository _researchMethodologyRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public CreateResearchMethodologyHandler(IResearchMethodologyRepository researchMethodologyRepository)
+        public CreateResearchMethodologyHandler(IResearchMethodologyRepository researchMethodologyRepository, IStaticDataCache staticDataCache)
         {
             _researchMethodologyRepository = researchMethodologyRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<ResearchMethodology> Handle(CreateResearchMethodology request, CancellationToken cancellationToken)
         {
-            return await _researchMethodologyRepository.InsertResearchMethodology(new ResearchMethodology {
+            var updated = await _researchMethodologyRepository.InsertResearchMethodology(new ResearchMethodology {
                     Name = request.Name,
                     Default = request.Default,
                     Hidden = request.Hidden,
                     FreeText = request.FreeText,
                     SortOrder = await _researchMethodologyRepository.CountResearchMethodology(),
                 });
+            
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

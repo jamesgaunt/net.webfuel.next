@@ -13,11 +13,13 @@ namespace Webfuel.Domain.StaticData
     internal class UpdateGenderHandler : IRequestHandler<UpdateGender, Gender>
     {
         private readonly IGenderRepository _genderRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public UpdateGenderHandler(IGenderRepository genderRepository)
+        public UpdateGenderHandler(IGenderRepository genderRepository, IStaticDataCache staticDataCache)
         {
             _genderRepository = genderRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<Gender> Handle(UpdateGender request, CancellationToken cancellationToken)
@@ -30,7 +32,9 @@ namespace Webfuel.Domain.StaticData
             updated.Hidden = request.Hidden;
             updated.FreeText = request.FreeText;
             
-            return await _genderRepository.UpdateGender(original: original, updated: updated);
+            updated = await _genderRepository.UpdateGender(original: original, updated: updated);
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

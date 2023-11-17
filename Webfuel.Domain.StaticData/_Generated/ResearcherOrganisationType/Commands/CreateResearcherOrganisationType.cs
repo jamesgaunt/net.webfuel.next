@@ -12,22 +12,27 @@ namespace Webfuel.Domain.StaticData
     internal class CreateResearcherOrganisationTypeHandler : IRequestHandler<CreateResearcherOrganisationType, ResearcherOrganisationType>
     {
         private readonly IResearcherOrganisationTypeRepository _researcherOrganisationTypeRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public CreateResearcherOrganisationTypeHandler(IResearcherOrganisationTypeRepository researcherOrganisationTypeRepository)
+        public CreateResearcherOrganisationTypeHandler(IResearcherOrganisationTypeRepository researcherOrganisationTypeRepository, IStaticDataCache staticDataCache)
         {
             _researcherOrganisationTypeRepository = researcherOrganisationTypeRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<ResearcherOrganisationType> Handle(CreateResearcherOrganisationType request, CancellationToken cancellationToken)
         {
-            return await _researcherOrganisationTypeRepository.InsertResearcherOrganisationType(new ResearcherOrganisationType {
+            var updated = await _researcherOrganisationTypeRepository.InsertResearcherOrganisationType(new ResearcherOrganisationType {
                     Name = request.Name,
                     Default = request.Default,
                     Hidden = request.Hidden,
                     FreeText = request.FreeText,
                     SortOrder = await _researcherOrganisationTypeRepository.CountResearcherOrganisationType(),
                 });
+            
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

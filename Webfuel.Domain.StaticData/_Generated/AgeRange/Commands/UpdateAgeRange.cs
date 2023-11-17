@@ -11,11 +11,13 @@ namespace Webfuel.Domain.StaticData
     internal class UpdateAgeRangeHandler : IRequestHandler<UpdateAgeRange, AgeRange>
     {
         private readonly IAgeRangeRepository _ageRangeRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public UpdateAgeRangeHandler(IAgeRangeRepository ageRangeRepository)
+        public UpdateAgeRangeHandler(IAgeRangeRepository ageRangeRepository, IStaticDataCache staticDataCache)
         {
             _ageRangeRepository = ageRangeRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<AgeRange> Handle(UpdateAgeRange request, CancellationToken cancellationToken)
@@ -26,7 +28,9 @@ namespace Webfuel.Domain.StaticData
             updated.Name = request.Name;
             updated.Default = request.Default;
             
-            return await _ageRangeRepository.UpdateAgeRange(original: original, updated: updated);
+            updated = await _ageRangeRepository.UpdateAgeRange(original: original, updated: updated);
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

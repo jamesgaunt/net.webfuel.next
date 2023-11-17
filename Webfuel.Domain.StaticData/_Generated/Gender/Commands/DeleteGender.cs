@@ -9,16 +9,19 @@ namespace Webfuel.Domain.StaticData
     internal class DeleteGenderHandler : IRequestHandler<DeleteGender>
     {
         private readonly IGenderRepository _genderRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public DeleteGenderHandler(IGenderRepository genderRepository)
+        public DeleteGenderHandler(IGenderRepository genderRepository, IStaticDataCache staticDataCache)
         {
             _genderRepository = genderRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task Handle(DeleteGender request, CancellationToken cancellationToken)
         {
             await _genderRepository.DeleteGender(request.Id);
+            _staticDataCache.FlushStaticData();
         }
     }
 }

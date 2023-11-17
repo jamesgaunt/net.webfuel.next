@@ -9,11 +9,13 @@ namespace Webfuel.Domain.StaticData
     internal class SortSupportProvidedHandler : IRequestHandler<SortSupportProvided>
     {
         private readonly ISupportProvidedRepository _supportProvidedRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public SortSupportProvidedHandler(ISupportProvidedRepository supportProvidedRepository)
+        public SortSupportProvidedHandler(ISupportProvidedRepository supportProvidedRepository, IStaticDataCache staticDataCache)
         {
             _supportProvidedRepository = supportProvidedRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task Handle(SortSupportProvided request, CancellationToken cancellationToken)
@@ -32,6 +34,7 @@ namespace Webfuel.Domain.StaticData
                 }
                 index++;
             }
+            _staticDataCache.FlushStaticData();
         }
     }
 }

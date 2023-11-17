@@ -9,11 +9,13 @@ namespace Webfuel.Domain.StaticData
     internal class SortResearchMethodologyHandler : IRequestHandler<SortResearchMethodology>
     {
         private readonly IResearchMethodologyRepository _researchMethodologyRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public SortResearchMethodologyHandler(IResearchMethodologyRepository researchMethodologyRepository)
+        public SortResearchMethodologyHandler(IResearchMethodologyRepository researchMethodologyRepository, IStaticDataCache staticDataCache)
         {
             _researchMethodologyRepository = researchMethodologyRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task Handle(SortResearchMethodology request, CancellationToken cancellationToken)
@@ -32,6 +34,7 @@ namespace Webfuel.Domain.StaticData
                 }
                 index++;
             }
+            _staticDataCache.FlushStaticData();
         }
     }
 }

@@ -9,11 +9,13 @@ namespace Webfuel.Domain.StaticData
     internal class SortApplicationStageHandler : IRequestHandler<SortApplicationStage>
     {
         private readonly IApplicationStageRepository _applicationStageRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public SortApplicationStageHandler(IApplicationStageRepository applicationStageRepository)
+        public SortApplicationStageHandler(IApplicationStageRepository applicationStageRepository, IStaticDataCache staticDataCache)
         {
             _applicationStageRepository = applicationStageRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task Handle(SortApplicationStage request, CancellationToken cancellationToken)
@@ -32,6 +34,7 @@ namespace Webfuel.Domain.StaticData
                 }
                 index++;
             }
+            _staticDataCache.FlushStaticData();
         }
     }
 }

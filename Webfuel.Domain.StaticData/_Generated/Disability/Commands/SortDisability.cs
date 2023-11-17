@@ -9,11 +9,13 @@ namespace Webfuel.Domain.StaticData
     internal class SortDisabilityHandler : IRequestHandler<SortDisability>
     {
         private readonly IDisabilityRepository _disabilityRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public SortDisabilityHandler(IDisabilityRepository disabilityRepository)
+        public SortDisabilityHandler(IDisabilityRepository disabilityRepository, IStaticDataCache staticDataCache)
         {
             _disabilityRepository = disabilityRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task Handle(SortDisability request, CancellationToken cancellationToken)
@@ -32,6 +34,7 @@ namespace Webfuel.Domain.StaticData
                 }
                 index++;
             }
+            _staticDataCache.FlushStaticData();
         }
     }
 }

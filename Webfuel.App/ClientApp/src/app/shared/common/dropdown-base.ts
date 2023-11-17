@@ -253,6 +253,8 @@ export abstract class DropDownBase<TItem> {
   }
 
   openPopup() {
+    this.focusInput.nativeElement.focus();
+
     if (this.popupRef)
       return;
 
@@ -287,12 +289,7 @@ export abstract class DropDownBase<TItem> {
     this.onTouched();
   }
 
-  togglePopup($event: Event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-    if (this._isDisabled)
-      return;
-
+  togglePopup() {
     this.popupOpen ? this.closePopup() : this.openPopup();
   }
 
@@ -325,7 +322,7 @@ export abstract class DropDownBase<TItem> {
   }
 
   focus() {
-    this.openPopup();
+   // this.openPopup();
   }
 
   blur() {

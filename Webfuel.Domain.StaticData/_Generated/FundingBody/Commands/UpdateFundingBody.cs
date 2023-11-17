@@ -13,11 +13,13 @@ namespace Webfuel.Domain.StaticData
     internal class UpdateFundingBodyHandler : IRequestHandler<UpdateFundingBody, FundingBody>
     {
         private readonly IFundingBodyRepository _fundingBodyRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public UpdateFundingBodyHandler(IFundingBodyRepository fundingBodyRepository)
+        public UpdateFundingBodyHandler(IFundingBodyRepository fundingBodyRepository, IStaticDataCache staticDataCache)
         {
             _fundingBodyRepository = fundingBodyRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<FundingBody> Handle(UpdateFundingBody request, CancellationToken cancellationToken)
@@ -30,7 +32,9 @@ namespace Webfuel.Domain.StaticData
             updated.Hidden = request.Hidden;
             updated.FreeText = request.FreeText;
             
-            return await _fundingBodyRepository.UpdateFundingBody(original: original, updated: updated);
+            updated = await _fundingBodyRepository.UpdateFundingBody(original: original, updated: updated);
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

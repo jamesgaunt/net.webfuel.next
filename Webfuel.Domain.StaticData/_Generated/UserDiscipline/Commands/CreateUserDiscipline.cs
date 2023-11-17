@@ -12,22 +12,27 @@ namespace Webfuel.Domain.StaticData
     internal class CreateUserDisciplineHandler : IRequestHandler<CreateUserDiscipline, UserDiscipline>
     {
         private readonly IUserDisciplineRepository _userDisciplineRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public CreateUserDisciplineHandler(IUserDisciplineRepository userDisciplineRepository)
+        public CreateUserDisciplineHandler(IUserDisciplineRepository userDisciplineRepository, IStaticDataCache staticDataCache)
         {
             _userDisciplineRepository = userDisciplineRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<UserDiscipline> Handle(CreateUserDiscipline request, CancellationToken cancellationToken)
         {
-            return await _userDisciplineRepository.InsertUserDiscipline(new UserDiscipline {
+            var updated = await _userDisciplineRepository.InsertUserDiscipline(new UserDiscipline {
                     Name = request.Name,
                     Default = request.Default,
                     Hidden = request.Hidden,
                     FreeText = request.FreeText,
                     SortOrder = await _userDisciplineRepository.CountUserDiscipline(),
                 });
+            
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

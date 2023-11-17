@@ -9,11 +9,13 @@ namespace Webfuel.Domain.StaticData
     internal class SortGenderHandler : IRequestHandler<SortGender>
     {
         private readonly IGenderRepository _genderRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public SortGenderHandler(IGenderRepository genderRepository)
+        public SortGenderHandler(IGenderRepository genderRepository, IStaticDataCache staticDataCache)
         {
             _genderRepository = genderRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task Handle(SortGender request, CancellationToken cancellationToken)
@@ -32,6 +34,7 @@ namespace Webfuel.Domain.StaticData
                 }
                 index++;
             }
+            _staticDataCache.FlushStaticData();
         }
     }
 }

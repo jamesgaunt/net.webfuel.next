@@ -9,11 +9,13 @@ namespace Webfuel.Domain.StaticData
     internal class SortResearcherOrganisationTypeHandler : IRequestHandler<SortResearcherOrganisationType>
     {
         private readonly IResearcherOrganisationTypeRepository _researcherOrganisationTypeRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public SortResearcherOrganisationTypeHandler(IResearcherOrganisationTypeRepository researcherOrganisationTypeRepository)
+        public SortResearcherOrganisationTypeHandler(IResearcherOrganisationTypeRepository researcherOrganisationTypeRepository, IStaticDataCache staticDataCache)
         {
             _researcherOrganisationTypeRepository = researcherOrganisationTypeRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task Handle(SortResearcherOrganisationType request, CancellationToken cancellationToken)
@@ -32,6 +34,7 @@ namespace Webfuel.Domain.StaticData
                 }
                 index++;
             }
+            _staticDataCache.FlushStaticData();
         }
     }
 }

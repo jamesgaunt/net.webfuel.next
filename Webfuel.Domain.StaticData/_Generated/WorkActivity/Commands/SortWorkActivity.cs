@@ -9,11 +9,13 @@ namespace Webfuel.Domain.StaticData
     internal class SortWorkActivityHandler : IRequestHandler<SortWorkActivity>
     {
         private readonly IWorkActivityRepository _workActivityRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public SortWorkActivityHandler(IWorkActivityRepository workActivityRepository)
+        public SortWorkActivityHandler(IWorkActivityRepository workActivityRepository, IStaticDataCache staticDataCache)
         {
             _workActivityRepository = workActivityRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task Handle(SortWorkActivity request, CancellationToken cancellationToken)
@@ -32,6 +34,7 @@ namespace Webfuel.Domain.StaticData
                 }
                 index++;
             }
+            _staticDataCache.FlushStaticData();
         }
     }
 }

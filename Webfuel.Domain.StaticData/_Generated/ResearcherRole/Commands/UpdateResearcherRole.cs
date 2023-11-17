@@ -13,11 +13,13 @@ namespace Webfuel.Domain.StaticData
     internal class UpdateResearcherRoleHandler : IRequestHandler<UpdateResearcherRole, ResearcherRole>
     {
         private readonly IResearcherRoleRepository _researcherRoleRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public UpdateResearcherRoleHandler(IResearcherRoleRepository researcherRoleRepository)
+        public UpdateResearcherRoleHandler(IResearcherRoleRepository researcherRoleRepository, IStaticDataCache staticDataCache)
         {
             _researcherRoleRepository = researcherRoleRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<ResearcherRole> Handle(UpdateResearcherRole request, CancellationToken cancellationToken)
@@ -30,7 +32,9 @@ namespace Webfuel.Domain.StaticData
             updated.Hidden = request.Hidden;
             updated.FreeText = request.FreeText;
             
-            return await _researcherRoleRepository.UpdateResearcherRole(original: original, updated: updated);
+            updated = await _researcherRoleRepository.UpdateResearcherRole(original: original, updated: updated);
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

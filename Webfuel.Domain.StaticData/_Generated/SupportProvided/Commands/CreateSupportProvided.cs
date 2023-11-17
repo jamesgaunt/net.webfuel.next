@@ -12,22 +12,27 @@ namespace Webfuel.Domain.StaticData
     internal class CreateSupportProvidedHandler : IRequestHandler<CreateSupportProvided, SupportProvided>
     {
         private readonly ISupportProvidedRepository _supportProvidedRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public CreateSupportProvidedHandler(ISupportProvidedRepository supportProvidedRepository)
+        public CreateSupportProvidedHandler(ISupportProvidedRepository supportProvidedRepository, IStaticDataCache staticDataCache)
         {
             _supportProvidedRepository = supportProvidedRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<SupportProvided> Handle(CreateSupportProvided request, CancellationToken cancellationToken)
         {
-            return await _supportProvidedRepository.InsertSupportProvided(new SupportProvided {
+            var updated = await _supportProvidedRepository.InsertSupportProvided(new SupportProvided {
                     Name = request.Name,
                     Default = request.Default,
                     Hidden = request.Hidden,
                     FreeText = request.FreeText,
                     SortOrder = await _supportProvidedRepository.CountSupportProvided(),
                 });
+            
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

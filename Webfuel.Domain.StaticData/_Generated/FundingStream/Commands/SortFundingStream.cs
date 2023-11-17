@@ -9,11 +9,13 @@ namespace Webfuel.Domain.StaticData
     internal class SortFundingStreamHandler : IRequestHandler<SortFundingStream>
     {
         private readonly IFundingStreamRepository _fundingStreamRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public SortFundingStreamHandler(IFundingStreamRepository fundingStreamRepository)
+        public SortFundingStreamHandler(IFundingStreamRepository fundingStreamRepository, IStaticDataCache staticDataCache)
         {
             _fundingStreamRepository = fundingStreamRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task Handle(SortFundingStream request, CancellationToken cancellationToken)
@@ -32,6 +34,7 @@ namespace Webfuel.Domain.StaticData
                 }
                 index++;
             }
+            _staticDataCache.FlushStaticData();
         }
     }
 }

@@ -13,11 +13,13 @@ namespace Webfuel.Domain.StaticData
     internal class UpdateFundingStreamHandler : IRequestHandler<UpdateFundingStream, FundingStream>
     {
         private readonly IFundingStreamRepository _fundingStreamRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public UpdateFundingStreamHandler(IFundingStreamRepository fundingStreamRepository)
+        public UpdateFundingStreamHandler(IFundingStreamRepository fundingStreamRepository, IStaticDataCache staticDataCache)
         {
             _fundingStreamRepository = fundingStreamRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<FundingStream> Handle(UpdateFundingStream request, CancellationToken cancellationToken)
@@ -30,7 +32,9 @@ namespace Webfuel.Domain.StaticData
             updated.Hidden = request.Hidden;
             updated.FreeText = request.FreeText;
             
-            return await _fundingStreamRepository.UpdateFundingStream(original: original, updated: updated);
+            updated = await _fundingStreamRepository.UpdateFundingStream(original: original, updated: updated);
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

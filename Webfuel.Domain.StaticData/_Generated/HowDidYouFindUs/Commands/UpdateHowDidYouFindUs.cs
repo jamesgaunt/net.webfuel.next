@@ -13,11 +13,13 @@ namespace Webfuel.Domain.StaticData
     internal class UpdateHowDidYouFindUsHandler : IRequestHandler<UpdateHowDidYouFindUs, HowDidYouFindUs>
     {
         private readonly IHowDidYouFindUsRepository _howDidYouFindUsRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public UpdateHowDidYouFindUsHandler(IHowDidYouFindUsRepository howDidYouFindUsRepository)
+        public UpdateHowDidYouFindUsHandler(IHowDidYouFindUsRepository howDidYouFindUsRepository, IStaticDataCache staticDataCache)
         {
             _howDidYouFindUsRepository = howDidYouFindUsRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<HowDidYouFindUs> Handle(UpdateHowDidYouFindUs request, CancellationToken cancellationToken)
@@ -30,7 +32,9 @@ namespace Webfuel.Domain.StaticData
             updated.Hidden = request.Hidden;
             updated.FreeText = request.FreeText;
             
-            return await _howDidYouFindUsRepository.UpdateHowDidYouFindUs(original: original, updated: updated);
+            updated = await _howDidYouFindUsRepository.UpdateHowDidYouFindUs(original: original, updated: updated);
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

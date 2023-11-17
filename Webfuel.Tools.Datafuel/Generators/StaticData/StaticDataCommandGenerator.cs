@@ -60,19 +60,21 @@ namespace Webfuel.Tools.Datafuel
                 using (sb.OpenBrace($"internal class Create{entity.Name}Handler : IRequestHandler<Create{entity.Name}, {entity.Name}>"))
                 {
                     sb.WriteLine($"private readonly I{entity.Name}Repository _{entity.Name.ToCamelCase()}Repository;");
+                    sb.WriteLine("private readonly IStaticDataCache _staticDataCache;");
                     sb.WriteLine();
 
                     sb.Write($@"
-                        public Create{entity.Name}Handler(I{entity.Name}Repository {entity.Name.ToCamelCase()}Repository)
+                        public Create{entity.Name}Handler(I{entity.Name}Repository {entity.Name.ToCamelCase()}Repository, IStaticDataCache staticDataCache)
                         {{
                             _{entity.Name.ToCamelCase()}Repository = {entity.Name.ToCamelCase()}Repository;
+                            _staticDataCache = staticDataCache;
                         }}
 ");
 
                     sb.Write($@"
                         public async Task<{entity.Name}> Handle(Create{entity.Name} request, CancellationToken cancellationToken)
                         {{
-                            return await _{entity.Name.ToCamelCase()}Repository.Insert{entity.Name}(new {entity.Name} {{ 
+                            var updated = await _{entity.Name.ToCamelCase()}Repository.Insert{entity.Name}(new {entity.Name} {{ 
                                 Name = request.Name,
                     ");
 
@@ -85,6 +87,9 @@ namespace Webfuel.Tools.Datafuel
                     }
                     sb.Write($@"SortOrder = await _{entity.Name.ToCamelCase()}Repository.Count{entity.Name}(),
                             }});
+
+                            _staticDataCache.FlushStaticData();
+                            return updated;
                         }}
 ");
                 }
@@ -117,12 +122,14 @@ namespace Webfuel.Tools.Datafuel
                 using (sb.OpenBrace($"internal class Update{entity.Name}Handler : IRequestHandler<Update{entity.Name}, {entity.Name}>"))
                 {
                     sb.WriteLine($"private readonly I{entity.Name}Repository _{entity.Name.ToCamelCase()}Repository;");
+                    sb.WriteLine("private readonly IStaticDataCache _staticDataCache;");
                     sb.WriteLine();
 
                     sb.Write($@"
-                        public Update{entity.Name}Handler(I{entity.Name}Repository {entity.Name.ToCamelCase()}Repository)
+                        public Update{entity.Name}Handler(I{entity.Name}Repository {entity.Name.ToCamelCase()}Repository, IStaticDataCache staticDataCache)
                         {{
                             _{entity.Name.ToCamelCase()}Repository = {entity.Name.ToCamelCase()}Repository;
+                            _staticDataCache = staticDataCache;
                         }}
 ");
 
@@ -145,7 +152,9 @@ namespace Webfuel.Tools.Datafuel
                     }
 
                     sb.Write($@"
-                            return await _{entity.Name.ToCamelCase()}Repository.Update{entity.Name}(original: original, updated: updated); 
+                            updated = await _{entity.Name.ToCamelCase()}Repository.Update{entity.Name}(original: original, updated: updated); 
+                            _staticDataCache.FlushStaticData();
+                            return updated;
                         }}
 ");
                 }
@@ -170,12 +179,14 @@ namespace Webfuel.Tools.Datafuel
                 using (sb.OpenBrace($"internal class Delete{entity.Name}Handler : IRequestHandler<Delete{entity.Name}>"))
                 {
                     sb.WriteLine($"private readonly I{entity.Name}Repository _{entity.Name.ToCamelCase()}Repository;");
+                    sb.WriteLine("private readonly IStaticDataCache _staticDataCache;");
                     sb.WriteLine();
 
                     sb.Write($@"
-                        public Delete{entity.Name}Handler(I{entity.Name}Repository {entity.Name.ToCamelCase()}Repository)
+                        public Delete{entity.Name}Handler(I{entity.Name}Repository {entity.Name.ToCamelCase()}Repository, IStaticDataCache staticDataCache)
                         {{
                             _{entity.Name.ToCamelCase()}Repository = {entity.Name.ToCamelCase()}Repository;
+                            _staticDataCache = staticDataCache;
                         }}
 ");
 
@@ -183,6 +194,7 @@ namespace Webfuel.Tools.Datafuel
                         public async Task Handle(Delete{entity.Name} request, CancellationToken cancellationToken)
                         {{
                             await _{entity.Name.ToCamelCase()}Repository.Delete{entity.Name}(request.Id);
+                            _staticDataCache.FlushStaticData();
                         }}
 ");
                 }
@@ -250,12 +262,14 @@ namespace Webfuel.Tools.Datafuel
                 using (sb.OpenBrace($"internal class Sort{entity.Name}Handler : IRequestHandler<Sort{entity.Name}>"))
                 {
                     sb.WriteLine($"private readonly I{entity.Name}Repository _{entity.Name.ToCamelCase()}Repository;");
+                    sb.WriteLine("private readonly IStaticDataCache _staticDataCache;");
                     sb.WriteLine();
 
                     sb.Write($@"
-                        public Sort{entity.Name}Handler(I{entity.Name}Repository {entity.Name.ToCamelCase()}Repository)
+                        public Sort{entity.Name}Handler(I{entity.Name}Repository {entity.Name.ToCamelCase()}Repository, IStaticDataCache staticDataCache)
                         {{
                             _{entity.Name.ToCamelCase()}Repository = {entity.Name.ToCamelCase()}Repository;
+                            _staticDataCache = staticDataCache;
                         }}
 ");
 
@@ -276,6 +290,7 @@ namespace Webfuel.Tools.Datafuel
                                 }}
                                 index++;
                             }}
+                            _staticDataCache.FlushStaticData();
                         }}
 ");
                 }

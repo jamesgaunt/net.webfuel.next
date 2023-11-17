@@ -9,11 +9,13 @@ namespace Webfuel.Domain.StaticData
     internal class SortHowDidYouFindUsHandler : IRequestHandler<SortHowDidYouFindUs>
     {
         private readonly IHowDidYouFindUsRepository _howDidYouFindUsRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public SortHowDidYouFindUsHandler(IHowDidYouFindUsRepository howDidYouFindUsRepository)
+        public SortHowDidYouFindUsHandler(IHowDidYouFindUsRepository howDidYouFindUsRepository, IStaticDataCache staticDataCache)
         {
             _howDidYouFindUsRepository = howDidYouFindUsRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task Handle(SortHowDidYouFindUs request, CancellationToken cancellationToken)
@@ -32,6 +34,7 @@ namespace Webfuel.Domain.StaticData
                 }
                 index++;
             }
+            _staticDataCache.FlushStaticData();
         }
     }
 }

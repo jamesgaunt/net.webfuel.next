@@ -13,11 +13,13 @@ namespace Webfuel.Domain.StaticData
     internal class UpdateSupportProvidedHandler : IRequestHandler<UpdateSupportProvided, SupportProvided>
     {
         private readonly ISupportProvidedRepository _supportProvidedRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public UpdateSupportProvidedHandler(ISupportProvidedRepository supportProvidedRepository)
+        public UpdateSupportProvidedHandler(ISupportProvidedRepository supportProvidedRepository, IStaticDataCache staticDataCache)
         {
             _supportProvidedRepository = supportProvidedRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<SupportProvided> Handle(UpdateSupportProvided request, CancellationToken cancellationToken)
@@ -30,7 +32,9 @@ namespace Webfuel.Domain.StaticData
             updated.Hidden = request.Hidden;
             updated.FreeText = request.FreeText;
             
-            return await _supportProvidedRepository.UpdateSupportProvided(original: original, updated: updated);
+            updated = await _supportProvidedRepository.UpdateSupportProvided(original: original, updated: updated);
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }

@@ -1,5 +1,5 @@
 <div #popupAnchor class="control">
-  <div class="input" (click)="FocusInput.focus()" [class.tags-input]="pickedItems.length > 0">
+  <div class="input" (click)="stop($event); togglePopup();" [class.tags-input]="pickedItems.length > 0">
     <span *ngIf="pickedItems.length == 0">
       {{ placeholder || "&nbsp;" }}
     </span>
@@ -15,7 +15,7 @@
     <i class="fas fa-times"></i>
   </div>
   <!-- Open Icon -->
-  <div *ngIf="!_isDisabled" class="icon is-secondary" (click)="togglePopup($event)">
+  <div *ngIf="!_isDisabled" class="icon is-secondary" (click)="stop($event); togglePopup();">
     <i class="fas fa-chevron-down"></i>
   </div>
 </div>

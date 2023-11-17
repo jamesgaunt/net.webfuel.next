@@ -13,11 +13,13 @@ namespace Webfuel.Domain.StaticData
     internal class UpdateWorkActivityHandler : IRequestHandler<UpdateWorkActivity, WorkActivity>
     {
         private readonly IWorkActivityRepository _workActivityRepository;
+        private readonly IStaticDataCache _staticDataCache;
         
         
-        public UpdateWorkActivityHandler(IWorkActivityRepository workActivityRepository)
+        public UpdateWorkActivityHandler(IWorkActivityRepository workActivityRepository, IStaticDataCache staticDataCache)
         {
             _workActivityRepository = workActivityRepository;
+            _staticDataCache = staticDataCache;
         }
         
         public async Task<WorkActivity> Handle(UpdateWorkActivity request, CancellationToken cancellationToken)
@@ -30,7 +32,9 @@ namespace Webfuel.Domain.StaticData
             updated.Hidden = request.Hidden;
             updated.FreeText = request.FreeText;
             
-            return await _workActivityRepository.UpdateWorkActivity(original: original, updated: updated);
+            updated = await _workActivityRepository.UpdateWorkActivity(original: original, updated: updated);
+            _staticDataCache.FlushStaticData();
+            return updated;
         }
     }
 }
