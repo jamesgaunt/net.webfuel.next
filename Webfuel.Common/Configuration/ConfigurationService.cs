@@ -13,7 +13,7 @@ namespace Webfuel.Common
 
         Task<int> AllocateNextSupportRequestNumber();
 
-        Task<Configuration> GetConfiguration();
+        Task<Configuration> GetConfiguration(bool reload = false);
     }
 
     [Service(typeof(IConfigurationService))]
@@ -28,12 +28,12 @@ namespace Webfuel.Common
 
         public async Task<int> AllocateNextProjectNumber()
         {
-            var _configuration = await GetConfiguration();
+            var _configuration = await GetConfiguration(true);
 
             var nextProjectNumber = _configuration.NextProjectNumber;
 
             var original = _configuration.Copy();
-            _configuration.NextProjectNumber++;
+            _configuration.NextProjectNumber += 1;
 
             await _configurationRepository.UpdateConfiguration(original: original, updated: _configuration);
 
@@ -42,21 +42,21 @@ namespace Webfuel.Common
 
         public async Task<int> AllocateNextSupportRequestNumber()
         {
-            var _configuration = await GetConfiguration();
+            var _configuration = await GetConfiguration(true);
 
             var nextSupportRequestNumber = _configuration.NextSupportRequestNumber;
 
             var original = _configuration.Copy();
-            _configuration.NextSupportRequestNumber++;
+            _configuration.NextSupportRequestNumber += 1;
 
             await _configurationRepository.UpdateConfiguration(original: original, updated: _configuration);
 
             return nextSupportRequestNumber;
         }
 
-        public async Task<Configuration> GetConfiguration()
+        public async Task<Configuration> GetConfiguration(bool reload = false)
         {
-            if (_configuration == null)
+            if (reload || _configuration == null)
                 _configuration = await _configurationRepository.RequireConfiguration(Guid.Empty);
             return _configuration.Copy();
         }

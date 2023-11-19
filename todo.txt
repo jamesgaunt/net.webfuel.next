@@ -12,7 +12,10 @@ TODO:
 
 > Change Log Utility : Format Primative (NULL -> (NONE) + on empty strings)
 
-> Something to go on the dashboard?
+> Something to go on the dashboard (just show outstanding request for support, cases to be triaged etc.)
+
+> Google Recaptcha 3 on the support request form (https://dev.to/rodrigokamada/adding-the-google-recaptcha-v3-to-an-angular-application-kge)
+
 
 ----- Future ------
 

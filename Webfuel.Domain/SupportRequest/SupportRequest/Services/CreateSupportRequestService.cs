@@ -42,7 +42,7 @@ namespace Webfuel.Domain
 
         async Task<int> GetNextSupportRequestNumber()
         {
-            return await _configurationService.AllocateNextProjectNumber();
+            return await _configurationService.AllocateNextSupportRequestNumber();
         }
 
         string FormatPrefixedNumber(SupportRequest supportRequest)
