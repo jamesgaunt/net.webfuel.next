@@ -22,10 +22,21 @@ namespace Webfuel
     internal class IdentityTokenService: IIdentityTokenService
     {
         private readonly IServiceProvider _serviceProvider;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public IdentityTokenService(IServiceProvider serviceProvider)
+        static string IdentityTokenSalt;
+        static string IdentityTokenKey;
+
+        static IdentityTokenService()
+        {
+            IdentityTokenSalt = RandomString(length: 12);
+            IdentityTokenKey = RandomString(length: 12);
+        }
+
+        public IdentityTokenService(IServiceProvider serviceProvider, IHttpContextAccessor httpContextAccessor)
         {
             _serviceProvider = serviceProvider;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<string> GenerateToken(IdentityUser user)
@@ -44,10 +55,11 @@ namespace Webfuel
             if (token.Signature != Signature(token))
                 return null;
 
-            if (token.Validity.ValidUntil < DateTimeOffset.UtcNow)
+            if (token.Validity.ValidFromIPAddress != RemoteIpAddress)
                 return null;
 
-            if (token.Validity.ValidFromIPAddress != RemoteIpAddress)
+            // TODO: Extend the token if necessary?
+            if (token.Validity.ValidUntil < DateTimeOffset.UtcNow)
                 return null;
 
             return token;
@@ -55,9 +67,7 @@ namespace Webfuel
 
         // Helpers
 
-        string IdentityTokenSalt = "l343$lf9c31!!3lci98vredf";
 
-        string IdentityTokenKey = "ao93Vv9££kd;lajieeiefe";
 
         async Task<IdentityToken> BuildToken(IdentityUser user, TimeSpan? validFor = null)
         {
@@ -77,6 +87,7 @@ namespace Webfuel
 
             foreach (var identityClaimsProvider in _serviceProvider.GetServices<IIdentityClaimsProvider>())
                 await identityClaimsProvider.ProvideIdentityClaims(token.User, token.Claims);
+            token.Claims.Sanitize();
 
             token.Signature = Signature(token);
 
@@ -112,7 +123,7 @@ namespace Webfuel
         {
             get
             {
-                return "::1";
+                return _httpContextAccessor.HttpContext?.Connection.RemoteIpAddress?.ToString() ?? "::1";
             }
         }
 
@@ -218,6 +229,18 @@ namespace Webfuel
                     return streamReader.ReadToEnd();
                 }
             }
+        }
+
+        static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!£$%^&*()_-";
+            var stringChars = new char[length];
+
+            for (int i = 0; i < stringChars.Length; i++)
+                stringChars[i] = chars[RandomNumberGenerator.GetInt32(chars.Length)];
+
+            var finalString = new String(stringChars);
+            return finalString;
         }
     }
 }

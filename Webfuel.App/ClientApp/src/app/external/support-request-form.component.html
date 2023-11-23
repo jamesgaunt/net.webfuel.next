@@ -1,5 +1,11 @@
 <div class="container">
+  <img src="https://www.webfuel.com/external/rss.png" alt="NIHR Research Support Service" style="width: 550px;" />
+
+  <h1>Imperial College London and Partners Hub</h1>
+  <hr />
+  <h2>Research Support Service request form</h2>
   <div *ngIf="stage == 'input'">
+    <p>To request free advice from our NIHR RSS hub on your funding application, please complete the form below.</p>
     <form class="form" [formGroup]="form">
 
       <!-- Project Details-->
@@ -96,7 +102,7 @@
         </div>
         <div class="field is-12">
           <div class="checkbox">
-            <label><input type="checkbox" formControlName="teamContactPrivacyStatementRead" /> Please tick this checkbox to confirm you have read our privacy statement [LINK REQUIRED].</label>
+            <label><input type="checkbox" formControlName="teamContactPrivacyStatementRead" /> Please tick this checkbox to confirm you have read our <a target="_blank" href="https://www.imperial.ac.uk/school-public-health/research/nihr-research-support-service/nihr-research-support-privacy-notice/" class="link is-primary">privacy notice <i class="fas fa-external-link"></i></a>.</label>
           </div>
         </div>
       </div>
@@ -105,7 +111,7 @@
       <hr class="external-form-divider" />
       <h2>Chief Investigator / Fellowship Applicant Details</h2>
       <p>Please enter the details for the chief investigator for this project.</p>
-      <div class="flex">
+      <div class="flex" *ngIf="!isTeamContactAlsoChiefInvestigator()">
         <div class="field is-4">
           <label class="label">Title</label>
           <dropdown-text-input placeholder="required" [dataSource]="staticDataCache.title" formControlName="leadApplicantTitle" />
@@ -118,7 +124,8 @@
           <label class="label">Last name</label>
           <input class="input" type="text" placeholder="required" formControlName="leadApplicantLastName" maxlength="64" />
         </div>
-
+      </div>
+      <div class="flex">
         <div class="field is-4">
           <label class="label">Job Role</label>
           <input class="input" type="text" placeholder="required" formControlName="leadApplicantJobRole" maxlength="64" />
@@ -199,11 +206,11 @@
       <hr class="external-form-divider" />
       <h2>Supporting Documents</h2>
       <p>If available, please provide copies of draft documentation, protocols, background information or feedback from any previous applications.</p>
+      <p class="text is-warning">Please ensure all files are saved and closed on your computer. You may receive an error message if you attempt to upload a file which you have open in another application.</p>
       <file-input formControlName="files" [progress]="progress"></file-input>
 
       <hr class="external-form-divider" />
       <h2>Submit Your Application</h2>
-      <p>You will receive an email confirming receipt of your application.</p>
 
       <div class="buttons">
         <button type="button" [disabled]="submitting" [class.processing]="submitting" class="button is-success" (click)="submit()">
@@ -217,6 +224,7 @@
         &nbsp;
         <span class="text is-danger is-bold">{{ errorMessage }}</span>
       </div>
+      <hr class="external-form-divider" />
     </form>
   </div>
   <div *ngIf="stage == 'submitted'">

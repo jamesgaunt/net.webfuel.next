@@ -14,5 +14,7 @@ export class FundingBodyComponent extends StaticDataComponent<FundingBody, Query
   ) {
     super(dataSource);
     this.typeName = "Funding Body";
+    this.enableFreeText = true;
+    this.enableHidden = true;
   }
 }

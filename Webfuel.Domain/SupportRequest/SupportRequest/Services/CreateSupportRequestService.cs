@@ -18,11 +18,16 @@ namespace Webfuel.Domain
     {
         private readonly ISupportRequestRepository _supportRequestRepository;
         private readonly IConfigurationService _configurationService;
+        private readonly IFileStorageService _fileStorageService;
 
-        public CreateSupportRequestService(ISupportRequestRepository supportRequestRepository, IConfigurationService configurationService)
+        public CreateSupportRequestService(
+            ISupportRequestRepository supportRequestRepository, 
+            IConfigurationService configurationService,
+            IFileStorageService fileStorageService)
         {
             _supportRequestRepository = supportRequestRepository;
             _configurationService = configurationService;
+            _fileStorageService = fileStorageService;
         }
 
         public async Task<SupportRequest> CreateSupportRequest(CreateSupportRequest request)
@@ -34,6 +39,11 @@ namespace Webfuel.Domain
             supportRequest.StatusId = SupportRequestStatusEnum.ToBeTriaged;
             supportRequest.DateOfRequest = DateOnly.FromDateTime(DateTime.Now);
             supportRequest.CreatedAt = DateTimeOffset.UtcNow;
+
+            if (request.FileStorageGroupId.HasValue)
+                supportRequest.FileStorageGroupId = request.FileStorageGroupId.Value;
+            else
+                supportRequest.FileStorageGroupId = (await _fileStorageService.CreateGroup()).Id;
 
             return await _supportRequestRepository.InsertSupportRequest(supportRequest);
         }

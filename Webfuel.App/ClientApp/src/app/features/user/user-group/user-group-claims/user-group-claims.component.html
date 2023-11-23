@@ -16,6 +16,35 @@
   </div>
   <user-group-tabs></user-group-tabs>
   <form class="form" [formGroup]="form">
+
+    <div class="flex">
+      <div class="field is-6">
+        <div class="checkbox">
+          <label><input type="checkbox" formControlName="canEditUsers" /> Can Edit Users</label>
+        </div>
+      </div>
+      <div class="field is-6">
+        <div class="checkbox">
+          <label><input type="checkbox" formControlName="canEditUserGroups" /> Can Edit User Groups</label>
+        </div>
+      </div>
+      <div class="field is-6">
+        <div class="checkbox">
+          <label><input type="checkbox" formControlName="canEditStaticData" /> Can Edit Static Data</label>
+        </div>
+      </div>
+      <div class="field is-6">
+        <div class="checkbox">
+          <label><input type="checkbox" formControlName="canUnlockProjects" /> Can Unlock Projects</label>
+        </div>
+      </div>
+      <div class="field is-6">
+        <div class="checkbox">
+          <label><input type="checkbox" formControlName="canTriageSupportRequests" /> Can Triage Support Requests</label>
+        </div>
+      </div>
+    </div>
+
     <div class="floating-buttons">
       <button class="button is-success" (click)="save(false)">Save</button>
       <button class="button is-success" (click)="save(true)">Save &amp; Close</button>

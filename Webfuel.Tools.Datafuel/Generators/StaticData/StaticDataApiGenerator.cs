@@ -72,16 +72,16 @@ namespace Webfuel.Tools.Datafuel
             // Commands
 
             app.MapPost(""api/{entity.Name.ToSnakeCase('-')}"", Create)
-                .RequireClaim(c => c.UserGroupClaims.CanEditStaticData);
+                .RequireClaim(c => c.CanEditStaticData);
 
             app.MapPut(""api/{entity.Name.ToSnakeCase('-')}"", Update)
-                .RequireClaim(c => c.UserGroupClaims.CanEditStaticData);
+                .RequireClaim(c => c.CanEditStaticData);
 
             app.MapPut(""api/{entity.Name.ToSnakeCase('-')}/sort"", Sort)
-                .RequireClaim(c => c.UserGroupClaims.CanEditStaticData);
+                .RequireClaim(c => c.CanEditStaticData);
 
             app.MapDelete(""api/{entity.Name.ToSnakeCase('-')}/{{id:guid}}"", Delete)
-                .RequireClaim(c => c.UserGroupClaims.CanEditStaticData);
+                .RequireClaim(c => c.CanEditStaticData);
             ");
                 }
 

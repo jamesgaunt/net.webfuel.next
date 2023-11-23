@@ -13,22 +13,25 @@ namespace Webfuel.App
     {
         public static void RegisterEndpoints(IEndpointRouteBuilder app)
         {
+            // External
+
+            app.MapPost("api/support-request/files", SubmitFiles);
+
+            app.MapPost("api/support-request/form", SubmitForm);
+
             // Commands
 
-            app.MapPost("api/support-request", Submit); // Called from external support request form, also takes in files
-                
-
             app.MapPut("api/support-request", Update)
-                .RequireIdentity();
+                .RequireClaim(c => c.CanTriageSupportRequests);
 
             app.MapPut("api/support-request/researcher", UpdateResearcher)
-                .RequireIdentity();
+                .RequireClaim(c => c.CanTriageSupportRequests);
 
             app.MapPost("api/support-request/status", UpdateStatus)
-                .RequireIdentity();
+                .RequireClaim(c => c.CanTriageSupportRequests);
 
             app.MapDelete("api/support-request/{id:guid}", Delete)
-                .RequireIdentity();
+                .RequireClaim(c => c.CanTriageSupportRequests);
 
             // Querys
 
@@ -39,23 +42,41 @@ namespace Webfuel.App
                 .RequireIdentity();
         }
 
-        public static async Task<SupportRequest> Submit(HttpRequest request, IMediator mediator, IFileStorageService fileStorageService)
+        public static async Task<SupportRequest> SubmitFiles(
+            HttpRequest request,
+            IFileStorageService fileStorageService,
+            IErrorLogService errorLogService)
         {
-            var fileStorageGroup = await fileStorageService.CreateGroup();
-            
-            foreach(var file in request.Form.Files)
-                await fileStorageService.UploadFile(new UploadFileStorageEntry { FileStorageGroupId = fileStorageGroup.Id, FormFile = file });
+            try
+            {
+                var fileStorageGroup = await fileStorageService.CreateGroup();
 
-            var data = request.Form["data"].ToString();
-            if (String.IsNullOrEmpty(data))
-                throw new InvalidOperationException("No data part found on create support request http request");
+                foreach (var file in request.Form.Files)
+                    await fileStorageService.UploadFile(new UploadFileStorageEntry { FileStorageGroupId = fileStorageGroup.Id, FormFile = file });
 
-            var command = JsonSerializer.Deserialize<CreateSupportRequest>(data, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-            if (command == null)
-                throw new InvalidOperationException("Unable to deserialize create support request command");
+                return new SupportRequest { FileStorageGroupId = fileStorageGroup.Id };
+            }
+            catch (Exception ex)
+            {
+                await errorLogService.LogException("Exception submitting support request files", ex: ex);
+                throw;
+            }
+        }
 
-            command.FileStorageGroupId = fileStorageGroup.Id;
-            return await mediator.Send(command);
+        public static async Task<SupportRequest> SubmitForm(
+            [FromBody] CreateSupportRequest command,
+            IMediator mediator,
+            IErrorLogService errorLogService)
+        {
+            try
+            {
+                return await mediator.Send(command);
+            }
+            catch (Exception ex)
+            {
+                await errorLogService.LogException("Exception submitting support request", ex: ex);
+                throw;
+            }
         }
 
         public static Task<SupportRequest> Update([FromBody] UpdateSupportRequest command, IMediator mediator)

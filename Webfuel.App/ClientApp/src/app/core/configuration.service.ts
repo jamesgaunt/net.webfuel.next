@@ -38,6 +38,12 @@ export class ConfigurationService {
     });
   }
 
+  hasClaim(check: (c: ClientConfiguration) => boolean): boolean {
+    if (this.configuration.value != null)
+      return check(this.configuration.value);
+    return false;
+  }
+
   static hasClaim(check: (c: ClientConfiguration) => boolean): boolean  {
     var service = inject(ConfigurationService);
     if (service.configuration.value != null)

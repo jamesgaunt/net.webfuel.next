@@ -11,6 +11,7 @@ namespace Webfuel.Domain
     [Mapper]
     internal partial class SupportRequestMapper
     {
+        [MapperIgnoreTarget(nameof(SupportRequest.FileStorageGroupId))]
         public partial SupportRequest Map(CreateSupportRequest request);
 
 

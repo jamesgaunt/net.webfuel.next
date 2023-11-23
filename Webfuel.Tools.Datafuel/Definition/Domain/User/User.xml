@@ -41,7 +41,7 @@
     </Index>
 
     <Data>
-      <Row Id="b752fc3b-db1d-4ea3-9ac3-92299e44d3cd" Email="james.gaunt@webfuel.com" Title="Mr" FirstName="James" LastName="Gaunt" UserGroupId="67fa9133-ad7b-4d79-8601-dc4641fa10f2" />
+      <Row Id="b752fc3b-db1d-4ea3-9ac3-92299e44d3cd" Email="james.gaunt@webfuel.com" Title="Mr" FirstName="James" LastName="Gaunt" UserGroupId="67fa9133-ad7b-4d79-8601-dc4641fa10f2" Developer="true" />
       <Row Id="30f66d8c-4255-4ba8-9e92-033930cc7edf" Email="v.cornelius@imperial.ac.uk" Title="" FirstName="Victoria" LastName="Cornelius" UserGroupId="67fa9133-ad7b-4d79-8601-dc4641fa10f2" />
       <Row Id="2a757dbb-f09b-4050-be5e-a4766205e253" Email="e.kingwell@ucl.ac.uk" Title="" FirstName="Elaine" LastName="Kingwell" UserGroupId="67fa9133-ad7b-4d79-8601-dc4641fa10f2" />
       <Row Id="20790bda-4547-462b-b68e-f151a845c312" Email="r.phillips@imperial.ac.uk" Title="" FirstName="Rachel" LastName="Phillips" UserGroupId="67fa9133-ad7b-4d79-8601-dc4641fa10f2" />

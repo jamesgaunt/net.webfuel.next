@@ -17,6 +17,6 @@ namespace Webfuel
 
         public ClientConfigurationMenu StaticDataMenu { get; set; } = new ClientConfigurationMenu();
 
-        public UserGroupClaims UserGroupClaims { get; set; } = new UserGroupClaims();
+        public IdentityClaims Claims { get; set; } = new IdentityClaims();
     }
 }

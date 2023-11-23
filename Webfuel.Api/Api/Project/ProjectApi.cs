@@ -16,7 +16,7 @@ namespace Webfuel.App
                 .RequireIdentity();
 
             app.MapPut("api/project/status", UpdateStatus)
-                .RequireIdentity();
+                .RequireClaim(c => c.CanUnlockProjects);
 
             app.MapDelete("api/project/{id:guid}", Delete)
                 .RequireIdentity();

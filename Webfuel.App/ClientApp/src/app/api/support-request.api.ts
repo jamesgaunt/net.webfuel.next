@@ -3,14 +3,18 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { SupportRequest, UpdateSupportRequest, UpdateSupportRequestResearcher, UpdateSupportRequestStatus, QuerySupportRequest, QueryResult } from './api.types';
+import { SupportRequest, CreateSupportRequest, UpdateSupportRequest, UpdateSupportRequestResearcher, UpdateSupportRequestStatus, QuerySupportRequest, QueryResult } from './api.types';
 
 @Injectable()
 export class SupportRequestApi implements IDataSource<SupportRequest, QuerySupportRequest, any, UpdateSupportRequest> {
     constructor(private apiService: ApiService) { }
     
-    public submit (options?: ApiOptions): Observable<SupportRequest> {
-        return this.apiService.request<undefined, SupportRequest>("POST", "api/support-request", undefined, options);
+    public submitFiles (options?: ApiOptions): Observable<SupportRequest> {
+        return this.apiService.request<undefined, SupportRequest>("POST", "api/support-request/files", undefined, options);
+    }
+    
+    public submitForm (body: CreateSupportRequest, options?: ApiOptions): Observable<SupportRequest> {
+        return this.apiService.request<CreateSupportRequest, SupportRequest>("POST", "api/support-request/form", body, options);
     }
     
     public update (body: UpdateSupportRequest, options?: ApiOptions): Observable<SupportRequest> {

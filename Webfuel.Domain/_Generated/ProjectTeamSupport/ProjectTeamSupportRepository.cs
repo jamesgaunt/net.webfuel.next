@@ -18,6 +18,7 @@ namespace Webfuel.Domain
         Task<int> CountProjectTeamSupport();
         Task<List<ProjectTeamSupport>> SelectProjectTeamSupport();
         Task<List<ProjectTeamSupport>> SelectProjectTeamSupportWithPage(int skip, int take);
+        Task<List<ProjectTeamSupport>> SelectProjectTeamSupportByCompletedAt(DateTimeOffset? completedAt);
         Task<List<ProjectTeamSupport>> SelectProjectTeamSupportBySupportTeamId(Guid supportTeamId);
         Task<List<ProjectTeamSupport>> SelectProjectTeamSupportByProjectId(Guid projectId);
     }
@@ -92,6 +93,15 @@ namespace Webfuel.Domain
             {
                 new SqlParameter("@Skip", skip),
                 new SqlParameter("@Take", take),
+            };
+            return await _connection.ExecuteReader<ProjectTeamSupport, ProjectTeamSupportMetadata>(sql, parameters);
+        }
+        public async Task<List<ProjectTeamSupport>> SelectProjectTeamSupportByCompletedAt(DateTimeOffset? completedAt)
+        {
+            var sql = @"SELECT * FROM [ProjectTeamSupport] WHERE ((CompletedAt = @CompletedAt) OR (CompletedAt IS NULL AND @CompletedAt IS NULL)) ORDER BY CreatedAt DESC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@CompletedAt", (object?)completedAt ?? DBNull.Value),
             };
             return await _connection.ExecuteReader<ProjectTeamSupport, ProjectTeamSupportMetadata>(sql, parameters);
         }

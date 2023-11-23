@@ -14,5 +14,7 @@ export class HowDidYouFindUsComponent extends StaticDataComponent<HowDidYouFindU
   ) {
     super(dataSource);
     this.typeName = "Comms";
+    this.enableFreeText = true;
+    this.enableHidden = true;
   }
 }

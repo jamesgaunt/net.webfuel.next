@@ -14,5 +14,6 @@ export class ProjectStatusComponent extends StaticDataComponent<ProjectStatus, Q
   ) {
     super(dataSource);
     this.typeName = "Project Status";
+    this.enableHidden = true;
   }
 }

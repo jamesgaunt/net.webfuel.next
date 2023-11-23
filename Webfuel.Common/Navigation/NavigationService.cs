@@ -23,19 +23,29 @@ namespace Webfuel.Common
         public Task ProvideClientConfiguration(ClientConfiguration clientConfiguration)
         {
             // Side Menu
+            {
+                clientConfiguration.SideMenu.AddChild(name: "My Activity", action: "/home/my-activity", icon: "fas fa-fw fa-calculator");
 
-            clientConfiguration.SideMenu.AddChild(name: "My Activity", action: "/home/my-activity", icon: "fas fa-fw fa-calculator");
-            clientConfiguration.SideMenu.AddChild(name: "Triage", action: "/support-request/support-request-list", icon: "far fa-fw fa-random");
-            clientConfiguration.SideMenu.AddChild(name: "Projects", action: "/project/project-list", icon: "fas fa-fw fa-books");
-            clientConfiguration.SideMenu.AddChild(name: "Users", action: "/user/user-list", icon: "fas fa-fw fa-users");
-            clientConfiguration.SideMenu.AddChild(name: "Configuration", action: "/configuration/configuration-menu", icon: "fas fa-fw fa-cogs");
+                if (_identityAccessor.Claims.CanTriageSupportRequests)
+                    clientConfiguration.SideMenu.AddChild(name: "Triage", action: "/support-request/support-request-list", icon: "far fa-fw fa-random");
+
+                clientConfiguration.SideMenu.AddChild(name: "Projects", action: "/project/project-list", icon: "fas fa-fw fa-books");
+
+                if (_identityAccessor.Claims.CanEditUsers)
+                    clientConfiguration.SideMenu.AddChild(name: "Users", action: "/user/user-list", icon: "fas fa-fw fa-users");
+
+                if (_identityAccessor.Claims.CanAccessConfiguration)
+                    clientConfiguration.SideMenu.AddChild(name: "Configuration", action: "/configuration/configuration-menu", icon: "fas fa-fw fa-cogs");
+            }
 
             // Settings Menu
+            {
+                if (_identityAccessor.Claims.CanEditUserGroups)
+                    clientConfiguration.SettingsMenu.AddChild(name: "User Groups", action: "/user/user-group-list", icon: "fas fa-users-cog");
 
-            clientConfiguration.SettingsMenu.AddChild(name: "User Groups", action: "/user/user-group-list", icon: "fas fa-users-cog");
-
-            if(_identityAccessor.Claims.Developer)
-                clientConfiguration.SettingsMenu.AddChild(name: "User Logins", action: "/developer/user-login", icon: "fas fa-sign-in");
+                if (_identityAccessor.Claims.Developer)
+                    clientConfiguration.SettingsMenu.AddChild(name: "User Logins", action: "/developer/user-login", icon: "fas fa-sign-in");
+            }
 
             return Task.CompletedTask;
         }

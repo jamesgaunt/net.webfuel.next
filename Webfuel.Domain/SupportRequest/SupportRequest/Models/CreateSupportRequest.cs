@@ -11,8 +11,8 @@ namespace Webfuel.Domain
 {
     public class CreateSupportRequest: IRequest<SupportRequest>
     {
-        // File Storage
-        [JsonIgnore] public Guid FileStorageGroupId { get; set; }
+        // File Storage (this may be null if no files were submitted)
+        public Guid? FileStorageGroupId { get; set; }
 
         // Project Details
 

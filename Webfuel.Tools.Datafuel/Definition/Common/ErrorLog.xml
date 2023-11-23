@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="ErrorLog" OrderBy="-Id">
+    <Key Name="Id" Type="guid" />
+    <Property Name="EntityId" Type="Guid" />
+    
+    <Property Name="Summary" Type="meta:name" />
+    <Property Name="Message" Type="string" />
+    
+    <Property Name="CreatedAt" Type="DateTime" />
+    <Property Name="CreatedBy" Type="meta:name" />
+    <Index Unique="false">
+      <Member Name="EntityId" />
+    </Index>
+  </Entity>
+</Schema>

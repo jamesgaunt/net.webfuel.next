@@ -5,22 +5,28 @@ namespace Webfuel.Domain
 {
     internal class CreateProjectTeamSupportHandler : IRequestHandler<CreateProjectTeamSupport, ProjectTeamSupport>
     {
+        private readonly IProjectRepository _projectRepository;
         private readonly IProjectTeamSupportRepository _projectTeamSupportRepository;
         private readonly IIdentityAccessor _identityAccessor;
 
         public CreateProjectTeamSupportHandler(
+            IProjectRepository projectRepository,
             IProjectTeamSupportRepository projectTeamSupportRepository,
             IIdentityAccessor identityAccessor)
         {
+            _projectRepository = projectRepository;
             _projectTeamSupportRepository = projectTeamSupportRepository;
             _identityAccessor = identityAccessor;
         }
 
         public async Task<ProjectTeamSupport> Handle(CreateProjectTeamSupport request, CancellationToken cancellationToken)
         {
+            var project = await _projectRepository.RequireProject(request.ProjectId);
+
             var projectTeamSupport = new ProjectTeamSupport();
 
             projectTeamSupport.ProjectId = request.ProjectId;
+            projectTeamSupport.ProjectPrefixedNumber = project.PrefixedNumber;
             projectTeamSupport.SupportTeamId = request.SupportTeamId;
             projectTeamSupport.CreatedNotes = request.CreatedNotes;
             projectTeamSupport.CreatedAt = DateTimeOffset.UtcNow;

@@ -253,6 +253,9 @@ export abstract class DropDownBase<TItem> {
   }
 
   openPopup() {
+    if (this._isDisabled)
+      return;
+
     this.focusInput.nativeElement.focus();
 
     if (this.popupRef)

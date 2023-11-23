@@ -4,6 +4,7 @@
   <Entity Name="ProjectTeamSupport" OrderBy="-CreatedAt">
     <Key Name="Id" Type="guid" />
     <Property Name="ProjectId" Type="Project" CascadeDelete="true" />
+    <Property Name="ProjectPrefixedNumber" Type="meta:name" />
     <Property Name="SupportTeamId" Type="SupportTeam" />
 
     <Property Name="CreatedNotes" Type="meta:description" />
@@ -19,6 +20,9 @@
     </Index>
     <Index Unique="false">
       <Member Name="SupportTeamId" />
+    </Index>
+    <Index Unique="false">
+      <Member Name="CompletedAt" />
     </Index>
   </Entity>
 </Schema>

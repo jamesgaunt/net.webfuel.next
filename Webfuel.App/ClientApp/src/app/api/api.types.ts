@@ -3,7 +3,7 @@ export interface ClientConfiguration {
     sideMenu: ClientConfigurationMenu;
     settingsMenu: ClientConfigurationMenu;
     staticDataMenu: ClientConfigurationMenu;
-    userGroupClaims: UserGroupClaims;
+    claims: IdentityClaims;
 }
 
 export interface ClientConfigurationMenu {
@@ -13,10 +13,14 @@ export interface ClientConfigurationMenu {
     children: Array<ClientConfigurationMenu> | null;
 }
 
-export interface UserGroupClaims {
+export interface IdentityClaims {
+    developer: boolean;
     canEditUsers: boolean;
+    canEditUserGroups: boolean;
     canEditStaticData: boolean;
-    canEditResearchers: boolean;
+    canUnlockProjects: boolean;
+    canTriageSupportRequests: boolean;
+    canAccessConfiguration: boolean;
 }
 
 export interface ProblemDetails {
@@ -41,6 +45,23 @@ export interface ValidationError {
 
 export interface UploadFileStorageEntry {
     fileStorageGroupId: string;
+}
+
+export interface DashboardModel {
+    openTeamSupport: Array<ProjectTeamSupport>;
+}
+
+export interface ProjectTeamSupport {
+    id: string;
+    projectPrefixedNumber: string;
+    createdNotes: string;
+    createdAt: string;
+    completedNotes: string;
+    completedAt: string | null | null;
+    projectId: string;
+    supportTeamId: string;
+    createdByUserId: string;
+    completedByUserId: string | null | null;
 }
 
 export interface QueryResult<TItem> {
@@ -574,18 +595,6 @@ export interface QueryProjectSupport extends Query {
     search?: string;
 }
 
-export interface ProjectTeamSupport {
-    id: string;
-    createdNotes: string;
-    createdAt: string;
-    completedNotes: string;
-    completedAt: string | null | null;
-    projectId: string;
-    supportTeamId: string;
-    createdByUserId: string;
-    completedByUserId: string | null | null;
-}
-
 export interface CreateProjectTeamSupport {
     projectId: string;
     supportTeamId: string;
@@ -605,30 +614,6 @@ export interface CompleteProjectTeamSupport {
 
 export interface QueryProjectTeamSupport extends Query {
     projectId: string;
-    skip: number;
-    take: number;
-    projection?: Array<string>;
-    filters?: Array<QueryFilter>;
-    sort?: Array<QuerySort>;
-    search?: string;
-}
-
-export interface Researcher {
-    id: string;
-    email: string;
-    createdAt: string;
-}
-
-export interface CreateResearcher {
-    email: string;
-}
-
-export interface UpdateResearcher {
-    id: string;
-    email: string;
-}
-
-export interface QueryResearcher extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;
@@ -683,6 +668,51 @@ export interface SupportRequest {
     howDidYouFindUsId: string | null | null;
     teamContactRoleId: string | null | null;
     leadApplicantOrganisationTypeId: string | null | null;
+    isLeadApplicantNHSId: string | null | null;
+    leadApplicantAgeRangeId: string | null | null;
+    leadApplicantGenderId: string | null | null;
+    leadApplicantEthnicityId: string | null | null;
+}
+
+export interface CreateSupportRequest {
+    fileStorageGroupId: string | null | null;
+    title: string;
+    proposedFundingStreamName: string;
+    targetSubmissionDate: string | null | null;
+    experienceOfResearchAwards: string;
+    briefDescription: string;
+    supportRequested: string;
+    isFellowshipId: string | null | null;
+    isTeamMembersConsultedId: string | null | null;
+    isResubmissionId: string | null | null;
+    applicationStageId: string | null | null;
+    applicationStageFreeText: string;
+    proposedFundingStreamId: string | null | null;
+    proposedFundingCallTypeId: string | null | null;
+    howDidYouFindUsId: string | null | null;
+    howDidYouFindUsFreeText: string;
+    teamContactTitle: string;
+    teamContactFirstName: string;
+    teamContactLastName: string;
+    teamContactEmail: string;
+    teamContactRoleId: string | null | null;
+    teamContactRoleFreeText: string;
+    teamContactMailingPermission: boolean;
+    teamContactPrivacyStatementRead: boolean;
+    leadApplicantTitle: string;
+    leadApplicantFirstName: string;
+    leadApplicantLastName: string;
+    leadApplicantJobRole: string;
+    leadApplicantOrganisationTypeId: string | null | null;
+    leadApplicantOrganisation: string;
+    leadApplicantDepartment: string;
+    leadApplicantAddressLine1: string;
+    leadApplicantAddressLine2: string;
+    leadApplicantAddressTown: string;
+    leadApplicantAddressCounty: string;
+    leadApplicantAddressCountry: string;
+    leadApplicantAddressPostcode: string;
+    leadApplicantORCID: string;
     isLeadApplicantNHSId: string | null | null;
     leadApplicantAgeRangeId: string | null | null;
     leadApplicantGenderId: string | null | null;
@@ -912,6 +942,14 @@ export interface UserGroup {
     claims: UserGroupClaims;
 }
 
+export interface UserGroupClaims {
+    canEditUsers: boolean;
+    canEditUserGroups: boolean;
+    canEditStaticData: boolean;
+    canUnlockProjects: boolean;
+    canTriageSupportRequests: boolean;
+}
+
 export interface CreateUserGroup {
     name: string;
 }
@@ -924,8 +962,10 @@ export interface UpdateUserGroup {
 export interface UpdateUserGroupClaims {
     id: string;
     canEditUsers: boolean;
+    canEditUserGroups: boolean;
     canEditStaticData: boolean;
-    canEditResearchers: boolean;
+    canUnlockProjects: boolean;
+    canTriageSupportRequests: boolean;
 }
 
 export interface QueryUserGroup extends Query {

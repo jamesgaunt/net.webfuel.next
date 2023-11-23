@@ -13,28 +13,28 @@ const routes: Routes = [
   {
     path: 'support-request-list',
     component: SupportRequestListComponent,
-    data: { activeSideMenu: 'Requests' }
+    data: { activeSideMenu: 'Triage' }
   },
   {
     path: 'support-request-item/:id',
     component: SupportRequestItemComponent,
     resolve: { supportRequest: SupportRequestApi.supportRequestResolver('id') },
     canDeactivate: [DeactivateService.isPristine<SupportRequestItemComponent>()],
-    data: { activeSideMenu: 'Requests' }
+    data: { activeSideMenu: 'Triage' }
   },
   {
     path: 'support-request-researcher/:id',
     component: SupportRequestResearcherComponent,
     resolve: { supportRequest: SupportRequestApi.supportRequestResolver('id') },
     canDeactivate: [DeactivateService.isPristine<SupportRequestResearcherComponent>()],
-    data: { activeSideMenu: 'Requests' }
+    data: { activeSideMenu: 'Triage' }
   },
   {
     path: 'support-request-files/:id',
     component: SupportRequestFilesComponent,
     resolve: { supportRequest: SupportRequestApi.supportRequestResolver('id') },
     canDeactivate: [DeactivateService.isPristine<SupportRequestFilesComponent>()],
-    data: { activeSideMenu: 'Requests' }
+    data: { activeSideMenu: 'Triage' }
   },
 ];
 

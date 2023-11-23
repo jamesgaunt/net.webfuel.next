@@ -1,14 +1,8 @@
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Project, ProjectStatus } from 'api/api.types';
-import { ProjectApi } from 'api/project.api';
-import { StaticDataCache } from 'api/static-data.cache';
+import { ClientConfiguration, Project } from 'api/api.types';
 import { FormService } from 'core/form.service';
-import { Observable, debounceTime, tap } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ProjectStatusEnum } from '../../../../api/api.enums';
-import { ConfirmDialog } from '../../../../shared/dialogs/confirm/confirm.dialog';
+import { ConfigurationService } from '../../../../core/configuration.service';
 import { ProjectComponentBase } from '../shared/project-component-base';
 
 @Component({
@@ -21,12 +15,17 @@ export class ProjectItemComponent extends ProjectComponentBase {
 
   constructor(
     private formService: FormService,
+    public configurationService: ConfigurationService
   ) {
     super();
   }
 
   ngOnInit() {
     super.ngOnInit();
+  }
+
+  canUnlock() {
+    return this.configurationService.hasClaim(p => p.claims.canUnlockProjects);
   }
 
   reset(item: Project) {

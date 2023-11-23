@@ -5,20 +5,24 @@
 <div class="container">
   <h1>Configuration</h1>
 
-  <h2>Settings</h2>
-  <div class="icon-menu" *ngIf="(configuration | async) !== null">
-    <a *ngFor="let item of (configuration | async)!.settingsMenu.children" [routerLink]="item.action">
-      <i [class]="item.icon || 'fas fa-database'"></i>
-      <label>{{ item.name }}</label>
-    </a>
+  <div *ngIf="(configuration | async)!.settingsMenu.children">
+    <h2>Settings</h2>
+    <div class="icon-menu" *ngIf="(configuration | async) !== null">
+      <a *ngFor="let item of (configuration | async)!.settingsMenu.children" [routerLink]="item.action">
+        <i [class]="item.icon || 'fas fa-database'"></i>
+        <label>{{ item.name }}</label>
+      </a>
+    </div>
   </div>
 
-  <h2>Static Data</h2>
-  <div class="icon-menu" *ngIf="(configuration | async) !== null">
-    <a *ngFor="let item of (configuration | async)!.staticDataMenu.children" [routerLink]="item.action">
-      <i [class]="item.icon || 'fas fa-database'"></i>
-      <label>{{ item.name }}</label>
-    </a>
+  <div *ngIf="(configuration | async)!.staticDataMenu.children">
+    <h2>Static Data</h2>
+    <div class="icon-menu" *ngIf="(configuration | async) !== null">
+      <a *ngFor="let item of (configuration | async)!.staticDataMenu.children" [routerLink]="item.action">
+        <i [class]="item.icon || 'fas fa-database'"></i>
+        <label>{{ item.name }}</label>
+      </a>
+    </div>
   </div>
 
 </div>

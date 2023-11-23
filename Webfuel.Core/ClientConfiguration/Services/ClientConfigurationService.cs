@@ -22,11 +22,11 @@ namespace Webfuel
 
         public Task ProvideClientConfiguration(ClientConfiguration clientConfiguration)
         {
-            var identityUser = _identityAccessor.User;
-            if (identityUser == null)
+            if (_identityAccessor.User == null)
                 throw new NotAuthenticatedException();
 
-            clientConfiguration.Email = identityUser.Email;
+            clientConfiguration.Email = _identityAccessor.User.Email;
+            clientConfiguration.Claims = _identityAccessor.Claims;
 
             return Task.CompletedTask;
         }

@@ -35,8 +35,7 @@
           <div class="card-title">
             <div *ngIf="teamSupport.completedAt === null" class="tag is-warning is-small">open</div>
             <div *ngIf="teamSupport.completedAt !== null" class="tag is-success is-small">complete</div>
-
-            {{ (staticDataCache.supportTeam.get({ id: teamSupport.supportTeamId }) | async)?.name }}
+            <b>{{ (staticDataCache.supportTeam.get({ id: teamSupport.supportTeamId }) | async)?.name }}</b>
             support requested by
             {{ userService.formatUser(teamSupport.createdByUserId) | async }}
             [{{ teamSupport.createdAt | date: 'dd-MMM-yy HH:mm' }}]

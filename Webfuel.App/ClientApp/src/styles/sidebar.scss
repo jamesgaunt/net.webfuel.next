@@ -71,3 +71,31 @@
     }
   }
 }
+
+
+
+@media (max-width: $breakpoint-sm) {
+
+  .chrome {
+    .sidebar {
+      z-index: 1000;
+      width: 3.5rem;
+      overflow: hidden;
+      white-space: nowrap;
+      transition: width 0.25s ease;
+
+      span {
+        display: none;
+      }
+
+      &:hover {
+        width: var(--sidebar-width);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+
+        span {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}

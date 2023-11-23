@@ -21,6 +21,9 @@ namespace Webfuel.Domain
                     case nameof(ProjectTeamSupport.Id):
                         Id = (Guid)value!;
                         break;
+                    case nameof(ProjectTeamSupport.ProjectPrefixedNumber):
+                        ProjectPrefixedNumber = (string)value!;
+                        break;
                     case nameof(ProjectTeamSupport.CreatedNotes):
                         CreatedNotes = (string)value!;
                         break;
@@ -49,6 +52,7 @@ namespace Webfuel.Domain
             }
         }
         public Guid Id  { get; set; } = Guid.Empty;
+        public string ProjectPrefixedNumber  { get; set; } = String.Empty;
         public string CreatedNotes  { get; set; } = String.Empty;
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public string CompletedNotes  { get; set; } = String.Empty;
@@ -61,6 +65,7 @@ namespace Webfuel.Domain
         {
             var entity = new ProjectTeamSupport();
             entity.Id = Id;
+            entity.ProjectPrefixedNumber = ProjectPrefixedNumber;
             entity.CreatedNotes = CreatedNotes;
             entity.CreatedAt = CreatedAt;
             entity.CompletedNotes = CompletedNotes;

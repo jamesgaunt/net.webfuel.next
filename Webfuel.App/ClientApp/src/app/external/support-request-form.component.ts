@@ -25,13 +25,34 @@ export class SupportRequestFormComponent {
     public staticDataCache: StaticDataCache,
     private httpClient: HttpClient,
   ) {
+
     this.form.valueChanges.pipe(
       takeUntilDestroyed(this.destroyRef),
       debounceTime(200)
     ).subscribe((result) => {
       if (this.form.valid)
         this.errorMessage = "";
-    })
+    });
+
+    this.staticDataCache.researcherRole.query({ filters: [{ field: "name", op: "eq", value: "Chief Investigator" }], skip: 0, take: 1 }).subscribe((result) => {
+      if (result.items.length > 0)
+        this.chiefInvestigatorRoleId = result.items[0].id;
+    });
+  }
+
+  chiefInvestigatorRoleId = "???";
+
+  isTeamContactAlsoChiefInvestigator() {
+    var value = this.form.value.teamContactRoleId == this.chiefInvestigatorRoleId;
+    if (value)
+      this.syncTeamContactDetails();
+    return value;
+  }
+
+  syncTeamContactDetails() {
+    this.form.patchValue({ leadApplicantTitle: this.form.value.teamContactTitle });
+    this.form.patchValue({ leadApplicantFirstName: this.form.value.teamContactFirstName });
+    this.form.patchValue({ leadApplicantLastName: this.form.value.teamContactLastName });
   }
 
   stage: 'input' | 'submitted' | 'error' = 'input';
@@ -93,7 +114,8 @@ export class SupportRequestFormComponent {
     leadApplicantEthnicityId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
 
     // Files
-    files: new FormControl(null)
+    files: new FormControl(null),
+    fileStorageGroupId: new FormControl<string | null>(null),
   });
 
   submitting = false;
@@ -103,55 +125,91 @@ export class SupportRequestFormComponent {
   errorMessage = "";
 
   submit() {
+    // Check title/name are syncronised
+    this.isTeamContactAlsoChiefInvestigator();
+
     if (this.formService.hasErrors(this.form)) {
       this.errorMessage = "Please complete all required fields";
       return;
     }
 
     this.submitting = true;
-    var formData = this.toFormData(this.form.value);
+    this.submitFiles();
+  }
 
-    this.httpClient.post(environment.apiHost + "api/support-request", formData, {
+  submitFiles() {
+    var fileData = this.buildFileData();
+    if (fileData == null) {
+      // no files to upload
+      this.submitForm(null);
+      return;
+    }
+
+    this.httpClient.post(environment.apiHost + "api/support-request/files", fileData, {
       reportProgress: true,
       observe: 'events'
     }).subscribe({
-      next:
-        (event) => {
-          if (event.type === HttpEventType.UploadProgress && event.total) {
-            this.progress = Math.round((100 * event.loaded) / event.total);
+      next: (event) => {
+        if (event.type === HttpEventType.UploadProgress && event.total) {
+          this.progress = Math.round((100 * event.loaded) / event.total);
+        }
+        if (event.type === HttpEventType.Response) {
+          // We are done submiting files
+          console.log(event);
+          var fileStorageGroupId = (<any>event.body)?.fileStorageGroupId;
+          if (!fileStorageGroupId) {
+            this.fileSubmissionError("FileStorageGroupId not returned by server");
+          } else {
+            this.submitForm(fileStorageGroupId);
           }
-          if (event.type === HttpEventType.Response) {
-            this.stage = 'submitted';
-          }
-        },
-      error: (err) => {
-        console.log("Form Submission Error: ", err);
-        this.stage = 'error';
+        }
       },
-      complete: () => {
-        this.progress = null;
-        setTimeout(() => this.submitting = false, 1000);
+      error: (err) => {
+        this.fileSubmissionError(err);
       }
     });
   }
 
-  toFormData(formValue: any) {
-    const formData = new FormData();
-    var data: any = {};
+  submitForm(fileStorageGroupId: string | null) {
+    this.form.patchValue({ fileStorageGroupId: fileStorageGroupId });
+    this.supportRequestApi.submitForm(this.form.getRawValue()).subscribe({
+      next: (result) => {
+        this.submitting = false;
+        this.progress = null;
+        this.stage = 'submitted';
+      },
+      error: (err) => {
+        this.submitting = false;
+        this.progress = null;
+        this.formSubmissionError(err);
+      }
+    });
+  }
 
-    for (const key of Object.keys(formValue)) {
-      if (key != "files") {
-        data[key] = formValue[key];
-        continue;
-      }
-      var files = formValue[key];
-      if (files && files.length) {
-        for (var i = 0; i < files.length; i++) {
-          formData.append("file_" + i, files[i]);
-        }
-      }
+  fileSubmissionError(err: any) {
+    this.submitting = false;
+    this.progress = null;
+    console.log("File Submission Error: ", err);
+
+    alert("There was an error uploading your files.\n\nPlease ensure all files are saved on your computer, and not open in another application.");
+  }
+
+  formSubmissionError(err: any) {
+    this.submitting = false;
+    this.progress = null;
+    console.log("Form Submission Error: ", err);
+
+    this.stage = 'error';
+  }
+
+  buildFileData(): FormData | null {
+    var files = <any>this.form.value.files;
+    if (!files || !files.length)
+      return null;
+    const formData = new FormData();
+    for (var i = 0; i < files.length; i++) {
+      formData.append("file_" + i, files[i]);
     }
-    formData.append("data", JSON.stringify(data));
     return formData;
   }
 }

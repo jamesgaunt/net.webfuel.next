@@ -18,8 +18,10 @@ namespace Webfuel.Domain
             var updated = original.Copy();
 
             updated.Claims.CanEditUsers = request.CanEditUsers;
+            updated.Claims.CanEditUserGroups = request.CanEditUserGroups;
             updated.Claims.CanEditStaticData = request.CanEditStaticData;
-            updated.Claims.CanEditResearchers = request.CanEditResearchers;
+            updated.Claims.CanUnlockProjects = request.CanUnlockProjects;
+            updated.Claims.CanTriageSupportRequests = request.CanTriageSupportRequests;
 
             return await _userGroupRepository.UpdateUserGroup(original: original, updated: updated); 
         }

@@ -39,8 +39,8 @@ export class CreateProjectTeamSupportDialogComponent extends DialogComponentBase
   }
 
   form = new FormGroup({
-    projectId: new FormControl<string>('', { nonNullable: true }),
-    supportTeamId: new FormControl<string>('', { nonNullable: true }),
+    projectId: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    supportTeamId: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     createdNotes: new FormControl<string>('', { validators: [Validators.required], nonNullable: true })
   });
 

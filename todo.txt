@@ -1,14 +1,14 @@
 TODO:
 
+> Upload Error if files open on PC.
+
 > Purchase and setup on new domain - send form code to ICL for their web administrators
 
 > Permissions (look again at asp.net core infrastructure)
 
-> Tab selection of controls (think it's kinda important now)
+> Tab selection of controls (think it's kinda important now) - mainly dates to do
 
 > Project Metrics Calculation (Lazy?)
-
-> Client side user identity cache
 
 > Change Log Utility : Format Primative (NULL -> (NONE) + on empty strings)
 
@@ -16,6 +16,7 @@ TODO:
 
 > Google Recaptcha 3 on the support request form (https://dev.to/rodrigokamada/adding-the-google-recaptcha-v3-to-an-angular-application-kge)
 
+> Project / Support Request Change Status => Unlock (to mirror can unlock permission) [API should mirror claims]
 
 ----- Future ------
 

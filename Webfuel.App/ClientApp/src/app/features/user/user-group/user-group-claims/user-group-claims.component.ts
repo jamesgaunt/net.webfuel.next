@@ -27,15 +27,18 @@ export class UserGroupClaimsComponent implements OnInit {
 
   reset(item: UserGroup) {
     this.item = item;
-    this.form.patchValue(item);
+    this.form.patchValue({ id: item.id });
+    this.form.patchValue(item.claims);
     this.form.markAsPristine();
   }
 
   form = new FormGroup({
     id: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     canEditUsers: new FormControl<boolean>(false, { nonNullable: true }),
+    canEditUserGroups: new FormControl<boolean>(false, { nonNullable: true }),
     canEditStaticData: new FormControl<boolean>(false, { nonNullable: true }),
-    canEditResearchers: new FormControl<boolean>(false, { nonNullable: true }),
+    canUnlockProjects: new FormControl<boolean>(false, { nonNullable: true }),
+    canTriageSupportRequests: new FormControl<boolean>(false, { nonNullable: true }),
   });
 
   save(close: boolean) {

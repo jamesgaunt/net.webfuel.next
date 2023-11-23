@@ -14,5 +14,7 @@ export class ApplicationStageComponent extends StaticDataComponent<ApplicationSt
   ) {
     super(dataSource);
     this.typeName = "Application Stage";
+    this.enableHidden = true;
+    this.enableFreeText = true;
   }
 }
