@@ -30,6 +30,7 @@ namespace Webfuel.Api
                 builder.Services.RegisterCommonServices();
                 builder.Services.RegisterDomainServices();
                 builder.Services.RegisterStaticDataServices();
+                builder.Services.RegisterExcelServices();
 
                 builder.Services.AddMediatR(c =>
                 {

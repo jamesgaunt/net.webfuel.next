@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Webfuel
 {
-
     public class ReportingField<TContext> where TContext : class
     {
         public required string Name { get; init; }
@@ -15,7 +14,11 @@ namespace Webfuel
 
         public required ReportingFieldType FieldType { get; init; }
 
-        public required bool Nullable { get; init; }
+        public string DataSource { get; init; } = String.Empty;
+
+        public bool Nullable { get; init; }
+
+        public bool Default { get; init; }
 
         public required Func<TContext, Task<object?>> Accessor { get; init; }
 

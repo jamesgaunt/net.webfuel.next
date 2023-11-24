@@ -1,0 +1,14 @@
+<ul class="breadcrumbs">
+  <li><a routerLink="/home">Home</a></li>
+  <li><a routerLink="/configuration/configuration-menu">Configuration</a></li>
+  <li><a routerLink="/report/report-group-list">Reports Groups</a></li>
+</ul>
+<div class="container">
+  <h1 class="title">Report Groups</h1>
+  <grid [dataSource]="reportGroupApi" [search]="true">
+    <grid-column name="name" />
+    <grid-action-column (add)="add()" (edit)="edit($event)" (delete)="delete($event)" />
+  </grid>
+</div>
+
+

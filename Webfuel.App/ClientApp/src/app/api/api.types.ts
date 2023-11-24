@@ -622,6 +622,34 @@ export interface QueryProjectTeamSupport extends Query {
     search?: string;
 }
 
+export interface ReportGroup {
+    id: string;
+    name: string;
+    sortOrder: number;
+}
+
+export interface CreateReportGroup {
+    name: string;
+}
+
+export interface UpdateReportGroup {
+    id: string;
+    name: string;
+}
+
+export interface SortReportGroup {
+    ids: Array<string>;
+}
+
+export interface QueryReportGroup extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
 export interface SupportRequest {
     id: string;
     number: number;

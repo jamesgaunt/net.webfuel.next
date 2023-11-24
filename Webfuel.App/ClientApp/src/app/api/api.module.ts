@@ -9,6 +9,7 @@ import { ProjectChangeLogApi } from './project-change-log.api';
 import { ProjectSubmissionApi } from './project-submission.api';
 import { ProjectSupportApi } from './project-support.api';
 import { ProjectTeamSupportApi } from './project-team-support.api';
+import { ReportGroupApi } from './report-group.api';
 import { SupportRequestApi } from './support-request.api';
 import { SupportRequestChangeLogApi } from './support-request-change-log.api';
 import { SupportTeamUserApi } from './support-team-user.api';
@@ -60,6 +61,7 @@ import { StaticDataCache } from './static-data.cache';
         ProjectSubmissionApi,
         ProjectSupportApi,
         ProjectTeamSupportApi,
+        ReportGroupApi,
         SupportRequestApi,
         SupportRequestChangeLogApi,
         SupportTeamUserApi,

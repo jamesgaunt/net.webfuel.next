@@ -67,6 +67,11 @@ const routes: Routes = [
     path: 'static-data',
     loadChildren: () => import('./features/static-data/static-data.module').then(m => m.StaticDataModule),
     canActivate: [isAuthenticated]
+  },
+  {
+    path: 'reporting',
+    loadChildren: () => import('./features/reporting/reporting.module').then(m => m.ReportingModule),
+    canActivate: [isAuthenticated]
   }
 ];
 

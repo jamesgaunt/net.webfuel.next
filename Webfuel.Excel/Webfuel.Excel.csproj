@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Attributes\" />
+    <ProjectReference Include="..\Webfuel.Core\Webfuel.Core.csproj" />
   </ItemGroup>
 
 </Project>

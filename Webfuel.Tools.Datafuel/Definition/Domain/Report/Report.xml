@@ -5,6 +5,5 @@
     <Key Name="Id" Type="guid" />
     <Property Name="Name" Type="meta:name" />
     <Property Name="SortOrder" Type="int" />
-    <Property Name="ReportingContextId" Type="Guid" />
   </Entity>
 </Schema>

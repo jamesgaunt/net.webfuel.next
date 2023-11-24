@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Webfuel
 {
-    public interface IReportingContext<TContext> where TContext : class
+    public interface IReportGeneratorRequest
     {
+        Guid ReportGenerationId { get; }
     }
 }

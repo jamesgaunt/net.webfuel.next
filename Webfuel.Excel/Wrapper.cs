@@ -145,10 +145,56 @@ namespace Webfuel.Excel
             return this;
         }
 
+        public ExcelCell SetValue(object? value)
+        {
+            if(value == null)
+                return Clear();
+
+            if(value is String)
+                return SetValue((String)value);
+
+            if(value is bool)
+                return SetValue((bool)value);
+
+            if(value is int)
+                return SetValue((int)value);
+
+            if(value is DateTime)
+                return SetValue((DateTime)value);
+
+            if(value is Decimal || IsNumericType(value.GetType()))
+                return SetValue((Decimal)value);
+
+            return SetValue("ERROR: Unable to map object value");
+        }
+
         public ExcelCell Clear()
         {
             _cell.Clear();
             return this;
+        }
+
+        // Helpers
+
+        bool IsNumericType(Type type)
+        {
+            switch (Type.GetTypeCode(type))
+            {
+                case TypeCode.Byte:
+                case TypeCode.SByte:
+                case TypeCode.UInt16:
+                case TypeCode.UInt32:
+                case TypeCode.UInt64:
+                case TypeCode.Int16:
+                case TypeCode.Int32:
+                case TypeCode.Int64:
+                case TypeCode.Decimal:
+                case TypeCode.Double:
+                case TypeCode.Single:
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 }

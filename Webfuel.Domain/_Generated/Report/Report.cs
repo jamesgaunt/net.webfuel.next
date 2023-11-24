@@ -27,23 +27,18 @@ namespace Webfuel.Domain
                     case nameof(Report.SortOrder):
                         SortOrder = (int)value!;
                         break;
-                    case nameof(Report.ReportingContextId):
-                        ReportingContextId = (Guid)value!;
-                        break;
                 }
             }
         }
         public Guid Id  { get; set; } = Guid.Empty;
         public string Name  { get; set; } = String.Empty;
         public int SortOrder  { get; set; } = 0;
-        public Guid ReportingContextId  { get; set; } = Guid.Empty;
         public Report Copy()
         {
             var entity = new Report();
             entity.Id = Id;
             entity.Name = Name;
             entity.SortOrder = SortOrder;
-            entity.ReportingContextId = ReportingContextId;
             return entity;
         }
     }

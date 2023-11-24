@@ -2,8 +2,6 @@
 {
     public enum ReportingFieldType
     {
-        Unknown,
-
         String,
         Int32,
         Decimal,
@@ -11,8 +9,8 @@
         Boolean, 
         DateTime,
         Date,
-
-        Reference,
-        ReferenceList,
+        Guid,
+        GuidList,
+        Complex,
     }
 }

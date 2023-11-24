@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Webfuel
 {
-    public interface IReportingContext<TContext> where TContext : class
+    public interface IReportProvider
     {
+
+
+
     }
 }
