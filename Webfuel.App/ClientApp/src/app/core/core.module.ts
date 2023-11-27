@@ -19,6 +19,8 @@ import { ConfigurationService } from './configuration.service';
 import { LoginService } from './login.service';
 import { QueryService } from './query.service';
 import { UserService } from './user.service';
+import { ReportService } from './report.service';
+import { ReportDialog, ReportDialogComponent } from './dialogs/report/report.dialog';
 
 @NgModule({
   imports: [
@@ -26,6 +28,10 @@ import { UserService } from './user.service';
     SharedModule,
   ],
   declarations: [
+    ReportDialogComponent
+  ],
+  exports: [
+    ReportDialogComponent
   ],
   providers: [
     ApiService,
@@ -39,7 +45,9 @@ import { UserService } from './user.service';
     ErrorService,
     QueryService,
     UserService,
+    ReportService,
     DeactivateService,
+    ReportDialog,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthorizationInterceptor,

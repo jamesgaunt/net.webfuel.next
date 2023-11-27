@@ -6,9 +6,11 @@ import { PingApi } from './ping.api';
 import { StaticDataApi } from './static-data.api';
 import { ProjectApi } from './project.api';
 import { ProjectChangeLogApi } from './project-change-log.api';
+import { ProjectExportApi } from './project-export.api';
 import { ProjectSubmissionApi } from './project-submission.api';
 import { ProjectSupportApi } from './project-support.api';
 import { ProjectTeamSupportApi } from './project-team-support.api';
+import { ReportApi } from './report.api';
 import { ReportGroupApi } from './report-group.api';
 import { SupportRequestApi } from './support-request.api';
 import { SupportRequestChangeLogApi } from './support-request-change-log.api';
@@ -58,9 +60,11 @@ import { StaticDataCache } from './static-data.cache';
         StaticDataApi,
         ProjectApi,
         ProjectChangeLogApi,
+        ProjectExportApi,
         ProjectSubmissionApi,
         ProjectSupportApi,
         ProjectTeamSupportApi,
+        ReportApi,
         ReportGroupApi,
         SupportRequestApi,
         SupportRequestChangeLogApi,

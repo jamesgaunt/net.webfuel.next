@@ -3,8 +3,16 @@
   <li><a routerLink="/project/project-list">Projects</a></li>
 </ul>
 <div class="container">
-  <h1 class="title">Projects</h1>
-
+  <div class="columns">
+    <div class="column">
+      <h1 class="title">Projects</h1>
+    </div>
+    <div class="column">
+      <div class="header-buttons">
+        <button *ngIf="canExport()" class="button is-primary" (click)="export()">Export</button>
+      </div>
+    </div>
+  </div>
   <div class="filter-form">
     <form class="form" [formGroup]="filterForm">
       <div class="flex">

@@ -6,31 +6,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Webfuel
+namespace Webfuel.Common
 {
-    public interface IBackgroundTaskService
+    internal interface IReportTaskService
     {
-        void InitialiseTask(BackgroundTask task);
+        void StoreTask(ReportTask task);
 
-        T? RetrieveTask<T>(Guid taskId) where T : BackgroundTask;
+        ReportTask? RetrieveTask(Guid taskId);
     }
 
-    [Service(typeof(BackgroundTaskService))]
-    internal class BackgroundTaskService: IBackgroundTaskService
+    [Service(typeof(IReportTaskService))]
+    internal class ReportTaskService: IReportTaskService
     {
         private readonly IIdentityAccessor _identityAccessor;
 
-        public BackgroundTaskService(IIdentityAccessor identityAccessor)
+        public ReportTaskService(IIdentityAccessor identityAccessor)
         {
             this._identityAccessor = identityAccessor;
         }
 
-        public void InitialiseTask(BackgroundTask task)
+        public void StoreTask(ReportTask task)
         {
             if (_identityAccessor.User == null)
-                throw new InvalidOperationException("Unable to initialise a background task without an identity context");
+                throw new InvalidOperationException("Unable to initialise a report task without an identity context");
 
-            var currentTaskId = CurrentIdentityTask();
+            var currentTaskId = CurrentTask();
             if(currentTaskId != null)
             {
                 // For now just dump it
@@ -46,10 +46,10 @@ namespace Webfuel
             CleanupTasks();
         }
 
-        public T? RetrieveTask<T>(Guid taskId) where T : BackgroundTask
+        public ReportTask? RetrieveTask(Guid taskId)
         {
             if (_identityAccessor.User == null)
-                throw new InvalidOperationException("Unable to retrieve a background task without an identity context");
+                throw new InvalidOperationException("Unable to retrieve a report task without an identity context");
 
             if (!_tasks.TryGetValue(taskId, out var task))
                 return null;
@@ -57,16 +57,13 @@ namespace Webfuel
             if (task.IdentityId != _identityAccessor.User.Id)
                 return null;
 
-            if (!(task is T))
-                return null;
-
             task.LastAccessedAt = DateTimeOffset.UtcNow;
 
             CleanupTasks();
-            return task as T;
+            return task;
         }
 
-        Guid? CurrentIdentityTask()
+        Guid? CurrentTask()
         {
             if (_identityAccessor.User == null)
                 return null;
@@ -90,6 +87,6 @@ namespace Webfuel
             }
         }
 
-        static ConcurrentDictionary<Guid, BackgroundTask> _tasks = new ConcurrentDictionary<Guid, BackgroundTask>();
+        static ConcurrentDictionary<Guid, ReportTask> _tasks = new ConcurrentDictionary<Guid, ReportTask>();
     }
 }

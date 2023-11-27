@@ -9,6 +9,8 @@ namespace Webfuel.Excel
     public class ExcelData
     {
         public List<ExcelDataRow> Rows { get; } = new List<ExcelDataRow>();
+
+
     }
 
     public class ExcelDataRow

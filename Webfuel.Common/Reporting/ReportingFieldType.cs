@@ -1,4 +1,4 @@
-﻿namespace Webfuel
+﻿namespace Webfuel.Common
 {
     public enum ReportingFieldType
     {

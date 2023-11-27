@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Project } from 'api/api.types';
 import { ProjectApi } from 'api/project.api';
 import { StaticDataCache } from 'api/static-data.cache';
-import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
-import { FormControl, FormGroup } from '@angular/forms';
+import { ProjectExportApi } from '../../../../api/project-export.api';
+import { ConfigurationService } from '../../../../core/configuration.service';
 
 @Component({
   selector: 'project-list',
@@ -15,7 +16,8 @@ export class ProjectListComponent {
     private router: Router,
     public projectApi: ProjectApi,
     public staticDataCache: StaticDataCache,
-    private confirmDeleteDialog: ConfirmDeleteDialog
+    private projectExportApi: ProjectExportApi,
+    private configurationService: ConfigurationService
   ) {
   }
 
@@ -41,5 +43,15 @@ export class ProjectListComponent {
 
   edit(item: Project) {
     this.router.navigate(['project/project-item', item.id]);
+  }
+
+  canExport() {
+    return this.configurationService.hasClaim(c => c.claims.developer);
+  }
+
+  export() {
+    this.projectExportApi.initialise(this.filterForm.getRawValue()).subscribe((result) => {
+
+    });
   }
 }

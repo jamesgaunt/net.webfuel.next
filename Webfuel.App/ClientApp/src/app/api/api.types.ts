@@ -519,6 +519,21 @@ export interface QueryProjectChangeLog extends Query {
     search?: string;
 }
 
+export interface ReportProgress {
+    taskId: string;
+    progressPercentage: number;
+    complete: boolean;
+}
+
+export interface ProjectExportRequest {
+    number: string;
+    title: string;
+    fromDate: string | null | null;
+    toDate: string | null | null;
+    statusId: string | null | null;
+    fundingStreamId: string | null | null;
+}
+
 export interface ProjectSubmission {
     id: string;
     nihrReference: string;
