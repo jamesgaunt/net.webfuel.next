@@ -13,13 +13,38 @@ namespace Webfuel.Common
         Task<ReportProgress> GenerateReport(Guid taskId);
     }
 
-    internal class ReportService
+    [Service(typeof(IReportService))]
+    internal class ReportService: IReportService
     {
         private readonly IServiceProvider _serviceProvider;
+        private readonly IReportTaskService _reportTaskService;
 
-        public ReportService(IServiceProvider serviceProvider) 
+        public ReportService(IServiceProvider serviceProvider, IReportTaskService reportTaskService) 
         { 
             _serviceProvider = serviceProvider;
+            _reportTaskService = reportTaskService;
+        }
+
+        public Task<ReportProgress> RegisterReport(ReportTask task)
+        {
+            _reportTaskService.StoreTask(task);
+
+            return Task.FromResult(ReportProgress.FromTask(task));
+        }
+
+        public async Task<ReportProgress> GenerateReport(Guid taskId)
+        {
+            var task = _reportTaskService.RetrieveTask(taskId);
+            if (task == null)
+                throw new DomainException("The specified report task no longer exists");
+
+            var reportGenerator = _serviceProvider.GetService(task.ReportGeneratorType) as IReportGenerator;
+            if(reportGenerator == null)
+                throw new DomainException("Unable to instantiate report generator of type " + task.ReportGeneratorType.Name);
+
+            await reportGenerator.GenerateReport(task);
+
+            return ReportProgress.FromTask(task);
         }
     }
 }

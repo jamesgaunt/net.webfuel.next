@@ -9,7 +9,7 @@ namespace Webfuel.Common
 {
     public abstract class ReportTask
     {
-        public abstract Type ReportGenerator { get; }
+        public abstract Type ReportGeneratorType { get; }
 
         public Guid TaskId { get; internal set; }
 

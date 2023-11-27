@@ -9,11 +9,9 @@ using Webfuel.Common;
 namespace Webfuel.Domain
 {
 
-    public interface IProjectExportService
+    public interface IProjectExportService: IReportGenerator
     {
         Task<ReportProgress> InitialiseReport(ProjectExportRequest request);
-
-        Task GenerateReport(ProjectExportTask task);
     }
 
     [Service(typeof(IProjectExportService))]
@@ -34,8 +32,11 @@ namespace Webfuel.Domain
             return _reportService.RegisterReport(task);
         }
 
-        public async Task GenerateReport(ProjectExportTask task)
+        public async Task GenerateReport(ReportTask _task)
         {
+            if (!(_task is ProjectExportTask task))
+                throw new DomainException("Wrong type of task passed to report generator");
+
             task.Query.Skip = task.ProgressCount;
             task.Query.Take = 10;
 

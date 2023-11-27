@@ -11,7 +11,7 @@ namespace Webfuel.Domain
             Query = Request.ToQuery();
         } 
 
-        public override Type ReportGenerator => typeof(IProjectExportService);
+        public override Type ReportGeneratorType => typeof(IProjectExportService);
        
         public ProjectExportRequest Request { get; }
         
