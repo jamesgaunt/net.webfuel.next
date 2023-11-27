@@ -12,7 +12,7 @@ namespace Webfuel.Domain
         Task<ProjectTeamSupport> UpdateProjectTeamSupport(ProjectTeamSupport entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<ProjectTeamSupport> UpdateProjectTeamSupport(ProjectTeamSupport updated, ProjectTeamSupport original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteProjectTeamSupport(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<ProjectTeamSupport>> QueryProjectTeamSupport(Query query);
+        Task<QueryResult<ProjectTeamSupport>> QueryProjectTeamSupport(Query query, bool countTotal = true);
         Task<ProjectTeamSupport?> GetProjectTeamSupport(Guid id);
         Task<ProjectTeamSupport> RequireProjectTeamSupport(Guid id);
         Task<int> CountProjectTeamSupport();
@@ -59,9 +59,9 @@ namespace Webfuel.Domain
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<ProjectTeamSupport>> QueryProjectTeamSupport(Query query)
+        public async Task<QueryResult<ProjectTeamSupport>> QueryProjectTeamSupport(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<ProjectTeamSupport, ProjectTeamSupportMetadata>(query);
+            return await _connection.ExecuteQuery<ProjectTeamSupport, ProjectTeamSupportMetadata>(query, countTotal);
         }
         public async Task<ProjectTeamSupport?> GetProjectTeamSupport(Guid id)
         {

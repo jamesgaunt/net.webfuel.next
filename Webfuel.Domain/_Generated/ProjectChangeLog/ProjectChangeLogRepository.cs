@@ -12,7 +12,7 @@ namespace Webfuel.Domain
         Task<ProjectChangeLog> UpdateProjectChangeLog(ProjectChangeLog entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<ProjectChangeLog> UpdateProjectChangeLog(ProjectChangeLog updated, ProjectChangeLog original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteProjectChangeLog(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<ProjectChangeLog>> QueryProjectChangeLog(Query query);
+        Task<QueryResult<ProjectChangeLog>> QueryProjectChangeLog(Query query, bool countTotal = true);
         Task<ProjectChangeLog?> GetProjectChangeLog(Guid id);
         Task<ProjectChangeLog> RequireProjectChangeLog(Guid id);
         Task<int> CountProjectChangeLog();
@@ -57,9 +57,9 @@ namespace Webfuel.Domain
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<ProjectChangeLog>> QueryProjectChangeLog(Query query)
+        public async Task<QueryResult<ProjectChangeLog>> QueryProjectChangeLog(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<ProjectChangeLog, ProjectChangeLogMetadata>(query);
+            return await _connection.ExecuteQuery<ProjectChangeLog, ProjectChangeLogMetadata>(query, countTotal);
         }
         public async Task<ProjectChangeLog?> GetProjectChangeLog(Guid id)
         {

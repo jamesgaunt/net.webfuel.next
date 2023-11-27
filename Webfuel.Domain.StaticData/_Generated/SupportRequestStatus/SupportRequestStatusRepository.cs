@@ -8,7 +8,7 @@ namespace Webfuel.Domain.StaticData
 {
     internal partial interface ISupportRequestStatusRepository
     {
-        Task<QueryResult<SupportRequestStatus>> QuerySupportRequestStatus(Query query);
+        Task<QueryResult<SupportRequestStatus>> QuerySupportRequestStatus(Query query, bool countTotal = true);
         Task<SupportRequestStatus?> GetSupportRequestStatus(Guid id);
         Task<SupportRequestStatus> RequireSupportRequestStatus(Guid id);
         Task<int> CountSupportRequestStatus();
@@ -26,9 +26,9 @@ namespace Webfuel.Domain.StaticData
         {
             _connection = connection;
         }
-        public async Task<QueryResult<SupportRequestStatus>> QuerySupportRequestStatus(Query query)
+        public async Task<QueryResult<SupportRequestStatus>> QuerySupportRequestStatus(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<SupportRequestStatus, SupportRequestStatusMetadata>(query);
+            return await _connection.ExecuteQuery<SupportRequestStatus, SupportRequestStatusMetadata>(query, countTotal);
         }
         public async Task<SupportRequestStatus?> GetSupportRequestStatus(Guid id)
         {

@@ -12,7 +12,7 @@ namespace Webfuel.Domain.StaticData
         Task<AgeRange> UpdateAgeRange(AgeRange entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<AgeRange> UpdateAgeRange(AgeRange updated, AgeRange original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteAgeRange(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<AgeRange>> QueryAgeRange(Query query);
+        Task<QueryResult<AgeRange>> QueryAgeRange(Query query, bool countTotal = true);
         Task<AgeRange?> GetAgeRange(Guid id);
         Task<AgeRange> RequireAgeRange(Guid id);
         Task<int> CountAgeRange();
@@ -58,9 +58,9 @@ namespace Webfuel.Domain.StaticData
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<AgeRange>> QueryAgeRange(Query query)
+        public async Task<QueryResult<AgeRange>> QueryAgeRange(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<AgeRange, AgeRangeMetadata>(query);
+            return await _connection.ExecuteQuery<AgeRange, AgeRangeMetadata>(query, countTotal);
         }
         public async Task<AgeRange?> GetAgeRange(Guid id)
         {

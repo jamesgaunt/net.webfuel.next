@@ -8,7 +8,7 @@ namespace Webfuel.Domain.StaticData
 {
     internal partial interface IIsPPIEAndEDIContributionRepository
     {
-        Task<QueryResult<IsPPIEAndEDIContribution>> QueryIsPPIEAndEDIContribution(Query query);
+        Task<QueryResult<IsPPIEAndEDIContribution>> QueryIsPPIEAndEDIContribution(Query query, bool countTotal = true);
         Task<IsPPIEAndEDIContribution?> GetIsPPIEAndEDIContribution(Guid id);
         Task<IsPPIEAndEDIContribution> RequireIsPPIEAndEDIContribution(Guid id);
         Task<int> CountIsPPIEAndEDIContribution();
@@ -26,9 +26,9 @@ namespace Webfuel.Domain.StaticData
         {
             _connection = connection;
         }
-        public async Task<QueryResult<IsPPIEAndEDIContribution>> QueryIsPPIEAndEDIContribution(Query query)
+        public async Task<QueryResult<IsPPIEAndEDIContribution>> QueryIsPPIEAndEDIContribution(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<IsPPIEAndEDIContribution, IsPPIEAndEDIContributionMetadata>(query);
+            return await _connection.ExecuteQuery<IsPPIEAndEDIContribution, IsPPIEAndEDIContributionMetadata>(query, countTotal);
         }
         public async Task<IsPPIEAndEDIContribution?> GetIsPPIEAndEDIContribution(Guid id)
         {

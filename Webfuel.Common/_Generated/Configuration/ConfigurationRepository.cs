@@ -12,7 +12,7 @@ namespace Webfuel.Common
         Task<Configuration> UpdateConfiguration(Configuration entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<Configuration> UpdateConfiguration(Configuration updated, Configuration original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteConfiguration(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<Configuration>> QueryConfiguration(Query query);
+        Task<QueryResult<Configuration>> QueryConfiguration(Query query, bool countTotal = true);
         Task<Configuration?> GetConfiguration(Guid id);
         Task<Configuration> RequireConfiguration(Guid id);
         Task<int> CountConfiguration();
@@ -56,9 +56,9 @@ namespace Webfuel.Common
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<Configuration>> QueryConfiguration(Query query)
+        public async Task<QueryResult<Configuration>> QueryConfiguration(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<Configuration, ConfigurationMetadata>(query);
+            return await _connection.ExecuteQuery<Configuration, ConfigurationMetadata>(query, countTotal);
         }
         public async Task<Configuration?> GetConfiguration(Guid id)
         {

@@ -12,7 +12,7 @@ namespace Webfuel.Common
         Task<ErrorLog> UpdateErrorLog(ErrorLog entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<ErrorLog> UpdateErrorLog(ErrorLog updated, ErrorLog original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteErrorLog(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<ErrorLog>> QueryErrorLog(Query query);
+        Task<QueryResult<ErrorLog>> QueryErrorLog(Query query, bool countTotal = true);
         Task<ErrorLog?> GetErrorLog(Guid id);
         Task<ErrorLog> RequireErrorLog(Guid id);
         Task<int> CountErrorLog();
@@ -57,9 +57,9 @@ namespace Webfuel.Common
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<ErrorLog>> QueryErrorLog(Query query)
+        public async Task<QueryResult<ErrorLog>> QueryErrorLog(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<ErrorLog, ErrorLogMetadata>(query);
+            return await _connection.ExecuteQuery<ErrorLog, ErrorLogMetadata>(query, countTotal);
         }
         public async Task<ErrorLog?> GetErrorLog(Guid id)
         {

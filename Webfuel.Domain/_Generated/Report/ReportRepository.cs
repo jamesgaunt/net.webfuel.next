@@ -12,7 +12,7 @@ namespace Webfuel.Domain
         Task<Report> UpdateReport(Report entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<Report> UpdateReport(Report updated, Report original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteReport(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<Report>> QueryReport(Query query);
+        Task<QueryResult<Report>> QueryReport(Query query, bool countTotal = true);
         Task<Report?> GetReport(Guid id);
         Task<Report> RequireReport(Guid id);
         Task<int> CountReport();
@@ -56,9 +56,9 @@ namespace Webfuel.Domain
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<Report>> QueryReport(Query query)
+        public async Task<QueryResult<Report>> QueryReport(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<Report, ReportMetadata>(query);
+            return await _connection.ExecuteQuery<Report, ReportMetadata>(query, countTotal);
         }
         public async Task<Report?> GetReport(Guid id)
         {

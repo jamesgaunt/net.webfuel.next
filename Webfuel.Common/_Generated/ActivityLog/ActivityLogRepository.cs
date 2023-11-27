@@ -12,7 +12,7 @@ namespace Webfuel.Common
         Task<ActivityLog> UpdateActivityLog(ActivityLog entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<ActivityLog> UpdateActivityLog(ActivityLog updated, ActivityLog original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteActivityLog(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<ActivityLog>> QueryActivityLog(Query query);
+        Task<QueryResult<ActivityLog>> QueryActivityLog(Query query, bool countTotal = true);
         Task<ActivityLog?> GetActivityLog(Guid id);
         Task<ActivityLog> RequireActivityLog(Guid id);
         Task<int> CountActivityLog();
@@ -57,9 +57,9 @@ namespace Webfuel.Common
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<ActivityLog>> QueryActivityLog(Query query)
+        public async Task<QueryResult<ActivityLog>> QueryActivityLog(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<ActivityLog, ActivityLogMetadata>(query);
+            return await _connection.ExecuteQuery<ActivityLog, ActivityLogMetadata>(query, countTotal);
         }
         public async Task<ActivityLog?> GetActivityLog(Guid id)
         {

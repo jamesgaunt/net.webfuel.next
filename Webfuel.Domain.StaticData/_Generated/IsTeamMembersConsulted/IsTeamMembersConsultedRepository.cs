@@ -8,7 +8,7 @@ namespace Webfuel.Domain.StaticData
 {
     internal partial interface IIsTeamMembersConsultedRepository
     {
-        Task<QueryResult<IsTeamMembersConsulted>> QueryIsTeamMembersConsulted(Query query);
+        Task<QueryResult<IsTeamMembersConsulted>> QueryIsTeamMembersConsulted(Query query, bool countTotal = true);
         Task<IsTeamMembersConsulted?> GetIsTeamMembersConsulted(Guid id);
         Task<IsTeamMembersConsulted> RequireIsTeamMembersConsulted(Guid id);
         Task<int> CountIsTeamMembersConsulted();
@@ -26,9 +26,9 @@ namespace Webfuel.Domain.StaticData
         {
             _connection = connection;
         }
-        public async Task<QueryResult<IsTeamMembersConsulted>> QueryIsTeamMembersConsulted(Query query)
+        public async Task<QueryResult<IsTeamMembersConsulted>> QueryIsTeamMembersConsulted(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<IsTeamMembersConsulted, IsTeamMembersConsultedMetadata>(query);
+            return await _connection.ExecuteQuery<IsTeamMembersConsulted, IsTeamMembersConsultedMetadata>(query, countTotal);
         }
         public async Task<IsTeamMembersConsulted?> GetIsTeamMembersConsulted(Guid id)
         {

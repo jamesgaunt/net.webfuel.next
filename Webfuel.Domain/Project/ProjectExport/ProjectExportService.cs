@@ -1,36 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.TagHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Webfuel.Common;
-using Webfuel.Excel;
 
 namespace Webfuel.Domain
 {
-    public class ProjectExportRequest
-    {
-        public string Number { get; set; } = String.Empty;
-
-        public string Title { get; set; } = String.Empty;
-
-        public DateOnly? FromDate { get; set; }
-
-        public DateOnly? ToDate { get; set; }
-
-        public Guid? StatusId { get; set; }
-
-        public Guid? FundingStreamId { get; set; }
-    }
-
-    public class ProjectExportTask: ReportTask
-    {
-        public override Type ReportGenerator => typeof(IProjectExportService);
-        public required ProjectExportRequest Request { get; init; }
-        public int Taken { get; set; }
-        public int Total { get; set; }
-        public ExcelData Data { get; } = new ExcelData();
-    }
 
     public interface IProjectExportService
     {
@@ -43,25 +20,38 @@ namespace Webfuel.Domain
     internal class ProjectExportService : IProjectExportService
     {
         private readonly IReportService _reportService;
+        private readonly IProjectRepository _projectRepository;
 
-        public ProjectExportService(IReportService reportService)
+        public ProjectExportService(IReportService reportService, IProjectRepository projectRepository)
         {
             _reportService = reportService;
+            _projectRepository = projectRepository;
         }
 
         public Task<ReportProgress> InitialiseReport(ProjectExportRequest request)
         {
-            var task = new ProjectExportTask
-            {
-                Request = request
-            };
-
+            var task = new ProjectExportTask(request);
             return _reportService.RegisterReport(task);
         }
 
-        public Task GenerateReport(ProjectExportTask task)
+        public async Task GenerateReport(ProjectExportTask task)
         {
-            throw new NotImplementedException();
+            task.Query.Skip = task.ProgressCount;
+            task.Query.Take = 10;
+
+            var result = await _projectRepository.QueryProject(task.Query, countTotal: task.Query.Skip == 0);
+
+            if (task.Query.Skip == 0) 
+                task.TotalCount = result.TotalCount;
+            task.ProgressCount += task.Query.Take;
+
+            foreach(var item in result.Items)
+            {
+                var row = task.Data.AddRow();
+
+                row.AddCell(item.PrefixedNumber);
+                row.AddCell(item.Title);
+            }
         }
     }
 }

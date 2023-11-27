@@ -12,7 +12,7 @@ namespace Webfuel.Domain.StaticData
         Task<ApplicationStage> UpdateApplicationStage(ApplicationStage entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<ApplicationStage> UpdateApplicationStage(ApplicationStage updated, ApplicationStage original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteApplicationStage(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<ApplicationStage>> QueryApplicationStage(Query query);
+        Task<QueryResult<ApplicationStage>> QueryApplicationStage(Query query, bool countTotal = true);
         Task<ApplicationStage?> GetApplicationStage(Guid id);
         Task<ApplicationStage> RequireApplicationStage(Guid id);
         Task<int> CountApplicationStage();
@@ -58,9 +58,9 @@ namespace Webfuel.Domain.StaticData
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<ApplicationStage>> QueryApplicationStage(Query query)
+        public async Task<QueryResult<ApplicationStage>> QueryApplicationStage(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<ApplicationStage, ApplicationStageMetadata>(query);
+            return await _connection.ExecuteQuery<ApplicationStage, ApplicationStageMetadata>(query, countTotal);
         }
         public async Task<ApplicationStage?> GetApplicationStage(Guid id)
         {

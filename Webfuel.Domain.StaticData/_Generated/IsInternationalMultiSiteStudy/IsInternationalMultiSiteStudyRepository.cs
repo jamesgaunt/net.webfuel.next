@@ -8,7 +8,7 @@ namespace Webfuel.Domain.StaticData
 {
     internal partial interface IIsInternationalMultiSiteStudyRepository
     {
-        Task<QueryResult<IsInternationalMultiSiteStudy>> QueryIsInternationalMultiSiteStudy(Query query);
+        Task<QueryResult<IsInternationalMultiSiteStudy>> QueryIsInternationalMultiSiteStudy(Query query, bool countTotal = true);
         Task<IsInternationalMultiSiteStudy?> GetIsInternationalMultiSiteStudy(Guid id);
         Task<IsInternationalMultiSiteStudy> RequireIsInternationalMultiSiteStudy(Guid id);
         Task<int> CountIsInternationalMultiSiteStudy();
@@ -26,9 +26,9 @@ namespace Webfuel.Domain.StaticData
         {
             _connection = connection;
         }
-        public async Task<QueryResult<IsInternationalMultiSiteStudy>> QueryIsInternationalMultiSiteStudy(Query query)
+        public async Task<QueryResult<IsInternationalMultiSiteStudy>> QueryIsInternationalMultiSiteStudy(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<IsInternationalMultiSiteStudy, IsInternationalMultiSiteStudyMetadata>(query);
+            return await _connection.ExecuteQuery<IsInternationalMultiSiteStudy, IsInternationalMultiSiteStudyMetadata>(query, countTotal);
         }
         public async Task<IsInternationalMultiSiteStudy?> GetIsInternationalMultiSiteStudy(Guid id)
         {

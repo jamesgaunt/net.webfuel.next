@@ -12,7 +12,7 @@ namespace Webfuel.Domain.StaticData
         Task<Disability> UpdateDisability(Disability entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<Disability> UpdateDisability(Disability updated, Disability original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteDisability(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<Disability>> QueryDisability(Query query);
+        Task<QueryResult<Disability>> QueryDisability(Query query, bool countTotal = true);
         Task<Disability?> GetDisability(Guid id);
         Task<Disability> RequireDisability(Guid id);
         Task<int> CountDisability();
@@ -58,9 +58,9 @@ namespace Webfuel.Domain.StaticData
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<Disability>> QueryDisability(Query query)
+        public async Task<QueryResult<Disability>> QueryDisability(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<Disability, DisabilityMetadata>(query);
+            return await _connection.ExecuteQuery<Disability, DisabilityMetadata>(query, countTotal);
         }
         public async Task<Disability?> GetDisability(Guid id)
         {

@@ -8,7 +8,7 @@ namespace Webfuel.Domain.StaticData
 {
     internal partial interface IIsCTUTeamContributionRepository
     {
-        Task<QueryResult<IsCTUTeamContribution>> QueryIsCTUTeamContribution(Query query);
+        Task<QueryResult<IsCTUTeamContribution>> QueryIsCTUTeamContribution(Query query, bool countTotal = true);
         Task<IsCTUTeamContribution?> GetIsCTUTeamContribution(Guid id);
         Task<IsCTUTeamContribution> RequireIsCTUTeamContribution(Guid id);
         Task<int> CountIsCTUTeamContribution();
@@ -26,9 +26,9 @@ namespace Webfuel.Domain.StaticData
         {
             _connection = connection;
         }
-        public async Task<QueryResult<IsCTUTeamContribution>> QueryIsCTUTeamContribution(Query query)
+        public async Task<QueryResult<IsCTUTeamContribution>> QueryIsCTUTeamContribution(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<IsCTUTeamContribution, IsCTUTeamContributionMetadata>(query);
+            return await _connection.ExecuteQuery<IsCTUTeamContribution, IsCTUTeamContributionMetadata>(query, countTotal);
         }
         public async Task<IsCTUTeamContribution?> GetIsCTUTeamContribution(Guid id)
         {

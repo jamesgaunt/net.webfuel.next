@@ -12,7 +12,7 @@ namespace Webfuel.Domain.StaticData
         Task<FundingStream> UpdateFundingStream(FundingStream entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<FundingStream> UpdateFundingStream(FundingStream updated, FundingStream original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteFundingStream(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<FundingStream>> QueryFundingStream(Query query);
+        Task<QueryResult<FundingStream>> QueryFundingStream(Query query, bool countTotal = true);
         Task<FundingStream?> GetFundingStream(Guid id);
         Task<FundingStream> RequireFundingStream(Guid id);
         Task<int> CountFundingStream();
@@ -58,9 +58,9 @@ namespace Webfuel.Domain.StaticData
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<FundingStream>> QueryFundingStream(Query query)
+        public async Task<QueryResult<FundingStream>> QueryFundingStream(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<FundingStream, FundingStreamMetadata>(query);
+            return await _connection.ExecuteQuery<FundingStream, FundingStreamMetadata>(query, countTotal);
         }
         public async Task<FundingStream?> GetFundingStream(Guid id)
         {

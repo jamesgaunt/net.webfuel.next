@@ -12,7 +12,7 @@ namespace Webfuel.Domain.StaticData
         Task<Site> UpdateSite(Site entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<Site> UpdateSite(Site updated, Site original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteSite(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<Site>> QuerySite(Query query);
+        Task<QueryResult<Site>> QuerySite(Query query, bool countTotal = true);
         Task<Site?> GetSite(Guid id);
         Task<Site> RequireSite(Guid id);
         Task<int> CountSite();
@@ -58,9 +58,9 @@ namespace Webfuel.Domain.StaticData
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<Site>> QuerySite(Query query)
+        public async Task<QueryResult<Site>> QuerySite(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<Site, SiteMetadata>(query);
+            return await _connection.ExecuteQuery<Site, SiteMetadata>(query, countTotal);
         }
         public async Task<Site?> GetSite(Guid id)
         {

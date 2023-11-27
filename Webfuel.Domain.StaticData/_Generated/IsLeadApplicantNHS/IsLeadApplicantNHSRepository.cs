@@ -8,7 +8,7 @@ namespace Webfuel.Domain.StaticData
 {
     internal partial interface IIsLeadApplicantNHSRepository
     {
-        Task<QueryResult<IsLeadApplicantNHS>> QueryIsLeadApplicantNHS(Query query);
+        Task<QueryResult<IsLeadApplicantNHS>> QueryIsLeadApplicantNHS(Query query, bool countTotal = true);
         Task<IsLeadApplicantNHS?> GetIsLeadApplicantNHS(Guid id);
         Task<IsLeadApplicantNHS> RequireIsLeadApplicantNHS(Guid id);
         Task<int> CountIsLeadApplicantNHS();
@@ -26,9 +26,9 @@ namespace Webfuel.Domain.StaticData
         {
             _connection = connection;
         }
-        public async Task<QueryResult<IsLeadApplicantNHS>> QueryIsLeadApplicantNHS(Query query)
+        public async Task<QueryResult<IsLeadApplicantNHS>> QueryIsLeadApplicantNHS(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<IsLeadApplicantNHS, IsLeadApplicantNHSMetadata>(query);
+            return await _connection.ExecuteQuery<IsLeadApplicantNHS, IsLeadApplicantNHSMetadata>(query, countTotal);
         }
         public async Task<IsLeadApplicantNHS?> GetIsLeadApplicantNHS(Guid id)
         {

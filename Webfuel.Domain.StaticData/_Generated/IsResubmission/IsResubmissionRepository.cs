@@ -8,7 +8,7 @@ namespace Webfuel.Domain.StaticData
 {
     internal partial interface IIsResubmissionRepository
     {
-        Task<QueryResult<IsResubmission>> QueryIsResubmission(Query query);
+        Task<QueryResult<IsResubmission>> QueryIsResubmission(Query query, bool countTotal = true);
         Task<IsResubmission?> GetIsResubmission(Guid id);
         Task<IsResubmission> RequireIsResubmission(Guid id);
         Task<int> CountIsResubmission();
@@ -26,9 +26,9 @@ namespace Webfuel.Domain.StaticData
         {
             _connection = connection;
         }
-        public async Task<QueryResult<IsResubmission>> QueryIsResubmission(Query query)
+        public async Task<QueryResult<IsResubmission>> QueryIsResubmission(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<IsResubmission, IsResubmissionMetadata>(query);
+            return await _connection.ExecuteQuery<IsResubmission, IsResubmissionMetadata>(query, countTotal);
         }
         public async Task<IsResubmission?> GetIsResubmission(Guid id)
         {

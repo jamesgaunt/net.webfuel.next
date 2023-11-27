@@ -12,7 +12,7 @@ namespace Webfuel.Domain.StaticData
         Task<SupportProvided> UpdateSupportProvided(SupportProvided entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<SupportProvided> UpdateSupportProvided(SupportProvided updated, SupportProvided original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteSupportProvided(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<SupportProvided>> QuerySupportProvided(Query query);
+        Task<QueryResult<SupportProvided>> QuerySupportProvided(Query query, bool countTotal = true);
         Task<SupportProvided?> GetSupportProvided(Guid id);
         Task<SupportProvided> RequireSupportProvided(Guid id);
         Task<int> CountSupportProvided();
@@ -58,9 +58,9 @@ namespace Webfuel.Domain.StaticData
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<SupportProvided>> QuerySupportProvided(Query query)
+        public async Task<QueryResult<SupportProvided>> QuerySupportProvided(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<SupportProvided, SupportProvidedMetadata>(query);
+            return await _connection.ExecuteQuery<SupportProvided, SupportProvidedMetadata>(query, countTotal);
         }
         public async Task<SupportProvided?> GetSupportProvided(Guid id)
         {

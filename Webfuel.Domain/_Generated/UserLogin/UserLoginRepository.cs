@@ -12,7 +12,7 @@ namespace Webfuel.Domain
         Task<UserLogin> UpdateUserLogin(UserLogin entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<UserLogin> UpdateUserLogin(UserLogin updated, UserLogin original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteUserLogin(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<UserLogin>> QueryUserLogin(Query query);
+        Task<QueryResult<UserLogin>> QueryUserLogin(Query query, bool countTotal = true);
         Task<UserLogin?> GetUserLogin(Guid id);
         Task<UserLogin> RequireUserLogin(Guid id);
         Task<int> CountUserLogin();
@@ -56,9 +56,9 @@ namespace Webfuel.Domain
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<UserLogin>> QueryUserLogin(Query query)
+        public async Task<QueryResult<UserLogin>> QueryUserLogin(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<UserLogin, UserLoginMetadata>(query);
+            return await _connection.ExecuteQuery<UserLogin, UserLoginMetadata>(query, countTotal);
         }
         public async Task<UserLogin?> GetUserLogin(Guid id)
         {

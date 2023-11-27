@@ -12,7 +12,7 @@ namespace Webfuel.Domain.StaticData
         Task<ResearcherOrganisationType> UpdateResearcherOrganisationType(ResearcherOrganisationType entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<ResearcherOrganisationType> UpdateResearcherOrganisationType(ResearcherOrganisationType updated, ResearcherOrganisationType original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteResearcherOrganisationType(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<ResearcherOrganisationType>> QueryResearcherOrganisationType(Query query);
+        Task<QueryResult<ResearcherOrganisationType>> QueryResearcherOrganisationType(Query query, bool countTotal = true);
         Task<ResearcherOrganisationType?> GetResearcherOrganisationType(Guid id);
         Task<ResearcherOrganisationType> RequireResearcherOrganisationType(Guid id);
         Task<int> CountResearcherOrganisationType();
@@ -58,9 +58,9 @@ namespace Webfuel.Domain.StaticData
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<ResearcherOrganisationType>> QueryResearcherOrganisationType(Query query)
+        public async Task<QueryResult<ResearcherOrganisationType>> QueryResearcherOrganisationType(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<ResearcherOrganisationType, ResearcherOrganisationTypeMetadata>(query);
+            return await _connection.ExecuteQuery<ResearcherOrganisationType, ResearcherOrganisationTypeMetadata>(query, countTotal);
         }
         public async Task<ResearcherOrganisationType?> GetResearcherOrganisationType(Guid id)
         {

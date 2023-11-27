@@ -12,7 +12,7 @@ namespace Webfuel.Common
         Task<EmailLog> UpdateEmailLog(EmailLog entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<EmailLog> UpdateEmailLog(EmailLog updated, EmailLog original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteEmailLog(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<EmailLog>> QueryEmailLog(Query query);
+        Task<QueryResult<EmailLog>> QueryEmailLog(Query query, bool countTotal = true);
         Task<EmailLog?> GetEmailLog(Guid id);
         Task<EmailLog> RequireEmailLog(Guid id);
         Task<int> CountEmailLog();
@@ -57,9 +57,9 @@ namespace Webfuel.Common
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<EmailLog>> QueryEmailLog(Query query)
+        public async Task<QueryResult<EmailLog>> QueryEmailLog(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<EmailLog, EmailLogMetadata>(query);
+            return await _connection.ExecuteQuery<EmailLog, EmailLogMetadata>(query, countTotal);
         }
         public async Task<EmailLog?> GetEmailLog(Guid id)
         {

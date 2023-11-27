@@ -8,7 +8,7 @@ namespace Webfuel.Domain.StaticData
 {
     internal partial interface ISubmissionOutcomeRepository
     {
-        Task<QueryResult<SubmissionOutcome>> QuerySubmissionOutcome(Query query);
+        Task<QueryResult<SubmissionOutcome>> QuerySubmissionOutcome(Query query, bool countTotal = true);
         Task<SubmissionOutcome?> GetSubmissionOutcome(Guid id);
         Task<SubmissionOutcome> RequireSubmissionOutcome(Guid id);
         Task<int> CountSubmissionOutcome();
@@ -26,9 +26,9 @@ namespace Webfuel.Domain.StaticData
         {
             _connection = connection;
         }
-        public async Task<QueryResult<SubmissionOutcome>> QuerySubmissionOutcome(Query query)
+        public async Task<QueryResult<SubmissionOutcome>> QuerySubmissionOutcome(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<SubmissionOutcome, SubmissionOutcomeMetadata>(query);
+            return await _connection.ExecuteQuery<SubmissionOutcome, SubmissionOutcomeMetadata>(query, countTotal);
         }
         public async Task<SubmissionOutcome?> GetSubmissionOutcome(Guid id)
         {

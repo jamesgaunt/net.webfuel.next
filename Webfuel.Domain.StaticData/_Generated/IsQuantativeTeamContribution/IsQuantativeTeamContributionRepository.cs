@@ -8,7 +8,7 @@ namespace Webfuel.Domain.StaticData
 {
     internal partial interface IIsQuantativeTeamContributionRepository
     {
-        Task<QueryResult<IsQuantativeTeamContribution>> QueryIsQuantativeTeamContribution(Query query);
+        Task<QueryResult<IsQuantativeTeamContribution>> QueryIsQuantativeTeamContribution(Query query, bool countTotal = true);
         Task<IsQuantativeTeamContribution?> GetIsQuantativeTeamContribution(Guid id);
         Task<IsQuantativeTeamContribution> RequireIsQuantativeTeamContribution(Guid id);
         Task<int> CountIsQuantativeTeamContribution();
@@ -26,9 +26,9 @@ namespace Webfuel.Domain.StaticData
         {
             _connection = connection;
         }
-        public async Task<QueryResult<IsQuantativeTeamContribution>> QueryIsQuantativeTeamContribution(Query query)
+        public async Task<QueryResult<IsQuantativeTeamContribution>> QueryIsQuantativeTeamContribution(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<IsQuantativeTeamContribution, IsQuantativeTeamContributionMetadata>(query);
+            return await _connection.ExecuteQuery<IsQuantativeTeamContribution, IsQuantativeTeamContributionMetadata>(query, countTotal);
         }
         public async Task<IsQuantativeTeamContribution?> GetIsQuantativeTeamContribution(Guid id)
         {

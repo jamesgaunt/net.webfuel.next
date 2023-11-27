@@ -12,7 +12,7 @@ namespace Webfuel.Domain.StaticData
         Task<HowDidYouFindUs> UpdateHowDidYouFindUs(HowDidYouFindUs entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<HowDidYouFindUs> UpdateHowDidYouFindUs(HowDidYouFindUs updated, HowDidYouFindUs original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteHowDidYouFindUs(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<HowDidYouFindUs>> QueryHowDidYouFindUs(Query query);
+        Task<QueryResult<HowDidYouFindUs>> QueryHowDidYouFindUs(Query query, bool countTotal = true);
         Task<HowDidYouFindUs?> GetHowDidYouFindUs(Guid id);
         Task<HowDidYouFindUs> RequireHowDidYouFindUs(Guid id);
         Task<int> CountHowDidYouFindUs();
@@ -58,9 +58,9 @@ namespace Webfuel.Domain.StaticData
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<HowDidYouFindUs>> QueryHowDidYouFindUs(Query query)
+        public async Task<QueryResult<HowDidYouFindUs>> QueryHowDidYouFindUs(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<HowDidYouFindUs, HowDidYouFindUsMetadata>(query);
+            return await _connection.ExecuteQuery<HowDidYouFindUs, HowDidYouFindUsMetadata>(query, countTotal);
         }
         public async Task<HowDidYouFindUs?> GetHowDidYouFindUs(Guid id)
         {

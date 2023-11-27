@@ -8,7 +8,7 @@ namespace Webfuel.Domain.StaticData
 {
     internal partial interface IProjectStatusRepository
     {
-        Task<QueryResult<ProjectStatus>> QueryProjectStatus(Query query);
+        Task<QueryResult<ProjectStatus>> QueryProjectStatus(Query query, bool countTotal = true);
         Task<ProjectStatus?> GetProjectStatus(Guid id);
         Task<ProjectStatus> RequireProjectStatus(Guid id);
         Task<int> CountProjectStatus();
@@ -26,9 +26,9 @@ namespace Webfuel.Domain.StaticData
         {
             _connection = connection;
         }
-        public async Task<QueryResult<ProjectStatus>> QueryProjectStatus(Query query)
+        public async Task<QueryResult<ProjectStatus>> QueryProjectStatus(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<ProjectStatus, ProjectStatusMetadata>(query);
+            return await _connection.ExecuteQuery<ProjectStatus, ProjectStatusMetadata>(query, countTotal);
         }
         public async Task<ProjectStatus?> GetProjectStatus(Guid id)
         {

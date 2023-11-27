@@ -12,7 +12,7 @@ namespace Webfuel.Domain.StaticData
         Task<UserDiscipline> UpdateUserDiscipline(UserDiscipline entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<UserDiscipline> UpdateUserDiscipline(UserDiscipline updated, UserDiscipline original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteUserDiscipline(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<UserDiscipline>> QueryUserDiscipline(Query query);
+        Task<QueryResult<UserDiscipline>> QueryUserDiscipline(Query query, bool countTotal = true);
         Task<UserDiscipline?> GetUserDiscipline(Guid id);
         Task<UserDiscipline> RequireUserDiscipline(Guid id);
         Task<int> CountUserDiscipline();
@@ -58,9 +58,9 @@ namespace Webfuel.Domain.StaticData
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<UserDiscipline>> QueryUserDiscipline(Query query)
+        public async Task<QueryResult<UserDiscipline>> QueryUserDiscipline(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<UserDiscipline, UserDisciplineMetadata>(query);
+            return await _connection.ExecuteQuery<UserDiscipline, UserDisciplineMetadata>(query, countTotal);
         }
         public async Task<UserDiscipline?> GetUserDiscipline(Guid id)
         {

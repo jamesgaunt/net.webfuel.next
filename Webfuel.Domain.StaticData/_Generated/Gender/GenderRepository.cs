@@ -12,7 +12,7 @@ namespace Webfuel.Domain.StaticData
         Task<Gender> UpdateGender(Gender entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<Gender> UpdateGender(Gender updated, Gender original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteGender(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<Gender>> QueryGender(Query query);
+        Task<QueryResult<Gender>> QueryGender(Query query, bool countTotal = true);
         Task<Gender?> GetGender(Guid id);
         Task<Gender> RequireGender(Guid id);
         Task<int> CountGender();
@@ -58,9 +58,9 @@ namespace Webfuel.Domain.StaticData
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<Gender>> QueryGender(Query query)
+        public async Task<QueryResult<Gender>> QueryGender(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<Gender, GenderMetadata>(query);
+            return await _connection.ExecuteQuery<Gender, GenderMetadata>(query, countTotal);
         }
         public async Task<Gender?> GetGender(Guid id)
         {

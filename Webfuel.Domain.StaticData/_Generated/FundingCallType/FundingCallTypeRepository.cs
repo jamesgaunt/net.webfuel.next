@@ -12,7 +12,7 @@ namespace Webfuel.Domain.StaticData
         Task<FundingCallType> UpdateFundingCallType(FundingCallType entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<FundingCallType> UpdateFundingCallType(FundingCallType updated, FundingCallType original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteFundingCallType(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<FundingCallType>> QueryFundingCallType(Query query);
+        Task<QueryResult<FundingCallType>> QueryFundingCallType(Query query, bool countTotal = true);
         Task<FundingCallType?> GetFundingCallType(Guid id);
         Task<FundingCallType> RequireFundingCallType(Guid id);
         Task<int> CountFundingCallType();
@@ -58,9 +58,9 @@ namespace Webfuel.Domain.StaticData
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<FundingCallType>> QueryFundingCallType(Query query)
+        public async Task<QueryResult<FundingCallType>> QueryFundingCallType(Query query, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<FundingCallType, FundingCallTypeMetadata>(query);
+            return await _connection.ExecuteQuery<FundingCallType, FundingCallTypeMetadata>(query, countTotal);
         }
         public async Task<FundingCallType?> GetFundingCallType(Guid id)
         {

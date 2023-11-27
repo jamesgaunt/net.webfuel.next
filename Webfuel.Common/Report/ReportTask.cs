@@ -12,7 +12,9 @@ namespace Webfuel.Common
         public abstract Type ReportGenerator { get; }
 
         public Guid TaskId { get; internal set; }
-        public int ProgressPercentage { get; set; }
+
+        public int ProgressCount { get; set; }
+        public int TotalCount { get; set; }
         public bool Complete { get; set; }
 
         internal Guid IdentityId { get; set; }
