@@ -1,12 +1,15 @@
 <div class="dialog">
-  <div class="dialog-head is-warning">
+  <div class="dialog-head is-primary">
     {{ data.title }}
   </div>
   <div class="dialog-body">
-    <p>{{ data.message }}</p>
+    <div style="text-align: center; font-size: 1.2em">
+      <p *ngIf="!data.downloadUrl"><i class="fas fa-cog fa-spin"></i> Generating your report...</p>
+      <p *ngIf="data.downloadUrl">Your report is ready to download.</p>
+    </div>
   </div>
   <div class="dialog-buttons">
-    <button type="submit" class="is-warning" (click)="confirm()">Confirm</button>
+    <button *ngIf="data.downloadUrl" type="submit" class="is-primary" (click)="download()">Download</button>
     <button type="button" (click)="cancel()">Cancel</button>
   </div>
 </div>

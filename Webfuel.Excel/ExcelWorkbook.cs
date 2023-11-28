@@ -3,7 +3,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Webfuel.Excel
 {
-    public class ExcelWorkbook
+    public class ExcelWorkbook: IDisposable
     {
         internal readonly XLWorkbook _workbook;
 
@@ -35,6 +35,14 @@ namespace Webfuel.Excel
             return new ExcelWorksheet(worksheet);
         }
 
+        public MemoryStream ToMemoryStream()
+        {
+            var ms = new MemoryStream();
+            _workbook.SaveAs(ms);
+            ms.Position = 0;
+            return ms;
+        }
+
         public static ExcelWorkbook Load(string filename)
         {
             var workbook = new XLWorkbook(filename);
@@ -45,6 +53,11 @@ namespace Webfuel.Excel
         {
             var workbook = new XLWorkbook(stream);
             return new ExcelWorkbook(workbook);
+        }
+
+        public void Dispose()
+        {
+            _workbook.Dispose();
         }
     }
 

@@ -6,13 +6,15 @@ import { IDataSource } from 'shared/common/data-source';
 import { ReportProgress } from './api.types';
 
 @Injectable()
-export class ReportApi implements IDataSource<Report, QueryReport, any, any> {
+export class ReportApi {
     constructor(private apiService: ApiService) { }
     
-    public generate (params: { taskId: string }, options?: ApiOptions): Observable<ReportProgress> {
-        return this.apiService.request<undefined, ReportProgress>("PUT", "api/report/" + params.taskId + "", undefined, options);
+    public generateReport (params: { taskId: string }, options?: ApiOptions): Observable<ReportProgress> {
+        return this.apiService.request<undefined, ReportProgress>("POST", "api/report/" + params.taskId + "", undefined, options);
     }
     
-    changed = new EventEmitter<any>();
+    public cancelReport (params: { taskId: string }, options?: ApiOptions): Observable<any> {
+        return this.apiService.request<undefined, any>("DELETE", "api/report/cancel/" + params.taskId + "", undefined, options);
+    }
 }
 

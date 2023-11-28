@@ -6,6 +6,7 @@ import { ProjectApi } from 'api/project.api';
 import { StaticDataCache } from 'api/static-data.cache';
 import { ProjectExportApi } from '../../../../api/project-export.api';
 import { ConfigurationService } from '../../../../core/configuration.service';
+import { ReportService } from '../../../../core/report.service';
 
 @Component({
   selector: 'project-list',
@@ -17,7 +18,8 @@ export class ProjectListComponent {
     public projectApi: ProjectApi,
     public staticDataCache: StaticDataCache,
     private projectExportApi: ProjectExportApi,
-    private configurationService: ConfigurationService
+    private configurationService: ConfigurationService,
+    private reportService: ReportService,
   ) {
   }
 
@@ -38,7 +40,7 @@ export class ProjectListComponent {
       statusId: null,
       fundingStreamId: null,
       title: ''
-    })
+    });
   }
 
   edit(item: Project) {
@@ -50,8 +52,8 @@ export class ProjectListComponent {
   }
 
   export() {
-    this.projectExportApi.initialise(this.filterForm.getRawValue()).subscribe((result) => {
-
+    this.projectExportApi.initialiseReport(this.filterForm.getRawValue()).subscribe((result) => {
+      this.reportService.generateReport(result);
     });
   }
 }

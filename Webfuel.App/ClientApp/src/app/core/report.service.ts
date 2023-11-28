@@ -17,24 +17,44 @@ export class ReportService {
 
   dialogData: ReportDialogData | null = null;
 
-  dialogHandle: DialogHandle<true> | null = null;
-
   generateReport(reportProgress: ReportProgress) {
 
-    if (this.dialogHandle != null)
+    if (this.dialogData != null)
       return;
 
     this.dialogData = {
       title: "Generate Report",
-      message: "Generating Report..."
     };
-  
-    this.dialogHandle = this.reportDialog.open(this.dialogData);
 
-    this.reportApi.generate({ taskId: reportProgress.taskId }).subscribe((result) => {
+    this.reportDialog.open(this.dialogData).subscribe({
+      complete: () => {
+        this.dialogData = null;
+      }
+    });
 
+    this._generateReport(reportProgress);
+  }
 
+  private _generateReport(reportProgress: ReportProgress) {
+    if (!this.dialogData)
+      return;
+
+    this.dialogData.progressPercentage = reportProgress.progressPercentage;
+
+    this.reportApi.generateReport({ taskId: reportProgress.taskId }).subscribe((result) => {
+      if (result.complete) {
+        this._generateResult(result);
+      } else {
+        setTimeout(() => {
+          this._generateReport(result);
+        }, 250);
+      }
     });
   }
 
+  private _generateResult(reportProgress: ReportProgress) {
+    if (!this.dialogData)
+      return;
+    this.dialogData.downloadUrl = "download-report/" + reportProgress.taskId;
+  }
 }

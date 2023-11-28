@@ -1,9 +1,11 @@
 import { Component, Injectable } from '@angular/core';
 import { DialogBase, DialogComponentBase } from '../../../shared/common/dialog-base';
+import { environment } from '../../../../environments/environment';
 
 export interface ReportDialogData {
   title: string;
-  message: string;
+  downloadUrl?: string;
+  progressPercentage?: number;
 }
 
 @Injectable()
@@ -24,11 +26,12 @@ export class ReportDialogComponent extends DialogComponentBase<true, ReportDialo
     super();
   }
 
-  report() {
-    this._closeDialog(true);
-  }
-
   cancel() {
     this._cancelDialog();
+  }
+
+  download() {
+    window.open(environment.apiHost + this.data.downloadUrl, "_blank");
+    this._closeDialog(true);
   }
 }

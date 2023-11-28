@@ -26,7 +26,7 @@
                 FundingStreamId = FundingStreamId,
 
                 Skip = 0,
-                Take = 10
+                Take = 1
             };
             query.ApplyCustomFilters();
             return query;

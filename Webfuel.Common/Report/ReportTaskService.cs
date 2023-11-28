@@ -13,10 +13,12 @@ namespace Webfuel.Common
         void StoreTask(ReportTask task);
 
         ReportTask? RetrieveTask(Guid taskId);
+
+        void DeleteTask(Guid taskId);
     }
 
     [Service(typeof(IReportTaskService))]
-    internal class ReportTaskService: IReportTaskService
+    internal class ReportTaskService : IReportTaskService
     {
         private readonly IIdentityAccessor _identityAccessor;
 
@@ -27,34 +29,33 @@ namespace Webfuel.Common
 
         public void StoreTask(ReportTask task)
         {
-            if (_identityAccessor.User == null)
-                throw new InvalidOperationException("Unable to initialise a report task without an identity context");
-
-            var currentTaskId = CurrentTask();
-            if(currentTaskId != null)
+            // If this user already has a report task running then kill it
             {
-                // For now just dump it
-                _tasks.Remove(currentTaskId.Value, out var _);
+                var taskId = CurrentUserTask();
+                if (taskId != null)
+                    DeleteTask(taskId.Value);
             }
 
             task.TaskId = Guid.NewGuid();
-            task.IdentityId = _identityAccessor.User.Id;
+            task.IdentityId = _identityAccessor.User?.Id;
             task.LastAccessedAt = DateTimeOffset.UtcNow;
 
             _tasks[task.TaskId] = task;
-
             CleanupTasks();
+        }
+
+        public void DeleteTask(Guid taskId)
+        {
+            if (!_tasks.TryGetValue(taskId, out var task))
+                return;
+
+            task.Dispose();
+            _tasks.Remove(task.TaskId, out var _);
         }
 
         public ReportTask? RetrieveTask(Guid taskId)
         {
-            if (_identityAccessor.User == null)
-                throw new InvalidOperationException("Unable to retrieve a report task without an identity context");
-
             if (!_tasks.TryGetValue(taskId, out var task))
-                return null;
-
-            if (task.IdentityId != _identityAccessor.User.Id)
                 return null;
 
             task.LastAccessedAt = DateTimeOffset.UtcNow;
@@ -63,12 +64,12 @@ namespace Webfuel.Common
             return task;
         }
 
-        Guid? CurrentTask()
+        Guid? CurrentUserTask()
         {
             if (_identityAccessor.User == null)
                 return null;
 
-            foreach(var task in _tasks)
+            foreach (var task in _tasks)
             {
                 if (task.Value.IdentityId == _identityAccessor.User.Id)
                     return task.Key;
@@ -78,11 +79,12 @@ namespace Webfuel.Common
 
         void CleanupTasks()
         {
-            foreach(var task in _tasks)
+            foreach (var task in _tasks)
             {
-                if(task.Value.LastAccessedAt <= DateTimeOffset.UtcNow.AddMinutes(-5))
+                if (task.Value.LastAccessedAt <= DateTimeOffset.UtcNow.AddMinutes(-5))
                 {
-                    _tasks.Remove(task.Key, out var _);
+                    DeleteTask(task.Key);
+                    return; // Iterator is now invalid
                 }
             }
         }

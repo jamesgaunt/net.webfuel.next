@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace Webfuel.Common
 {
-    public abstract class ReportTask
+    public abstract class ReportTask: IDisposable
     {
         public abstract Type ReportGeneratorType { get; }
+        public virtual ReportResult GenerateResult() { throw new NotImplementedException(); }
+        public abstract void Dispose();
 
         public Guid TaskId { get; internal set; }
 
@@ -17,7 +19,7 @@ namespace Webfuel.Common
         public int TotalCount { get; set; }
         public bool Complete { get; set; }
 
-        internal Guid IdentityId { get; set; }
+        internal Guid? IdentityId { get; set; }
         internal DateTimeOffset CreatedAt { get; } = DateTimeOffset.UtcNow;
         internal DateTimeOffset LastAccessedAt { get; set; } = DateTimeOffset.UtcNow;
     }

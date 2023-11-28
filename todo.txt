@@ -1,5 +1,7 @@
 TODO:
 
+> User title optional
+
 > Remove Iframe resizer, not needed any more
 
 > Purchase and setup on new domain - send form code to ICL for their web administrators

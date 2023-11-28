@@ -6,13 +6,11 @@ import { IDataSource } from 'shared/common/data-source';
 import { ProjectExportRequest, ReportProgress } from './api.types';
 
 @Injectable()
-export class ProjectExportApi implements IDataSource<ProjectExport, QueryProjectExport, any, any> {
+export class ProjectExportApi {
     constructor(private apiService: ApiService) { }
     
-    public initialise (body: ProjectExportRequest, options?: ApiOptions): Observable<ReportProgress> {
+    public initialiseReport (body: ProjectExportRequest, options?: ApiOptions): Observable<ReportProgress> {
         return this.apiService.request<ProjectExportRequest, ReportProgress>("PUT", "api/project-export", body, options);
     }
-    
-    changed = new EventEmitter<any>();
 }
 

@@ -9,7 +9,7 @@ using Webfuel.Common;
 namespace Webfuel.Domain
 {
 
-    public interface IProjectExportService: IReportGenerator
+    public interface IProjectExportService : IReportGenerator
     {
         Task<ReportProgress> InitialiseReport(ProjectExportRequest request);
     }
@@ -19,6 +19,8 @@ namespace Webfuel.Domain
     {
         private readonly IReportService _reportService;
         private readonly IProjectRepository _projectRepository;
+
+        const int ITEMS_PER_STEP = 1;
 
         public ProjectExportService(IReportService reportService, IProjectRepository projectRepository)
         {
@@ -38,20 +40,31 @@ namespace Webfuel.Domain
                 throw new DomainException("Wrong type of task passed to report generator");
 
             task.Query.Skip = task.ProgressCount;
-            task.Query.Take = 10;
+            task.Query.Take = ITEMS_PER_STEP;
 
             var result = await _projectRepository.QueryProject(task.Query, countTotal: task.Query.Skip == 0);
 
-            if (task.Query.Skip == 0) 
+            if (task.Query.Skip == 0)
+            {
+                // First iteration
                 task.TotalCount = result.TotalCount;
+            }
+
+            if (result.Items.Count == 0)
+            {
+                // Last iteration
+                task.ProgressCount = task.TotalCount;
+                task.Complete = true;
+                return;
+            }
+
             task.ProgressCount += task.Query.Take;
 
-            foreach(var item in result.Items)
+            foreach (var item in result.Items)
             {
-                var row = task.Data.AddRow();
-
-                row.AddCell(item.PrefixedNumber);
-                row.AddCell(item.Title);
+                task.Worksheet.Cell(task.Row, 1).SetValue(item.PrefixedNumber);
+                task.Worksheet.Cell(task.Row, 1).SetValue(item.Title);
+                task.Row++;
             }
         }
     }

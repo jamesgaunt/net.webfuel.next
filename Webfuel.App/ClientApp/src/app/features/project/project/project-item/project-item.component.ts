@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ClientConfiguration, Project } from 'api/api.types';
+import { Project } from 'api/api.types';
 import { FormService } from 'core/form.service';
 import { ConfigurationService } from '../../../../core/configuration.service';
 import { ProjectComponentBase } from '../shared/project-component-base';

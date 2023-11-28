@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,10 @@ namespace Webfuel.Common
         Task<ReportProgress> RegisterReport(ReportTask task);
 
         Task<ReportProgress> GenerateReport(Guid taskId);
+
+        Task<ReportResult?> GenerateResult(Guid taskId);
+
+        Task CancelReport(Guid taskId);
     }
 
     [Service(typeof(IReportService))]
@@ -45,6 +50,30 @@ namespace Webfuel.Common
             await reportGenerator.GenerateReport(task);
 
             return ReportProgress.FromTask(task);
+        }
+
+        public Task<ReportResult?> GenerateResult(Guid taskId)
+        {
+            var task = _reportTaskService.RetrieveTask(taskId);
+            if (task == null)
+                return Task.FromResult<ReportResult?>(null);
+
+            var result = task.GenerateResult();
+
+            _reportTaskService.DeleteTask(task.TaskId);
+
+            return Task.FromResult<ReportResult?>(result);
+        }
+
+        public Task CancelReport(Guid taskId)
+        {
+            var task = _reportTaskService.RetrieveTask(taskId);
+            if (task == null)
+                return Task.CompletedTask;
+
+            _reportTaskService.DeleteTask(task.TaskId);
+
+            return Task.CompletedTask;
         }
     }
 }
