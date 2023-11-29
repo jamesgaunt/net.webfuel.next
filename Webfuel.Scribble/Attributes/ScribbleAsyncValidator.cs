@@ -1,11 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 
-namespace Webfuel
+namespace Webfuel.Scribble
 {
     /// <summary>
     /// Assigns a custom async validator to a method
