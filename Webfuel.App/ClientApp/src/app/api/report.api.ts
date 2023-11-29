@@ -3,18 +3,38 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { ReportProgress } from './api.types';
+import { CreateReport, Report, UpdateReport, QueryReport, QueryResult } from './api.types';
 
 @Injectable()
 export class ReportApi {
     constructor(private apiService: ApiService) { }
     
-    public generateReport (params: { taskId: string }, options?: ApiOptions): Observable<ReportProgress> {
-        return this.apiService.request<undefined, ReportProgress>("POST", "api/report/" + params.taskId + "", undefined, options);
+    public create (body: CreateReport, options?: ApiOptions): Observable<Report> {
+        return this.apiService.request<CreateReport, Report>("POST", "api/report", body, options);
     }
     
-    public cancelReport (params: { taskId: string }, options?: ApiOptions): Observable<any> {
-        return this.apiService.request<undefined, any>("DELETE", "api/report/cancel/" + params.taskId + "", undefined, options);
+    public update (body: UpdateReport, options?: ApiOptions): Observable<Report> {
+        return this.apiService.request<UpdateReport, Report>("PUT", "api/report", body, options);
+    }
+    
+    public delete (params: { id: string }, options?: ApiOptions): Observable<any> {
+        return this.apiService.request<undefined, any>("DELETE", "api/report/" + params.id + "", undefined, options);
+    }
+    
+    public query (body: QueryReport, options?: ApiOptions): Observable<QueryResult<Report>> {
+        return this.apiService.request<QueryReport, QueryResult<Report>>("POST", "api/report/query", body, options);
+    }
+    
+    public get (params: { id: string }, options?: ApiOptions): Observable<Report> {
+        return this.apiService.request<undefined, Report>("GET", "api/report/" + params.id + "", undefined, options);
+    }
+    
+    // Resolvers
+    
+    static reportResolver(param: string): ResolveFn<Report> {
+        return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Report> => {
+            return inject(ReportApi).get({id: route.paramMap.get(param)! });
+        };
     }
 }
 

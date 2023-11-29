@@ -46,6 +46,7 @@ namespace Webfuel.Common
                 if (_identityAccessor.Claims.Developer) { 
                     clientConfiguration.SettingsMenu.AddChild(name: "User Logins", action: "/developer/user-login", icon: "fas fa-sign-in");
                     clientConfiguration.SettingsMenu.AddChild(name: "Report Groups", action: "/reporting/report-group-list", icon: "fas fa-layer-group");
+                    clientConfiguration.SettingsMenu.AddChild(name: "Report Designer", action: "/reporting/report-designer", icon: "fas fa-pencil-ruler");
                 }
             }
 

@@ -1,3 +1,13 @@
+export enum ReportFieldType {
+    String = 0,
+    Numeric = 1,
+    Boolean = 2,
+    DateTime = 3,
+    Date = 4,
+    Reference = 5,
+    ReferenceList = 6,
+}
+
 export interface ClientConfiguration {
     email: string;
     sideMenu: ClientConfigurationMenu;
@@ -45,6 +55,16 @@ export interface ValidationError {
 
 export interface UploadFileStorageEntry {
     fileStorageGroupId: string;
+}
+
+export interface ReportColumn {
+    title: string;
+    fieldId: string;
+}
+
+export interface ReportDesign {
+    reportProviderId: string;
+    columns: Array<ReportColumn>;
 }
 
 export interface DashboardModel {
@@ -635,6 +655,46 @@ export interface QueryProjectTeamSupport extends Query {
     filters?: Array<QueryFilter>;
     sort?: Array<QuerySort>;
     search?: string;
+}
+
+export interface Report {
+    id: string;
+    name: string;
+    design: ReportDesign;
+    sortOrder: number;
+    reportGroupId: string;
+    reportProviderId: string;
+}
+
+export interface CreateReport {
+    name: string;
+}
+
+export interface UpdateReport {
+    id: string;
+    name: string;
+}
+
+export interface QueryReport extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface IReportSchema {
+    fields: Array<IReportField>;
+}
+
+export interface IReportField {
+    fieldId: string;
+    name: string;
+    fieldType: ReportFieldType;
+    referenceType: string;
+    nullable: boolean;
+    default: boolean;
 }
 
 export interface ReportGroup {

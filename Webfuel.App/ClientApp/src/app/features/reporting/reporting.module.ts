@@ -7,6 +7,8 @@ import { ReportGroupListComponent } from './report-group/report-group-list/repor
 import { ReportGroupItemComponent } from './report-group/report-group-item/report-group-item.component';
 import { ReportGroupTabsComponent } from './report-group/report-group-tabs/report-group-tabs.component';
 
+import { ReportDesignerComponent } from './report-designer/report-designer.component';
+
 import { CreateReportGroupDialog, CreateReportGroupDialogComponent } from './report-group/dialogs/create-report-group/create-report-group.dialog';
 
 @NgModule({
@@ -19,6 +21,7 @@ import { CreateReportGroupDialog, CreateReportGroupDialogComponent } from './rep
     ReportGroupListComponent,
     ReportGroupItemComponent,
     ReportGroupTabsComponent,
+    ReportDesignerComponent,
 
     CreateReportGroupDialogComponent,
   ],

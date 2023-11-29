@@ -10,39 +10,49 @@ namespace Webfuel.App
     {
         public static void RegisterEndpoints(IEndpointRouteBuilder app)
         {
-            app.MapPost("api/report/{taskId:guid}", GenerateReport)
+            // Commands
+
+            app.MapPost("api/report", Create)
                 .RequireIdentity();
 
-            app.MapDelete("api/report/cancel/{taskId:guid}", CancelReport)
-                   .RequireIdentity();
+            app.MapPut("api/report", Update)
+                .RequireIdentity();
 
-            app.MapGet("download-report/{taskId:guid}", GenerateResult);
+            app.MapDelete("api/report/{id:guid}", Delete)
+                .RequireIdentity();
+
+            // Querys
+
+            app.MapPost("api/report/query", Query)
+                .RequireIdentity();
+
+            app.MapGet("api/report/{id:guid}", Get)
+                .RequireIdentity();
         }
 
-        public static Task<ReportProgress> GenerateReport(Guid taskId, IReportService service)
+        public static Task<Report> Create([FromBody] CreateReport command, IMediator mediator)
         {
-            return service.GenerateReport(taskId);
+            return mediator.Send(command);
         }
 
-        public static Task CancelReport(Guid taskId, IReportService service)
+        public static Task<Report> Update([FromBody] UpdateReport command, IMediator mediator)
         {
-            return service.CancelReport(taskId);
+            return mediator.Send(command);
         }
 
-        [ApiIgnore]
-        public static async Task<IResult> GenerateResult(Guid taskId, IReportService service)
+        public static Task Delete(Guid id, IMediator mediator)
         {
-            var result = await service.GenerateResult(taskId);
+            return mediator.Send(new DeleteReport { Id = id });
+        }
 
-            if (result?.MemoryStream != null)
-            {
-                return Results.File(
-                    fileContents: result.MemoryStream.ToArray(),
-                    contentType: result.ContentType,
-                    fileDownloadName: result.FileDownloadName);
-            }
+        public static Task<QueryResult<Report>> Query([FromBody] QueryReport command, IMediator mediator)
+        {
+            return mediator.Send(command);
+        }
 
-            return Results.NoContent();
+        public static async Task<Report?> Get(Guid id, IMediator mediator)
+        {
+            return await mediator.Send(new GetReport { Id = id });
         }
     }
 }

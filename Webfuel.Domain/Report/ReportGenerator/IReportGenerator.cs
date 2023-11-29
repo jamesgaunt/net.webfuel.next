@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Webfuel.Common
+namespace Webfuel.Domain
 {
-    public interface IReportingContext<TContext> where TContext : class
+    public interface IReportGenerator
     {
+        Task GenerateReport(ReportTask task);
     }
 }

@@ -24,21 +24,47 @@ namespace Webfuel.Domain
                     case nameof(Report.Name):
                         Name = (string)value!;
                         break;
+                    case nameof(Report.Design):
+                        DesignJson = (string)value!;
+                        break;
                     case nameof(Report.SortOrder):
                         SortOrder = (int)value!;
+                        break;
+                    case nameof(Report.ReportGroupId):
+                        ReportGroupId = (Guid)value!;
+                        break;
+                    case nameof(Report.ReportProviderId):
+                        ReportProviderId = (Guid)value!;
                         break;
                 }
             }
         }
         public Guid Id  { get; set; } = Guid.Empty;
         public string Name  { get; set; } = String.Empty;
+        public ReportDesign Design
+        {
+            get { return _Design ?? (_Design = SafeJsonSerializer.Deserialize<ReportDesign>(_DesignJson)); }
+            set { _Design = value; }
+        }
+        ReportDesign? _Design = null;
+        internal string DesignJson
+        {
+            get { var result = _Design == null ? _DesignJson : (_DesignJson = SafeJsonSerializer.Serialize(_Design)); _Design = null; return result; }
+            set { _DesignJson = value; _Design = null; }
+        }
+        string _DesignJson = String.Empty;
         public int SortOrder  { get; set; } = 0;
+        public Guid ReportGroupId { get; set; }
+        public Guid ReportProviderId { get; set; }
         public Report Copy()
         {
             var entity = new Report();
             entity.Id = Id;
             entity.Name = Name;
+            entity.DesignJson = DesignJson;
             entity.SortOrder = SortOrder;
+            entity.ReportGroupId = ReportGroupId;
+            entity.ReportProviderId = ReportProviderId;
             return entity;
         }
     }

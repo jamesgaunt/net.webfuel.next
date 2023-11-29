@@ -4,13 +4,14 @@ import { ReportApi } from '../api/report.api';
 import { ReportDialog, ReportDialogData } from './dialogs/report/report.dialog';
 import { ReportProgress } from '../api/api.types';
 import { DialogHandle } from './dialog.service';
+import { ReportGeneratorApi } from '../api/report-generator.api';
 
 @Injectable()
 export class ReportService {
 
   constructor(
     private router: Router,
-    private reportApi: ReportApi,
+    private reportGeneratorApi: ReportGeneratorApi,
     private reportDialog: ReportDialog,
   ) { }
 
@@ -41,7 +42,7 @@ export class ReportService {
 
     this.dialogData.progressPercentage = reportProgress.progressPercentage;
 
-    this.reportApi.generateReport({ taskId: reportProgress.taskId }).subscribe((result) => {
+    this.reportGeneratorApi.generateReport({ taskId: reportProgress.taskId }).subscribe((result) => {
       if (result.complete) {
         this._generateResult(result);
       } else {

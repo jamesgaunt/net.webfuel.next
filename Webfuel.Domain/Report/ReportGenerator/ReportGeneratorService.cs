@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Webfuel.Common
+namespace Webfuel.Domain
 {
-    public interface IReportService
+    public interface IReportGeneratorService
     {
         Task<ReportProgress> RegisterReport(ReportTask task);
 
@@ -18,16 +19,24 @@ namespace Webfuel.Common
         Task CancelReport(Guid taskId);
     }
 
-    [Service(typeof(IReportService))]
-    internal class ReportService: IReportService
+    [Service(typeof(IReportGeneratorService))]
+    internal class ReportGeneratorService: IReportGeneratorService
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IReportTaskService _reportTaskService;
 
-        public ReportService(IServiceProvider serviceProvider, IReportTaskService reportTaskService) 
+        public ReportGeneratorService(IServiceProvider serviceProvider, IReportTaskService reportTaskService) 
         { 
             _serviceProvider = serviceProvider;
             _reportTaskService = reportTaskService;
+        }
+
+        IReportProvider GetReportProvider(Guid id)
+        {
+            var providers = _serviceProvider.GetServices<IReportProvider>();
+
+            return providers.FirstOrDefault(p => p.Id == id)
+                ?? throw new InvalidOperationException("The specified report provider does not exist.");
         }
 
         public Task<ReportProgress> RegisterReport(ReportTask task)

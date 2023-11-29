@@ -17,21 +17,21 @@ namespace Webfuel.Domain
     [Service(typeof(IProjectExportService))]
     internal class ProjectExportService : IProjectExportService
     {
-        private readonly IReportService _reportService;
         private readonly IProjectRepository _projectRepository;
+        private readonly IReportGeneratorService _reportGeneratorService;
 
         const int ITEMS_PER_STEP = 1;
 
-        public ProjectExportService(IReportService reportService, IProjectRepository projectRepository)
+        public ProjectExportService(IProjectRepository projectRepository, IReportGeneratorService reportGeneratorService)
         {
-            _reportService = reportService;
             _projectRepository = projectRepository;
+            _reportGeneratorService = reportGeneratorService;
         }
 
         public Task<ReportProgress> InitialiseReport(ProjectExportRequest request)
         {
             var task = new ProjectExportTask(request);
-            return _reportService.RegisterReport(task);
+            return _reportGeneratorService.RegisterReport(task);
         }
 
         public async Task GenerateReport(ReportTask _task)

@@ -4,6 +4,11 @@
   <Entity Name="Report">
     <Key Name="Id" Type="guid" />
     <Property Name="Name" Type="meta:name" />
+    <Property Name="Design" Type="Json:ReportingDesign" />
     <Property Name="SortOrder" Type="int" />
+
+    <Property Name="ReportGroupId" Type="ReportGroup" />
+    <Property Name="ReportProviderId" Type="ReportProvider" />
+
   </Entity>
 </Schema>

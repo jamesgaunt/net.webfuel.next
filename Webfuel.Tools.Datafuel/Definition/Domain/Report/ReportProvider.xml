@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="ReportProvider" Tags="Enum">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+
+    <Data>
+      <Row Id="b8b6dea3-d6de-4480-a944-e7b0c2827888" Name="Project" />
+      <Row Id="2af96eb5-e52d-4163-9247-c34e7b170f62" Name="ProjectSupport" />
+    </Data>
+
+  </Entity>
+</Schema>
+

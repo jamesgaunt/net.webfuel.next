@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Webfuel.Common
+namespace Webfuel.Domain
 {
     internal interface IReportTaskService
     {
@@ -81,7 +81,7 @@ namespace Webfuel.Common
         {
             foreach (var task in _tasks)
             {
-                if (task.Value.LastAccessedAt <= DateTimeOffset.UtcNow.AddMinutes(-5))
+                if (task.Value.LastAccessedAt <= DateTimeOffset.UtcNow.AddMinutes(-10))
                 {
                     DeleteTask(task.Key);
                     return; // Iterator is now invalid

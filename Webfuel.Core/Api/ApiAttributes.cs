@@ -25,7 +25,7 @@
     {
     }
 
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
     public class ApiTypeAttribute : Attribute
     {
         public string Signature { get; set; } = String.Empty;

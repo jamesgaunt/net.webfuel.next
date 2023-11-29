@@ -14,6 +14,11 @@ export enum QueryOp {
     Or = "or",
 }
 
+export enum ReportProviderEnum {
+    Project = "b8b6dea3-d6de-4480-a944-e7b0c2827888",
+    ProjectSupport = "2af96eb5-e52d-4163-9247-c34e7b170f62",
+}
+
 export enum IsCTUTeamContributionEnum {
     Yes = "3e1f2673-e708-44a8-8768-cbf9fe1afb7c",
     No = "5b18a6b2-1169-4f7c-91b7-e738ea4527c6",
@@ -89,6 +94,16 @@ export enum SupportTeamEnum {
     PPIETeam = "662067e9-875c-47f7-8427-26ac98078c20",
     ExpertQuantitativeTeam = "5283e9be-faf3-45f5-83b2-4c5288c090c3",
     ExpertQualitativeTeam = "b1bdcae3-7df9-404a-aad7-a9265392b5aa",
+}
+
+export enum ReportFieldType {
+    String = 0,
+    Numeric = 1,
+    Boolean = 2,
+    DateTime = 3,
+    Date = 4,
+    Reference = 5,
+    ReferenceList = 6,
 }
 
 
