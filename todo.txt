@@ -1,12 +1,14 @@
 TODO:
 
+> Heartbeats
+
+> Code Editor (+ Terminal Editor) => Terminal 2.0
+
 > Team Support Request Dashboard filters/grid?
 
 > User title optional
 
 > Remove Iframe resizer, not needed any more
-
-> Purchase and setup on new domain - send form code to ICL for their web administrators
 
 > Tab selection of controls (think it's kinda important now) - mainly dates to do
 
