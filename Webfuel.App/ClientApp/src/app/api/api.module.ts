@@ -39,6 +39,7 @@ import { IsQuantativeTeamContributionApi } from './is-quantative-team-contributi
 import { IsResubmissionApi } from './is-resubmission.api';
 import { IsTeamMembersConsultedApi } from './is-team-members-consulted.api';
 import { ProjectStatusApi } from './project-status.api';
+import { ReportProviderApi } from './report-provider.api';
 import { ResearcherOrganisationTypeApi } from './researcher-organisation-type.api';
 import { ResearcherRoleApi } from './researcher-role.api';
 import { ResearchMethodologyApi } from './research-methodology.api';
@@ -95,6 +96,7 @@ import { StaticDataCache } from './static-data.cache';
         IsResubmissionApi,
         IsTeamMembersConsultedApi,
         ProjectStatusApi,
+        ReportProviderApi,
         ResearcherOrganisationTypeApi,
         ResearcherRoleApi,
         ResearchMethodologyApi,

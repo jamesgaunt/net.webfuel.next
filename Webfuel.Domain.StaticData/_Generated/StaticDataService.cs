@@ -58,6 +58,9 @@ namespace Webfuel.Domain.StaticData
         Task<IReadOnlyList<ProjectStatus>> SelectProjectStatus();
         Task<ProjectStatus?> GetProjectStatus(Guid id);
         Task<ProjectStatus> RequireProjectStatus(Guid id);
+        Task<IReadOnlyList<ReportProvider>> SelectReportProvider();
+        Task<ReportProvider?> GetReportProvider(Guid id);
+        Task<ReportProvider> RequireReportProvider(Guid id);
         Task<IReadOnlyList<ResearcherOrganisationType>> SelectResearcherOrganisationType();
         Task<ResearcherOrganisationType?> GetResearcherOrganisationType(Guid id);
         Task<ResearcherOrganisationType> RequireResearcherOrganisationType(Guid id);
@@ -365,6 +368,21 @@ namespace Webfuel.Domain.StaticData
         public async Task<ProjectStatus> RequireProjectStatus(Guid id)
         {
             return (await GetStaticData()).ProjectStatus.First(p => p.Id == id);
+        }
+        
+        public async Task<IReadOnlyList<ReportProvider>> SelectReportProvider()
+        {
+            return (await GetStaticData()).ReportProvider;
+        }
+        
+        public async Task<ReportProvider?> GetReportProvider(Guid id)
+        {
+            return (await GetStaticData()).ReportProvider.FirstOrDefault(p => p.Id == id);
+        }
+        
+        public async Task<ReportProvider> RequireReportProvider(Guid id)
+        {
+            return (await GetStaticData()).ReportProvider.First(p => p.Id == id);
         }
         
         public async Task<IReadOnlyList<ResearcherOrganisationType>> SelectResearcherOrganisationType()

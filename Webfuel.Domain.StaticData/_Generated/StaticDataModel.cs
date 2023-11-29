@@ -22,6 +22,7 @@ namespace Webfuel.Domain.StaticData
         IReadOnlyList<IsResubmission> IsResubmission { get; }
         IReadOnlyList<IsTeamMembersConsulted> IsTeamMembersConsulted { get; }
         IReadOnlyList<ProjectStatus> ProjectStatus { get; }
+        IReadOnlyList<ReportProvider> ReportProvider { get; }
         IReadOnlyList<ResearcherOrganisationType> ResearcherOrganisationType { get; }
         IReadOnlyList<ResearcherRole> ResearcherRole { get; }
         IReadOnlyList<ResearchMethodology> ResearchMethodology { get; }
@@ -56,6 +57,7 @@ namespace Webfuel.Domain.StaticData
         public required IReadOnlyList<IsResubmission> IsResubmission { get; init; }
         public required IReadOnlyList<IsTeamMembersConsulted> IsTeamMembersConsulted { get; init; }
         public required IReadOnlyList<ProjectStatus> ProjectStatus { get; init; }
+        public required IReadOnlyList<ReportProvider> ReportProvider { get; init; }
         public required IReadOnlyList<ResearcherOrganisationType> ResearcherOrganisationType { get; init; }
         public required IReadOnlyList<ResearcherRole> ResearcherRole { get; init; }
         public required IReadOnlyList<ResearchMethodology> ResearchMethodology { get; init; }
@@ -92,6 +94,7 @@ namespace Webfuel.Domain.StaticData
                 IsResubmission = await serviceProvider.GetRequiredService<IIsResubmissionRepository>().SelectIsResubmission(),
                 IsTeamMembersConsulted = await serviceProvider.GetRequiredService<IIsTeamMembersConsultedRepository>().SelectIsTeamMembersConsulted(),
                 ProjectStatus = await serviceProvider.GetRequiredService<IProjectStatusRepository>().SelectProjectStatus(),
+                ReportProvider = await serviceProvider.GetRequiredService<IReportProviderRepository>().SelectReportProvider(),
                 ResearcherOrganisationType = await serviceProvider.GetRequiredService<IResearcherOrganisationTypeRepository>().SelectResearcherOrganisationType(),
                 ResearcherRole = await serviceProvider.GetRequiredService<IResearcherRoleRepository>().SelectResearcherRole(),
                 ResearchMethodology = await serviceProvider.GetRequiredService<IResearchMethodologyRepository>().SelectResearchMethodology(),

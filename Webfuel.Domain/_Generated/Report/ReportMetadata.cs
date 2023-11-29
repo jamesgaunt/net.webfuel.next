@@ -32,6 +32,9 @@ namespace Webfuel.Domain
                     case nameof(Report.SortOrder):
                         result.Add(new SqlParameter(nameof(Report.SortOrder), entity.SortOrder));
                         break;
+                    case nameof(Report.OwnerUserId):
+                        result.Add(new SqlParameter(nameof(Report.OwnerUserId), entity.OwnerUserId));
+                        break;
                     case nameof(Report.ReportGroupId):
                         result.Add(new SqlParameter(nameof(Report.ReportGroupId), entity.ReportGroupId));
                         break;
@@ -68,6 +71,7 @@ namespace Webfuel.Domain
                 yield return "Name";
                 yield return "Design";
                 yield return "SortOrder";
+                yield return "OwnerUserId";
                 yield return "ReportGroupId";
                 yield return "ReportProviderId";
             }
@@ -81,6 +85,7 @@ namespace Webfuel.Domain
                 yield return "Name";
                 yield return "Design";
                 yield return "SortOrder";
+                yield return "OwnerUserId";
                 yield return "ReportGroupId";
                 yield return "ReportProviderId";
             }
@@ -93,6 +98,7 @@ namespace Webfuel.Domain
                 yield return "Name";
                 yield return "Design";
                 yield return "SortOrder";
+                yield return "OwnerUserId";
                 yield return "ReportGroupId";
                 yield return "ReportProviderId";
             }

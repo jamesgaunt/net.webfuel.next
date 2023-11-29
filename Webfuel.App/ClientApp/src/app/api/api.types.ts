@@ -153,6 +153,7 @@ export interface IStaticDataModel {
     isResubmission: Array<IsResubmission>;
     isTeamMembersConsulted: Array<IsTeamMembersConsulted>;
     projectStatus: Array<ProjectStatus>;
+    reportProvider: Array<ReportProvider>;
     researcherOrganisationType: Array<ResearcherOrganisationType>;
     researcherRole: Array<ResearcherRole>;
     researchMethodology: Array<ResearchMethodology>;
@@ -322,6 +323,14 @@ export interface ProjectStatus extends IStaticData {
     hidden: boolean;
     locked: boolean;
     discarded: boolean;
+}
+
+export interface ReportProvider extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
 }
 
 export interface ResearcherOrganisationType extends IStaticData, IStaticDataWithFreeText {
@@ -662,12 +671,15 @@ export interface Report {
     name: string;
     design: ReportDesign;
     sortOrder: number;
+    ownerUserId: string;
     reportGroupId: string;
     reportProviderId: string;
 }
 
 export interface CreateReport {
     name: string;
+    reportGroupId: string;
+    reportProviderId: string;
 }
 
 export interface UpdateReport {
@@ -1449,6 +1461,15 @@ export interface QueryIsTeamMembersConsulted extends Query {
 }
 
 export interface QueryProjectStatus extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface QueryReportProvider extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;

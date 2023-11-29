@@ -2,7 +2,7 @@ using FluentValidation;
 using Microsoft.Data.SqlClient;
 using System.Text.Json.Serialization;
 
-namespace Webfuel.Domain
+namespace Webfuel.Domain.StaticData
 {
     public partial class ReportProviderMetadata: IRepositoryMetadata<ReportProvider>
     {
@@ -10,7 +10,7 @@ namespace Webfuel.Domain
         
         public static string DatabaseTable => "ReportProvider";
         
-        public static string DefaultOrderBy => "ORDER BY Id ASC";
+        public static string DefaultOrderBy => "ORDER BY SortOrder ASC";
         
         public static ReportProvider DataReader(SqlDataReader dr) => new ReportProvider(dr);
         
@@ -25,6 +25,15 @@ namespace Webfuel.Domain
                         break;
                     case nameof(ReportProvider.Name):
                         result.Add(new SqlParameter(nameof(ReportProvider.Name), entity.Name));
+                        break;
+                    case nameof(ReportProvider.SortOrder):
+                        result.Add(new SqlParameter(nameof(ReportProvider.SortOrder), entity.SortOrder));
+                        break;
+                    case nameof(ReportProvider.Default):
+                        result.Add(new SqlParameter(nameof(ReportProvider.Default), entity.Default));
+                        break;
+                    case nameof(ReportProvider.Hidden):
+                        result.Add(new SqlParameter(nameof(ReportProvider.Hidden), entity.Hidden));
                         break;
                 }
             }
@@ -54,6 +63,9 @@ namespace Webfuel.Domain
             {
                 yield return "Id";
                 yield return "Name";
+                yield return "SortOrder";
+                yield return "Default";
+                yield return "Hidden";
             }
         }
         
@@ -63,6 +75,9 @@ namespace Webfuel.Domain
             {
                 yield return "Id";
                 yield return "Name";
+                yield return "SortOrder";
+                yield return "Default";
+                yield return "Hidden";
             }
         }
         
@@ -71,6 +86,9 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Name";
+                yield return "SortOrder";
+                yield return "Default";
+                yield return "Hidden";
             }
         }
         

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.Data.SqlClient;
 
-namespace Webfuel.Domain
+namespace Webfuel.Domain.StaticData
 {
     internal partial interface IReportProviderRepository
     {
@@ -48,12 +48,12 @@ namespace Webfuel.Domain
         }
         public async Task<List<ReportProvider>> SelectReportProvider()
         {
-            var sql = @"SELECT * FROM [ReportProvider] ORDER BY Id ASC";
+            var sql = @"SELECT * FROM [ReportProvider] ORDER BY SortOrder ASC";
             return await _connection.ExecuteReader<ReportProvider, ReportProviderMetadata>(sql);
         }
         public async Task<List<ReportProvider>> SelectReportProviderWithPage(int skip, int take)
         {
-            var sql = @"SELECT * FROM [ReportProvider] ORDER BY Id ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+            var sql = @"SELECT * FROM [ReportProvider] ORDER BY SortOrder ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Skip", skip),

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Webfuel.Common;
+using Webfuel.Domain.StaticData;
 
 namespace Webfuel.Domain
 {

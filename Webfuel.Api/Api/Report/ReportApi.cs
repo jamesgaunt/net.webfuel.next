@@ -6,6 +6,7 @@ using Webfuel.Domain;
 namespace Webfuel.App
 {
     [ApiService]
+    [ApiDataSource]
     public static class ReportApi
     {
         public static void RegisterEndpoints(IEndpointRouteBuilder app)

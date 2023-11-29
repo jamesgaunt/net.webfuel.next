@@ -9,6 +9,7 @@ import { ReportDesignerComponent } from './report-designer/report-designer.compo
 import { ReportGroupApi } from '../../api/report-group.api';
 import { DeactivateService } from '../../core/deactivate.service';
 import { ConfigurationService } from '../../core/configuration.service';
+import { ReportListComponent } from './report/report-list/report-list.component';
 
 const routes: Routes = [
   {
@@ -24,8 +25,8 @@ const routes: Routes = [
     data: { activeSideMenu: 'Configuration' }
   },
   {
-    path: 'report-designer',
-    component: ReportDesignerComponent,
+    path: 'report-list',
+    component: ReportListComponent,
     data: { activeSideMenu: 'Configuration' }
   },
 ];

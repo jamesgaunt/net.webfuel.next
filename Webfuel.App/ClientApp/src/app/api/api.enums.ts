@@ -14,11 +14,6 @@ export enum QueryOp {
     Or = "or",
 }
 
-export enum ReportProviderEnum {
-    Project = "b8b6dea3-d6de-4480-a944-e7b0c2827888",
-    ProjectSupport = "2af96eb5-e52d-4163-9247-c34e7b170f62",
-}
-
 export enum IsCTUTeamContributionEnum {
     Yes = "3e1f2673-e708-44a8-8768-cbf9fe1afb7c",
     No = "5b18a6b2-1169-4f7c-91b7-e738ea4527c6",
@@ -63,6 +58,11 @@ export enum ProjectStatusEnum {
     Active = "6c83e9e4-617b-4386-b087-16a11f6b24af",
     Closed = "ed4845b0-1f4c-4df3-b4ec-46e5ce94c275",
     Discarded = "164fdeee-8d6f-42fa-a23b-fbab0ef3ba93",
+}
+
+export enum ReportProviderEnum {
+    Project = "b8b6dea3-d6de-4480-a944-e7b0c2827888",
+    ProjectSupport = "2af96eb5-e52d-4163-9247-c34e7b170f62",
 }
 
 export enum SubmissionOutcomeEnum {

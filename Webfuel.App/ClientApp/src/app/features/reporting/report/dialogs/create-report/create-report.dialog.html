@@ -1,0 +1,26 @@
+<form class="form dialog" [formGroup]="form">
+  <div class="dialog-head">
+    Create Report
+  </div>
+  <div class="dialog-body">
+    <div class="grid">
+      <div class="field">
+        <label class="label">Name</label>
+        <input class="input" type="text" placeholder="required" formControlName="name" />
+      </div>
+      <div class="field">
+        <label class="label">Report Group</label>
+        <dropdown-select formControlName="reportGroupId" [dataSource]="reportGroupApi" placeholder="required" />
+      </div>
+      <div class="field">
+        <label class="label">Report Data Type</label>
+        <dropdown-select formControlName="reportProviderId" [dataSource]="staticDataCache.reportProvider" placeholder="required" />
+      </div>
+    </div>
+  </div>
+  <div class="dialog-buttons">
+    <button type="submit" class="is-success" (click)="save()">Add</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+  </div>
+</form>
+

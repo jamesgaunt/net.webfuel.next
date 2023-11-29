@@ -6,19 +6,19 @@ import { IDataSource } from 'shared/common/data-source';
 import { CreateReport, Report, UpdateReport, QueryReport, QueryResult } from './api.types';
 
 @Injectable()
-export class ReportApi {
+export class ReportApi implements IDataSource<Report, QueryReport, CreateReport, UpdateReport> {
     constructor(private apiService: ApiService) { }
     
     public create (body: CreateReport, options?: ApiOptions): Observable<Report> {
-        return this.apiService.request<CreateReport, Report>("POST", "api/report", body, options);
+        return this.apiService.request<CreateReport, Report>("POST", "api/report", body, options).pipe(tap(_ => this.changed.emit()));
     }
     
     public update (body: UpdateReport, options?: ApiOptions): Observable<Report> {
-        return this.apiService.request<UpdateReport, Report>("PUT", "api/report", body, options);
+        return this.apiService.request<UpdateReport, Report>("PUT", "api/report", body, options).pipe(tap(_ => this.changed.emit()));
     }
     
     public delete (params: { id: string }, options?: ApiOptions): Observable<any> {
-        return this.apiService.request<undefined, any>("DELETE", "api/report/" + params.id + "", undefined, options);
+        return this.apiService.request<undefined, any>("DELETE", "api/report/" + params.id + "", undefined, options).pipe(tap(_ => this.changed.emit()));
     }
     
     public query (body: QueryReport, options?: ApiOptions): Observable<QueryResult<Report>> {
@@ -28,6 +28,8 @@ export class ReportApi {
     public get (params: { id: string }, options?: ApiOptions): Observable<Report> {
         return this.apiService.request<undefined, Report>("GET", "api/report/" + params.id + "", undefined, options);
     }
+    
+    changed = new EventEmitter<any>();
     
     // Resolvers
     
