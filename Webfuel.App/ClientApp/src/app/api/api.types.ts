@@ -73,7 +73,7 @@ export interface DashboardModel {
 
 export interface ProjectTeamSupport {
     id: string;
-    projectPrefixedNumber: string;
+    projectLabel: string;
     createdNotes: string;
     createdAt: string;
     completedNotes: string;

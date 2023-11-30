@@ -23,8 +23,8 @@ namespace Webfuel.Domain
                 {
                     case nameof(ProjectTeamSupport.Id):
                         break;
-                    case nameof(ProjectTeamSupport.ProjectPrefixedNumber):
-                        result.Add(new SqlParameter(nameof(ProjectTeamSupport.ProjectPrefixedNumber), entity.ProjectPrefixedNumber));
+                    case nameof(ProjectTeamSupport.ProjectLabel):
+                        result.Add(new SqlParameter(nameof(ProjectTeamSupport.ProjectLabel), entity.ProjectLabel));
                         break;
                     case nameof(ProjectTeamSupport.CreatedNotes):
                         result.Add(new SqlParameter(nameof(ProjectTeamSupport.CreatedNotes), entity.CreatedNotes));
@@ -77,7 +77,7 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Id";
-                yield return "ProjectPrefixedNumber";
+                yield return "ProjectLabel";
                 yield return "CreatedNotes";
                 yield return "CreatedAt";
                 yield return "CompletedNotes";
@@ -94,7 +94,7 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Id";
-                yield return "ProjectPrefixedNumber";
+                yield return "ProjectLabel";
                 yield return "CreatedNotes";
                 yield return "CreatedAt";
                 yield return "CompletedNotes";
@@ -110,7 +110,7 @@ namespace Webfuel.Domain
         {
             get
             {
-                yield return "ProjectPrefixedNumber";
+                yield return "ProjectLabel";
                 yield return "CreatedNotes";
                 yield return "CreatedAt";
                 yield return "CompletedNotes";
@@ -126,8 +126,8 @@ namespace Webfuel.Domain
         
         public static void Validate(ProjectTeamSupport entity)
         {
-            entity.ProjectPrefixedNumber = entity.ProjectPrefixedNumber ?? String.Empty;
-            entity.ProjectPrefixedNumber = entity.ProjectPrefixedNumber.Trim();
+            entity.ProjectLabel = entity.ProjectLabel ?? String.Empty;
+            entity.ProjectLabel = entity.ProjectLabel.Trim();
             entity.CreatedNotes = entity.CreatedNotes ?? String.Empty;
             entity.CreatedNotes = entity.CreatedNotes.Trim();
             entity.CompletedNotes = entity.CompletedNotes ?? String.Empty;
@@ -137,15 +137,15 @@ namespace Webfuel.Domain
         
         public static ProjectTeamSupportRepositoryValidator Validator { get; } = new ProjectTeamSupportRepositoryValidator();
         
-        public const int ProjectPrefixedNumber_MaxLength = 64;
+        public const int ProjectLabel_MaxLength = 64;
         public const int CreatedNotes_MaxLength = 1024;
         public const int CompletedNotes_MaxLength = 1024;
         
-        public static void ProjectPrefixedNumber_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        public static void ProjectLabel_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull()
-                .MaximumLength(ProjectPrefixedNumber_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+                .MaximumLength(ProjectLabel_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
         public static void CreatedNotes_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
@@ -167,7 +167,7 @@ namespace Webfuel.Domain
     {
         public ProjectTeamSupportRepositoryValidator()
         {
-            RuleFor(x => x.ProjectPrefixedNumber).Use(ProjectTeamSupportMetadata.ProjectPrefixedNumber_ValidationRules);
+            RuleFor(x => x.ProjectLabel).Use(ProjectTeamSupportMetadata.ProjectLabel_ValidationRules);
             RuleFor(x => x.CreatedNotes).Use(ProjectTeamSupportMetadata.CreatedNotes_ValidationRules);
             RuleFor(x => x.CompletedNotes).Use(ProjectTeamSupportMetadata.CompletedNotes_ValidationRules);
             Validation();

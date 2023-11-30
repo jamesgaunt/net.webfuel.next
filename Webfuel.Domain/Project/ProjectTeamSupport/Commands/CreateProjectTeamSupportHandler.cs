@@ -26,7 +26,7 @@ namespace Webfuel.Domain
             var projectTeamSupport = new ProjectTeamSupport();
 
             projectTeamSupport.ProjectId = request.ProjectId;
-            projectTeamSupport.ProjectPrefixedNumber = project.PrefixedNumber;
+            projectTeamSupport.ProjectLabel = project.PrefixedNumber + " " + project.LeadApplicantLastName;
             projectTeamSupport.SupportTeamId = request.SupportTeamId;
             projectTeamSupport.CreatedNotes = request.CreatedNotes;
             projectTeamSupport.CreatedAt = DateTimeOffset.UtcNow;
