@@ -2,6 +2,8 @@ TODO:
 
 > Heartbeats
 
+> Dirty projects (needs heartbeats to update data) + need filterable update statements to avoid stamping on data
+
 > Code Editor (+ Terminal Editor) => Terminal 2.0
 
 > Team Support Request Dashboard filters/grid?

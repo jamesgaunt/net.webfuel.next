@@ -669,6 +669,8 @@ export interface QueryProjectTeamSupport extends Query {
 export interface Report {
     id: string;
     name: string;
+    fileName: string;
+    worksheetName: string;
     design: ReportDesign;
     sortOrder: number;
     ownerUserId: string;

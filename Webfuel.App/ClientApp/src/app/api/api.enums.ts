@@ -56,6 +56,7 @@ export enum IsTeamMembersConsultedEnum {
 
 export enum ProjectStatusEnum {
     Active = "6c83e9e4-617b-4386-b087-16a11f6b24af",
+    OnHold = "691ee44b-7b01-4af0-b8f3-13f96f00f0ce",
     Closed = "ed4845b0-1f4c-4df3-b4ec-46e5ce94c275",
     Discarded = "164fdeee-8d6f-42fa-a23b-fbab0ef3ba93",
 }
