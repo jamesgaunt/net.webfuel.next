@@ -52,9 +52,9 @@ namespace Webfuel.Domain
             if (task == null)
                 throw new DomainException("The specified report task no longer exists");
 
-            var reportGenerator = _serviceProvider.GetService(task.ReportGeneratorType) as IReportGenerator;
+            var reportGenerator = _serviceProvider.GetService(task.ReportGenerator) as IReportGenerator;
             if(reportGenerator == null)
-                throw new DomainException("Unable to instantiate report generator of type " + task.ReportGeneratorType.Name);
+                throw new DomainException("Unable to instantiate report generator of type " + task.ReportGenerator.Name);
 
             await reportGenerator.GenerateReport(task);
 

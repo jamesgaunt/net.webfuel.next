@@ -14,7 +14,7 @@
 
         public Guid? FundingStreamId { get; set; }
 
-        public QueryProject ToQuery()
+        public Query ToQuery()
         {
             var query = new QueryProject
             {

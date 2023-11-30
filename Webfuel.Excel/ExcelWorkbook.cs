@@ -35,6 +35,17 @@ namespace Webfuel.Excel
             return new ExcelWorksheet(worksheet);
         }
 
+        public ExcelWorksheet GetOrCreateWorksheet(string sheetName)
+        {
+            if (string.IsNullOrEmpty(sheetName))
+                sheetName = "Sheet1";
+
+            if (!_workbook.TryGetWorksheet(sheetName, out var _worksheet))
+                _worksheet = _workbook.AddWorksheet(sheetName);
+
+            return Worksheet(sheetName);
+        }
+
         public MemoryStream ToMemoryStream()
         {
             var ms = new MemoryStream();

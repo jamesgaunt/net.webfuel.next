@@ -1,19 +1,11 @@
-﻿using Microsoft.Identity.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Webfuel.Excel;
 
 namespace Webfuel.Domain
 {
-    public abstract class ReportTask: IDisposable
+    public class ReportTask : IDisposable
     {
-        public abstract Type ReportGeneratorType { get; }
-        public virtual ReportResult GenerateResult() { throw new NotImplementedException(); }
-        public abstract void Dispose();
-
         public Guid TaskId { get; internal set; }
+        public required Type ReportGenerator { get; init; }
 
         public int ProgressCount { get; set; }
         public int TotalCount { get; set; }
@@ -22,5 +14,46 @@ namespace Webfuel.Domain
         internal Guid? IdentityId { get; set; }
         internal DateTimeOffset CreatedAt { get; } = DateTimeOffset.UtcNow;
         internal DateTimeOffset LastAccessedAt { get; set; } = DateTimeOffset.UtcNow;
+
+        public ReportDesign Design { get; set; } = new ReportDesign();
+        public Query Query { get; set; } = new Query();
+        public int CurrentRow { get; set; } = 1;
+        public ExcelWorkbook Workbook { get; } = new ExcelWorkbook();
+
+        public ExcelWorksheet Worksheet
+        {
+            get
+            {
+                return Workbook.GetOrCreateWorksheet(Design.WorksheetName);
+            }
+        }
+
+        public ReportResult GenerateResult()
+        {
+            return new ReportResult
+            {
+                MemoryStream = Workbook.ToMemoryStream(),
+                ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                FileDownloadName = FileName
+            };
+        }
+
+        public void Dispose()
+        {
+            Workbook.Dispose();
+        }
+
+        string FileName
+        {
+            get
+            {
+                var filename = Design.FileName.Trim();
+                if (String.IsNullOrEmpty(filename))
+                    filename = "report.xlsx";
+                else if (!filename.EndsWith(".xlsx", StringComparison.OrdinalIgnoreCase))
+                    filename += ".xlsx";
+                return filename;
+            }
+        }
     }
 }
