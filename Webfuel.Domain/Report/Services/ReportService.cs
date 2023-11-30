@@ -39,7 +39,7 @@ namespace Webfuel.Domain
         {
             var report = await _reportRepository.RequireReport(request.ReportId);
             var provider = GetReportProvider(report.ReportProviderId);
-            return await provider.InitialiseReport(request);
+            return await provider.InitialiseReport(report, request);
         }
 
         IReportProvider GetReportProvider(Guid id)

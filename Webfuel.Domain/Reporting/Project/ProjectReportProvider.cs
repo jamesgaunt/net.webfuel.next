@@ -36,10 +36,11 @@ namespace Webfuel.Domain
             return Task.FromResult<IReportSchema>(Schema);
         }
 
-        public async Task<ReportProgress> InitialiseReport(ReportRequest request)
+        public async Task<ReportProgress> InitialiseReport(Report report,ReportRequest request)
         {
             var task = new ReportTask
             {
+                Report = report,
                 ReportGenerator = typeof(IProjectReportProvider),
             };
 

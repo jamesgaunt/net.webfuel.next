@@ -5,6 +5,7 @@ namespace Webfuel.Domain
     public class ReportTask : IDisposable
     {
         public Guid TaskId { get; internal set; }
+        public required Report Report { get; init; }
         public required Type ReportGenerator { get; init; }
 
         public int ProgressCount { get; set; }
@@ -15,7 +16,6 @@ namespace Webfuel.Domain
         internal DateTimeOffset CreatedAt { get; } = DateTimeOffset.UtcNow;
         internal DateTimeOffset LastAccessedAt { get; set; } = DateTimeOffset.UtcNow;
 
-        public ReportDesign Design { get; set; } = new ReportDesign();
         public Query Query { get; set; } = new Query();
         public int CurrentRow { get; set; } = 1;
         public ExcelWorkbook Workbook { get; } = new ExcelWorkbook();
@@ -24,7 +24,7 @@ namespace Webfuel.Domain
         {
             get
             {
-                return Workbook.GetOrCreateWorksheet(Design.WorksheetName);
+                return Workbook.GetOrCreateWorksheet(Report.WorksheetName);
             }
         }
 
@@ -47,7 +47,7 @@ namespace Webfuel.Domain
         {
             get
             {
-                var filename = Design.FileName.Trim();
+                var filename = Report.FileName.Trim();
                 if (String.IsNullOrEmpty(filename))
                     filename = "report.xlsx";
                 else if (!filename.EndsWith(".xlsx", StringComparison.OrdinalIgnoreCase))

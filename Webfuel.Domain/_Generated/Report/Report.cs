@@ -24,6 +24,12 @@ namespace Webfuel.Domain
                     case nameof(Report.Name):
                         Name = (string)value!;
                         break;
+                    case nameof(Report.FileName):
+                        FileName = (string)value!;
+                        break;
+                    case nameof(Report.WorksheetName):
+                        WorksheetName = (string)value!;
+                        break;
                     case nameof(Report.Design):
                         DesignJson = (string)value!;
                         break;
@@ -44,6 +50,8 @@ namespace Webfuel.Domain
         }
         public Guid Id  { get; set; } = Guid.Empty;
         public string Name  { get; set; } = String.Empty;
+        public string FileName  { get; set; } = String.Empty;
+        public string WorksheetName  { get; set; } = String.Empty;
         public ReportDesign Design
         {
             get { return _Design ?? (_Design = SafeJsonSerializer.Deserialize<ReportDesign>(_DesignJson)); }
@@ -65,6 +73,8 @@ namespace Webfuel.Domain
             var entity = new Report();
             entity.Id = Id;
             entity.Name = Name;
+            entity.FileName = FileName;
+            entity.WorksheetName = WorksheetName;
             entity.DesignJson = DesignJson;
             entity.SortOrder = SortOrder;
             entity.OwnerUserId = OwnerUserId;

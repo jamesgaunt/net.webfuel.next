@@ -12,6 +12,6 @@ namespace Webfuel.Domain
 
         Task<IReportSchema> GetReportSchema();
 
-        Task<ReportProgress> InitialiseReport(ReportRequest request);
+        Task<ReportProgress> InitialiseReport(Report report, ReportRequest request);
     }
 }
