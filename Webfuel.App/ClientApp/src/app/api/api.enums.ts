@@ -97,13 +97,14 @@ export enum SupportTeamEnum {
 }
 
 export enum ReportFieldType {
-    String = 0,
-    Numeric = 1,
-    Boolean = 2,
-    DateTime = 3,
-    Date = 4,
-    Reference = 5,
-    ReferenceList = 6,
+    Unspecified = 0,
+    String = 10,
+    Numeric = 20,
+    Boolean = 30,
+    DateTime = 40,
+    Date = 50,
+    Reference = 1000,
+    ReferenceList = 1010,
 }
 
 

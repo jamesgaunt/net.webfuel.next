@@ -5,5 +5,11 @@
     <Key Name="Id" Type="guid" />
     <Property Name="Name" Type="meta:name" />
     <Property Name="SortOrder" Type="int" />
+
+    <Data>
+      <Row Id="e0347af0-f84e-495b-88ef-f3fbd16a652f" Name="Standard" />
+      <Row Id="f67485d6-5da6-4d84-a015-83daa9d44dd1" Name="Administrator" />
+    </Data>
+    
   </Entity>
 </Schema>

@@ -2,15 +2,17 @@
 {
     public enum ReportFieldType
     {
+        Unspecified = 0,
+
         // Primatives
-        String,
-        Numeric,
-        Boolean, 
-        DateTime,
-        Date,
+        String = 10,
+        Numeric = 20,
+        Boolean = 30, 
+        DateTime = 40,
+        Date = 50,
 
         // Complex Types
-        Reference,
-        ReferenceList,
+        Reference = 1000,
+        ReferenceList = 1010,
     }
 }

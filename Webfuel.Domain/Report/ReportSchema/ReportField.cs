@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Webfuel.Domain
@@ -9,7 +10,7 @@ namespace Webfuel.Domain
     [ApiType]
     public interface IReportField
     {
-        string FieldId { get; }
+        string Id { get; }
 
         string Name { get; }
 
@@ -24,22 +25,28 @@ namespace Webfuel.Domain
 
     public class ReportField<TContext>: IReportField where TContext : class
     {
-        public required string FieldId { get; init; }
+        public ReportField(string id)
+        {
+            Id = id;
+            Name = id;
+        }
 
-        public required string Name { get; init; }
+        public string Id { get; set; }
 
-        public required ReportFieldType FieldType { get; init; }
+        public string Name { get; set; }
 
-        public string ReferenceType { get; init; } = String.Empty;
+        public ReportFieldType FieldType { get; set; }
 
-        public bool Nullable { get; init; }
+        public string ReferenceType { get; set; } = String.Empty;
 
-        public bool Default { get; init; } = true;
+        public bool Nullable { get; set; }
 
+        public bool Default { get; set; } = true;
+
+        [JsonIgnore]
         public Func<TContext, object?>? Accessor { get; init; }
 
+        [JsonIgnore]
         public Func<TContext, Task<object?>>? AsyncAccessor { get; init; }
-
-        public Func<object?, Task<string>>? Formatter { get; init; } = null; // If null use the default formatter for this field type
     }
 }

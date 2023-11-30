@@ -1,11 +1,12 @@
 export enum ReportFieldType {
-    String = 0,
-    Numeric = 1,
-    Boolean = 2,
-    DateTime = 3,
-    Date = 4,
-    Reference = 5,
-    ReferenceList = 6,
+    Unspecified = 0,
+    String = 10,
+    Numeric = 20,
+    Boolean = 30,
+    DateTime = 40,
+    Date = 50,
+    Reference = 1000,
+    ReferenceList = 1010,
 }
 
 export interface ClientConfiguration {
@@ -63,7 +64,6 @@ export interface ReportColumn {
 }
 
 export interface ReportDesign {
-    reportProviderId: string;
     columns: Array<ReportColumn>;
 }
 
@@ -685,6 +685,7 @@ export interface CreateReport {
 export interface UpdateReport {
     id: string;
     name: string;
+    design: ReportDesign;
 }
 
 export interface QueryReport extends Query {
@@ -701,7 +702,7 @@ export interface IReportSchema {
 }
 
 export interface IReportField {
-    fieldId: string;
+    id: string;
     name: string;
     fieldType: ReportFieldType;
     referenceType: string;

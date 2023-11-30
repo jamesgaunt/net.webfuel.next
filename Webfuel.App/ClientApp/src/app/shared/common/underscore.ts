@@ -175,6 +175,12 @@ export default class Underscore {
     return { ..._0, ..._1, ..._2 };
   }
 
+  // Clone
+
+  static deepClone<T>(obj: T): T {
+    return <T>JSON.parse(JSON.stringify(obj))
+  }
+
   // String
 
   static compareInsensitive(string1: string, string2: string) {
@@ -335,7 +341,7 @@ export default class Underscore {
 
   // Local Storage
 
-  private static _localStoragePrefix = "20180921:";
+  private static _localStoragePrefix = "20231130:";
 
   private static _generateLocalStorageKey(key: string) {
     return this._localStoragePrefix + key;

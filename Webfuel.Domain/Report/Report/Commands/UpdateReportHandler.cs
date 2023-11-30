@@ -17,6 +17,7 @@ namespace Webfuel.Domain
 
             var updated = original.Copy();
             updated.Name = request.Name;
+            updated.Design = request.Design;
 
             return await _reportRepository.UpdateReport(original: original, updated: updated); 
         }

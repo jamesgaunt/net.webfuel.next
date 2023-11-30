@@ -8,5 +8,7 @@ namespace Webfuel.Domain
         public Guid Id { get; set; }
 
         public string Name { get; set; } = String.Empty;
+
+        public required ReportDesign Design { get; set; }
     }
 }

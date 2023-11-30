@@ -9,8 +9,6 @@ namespace Webfuel.Domain
     [ApiType]
     public class ReportDesign
     {
-        public Guid ReportProviderId { get; set; }
-
-        public List<ReportColumn> Columns { get; } = new List<ReportColumn>();
+        public List<ReportColumn> Columns { get; set; } = new List<ReportColumn>();
     }
 }

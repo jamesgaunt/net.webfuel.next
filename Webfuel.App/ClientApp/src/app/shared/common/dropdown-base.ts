@@ -8,6 +8,7 @@ import { TemplatePortal } from '@angular/cdk/portal';
 import { QueryOp } from '../../api/api.enums';
 import { FormControl } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { QueryService } from '../../core/query.service';
 
 @Component({
   template: ''
@@ -21,6 +22,7 @@ export abstract class DropDownBase<TItem> {
   overlay: Overlay = inject(Overlay);
   viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
   cd: ChangeDetectorRef = inject(ChangeDetectorRef);
+  queryService: QueryService = inject(QueryService);
 
   ngOnInit(): void {
     this.focusControl.valueChanges
@@ -55,8 +57,15 @@ export abstract class DropDownBase<TItem> {
 
   // Data Source
 
-  @Input({ required: true })
+  @Input()
   dataSource: IDataSource<TItem> | undefined;
+
+  @Input()
+  set items(value: TItem[]) {
+    this.dataSource = {
+      query: (query: Query) => this.queryService.query(query, value)
+    };
+  }
 
   // Option Items
 

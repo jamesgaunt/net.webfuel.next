@@ -27,7 +27,7 @@ export class ReportListComponent {
   }
 
   edit(item: Report) {
-    this.router.navigate(['report/report-item', item.id]);
+    this.router.navigate(['reporting/report-item', item.id]);
   }
 
   delete(item: Report) {
