@@ -115,7 +115,7 @@ namespace Webfuel.Domain
         
         public static ProjectSubmissionRepositoryValidator Validator { get; } = new ProjectSubmissionRepositoryValidator();
         
-        public const int NIHRReference_MaxLength = 64;
+        public const int NIHRReference_MaxLength = 128;
         
         public static void NIHRReference_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {

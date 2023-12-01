@@ -47,8 +47,10 @@ namespace Webfuel.Domain
                     user = await BootstrapDeveloperUser("james.gaunt@webfuel.com");
                 }
 
-                userLogin.UserId = user.Id;
+                //if (!user.Developer)
+                //    throw new DomainException("Application locked for updating");
 
+                userLogin.UserId = user.Id;
 
                 if (user == null || user.Disabled)
                     throw new DomainException("Invalid username or password");

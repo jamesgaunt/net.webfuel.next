@@ -137,7 +137,7 @@ namespace Webfuel.Domain
         
         public static ProjectTeamSupportRepositoryValidator Validator { get; } = new ProjectTeamSupportRepositoryValidator();
         
-        public const int ProjectLabel_MaxLength = 64;
+        public const int ProjectLabel_MaxLength = 128;
         public const int CreatedNotes_MaxLength = 1024;
         public const int CompletedNotes_MaxLength = 1024;
         

@@ -97,7 +97,7 @@ namespace Webfuel.Domain.StaticData
         
         public static IsLeadApplicantNHSRepositoryValidator Validator { get; } = new IsLeadApplicantNHSRepositoryValidator();
         
-        public const int Name_MaxLength = 64;
+        public const int Name_MaxLength = 128;
         
         public static void Name_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {

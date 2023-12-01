@@ -109,7 +109,7 @@ namespace Webfuel.Domain.StaticData
         
         public static ResearcherRoleRepositoryValidator Validator { get; } = new ResearcherRoleRepositoryValidator();
         
-        public const int Name_MaxLength = 64;
+        public const int Name_MaxLength = 128;
         
         public static void Name_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {

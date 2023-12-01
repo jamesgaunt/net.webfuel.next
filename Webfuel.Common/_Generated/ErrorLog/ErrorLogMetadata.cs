@@ -113,8 +113,8 @@ namespace Webfuel.Common
         
         public static ErrorLogRepositoryValidator Validator { get; } = new ErrorLogRepositoryValidator();
         
-        public const int Summary_MaxLength = 64;
-        public const int CreatedBy_MaxLength = 64;
+        public const int Summary_MaxLength = 128;
+        public const int CreatedBy_MaxLength = 128;
         
         public static void Summary_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {

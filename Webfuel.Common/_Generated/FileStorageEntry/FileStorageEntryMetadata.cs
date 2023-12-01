@@ -117,8 +117,8 @@ namespace Webfuel.Common
         
         public static FileStorageEntryRepositoryValidator Validator { get; } = new FileStorageEntryRepositoryValidator();
         
-        public const int FileName_MaxLength = 64;
-        public const int Description_MaxLength = 64;
+        public const int FileName_MaxLength = 128;
+        public const int Description_MaxLength = 128;
         
         public static void FileName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {

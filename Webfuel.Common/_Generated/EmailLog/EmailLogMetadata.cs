@@ -145,8 +145,8 @@ namespace Webfuel.Common
         
         public static EmailLogRepositoryValidator Validator { get; } = new EmailLogRepositoryValidator();
         
-        public const int SentBy_MaxLength = 64;
-        public const int ReplyTo_MaxLength = 64;
+        public const int SentBy_MaxLength = 128;
+        public const int ReplyTo_MaxLength = 128;
         
         public static void SendTo_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {

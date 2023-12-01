@@ -10,7 +10,7 @@
       <Member Name="Name" />
     </Index>
     <Data>
-      <Row Id="ca500eee-3e76-46f3-9505-a9fb484b5256" Name="IC" />
+      <Row Id="ca500eee-3e76-46f3-9505-a9fb484b5256" Name="ICL" />
       <Row Id="35cf1c1b-b6b0-4e89-a9fa-d1b34c11a21d" Name="QMUL" />
       <Row Id="2171e15a-78db-485e-a052-2a43e5e220c4" Name="KCL" />
       <Row Id="6ac72fc9-f11d-460f-bb53-025c020e4d94" Name="UCL"/>

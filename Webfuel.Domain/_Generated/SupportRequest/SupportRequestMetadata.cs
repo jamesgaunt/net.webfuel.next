@@ -417,32 +417,32 @@ namespace Webfuel.Domain
         
         public static SupportRequestRepositoryValidator Validator { get; } = new SupportRequestRepositoryValidator();
         
-        public const int PrefixedNumber_MaxLength = 64;
+        public const int PrefixedNumber_MaxLength = 128;
         public const int Title_MaxLength = 1000;
-        public const int ApplicationStageFreeText_MaxLength = 64;
-        public const int ProposedFundingStreamName_MaxLength = 64;
+        public const int ApplicationStageFreeText_MaxLength = 128;
+        public const int ProposedFundingStreamName_MaxLength = 128;
         public const int ExperienceOfResearchAwards_MaxLength = 1000;
         public const int BriefDescription_MaxLength = 5000;
         public const int SupportRequested_MaxLength = 2000;
-        public const int HowDidYouFindUsFreeText_MaxLength = 64;
-        public const int TeamContactTitle_MaxLength = 64;
-        public const int TeamContactFirstName_MaxLength = 64;
-        public const int TeamContactLastName_MaxLength = 64;
-        public const int TeamContactEmail_MaxLength = 64;
-        public const int TeamContactRoleFreeText_MaxLength = 64;
-        public const int LeadApplicantTitle_MaxLength = 64;
-        public const int LeadApplicantFirstName_MaxLength = 64;
-        public const int LeadApplicantLastName_MaxLength = 64;
-        public const int LeadApplicantJobRole_MaxLength = 64;
-        public const int LeadApplicantOrganisation_MaxLength = 64;
-        public const int LeadApplicantDepartment_MaxLength = 64;
-        public const int LeadApplicantAddressLine1_MaxLength = 64;
-        public const int LeadApplicantAddressLine2_MaxLength = 64;
-        public const int LeadApplicantAddressTown_MaxLength = 64;
-        public const int LeadApplicantAddressCounty_MaxLength = 64;
-        public const int LeadApplicantAddressCountry_MaxLength = 64;
-        public const int LeadApplicantAddressPostcode_MaxLength = 64;
-        public const int LeadApplicantORCID_MaxLength = 64;
+        public const int HowDidYouFindUsFreeText_MaxLength = 128;
+        public const int TeamContactTitle_MaxLength = 128;
+        public const int TeamContactFirstName_MaxLength = 128;
+        public const int TeamContactLastName_MaxLength = 128;
+        public const int TeamContactEmail_MaxLength = 128;
+        public const int TeamContactRoleFreeText_MaxLength = 128;
+        public const int LeadApplicantTitle_MaxLength = 128;
+        public const int LeadApplicantFirstName_MaxLength = 128;
+        public const int LeadApplicantLastName_MaxLength = 128;
+        public const int LeadApplicantJobRole_MaxLength = 128;
+        public const int LeadApplicantOrganisation_MaxLength = 128;
+        public const int LeadApplicantDepartment_MaxLength = 128;
+        public const int LeadApplicantAddressLine1_MaxLength = 128;
+        public const int LeadApplicantAddressLine2_MaxLength = 128;
+        public const int LeadApplicantAddressTown_MaxLength = 128;
+        public const int LeadApplicantAddressCounty_MaxLength = 128;
+        public const int LeadApplicantAddressCountry_MaxLength = 128;
+        public const int LeadApplicantAddressPostcode_MaxLength = 128;
+        public const int LeadApplicantORCID_MaxLength = 128;
         
         public static void PrefixedNumber_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {

@@ -251,12 +251,12 @@ namespace Webfuel.Domain
         
         public const int Email_MaxLength = 64;
         public const int Title_MaxLength = 16;
-        public const int FirstName_MaxLength = 64;
-        public const int LastName_MaxLength = 64;
-        public const int RSSJobTitle_MaxLength = 64;
-        public const int UniversityJobTitle_MaxLength = 64;
-        public const int ProfessionalBackground_MaxLength = 64;
-        public const int Specialisation_MaxLength = 64;
+        public const int FirstName_MaxLength = 128;
+        public const int LastName_MaxLength = 128;
+        public const int RSSJobTitle_MaxLength = 128;
+        public const int UniversityJobTitle_MaxLength = 128;
+        public const int ProfessionalBackground_MaxLength = 1024;
+        public const int Specialisation_MaxLength = 1024;
         public const int DisciplineFreeText_MaxLength = 1024;
         public const int PasswordHash_MaxLength = 256;
         public const int PasswordSalt_MaxLength = 256;

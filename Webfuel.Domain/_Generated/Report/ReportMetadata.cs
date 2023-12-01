@@ -131,9 +131,9 @@ namespace Webfuel.Domain
         
         public static ReportRepositoryValidator Validator { get; } = new ReportRepositoryValidator();
         
-        public const int Name_MaxLength = 64;
-        public const int FileName_MaxLength = 64;
-        public const int WorksheetName_MaxLength = 64;
+        public const int Name_MaxLength = 128;
+        public const int FileName_MaxLength = 128;
+        public const int WorksheetName_MaxLength = 128;
         
         public static void Name_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {

@@ -127,7 +127,7 @@ namespace Webfuel.Tools.Datafuel
                     return new SchemaEntityPropertyDateTime(entity, element, nullable);
 
                 case "meta:name":
-                    return new SchemaEntityPropertyString(entity, element, nullable, "64");
+                    return new SchemaEntityPropertyString(entity, element, nullable, "128");
                 case "meta:path":
                     return new SchemaEntityPropertyString(entity, element, nullable, "256");
                 case "meta:code":

@@ -13,7 +13,7 @@
            Prefix="IC"
            NextProjectNumber="1"
            NextSupportRequestNumber="1"
-           DomainName="https://db.rssimperialpartners.org.uk/"
+           DomainName="https://db.rssimperialpartners.org.uk"
            ReplyTo="admin@rssimperialpartners.org.uk" />
     </Data>
   </Entity>

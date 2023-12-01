@@ -119,9 +119,9 @@ namespace Webfuel.Domain
         
         public static UserLoginRepositoryValidator Validator { get; } = new UserLoginRepositoryValidator();
         
-        public const int Email_MaxLength = 64;
-        public const int IPAddress_MaxLength = 64;
-        public const int Reason_MaxLength = 64;
+        public const int Email_MaxLength = 128;
+        public const int IPAddress_MaxLength = 128;
+        public const int Reason_MaxLength = 128;
         
         public static void Email_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {

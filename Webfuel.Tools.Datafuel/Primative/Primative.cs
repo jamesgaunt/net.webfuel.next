@@ -100,7 +100,7 @@ namespace Webfuel.Tools.Datafuel
                 case "datetime":
                     return new PrimativeDateTime(nullable);
                 case "meta:name":
-                    return new PrimativeString(nullable, max: 64);
+                    return new PrimativeString(nullable, max: 128);
                 case "meta:path":
                     return new PrimativeString(nullable, max: 256);
                 case "meta:code":

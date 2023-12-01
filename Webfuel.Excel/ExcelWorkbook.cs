@@ -93,6 +93,11 @@ namespace Webfuel.Excel
             return new ExcelCell(cell);
         }
 
+        public ExcelCell Cell(int row, string header)
+        {
+            return Cell(row, FindHeaderCol(header));
+        }
+
         public int FindHeaderCol(string header)
         {
             var col = 1;
@@ -137,6 +142,11 @@ namespace Webfuel.Excel
         public T GetValue<T>()
         {
             return _cell.GetValue<T>();
+        }
+
+        public bool TryGetValue<T>(out T result)
+        {
+            return _cell.TryGetValue<T>(out result);
         }
 
         public ExcelCell SetValue(string value)
@@ -186,7 +196,7 @@ namespace Webfuel.Excel
             if(value is DateTime)
                 return SetValue((DateTime)value);
 
-            if(value is Decimal || IsNumericType(value.GetType()))
+            if(IsNumericType(value.GetType()))
                 return SetValue((Decimal)value);
 
             return SetValue("ERROR: Unable to map object value");
