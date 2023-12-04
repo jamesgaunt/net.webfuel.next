@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Webfuel.Common\Webfuel.Common.csproj" />
     <ProjectReference Include="..\Webfuel.Domain.StaticData\Webfuel.Domain.StaticData.csproj" />
+    <ProjectReference Include="..\Webfuel.Reporting\Webfuel.Reporting.csproj" />
   </ItemGroup>
 
   <ItemGroup>

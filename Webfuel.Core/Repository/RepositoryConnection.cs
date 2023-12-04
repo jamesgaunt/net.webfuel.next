@@ -112,7 +112,9 @@ namespace Webfuel
 
             var querySql = $"{selectSql} {fromSql} {filterSql} {orderSql} {pageSql}";
 
-            var items = await ExecuteReader<TEntity, TEntityMetadata>(querySql, RepositoryQueryUtility.SqlParameters(parameters));
+            var items = query.Take > 0 ?
+                await ExecuteReader<TEntity, TEntityMetadata>(querySql, RepositoryQueryUtility.SqlParameters(parameters)) :
+                new List<TEntity>();
 
             int? totalCount = null;
             if (countTotal && !String.IsNullOrEmpty(pageSql))

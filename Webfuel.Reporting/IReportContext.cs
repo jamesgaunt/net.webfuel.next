@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Webfuel.Domain
+namespace Webfuel.Reporting
 {
-    public class ReportBuilder
+    public interface IReportContext
     {
+        Task<object?> GetValue(string name);
     }
 }

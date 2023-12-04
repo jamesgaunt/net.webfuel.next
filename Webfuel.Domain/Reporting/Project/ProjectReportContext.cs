@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Webfuel.Reporting;
 
 namespace Webfuel.Domain
 {
-    public class ProjectReportContext
+    public class ProjectReportContext: IReportContext
     {
-        public ProjectReportContext(Project item)
+        private readonly Project _item;
+        private readonly IServiceProvider _serviceProvider;
+
+        public ProjectReportContext(Project item, IServiceProvider serviceProvider)
         {
-            Item = item;
+            _item = item;
+            _serviceProvider = serviceProvider;
         }
 
-        public Project Item { get; }
+        public Task<object?> GetValue(string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

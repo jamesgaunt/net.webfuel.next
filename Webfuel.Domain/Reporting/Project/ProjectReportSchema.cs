@@ -7,26 +7,7 @@ using System.Threading.Tasks;
 
 namespace Webfuel.Domain
 {
-    public class ProjectReportSchema: ReportSchema<ProjectReportContext>
+    public class ProjectReportSchema
     {
-        public ProjectReportSchema()
-        {
-            InitialiseFields();            
-        }
-
-        void InitialiseFields()
-        {
-            Fields.Add(new ReportField<ProjectReportContext>("Prefixed Number")
-            {
-                FieldType = ReportFieldType.String,
-                Accessor = p => p.Item.PrefixedNumber
-            });
-
-            Fields.Add(new ReportField<ProjectReportContext>("Title")
-            {
-                FieldType = ReportFieldType.String,
-                Accessor = p => p.Item.Title
-            });
-        }
     }
 }
