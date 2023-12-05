@@ -6,7 +6,7 @@
   gap: var(--gap);
 
   &.is-gapless {
-      gap: 0;
+    gap: 0;
   }
 
   &.is-align-center {
@@ -14,7 +14,9 @@
   }
 
   .column {
-    flex: 1;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
 
     &.is-050, &.is-half {
       width: 50%;
@@ -26,6 +28,11 @@
 
     &.is-right {
       text-align: right;
+    }
+
+    &.is-narrow {
+        flex-grow: 0;
+        white-space: nowrap;
     }
   }
 }

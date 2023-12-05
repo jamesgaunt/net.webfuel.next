@@ -10,12 +10,18 @@ namespace Webfuel.Reporting
     [ApiType]
     public class ReportField
     {
+        public required Guid Id { get; init; }
+
         public required String Name { get; init; }
 
         public required ReportFieldType FieldType { get; init; }
 
-        public String Label { get; init; } = String.Empty;
+        public bool Exportable { get; init; } = true;
 
-        public bool Default { get; init; } = true;
+        [JsonIgnore]
+        public Func<object, object?>? Accessor { get; set; }
+
+        [JsonIgnore]
+        public Func<object, Task<object?>>? AsyncAccessor { get; set; }
     }
 }

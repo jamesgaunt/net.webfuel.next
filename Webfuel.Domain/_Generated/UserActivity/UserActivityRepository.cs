@@ -12,7 +12,7 @@ namespace Webfuel.Domain
         Task<UserActivity> UpdateUserActivity(UserActivity entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<UserActivity> UpdateUserActivity(UserActivity updated, UserActivity original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteUserActivity(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<UserActivity>> QueryUserActivity(Query query, bool countTotal = true);
+        Task<QueryResult<UserActivity>> QueryUserActivity(Query query, bool selectItems = true, bool countTotal = true);
         Task<UserActivity?> GetUserActivity(Guid id);
         Task<UserActivity> RequireUserActivity(Guid id);
         Task<int> CountUserActivity();
@@ -60,9 +60,9 @@ namespace Webfuel.Domain
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<UserActivity>> QueryUserActivity(Query query, bool countTotal = true)
+        public async Task<QueryResult<UserActivity>> QueryUserActivity(Query query, bool selectItems = true, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<UserActivity, UserActivityMetadata>(query, countTotal);
+            return await _connection.ExecuteQuery<UserActivity, UserActivityMetadata>(query, selectItems: selectItems, countTotal: countTotal);
         }
         public async Task<UserActivity?> GetUserActivity(Guid id)
         {

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 import { ReportRoutingModule } from './report-routing.module';
 import { ReportIndexComponent } from './report-index/report-index.component';
+import { ReportRunnerComponent } from './report-runner/report-runner.component';
 
 @NgModule({
   imports: [
@@ -11,7 +12,8 @@ import { ReportIndexComponent } from './report-index/report-index.component';
     ReportRoutingModule
   ],
   declarations: [
-    ReportIndexComponent
+    ReportIndexComponent,
+    ReportRunnerComponent,
   ],
   providers: [
 

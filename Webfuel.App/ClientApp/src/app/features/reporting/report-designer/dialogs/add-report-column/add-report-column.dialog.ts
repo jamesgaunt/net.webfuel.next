@@ -2,12 +2,12 @@ import { Component, Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormService } from 'core/form.service';
 import { DialogBase, DialogComponentBase } from 'shared/common/dialog-base';
-import { IReportSchema, ReportColumn, ReportDesign } from '../../../../../api/api.types';
+import { ReportSchema, ReportColumn, ReportDesign } from '../../../../../api/api.types';
 import { StaticDataCache } from '../../../../../api/static-data.cache';
 import _ from 'shared/common/underscore';
 
 export interface AddReportColumnDialogData {
-  schema: IReportSchema;
+  schema: ReportSchema;
   design: ReportDesign;
 }
 

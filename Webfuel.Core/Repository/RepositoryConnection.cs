@@ -33,7 +33,7 @@ namespace Webfuel
             where TEntity : class
             where TEntityMetadata : IRepositoryMetadata<TEntity>;
 
-        Task<QueryResult<TEntity>> ExecuteQuery<TEntity, TEntityMetadata>(Query query, bool countTotal = true)
+        Task<QueryResult<TEntity>> ExecuteQuery<TEntity, TEntityMetadata>(Query query, bool selectItems = true, bool countTotal = true)
             where TEntity : class
             where TEntityMetadata : IRepositoryMetadata<TEntity>;
     }
@@ -94,7 +94,7 @@ namespace Webfuel
             }
         }
 
-        public async Task<QueryResult<TEntity>> ExecuteQuery<TEntity, TEntityMetadata>(Query query, bool countTotal = true)
+        public async Task<QueryResult<TEntity>> ExecuteQuery<TEntity, TEntityMetadata>(Query query, bool selectItems = true, bool countTotal = true)
             where TEntity : class
             where TEntityMetadata : IRepositoryMetadata<TEntity>
         {
@@ -112,12 +112,17 @@ namespace Webfuel
 
             var querySql = $"{selectSql} {fromSql} {filterSql} {orderSql} {pageSql}";
 
-            var items = query.Take > 0 ?
+            var items = selectItems ?
                 await ExecuteReader<TEntity, TEntityMetadata>(querySql, RepositoryQueryUtility.SqlParameters(parameters)) :
                 new List<TEntity>();
 
-            int? totalCount = null;
-            if (countTotal && !String.IsNullOrEmpty(pageSql))
+            int totalCount = 0;
+
+            if(selectItems && String.IsNullOrEmpty(pageSql))
+            {
+                totalCount = items.Count;
+            }
+            else if (countTotal)
             {
                 var countSql = RepositoryQueryUtility.CountSql(query, fields);
                 querySql = $"{countSql} {fromSql} {filterSql}";

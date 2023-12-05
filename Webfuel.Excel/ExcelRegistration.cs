@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Webfuel.MediatR;
 
-namespace Webfuel
+namespace Webfuel.Excel
 {
     public class ExcelAssemblyMarker { }
 

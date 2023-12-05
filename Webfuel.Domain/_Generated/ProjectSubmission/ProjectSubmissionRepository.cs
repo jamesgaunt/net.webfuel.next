@@ -12,7 +12,7 @@ namespace Webfuel.Domain
         Task<ProjectSubmission> UpdateProjectSubmission(ProjectSubmission entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<ProjectSubmission> UpdateProjectSubmission(ProjectSubmission updated, ProjectSubmission original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteProjectSubmission(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<ProjectSubmission>> QueryProjectSubmission(Query query, bool countTotal = true);
+        Task<QueryResult<ProjectSubmission>> QueryProjectSubmission(Query query, bool selectItems = true, bool countTotal = true);
         Task<ProjectSubmission?> GetProjectSubmission(Guid id);
         Task<ProjectSubmission> RequireProjectSubmission(Guid id);
         Task<int> CountProjectSubmission();
@@ -58,9 +58,9 @@ namespace Webfuel.Domain
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<ProjectSubmission>> QueryProjectSubmission(Query query, bool countTotal = true)
+        public async Task<QueryResult<ProjectSubmission>> QueryProjectSubmission(Query query, bool selectItems = true, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<ProjectSubmission, ProjectSubmissionMetadata>(query, countTotal);
+            return await _connection.ExecuteQuery<ProjectSubmission, ProjectSubmissionMetadata>(query, selectItems: selectItems, countTotal: countTotal);
         }
         public async Task<ProjectSubmission?> GetProjectSubmission(Guid id)
         {

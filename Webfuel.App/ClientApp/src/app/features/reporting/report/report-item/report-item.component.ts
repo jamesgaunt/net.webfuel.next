@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReportApi } from 'api/report.api';
-import { IReportSchema, Report, ReportDesign } from '../../../../api/api.types';
+import { ReportSchema, Report, ReportDesign } from '../../../../api/api.types';
 import { FormService } from '../../../../core/form.service';
 import { ReportDesignApi } from '../../../../api/report-design.api';
 import _ from 'shared/common/underscore';
@@ -61,5 +61,5 @@ export class ReportItemComponent implements OnInit {
 
   // Report Designer
 
-  reportSchema!: IReportSchema;
+  reportSchema!: ReportSchema;
 }

@@ -29,12 +29,18 @@ namespace Webfuel.Reporting
 
         public ReportTask RegisterTask(ReportBuilder builder)
         {
+            CleanupTasks();
+
             // If this user already has a report task running then kill it
             {
                 var taskId = CurrentUserTask();
                 if (taskId != null)
                     DeleteTask(taskId.Value);
             }
+
+            if (_tasks.Count() > 10)
+                throw new InvalidOperationException("Report generation capacity reached. Please try again later.");
+
             var task = new ReportTask
             {
                 TaskId = Guid.NewGuid(),
@@ -55,7 +61,13 @@ namespace Webfuel.Reporting
                 return;
 
             if (task is IDisposable disposable)
-                disposable.Dispose();
+            {
+                try
+                {
+                    disposable.Dispose();
+                }
+                catch { /* GULP */ }
+            }
 
             _tasks.Remove(task.TaskId, out var _);
         }
@@ -86,13 +98,17 @@ namespace Webfuel.Reporting
 
         void CleanupTasks()
         {
+            List<Guid> toRemove = new List<Guid>();
+
             foreach (var task in _tasks)
             {
-                if (task.Value.LastAccessedAt <= DateTimeOffset.UtcNow.AddMinutes(-10))
-                {
-                    DeleteTask(task.Key);
-                    return; // Iterator is now invalid
-                }
+                if (task.Value.LastAccessedAt <= DateTimeOffset.UtcNow.AddMinutes(-2))
+                    toRemove.Add(task.Key);
+            }
+
+            foreach (var taskId in toRemove)
+            {
+                DeleteTask(taskId);
             }
         }
 

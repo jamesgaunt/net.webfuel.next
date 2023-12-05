@@ -8,10 +8,10 @@
             TotalCount = 0;
         }
 
-        public QueryResult(List<TItem> items, int? totalCount = null)
+        public QueryResult(List<TItem> items, int totalCount)
         {
             Items = items;
-            TotalCount = totalCount ?? items.Count;
+            TotalCount = totalCount;
         }
 
         public List<TItem> Items { get; set; }

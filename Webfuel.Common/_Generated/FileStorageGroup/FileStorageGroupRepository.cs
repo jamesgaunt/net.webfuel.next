@@ -12,7 +12,7 @@ namespace Webfuel.Common
         Task<FileStorageGroup> UpdateFileStorageGroup(FileStorageGroup entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<FileStorageGroup> UpdateFileStorageGroup(FileStorageGroup updated, FileStorageGroup original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteFileStorageGroup(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<FileStorageGroup>> QueryFileStorageGroup(Query query, bool countTotal = true);
+        Task<QueryResult<FileStorageGroup>> QueryFileStorageGroup(Query query, bool selectItems = true, bool countTotal = true);
         Task<FileStorageGroup?> GetFileStorageGroup(Guid id);
         Task<FileStorageGroup> RequireFileStorageGroup(Guid id);
         Task<int> CountFileStorageGroup();
@@ -56,9 +56,9 @@ namespace Webfuel.Common
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<FileStorageGroup>> QueryFileStorageGroup(Query query, bool countTotal = true)
+        public async Task<QueryResult<FileStorageGroup>> QueryFileStorageGroup(Query query, bool selectItems = true, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<FileStorageGroup, FileStorageGroupMetadata>(query, countTotal);
+            return await _connection.ExecuteQuery<FileStorageGroup, FileStorageGroupMetadata>(query, selectItems: selectItems, countTotal: countTotal);
         }
         public async Task<FileStorageGroup?> GetFileStorageGroup(Guid id)
         {

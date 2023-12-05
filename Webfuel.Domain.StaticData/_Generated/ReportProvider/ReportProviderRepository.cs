@@ -8,7 +8,7 @@ namespace Webfuel.Domain.StaticData
 {
     internal partial interface IReportProviderRepository
     {
-        Task<QueryResult<ReportProvider>> QueryReportProvider(Query query, bool countTotal = true);
+        Task<QueryResult<ReportProvider>> QueryReportProvider(Query query, bool selectItems = true, bool countTotal = true);
         Task<ReportProvider?> GetReportProvider(Guid id);
         Task<ReportProvider> RequireReportProvider(Guid id);
         Task<int> CountReportProvider();
@@ -24,9 +24,9 @@ namespace Webfuel.Domain.StaticData
         {
             _connection = connection;
         }
-        public async Task<QueryResult<ReportProvider>> QueryReportProvider(Query query, bool countTotal = true)
+        public async Task<QueryResult<ReportProvider>> QueryReportProvider(Query query, bool selectItems = true, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<ReportProvider, ReportProviderMetadata>(query, countTotal);
+            return await _connection.ExecuteQuery<ReportProvider, ReportProviderMetadata>(query, selectItems: selectItems, countTotal: countTotal);
         }
         public async Task<ReportProvider?> GetReportProvider(Guid id)
         {

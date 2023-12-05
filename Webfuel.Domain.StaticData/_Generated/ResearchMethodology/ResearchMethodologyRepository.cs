@@ -12,7 +12,7 @@ namespace Webfuel.Domain.StaticData
         Task<ResearchMethodology> UpdateResearchMethodology(ResearchMethodology entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<ResearchMethodology> UpdateResearchMethodology(ResearchMethodology updated, ResearchMethodology original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteResearchMethodology(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<ResearchMethodology>> QueryResearchMethodology(Query query, bool countTotal = true);
+        Task<QueryResult<ResearchMethodology>> QueryResearchMethodology(Query query, bool selectItems = true, bool countTotal = true);
         Task<ResearchMethodology?> GetResearchMethodology(Guid id);
         Task<ResearchMethodology> RequireResearchMethodology(Guid id);
         Task<int> CountResearchMethodology();
@@ -58,9 +58,9 @@ namespace Webfuel.Domain.StaticData
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<ResearchMethodology>> QueryResearchMethodology(Query query, bool countTotal = true)
+        public async Task<QueryResult<ResearchMethodology>> QueryResearchMethodology(Query query, bool selectItems = true, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<ResearchMethodology, ResearchMethodologyMetadata>(query, countTotal);
+            return await _connection.ExecuteQuery<ResearchMethodology, ResearchMethodologyMetadata>(query, selectItems: selectItems, countTotal: countTotal);
         }
         public async Task<ResearchMethodology?> GetResearchMethodology(Guid id)
         {

@@ -59,7 +59,25 @@ namespace Webfuel.Tools.Datafuel
                 type = type.Substring(0, type.Length - 1);
             }
 
-            if (type.Contains("."))
+            if (type.ToLower().StartsWith("json:"))
+            {
+                tag = type.Substring("json:".Length);
+                type = "json";
+            }
+
+            else if (type.ToLower().StartsWith("enum:"))
+            {
+                tag = type.Substring("enum:".Length);
+                type = "enum";
+            }
+
+            else if (type.ToLower().StartsWith("flags:"))
+            {
+                tag = type.Substring("flags:".Length);
+                type = "flags";
+            }
+
+            else if (type.Contains("."))
             {
                 var parts = type.Split('.');
                 var property = entity.Schema.FindEntity(parts[0]).FindMember(parts[1]);
@@ -70,24 +88,6 @@ namespace Webfuel.Tools.Datafuel
                     nullable = true;
                     type = type.Substring(0, type.Length - 1);
                 }
-            }
-
-            if(type.ToLower().StartsWith("json:"))
-            {
-                tag = type.Substring("json:".Length);
-                type = "json";
-            }
-
-            if (type.ToLower().StartsWith("enum:"))
-            {
-                tag = type.Substring("enum:".Length);
-                type = "enum";
-            }
-
-            if (type.ToLower().StartsWith("flags:"))
-            {
-                tag = type.Substring("flags:".Length);
-                type = "flags";
             }
 
             if (type.EndsWith("]"))

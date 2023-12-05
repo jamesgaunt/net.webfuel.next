@@ -16,7 +16,7 @@ namespace Webfuel.Domain
             var original = await _reportRepository.RequireReport(request.Id);
 
             var updated = original.Copy();
-            updated.Name = request.Name;
+            updated.Name = request.Design.Name;
             updated.Design = request.Design;
 
             return await _reportRepository.UpdateReport(original: original, updated: updated); 

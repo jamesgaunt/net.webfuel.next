@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Azure.Core;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,13 @@ namespace Webfuel.Reporting
 {
     public interface IReportProviderService
     {
+        Task<ReportSchema> GetReportSchema(Guid providerId);
+
         Task<ReportStep> RegisterReport(ReportRequest request);
     }
 
     [Service(typeof(IReportProviderService))]
-    internal class ReportProviderService
+    internal class ReportProviderService: IReportProviderService
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IReportGeneratorService _reportGeneratorService;
@@ -22,6 +25,12 @@ namespace Webfuel.Reporting
         {
             _serviceProvider = serviceProvider;
             _reportGeneratorService = reportGeneratorService;   
+        }
+
+        public async Task<ReportSchema> GetReportSchema(Guid providerId)
+        {
+            var provider = GetReportProvider(providerId);
+            return await provider.GetReportSchema();
         }
 
         public async Task<ReportStep> RegisterReport(ReportRequest request)

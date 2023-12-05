@@ -17,5 +17,7 @@ namespace Webfuel.Reporting
         public Guid ProviderId { get; set; }
 
         public List<ReportColumn> Columns { get; set; } = new List<ReportColumn>();
+
+        public List<ReportParameter> Parameters { get; set; } = new List<ReportParameter>();
     }
 }

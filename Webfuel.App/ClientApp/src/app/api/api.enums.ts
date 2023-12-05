@@ -14,6 +14,28 @@ export enum QueryOp {
     Or = "or",
 }
 
+export enum ReportParameterGroupCondition {
+    All = 0,
+    Any = 1,
+    None = 2,
+}
+
+export enum ReportParameterType {
+    Unspecified = 0,
+    Group = 100,
+}
+
+export enum ReportFieldType {
+    Unspecified = 0,
+    String = 10,
+    Decimal = 20,
+    Boolean = 30,
+    DateTime = 40,
+    Date = 50,
+    Reference = 1000,
+    ReferenceList = 1010,
+}
+
 export enum IsCTUTeamContributionEnum {
     Yes = "3e1f2673-e708-44a8-8768-cbf9fe1afb7c",
     No = "5b18a6b2-1169-4f7c-91b7-e738ea4527c6",
@@ -84,7 +106,7 @@ export enum SubmissionStageEnum {
 
 export enum SupportRequestStatusEnum {
     ToBeTriaged = "206b6f9d-feee-4b28-9795-1e1a2b7b887f",
-    ClosedAsNotEligibleFromNIHRRSS = "1fa7ae4c-8bb7-49da-9efc-f9aa96de4c1d",
+    ClosedAsNotEligibleForNIHRRSS = "1fa7ae4c-8bb7-49da-9efc-f9aa96de4c1d",
     ClosedAsReferredToAnotherNIHRRSS = "3d344c3c-9964-4079-877e-bc3b6864f52d",
     ReferredToNIHRRSSExpertTeams = "c22df21d-30ed-49d5-bee0-0f304b74a365",
 }
@@ -95,17 +117,6 @@ export enum SupportTeamEnum {
     PPIETeam = "662067e9-875c-47f7-8427-26ac98078c20",
     ExpertQuantitativeTeam = "5283e9be-faf3-45f5-83b2-4c5288c090c3",
     ExpertQualitativeTeam = "b1bdcae3-7df9-404a-aad7-a9265392b5aa",
-}
-
-export enum ReportFieldType {
-    Unspecified = 0,
-    String = 10,
-    Numeric = 20,
-    Boolean = 30,
-    DateTime = 40,
-    Date = 50,
-    Reference = 1000,
-    ReferenceList = 1010,
 }
 
 

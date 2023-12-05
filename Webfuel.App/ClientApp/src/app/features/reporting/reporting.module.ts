@@ -15,6 +15,7 @@ import { ReportDesignerComponent } from './report-designer/report-designer.compo
 import { CreateReportGroupDialog, CreateReportGroupDialogComponent } from './report-group/dialogs/create-report-group/create-report-group.dialog';
 import { CreateReportDialog, CreateReportDialogComponent } from './report/dialogs/create-report/create-report.dialog';
 import { AddReportColumnDialog, AddReportColumnDialogComponent } from './report-designer/dialogs/add-report-column/add-report-column.dialog';
+import { EditReportColumnDialog, EditReportColumnDialogComponent } from './report-designer/dialogs/edit-report-column/edit-report-column';
 
 @NgModule({
   imports: [
@@ -33,11 +34,13 @@ import { AddReportColumnDialog, AddReportColumnDialogComponent } from './report-
     CreateReportGroupDialogComponent,
     CreateReportDialogComponent,
     AddReportColumnDialogComponent,
+    EditReportColumnDialogComponent,
   ],
   providers: [
     CreateReportGroupDialog,
     CreateReportDialog,
     AddReportColumnDialog,
+    EditReportColumnDialog,
   ]
 })
 export class ReportingModule { }

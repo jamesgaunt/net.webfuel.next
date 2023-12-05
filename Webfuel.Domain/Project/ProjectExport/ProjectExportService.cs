@@ -6,13 +6,14 @@ using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Threading.Tasks;
 using Webfuel.Common;
+using Webfuel.Reporting;
 
 namespace Webfuel.Domain
 {
 
     public interface IProjectExportService
     {
-        Task<ReportProgress> InitialiseReport(ProjectExportRequest request);
+        Task<ReportStep> InitialiseReport(ProjectExportRequest request);
     }
 
     [Service(typeof(IProjectExportService))]
@@ -25,7 +26,7 @@ namespace Webfuel.Domain
             _projectReportProvider = projectReportProvider;
         }
 
-        public Task<ReportProgress> InitialiseReport(ProjectExportRequest request)
+        public Task<ReportStep> InitialiseReport(ProjectExportRequest request)
         {
             throw new NotImplementedException();
         }

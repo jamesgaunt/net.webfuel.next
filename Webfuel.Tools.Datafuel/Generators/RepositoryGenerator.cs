@@ -60,7 +60,7 @@ namespace Webfuel.Tools.Datafuel
                     }
                 }
 
-                sb.WriteLine($"Task<QueryResult<{entity.Name}>> Query{entity.Name}(Query query, bool countTotal = true);");
+                sb.WriteLine($"Task<QueryResult<{entity.Name}>> Query{entity.Name}(Query query, bool selectItems = true, bool countTotal = true);");
 
                 foreach (var query in entity.Queries)
                     QueryInterface(sb, query);
@@ -173,9 +173,9 @@ namespace Webfuel.Tools.Datafuel
 
         static void Query(ScriptBuilder sb, SchemaEntity entity)
         {
-            using (sb.OpenBrace($"public async Task<QueryResult<{entity.Name}>> Query{entity.Name}(Query query, bool countTotal = true)"))
+            using (sb.OpenBrace($"public async Task<QueryResult<{entity.Name}>> Query{entity.Name}(Query query, bool selectItems = true, bool countTotal = true)"))
             {
-                sb.WriteLine($"return await _connection.ExecuteQuery<{entity.Name}, {entity.Name}Metadata>(query, countTotal);");
+                sb.WriteLine($"return await _connection.ExecuteQuery<{entity.Name}, {entity.Name}Metadata>(query, selectItems: selectItems, countTotal: countTotal);");
             }
         }
 

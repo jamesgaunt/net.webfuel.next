@@ -12,7 +12,7 @@ namespace Webfuel.Common
         Task<FileStorageEntry> UpdateFileStorageEntry(FileStorageEntry entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<FileStorageEntry> UpdateFileStorageEntry(FileStorageEntry updated, FileStorageEntry original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteFileStorageEntry(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<FileStorageEntry>> QueryFileStorageEntry(Query query, bool countTotal = true);
+        Task<QueryResult<FileStorageEntry>> QueryFileStorageEntry(Query query, bool selectItems = true, bool countTotal = true);
         Task<FileStorageEntry?> GetFileStorageEntry(Guid id);
         Task<FileStorageEntry> RequireFileStorageEntry(Guid id);
         Task<int> CountFileStorageEntry();
@@ -57,9 +57,9 @@ namespace Webfuel.Common
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<FileStorageEntry>> QueryFileStorageEntry(Query query, bool countTotal = true)
+        public async Task<QueryResult<FileStorageEntry>> QueryFileStorageEntry(Query query, bool selectItems = true, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<FileStorageEntry, FileStorageEntryMetadata>(query, countTotal);
+            return await _connection.ExecuteQuery<FileStorageEntry, FileStorageEntryMetadata>(query, selectItems: selectItems, countTotal: countTotal);
         }
         public async Task<FileStorageEntry?> GetFileStorageEntry(Guid id)
         {

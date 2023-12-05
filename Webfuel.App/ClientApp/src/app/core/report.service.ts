@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReportApi } from '../api/report.api';
 import { ReportDialog, ReportDialogData } from './dialogs/report/report.dialog';
-import { ReportProgress } from '../api/api.types';
+import { ReportStep } from '../api/api.types';
 import { DialogHandle } from './dialog.service';
 import { ReportGeneratorApi } from '../api/report-generator.api';
 
@@ -14,11 +14,10 @@ export class ReportService {
     private reportGeneratorApi: ReportGeneratorApi,
     private reportDialog: ReportDialog,
   ) { }
-
-
+  
   dialogData: ReportDialogData | null = null;
 
-  generateReport(reportProgress: ReportProgress) {
+  generateReport(reportStep: ReportStep) {
 
     if (this.dialogData != null)
       return;
@@ -33,18 +32,18 @@ export class ReportService {
       }
     });
 
-    this._generateReport(reportProgress);
+    this._generateReport(reportStep);
   }
 
-  private _generateReport(reportProgress: ReportProgress) {
+  private _generateReport(reportStep: ReportStep) {
     if (!this.dialogData)
       return;
 
-    this.dialogData.progressPercentage = reportProgress.progressPercentage;
+    this.dialogData.progressPercentage = reportStep.progressPercentage;
 
-    this.reportGeneratorApi.generateReport({ taskId: reportProgress.taskId }).subscribe((result) => {
+    this.reportGeneratorApi.generateReport({ taskId: reportStep.taskId }).subscribe((result) => {
       if (result.complete) {
-        this._generateResult(result);
+        this._renderReport(result);
       } else {
         setTimeout(() => {
           this._generateReport(result);
@@ -53,9 +52,9 @@ export class ReportService {
     });
   }
 
-  private _generateResult(reportProgress: ReportProgress) {
+  private _renderReport(reportStep: ReportStep) {
     if (!this.dialogData)
       return;
-    this.dialogData.downloadUrl = "download-report/" + reportProgress.taskId;
+    this.dialogData.downloadUrl = "download-report/" + reportStep.taskId;
   }
 }

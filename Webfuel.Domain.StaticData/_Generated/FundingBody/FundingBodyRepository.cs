@@ -12,7 +12,7 @@ namespace Webfuel.Domain.StaticData
         Task<FundingBody> UpdateFundingBody(FundingBody entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<FundingBody> UpdateFundingBody(FundingBody updated, FundingBody original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteFundingBody(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<FundingBody>> QueryFundingBody(Query query, bool countTotal = true);
+        Task<QueryResult<FundingBody>> QueryFundingBody(Query query, bool selectItems = true, bool countTotal = true);
         Task<FundingBody?> GetFundingBody(Guid id);
         Task<FundingBody> RequireFundingBody(Guid id);
         Task<int> CountFundingBody();
@@ -58,9 +58,9 @@ namespace Webfuel.Domain.StaticData
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<FundingBody>> QueryFundingBody(Query query, bool countTotal = true)
+        public async Task<QueryResult<FundingBody>> QueryFundingBody(Query query, bool selectItems = true, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<FundingBody, FundingBodyMetadata>(query, countTotal);
+            return await _connection.ExecuteQuery<FundingBody, FundingBodyMetadata>(query, selectItems: selectItems, countTotal: countTotal);
         }
         public async Task<FundingBody?> GetFundingBody(Guid id)
         {

@@ -1,7 +1,18 @@
+export enum ReportParameterGroupCondition {
+    All = 0,
+    Any = 1,
+    None = 2,
+}
+
+export enum ReportParameterType {
+    Unspecified = 0,
+    Group = 100,
+}
+
 export enum ReportFieldType {
     Unspecified = 0,
     String = 10,
-    Numeric = 20,
+    Decimal = 20,
     Boolean = 30,
     DateTime = 40,
     Date = 50,
@@ -58,13 +69,35 @@ export interface UploadFileStorageEntry {
     fileStorageGroupId: string;
 }
 
+export interface ReportParameterGroup extends ReportParameter {
+    parmeterType: ReportParameterType;
+    condition: ReportParameterGroupCondition;
+    parameters: Array<ReportParameter>;
+}
+
+export interface ReportParameter {
+    parmeterType: ReportParameterType;
+}
+
 export interface ReportColumn {
-    title: string;
     fieldId: string;
+    title: string;
 }
 
 export interface ReportDesign {
+    name: string;
+    filename: string;
+    providerId: string;
     columns: Array<ReportColumn>;
+    parameters: Array<ReportParameter>;
+}
+
+export interface ReportField {
+    id: string;
+    name: string;
+    fieldType: ReportFieldType;
+    label: string;
+    default: boolean;
 }
 
 export interface DashboardModel {
@@ -548,7 +581,7 @@ export interface QueryProjectChangeLog extends Query {
     search?: string;
 }
 
-export interface ReportProgress {
+export interface ReportStep {
     taskId: string;
     progressPercentage: number;
     complete: boolean;
@@ -669,8 +702,6 @@ export interface QueryProjectTeamSupport extends Query {
 export interface Report {
     id: string;
     name: string;
-    fileName: string;
-    worksheetName: string;
     design: ReportDesign;
     sortOrder: number;
     ownerUserId: string;
@@ -686,8 +717,12 @@ export interface CreateReport {
 
 export interface UpdateReport {
     id: string;
-    name: string;
     design: ReportDesign;
+}
+
+export interface RunReport {
+    reportId: string;
+    arguments: any | null;
 }
 
 export interface QueryReport extends Query {
@@ -699,17 +734,8 @@ export interface QueryReport extends Query {
     search?: string;
 }
 
-export interface IReportSchema {
-    fields: Array<IReportField>;
-}
-
-export interface IReportField {
-    id: string;
-    name: string;
-    fieldType: ReportFieldType;
-    referenceType: string;
-    nullable: boolean;
-    default: boolean;
+export interface ReportSchema {
+    fields: Array<ReportField>;
 }
 
 export interface ReportGroup {

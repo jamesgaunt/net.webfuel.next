@@ -1,4 +1,29 @@
 
+<div class="report-designer" *ngIf="design">
 
-<button class="button" (click)="addColumn()">Add Column</button>
+  <div class="report-columns" cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="dropColumn($event)" [cdkDropListDisabled]="false">
+    <div class="report-column" *ngFor="let column of design.columns" cdkDrag>
+      <div class="columns">
+        <div class="column">
+          <span class="report-drag-handle" cdkDragHandle>
+            <i class="fas fa-fw fa-bars"></i>
+          </span>
+          {{ column.title }}
+        </div>
+        <div class="column is-right is-narrow">
+          <a class="link is-primary" (click)="editColumn(column)">edit</a>
+          &nbsp;
+          <a class="link is-danger" (click)="deleteColumn(column)">delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <button class="button" (click)="addColumn()">Add Column</button>
+
+</div>
+
+
+
 

@@ -1,15 +1,18 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, forwardRef, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormService } from '../../../core/form.service';
-import { IReportSchema, ReportDesign } from '../../../api/api.types';
+import { ReportSchema, ReportDesign, ReportColumn } from '../../../api/api.types';
 import { AddReportColumnDialog } from './dialogs/add-report-column/add-report-column.dialog';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { noop } from 'rxjs';
 import _ from 'shared/common/underscore';
+import { ConfirmDeleteDialog } from '../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
+import { EditReportColumnDialog } from './dialogs/edit-report-column/edit-report-column';
 
 @Component({
   selector: 'report-designer',
   templateUrl: './report-designer.component.html',
+  styleUrls: [ './report-designer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
@@ -27,7 +30,9 @@ export class ReportDesignerComponent implements ControlValueAccessor, OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formService: FormService,
-    private addReportColumnDialog: AddReportColumnDialog
+    private addReportColumnDialog: AddReportColumnDialog,
+    private editReportColumnDialog: EditReportColumnDialog,
+    private confirmDeleteDialog: ConfirmDeleteDialog,
   ) {
   }
 
@@ -35,16 +40,43 @@ export class ReportDesignerComponent implements ControlValueAccessor, OnInit {
   }
 
   @Input({ required: true })
-  schema!: IReportSchema;
+  schema!: ReportSchema;
 
   // Design
 
   design!: ReportDesign;
 
+  // Columns
+
   addColumn() {
     this.addReportColumnDialog.open({ schema: this.schema, design: this.design }).subscribe(() => {
       this.emitChanges();
     });
+  }
+
+  editColumn(column: ReportColumn) {
+    this.editReportColumnDialog.open({ column: column }).subscribe((result) => {
+      this.design.columns[this.design.columns.findIndex(p => p.fieldId == column.fieldId)] = result;
+      this.emitChanges();
+    });
+  }
+
+  deleteColumn(column: ReportColumn) {
+    this.confirmDeleteDialog.open({ title: "Delete Column" }).subscribe(() => {
+      this.design.columns = this.design.columns.filter(p => p.fieldId != column.fieldId);
+      this.emitChanges();
+    });
+  }
+
+  dropColumn($event: any) {
+    var currentIndex = <number>$event.currentIndex;
+    var previousIndex = <number>$event.previousIndex;
+
+    // Client Side
+    const item = this.design.columns.splice(previousIndex, 1);
+    this.design.columns.splice(currentIndex, 0, item[0]);
+
+    this.emitChanges();
   }
 
   // ControlValueAccessor API
@@ -57,14 +89,8 @@ export class ReportDesignerComponent implements ControlValueAccessor, OnInit {
   onChange: (value: ReportDesign) => void = noop;
   onTouched: () => void = noop;
 
-  public writeValue(value: ReportDesign | null): void {
-    if (value == null) {
-      this.design = {
-        columns: [],
-      }
-    } else {
-      this.design = _.deepClone(value);
-    }
+  public writeValue(value: ReportDesign): void {
+    this.design = _.deepClone(value);
     this.cd.detectChanges();
   }
 

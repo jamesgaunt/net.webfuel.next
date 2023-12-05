@@ -12,7 +12,7 @@ namespace Webfuel.Domain
         Task<ReportGroup> UpdateReportGroup(ReportGroup entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<ReportGroup> UpdateReportGroup(ReportGroup updated, ReportGroup original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteReportGroup(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<ReportGroup>> QueryReportGroup(Query query, bool countTotal = true);
+        Task<QueryResult<ReportGroup>> QueryReportGroup(Query query, bool selectItems = true, bool countTotal = true);
         Task<ReportGroup?> GetReportGroup(Guid id);
         Task<ReportGroup> RequireReportGroup(Guid id);
         Task<int> CountReportGroup();
@@ -56,9 +56,9 @@ namespace Webfuel.Domain
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<ReportGroup>> QueryReportGroup(Query query, bool countTotal = true)
+        public async Task<QueryResult<ReportGroup>> QueryReportGroup(Query query, bool selectItems = true, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<ReportGroup, ReportGroupMetadata>(query, countTotal);
+            return await _connection.ExecuteQuery<ReportGroup, ReportGroupMetadata>(query, selectItems: selectItems, countTotal: countTotal);
         }
         public async Task<ReportGroup?> GetReportGroup(Guid id)
         {

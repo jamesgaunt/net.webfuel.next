@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Webfuel.Common;
 using Webfuel.Domain;
+using Webfuel.Reporting;
 
 namespace Webfuel.App
 {
@@ -15,7 +16,7 @@ namespace Webfuel.App
                 .RequireIdentity();
         }
 
-        public static Task<ReportProgress> InitialiseReport([FromBody] ProjectExportRequest request, IProjectExportService service)
+        public static Task<ReportStep> InitialiseReport([FromBody] ProjectExportRequest request, IProjectExportService service)
         {
             return service.InitialiseReport(request);
         }

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Webfuel.Domain;
+using Webfuel.Reporting;
 
 namespace Webfuel.App
 {
@@ -11,9 +12,9 @@ namespace Webfuel.App
             app.MapGet("api/report-design/schema/{reportProviderId:guid}", GetReportSchema);
         }
 
-        public static Task<IReportSchema> GetReportSchema(Guid reportProviderId, IReportService reportService)
+        public static Task<ReportSchema> GetReportSchema(Guid reportProviderId, IReportProviderService reportProviderService)
         {
-            return reportService.GetReportSchema(reportProviderId);
+            return reportProviderService.GetReportSchema(reportProviderId);
         }
     }
 }

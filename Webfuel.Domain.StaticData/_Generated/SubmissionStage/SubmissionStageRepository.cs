@@ -8,7 +8,7 @@ namespace Webfuel.Domain.StaticData
 {
     internal partial interface ISubmissionStageRepository
     {
-        Task<QueryResult<SubmissionStage>> QuerySubmissionStage(Query query, bool countTotal = true);
+        Task<QueryResult<SubmissionStage>> QuerySubmissionStage(Query query, bool selectItems = true, bool countTotal = true);
         Task<SubmissionStage?> GetSubmissionStage(Guid id);
         Task<SubmissionStage> RequireSubmissionStage(Guid id);
         Task<int> CountSubmissionStage();
@@ -26,9 +26,9 @@ namespace Webfuel.Domain.StaticData
         {
             _connection = connection;
         }
-        public async Task<QueryResult<SubmissionStage>> QuerySubmissionStage(Query query, bool countTotal = true)
+        public async Task<QueryResult<SubmissionStage>> QuerySubmissionStage(Query query, bool selectItems = true, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<SubmissionStage, SubmissionStageMetadata>(query, countTotal);
+            return await _connection.ExecuteQuery<SubmissionStage, SubmissionStageMetadata>(query, selectItems: selectItems, countTotal: countTotal);
         }
         public async Task<SubmissionStage?> GetSubmissionStage(Guid id)
         {

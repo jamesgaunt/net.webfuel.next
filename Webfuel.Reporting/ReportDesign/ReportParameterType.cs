@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Webfuel.Domain
+namespace Webfuel.Reporting
 {
-    public interface IReportGenerator
+    [ApiEnum]
+    public enum ReportParameterType
     {
-        Task GenerateReport(ReportTask task);
+        Unspecified = 0,
+
+        Group = 100,
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Webfuel.Common;
 using Webfuel.Domain;
+using Webfuel.Reporting;
 
 namespace Webfuel.App
 {
@@ -22,12 +23,18 @@ namespace Webfuel.App
             app.MapDelete("api/report/{id:guid}", Delete)
                 .RequireIdentity();
 
+            app.MapPost("api/report/run", Run)
+                .RequireIdentity();
+
             // Querys
 
             app.MapPost("api/report/query", Query)
                 .RequireIdentity();
 
             app.MapGet("api/report/{id:guid}", Get)
+                .RequireIdentity();
+
+            app.MapGet("api/report/list-head", ListHead)
                 .RequireIdentity();
         }
 
@@ -50,10 +57,19 @@ namespace Webfuel.App
         {
             return mediator.Send(command);
         }
+        public static async Task<ReportStep> Run([FromBody] RunReport command, IMediator mediator)
+        {
+            return await mediator.Send(command);
+        }
 
         public static async Task<Report?> Get(Guid id, IMediator mediator)
         {
             return await mediator.Send(new GetReport { Id = id });
+        }
+
+        public static async Task<List<Report>> ListHead(IMediator mediator)
+        {
+            return await mediator.Send(new ListHeadReport());
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Webfuel.Domain.StaticData
         Task<Title> UpdateTitle(Title entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<Title> UpdateTitle(Title updated, Title original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteTitle(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<Title>> QueryTitle(Query query, bool countTotal = true);
+        Task<QueryResult<Title>> QueryTitle(Query query, bool selectItems = true, bool countTotal = true);
         Task<Title?> GetTitle(Guid id);
         Task<Title> RequireTitle(Guid id);
         Task<int> CountTitle();
@@ -58,9 +58,9 @@ namespace Webfuel.Domain.StaticData
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<Title>> QueryTitle(Query query, bool countTotal = true)
+        public async Task<QueryResult<Title>> QueryTitle(Query query, bool selectItems = true, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<Title, TitleMetadata>(query, countTotal);
+            return await _connection.ExecuteQuery<Title, TitleMetadata>(query, selectItems: selectItems, countTotal: countTotal);
         }
         public async Task<Title?> GetTitle(Guid id)
         {

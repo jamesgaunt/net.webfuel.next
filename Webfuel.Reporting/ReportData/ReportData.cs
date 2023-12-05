@@ -6,24 +6,36 @@ using System.Threading.Tasks;
 
 namespace Webfuel.Reporting
 {
-    public class ReportData
+    public class ReportSheet
     {
-        public List<ReportDataCol> Cols { get; } = new List<ReportDataCol>();
+        public List<ReportRow> Rows => _rows;
+        List<ReportRow> _rows = new List<ReportRow>();
 
-        public List<ReportDataRow> Rows { get; } = new List<ReportDataRow>();
+        public ReportRow AddRow()
+        {
+            var row = new ReportRow();
+            _rows.Add(row);
+            return row;
+        }
     }
 
-    public class ReportDataCol
-    {
-        public required string Title { get; init; }
 
-        public bool Grouped { get; set; }
+    public class ReportRow
+    {
+        public List<ReportCell> Cells => _cells;
+        List<ReportCell> _cells = new List<ReportCell>();
+
+        public ReportCell AddCell()
+        {
+            var cell = new ReportCell();
+            _cells.Add(cell);
+            return cell;
+        }
     }
 
-    public class ReportDataRow
+    public class ReportCell
     {
-        public Dictionary<string, object?> Values { get; } = new Dictionary<string, object?>(); 
-
+        public object? Value { get; set; }
     }
 
 }

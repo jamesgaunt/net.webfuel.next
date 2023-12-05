@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { CreateReport, Report, UpdateReport, QueryReport, QueryResult } from './api.types';
+import { CreateReport, Report, UpdateReport, RunReport, ReportStep, QueryReport, QueryResult } from './api.types';
 
 @Injectable()
 export class ReportApi implements IDataSource<Report, QueryReport, CreateReport, UpdateReport> {
@@ -21,12 +21,20 @@ export class ReportApi implements IDataSource<Report, QueryReport, CreateReport,
         return this.apiService.request<undefined, any>("DELETE", "api/report/" + params.id + "", undefined, options).pipe(tap(_ => this.changed.emit()));
     }
     
+    public run (body: RunReport, options?: ApiOptions): Observable<ReportStep> {
+        return this.apiService.request<RunReport, ReportStep>("POST", "api/report/run", body, options);
+    }
+    
     public query (body: QueryReport, options?: ApiOptions): Observable<QueryResult<Report>> {
         return this.apiService.request<QueryReport, QueryResult<Report>>("POST", "api/report/query", body, options);
     }
     
     public get (params: { id: string }, options?: ApiOptions): Observable<Report> {
         return this.apiService.request<undefined, Report>("GET", "api/report/" + params.id + "", undefined, options);
+    }
+    
+    public listHead (options?: ApiOptions): Observable<Array<Report>> {
+        return this.apiService.request<undefined, Array<Report>>("GET", "api/report/list-head", undefined, options);
     }
     
     changed = new EventEmitter<any>();

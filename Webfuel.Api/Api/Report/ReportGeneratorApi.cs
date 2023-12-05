@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Webfuel.Common;
 using Webfuel.Domain;
+using Webfuel.Reporting;
 
 namespace Webfuel.App
 {
@@ -10,7 +11,6 @@ namespace Webfuel.App
     {
         public static void RegisterEndpoints(IEndpointRouteBuilder app)
         {
-
             app.MapPost("api/report-generator/{taskId:guid}", GenerateReport)
                 .RequireIdentity();
 
@@ -20,7 +20,7 @@ namespace Webfuel.App
             app.MapGet("download-report/{taskId:guid}", Download);
         }
 
-        public static Task<ReportProgress> GenerateReport(Guid taskId, IReportGeneratorService service)
+        public static Task<ReportStep> GenerateReport(Guid taskId, IReportGeneratorService service)
         {
             return service.GenerateReport(taskId);
         }
@@ -33,14 +33,14 @@ namespace Webfuel.App
         [ApiIgnore]
         public static async Task<IResult> Download(Guid taskId, IReportGeneratorService service)
         {
-            var result = await service.GenerateResult(taskId);
+            var result = await service.RenderReport(taskId);
 
             if (result?.MemoryStream != null)
             {
                 return Results.File(
                     fileContents: result.MemoryStream.ToArray(),
                     contentType: result.ContentType,
-                    fileDownloadName: result.FileDownloadName);
+                    fileDownloadName: result.Filename);
             }
 
             return Results.NoContent();

@@ -4,6 +4,11 @@
 </ul>
 <div class="container">
   <h1 class="title">Reports</h1>
+
+  <div *ngFor="let report of reports">
+    <a class="link" (click)="runReport(report)">{{ report.name }}</a>
+  </div>
+
 </div>
 
 

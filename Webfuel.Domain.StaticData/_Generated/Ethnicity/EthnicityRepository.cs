@@ -12,7 +12,7 @@ namespace Webfuel.Domain.StaticData
         Task<Ethnicity> UpdateEthnicity(Ethnicity entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<Ethnicity> UpdateEthnicity(Ethnicity updated, Ethnicity original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteEthnicity(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<Ethnicity>> QueryEthnicity(Query query, bool countTotal = true);
+        Task<QueryResult<Ethnicity>> QueryEthnicity(Query query, bool selectItems = true, bool countTotal = true);
         Task<Ethnicity?> GetEthnicity(Guid id);
         Task<Ethnicity> RequireEthnicity(Guid id);
         Task<int> CountEthnicity();
@@ -58,9 +58,9 @@ namespace Webfuel.Domain.StaticData
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<Ethnicity>> QueryEthnicity(Query query, bool countTotal = true)
+        public async Task<QueryResult<Ethnicity>> QueryEthnicity(Query query, bool selectItems = true, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<Ethnicity, EthnicityMetadata>(query, countTotal);
+            return await _connection.ExecuteQuery<Ethnicity, EthnicityMetadata>(query, selectItems: selectItems, countTotal: countTotal);
         }
         public async Task<Ethnicity?> GetEthnicity(Guid id)
         {

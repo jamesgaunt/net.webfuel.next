@@ -12,7 +12,7 @@ namespace Webfuel.Domain
         Task<Researcher> UpdateResearcher(Researcher entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<Researcher> UpdateResearcher(Researcher updated, Researcher original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteResearcher(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<Researcher>> QueryResearcher(Query query, bool countTotal = true);
+        Task<QueryResult<Researcher>> QueryResearcher(Query query, bool selectItems = true, bool countTotal = true);
         Task<Researcher?> GetResearcher(Guid id);
         Task<Researcher> RequireResearcher(Guid id);
         Task<int> CountResearcher();
@@ -58,9 +58,9 @@ namespace Webfuel.Domain
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<Researcher>> QueryResearcher(Query query, bool countTotal = true)
+        public async Task<QueryResult<Researcher>> QueryResearcher(Query query, bool selectItems = true, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<Researcher, ResearcherMetadata>(query, countTotal);
+            return await _connection.ExecuteQuery<Researcher, ResearcherMetadata>(query, selectItems: selectItems, countTotal: countTotal);
         }
         public async Task<Researcher?> GetResearcher(Guid id)
         {

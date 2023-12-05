@@ -104,6 +104,7 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
     ReactiveFormsModule,
     RouterModule,
     OverlayModule,
+    DragDropModule,
     DialogModule,
 
     // Chrome

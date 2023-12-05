@@ -12,7 +12,7 @@ namespace Webfuel.Domain.StaticData
         Task<WorkActivity> UpdateWorkActivity(WorkActivity entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<WorkActivity> UpdateWorkActivity(WorkActivity updated, WorkActivity original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteWorkActivity(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<WorkActivity>> QueryWorkActivity(Query query, bool countTotal = true);
+        Task<QueryResult<WorkActivity>> QueryWorkActivity(Query query, bool selectItems = true, bool countTotal = true);
         Task<WorkActivity?> GetWorkActivity(Guid id);
         Task<WorkActivity> RequireWorkActivity(Guid id);
         Task<int> CountWorkActivity();
@@ -58,9 +58,9 @@ namespace Webfuel.Domain.StaticData
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<WorkActivity>> QueryWorkActivity(Query query, bool countTotal = true)
+        public async Task<QueryResult<WorkActivity>> QueryWorkActivity(Query query, bool selectItems = true, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<WorkActivity, WorkActivityMetadata>(query, countTotal);
+            return await _connection.ExecuteQuery<WorkActivity, WorkActivityMetadata>(query, selectItems: selectItems, countTotal: countTotal);
         }
         public async Task<WorkActivity?> GetWorkActivity(Guid id)
         {

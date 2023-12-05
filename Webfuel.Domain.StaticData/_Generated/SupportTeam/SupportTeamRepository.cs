@@ -8,7 +8,7 @@ namespace Webfuel.Domain.StaticData
 {
     internal partial interface ISupportTeamRepository
     {
-        Task<QueryResult<SupportTeam>> QuerySupportTeam(Query query, bool countTotal = true);
+        Task<QueryResult<SupportTeam>> QuerySupportTeam(Query query, bool selectItems = true, bool countTotal = true);
         Task<SupportTeam?> GetSupportTeam(Guid id);
         Task<SupportTeam> RequireSupportTeam(Guid id);
         Task<int> CountSupportTeam();
@@ -26,9 +26,9 @@ namespace Webfuel.Domain.StaticData
         {
             _connection = connection;
         }
-        public async Task<QueryResult<SupportTeam>> QuerySupportTeam(Query query, bool countTotal = true)
+        public async Task<QueryResult<SupportTeam>> QuerySupportTeam(Query query, bool selectItems = true, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<SupportTeam, SupportTeamMetadata>(query, countTotal);
+            return await _connection.ExecuteQuery<SupportTeam, SupportTeamMetadata>(query, selectItems: selectItems, countTotal: countTotal);
         }
         public async Task<SupportTeam?> GetSupportTeam(Guid id)
         {

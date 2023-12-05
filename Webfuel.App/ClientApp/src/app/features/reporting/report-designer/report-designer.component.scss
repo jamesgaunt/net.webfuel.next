@@ -1,0 +1,16 @@
+@import '../../../../styles/config.scss';
+
+.report-column {
+  display: block;
+  padding: 0.6rem;
+  background-color: var(--palette-control-background);
+  border: 1px solid var(--palette-control-border);
+  margin-bottom: 0.3rem;
+}
+
+.report-designer {
+
+  .report-columns {
+    margin-bottom: var(--gap);
+  }
+}

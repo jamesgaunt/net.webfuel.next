@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Webfuel.Core\Webfuel.Core.csproj" />
+    <ProjectReference Include="..\Webfuel.Excel\Webfuel.Excel.csproj" />
   </ItemGroup>
 
 </Project>

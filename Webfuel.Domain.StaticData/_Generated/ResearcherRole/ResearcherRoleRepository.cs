@@ -12,7 +12,7 @@ namespace Webfuel.Domain.StaticData
         Task<ResearcherRole> UpdateResearcherRole(ResearcherRole entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<ResearcherRole> UpdateResearcherRole(ResearcherRole updated, ResearcherRole original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteResearcherRole(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<ResearcherRole>> QueryResearcherRole(Query query, bool countTotal = true);
+        Task<QueryResult<ResearcherRole>> QueryResearcherRole(Query query, bool selectItems = true, bool countTotal = true);
         Task<ResearcherRole?> GetResearcherRole(Guid id);
         Task<ResearcherRole> RequireResearcherRole(Guid id);
         Task<int> CountResearcherRole();
@@ -58,9 +58,9 @@ namespace Webfuel.Domain.StaticData
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<ResearcherRole>> QueryResearcherRole(Query query, bool countTotal = true)
+        public async Task<QueryResult<ResearcherRole>> QueryResearcherRole(Query query, bool selectItems = true, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<ResearcherRole, ResearcherRoleMetadata>(query, countTotal);
+            return await _connection.ExecuteQuery<ResearcherRole, ResearcherRoleMetadata>(query, selectItems: selectItems, countTotal: countTotal);
         }
         public async Task<ResearcherRole?> GetResearcherRole(Guid id)
         {

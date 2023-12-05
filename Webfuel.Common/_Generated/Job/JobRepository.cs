@@ -12,7 +12,7 @@ namespace Webfuel.Common
         Task<Job> UpdateJob(Job entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<Job> UpdateJob(Job updated, Job original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteJob(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<Job>> QueryJob(Query query, bool countTotal = true);
+        Task<QueryResult<Job>> QueryJob(Query query, bool selectItems = true, bool countTotal = true);
         Task<Job?> GetJob(Guid id);
         Task<Job> RequireJob(Guid id);
         Task<int> CountJob();
@@ -56,9 +56,9 @@ namespace Webfuel.Common
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<Job>> QueryJob(Query query, bool countTotal = true)
+        public async Task<QueryResult<Job>> QueryJob(Query query, bool selectItems = true, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<Job, JobMetadata>(query, countTotal);
+            return await _connection.ExecuteQuery<Job, JobMetadata>(query, selectItems: selectItems, countTotal: countTotal);
         }
         public async Task<Job?> GetJob(Guid id)
         {

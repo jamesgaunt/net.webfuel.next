@@ -12,7 +12,7 @@ namespace Webfuel.Domain
         Task<UserGroup> UpdateUserGroup(UserGroup entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<UserGroup> UpdateUserGroup(UserGroup updated, UserGroup original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteUserGroup(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<UserGroup>> QueryUserGroup(Query query, bool countTotal = true);
+        Task<QueryResult<UserGroup>> QueryUserGroup(Query query, bool selectItems = true, bool countTotal = true);
         Task<UserGroup?> GetUserGroup(Guid id);
         Task<UserGroup> RequireUserGroup(Guid id);
         Task<int> CountUserGroup();
@@ -58,9 +58,9 @@ namespace Webfuel.Domain
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<UserGroup>> QueryUserGroup(Query query, bool countTotal = true)
+        public async Task<QueryResult<UserGroup>> QueryUserGroup(Query query, bool selectItems = true, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<UserGroup, UserGroupMetadata>(query, countTotal);
+            return await _connection.ExecuteQuery<UserGroup, UserGroupMetadata>(query, selectItems: selectItems, countTotal: countTotal);
         }
         public async Task<UserGroup?> GetUserGroup(Guid id)
         {

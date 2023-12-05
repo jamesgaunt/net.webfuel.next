@@ -8,7 +8,7 @@ namespace Webfuel.Domain.StaticData
 {
     internal partial interface IIsFellowshipRepository
     {
-        Task<QueryResult<IsFellowship>> QueryIsFellowship(Query query, bool countTotal = true);
+        Task<QueryResult<IsFellowship>> QueryIsFellowship(Query query, bool selectItems = true, bool countTotal = true);
         Task<IsFellowship?> GetIsFellowship(Guid id);
         Task<IsFellowship> RequireIsFellowship(Guid id);
         Task<int> CountIsFellowship();
@@ -26,9 +26,9 @@ namespace Webfuel.Domain.StaticData
         {
             _connection = connection;
         }
-        public async Task<QueryResult<IsFellowship>> QueryIsFellowship(Query query, bool countTotal = true)
+        public async Task<QueryResult<IsFellowship>> QueryIsFellowship(Query query, bool selectItems = true, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<IsFellowship, IsFellowshipMetadata>(query, countTotal);
+            return await _connection.ExecuteQuery<IsFellowship, IsFellowshipMetadata>(query, selectItems: selectItems, countTotal: countTotal);
         }
         public async Task<IsFellowship?> GetIsFellowship(Guid id)
         {

@@ -12,7 +12,7 @@ namespace Webfuel.Domain
         Task<SupportRequest> UpdateSupportRequest(SupportRequest entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<SupportRequest> UpdateSupportRequest(SupportRequest updated, SupportRequest original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteSupportRequest(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<SupportRequest>> QuerySupportRequest(Query query, bool countTotal = true);
+        Task<QueryResult<SupportRequest>> QuerySupportRequest(Query query, bool selectItems = true, bool countTotal = true);
         Task<SupportRequest?> GetSupportRequest(Guid id);
         Task<SupportRequest> RequireSupportRequest(Guid id);
         Task<int> CountSupportRequest();
@@ -57,9 +57,9 @@ namespace Webfuel.Domain
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<SupportRequest>> QuerySupportRequest(Query query, bool countTotal = true)
+        public async Task<QueryResult<SupportRequest>> QuerySupportRequest(Query query, bool selectItems = true, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<SupportRequest, SupportRequestMetadata>(query, countTotal);
+            return await _connection.ExecuteQuery<SupportRequest, SupportRequestMetadata>(query, selectItems: selectItems, countTotal: countTotal);
         }
         public async Task<SupportRequest?> GetSupportRequest(Guid id)
         {

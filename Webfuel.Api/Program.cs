@@ -1,9 +1,10 @@
 using Serilog;
-using FluentValidation;
 using Webfuel.Common;
 using Webfuel.Domain;
 using Serilog.Events;
 using Webfuel.Domain.StaticData;
+using Webfuel.Reporting;
+using Webfuel.Excel;
 
 namespace Webfuel.Api
 {
@@ -31,6 +32,7 @@ namespace Webfuel.Api
                 builder.Services.RegisterDomainServices();
                 builder.Services.RegisterStaticDataServices();
                 builder.Services.RegisterExcelServices();
+                builder.Services.RegisterReportingServices();
 
                 builder.Services.AddMediatR(c =>
                 {

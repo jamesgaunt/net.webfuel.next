@@ -26,12 +26,6 @@ namespace Webfuel.Domain
                     case nameof(Report.Name):
                         result.Add(new SqlParameter(nameof(Report.Name), entity.Name));
                         break;
-                    case nameof(Report.FileName):
-                        result.Add(new SqlParameter(nameof(Report.FileName), entity.FileName));
-                        break;
-                    case nameof(Report.WorksheetName):
-                        result.Add(new SqlParameter(nameof(Report.WorksheetName), entity.WorksheetName));
-                        break;
                     case nameof(Report.Design):
                         result.Add(new SqlParameter(nameof(Report.Design), entity.DesignJson));
                         break;
@@ -75,8 +69,6 @@ namespace Webfuel.Domain
             {
                 yield return "Id";
                 yield return "Name";
-                yield return "FileName";
-                yield return "WorksheetName";
                 yield return "Design";
                 yield return "SortOrder";
                 yield return "OwnerUserId";
@@ -91,8 +83,6 @@ namespace Webfuel.Domain
             {
                 yield return "Id";
                 yield return "Name";
-                yield return "FileName";
-                yield return "WorksheetName";
                 yield return "Design";
                 yield return "SortOrder";
                 yield return "OwnerUserId";
@@ -106,8 +96,6 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Name";
-                yield return "FileName";
-                yield return "WorksheetName";
                 yield return "Design";
                 yield return "SortOrder";
                 yield return "OwnerUserId";
@@ -122,38 +110,18 @@ namespace Webfuel.Domain
         {
             entity.Name = entity.Name ?? String.Empty;
             entity.Name = entity.Name.Trim();
-            entity.FileName = entity.FileName ?? String.Empty;
-            entity.FileName = entity.FileName.Trim();
-            entity.WorksheetName = entity.WorksheetName ?? String.Empty;
-            entity.WorksheetName = entity.WorksheetName.Trim();
             Validator.ValidateAndThrow(entity);
         }
         
         public static ReportRepositoryValidator Validator { get; } = new ReportRepositoryValidator();
         
         public const int Name_MaxLength = 128;
-        public const int FileName_MaxLength = 128;
-        public const int WorksheetName_MaxLength = 128;
         
         public static void Name_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull()
                 .MaximumLength(Name_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
-        }
-        
-        public static void FileName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
-        {
-            ruleBuilder
-                .NotNull()
-                .MaximumLength(FileName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
-        }
-        
-        public static void WorksheetName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
-        {
-            ruleBuilder
-                .NotNull()
-                .MaximumLength(WorksheetName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
     }
     
@@ -162,8 +130,6 @@ namespace Webfuel.Domain
         public ReportRepositoryValidator()
         {
             RuleFor(x => x.Name).Use(ReportMetadata.Name_ValidationRules);
-            RuleFor(x => x.FileName).Use(ReportMetadata.FileName_ValidationRules);
-            RuleFor(x => x.WorksheetName).Use(ReportMetadata.WorksheetName_ValidationRules);
             Validation();
         }
         

@@ -12,7 +12,7 @@ namespace Webfuel.Domain
         Task<SupportRequestChangeLog> UpdateSupportRequestChangeLog(SupportRequestChangeLog entity, RepositoryCommandBuffer? commandBuffer = null);
         Task<SupportRequestChangeLog> UpdateSupportRequestChangeLog(SupportRequestChangeLog updated, SupportRequestChangeLog original, RepositoryCommandBuffer? commandBuffer = null);
         Task DeleteSupportRequestChangeLog(Guid key, RepositoryCommandBuffer? commandBuffer = null);
-        Task<QueryResult<SupportRequestChangeLog>> QuerySupportRequestChangeLog(Query query, bool countTotal = true);
+        Task<QueryResult<SupportRequestChangeLog>> QuerySupportRequestChangeLog(Query query, bool selectItems = true, bool countTotal = true);
         Task<SupportRequestChangeLog?> GetSupportRequestChangeLog(Guid id);
         Task<SupportRequestChangeLog> RequireSupportRequestChangeLog(Guid id);
         Task<int> CountSupportRequestChangeLog();
@@ -57,9 +57,9 @@ namespace Webfuel.Domain
             var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
             await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
-        public async Task<QueryResult<SupportRequestChangeLog>> QuerySupportRequestChangeLog(Query query, bool countTotal = true)
+        public async Task<QueryResult<SupportRequestChangeLog>> QuerySupportRequestChangeLog(Query query, bool selectItems = true, bool countTotal = true)
         {
-            return await _connection.ExecuteQuery<SupportRequestChangeLog, SupportRequestChangeLogMetadata>(query, countTotal);
+            return await _connection.ExecuteQuery<SupportRequestChangeLog, SupportRequestChangeLogMetadata>(query, selectItems: selectItems, countTotal: countTotal);
         }
         public async Task<SupportRequestChangeLog?> GetSupportRequestChangeLog(Guid id)
         {

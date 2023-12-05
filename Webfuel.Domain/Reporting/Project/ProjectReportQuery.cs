@@ -24,7 +24,7 @@ namespace Webfuel.Domain
             Query.Skip = 0;
             Query.Take = 0;
 
-            var result = await services.GetRequiredService<IProjectRepository>().QueryProject(Query, countTotal: true);
+            var result = await services.GetRequiredService<IProjectRepository>().QueryProject(Query, selectItems: false, countTotal: true);
             return result.TotalCount;
         }
     }
