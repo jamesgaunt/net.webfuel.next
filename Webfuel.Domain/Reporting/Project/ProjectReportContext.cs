@@ -7,7 +7,7 @@ using Webfuel.Reporting;
 
 namespace Webfuel.Domain
 {
-    public class ProjectReportContext: IReportContext
+    public class ProjectReportContext
     {
         private readonly Project _item;
         private readonly IServiceProvider _serviceProvider;
@@ -16,11 +16,6 @@ namespace Webfuel.Domain
         {
             _item = item;
             _serviceProvider = serviceProvider;
-        }
-
-        public Task<object?> GetValue(string name)
-        {
-            throw new NotImplementedException();
         }
     }
 }

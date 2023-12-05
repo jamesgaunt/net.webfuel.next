@@ -1,5 +1,4 @@
 ﻿using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Webfuel.Excel
 {
@@ -128,6 +127,11 @@ namespace Webfuel.Excel
             }
             return true;
         }
+
+        public void AutoFitColumns()
+        {
+            _worksheet.Columns().AdjustToContents();
+        }
     }
 
     public struct ExcelCell
@@ -184,22 +188,28 @@ namespace Webfuel.Excel
             if(value == null)
                 return Clear();
 
-            if(value is String)
-                return SetValue((String)value);
+            if(value is String s)
+                return SetValue(s);
 
-            if(value is bool)
-                return SetValue((bool)value);
+            if(value is bool b)
+                return SetValue(b);
 
-            if(value is int)
-                return SetValue((int)value);
+            if(value is int i)
+                return SetValue(i);
 
-            if(value is DateTime)
-                return SetValue((DateTime)value);
+            if(value is DateTime dt)
+                return SetValue(dt);
+
+            if (value is DateOnly donly)
+                return SetValue(donly.ToDateTime(TimeOnly.MinValue));
+
+            if (value is DateTimeOffset doffset)
+                return SetValue(doffset.LocalDateTime);
 
             if(IsNumericType(value.GetType()))
-                return SetValue((Decimal)value);
+                return SetValue((double)value);
 
-            return SetValue("ERROR: Unable to map object value");
+            return SetValue($"ERROR: Unable to map object value of type {value.GetType().Name}");
         }
 
         public ExcelCell Clear()

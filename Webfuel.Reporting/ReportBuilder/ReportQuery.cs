@@ -11,7 +11,7 @@ namespace Webfuel.Reporting
     {
         public Query Query { get; set; } = new Query();
 
-        public abstract Task<IEnumerable<object>> GetItems(int skip, int take, IServiceProvider services);
+        public abstract Task<IReadOnlyList<object>> GetItems(int skip, int take, IServiceProvider services);
 
         public abstract Task<int> GetTotalCount(IServiceProvider services);
     }

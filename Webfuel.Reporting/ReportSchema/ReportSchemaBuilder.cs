@@ -24,6 +24,23 @@ namespace Webfuel.Reporting
             });
         }
 
+        public void AddField<TProperty>(
+            Guid id,
+            Expression<Func<TContext, Task<TProperty>>> expr,
+            string? name = null,
+            ReportFieldType? fieldType = null,
+            bool? exportable = null)
+        {
+            Schema.Fields.Add(new ReportField
+            {
+                Id = id,
+                Name = name ?? GetExprName(expr),
+                AsyncAccessor = async o => await expr.Compile()((TContext)o),
+                FieldType = fieldType ?? GetExprFieldType(expr),
+                Exportable = exportable ?? true,
+            });
+        }
+
         // Helpers
 
         string GetExprName<TProperty>(Expression<Func<TContext, TProperty>> accessor)

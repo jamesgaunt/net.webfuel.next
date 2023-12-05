@@ -9,8 +9,8 @@ namespace Webfuel.Reporting
     [ApiEnum]
     public enum ReportParameterType
     {
-        Unspecified = 0,
+        String = 10,
 
-        Group = 100,
+        Group = 999999,
     }
 }

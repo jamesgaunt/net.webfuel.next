@@ -10,7 +10,7 @@ namespace Webfuel.Reporting
     {
 #pragma warning disable CS8618
         // This is set by the report generator service before every iteration
-        internal protected IServiceProvider ServiceProvider { get; set; }
+        public IServiceProvider ServiceProvider { get; set; }
 #pragma warning restore CS8618
 
         public int ProgressCount { get; set; }

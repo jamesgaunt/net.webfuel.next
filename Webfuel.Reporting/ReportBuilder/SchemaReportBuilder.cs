@@ -108,6 +108,8 @@ namespace Webfuel.Reporting
                 ri++;
             }
 
+            worksheet.AutoFitColumns();
+
             return workbook;
         }
 
