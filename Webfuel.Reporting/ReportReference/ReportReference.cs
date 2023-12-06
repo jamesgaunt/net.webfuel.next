@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Webfuel.Reporting
 {
-    [ApiEnum]
-    public enum ReportParameterType
+    public class ReportReference
     {
-        String = 10,
+        public Guid Id { get; set; }
 
-        Group = 999999,
+        public string Name { get; set; } = String.Empty;
     }
 }

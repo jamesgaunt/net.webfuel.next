@@ -8,7 +8,7 @@ using Webfuel.Reporting;
 
 namespace Webfuel.Domain
 {
-    internal class UserReportBuilder : SchemaReportBuilder
+    internal class UserReportBuilder : StandardReportBuilder
     {
         public UserReportBuilder(ReportRequest request):
             base(UserReportSchema.Schema, request, new UserReportQuery())

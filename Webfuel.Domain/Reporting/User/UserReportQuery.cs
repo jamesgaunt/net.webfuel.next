@@ -16,7 +16,7 @@ namespace Webfuel.Domain
             Query.Take = take;
 
             var result = await services.GetRequiredService<IUserRepository>().QueryUser(Query, countTotal: false);
-            return result.Items.Select(p => new UserReportContext(p, services)).ToList();
+            return result.Items;
         }
 
         public override async Task<int> GetTotalCount(IServiceProvider services)

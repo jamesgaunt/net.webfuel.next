@@ -10,14 +10,8 @@ namespace Webfuel.Reporting
     [ApiType]
     public class ReportDesign
     {
-        public string Name { get; set; } = String.Empty;
-
-        public string Filename { get; set; } = String.Empty;
-
-        public Guid ProviderId { get; set; }
-
         public List<ReportColumn> Columns { get; set; } = new List<ReportColumn>();
 
-        public List<ReportParameter> Parameters { get; set; } = new List<ReportParameter>();
+        public List<ReportFilter> Filters { get; set; } = new List<ReportFilter>();
     }
 }

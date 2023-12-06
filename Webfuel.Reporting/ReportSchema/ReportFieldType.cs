@@ -5,14 +5,16 @@
     {
         Unspecified = 0,
 
-        // Primatives
+        // Primative Types
+
         String = 10,
-        Decimal = 20,
+        Number = 20,
         Boolean = 30, 
         DateTime = 40,
         Date = 50,
 
         // Complex Types
+
         Reference = 1000,
         ReferenceList = 1010,
     }

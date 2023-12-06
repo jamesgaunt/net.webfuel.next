@@ -8,6 +8,8 @@ namespace Webfuel.Reporting
 {
     public class ReportRequest
     {
+        public required Guid ProviderId { get; init; }
+
         public required ReportDesign Design { get; init; }
 
         public required Dictionary<string, object?> Arguments { get; init; }

@@ -9,6 +9,7 @@
     <grid-column name="name" />
 
     <grid-reference-column name="reportGroupId" [dataSource]="reportGroupApi" />
+    <grid-reference-column name="reportProviderId" label="Data Type" [dataSource]="staticDataCache.reportProvider" />
 
     <grid-action-column (add)="add()" (edit)="edit($event)" (delete)="delete($event)" />
   </grid>

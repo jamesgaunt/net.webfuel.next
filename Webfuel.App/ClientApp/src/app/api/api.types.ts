@@ -1,18 +1,31 @@
-export enum ReportParameterGroupCondition {
-    All = 0,
-    Any = 1,
-    None = 2,
+export enum ReportFilterType {
+    String = 10,
+    Number = 20,
+    Group = 999999,
 }
 
-export enum ReportParameterType {
-    Unspecified = 0,
-    Group = 100,
+export enum ReportFilterGroupCondition {
+    All = 10,
+    Any = 20,
+    None = 30,
+}
+
+export enum ReportFilterNumberCondition {
+    EqualTo = 10,
+}
+
+export enum ReportFilterStringCondition {
+    Contains = 10,
+    StartsWith = 20,
+    EndsWith = 30,
+    IsEmpty = 100,
+    IsNotEmpty = 200,
 }
 
 export enum ReportFieldType {
     Unspecified = 0,
     String = 10,
-    Decimal = 20,
+    Number = 20,
     Boolean = 30,
     DateTime = 40,
     Date = 50,
@@ -69,35 +82,70 @@ export interface UploadFileStorageEntry {
     fileStorageGroupId: string;
 }
 
-export interface ReportParameterGroup extends ReportParameter {
-    parmeterType: ReportParameterType;
-    condition: ReportParameterGroupCondition;
-    parameters: Array<ReportParameter>;
+export interface ReportFilter {
+    filterType: ReportFilterType;
 }
 
-export interface ReportParameter {
-    parmeterType: ReportParameterType;
+export interface ReportFilterGroup extends ReportFilter {
+    filterType: ReportFilterType;
+    condition: ReportFilterGroupCondition;
+    filters: Array<ReportFilter>;
+}
+
+export interface ReportFilterNumber extends ReportFilter {
+    filterType: ReportFilterType;
+    fieldId: string;
+    condition: ReportFilterNumberCondition;
+    value: number | null | null;
+}
+
+export interface ReportFilterString extends ReportFilter {
+    filterType: ReportFilterType;
+    fieldId: string;
+    condition: ReportFilterStringCondition;
+    value: string;
 }
 
 export interface ReportColumn {
     fieldId: string;
     title: string;
+    width: number | null | null;
+    format: string;
 }
 
 export interface ReportDesign {
-    name: string;
-    filename: string;
-    providerId: string;
     columns: Array<ReportColumn>;
-    parameters: Array<ReportParameter>;
+    filters: Array<ReportFilter>;
+}
+
+export interface ReportMethodField extends ReportField {
+    id: string;
+    name: string;
+    fieldType: ReportFieldType;
 }
 
 export interface ReportField {
     id: string;
     name: string;
     fieldType: ReportFieldType;
-    label: string;
-    default: boolean;
+}
+
+export interface ReportPropertyField extends ReportField {
+    id: string;
+    name: string;
+    fieldType: ReportFieldType;
+}
+
+export interface ReportReferenceField extends ReportField {
+    id: string;
+    name: string;
+    fieldType: ReportFieldType;
+}
+
+export interface ReportReferenceListField extends ReportField {
+    id: string;
+    name: string;
+    fieldType: ReportFieldType;
 }
 
 export interface DashboardModel {
@@ -704,9 +752,9 @@ export interface Report {
     name: string;
     design: ReportDesign;
     sortOrder: number;
+    reportProviderId: string;
     ownerUserId: string;
     reportGroupId: string;
-    reportProviderId: string;
 }
 
 export interface CreateReport {
@@ -717,6 +765,7 @@ export interface CreateReport {
 
 export interface UpdateReport {
     id: string;
+    name: string;
     design: ReportDesign;
 }
 
@@ -735,7 +784,25 @@ export interface QueryReport extends Query {
 }
 
 export interface ReportSchema {
+    reportProviderId: string;
     fields: Array<ReportField>;
+}
+
+export interface ReportReference {
+    id: string;
+    name: string;
+}
+
+export interface GetReportReference {
+    reportProviderId: string;
+    fieldId: string;
+    id: string;
+}
+
+export interface QueryReportReference {
+    reportProviderId: string;
+    fieldId: string;
+    query: Query;
 }
 
 export interface ReportGroup {

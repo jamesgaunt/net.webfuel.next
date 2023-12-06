@@ -7,21 +7,22 @@ namespace Webfuel.Domain
     {
         private readonly IReportRepository _reportRepository;
         private readonly IIdentityAccessor _identityAccessor;
-        private readonly IReportProviderService _reportProviderService;
+        private readonly IReportDesignService _reportDesignService;
 
-        public RunReportHandler(IReportRepository reportRepository, IIdentityAccessor identityAccessor, IReportProviderService reportProviderService)
+        public RunReportHandler(IReportRepository reportRepository, IIdentityAccessor identityAccessor, IReportDesignService reportDesignService)
         {
             _reportRepository = reportRepository;
             _identityAccessor = identityAccessor;
-            _reportProviderService = reportProviderService;
+            _reportDesignService = reportDesignService;
         }
 
         public async Task<ReportStep> Handle(RunReport request, CancellationToken cancellationToken)
         {
             var report = await _reportRepository.RequireReport(request.ReportId);
 
-            return await _reportProviderService.RegisterReport(new ReportRequest
+            return await _reportDesignService.RegisterReport(new ReportRequest
             {
+                ProviderId = report.ReportProviderId,
                 Design = report.Design,
                 Arguments = request.Arguments ?? new Dictionary<string, object?>()
             });

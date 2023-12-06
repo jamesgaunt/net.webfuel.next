@@ -14,8 +14,10 @@ import { ReportDesignerComponent } from './report-designer/report-designer.compo
 
 import { CreateReportGroupDialog, CreateReportGroupDialogComponent } from './report-group/dialogs/create-report-group/create-report-group.dialog';
 import { CreateReportDialog, CreateReportDialogComponent } from './report/dialogs/create-report/create-report.dialog';
-import { AddReportColumnDialog, AddReportColumnDialogComponent } from './report-designer/dialogs/add-report-column/add-report-column.dialog';
-import { EditReportColumnDialog, EditReportColumnDialogComponent } from './report-designer/dialogs/edit-report-column/edit-report-column';
+import { AddReportColumnDialog, AddReportColumnDialogComponent } from './report-design-service/dialogs/add-report-column/add-report-column.dialog';
+import { EditReportColumnDialog, EditReportColumnDialogComponent } from './report-design-service/dialogs/edit-report-column/edit-report-column';
+import { ReportDesignService } from './report-design-service/report-design.service';
+import { AddReportFilterDialog, AddReportFilterDialogComponent } from './report-design-service/dialogs/add-report-filter/add-report-filter.dialog';
 
 @NgModule({
   imports: [
@@ -35,12 +37,16 @@ import { EditReportColumnDialog, EditReportColumnDialogComponent } from './repor
     CreateReportDialogComponent,
     AddReportColumnDialogComponent,
     EditReportColumnDialogComponent,
+    AddReportFilterDialogComponent,
   ],
   providers: [
+    ReportDesignService,
+
     CreateReportGroupDialog,
     CreateReportDialog,
     AddReportColumnDialog,
     EditReportColumnDialog,
+    AddReportFilterDialog,
   ]
 })
 export class ReportingModule { }

@@ -2,12 +2,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, f
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormService } from '../../../core/form.service';
 import { ReportSchema, ReportDesign, ReportColumn } from '../../../api/api.types';
-import { AddReportColumnDialog } from './dialogs/add-report-column/add-report-column.dialog';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { noop } from 'rxjs';
 import _ from 'shared/common/underscore';
-import { ConfirmDeleteDialog } from '../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
-import { EditReportColumnDialog } from './dialogs/edit-report-column/edit-report-column';
+import { ReportDesignService } from '../report-design-service/report-design.service';
 
 @Component({
   selector: 'report-designer',
@@ -30,9 +28,7 @@ export class ReportDesignerComponent implements ControlValueAccessor, OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formService: FormService,
-    private addReportColumnDialog: AddReportColumnDialog,
-    private editReportColumnDialog: EditReportColumnDialog,
-    private confirmDeleteDialog: ConfirmDeleteDialog,
+    private reportDesignService: ReportDesignService
   ) {
   }
 
@@ -49,21 +45,19 @@ export class ReportDesignerComponent implements ControlValueAccessor, OnInit {
   // Columns
 
   addColumn() {
-    this.addReportColumnDialog.open({ schema: this.schema, design: this.design }).subscribe(() => {
+    this.reportDesignService.addColumn(this.schema, this.design).subscribe(() => {
       this.emitChanges();
     });
   }
 
   editColumn(column: ReportColumn) {
-    this.editReportColumnDialog.open({ column: column }).subscribe((result) => {
-      this.design.columns[this.design.columns.findIndex(p => p.fieldId == column.fieldId)] = result;
+    this.reportDesignService.editColumn(this.schema, this.design, column).subscribe(() => {
       this.emitChanges();
     });
   }
 
   deleteColumn(column: ReportColumn) {
-    this.confirmDeleteDialog.open({ title: "Delete Column" }).subscribe(() => {
-      this.design.columns = this.design.columns.filter(p => p.fieldId != column.fieldId);
+    this.reportDesignService.deleteColumn(this.schema, this.design, column).subscribe(() => {
       this.emitChanges();
     });
   }
@@ -77,6 +71,14 @@ export class ReportDesignerComponent implements ControlValueAccessor, OnInit {
     this.design.columns.splice(currentIndex, 0, item[0]);
 
     this.emitChanges();
+  }
+
+  // Filters
+
+  addFilter() {
+    this.reportDesignService.addFilter(this.schema, this.design, this.design.filters).subscribe(() => {
+      this.emitChanges();
+    });
   }
 
   // ControlValueAccessor API

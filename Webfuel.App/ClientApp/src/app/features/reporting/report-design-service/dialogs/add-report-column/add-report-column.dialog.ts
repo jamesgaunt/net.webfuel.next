@@ -45,7 +45,9 @@ export class AddReportColumnDialogComponent extends DialogComponentBase<true, Ad
 
     this.data.design.columns.push({
       fieldId: field.id,
-      title: field.name
+      title: field.name,
+      width: null,
+      format: ""
     });
     this._closeDialog(true);
   }

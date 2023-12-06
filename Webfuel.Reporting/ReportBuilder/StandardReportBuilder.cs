@@ -2,12 +2,12 @@
 
 namespace Webfuel.Reporting
 {
-    public abstract class SchemaReportBuilder : ReportBuilder
+    public abstract class StandardReportBuilder : ReportBuilder
     {
         const long MICROSECONDS_PER_STEP = 1000 * 100;
         protected int ItemsPerStep { get; set; } = 10;
 
-        public SchemaReportBuilder(ReportSchema schema, ReportRequest request, ReportQuery query)
+        public StandardReportBuilder(ReportSchema schema, ReportRequest request, ReportQuery query)
         {
             Schema = schema;
             Request = request;
@@ -56,22 +56,14 @@ namespace Webfuel.Reporting
             row.AddCell().Value = value;
         }
 
-        public virtual async Task<object?> EvaluateColumn(object item, ReportColumn column)
+        public virtual Task<object?> EvaluateColumn(object item, ReportColumn column)
         {
             var field = Schema.Fields.FirstOrDefault(p => p.Id == column.FieldId);
             
             if (field == null)
-                return null;
+                return Task.FromResult<object?>(null);
 
-            if (field.Accessor != null)
-                return field.Accessor(item);
-
-            if(field.AsyncAccessor != null)
-                return await field.AsyncAccessor(item);
-
-            // Scribble Expressions, Reflection?
-
-            return null;
+            return field.Evaluate(item, ServiceProvider);
         }
 
         public override Task<ReportResult> RenderReport()
@@ -93,7 +85,7 @@ namespace Webfuel.Reporting
 
             for (var i = 0; i < Request.Design.Columns.Count; i++)
             {
-                worksheet.Cell(1, i + 1).SetValue(Request.Design.Columns[i].Title);
+                worksheet.Cell(1, i + 1).SetValue(Request.Design.Columns[i].Title).SetBold(true);
             }
 
             var ri = 2;
@@ -108,7 +100,14 @@ namespace Webfuel.Reporting
                 ri++;
             }
 
-            worksheet.AutoFitColumns();
+            for (var i = 0; i < Request.Design.Columns.Count; i++)
+            {
+                var width = Request.Design.Columns[i].Width;
+                if (width == null)
+                    worksheet.Column(i + 1).AdjustToContents();
+                else
+                    worksheet.Column(i + 1).SetWidth(width.Value);
+            }
 
             return workbook;
         }

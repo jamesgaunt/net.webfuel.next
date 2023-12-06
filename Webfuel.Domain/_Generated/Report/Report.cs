@@ -30,14 +30,14 @@ namespace Webfuel.Domain
                     case nameof(Report.SortOrder):
                         SortOrder = (int)value!;
                         break;
+                    case nameof(Report.ReportProviderId):
+                        ReportProviderId = (Guid)value!;
+                        break;
                     case nameof(Report.OwnerUserId):
                         OwnerUserId = (Guid)value!;
                         break;
                     case nameof(Report.ReportGroupId):
                         ReportGroupId = (Guid)value!;
-                        break;
-                    case nameof(Report.ReportProviderId):
-                        ReportProviderId = (Guid)value!;
                         break;
                 }
             }
@@ -57,9 +57,9 @@ namespace Webfuel.Domain
         }
         string _DesignJson = String.Empty;
         public int SortOrder  { get; set; } = 0;
+        public Guid ReportProviderId { get; set; }
         public Guid OwnerUserId { get; set; }
         public Guid ReportGroupId { get; set; }
-        public Guid ReportProviderId { get; set; }
         public Report Copy()
         {
             var entity = new Report();
@@ -67,9 +67,9 @@ namespace Webfuel.Domain
             entity.Name = Name;
             entity.DesignJson = DesignJson;
             entity.SortOrder = SortOrder;
+            entity.ReportProviderId = ReportProviderId;
             entity.OwnerUserId = OwnerUserId;
             entity.ReportGroupId = ReportGroupId;
-            entity.ReportProviderId = ReportProviderId;
             return entity;
         }
     }

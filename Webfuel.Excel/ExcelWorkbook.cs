@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace Webfuel.Excel
 {
@@ -71,7 +72,7 @@ namespace Webfuel.Excel
         }
     }
 
-    public struct ExcelWorksheet
+    public class ExcelWorksheet
     {
         internal readonly IXLWorksheet _worksheet;
 
@@ -94,10 +95,15 @@ namespace Webfuel.Excel
 
         public ExcelCell Cell(int row, string header)
         {
-            return Cell(row, FindHeaderCol(header));
+            return Cell(row, FindColumnIndex(header));
         }
 
-        public int FindHeaderCol(string header)
+        public ExcelColumn Column(int col)
+        {
+            return new ExcelColumn(_worksheet.Column(col));
+        }
+
+        public int FindColumnIndex(string header)
         {
             var col = 1;
 
@@ -127,14 +133,31 @@ namespace Webfuel.Excel
             }
             return true;
         }
+    }
 
-        public void AutoFitColumns()
+    public class ExcelColumn
+    {
+        internal readonly IXLColumn _column;
+
+        internal ExcelColumn(IXLColumn column)
         {
-            _worksheet.Columns().AdjustToContents();
+            _column = column;
+        }
+
+        public ExcelColumn AdjustToContents()
+        {
+            _column.AdjustToContents();
+            return this;
+        }
+
+        public ExcelColumn SetWidth(double width)
+        {
+            _column.Width = width;
+            return this;
         }
     }
 
-    public struct ExcelCell
+    public class ExcelCell
     {
         internal readonly IXLCell _cell;
 
@@ -153,9 +176,9 @@ namespace Webfuel.Excel
             return _cell.TryGetValue<T>(out result);
         }
 
-        public ExcelCell SetValue(string value)
+        public ExcelCell SetValue(string? value)
         {
-            _cell.SetValue(value);
+            _cell.SetValue(value ?? String.Empty);
             return this;
         }
 
@@ -209,7 +232,7 @@ namespace Webfuel.Excel
             if(IsNumericType(value.GetType()))
                 return SetValue((double)value);
 
-            return SetValue($"ERROR: Unable to map object value of type {value.GetType().Name}");
+            return SetValue(value.ToString());
         }
 
         public ExcelCell Clear()
@@ -218,9 +241,35 @@ namespace Webfuel.Excel
             return this;
         }
 
+        // Style
+
+        public bool Bold
+        {
+            get { return _cell.Style.Font.Bold; }
+            set { _cell.Style.Font.Bold = value; }
+        }
+
+        public ExcelCell SetBold(bool value)
+        {
+            Bold = value;
+            return this;
+        }
+
+        public bool Italic
+        {
+            get { return _cell.Style.Font.Italic; }
+            set { _cell.Style.Font.Italic = value; }
+        }
+
+        public ExcelCell SetItalic(bool value)
+        {
+            Italic = value;
+            return this;
+        }
+
         // Helpers
 
-        bool IsNumericType(Type type)
+        static bool IsNumericType(Type type)
         {
             switch (Type.GetTypeCode(type))
             {

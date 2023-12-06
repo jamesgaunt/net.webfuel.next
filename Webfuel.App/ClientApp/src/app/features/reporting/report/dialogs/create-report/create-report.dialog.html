@@ -9,12 +9,12 @@
         <input class="input" type="text" placeholder="required" formControlName="name" />
       </div>
       <div class="field">
-        <label class="label">Report Group</label>
-        <dropdown-select formControlName="reportGroupId" [dataSource]="reportGroupApi" placeholder="required" />
+        <label class="label">Data Type</label>
+        <dropdown-select formControlName="reportProviderId" [dataSource]="staticDataCache.reportProvider" placeholder="required" />
       </div>
       <div class="field">
-        <label class="label">Report Data Type</label>
-        <dropdown-select formControlName="reportProviderId" [dataSource]="staticDataCache.reportProvider" placeholder="required" />
+        <label class="label">Report Group</label>
+        <dropdown-select formControlName="reportGroupId" [dataSource]="reportGroupApi" placeholder="required" />
       </div>
     </div>
   </div>

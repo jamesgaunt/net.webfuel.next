@@ -1,43 +1,90 @@
-﻿using System.Linq.Expressions;
+﻿using Microsoft.VisualBasic.FileIO;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Webfuel.Reporting
 {
     public class ReportSchemaBuilder<TContext> where TContext : class
     {
-        public ReportSchema Schema { get; set; } = new ReportSchema();
-
-        public void AddField<TProperty>(
-            Guid id,
-            Expression<Func<TContext, TProperty>> expr,
-            string? name = null,
-            ReportFieldType? fieldType = null,
-            bool? exportable = null)
+        public ReportSchemaBuilder(Guid reportProviderId)
         {
-            Schema.Fields.Add(new ReportField
+            Schema = new ReportSchema { ReportProviderId = reportProviderId };
+        }
+
+        public ReportSchema Schema { get; }
+
+        public void AddProperty<TField>(
+            Guid id,
+            Expression<Func<TContext, TField>> expr,
+            string? name = null,
+            ReportFieldType? fieldType = null)
+        {
+            Schema.AddField(new ReportPropertyField
             {
                 Id = id,
                 Name = name ?? GetExprName(expr),
                 Accessor = o => expr.Compile()((TContext)o),
                 FieldType = fieldType ?? GetExprFieldType(expr),
-                Exportable = exportable ?? true,
             });
         }
 
-        public void AddField<TProperty>(
+        public void AddMethod<TField>(
             Guid id,
-            Expression<Func<TContext, Task<TProperty>>> expr,
+            Expression<Func<TContext, Task<TField>>> expr,
             string? name = null,
-            ReportFieldType? fieldType = null,
-            bool? exportable = null)
+            ReportFieldType? fieldType = null)
         {
-            Schema.Fields.Add(new ReportField
+            Schema.AddField(new ReportMethodField
             {
                 Id = id,
                 Name = name ?? GetExprName(expr),
-                AsyncAccessor = async o => await expr.Compile()((TContext)o),
+                Accessor = async o => await expr.Compile()((TContext)o),
                 FieldType = fieldType ?? GetExprFieldType(expr),
-                Exportable = exportable ?? true,
+            });
+        }
+
+        public void AddReference<TReferenceProvider>(
+            Guid id,
+            Expression<Func<TContext, Guid?>> expr,
+            string? name = null) where TReferenceProvider : IReportReferenceProvider
+        {
+            Schema.AddField(new ReportReferenceField
+            {
+                Id = id,
+                Name = name ?? GetExprName(expr),
+                Accessor = o => expr.Compile()((TContext)o),
+                ReferenceProviderType = typeof(TReferenceProvider),
+                FieldType = ReportFieldType.Reference,
+            });
+        }
+
+        public void AddReference<TReferenceProvider>(
+            Guid id,
+            Expression<Func<TContext, Guid>> expr,
+            string? name = null) where TReferenceProvider : IReportReferenceProvider
+        {
+            Schema.AddField(new ReportReferenceField
+            {
+                Id = id,
+                Name = name ?? GetExprName(expr),
+                Accessor = o => expr.Compile()((TContext)o),
+                ReferenceProviderType = typeof(TReferenceProvider),
+                FieldType = ReportFieldType.Reference,
+            });
+        }
+
+        public void AddReferenceList<TReferenceProvider>(
+            Guid id,
+            Expression<Func<TContext, IEnumerable<Guid>>> expr,
+            string? name = null) where TReferenceProvider : IReportReferenceProvider
+        {
+            Schema.AddField(new ReportReferenceListField
+            {
+                Id = id,
+                Name = name ?? GetExprName(expr),
+                Accessor = o => expr.Compile()((TContext)o),
+                ReferenceProviderType = typeof(TReferenceProvider),
+                FieldType = ReportFieldType.ReferenceList,
             });
         }
 
@@ -61,11 +108,12 @@ namespace Webfuel.Reporting
             if (accessor.Body is MethodCallExpression methodCall)
                 return MapFieldType(methodCall.Method.ReturnType);
 
-            if (accessor.Body is MemberExpression member) { 
-                if(member.Member is FieldInfo fieldInfo)
+            if (accessor.Body is MemberExpression member)
+            {
+                if (member.Member is FieldInfo fieldInfo)
                     return MapFieldType(fieldInfo.FieldType);
 
-                if(member.Member is PropertyInfo propertyInfo)
+                if (member.Member is PropertyInfo propertyInfo)
                     return MapFieldType(propertyInfo.PropertyType);
             }
 
@@ -76,7 +124,15 @@ namespace Webfuel.Reporting
 
         static string FormatName(string input)
         {
-            return SplitCamelCase(input);
+            input = SplitCamelCase(input);
+
+            if (input.EndsWith(" Id"))
+                input = input.Substring(0, input.Length - 3);
+
+            if (input.EndsWith(" Ids"))
+                input = input.Substring(0, input.Length - 4);
+
+            return input;
         }
 
         static ReportFieldType MapFieldType(Type clrType)
@@ -84,15 +140,15 @@ namespace Webfuel.Reporting
             var type = UnwrapBaseType(clrType);
 
             if (IsNumericType(type))
-                return ReportFieldType.Decimal;
+                return ReportFieldType.Number;
 
-            if(type == typeof(DateOnly))
+            if (type == typeof(DateOnly))
                 return ReportFieldType.Date;
 
-            if(type == typeof(DateTimeOffset))
+            if (type == typeof(DateTimeOffset))
                 return ReportFieldType.DateTime;
 
-            if(type ==  typeof(bool))
+            if (type == typeof(bool))
                 return ReportFieldType.Boolean;
 
             return ReportFieldType.String;

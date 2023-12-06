@@ -14,21 +14,34 @@ export enum QueryOp {
     Or = "or",
 }
 
-export enum ReportParameterGroupCondition {
-    All = 0,
-    Any = 1,
-    None = 2,
+export enum ReportFilterType {
+    String = 10,
+    Number = 20,
+    Group = 999999,
 }
 
-export enum ReportParameterType {
-    Unspecified = 0,
-    Group = 100,
+export enum ReportFilterGroupCondition {
+    All = 10,
+    Any = 20,
+    None = 30,
+}
+
+export enum ReportFilterNumberCondition {
+    EqualTo = 10,
+}
+
+export enum ReportFilterStringCondition {
+    Contains = 10,
+    StartsWith = 20,
+    EndsWith = 30,
+    IsEmpty = 100,
+    IsNotEmpty = 200,
 }
 
 export enum ReportFieldType {
     Unspecified = 0,
     String = 10,
-    Decimal = 20,
+    Number = 20,
     Boolean = 30,
     DateTime = 40,
     Date = 50,
@@ -86,6 +99,8 @@ export enum ProjectStatusEnum {
 export enum ReportProviderEnum {
     Project = "b8b6dea3-d6de-4480-a944-e7b0c2827888",
     ProjectSupport = "2af96eb5-e52d-4163-9247-c34e7b170f62",
+    SupportRequest = "bb41b6b6-ef1a-4982-95d0-9f41f80c91cb",
+    User = "96124eea-4434-4669-b377-580bbf85a96d",
 }
 
 export enum SubmissionOutcomeEnum {
