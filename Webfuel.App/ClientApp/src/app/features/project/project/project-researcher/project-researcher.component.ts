@@ -61,7 +61,7 @@ export class ProjectResearcherComponent implements OnInit {
     leadApplicantJobRole: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     leadApplicantOrganisationTypeId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
     leadApplicantOrganisation: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
-    leadApplicantDepartment: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    leadApplicantDepartment: new FormControl<string>('', { nonNullable: true }),
 
     leadApplicantAddressLine1: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     leadApplicantAddressLine2: new FormControl<string>('', { nonNullable: true }),
@@ -70,7 +70,7 @@ export class ProjectResearcherComponent implements OnInit {
     leadApplicantAddressCountry: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     leadApplicantAddressPostcode: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
 
-    leadApplicantORCID: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    leadApplicantORCID: new FormControl<string>('', { nonNullable: true }),
     isLeadApplicantNHSId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
 
     leadApplicantAgeRangeId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
