@@ -13,7 +13,7 @@ namespace Webfuel.Reporting
     {
         ReportSchema GetReportSchema(Guid reportProviderId);
 
-        Task<ReportStep> RegisterReport(ReportRequest request);
+        ReportStep RegisterReport(ReportRequest request);
 
         Task<IEnumerable<object>> QueryItems(Guid reportProviderId, int skip, int take);
 
@@ -44,11 +44,11 @@ namespace Webfuel.Reporting
             return provider.Schema;
         }
 
-        public async Task<ReportStep> RegisterReport(ReportRequest request)
+        public ReportStep RegisterReport(ReportRequest request)
         {
             var provider = GetReportProvider(request.ReportProviderId);
-            var builder = await provider.GetReportBuilder(request);
-            return await _reportGeneratorService.RegisterReport(builder);
+            var builder = provider.GetReportBuilder(request);
+            return _reportGeneratorService.RegisterReport(builder);
         }
 
         public Task<IEnumerable<object>> QueryItems(Guid reportProviderId, int skip, int take)

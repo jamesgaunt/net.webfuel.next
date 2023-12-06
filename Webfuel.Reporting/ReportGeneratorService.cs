@@ -10,7 +10,7 @@ namespace Webfuel.Reporting
 {
     public interface IReportGeneratorService
     {
-        Task<ReportStep> RegisterReport(ReportBuilder builder);
+        ReportStep RegisterReport(ReportBuilder builder);
 
         Task<ReportStep> GenerateReport(Guid taskId);
 
@@ -31,14 +31,9 @@ namespace Webfuel.Reporting
             _reportTaskService = reportTaskService;
         }
 
-        public async Task<ReportStep> RegisterReport(ReportBuilder builder)
+        public ReportStep RegisterReport(ReportBuilder builder)
         {
             var task =_reportTaskService.RegisterTask(builder);
-
-            task.Builder.ServiceProvider = _serviceProvider;
-            task.Builder.ReportDesignService = _serviceProvider.GetRequiredService<IReportDesignService>();
-
-            await task.Builder.InitialiseReport();
             return ReportStep.FromTask(task);
         }
 

@@ -20,9 +20,9 @@ namespace Webfuel.Domain
 
         public Guid Id => ReportProviderEnum.SupportRequest;
 
-        public Task<ReportBuilder> GetReportBuilder(ReportRequest request)
+        public ReportBuilder GetReportBuilder(ReportRequest request)
         {
-            return Task.FromResult<ReportBuilder>(new StandardReportBuilder(request));
+            return new StandardReportBuilder(request);
         }
 
         public async Task<IEnumerable<object>> QueryItems(int skip, int take)

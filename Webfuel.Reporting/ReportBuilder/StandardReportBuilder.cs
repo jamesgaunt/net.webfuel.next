@@ -18,37 +18,40 @@ namespace Webfuel.Reporting
         public ReportSheet Sheet { get; } = new ReportSheet();
         public ReportRequest Request { get; }
 
-        public override async Task InitialiseReport()
-        {
-            Stage = "Generating";
-            StageTotal = await ReportDesignService.GetTotalCount(Request.ReportProviderId);
-            StageCount = 0;
-        }
-
         public override async Task GenerateReport()
         {
-            var startTimestamp = MicrosecondTimer.Timestamp;
-            do
+            if (Stage == String.Empty)
             {
-                var items = await ReportDesignService.QueryItems(Request.ReportProviderId, StageCount, ItemsPerStep);
-
-                var none = true;
-                foreach (var item in items)
-                {
-                    await ProcessItem(item);
-                    none = false;
-                }
-
-                if (none)
-                {
-                    StageCount = StageTotal;
-                    Complete = true;
-                    return;
-                }
-
-                StageCount += ItemsPerStep;
+                Stage = "Generating";
+                StageTotal = await ReportDesignService.GetTotalCount(Request.ReportProviderId);
+                StageCount = 0;
             }
-            while (MicrosecondTimer.Timestamp - startTimestamp < MICROSECONDS_PER_STEP);
+
+            else if (Stage == "Generating")
+            {
+                var startTimestamp = MicrosecondTimer.Timestamp;
+                do
+                {
+                    var items = await ReportDesignService.QueryItems(Request.ReportProviderId, StageCount, ItemsPerStep);
+
+                    var none = true;
+                    foreach (var item in items)
+                    {
+                        await ProcessItem(item);
+                        none = false;
+                    }
+
+                    if (none)
+                    {
+                        StageCount = StageTotal;
+                        Complete = true;
+                        return;
+                    }
+
+                    StageCount += ItemsPerStep;
+                }
+                while (MicrosecondTimer.Timestamp - startTimestamp < MICROSECONDS_PER_STEP);
+            }
         }
 
         public virtual async Task ProcessItem(object item)

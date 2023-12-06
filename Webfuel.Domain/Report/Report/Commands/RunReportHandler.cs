@@ -20,8 +20,9 @@ namespace Webfuel.Domain
         {
             var report = await _reportRepository.RequireReport(request.ReportId);
 
-            return await _reportDesignService.RegisterReport(new ReportRequest
+            return _reportDesignService.RegisterReport(new ReportRequest
             {
+                ReportName = report.Name,
                 ReportProviderId = report.ReportProviderId,
                 Design = report.Design,
                 Arguments = request.Arguments ?? new Dictionary<string, object?>()

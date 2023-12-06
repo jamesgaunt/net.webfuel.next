@@ -19,7 +19,6 @@ namespace Webfuel.Reporting
         public int StageTotal { get; set; }
         public bool Complete { get; set; }
 
-        public abstract Task InitialiseReport();
         public abstract Task GenerateReport();
         public abstract Task<ReportResult> RenderReport();
 

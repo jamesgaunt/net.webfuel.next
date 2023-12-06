@@ -88,6 +88,7 @@ export interface UploadFileStorageEntry {
 
 export interface ReportFilter {
     filterType: ReportFilterType;
+    id: string;
     description: string;
 }
 
@@ -95,6 +96,7 @@ export interface ReportFilterGroup extends ReportFilter {
     filterType: ReportFilterType;
     condition: ReportFilterGroupCondition;
     filters: Array<ReportFilter>;
+    id: string;
     description: string;
 }
 
@@ -103,6 +105,7 @@ export interface ReportFilterNumber extends ReportFilter {
     fieldId: string;
     condition: ReportFilterNumberCondition;
     value: number | null | null;
+    id: string;
     description: string;
 }
 
@@ -111,6 +114,7 @@ export interface ReportFilterString extends ReportFilter {
     fieldId: string;
     condition: ReportFilterStringCondition;
     value: string;
+    id: string;
     description: string;
 }
 
@@ -639,7 +643,9 @@ export interface QueryProjectChangeLog extends Query {
 
 export interface ReportStep {
     taskId: string;
-    progressPercentage: number;
+    stage: string;
+    stageCount: number;
+    stageTotal: number;
     complete: boolean;
 }
 
