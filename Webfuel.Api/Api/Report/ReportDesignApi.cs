@@ -15,9 +15,11 @@ namespace Webfuel.App
             app.MapPost("api/report-design/get-report-reference", GetReportReference);
 
             app.MapPost("api/report-design/query-report-reference", QueryReportReference);
+
+            app.MapPost("api/report-design/validate-design", ValidateDesign);
         }
 
-        public static Task<ReportSchema> GetReportSchema(Guid reportProviderId, IReportDesignService reportDesignService)
+        public static ReportSchema GetReportSchema(Guid reportProviderId, IReportDesignService reportDesignService)
         {
             return reportDesignService.GetReportSchema(reportProviderId);
         }
@@ -37,6 +39,15 @@ namespace Webfuel.App
                 fieldId: command.FieldId,
                 query: command.Query);
         }
+
+        public static ReportDesign ValidateDesign([FromBody] ValidateDesign command, IReportDesignService reportDesignService)
+        {
+            reportDesignService.ValidateDesign(
+                reportProviderId: command.ReportProviderId,
+                design: command.Design);
+            
+            return command.Design;
+        }
     }
 
     public class GetReportReference
@@ -55,5 +66,12 @@ namespace Webfuel.App
         public required Guid FieldId { get; set; }
 
         public required Query Query { get; set; }
+    }
+
+    public class ValidateDesign
+    {
+        public required Guid ReportProviderId { get; set; }
+
+        public required ReportDesign Design { get; init; }
     }
 }

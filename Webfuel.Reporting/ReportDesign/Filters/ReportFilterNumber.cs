@@ -12,6 +12,10 @@ namespace Webfuel.Reporting
     public enum ReportFilterNumberCondition
     {
         EqualTo = 10,
+        LessThan = 20,
+        LessThanOrEqualTo = 30,
+        GreaterThan = 40,
+        GreaterThanOrEqualTo = 50,
     }
 
     [ApiType]
@@ -29,40 +33,34 @@ namespace Webfuel.Reporting
 
         // Serialization
 
-        public override void ReadProperties(ref Utf8JsonReader reader, JsonSerializerOptions options)
+        public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
         {
-            while (reader.Read())
+            if (String.Compare(nameof(FieldId), propertyName, true) == 0)
             {
-                if (reader.TokenType != JsonTokenType.PropertyName)
-                    break;
-
-                var propertyName = reader.GetString();
-                reader.Read();
-
-                switch (propertyName)
-                {
-                    case "fieldId":
-                        FieldId = reader.GetGuid();
-                        break;
-
-                    case "condition":
-                        Condition = (ReportFilterNumberCondition)reader.GetInt32();
-                        break;
-
-                    case "value":
-                        if (reader.TokenType == JsonTokenType.Number)
-                            Value = reader.GetDecimal();
-                        break;
-
-                    default:
-                        reader.Skip();
-                        break;
-                }
+                FieldId = reader.GetGuid();
+                return true;
             }
-        }
 
-        public override void WriteProperties(Utf8JsonWriter writer, JsonSerializerOptions options)
+            if (String.Compare(nameof(Condition), propertyName, true) == 0)
+            {
+                Condition = (ReportFilterNumberCondition)reader.GetInt32();
+                return true;
+            }
+
+            if (String.Compare(nameof(Value), propertyName, true) == 0)
+            {
+                if (reader.TokenType == JsonTokenType.Number)
+                    Value = reader.GetDecimal();
+                return true;
+            }
+
+
+            return base.ReadProperty(propertyName, ref reader);
+        }
+        
+        public override void WriteProperties(Utf8JsonWriter writer)
         {
+            base.WriteProperties(writer);
             writer.WriteString("fieldId", FieldId);
             writer.WriteNumber("condition", (int)Condition);
 
@@ -70,6 +68,42 @@ namespace Webfuel.Reporting
                 writer.WriteNull("value");
             else
                 writer.WriteNumber("value", Value.Value);
+        }
+
+        // Description
+
+        public override void ValidateFilter(ReportSchema schema)
+        {
+            Description = $"{GenerateFieldName(schema)} {GenerateConditionDescription()} {GenerateValueDescription()}";
+            base.ValidateFilter(schema);
+        }
+
+        string GenerateFieldName(ReportSchema schema)
+        {
+            var field = schema.Fields.FirstOrDefault(f => f.Id == FieldId);
+            if (field == null)
+                return "Unknown field";
+            return field.Name;
+        }
+
+        string GenerateConditionDescription()
+        {
+            return Condition switch
+            {
+                ReportFilterNumberCondition.EqualTo => "is equal to",
+                ReportFilterNumberCondition.LessThan => "is less than",
+                ReportFilterNumberCondition.LessThanOrEqualTo => "is less than or equal to",
+                ReportFilterNumberCondition.GreaterThan => "is greater than",
+                ReportFilterNumberCondition.GreaterThanOrEqualTo => "is greater than or equal to",
+                _ => "is equal to"
+            };
+        }
+
+        string GenerateValueDescription()
+        {
+            if (Value == null)
+                return "null";
+            return Value.Value.ToString("N2");
         }
     }
 }

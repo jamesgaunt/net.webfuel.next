@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ReportDesignApi } from "../../../api/report-design.api";
-import { ReportColumn, ReportDesign, ReportField, ReportFieldType, ReportFilter, ReportFilterNumber, ReportFilterNumberCondition, ReportFilterString, ReportFilterStringCondition, ReportFilterType, ReportSchema } from "../../../api/api.types";
+import { ReportColumn, ReportDesign, ReportField, ReportFieldType, ReportFilter, ReportFilterGroup, ReportFilterNumber, ReportFilterNumberCondition, ReportFilterString, ReportFilterStringCondition, ReportFilterType, ReportSchema } from "../../../api/api.types";
 import { AddReportColumnDialog } from "./dialogs/add-report-column/add-report-column.dialog";
 import { EditReportColumnDialog } from "./dialogs/edit-report-column/edit-report-column";
 import { ConfirmDeleteDialog } from "../../../shared/dialogs/confirm-delete/confirm-delete.dialog";
@@ -8,6 +8,7 @@ import { tap } from "rxjs/operators";
 import { AddReportFilterDialog } from "./dialogs/add-report-filter/add-report-filter.dialog";
 import { GrowlService } from "../../../core/growl.service";
 import _ from 'shared/common/underscore';
+import { Observable } from "rxjs";
 
 @Injectable()
 export class ReportDesignService {
@@ -37,7 +38,7 @@ export class ReportDesignService {
   }
 
   deleteColumn(schema: ReportSchema, design: ReportDesign, column: ReportColumn) {
-    return this.confirmDeleteDialog.open({ title: "Delete Column" }).pipe(
+    return this.confirmDeleteDialog.open({ title: "Column" }).pipe(
       tap(() => { design.columns = design.columns.filter(p => p !== column); })
     );
   }
@@ -45,9 +46,7 @@ export class ReportDesignService {
   // Filters
 
   addFilter(schema: ReportSchema, design: ReportDesign, filters: ReportFilter[]) {
-    return this.addReportFilterDialog.open({ schema: schema, design: design, filters: filters }).pipe(
-      tap((id) => this._addFilter(schema, design, filters, id))
-    );
+    return this.addReportFilterDialog.open({ schema: schema, design: design, filters: filters })
   }
 
   editFilter(schema: ReportSchema, design: ReportDesign, filter: ReportFilter) {
@@ -64,50 +63,31 @@ export class ReportDesignService {
     }
   }
 
+  deleteFilter(schema: ReportSchema, design: ReportDesign, filter: ReportFilter) {
+    return this.confirmDeleteDialog.open({ title: "Filter" }).pipe(
+      tap(() => {
+        var filterArray = this._findFilterArray(filter, design.filters);
+        if (!filterArray)
+          return;
+        filterArray.splice(filterArray.indexOf(filter), 1);
+      })
+    );
+  }
+
   // Helpers
-  
-  private _addFilter(schema: ReportSchema, design: ReportDesign, filters: ReportFilter[], id: string) {
-    var field = this._getField(schema, id);
-    if (!field)
-      return;
 
-    var filter = this._initialiseFilterForField(field);
-    if (!filter)
-      return;
+  private _findFilterArray(filter: ReportFilter, filters: ReportFilter[]): ReportFilter[] | undefined {
+    for (var i = 0; i < filters.length; i++) {
+      if (filters[i] === filter)
+        return filters;
 
-    filters.push(filter);
-  }
-
-  private _getField(schema: ReportSchema, fieldId: string) {
-    var field = schema.fields.find(p => p.id == fieldId);
-    if (!field)
-      this.growlService.growlDanger("Field not found: " + fieldId);
-    return field;
-  }
-
-  private _initialiseFilterForField(field: ReportField): ReportFilter | undefined {
-    switch (field.fieldType) {
-
-      case ReportFieldType.String:
-        return <ReportFilterString>{
-          filterType: ReportFilterType.String,
-          fieldId: field.id,
-          condition: ReportFilterStringCondition.Contains,
-          value: ""
-        };
-
-      case ReportFieldType.Number:
-        return <ReportFilterNumber>{
-          filterType: ReportFilterType.Number,
-          fieldId: field.id,
-          condition: ReportFilterNumberCondition.EqualTo,
-          value: null
-        }
-
-      default:
-        this.growlService.growlDanger("Unrecognised field type: " + field.fieldType);
-        return undefined;
+      if (filters[i].filterType === ReportFilterType.Group) {
+        var result = this._findFilterArray(filter, (<ReportFilterGroup>filters[i]).filters);
+        if (result)
+          return result;
+      }
     }
+    return undefined;
   }
 }
 

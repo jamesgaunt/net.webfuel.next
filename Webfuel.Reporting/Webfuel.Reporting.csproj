@@ -11,8 +11,4 @@
     <ProjectReference Include="..\Webfuel.Excel\Webfuel.Excel.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ReportDesign\Parameters\" />
-  </ItemGroup>
-
 </Project>

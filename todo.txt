@@ -1,5 +1,7 @@
 TODO:
 
+> RemoveReportQuery (call ReportProvider instead since Schema knows the id)
+
 > Reporting: Polymorphic ReportSchema => Polymorphic ReportDesign (ReportColumn)
 
 > Guid Field Id - future proof

@@ -13,6 +13,11 @@ namespace Webfuel.Reporting
 
         public ReportSchema Schema { get; }
 
+        public void AddField(ReportField field)
+        {
+            Schema.AddField(field);
+        }
+
         public void AddProperty<TField>(
             Guid id,
             Expression<Func<TContext, TField>> expr,

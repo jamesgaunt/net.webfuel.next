@@ -7,11 +7,11 @@
     <div class="column">
       <div class="field">
         <label class="label">Columns</label>
-        <div class="report-columns" cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="dropColumn($event)" [cdkDropListDisabled]="false">
-          <div class="report-column" *ngFor="let column of design.columns" cdkDrag>
+        <div class="report-slots" cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="dropColumn($event)" [cdkDropListDisabled]="false">
+          <div class="report-slot" *ngFor="let column of design.columns" cdkDrag>
             <div class="columns">
               <div class="column">
-                <span class="report-drag-handle" cdkDragHandle>
+                <span cdkDragHandle>
                   <i class="fas fa-fw fa-bars"></i>
                 </span>
                 {{ column.title }}
@@ -23,6 +23,9 @@
               </div>
             </div>
           </div>
+          <div class="report-slot" *ngIf="design.columns.length == 0">
+            There are no columns specified on this report.
+          </div>
         </div>
         <button class="button" (click)="addColumn()">Add Column</button>
       </div>
@@ -32,7 +35,26 @@
     <div class="column">
       <div class="field">
         <label class="label">Filters</label>
-
+        <div class="report-slots" cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="dropFilter($event)" [cdkDropListDisabled]="false">
+          <div class="report-slot" *ngFor="let filter of design.filters" cdkDrag>
+            <div class="columns">
+              <div class="column">
+                <span cdkDragHandle>
+                  <i class="fas fa-fw fa-bars"></i>
+                </span>
+                {{ filter.description }}
+              </div>
+              <div class="column is-right is-narrow">
+                <a class="link is-primary" (click)="editFilter(filter)">edit</a>
+                &nbsp;
+                <a class="link is-danger" (click)="deleteFilter(filter)">delete</a>
+              </div>
+            </div>
+          </div>
+          <div class="report-slot" *ngIf="design.filters.length == 0">
+            There are no filters specified on this report.
+          </div>
+        </div>
         <button class="button" (click)="addFilter()">Add Filter</button>
       </div>
     </div>

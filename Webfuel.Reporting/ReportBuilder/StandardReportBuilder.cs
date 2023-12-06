@@ -2,21 +2,27 @@
 
 namespace Webfuel.Reporting
 {
-    public abstract class StandardReportBuilder : ReportBuilder
+    /// <summary>
+    /// Standard report builder that generates a report in Excel format using the specified report schema and design.
+    /// </summary>
+    public class StandardReportBuilder : ReportBuilder
     {
         const long MICROSECONDS_PER_STEP = 1000 * 100;
         protected int ItemsPerStep { get; set; } = 10;
 
-        public StandardReportBuilder(ReportSchema schema, ReportRequest request, ReportQuery query)
+        public StandardReportBuilder(ReportRequest request)
         {
-            Schema = schema;
             Request = request;
-            Query = query;
         }
+
+        public ReportSheet Sheet { get; } = new ReportSheet();
+        public ReportRequest Request { get; }
 
         public override async Task InitialiseReport()
         {
-            TotalCount = await Query.GetTotalCount(ServiceProvider);
+            Stage = "Generating";
+            StageTotal = await ReportDesignService.GetTotalCount(Request.ReportProviderId);
+            StageCount = 0;
         }
 
         public override async Task GenerateReport()
@@ -24,19 +30,23 @@ namespace Webfuel.Reporting
             var startTimestamp = MicrosecondTimer.Timestamp;
             do
             {
-                var items = await Query.GetItems(ProgressCount, ItemsPerStep, ServiceProvider);
+                var items = await ReportDesignService.QueryItems(Request.ReportProviderId, StageCount, ItemsPerStep);
 
-                if (!items.Any())
+                var none = true;
+                foreach (var item in items)
                 {
-                    ProgressCount = TotalCount;
+                    await ProcessItem(item);
+                    none = false;
+                }
+
+                if (none)
+                {
+                    StageCount = StageTotal;
                     Complete = true;
                     return;
                 }
 
-                foreach (var item in items)
-                    await ProcessItem(item);
-
-                ProgressCount += ItemsPerStep;
+                StageCount += ItemsPerStep;
             }
             while (MicrosecondTimer.Timestamp - startTimestamp < MICROSECONDS_PER_STEP);
         }
@@ -44,7 +54,7 @@ namespace Webfuel.Reporting
         public virtual async Task ProcessItem(object item)
         {
             var row = Sheet.AddRow();
-            foreach (var column in Request.Design.Columns) 
+            foreach (var column in Request.Design.Columns)
             {
                 await ProcessColumn(item, column, row);
             }
@@ -58,8 +68,8 @@ namespace Webfuel.Reporting
 
         public virtual Task<object?> EvaluateColumn(object item, ReportColumn column)
         {
-            var field = Schema.Fields.FirstOrDefault(p => p.Id == column.FieldId);
-            
+            var field = ReportDesignService.GetReportSchema(Request.ReportProviderId).Fields.FirstOrDefault(p => p.Id == column.FieldId);
+
             if (field == null)
                 return Task.FromResult<object?>(null);
 
@@ -89,10 +99,10 @@ namespace Webfuel.Reporting
             }
 
             var ri = 2;
-            foreach(var row in Sheet.Rows)
+            foreach (var row in Sheet.Rows)
             {
                 var ci = 1;
-                foreach(var cell in row.Cells)
+                foreach (var cell in row.Cells)
                 {
                     worksheet.Cell(ri, ci).SetValue(cell.Value);
                     ci++;
@@ -111,10 +121,5 @@ namespace Webfuel.Reporting
 
             return workbook;
         }
-
-        public ReportSheet Sheet { get; } = new ReportSheet();
-        public ReportRequest Request { get; }
-        public ReportSchema Schema { get; }
-        public ReportQuery Query { get; }
     }
 }

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Webfuel.Reporting
 {
@@ -14,9 +9,38 @@ namespace Webfuel.Reporting
     {
         public abstract ReportFilterType FilterType { get; }
 
-        public abstract void ReadProperties(ref Utf8JsonReader reader, JsonSerializerOptions options);
+        public Guid Id { get; set; }
 
-        public abstract void WriteProperties(Utf8JsonWriter writer, JsonSerializerOptions options);
+        public string Description { get; internal set; } = String.Empty;
+
+        public virtual bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
+        {
+            if (String.Compare(nameof(Id), propertyName, true) == 0)
+            {
+                Id = reader.GetGuid();
+                return true;
+            }
+
+            if (String.Compare(nameof(Description), propertyName, true) == 0)
+            {
+                Description = reader.GetString() ?? String.Empty;
+                return true;
+            }
+
+            return false;
+        }
+
+        public virtual void WriteProperties(Utf8JsonWriter writer)
+        {
+            writer.WriteString("id", Id.ToString());
+            writer.WriteString("description", Description);
+        }
+
+        public virtual void ValidateFilter(ReportSchema schema)
+        {
+            if(Id == Guid.Empty)
+                Id = Guid.NewGuid();
+        }
     }
 
     public class ReportFilterConverter : JsonConverter<ReportFilter>
@@ -27,17 +51,10 @@ namespace Webfuel.Reporting
                 throw new JsonException();
 
             reader.Read();
-            if (reader.TokenType != JsonTokenType.PropertyName)
-                throw new JsonException();
-
-            var propertyName = reader.GetString();
-            if(propertyName != "filterType")
+            if (reader.TokenType != JsonTokenType.PropertyName || reader.GetString() != "filterType")
                 throw new JsonException();
 
             reader.Read();
-            if (reader.TokenType != JsonTokenType.Number)
-                throw new JsonException();
-
             var propertyType = (ReportFilterType)reader.GetInt32();
 
             ReportFilter filter = propertyType switch
@@ -48,7 +65,17 @@ namespace Webfuel.Reporting
                 _ => throw new JsonException()
             };
 
-            filter.ReadProperties(ref reader, options);
+            while (reader.Read())
+            {
+                if (reader.TokenType != JsonTokenType.PropertyName)
+                    break;
+
+                var propertyName = reader.GetString() ?? String.Empty;
+
+                reader.Read();
+                if (!filter.ReadProperty(propertyName, ref reader))
+                    reader.Skip();
+            }
 
             if (reader.TokenType != JsonTokenType.EndObject)
                 throw new JsonException();
@@ -61,7 +88,7 @@ namespace Webfuel.Reporting
             writer.WriteStartObject();
             {
                 writer.WriteNumber("filterType", (int)filter.FilterType);
-                filter.WriteProperties(writer, options);
+                filter.WriteProperties(writer);
             }
             writer.WriteEndObject();
         }

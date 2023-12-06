@@ -1,6 +1,13 @@
 @import '../../../../styles/config.scss';
 
-.report-column {
+.report-designer {
+}
+
+.report-slots {
+  margin-bottom: var(--gap);
+}
+
+.report-slot {
   display: block;
   padding: 0.6rem;
   background-color: var(--palette-control-background);
@@ -8,9 +15,3 @@
   margin-bottom: 0.3rem;
 }
 
-.report-designer {
-
-  .report-columns {
-    margin-bottom: var(--gap);
-  }
-}

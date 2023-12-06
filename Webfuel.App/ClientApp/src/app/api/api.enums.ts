@@ -28,6 +28,10 @@ export enum ReportFilterGroupCondition {
 
 export enum ReportFilterNumberCondition {
     EqualTo = 10,
+    LessThan = 20,
+    LessThanOrEqualTo = 30,
+    GreaterThan = 40,
+    GreaterThanOrEqualTo = 50,
 }
 
 export enum ReportFilterStringCondition {

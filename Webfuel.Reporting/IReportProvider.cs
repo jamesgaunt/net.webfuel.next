@@ -10,8 +10,12 @@ namespace Webfuel.Reporting
     {
         Guid Id { get; }
 
-        Task<ReportSchema> GetReportSchema();
+        ReportSchema Schema { get; }
 
-        Task<ReportBuilder> InitialiseReport(ReportRequest request);
+        Task<ReportBuilder> GetReportBuilder(ReportRequest request);
+
+        Task<IEnumerable<object>> QueryItems(int skip, int take);
+
+        Task<int> GetTotalCount();
     }
 }

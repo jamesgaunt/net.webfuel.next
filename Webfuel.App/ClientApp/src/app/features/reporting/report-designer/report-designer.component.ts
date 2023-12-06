@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, forwardRef, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormService } from '../../../core/form.service';
-import { ReportSchema, ReportDesign, ReportColumn } from '../../../api/api.types';
+import { ReportSchema, ReportDesign, ReportColumn, ReportFilter } from '../../../api/api.types';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { noop } from 'rxjs';
 import _ from 'shared/common/underscore';
@@ -76,9 +76,23 @@ export class ReportDesignerComponent implements ControlValueAccessor, OnInit {
   // Filters
 
   addFilter() {
-    this.reportDesignService.addFilter(this.schema, this.design, this.design.filters).subscribe(() => {
+    this.reportDesignService.addFilter(this.schema, this.design, this.design.filters).subscribe((design) => {
+      this.design = design;
       this.emitChanges();
     });
+  }
+
+  editFilter(filter: ReportFilter) {
+  }
+
+  deleteFilter(filter: ReportFilter) {
+    this.reportDesignService.deleteFilter(this.schema, this.design, filter).subscribe(() => {
+      this.emitChanges();
+    });
+  }
+
+  dropFilter($event: any) {
+    this.emitChanges();
   }
 
   // ControlValueAccessor API

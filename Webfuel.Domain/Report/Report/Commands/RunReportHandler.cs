@@ -22,7 +22,7 @@ namespace Webfuel.Domain
 
             return await _reportDesignService.RegisterReport(new ReportRequest
             {
-                ProviderId = report.ReportProviderId,
+                ReportProviderId = report.ReportProviderId,
                 Design = report.Design,
                 Arguments = request.Arguments ?? new Dictionary<string, object?>()
             });

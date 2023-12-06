@@ -5,6 +5,7 @@ import { DialogBase, DialogComponentBase } from 'shared/common/dialog-base';
 import { ReportSchema, ReportColumn, ReportDesign } from '../../../../../api/api.types';
 import { StaticDataCache } from '../../../../../api/static-data.cache';
 import _ from 'shared/common/underscore';
+import { ReportDesignApi } from '../../../../../api/report-design.api';
 
 export interface AddReportColumnDialogData {
   schema: ReportSchema;
@@ -12,7 +13,7 @@ export interface AddReportColumnDialogData {
 }
 
 @Injectable()
-export class AddReportColumnDialog extends DialogBase<true, AddReportColumnDialogData> {
+export class AddReportColumnDialog extends DialogBase<ReportDesign, AddReportColumnDialogData> {
   open(data: AddReportColumnDialogData) {
     return this._open(AddReportColumnDialogComponent, data);
   }
@@ -22,11 +23,11 @@ export class AddReportColumnDialog extends DialogBase<true, AddReportColumnDialo
   selector: 'add-report-column-dialog',
   templateUrl: './add-report-column.dialog.html'
 })
-export class AddReportColumnDialogComponent extends DialogComponentBase<true, AddReportColumnDialogData> {
+export class AddReportColumnDialogComponent extends DialogComponentBase<ReportDesign, AddReportColumnDialogData> {
 
   constructor(
     private formService: FormService,
-    public staticDataCache: StaticDataCache,
+    public reportDesignApi: ReportDesignApi
   ) {
     super();
   }
@@ -43,13 +44,17 @@ export class AddReportColumnDialogComponent extends DialogComponentBase<true, Ad
     if (!field)
       return;
 
-    this.data.design.columns.push({
+    var design = _.deepClone(this.data.design);
+    design.columns.push({
       fieldId: field.id,
       title: field.name,
       width: null,
       format: ""
     });
-    this._closeDialog(true);
+
+    this.reportDesignApi.validateDesign({ reportProviderId: this.data.schema.reportProviderId, design: design }).subscribe((design) => {
+      this._closeDialog(design);
+    })
   }
 
   cancel() {

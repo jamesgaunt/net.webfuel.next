@@ -9,12 +9,14 @@ namespace Webfuel.Reporting
     public abstract class ReportBuilder
     {
 #pragma warning disable CS8618
-        // This is set by the report generator service before every iteration
+        // These are set by the report generator service before every iteration
         public IServiceProvider ServiceProvider { get; set; }
+        public IReportDesignService ReportDesignService { get; set; }
 #pragma warning restore CS8618
 
-        public int ProgressCount { get; set; }
-        public int TotalCount { get; set; }
+        public string Stage { get; set; } = String.Empty;
+        public int StageCount { get; set; }
+        public int StageTotal { get; set; }
         public bool Complete { get; set; }
 
         public abstract Task InitialiseReport();

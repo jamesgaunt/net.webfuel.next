@@ -11,10 +11,10 @@ namespace Webfuel
     public static class StringExtensions
     {
         // Ensures the first letter of the string is lower case
-        public static string? ToCamelCase(this string? input)
+        public static string ToCamelCase(this string? input)
         {
             if (input == null || input.Length == 0 || char.IsLower(input[0]))
-                return input;
+                return input ?? String.Empty;
 
             StringBuilder sb = new StringBuilder();
             bool leading = true;

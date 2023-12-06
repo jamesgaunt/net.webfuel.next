@@ -12,6 +12,10 @@ export enum ReportFilterGroupCondition {
 
 export enum ReportFilterNumberCondition {
     EqualTo = 10,
+    LessThan = 20,
+    LessThanOrEqualTo = 30,
+    GreaterThan = 40,
+    GreaterThanOrEqualTo = 50,
 }
 
 export enum ReportFilterStringCondition {
@@ -84,12 +88,14 @@ export interface UploadFileStorageEntry {
 
 export interface ReportFilter {
     filterType: ReportFilterType;
+    description: string;
 }
 
 export interface ReportFilterGroup extends ReportFilter {
     filterType: ReportFilterType;
     condition: ReportFilterGroupCondition;
     filters: Array<ReportFilter>;
+    description: string;
 }
 
 export interface ReportFilterNumber extends ReportFilter {
@@ -97,6 +103,7 @@ export interface ReportFilterNumber extends ReportFilter {
     fieldId: string;
     condition: ReportFilterNumberCondition;
     value: number | null | null;
+    description: string;
 }
 
 export interface ReportFilterString extends ReportFilter {
@@ -104,6 +111,7 @@ export interface ReportFilterString extends ReportFilter {
     fieldId: string;
     condition: ReportFilterStringCondition;
     value: string;
+    description: string;
 }
 
 export interface ReportColumn {
@@ -803,6 +811,11 @@ export interface QueryReportReference {
     reportProviderId: string;
     fieldId: string;
     query: Query;
+}
+
+export interface ValidateDesign {
+    reportProviderId: string;
+    design: ReportDesign;
 }
 
 export interface ReportGroup {

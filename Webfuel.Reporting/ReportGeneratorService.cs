@@ -36,6 +36,8 @@ namespace Webfuel.Reporting
             var task =_reportTaskService.RegisterTask(builder);
 
             task.Builder.ServiceProvider = _serviceProvider;
+            task.Builder.ReportDesignService = _serviceProvider.GetRequiredService<IReportDesignService>();
+
             await task.Builder.InitialiseReport();
             return ReportStep.FromTask(task);
         }
@@ -47,6 +49,8 @@ namespace Webfuel.Reporting
                 throw new DomainException("The specified report task no longer exists");
 
             task.Builder.ServiceProvider = _serviceProvider;
+            task.Builder.ReportDesignService = _serviceProvider.GetRequiredService<IReportDesignService>();
+
             await task.Builder.GenerateReport();
             return ReportStep.FromTask(task);
         }
@@ -58,6 +62,8 @@ namespace Webfuel.Reporting
                 return new ReportResult();
 
             task.Builder.ServiceProvider = _serviceProvider;
+            task.Builder.ReportDesignService = _serviceProvider.GetRequiredService<IReportDesignService>();
+
             var result = await task.Builder.RenderReport();
 
             _reportTaskService.DeleteTask(task.TaskId);

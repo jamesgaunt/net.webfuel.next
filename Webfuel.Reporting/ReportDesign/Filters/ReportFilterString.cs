@@ -34,42 +34,59 @@ namespace Webfuel.Reporting
 
         // Serialization
 
-        public override void ReadProperties(ref Utf8JsonReader reader, JsonSerializerOptions options)
+        public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
         {
-            while (reader.Read())
+            if(String.Compare(nameof(FieldId), propertyName, true) == 0)
             {
-                if (reader.TokenType != JsonTokenType.PropertyName)
-                    break;
-
-                var propertyName = reader.GetString();
-                reader.Read();
-
-                switch (propertyName)
-                {
-                    case "fieldId":
-                        FieldId = reader.GetGuid();
-                        break;
-
-                    case "condition":
-                        Condition = (ReportFilterStringCondition)reader.GetInt32();
-                        break;
-
-                    case "value":
-                        Value = reader.GetString() ?? String.Empty;
-                        break;
-
-                    default:
-                        reader.Skip();
-                        break;
-                }
+                FieldId = reader.GetGuid();
+                return true;
             }
+
+            if (String.Compare(nameof(Condition), propertyName, true) == 0)
+            {
+                Condition = (ReportFilterStringCondition)reader.GetInt32();
+                return true;
+            }
+
+            if (String.Compare(nameof(Value), propertyName, true) == 0)
+            {
+                Value = reader.GetString() ?? String.Empty;
+                return true;
+            }
+
+            return base.ReadProperty(propertyName, ref reader);
         }
 
-        public override void WriteProperties(Utf8JsonWriter writer, JsonSerializerOptions options)
+        public override void WriteProperties(Utf8JsonWriter writer)
         {
+            base.WriteProperties(writer);
             writer.WriteString("fieldId", FieldId);
             writer.WriteNumber("condition", (int)Condition);
             writer.WriteString("value", Value);
+
+        }
+
+        // Description
+
+        public override void ValidateFilter(ReportSchema schema)
+        {
+            Description = GenerateFieldName(schema) + " " + Condition switch
+            {
+                ReportFilterStringCondition.StartsWith => $"starts with '{Value}'",
+                ReportFilterStringCondition.EndsWith => $"ends with '{Value}'",
+                ReportFilterStringCondition.IsEmpty => "is empty",
+                ReportFilterStringCondition.IsNotEmpty => "is not empty",
+                _ => $"contains '{Value}'"
+            };
+            base.ValidateFilter(schema);
+        }
+
+        string GenerateFieldName(ReportSchema schema)
+        {
+            var field = schema.Fields.FirstOrDefault(f => f.Id == FieldId);
+            if (field == null)
+                return "Unknown field";
+            return field.Name;
         }
     }
 }

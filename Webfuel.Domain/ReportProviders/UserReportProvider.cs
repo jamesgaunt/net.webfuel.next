@@ -1,17 +1,49 @@
-﻿using Microsoft.Extensions.Azure;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using Webfuel.Reporting;
+using Webfuel.Common;
 using Webfuel.Domain.StaticData;
+using Webfuel.Reporting;
 
 namespace Webfuel.Domain
 {
-    public static class UserReportSchema
+    public interface IUserReportProvider: IReportProvider
     {
-        public static ReportSchema Schema
+    }
+
+    [Service(typeof(IUserReportProvider), typeof(IReportProvider))]
+    internal class UserReportProvider : IUserReportProvider
+    {
+        private readonly IUserRepository _userRepository;
+
+        public UserReportProvider(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
+
+        public Guid Id => ReportProviderEnum.User;
+
+        public Task<ReportBuilder> GetReportBuilder(ReportRequest request)
+        {
+            return Task.FromResult<ReportBuilder>(new StandardReportBuilder(request));
+        }
+
+        public async Task<IEnumerable<object>> QueryItems(int skip, int take)
+        {
+            var result = await _userRepository.QueryUser(new Query { Skip = skip, Take = take }, countTotal: false);
+            return result.Items;
+        }
+
+        public async Task<int> GetTotalCount()
+        {
+            var result = await _userRepository.QueryUser(new Query(), selectItems: false, countTotal: true);
+            return result.TotalCount;
+        }
+
+        public ReportSchema Schema
         {
             get
             {
@@ -51,4 +83,3 @@ namespace Webfuel.Domain
         static ReportSchema? _schema = null;
     }
 }
-
