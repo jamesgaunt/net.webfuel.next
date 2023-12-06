@@ -50,23 +50,13 @@ export class ReportDesignService {
     );
   }
 
-  private _addFilter(schema: ReportSchema, design: ReportDesign, filters: ReportFilter[], id: string) {
-    var field = this._getField(schema, id);
-    if (!field)
-      return;
-
-    var filter = this._getFilterForField(field);
-    if (!filter)
-      return;
-
-    filters.push(filter);
-  }
-
   editFilter(schema: ReportSchema, design: ReportDesign, filter: ReportFilter) {
     switch (filter.filterType) {
       case ReportFilterType.Group:
         break;
       case ReportFilterType.String:
+        break;
+      case ReportFilterType.Number:
         break;
       default:
         this.growlService.growlDanger("Unrecognised filter type: " + filter.filterType);
@@ -75,6 +65,18 @@ export class ReportDesignService {
   }
 
   // Helpers
+  
+  private _addFilter(schema: ReportSchema, design: ReportDesign, filters: ReportFilter[], id: string) {
+    var field = this._getField(schema, id);
+    if (!field)
+      return;
+
+    var filter = this._initialiseFilterForField(field);
+    if (!filter)
+      return;
+
+    filters.push(filter);
+  }
 
   private _getField(schema: ReportSchema, fieldId: string) {
     var field = schema.fields.find(p => p.id == fieldId);
@@ -83,7 +85,7 @@ export class ReportDesignService {
     return field;
   }
 
-  private _getFilterForField(field: ReportField): ReportFilter | undefined {
+  private _initialiseFilterForField(field: ReportField): ReportFilter | undefined {
     switch (field.fieldType) {
 
       case ReportFieldType.String:
