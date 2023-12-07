@@ -20,7 +20,7 @@ namespace Webfuel.Reporting
         public bool Complete { get; set; }
 
         public abstract Task GenerateReport();
-        public abstract Task<ReportResult> RenderReport();
+        public abstract ReportResult RenderReport();
 
     }
 }

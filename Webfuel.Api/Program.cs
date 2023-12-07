@@ -40,6 +40,7 @@ namespace Webfuel.Api
                     c.RegisterServicesFromAssemblyContaining<DomainAssemblyMarker>();
                     c.RegisterServicesFromAssemblyContaining<CommonAssemblyMarker>();
                     c.RegisterServicesFromAssemblyContaining<StaticDataAssemblyMarker>();
+                    c.RegisterServicesFromAssemblyContaining<ReportingAssemblyMarker>();
                 });
 
                 builder.Services.AddCors(options =>

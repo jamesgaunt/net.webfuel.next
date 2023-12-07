@@ -10,14 +10,53 @@ namespace Webfuel.App
     {
         public static void RegisterEndpoints(IEndpointRouteBuilder app)
         {
+            // Report Design Modification (note these have no authentication requirements as they don't save any state)
+
+            app.MapPost("api/report-design/insert-column", InsertReportColumn);
+            app.MapPost("api/report-design/update-column", UpdateReportColumn);
+            app.MapPost("api/report-design/delete-column", DeleteReportColumn);
+
+            app.MapPost("api/report-design/insert-filter", InsertReportFilter);
+            //app.MapPost("api/report-design/update-filter", UpdateReportFilter);
+            app.MapPost("api/report-design/delete-filter", DeleteReportFilter);
+
+            // Helpers
+
             app.MapGet("api/report-design/schema/{reportProviderId:guid}", GetReportSchema);
-
             app.MapPost("api/report-design/get-report-reference", GetReportReference);
-
             app.MapPost("api/report-design/query-report-reference", QueryReportReference);
-
             app.MapPost("api/report-design/validate-design", ValidateDesign);
         }
+
+        // Report Design Modification
+
+        public static Task<ReportDesign> InsertReportColumn([FromBody] InsertReportColumn command, IMediator mediator)
+        {
+            return mediator.Send(command);
+        }
+
+        public static Task<ReportDesign> UpdateReportColumn([FromBody] UpdateReportColumn command, IMediator mediator)
+        {
+            return mediator.Send(command);
+        }
+
+        public static Task<ReportDesign> DeleteReportColumn([FromBody] DeleteReportColumn command, IMediator mediator)
+        {
+            return mediator.Send(command);
+        }
+
+        public static Task<ReportDesign> InsertReportFilter([FromBody] InsertReportFilter command, IMediator mediator)
+        {
+            return mediator.Send(command);
+        }
+
+        public static Task<ReportDesign> DeleteReportFilter([FromBody] DeleteReportFilter command, IMediator mediator)
+        {
+            return mediator.Send(command);
+        }
+
+
+        // Helpers
 
         public static ReportSchema GetReportSchema(Guid reportProviderId, IReportDesignService reportDesignService)
         {
@@ -49,6 +88,11 @@ namespace Webfuel.App
             return command.Design;
         }
     }
+
+
+
+
+    // TODO: Get rid of these!
 
     public class GetReportReference
     {

@@ -68,9 +68,9 @@ namespace Webfuel.Reporting
 
         // Description
 
-        public override void ValidateFilter(ReportSchema schema)
+        public override string GenerateDescription(ReportSchema schema)
         {
-            Description = GenerateFieldName(schema) + " " + Condition switch
+            return GenerateFieldName(schema) + " " + Condition switch
             {
                 ReportFilterStringCondition.StartsWith => $"starts with '{Value}'",
                 ReportFilterStringCondition.EndsWith => $"ends with '{Value}'",
@@ -78,7 +78,6 @@ namespace Webfuel.Reporting
                 ReportFilterStringCondition.IsNotEmpty => "is not empty",
                 _ => $"contains '{Value}'"
             };
-            base.ValidateFilter(schema);
         }
 
         string GenerateFieldName(ReportSchema schema)

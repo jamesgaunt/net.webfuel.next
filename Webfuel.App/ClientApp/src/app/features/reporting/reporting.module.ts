@@ -14,10 +14,12 @@ import { ReportDesignerComponent } from './report-designer/report-designer.compo
 
 import { CreateReportGroupDialog, CreateReportGroupDialogComponent } from './report-group/dialogs/create-report-group/create-report-group.dialog';
 import { CreateReportDialog, CreateReportDialogComponent } from './report/dialogs/create-report/create-report.dialog';
-import { AddReportColumnDialog, AddReportColumnDialogComponent } from './report-design-service/dialogs/add-report-column/add-report-column.dialog';
-import { EditReportColumnDialog, EditReportColumnDialogComponent } from './report-design-service/dialogs/edit-report-column/edit-report-column';
 import { ReportDesignService } from './report-design-service/report-design.service';
-import { AddReportFilterDialog, AddReportFilterDialogComponent } from './report-design-service/dialogs/add-report-filter/add-report-filter.dialog';
+import { InsertReportColumnDialog, InsertReportColumnDialogComponent } from './report-design-service/dialogs/insert-report-column/insert-report-column.dialog';
+import { InsertReportFilterDialog, InsertReportFilterDialogComponent } from './report-design-service/dialogs/insert-report-filter/insert-report-filter.dialog';
+import { UpdateReportColumnDialog, UpdateReportColumnDialogComponent } from './report-design-service/dialogs/update-report-column/update-report-column.dialog';
+import { DeleteReportColumnDialog, DeleteReportColumnDialogComponent } from './report-design-service/dialogs/delete-report-column/delete-report-column.dialog';
+import { DeleteReportFilterDialog, DeleteReportFilterDialogComponent } from './report-design-service/dialogs/delete-report-filter/delete-report-filter.dialog';
 
 @NgModule({
   imports: [
@@ -35,18 +37,28 @@ import { AddReportFilterDialog, AddReportFilterDialogComponent } from './report-
 
     CreateReportGroupDialogComponent,
     CreateReportDialogComponent,
-    AddReportColumnDialogComponent,
-    EditReportColumnDialogComponent,
-    AddReportFilterDialogComponent,
+
+    InsertReportColumnDialogComponent,
+    InsertReportFilterDialogComponent,
+
+    UpdateReportColumnDialogComponent,
+
+    DeleteReportColumnDialogComponent,
+    DeleteReportFilterDialogComponent,
   ],
   providers: [
     ReportDesignService,
 
     CreateReportGroupDialog,
     CreateReportDialog,
-    AddReportColumnDialog,
-    EditReportColumnDialog,
-    AddReportFilterDialog,
+
+    InsertReportColumnDialog,
+    InsertReportFilterDialog,
+
+    UpdateReportColumnDialog,
+
+    DeleteReportColumnDialog,
+    DeleteReportFilterDialog,
   ]
 })
 export class ReportingModule { }

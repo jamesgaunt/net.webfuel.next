@@ -48,7 +48,7 @@ namespace Webfuel.Tools.ConsoleApp
             Console.Clear();
 
             Console.WriteLine("Commands:");
-            Console.WriteLine("-- import users");
+            Console.WriteLine("-- user test data");
             Console.WriteLine("-- exit");
 
             Console.Write("> ");
@@ -59,8 +59,8 @@ namespace Webfuel.Tools.ConsoleApp
 
             switch (command)
             {
-                case "import users":
-                    await serviceProvider.GetRequiredService<IUserImporter>().Import();
+                case "user test data":
+                    await serviceProvider.GetRequiredService<IUserTestData>().GenerateTestData();
                     break;
 
                 default:

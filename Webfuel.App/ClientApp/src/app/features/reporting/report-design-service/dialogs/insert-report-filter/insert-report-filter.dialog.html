@@ -1,12 +1,12 @@
 <form class="form dialog" [formGroup]="form">
   <div class="dialog-head">
-    Add Column
+    Add Filter
   </div>
   <div class="dialog-body">
     <div class="grid">
       <div class="field">
-        <label class="label">Name</label>
-        <dropdown-select [items]="data.schema.fields" placeholder="required" formControlName="id" />
+        <label class="label">Filter Type</label>
+        <dropdown-select [items]="data.schema.fields" placeholder="required" formControlName="fieldId" />
       </div>
     </div>
   </div>

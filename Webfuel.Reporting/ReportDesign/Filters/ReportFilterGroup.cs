@@ -71,15 +71,18 @@ namespace Webfuel.Reporting
             writer.WriteEndArray();
         }
 
-        // Description
-
         public override void ValidateFilter(ReportSchema schema)
         {
-            Description = $"{GetConditionDescription()} of these conditions are true...";
             base.ValidateFilter(schema);
-
             foreach (var filter in Filters)
                 filter.ValidateFilter(schema);
+        }
+
+        // Description
+
+        public override string GenerateDescription(ReportSchema schema)
+        {
+            return $"{GetConditionDescription()} of these conditions are true...";
         }
 
         string GetConditionDescription()

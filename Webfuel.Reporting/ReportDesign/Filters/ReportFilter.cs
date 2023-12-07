@@ -38,9 +38,10 @@ namespace Webfuel.Reporting
 
         public virtual void ValidateFilter(ReportSchema schema)
         {
-            if(Id == Guid.Empty)
-                Id = Guid.NewGuid();
+            Description = GenerateDescription(schema);
         }
+
+        public abstract string GenerateDescription(ReportSchema schema);
     }
 
     public class ReportFilterConverter : JsonConverter<ReportFilter>

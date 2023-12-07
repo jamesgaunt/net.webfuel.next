@@ -50,20 +50,20 @@ namespace Webfuel.Reporting
             return ReportStep.FromTask(task);
         }
 
-        public async Task<ReportResult> RenderReport(Guid taskId)
+        public Task<ReportResult> RenderReport(Guid taskId)
         {
             var task = _reportTaskService.RetrieveTask(taskId);
             if (task == null)
-                return new ReportResult();
+                return Task.FromResult(new ReportResult());
 
             task.Builder.ServiceProvider = _serviceProvider;
             task.Builder.ReportDesignService = _serviceProvider.GetRequiredService<IReportDesignService>();
 
-            var result = await task.Builder.RenderReport();
+            var result = task.Builder.RenderReport();
 
             _reportTaskService.DeleteTask(task.TaskId);
 
-            return result;
+            return Task.FromResult(result);
         }
 
         public Task CancelReport(Guid taskId)

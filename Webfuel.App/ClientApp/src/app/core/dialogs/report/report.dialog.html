@@ -4,7 +4,7 @@
   </div>
   <div class="dialog-body">
     <div style="text-align: center; font-size: 1.2em">
-      <p *ngIf="!data.downloadUrl"><i class="fas fa-cog fa-spin"></i> Generating your report...</p>
+      <p *ngIf="!data.downloadUrl"><i class="fas fa-cog fa-spin"></i> {{ data.reportStep.stage }} {{ data.reportStep.stageCount }}/{{ data.reportStep.stageTotal }}</p>
       <p *ngIf="data.downloadUrl">Your report is ready to download.</p>
     </div>
   </div>

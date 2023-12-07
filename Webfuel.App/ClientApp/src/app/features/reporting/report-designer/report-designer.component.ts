@@ -45,19 +45,22 @@ export class ReportDesignerComponent implements ControlValueAccessor, OnInit {
   // Columns
 
   addColumn() {
-    this.reportDesignService.addColumn(this.schema, this.design).subscribe(() => {
+    this.reportDesignService.insertColumn(this.schema, this.design).subscribe((design) => {
+      this.design = design;
       this.emitChanges();
     });
   }
 
   editColumn(column: ReportColumn) {
-    this.reportDesignService.editColumn(this.schema, this.design, column).subscribe(() => {
+    this.reportDesignService.updateColumn(this.schema, this.design, column).subscribe((design) => {
+      this.design = design;
       this.emitChanges();
     });
   }
 
   deleteColumn(column: ReportColumn) {
-    this.reportDesignService.deleteColumn(this.schema, this.design, column).subscribe(() => {
+    this.reportDesignService.deleteColumn(this.schema, this.design, column).subscribe((design) => {
+      this.design = design;
       this.emitChanges();
     });
   }
@@ -66,7 +69,7 @@ export class ReportDesignerComponent implements ControlValueAccessor, OnInit {
     var currentIndex = <number>$event.currentIndex;
     var previousIndex = <number>$event.previousIndex;
 
-    // Client Side
+    // Client side only, reordring stuff can't really break anything
     const item = this.design.columns.splice(previousIndex, 1);
     this.design.columns.splice(currentIndex, 0, item[0]);
 
@@ -76,17 +79,18 @@ export class ReportDesignerComponent implements ControlValueAccessor, OnInit {
   // Filters
 
   addFilter() {
-    this.reportDesignService.addFilter(this.schema, this.design, this.design.filters).subscribe((design) => {
+    this.reportDesignService.insertFilter(this.schema, this.design).subscribe((design) => {
       this.design = design;
       this.emitChanges();
-    });
+   });
   }
 
   editFilter(filter: ReportFilter) {
   }
 
   deleteFilter(filter: ReportFilter) {
-    this.reportDesignService.deleteFilter(this.schema, this.design, filter).subscribe(() => {
+    this.reportDesignService.deleteFilter(this.schema, this.design, filter).subscribe((design) => {
+      this.design = design;
       this.emitChanges();
     });
   }

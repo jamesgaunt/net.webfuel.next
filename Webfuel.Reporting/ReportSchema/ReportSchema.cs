@@ -14,7 +14,7 @@ namespace Webfuel.Reporting
     {
         public required Guid ReportProviderId { get; init; }
 
-        public IReadOnlyList<ReportField> Fields => _fields;
+        public IEnumerable<ReportField> Fields => _fields;
 
         List<ReportField> _fields = new List<ReportField>();
 
@@ -23,6 +23,11 @@ namespace Webfuel.Reporting
             if (_fields.Any(p => p.Id == field.Id))
                 throw new InvalidOperationException($"Field {field.Name} has an id that is already in use.");
             _fields.Add(field);
+        }
+
+        internal ReportField GetField(Guid fieldId)
+        {
+            return _fields.FirstOrDefault(p => p.Id == fieldId) ?? throw new InvalidOperationException("The specified field does not exist");
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Webfuel.Reporting
 {
-    public class ReportSheet
+    public class ReportData
     {
         public List<ReportRow> Rows => _rows;
         List<ReportRow> _rows = new List<ReportRow>();

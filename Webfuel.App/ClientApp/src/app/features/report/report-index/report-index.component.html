@@ -5,8 +5,12 @@
 <div class="container">
   <h1 class="title">Reports</h1>
 
-  <div *ngFor="let report of reports">
-    <a class="link" (click)="runReport(report)">{{ report.name }}</a>
+  <div class="report-menu">
+    <h3>Standard Reports</h3>
+    <a *ngFor="let report of reports" class="report-link" (click)="runReport(report)">
+      <i class="far fa-file-alt"></i>
+      <span class="name">{{ report.name }}</span>
+    </a>
   </div>
 
 </div>

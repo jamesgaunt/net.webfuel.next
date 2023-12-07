@@ -1,11 +1,12 @@
 import { Component, Injectable } from '@angular/core';
 import { DialogBase, DialogComponentBase } from '../../../shared/common/dialog-base';
 import { environment } from '../../../../environments/environment';
+import { ReportStep } from '../../../api/api.types';
 
 export interface ReportDialogData {
   title: string;
+  reportStep: ReportStep;
   downloadUrl?: string;
-  progressPercentage?: number;
 }
 
 @Injectable()

@@ -119,6 +119,7 @@ export interface ReportFilterString extends ReportFilter {
 }
 
 export interface ReportColumn {
+    id: string;
     fieldId: string;
     title: string;
     width: number | null | null;
@@ -795,6 +796,37 @@ export interface QueryReport extends Query {
     filters?: Array<QueryFilter>;
     sort?: Array<QuerySort>;
     search?: string;
+}
+
+export interface InsertReportColumn {
+    reportProviderId: string;
+    design: ReportDesign;
+    fieldId: string;
+}
+
+export interface UpdateReportColumn {
+    reportProviderId: string;
+    design: ReportDesign;
+    id: string;
+    title: string;
+}
+
+export interface DeleteReportColumn {
+    reportProviderId: string;
+    design: ReportDesign;
+    id: string;
+}
+
+export interface InsertReportFilter {
+    reportProviderId: string;
+    design: ReportDesign;
+    fieldId: string;
+}
+
+export interface DeleteReportFilter {
+    reportProviderId: string;
+    design: ReportDesign;
+    id: string;
 }
 
 export interface ReportSchema {

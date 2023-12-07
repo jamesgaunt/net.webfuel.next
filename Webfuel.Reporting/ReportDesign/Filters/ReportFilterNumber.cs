@@ -72,10 +72,9 @@ namespace Webfuel.Reporting
 
         // Description
 
-        public override void ValidateFilter(ReportSchema schema)
+        public override string GenerateDescription(ReportSchema schema)
         {
-            Description = $"{GenerateFieldName(schema)} {GenerateConditionDescription()} {GenerateValueDescription()}";
-            base.ValidateFilter(schema);
+            return $"{GenerateFieldName(schema)} {GenerateConditionDescription()} {GenerateValueDescription()}";
         }
 
         string GenerateFieldName(ReportSchema schema)

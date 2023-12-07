@@ -44,3 +44,17 @@
     }
   }
 }
+
+.report-menu {
+  .report-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem;
+    max-width: 500px;
+
+    i {
+        font-size: 3rem;
+        margin-right: 0.5rem;
+    }
+  }
+}

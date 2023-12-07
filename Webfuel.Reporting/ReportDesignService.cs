@@ -78,8 +78,7 @@ namespace Webfuel.Reporting
         public void ValidateDesign(Guid reportProviderId, ReportDesign design)
         {
             var schema = GetReportSchema(reportProviderId);
-            foreach (var filter in design.Filters)
-                filter.ValidateFilter(schema);
+            design.ValidateDesign(schema);
         }
 
         // Helpers
