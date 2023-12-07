@@ -66,3 +66,27 @@
     }
   }
 }
+
+.progress-bar {
+  position: relative;
+  height: 3rem;
+
+  .progress-bar-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #b5e0fb;
+  }
+
+  .progress-bar-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

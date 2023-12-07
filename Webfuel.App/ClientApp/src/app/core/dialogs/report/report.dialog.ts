@@ -7,6 +7,7 @@ export interface ReportDialogData {
   title: string;
   reportStep: ReportStep;
   downloadUrl?: string;
+  progressPercentage: number | null;
 }
 
 @Injectable()

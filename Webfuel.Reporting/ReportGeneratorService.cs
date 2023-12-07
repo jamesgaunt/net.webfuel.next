@@ -44,7 +44,6 @@ namespace Webfuel.Reporting
                 throw new DomainException("The specified report task no longer exists");
 
             task.Builder.ServiceProvider = _serviceProvider;
-            task.Builder.ReportDesignService = _serviceProvider.GetRequiredService<IReportDesignService>();
 
             await task.Builder.GenerateReport();
             return ReportStep.FromTask(task);
@@ -57,7 +56,6 @@ namespace Webfuel.Reporting
                 return Task.FromResult(new ReportResult());
 
             task.Builder.ServiceProvider = _serviceProvider;
-            task.Builder.ReportDesignService = _serviceProvider.GetRequiredService<IReportDesignService>();
 
             var result = task.Builder.RenderReport();
 

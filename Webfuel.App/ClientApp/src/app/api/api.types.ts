@@ -648,6 +648,31 @@ export interface ReportStep {
     stageCount: number;
     stageTotal: number;
     complete: boolean;
+    metrics: ReportBuilderMetrics;
+}
+
+export interface ReportBuilderMetrics {
+    loadSteps: number;
+    loadItems: number;
+    loadAvgMicroseconds: number;
+    loadAvgItems: number;
+    loadMicroseconds: number;
+    loadMinMicroseconds: number;
+    loadMaxMicroseconds: number;
+    renderSteps: number;
+    renderItems: number;
+    renderMicroseconds: number;
+    renderAvgMicroseconds: number;
+    renderAvgItems: number;
+    renderMinMicroseconds: number;
+    renderMaxMicroseconds: number;
+    generationSteps: number;
+    generationItems: number;
+    generationMicroseconds: number;
+    generationAvgMicroseconds: number;
+    generationAvgItems: number;
+    generationMinMicroseconds: number;
+    generationMaxMicroseconds: number;
 }
 
 export interface ProjectExportRequest {

@@ -15,6 +15,7 @@ namespace Webfuel.Reporting
         public int StageCount { get; init; }
         public int StageTotal { get; init; }
         public bool Complete { get; init; }
+        public ReportBuilderMetrics Metrics { get; init; } = new ReportBuilderMetrics();
 
         internal static ReportStep FromTask(ReportTask task)
         {
@@ -24,7 +25,8 @@ namespace Webfuel.Reporting
                 Stage = task.Builder.Stage,
                 StageCount = task.Builder.StageCount,
                 StageTotal = task.Builder.StageTotal,
-                Complete = task.Builder.Complete
+                Complete = task.Builder.Complete,
+                Metrics = task.Builder.Metrics
             };
 
             return progress;

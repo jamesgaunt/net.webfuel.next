@@ -71,11 +71,17 @@ namespace Webfuel.Reporting
             writer.WriteEndArray();
         }
 
+        // Validation
+
         public override void ValidateFilter(ReportSchema schema)
         {
-            base.ValidateFilter(schema);
+            if (!Enum.IsDefined(Condition))
+                Condition = ReportFilterGroupCondition.All;
+
             foreach (var filter in Filters)
                 filter.ValidateFilter(schema);
+
+            base.ValidateFilter(schema);
         }
 
         // Description

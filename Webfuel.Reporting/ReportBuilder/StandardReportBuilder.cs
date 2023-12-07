@@ -1,19 +1,33 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.Extensions.DependencyInjection;
 using Webfuel.Excel;
 
 namespace Webfuel.Reporting
 {
+
+    public static class StandardReportStage
+    {
+        public const string Initialisation = "Initialisation";
+        public const string Generating = "Generating";
+        public const string Rendering = "Rendering";
+        public const string Complete = "Complete";
+    }
+
     /// <summary>
     /// Standard report builder that generates a report in Excel format using the specified report schema and design.
     /// </summary>
     public class StandardReportBuilder : ReportBuilder
     {
+        const long MICROSECONDS_PER_LOAD = 1000 * 25;
+
         const long MICROSECONDS_PER_STEP = 1000 * 100;
-        protected int ItemsPerStep { get; set; } = 10;
+        
+        protected int ItemsPerLoad { get; set; } = 10; // Initial value, will auto-tune
 
         public StandardReportBuilder(ReportRequest request)
         {
             Request = request;
+            Stage = StandardReportStage.Initialisation;
         }
 
         public ReportRequest Request { get; }
@@ -21,55 +35,87 @@ namespace Webfuel.Reporting
         public ExcelWorkbook? Workbook { get; set; }
         public ReportResult? Result { get; set; }
 
+        public async Task<IEnumerable<object>> QueryItems(int skip, int take)
+        {
+            return await ServiceProvider.GetRequiredService<IReportDesignService>().QueryItems(Request.ReportProviderId, StageCount, ItemsPerLoad);
+        }
+
+        public async Task<int> GetTotalCount()
+        {
+            return await ServiceProvider.GetRequiredService<IReportDesignService>().GetTotalCount(Request.ReportProviderId); 
+        }
+
         public override async Task GenerateReport()
         {
-            if (Stage == String.Empty)
+            if (Stage == StandardReportStage.Initialisation)
                 await InitialisationStep();
-            else if (Stage == "Generating")
+            else if (Stage == StandardReportStage.Generating)
                 await GenerationStep();
-            else if (Stage == "Rendering")
+            else if (Stage == StandardReportStage.Rendering)
                 await RenderStep();
-            else 
+            else
                 throw new InvalidOperationException($"Unknown stage: {Stage}");
         }
 
         public virtual async Task InitialisationStep()
         {
-            StageTotal = await ReportDesignService.GetTotalCount(Request.ReportProviderId);
+            StageTotal = await GetTotalCount();
             StageCount = 0;
-            Stage = "Generating";
+            Stage = StandardReportStage.Generating;
+        }
+
+        public void TuneItemsPerLoad(long microseconds)
+        {
+            long microsecondsPerItem = microseconds / ItemsPerLoad;
+
+            ItemsPerLoad = (int)(MICROSECONDS_PER_LOAD / microsecondsPerItem);
+
+            if (ItemsPerLoad < 1)
+                ItemsPerLoad = 1;
+            if (ItemsPerLoad > 100)
+                ItemsPerLoad = 100;
         }
 
         public virtual async Task GenerationStep()
         {
-            var startTimestamp = MicrosecondTimer.Timestamp;
+            var stepTimestamp = MicrosecondTimer.Timestamp;
+            var stepItems = 0;
             do
             {
-                var items = await ReportDesignService.QueryItems(Request.ReportProviderId, StageCount, ItemsPerStep);
+                var loadTimestamp = MicrosecondTimer.Timestamp;
+                var items = await QueryItems(StageCount, ItemsPerLoad);
+                var loadMicroseconds = MicrosecondTimer.Timestamp - loadTimestamp;
 
                 var none = true;
+                var loadItems = 0;
                 foreach (var item in items)
                 {
                     await ProcessItem(item);
                     none = false;
+                    stepItems++;
+                    loadItems++;
                 }
 
                 if (none)
                 {
                     StageTotal = Data.Rows.Count;
                     StageCount = 0;
-                    Stage = "Rendering";
-                    return;
+                    Stage = StandardReportStage.Rendering;
+                    break;
                 }
 
-                StageCount += ItemsPerStep;
+                StageCount += loadItems;
+                Metrics.AddLoad(loadMicroseconds, loadItems);
+                TuneItemsPerLoad(loadMicroseconds);
             }
-            while (MicrosecondTimer.Timestamp - startTimestamp < MICROSECONDS_PER_STEP);
+            while (MicrosecondTimer.Timestamp - stepTimestamp < MICROSECONDS_PER_STEP);
+
+            Metrics.AddGeneration(MicrosecondTimer.Timestamp - stepTimestamp, stepItems);
         }
 
         public virtual Task RenderStep()
         {
-            if(Workbook == null)
+            if (Workbook == null)
             {
                 Workbook = new ExcelWorkbook();
                 var _worksheet = Workbook.GetOrCreateWorksheet();
@@ -80,26 +126,31 @@ namespace Webfuel.Reporting
             }
 
             var worksheet = Workbook.GetOrCreateWorksheet();
-            var startTimestamp = MicrosecondTimer.Timestamp;
+
+            var stepTimestamp = MicrosecondTimer.Timestamp;
+            var stepItems = 0;
             do
             {
-                if(StageCount >= Data.Rows.Count)
+                if (StageCount >= Data.Rows.Count)
                 {
                     GenerateResult();
+                    Stage = StandardReportStage.Complete;
                     Complete = true;
-                    return Task.CompletedTask;
+                    break;
                 }
 
                 var row = Data.Rows[StageCount];
-                for(var c = 0; c < row.Cells.Count; c++)
+                for (var c = 0; c < row.Cells.Count; c++)
                 {
                     worksheet.Cell(StageCount + 2, c + 1).SetValue(row.Cells[c].Value);
                 }
 
                 StageCount++;
+                stepItems++;
             }
-            while (MicrosecondTimer.Timestamp - startTimestamp < MICROSECONDS_PER_STEP);
+            while (MicrosecondTimer.Timestamp - stepTimestamp < MICROSECONDS_PER_STEP);
 
+            Metrics.AddRender(MicrosecondTimer.Timestamp - stepTimestamp, stepItems);
             return Task.CompletedTask;
         }
 
@@ -129,8 +180,16 @@ namespace Webfuel.Reporting
             }
         }
 
+        public virtual Task<Boolean> FilterItem(object item)
+        {
+            return Task.FromResult(true);
+        }
+
         public virtual async Task ProcessItem(object item)
         {
+            if(!await FilterItem(item))
+                return;
+
             var row = Data.AddRow();
             foreach (var column in Request.Design.Columns)
             {
@@ -146,10 +205,9 @@ namespace Webfuel.Reporting
 
         public virtual Task<object?> EvaluateColumn(object item, ReportColumn column)
         {
-            var field = ReportDesignService.GetReportSchema(Request.ReportProviderId).Fields.FirstOrDefault(p => p.Id == column.FieldId);
-
-            if (field == null)
-                return Task.FromResult<object?>(null);
+            var field = ServiceProvider.GetRequiredService<IReportDesignService>()
+                .GetReportSchema(Request.ReportProviderId)
+                .GetField(column.FieldId);
 
             return field.Evaluate(item, ServiceProvider);
         }

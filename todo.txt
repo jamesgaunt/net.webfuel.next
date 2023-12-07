@@ -1,21 +1,6 @@
 TODO:
 
-> RemoveReportQuery (call ReportProvider instead since Schema knows the id)
-
-> Reporting: Polymorphic ReportSchema => Polymorphic ReportDesign (ReportColumn)
-
-> Guid Field Id - future proof
-
-ReportSchema -> Set(ExcelCell, ReportColumn) => Set logic locally/specific to type
-
-> Maximum flexiblity on available columns => Any report can be generated
-
-> GROUPING = NON-IMMEDIATE DATA!!! WE GONE WRONG!!!
-
-> More reporting into a seperate assembly. Serialization is a seperate issue! Can serialize field by field.
-
-> WE ARE NOWHERE NEAR YET!!
-
+> ReportReference / ReportLookup  ????
 
 > Heartbeats
 

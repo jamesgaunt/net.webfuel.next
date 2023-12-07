@@ -25,6 +25,7 @@ export class ReportService {
     this.dialogData = {
       title: "Generate Report",
       reportStep: reportStep,
+      progressPercentage: null
     };
 
     this.reportDialog.open(this.dialogData).subscribe({
@@ -41,6 +42,7 @@ export class ReportService {
       return;
 
     this.dialogData.reportStep = reportStep;
+    this.dialogData.progressPercentage = reportStep.stageTotal > 0 ? reportStep.stageCount * 100.0 / reportStep.stageTotal : 0; 
 
     this.reportGeneratorApi.generateReport({ taskId: reportStep.taskId }).subscribe((result) => {
       if (result.complete) {
@@ -56,6 +58,10 @@ export class ReportService {
   private _renderReport(reportStep: ReportStep) {
     if (!this.dialogData)
       return;
+
+    this.dialogData.progressPercentage = null;
+
+    console.log("Report Metrics: ", reportStep.metrics);
     this.dialogData.downloadUrl = "download-report/" + reportStep.taskId;
   }
 }

@@ -11,7 +11,6 @@ namespace Webfuel.Reporting
 
         public string Title { get; set; } = String.Empty;
 
-
         // TODO:
 
         public double? Width { get; set; }
@@ -20,6 +19,7 @@ namespace Webfuel.Reporting
 
         public virtual void ValidateColumn(ReportSchema schema)
         {
+            // TODO: Description / Calcuation information
         }
     }
 }

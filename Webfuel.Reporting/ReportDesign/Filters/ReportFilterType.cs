@@ -13,5 +13,6 @@ namespace Webfuel.Reporting
         Number = 20,
 
         Group = 999999,
+        Expression = 1000000,
     }
 }

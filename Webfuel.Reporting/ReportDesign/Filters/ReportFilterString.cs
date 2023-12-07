@@ -14,6 +14,7 @@ namespace Webfuel.Reporting
         Contains = 10,
         StartsWith = 20,
         EndsWith = 30,
+        EqualTo = 40,
 
         IsEmpty = 100,
         IsNotEmpty = 200,
@@ -64,6 +65,16 @@ namespace Webfuel.Reporting
             writer.WriteNumber("condition", (int)Condition);
             writer.WriteString("value", Value);
 
+        }
+
+        // Validation
+
+        public override void ValidateFilter(ReportSchema schema)
+        {
+            if (!Enum.IsDefined(Condition))
+                Condition = ReportFilterStringCondition.Contains;
+
+            base.ValidateFilter(schema);
         }
 
         // Description

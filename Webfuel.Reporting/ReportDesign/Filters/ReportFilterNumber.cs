@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -68,6 +69,16 @@ namespace Webfuel.Reporting
                 writer.WriteNull("value");
             else
                 writer.WriteNumber("value", Value.Value);
+        }
+
+        // Validation
+
+        public override void ValidateFilter(ReportSchema schema)
+        {
+            if (!Enum.IsDefined(Condition))
+                Condition = ReportFilterNumberCondition.EqualTo;
+
+            base.ValidateFilter(schema);
         }
 
         // Description

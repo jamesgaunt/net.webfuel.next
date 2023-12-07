@@ -93,6 +93,20 @@ namespace Webfuel.Reporting
             });
         }
 
+        public void AddExpression(
+            Guid id,
+            string name,
+            string expression)
+        {
+            Schema.AddField(new ReportExpressionField
+            {
+                Id = id,
+                Name = name,
+                Expression = expression,
+                FieldType = ReportFieldType.Expression,
+            });
+        }
+
         // Helpers
 
         string GetExprName<TProperty>(Expression<Func<TContext, TProperty>> accessor)
