@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,32 +10,29 @@ using System.Threading.Tasks;
 namespace Webfuel.Reporting
 {
     [ApiType]
-    public class ReportFilterExpression : ReportFilter
+    public abstract class ReportFilterField : ReportFilter
     {
-        public override ReportFilterType FilterType => ReportFilterType.Expression;
+        // Properties
 
-        public override ReportPrimativeType PrimativeType => ReportPrimativeType.None;
-
-        public string Expression { get; set; } = String.Empty;
+        public Guid FieldId { get; set; }
 
         // Serialization
 
         public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
         {
-            if (String.Compare(nameof(Expression), propertyName, true) == 0)
+            if (String.Compare(nameof(FieldId), propertyName, true) == 0)
             {
-                Expression = reader.GetString() ?? String.Empty;
+                FieldId = reader.GetGuid();
                 return true;
             }
 
             return base.ReadProperty(propertyName, ref reader);
         }
-
+        
         public override void WriteProperties(Utf8JsonWriter writer)
         {
             base.WriteProperties(writer);
-            writer.WriteString("expression", Expression);
-
+            writer.WriteString("fieldId", FieldId);
         }
 
         // Validation
@@ -42,13 +40,6 @@ namespace Webfuel.Reporting
         public override void ValidateFilter(ReportSchema schema)
         {
             base.ValidateFilter(schema);
-        }
-
-        // Description
-
-        public override string GenerateDescription(ReportSchema schema)
-        {
-            return "Custom Expression";
         }
     }
 }

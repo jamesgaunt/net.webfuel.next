@@ -20,13 +20,11 @@ namespace Webfuel.Reporting
     }
 
     [ApiType]
-    public class ReportFilterNumber : ReportFilter
+    public class ReportFilterNumber : ReportFilterField
     {
         public override ReportFilterType FilterType => ReportFilterType.Number;
 
-        // Properties
-
-        public Guid FieldId { get; set; }
+        public override ReportPrimativeType PrimativeType => ReportPrimativeType.Number;
 
         public ReportFilterNumberCondition Condition { get; set; } = ReportFilterNumberCondition.EqualTo;
 
@@ -36,12 +34,6 @@ namespace Webfuel.Reporting
 
         public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
         {
-            if (String.Compare(nameof(FieldId), propertyName, true) == 0)
-            {
-                FieldId = reader.GetGuid();
-                return true;
-            }
-
             if (String.Compare(nameof(Condition), propertyName, true) == 0)
             {
                 Condition = (ReportFilterNumberCondition)reader.GetInt32();
@@ -62,10 +54,9 @@ namespace Webfuel.Reporting
         public override void WriteProperties(Utf8JsonWriter writer)
         {
             base.WriteProperties(writer);
-            writer.WriteString("fieldId", FieldId);
             writer.WriteNumber("condition", (int)Condition);
 
-            if (Value == null)
+            if(Value == null)
                 writer.WriteNull("value");
             else
                 writer.WriteNumber("value", Value.Value);

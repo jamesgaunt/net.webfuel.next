@@ -23,7 +23,7 @@ namespace Webfuel.Reporting
     {
         public override ReportFilterType FilterType => ReportFilterType.Group;
 
-        // Properties
+        public override ReportPrimativeType PrimativeType => ReportPrimativeType.None;
 
         public ReportFilterGroupCondition Condition { get; set; } = ReportFilterGroupCondition.All;
 

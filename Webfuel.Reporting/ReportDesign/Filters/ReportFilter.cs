@@ -9,6 +9,8 @@ namespace Webfuel.Reporting
     {
         public abstract ReportFilterType FilterType { get; }
 
+        public abstract ReportPrimativeType PrimativeType { get; }
+
         public Guid Id { get; set; }
 
         public string Description { get; internal set; } = String.Empty;

@@ -17,6 +17,7 @@ namespace Webfuel.Reporting
 
         public string Format { get; set; } = String.Empty;
 
+
         public virtual void ValidateColumn(ReportSchema schema)
         {
             // TODO: Description / Calcuation information

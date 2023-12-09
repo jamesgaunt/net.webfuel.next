@@ -1,5 +1,11 @@
 TODO:
 
+> Ensure reporting enums use exhaustive switch
+
+> Is it worth supporting multi-value filters?
+
+> Rename boolean domain poperties to use the Is prefix
+
 > ReportReference / ReportLookup  ????
 
 > Heartbeats

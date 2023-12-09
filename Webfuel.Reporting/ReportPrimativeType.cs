@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace Webfuel.Reporting
 {
-    [ApiEnum]
-    public enum ReportFilterType
+    public enum ReportPrimativeType
     {
+        None = 0,
+
         String = 10,
         Number = 20,
-
-        Group = 1000,
-        Expression = 2000,
+        Boolean = 30,
+        Date = 40,
+        DateTime = 50,
     }
 }
