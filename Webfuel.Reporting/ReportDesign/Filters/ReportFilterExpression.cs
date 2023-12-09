@@ -13,8 +13,6 @@ namespace Webfuel.Reporting
     {
         public override ReportFilterType FilterType => ReportFilterType.Expression;
 
-        public override ReportPrimativeType PrimativeType => ReportPrimativeType.None;
-
         public string Expression { get; set; } = String.Empty;
 
         // Serialization

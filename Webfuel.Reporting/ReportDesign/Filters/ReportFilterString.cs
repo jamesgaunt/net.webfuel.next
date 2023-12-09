@@ -25,8 +25,6 @@ namespace Webfuel.Reporting
     {
         public override ReportFilterType FilterType => ReportFilterType.String;
 
-        public override ReportPrimativeType PrimativeType => ReportPrimativeType.String;
-
         public ReportFilterStringCondition Condition { get; set; } = ReportFilterStringCondition.Contains;
 
         public string Value { get; set; } = String.Empty;

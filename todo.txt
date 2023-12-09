@@ -1,8 +1,12 @@
 TODO:
 
+> Work out the "value pipeline" for the reporting engine  (Evaluate > [Dereference] > [Transform])
+
+> Prototype Complex Filter : Project Support => filter by Project Created Date Range (report reference includes entier object as property)
+
 > Ensure reporting enums use exhaustive switch
 
-> Is it worth supporting multi-value filters?
+> Is it worth supporting multi-value filters? [think it's a no]
 
 > Rename boolean domain poperties to use the Is prefix
 

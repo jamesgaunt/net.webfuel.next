@@ -24,8 +24,6 @@ namespace Webfuel.Reporting
     {
         public override ReportFilterType FilterType => ReportFilterType.Number;
 
-        public override ReportPrimativeType PrimativeType => ReportPrimativeType.Number;
-
         public ReportFilterNumberCondition Condition { get; set; } = ReportFilterNumberCondition.EqualTo;
 
         public decimal? Value { get; set; }
