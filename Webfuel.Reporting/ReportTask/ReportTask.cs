@@ -15,10 +15,5 @@ namespace Webfuel.Reporting
         internal Guid? IdentityId { get; set; }
         internal DateTimeOffset CreatedAt { get; } = DateTimeOffset.UtcNow;
         internal DateTimeOffset LastAccessedAt { get; set; } = DateTimeOffset.UtcNow;
-
-        // Metrics (TODO)
-
-        public int IterationCount { get; set; }
-        public long TotalMicroseconds { get; set; }
     }
 }

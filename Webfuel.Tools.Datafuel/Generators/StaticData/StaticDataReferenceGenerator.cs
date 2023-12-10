@@ -40,7 +40,7 @@ namespace Webfuel.Tools.Datafuel
             _staticDataCache = staticDataCache;
         }}
 
-        public async Task<ReportReference?> GetReference(Guid id)
+        public async Task<ReportReference?> GetReportReference(Guid id)
         {{
             var staticData = await _staticDataCache.GetStaticData();
             var item = staticData.{entity.Name}.FirstOrDefault(x => x.Id == id);
@@ -51,10 +51,11 @@ namespace Webfuel.Tools.Datafuel
             {{
                 Id = item.Id,
                 Name = item.Name,
+                Entity = item,
             }};
         }}
 
-        public async Task<QueryResult<ReportReference>> QueryReference(Query query)
+        public async Task<QueryResult<ReportReference>> QueryReportReference(Query query)
         {{
             var result = await _repository.Query{entity.Name}(query);
 
@@ -65,6 +66,7 @@ namespace Webfuel.Tools.Datafuel
                 {{
                     Id = x.Id,
                     Name = x.Name,
+                    Entity = x,
                 }}).ToList(),
             }};
         }}

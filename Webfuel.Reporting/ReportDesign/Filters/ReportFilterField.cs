@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Irony.Parsing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +40,16 @@ namespace Webfuel.Reporting
 
         public override void ValidateFilter(ReportSchema schema)
         {
+            DefaultName = GetFieldName(schema);
             base.ValidateFilter(schema);
+        }
+
+        protected string GetFieldName(ReportSchema schema)
+        {
+            var field = schema.Fields.FirstOrDefault(f => f.Id == FieldId);
+            if (field == null)
+                return "Unknown field";
+            return field.Name;
         }
     }
 }

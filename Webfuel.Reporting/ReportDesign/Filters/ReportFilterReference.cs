@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,25 +10,20 @@ using System.Threading.Tasks;
 namespace Webfuel.Reporting
 {
     [ApiEnum]
-    public enum ReportFilterStringCondition
+    public enum ReportFilterReferenceCondition
     {
-        Contains = 10,
-        StartsWith = 20,
-        EndsWith = 30,
-        EqualTo = 40,
-
-        IsEmpty = 100,
-        IsNotEmpty = 200,
+        OneOf = 10,
+        NotOneOf = 20,
     }
 
     [ApiType]
-    public class ReportFilterString : ReportFilterField
+    public class ReportFilterReference : ReportFilterField
     {
-        public override ReportFilterType FilterType => ReportFilterType.String;
+        public override ReportFilterType FilterType => ReportFilterType.Reference;
 
-        public ReportFilterStringCondition Condition { get; set; } = ReportFilterStringCondition.Contains;
+        public ReportFilterReferenceCondition Condition { get; set; } = ReportFilterReferenceCondition.OneOf;
 
-        public string Value { get; set; } = String.Empty;
+        public List<Guid> Value { get; set; } = new List<Guid>();
 
         // Serialization
 
@@ -35,24 +31,31 @@ namespace Webfuel.Reporting
         {
             if (String.Compare(nameof(Condition), propertyName, true) == 0)
             {
-                Condition = (ReportFilterStringCondition)reader.GetInt32();
+                Condition = (ReportFilterReferenceCondition)reader.GetInt32();
                 return true;
             }
 
             if (String.Compare(nameof(Value), propertyName, true) == 0)
             {
-                Value = reader.GetString() ?? String.Empty;
+                if (reader.TokenType == JsonTokenType.String)
+                {
+                    Value = JsonSerializer.Deserialize<List<Guid>>(ref reader, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+                        ?? new List<Guid>();
+                }
                 return true;
             }
 
+
             return base.ReadProperty(propertyName, ref reader);
         }
-
+        
         public override void WriteProperties(Utf8JsonWriter writer)
         {
             base.WriteProperties(writer);
             writer.WriteNumber("condition", (int)Condition);
-            writer.WriteString("value", Value);
+
+            writer.WritePropertyName("value");
+            JsonSerializer.Serialize(writer, Value, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
 
         // Validation
@@ -60,7 +63,7 @@ namespace Webfuel.Reporting
         public override void ValidateFilter(ReportSchema schema)
         {
             if (!Enum.IsDefined(Condition))
-                Condition = ReportFilterStringCondition.Contains;
+                Condition = ReportFilterReferenceCondition.OneOf;
 
             base.ValidateFilter(schema);
         }

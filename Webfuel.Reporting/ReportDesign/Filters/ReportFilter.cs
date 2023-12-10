@@ -11,13 +11,29 @@ namespace Webfuel.Reporting
 
         public Guid Id { get; set; }
 
-        public string Description { get; internal set; } = String.Empty;
+        public string Name { get; set; } = String.Empty;
+
+        public string DefaultName { get; set; } = String.Empty;
+
+        public string Description { get; set; } = String.Empty;
 
         public virtual bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
         {
             if (String.Compare(nameof(Id), propertyName, true) == 0)
             {
                 Id = reader.GetGuid();
+                return true;
+            }
+
+            if (String.Compare(nameof(Name), propertyName, true) == 0)
+            {
+                Name = reader.GetString() ?? String.Empty;
+                return true;
+            }
+
+            if (String.Compare(nameof(DefaultName), propertyName, true) == 0)
+            {
+                DefaultName = reader.GetString() ?? String.Empty;
                 return true;
             }
 
@@ -33,15 +49,14 @@ namespace Webfuel.Reporting
         public virtual void WriteProperties(Utf8JsonWriter writer)
         {
             writer.WriteString("id", Id.ToString());
+            writer.WriteString("name", Name);
+            writer.WriteString("defaultName", DefaultName);
             writer.WriteString("description", Description);
         }
 
         public virtual void ValidateFilter(ReportSchema schema)
         {
-            Description = GenerateDescription(schema);
         }
-
-        public abstract string GenerateDescription(ReportSchema schema);
     }
 
     public class ReportFilterConverter : JsonConverter<ReportFilter>
@@ -63,6 +78,8 @@ namespace Webfuel.Reporting
                 ReportFilterType.Group => new ReportFilterGroup(),
                 ReportFilterType.String => new ReportFilterString(),
                 ReportFilterType.Number => new ReportFilterNumber(),
+                ReportFilterType.Boolean => new ReportFilterBoolean(),
+                ReportFilterType.Reference => new ReportFilterReference(),
                 _ => throw new JsonException()
             };
 

@@ -46,6 +46,7 @@ namespace Webfuel.Domain
 
                     builder.AddProperty(Guid.Parse("82b05021-9512-4217-9e71-bb0bc9bc8384"), p => p.Number);
                     builder.AddProperty(Guid.Parse("c3b0b5a0-5b1a-4b7e-9b9a-0b6b8b8b6b8b"), p => p.PrefixedNumber);
+
                     builder.AddReference<ISupportRequestStatusReferenceProvider>(Guid.Parse("c3b0b5a0-5b1a-4b7e-9b9a-0b6b8b8b6b8b"), p => p.StatusId);
 
                     builder.AddProperty(Guid.Parse("cbeb9e2d-59a2-4896-a3c5-01c5c2aa42c7"), p => p.Title);

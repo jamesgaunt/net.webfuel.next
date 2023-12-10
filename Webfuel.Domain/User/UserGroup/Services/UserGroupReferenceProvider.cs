@@ -32,6 +32,7 @@ namespace Webfuel.Domain
             {
                 Id = userGroup.Id,
                 Name = userGroup.Name,
+                Entity = userGroup,
             };
         }
 
@@ -46,6 +47,7 @@ namespace Webfuel.Domain
                 {
                     Id = x.Id,
                     Name = x.Name,
+                    Entity = x
                 }).ToList(),
             };
         }

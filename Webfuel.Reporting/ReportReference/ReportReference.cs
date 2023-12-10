@@ -11,5 +11,7 @@ namespace Webfuel.Reporting
         public Guid Id { get; set; }
 
         public string Name { get; set; } = String.Empty;
+
+        public required object Entity { get; init; }
     }
 }

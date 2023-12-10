@@ -42,7 +42,7 @@
                 <span cdkDragHandle>
                   <i class="fas fa-fw fa-bars"></i>
                 </span>
-                {{ filter.description }}
+                {{ filter.name || filter.defaultName }}
               </div>
               <div class="column is-right is-narrow">
                 <a class="link is-primary" (click)="editFilter(filter)">edit</a>

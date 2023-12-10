@@ -29,6 +29,7 @@ namespace Webfuel.Domain.StaticData
             {
                 Id = item.Id,
                 Name = item.Name,
+                Entity = item,
             };
         }
         
@@ -43,6 +44,7 @@ namespace Webfuel.Domain.StaticData
                     {
                         Id = x.Id,
                         Name = x.Name,
+                        Entity = x,
                     }).ToList(),
             };
         }

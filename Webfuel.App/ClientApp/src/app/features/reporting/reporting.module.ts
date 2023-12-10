@@ -20,6 +20,7 @@ import { InsertReportFilterDialog, InsertReportFilterDialogComponent } from './r
 import { UpdateReportColumnDialog, UpdateReportColumnDialogComponent } from './report-design-service/dialogs/update-report-column/update-report-column.dialog';
 import { DeleteReportColumnDialog, DeleteReportColumnDialogComponent } from './report-design-service/dialogs/delete-report-column/delete-report-column.dialog';
 import { DeleteReportFilterDialog, DeleteReportFilterDialogComponent } from './report-design-service/dialogs/delete-report-filter/delete-report-filter.dialog';
+import { UpdateReportFilterDialog, UpdateReportFilterDialogComponent } from './report-design-service/dialogs/update-report-filter/update-report-filter.dialog';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { DeleteReportFilterDialog, DeleteReportFilterDialogComponent } from './r
     InsertReportFilterDialogComponent,
 
     UpdateReportColumnDialogComponent,
+    UpdateReportFilterDialogComponent,
 
     DeleteReportColumnDialogComponent,
     DeleteReportFilterDialogComponent,
@@ -56,6 +58,7 @@ import { DeleteReportFilterDialog, DeleteReportFilterDialogComponent } from './r
     InsertReportFilterDialog,
 
     UpdateReportColumnDialog,
+    UpdateReportFilterDialog,
 
     DeleteReportColumnDialog,
     DeleteReportFilterDialog,

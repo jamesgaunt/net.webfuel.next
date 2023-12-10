@@ -63,19 +63,21 @@ namespace Webfuel.Reporting
             });
         }
 
-        public void AddReference<TReferenceProvider>(
+        public ReportReferenceField AddReference<TReferenceProvider>(
             Guid id,
             Expression<Func<TContext, Guid>> expr,
             string? name = null) where TReferenceProvider : IReportReferenceProvider
         {
-            Schema.AddField(new ReportReferenceField
+            var field = new ReportReferenceField
             {
                 Id = id,
                 Name = name ?? GetExprName(expr),
                 Accessor = o => expr.Compile()((TContext)o),
                 ReferenceProviderType = typeof(TReferenceProvider),
                 FieldType = ReportFieldType.Reference,
-            });
+            };
+            Schema.AddField(field);
+            return field;
         }
 
         public void AddReferenceList<TReferenceProvider>(

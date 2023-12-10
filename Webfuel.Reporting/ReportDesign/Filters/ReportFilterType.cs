@@ -11,6 +11,12 @@ namespace Webfuel.Reporting
     {
         String = 10,
         Number = 20,
+        Boolean = 30,
+        DateTime = 40,
+        Date = 50,
+
+        Reference = 200,
+        ReferenceList = 210,
 
         Group = 1000,
         Expression = 2000,

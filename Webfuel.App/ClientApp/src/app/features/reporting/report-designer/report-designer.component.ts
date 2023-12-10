@@ -86,6 +86,10 @@ export class ReportDesignerComponent implements ControlValueAccessor, OnInit {
   }
 
   editFilter(filter: ReportFilter) {
+    this.reportDesignService.updateFilter(this.schema, this.design, filter).subscribe((design) => {
+      this.design = design;
+      this.emitChanges();
+    });
   }
 
   deleteFilter(filter: ReportFilter) {

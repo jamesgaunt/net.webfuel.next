@@ -79,14 +79,8 @@ namespace Webfuel.Reporting
             foreach (var filter in Filters)
                 filter.ValidateFilter(schema);
 
+            DefaultName = $"{GetConditionDescription()} of these conditions are true:";
             base.ValidateFilter(schema);
-        }
-
-        // Description
-
-        public override string GenerateDescription(ReportSchema schema)
-        {
-            return $"{GetConditionDescription()} of these conditions are true...";
         }
 
         string GetConditionDescription()

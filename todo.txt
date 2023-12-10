@@ -2,7 +2,17 @@ TODO:
 
 > Work out the "value pipeline" for the reporting engine  (Evaluate > [Dereference] > [Transform])
 
-> Prototype Complex Filter : Project Support => filter by Project Created Date Range (report reference includes entier object as property)
+> [Non-selectable fields - control mappings?]
+
+> Reference - static data vs complex type (e.g. Project)
+
+> Prototype Complex Filter : Reference => Guid / Guids
+
+> Prototype Complex Filter : Mapping => On support provided filter by Project.Created date range (report reference includes entity as property)
+
+> [SORT OUT REFERENCES/MAPPING AND THE REST SHOULD FALL INTO PLACE]
+
+> ReportFilterEditor (used on both)
 
 > Ensure reporting enums use exhaustive switch
 

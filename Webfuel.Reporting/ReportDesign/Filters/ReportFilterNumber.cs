@@ -26,7 +26,7 @@ namespace Webfuel.Reporting
 
         public ReportFilterNumberCondition Condition { get; set; } = ReportFilterNumberCondition.EqualTo;
 
-        public decimal? Value { get; set; }
+        public double? Value { get; set; }
 
         // Serialization
 
@@ -41,7 +41,7 @@ namespace Webfuel.Reporting
             if (String.Compare(nameof(Value), propertyName, true) == 0)
             {
                 if (reader.TokenType == JsonTokenType.Number)
-                    Value = reader.GetDecimal();
+                    Value = reader.GetDouble();
                 return true;
             }
 
@@ -68,41 +68,6 @@ namespace Webfuel.Reporting
                 Condition = ReportFilterNumberCondition.EqualTo;
 
             base.ValidateFilter(schema);
-        }
-
-        // Description
-
-        public override string GenerateDescription(ReportSchema schema)
-        {
-            return $"{GenerateFieldName(schema)} {GenerateConditionDescription()} {GenerateValueDescription()}";
-        }
-
-        string GenerateFieldName(ReportSchema schema)
-        {
-            var field = schema.Fields.FirstOrDefault(f => f.Id == FieldId);
-            if (field == null)
-                return "Unknown field";
-            return field.Name;
-        }
-
-        string GenerateConditionDescription()
-        {
-            return Condition switch
-            {
-                ReportFilterNumberCondition.EqualTo => "is equal to",
-                ReportFilterNumberCondition.LessThan => "is less than",
-                ReportFilterNumberCondition.LessThanOrEqualTo => "is less than or equal to",
-                ReportFilterNumberCondition.GreaterThan => "is greater than",
-                ReportFilterNumberCondition.GreaterThanOrEqualTo => "is greater than or equal to",
-                _ => "is equal to"
-            };
-        }
-
-        string GenerateValueDescription()
-        {
-            if (Value == null)
-                return "null";
-            return Value.Value.ToString("N2");
         }
     }
 }
