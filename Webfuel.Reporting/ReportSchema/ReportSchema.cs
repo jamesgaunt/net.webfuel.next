@@ -22,6 +22,10 @@ namespace Webfuel.Reporting
         {
             if (_fields.Any(p => p.Id == field.Id))
                 throw new InvalidOperationException($"Field {field.Name} has an id that is already in use.");
+
+            if (_fields.Any(p => p.Name == field.Name))
+                throw new InvalidOperationException($"Field {field.Name} has a name that is already in use.");
+
             _fields.Add(field);
         }
 

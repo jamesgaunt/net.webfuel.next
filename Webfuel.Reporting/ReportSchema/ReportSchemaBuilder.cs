@@ -22,12 +22,12 @@ namespace Webfuel.Reporting
 
         public ReportMapping<TContext>? Mapping { get; set; }
 
-        public void AddField(ReportField field)
+        public void Add(ReportField field)
         {
             Schema.AddField(field);
         }
 
-        public void AddProperty<TField>(
+        public void Add<TField>(
             Guid id,
             Expression<Func<TContext, TField>> expr,
             string? name = null,
@@ -43,7 +43,7 @@ namespace Webfuel.Reporting
             });
         }
 
-        public void AddMethod<TField>(
+        public void Add<TField>(
             Guid id,
             Expression<Func<TContext, Task<TField>>> expr,
             string? name = null,
@@ -59,7 +59,7 @@ namespace Webfuel.Reporting
             });
         }
 
-        public void AddReference<TReferenceProvider>(
+        public void Ref<TReferenceProvider>(
             Guid id,
             Expression<Func<TContext, Guid?>> expr,
             string? name = null) where TReferenceProvider : IReportReferenceProvider
@@ -74,7 +74,7 @@ namespace Webfuel.Reporting
             });
         }
 
-        public ReportReferenceField AddReference<TReferenceProvider>(
+        public ReportReferenceField Ref<TReferenceProvider>(
             Guid id,
             Expression<Func<TContext, Guid>> expr,
             string? name = null) where TReferenceProvider : IReportReferenceProvider
@@ -91,7 +91,7 @@ namespace Webfuel.Reporting
             return field;
         }
 
-        public void AddReferenceList<TReferenceProvider>(
+        public void Ref<TReferenceProvider>(
             Guid id,
             Expression<Func<TContext, IEnumerable<Guid>>> expr,
             string? name = null) where TReferenceProvider : IReportReferenceProvider
@@ -106,7 +106,7 @@ namespace Webfuel.Reporting
             });
         }
 
-        public void AddExpression(
+        public void Add(
             Guid id,
             string name,
             string expression)
@@ -125,7 +125,8 @@ namespace Webfuel.Reporting
             var mapping = new ReportMapping<TEntity>
             {
                 Accessor = o => expr.Compile()((TContext)o),
-                Mapping = Mapping
+                Mapping = Mapping,
+                Name = GetExprName(expr)
             };
             return new ReportSchemaBuilder<TEntity>(Schema, mapping);
         }
@@ -135,7 +136,8 @@ namespace Webfuel.Reporting
             var mapping = new ReportMapping<TEntity>
             {
                 Accessor = o => expr.Compile()((TContext)o),
-                Mapping = Mapping
+                Mapping = Mapping,
+                Name = GetExprName(expr)
             };
             return new ReportSchemaBuilder<TEntity>(Schema, mapping);
         }
@@ -174,7 +176,7 @@ namespace Webfuel.Reporting
                 accessor.ToString()));
         }
 
-        static string FormatName(string input)
+        string FormatName(string input)
         {
             input = SplitCamelCase(input);
 
@@ -183,6 +185,9 @@ namespace Webfuel.Reporting
 
             if (input.EndsWith(" Ids"))
                 input = input.Substring(0, input.Length - 4);
+
+            if(Mapping != null)
+                input = Mapping.Name + " " + input;
 
             return input;
         }

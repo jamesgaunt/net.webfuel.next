@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Webfuel.Reporting
+namespace Webfuel
 {
-    public interface IReportMapper<TEntity> where TEntity : class
+    public interface IDataSource<TEntity> where TEntity : class
     {
         Task<TEntity?> Get(Guid id);
 
