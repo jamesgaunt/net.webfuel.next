@@ -209,7 +209,7 @@ namespace Webfuel.Reporting
                 .GetReportSchema(Request.ReportProviderId)
                 .GetField(column.FieldId);
 
-            return field.Evaluate(item, ServiceProvider);
+            return field.Evaluate(item, this);
         }
 
         public override ReportResult RenderReport()

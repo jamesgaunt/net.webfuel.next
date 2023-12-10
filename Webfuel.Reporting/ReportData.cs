@@ -19,7 +19,6 @@ namespace Webfuel.Reporting
         }
     }
 
-
     public class ReportRow
     {
         public List<ReportCell> Cells => _cells;

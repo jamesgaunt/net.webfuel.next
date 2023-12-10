@@ -22,12 +22,8 @@ namespace Webfuel.Reporting
 
         public ReportMapping<TContext>? Mapping { get; set; }
 
-        public void Add(ReportField field)
-        {
-            Schema.AddField(field);
-        }
-
-        public void Add<TField>(
+        // Add Property Expression
+        public ReportSchemaBuilder<TContext> Add<TField>(
             Guid id,
             Expression<Func<TContext, TField>> expr,
             string? name = null,
@@ -41,9 +37,11 @@ namespace Webfuel.Reporting
                 Mapping = Mapping,
                 FieldType = fieldType ?? GetExprFieldType(expr),
             });
+            return this;
         }
 
-        public void Add<TField>(
+        // Add Async Expression
+        public ReportSchemaBuilder<TContext> Add<TField>(
             Guid id,
             Expression<Func<TContext, Task<TField>>> expr,
             string? name = null,
@@ -57,6 +55,7 @@ namespace Webfuel.Reporting
                 Mapping = Mapping,
                 FieldType = fieldType ?? GetExprFieldType(expr),
             });
+            return this;
         }
 
         public void Ref<TReferenceProvider>(
@@ -106,16 +105,16 @@ namespace Webfuel.Reporting
             });
         }
 
+        // Add Scribble Expression
         public void Add(
             Guid id,
             string name,
-            string expression)
+            string scribble)
         {
-            Schema.AddField(new ReportExpressionField
+            Schema.AddField(new ReportScribbleField<TContext>(scribble)
             {
                 Id = id,
                 Name = name,
-                Expression = expression,
                 FieldType = ReportFieldType.Expression,
             });
         }

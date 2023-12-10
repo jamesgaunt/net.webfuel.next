@@ -11,13 +11,13 @@ namespace Webfuel.Reporting
         [JsonIgnore]
         public required Type ReferenceProviderType { get; init; }
 
-        public override async Task<object?> Evaluate(object context, IServiceProvider services)
+        public override async Task<object?> Evaluate(object context, ReportBuilder builder)
         {
             var id = Accessor(context);
             if (id == null)
                 return null;
 
-            var referenceProvider = (IReportReferenceProvider)services.GetRequiredService(ReferenceProviderType);
+            var referenceProvider = (IReportReferenceProvider)builder.ServiceProvider.GetRequiredService(ReferenceProviderType);
 
             var reference = await referenceProvider.GetReportReference(id.Value);
             if(reference == null)

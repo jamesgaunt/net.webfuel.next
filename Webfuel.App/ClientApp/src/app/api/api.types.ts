@@ -197,6 +197,9 @@ export interface ReportExpressionField extends ReportField {
     fieldType: ReportFieldType;
 }
 
+export interface IReportMapping {
+}
+
 export interface ReportField {
     id: string;
     name: string;

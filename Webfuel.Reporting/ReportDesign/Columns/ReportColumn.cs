@@ -17,6 +17,8 @@ namespace Webfuel.Reporting
 
         public string Format { get; set; } = String.Empty;
 
+        public string? Expression { get; set; }
+
 
         public virtual void ValidateColumn(ReportSchema schema)
         {
