@@ -1,7 +1,13 @@
 export enum ReportFilterType {
     String = 10,
     Number = 20,
-    Group = 999999,
+    Boolean = 30,
+    DateTime = 40,
+    Date = 50,
+    Reference = 200,
+    ReferenceList = 210,
+    Group = 1000,
+    Expression = 2000,
 }
 
 export enum ReportFilterGroupCondition {
@@ -18,10 +24,16 @@ export enum ReportFilterNumberCondition {
     GreaterThanOrEqualTo = 50,
 }
 
+export enum ReportFilterReferenceCondition {
+    OneOf = 10,
+    NotOneOf = 20,
+}
+
 export enum ReportFilterStringCondition {
     Contains = 10,
     StartsWith = 20,
     EndsWith = 30,
+    EqualTo = 40,
     IsEmpty = 100,
     IsNotEmpty = 200,
 }
@@ -35,6 +47,7 @@ export enum ReportFieldType {
     Date = 50,
     Reference = 1000,
     ReferenceList = 1010,
+    Expression = 1020,
 }
 
 export interface ClientConfiguration {
@@ -86,38 +99,6 @@ export interface UploadFileStorageEntry {
     fileStorageGroupId: string;
 }
 
-export interface ReportFilter {
-    filterType: ReportFilterType;
-    id: string;
-    description: string;
-}
-
-export interface ReportFilterGroup extends ReportFilter {
-    filterType: ReportFilterType;
-    condition: ReportFilterGroupCondition;
-    filters: Array<ReportFilter>;
-    id: string;
-    description: string;
-}
-
-export interface ReportFilterNumber extends ReportFilter {
-    filterType: ReportFilterType;
-    fieldId: string;
-    condition: ReportFilterNumberCondition;
-    value: number | null | null;
-    id: string;
-    description: string;
-}
-
-export interface ReportFilterString extends ReportFilter {
-    filterType: ReportFilterType;
-    fieldId: string;
-    condition: ReportFilterStringCondition;
-    value: string;
-    id: string;
-    description: string;
-}
-
 export interface ReportColumn {
     id: string;
     fieldId: string;
@@ -126,18 +107,103 @@ export interface ReportColumn {
     format: string;
 }
 
+export interface ReportFilter {
+    filterType: ReportFilterType;
+    id: string;
+    name: string;
+    defaultName: string;
+    description: string;
+}
+
+export interface ReportFilterBoolean extends ReportFilterField {
+    filterType: ReportFilterType;
+    value: boolean | null | null;
+    fieldId: string;
+    id: string;
+    name: string;
+    defaultName: string;
+    description: string;
+}
+
+export interface ReportFilterField extends ReportFilter {
+    fieldId: string;
+    filterType: ReportFilterType;
+    id: string;
+    name: string;
+    defaultName: string;
+    description: string;
+}
+
+export interface ReportFilterExpression extends ReportFilter {
+    filterType: ReportFilterType;
+    expression: string;
+    id: string;
+    name: string;
+    defaultName: string;
+    description: string;
+}
+
+export interface ReportFilterGroup extends ReportFilter {
+    filterType: ReportFilterType;
+    condition: ReportFilterGroupCondition;
+    filters: Array<ReportFilter>;
+    id: string;
+    name: string;
+    defaultName: string;
+    description: string;
+}
+
+export interface ReportFilterNumber extends ReportFilterField {
+    filterType: ReportFilterType;
+    condition: ReportFilterNumberCondition;
+    value: number | null | null;
+    fieldId: string;
+    id: string;
+    name: string;
+    defaultName: string;
+    description: string;
+}
+
+export interface ReportFilterReference extends ReportFilterField {
+    filterType: ReportFilterType;
+    condition: ReportFilterReferenceCondition;
+    value: Array<string>;
+    fieldId: string;
+    id: string;
+    name: string;
+    defaultName: string;
+    description: string;
+}
+
+export interface ReportFilterString extends ReportFilterField {
+    filterType: ReportFilterType;
+    condition: ReportFilterStringCondition;
+    value: string;
+    fieldId: string;
+    id: string;
+    name: string;
+    defaultName: string;
+    description: string;
+}
+
 export interface ReportDesign {
     columns: Array<ReportColumn>;
     filters: Array<ReportFilter>;
 }
 
-export interface ReportMethodField extends ReportField {
+export interface ReportExpressionField extends ReportField {
     id: string;
     name: string;
     fieldType: ReportFieldType;
 }
 
 export interface ReportField {
+    id: string;
+    name: string;
+    fieldType: ReportFieldType;
+}
+
+export interface ReportMethodField extends ReportField {
     id: string;
     name: string;
     fieldType: ReportFieldType;
@@ -862,6 +928,7 @@ export interface ReportSchema {
 export interface ReportReference {
     id: string;
     name: string;
+    entity: any;
 }
 
 export interface GetReportReference {

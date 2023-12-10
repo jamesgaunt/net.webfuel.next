@@ -17,7 +17,13 @@ export enum QueryOp {
 export enum ReportFilterType {
     String = 10,
     Number = 20,
-    Group = 999999,
+    Boolean = 30,
+    DateTime = 40,
+    Date = 50,
+    Reference = 200,
+    ReferenceList = 210,
+    Group = 1000,
+    Expression = 2000,
 }
 
 export enum ReportFilterGroupCondition {
@@ -34,10 +40,16 @@ export enum ReportFilterNumberCondition {
     GreaterThanOrEqualTo = 50,
 }
 
+export enum ReportFilterReferenceCondition {
+    OneOf = 10,
+    NotOneOf = 20,
+}
+
 export enum ReportFilterStringCondition {
     Contains = 10,
     StartsWith = 20,
     EndsWith = 30,
+    EqualTo = 40,
     IsEmpty = 100,
     IsNotEmpty = 200,
 }
@@ -51,6 +63,7 @@ export enum ReportFieldType {
     Date = 50,
     Reference = 1000,
     ReferenceList = 1010,
+    Expression = 1020,
 }
 
 export enum IsCTUTeamContributionEnum {

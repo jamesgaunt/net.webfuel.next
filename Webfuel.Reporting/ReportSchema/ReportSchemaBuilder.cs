@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic.FileIO;
+﻿using DocumentFormat.OpenXml.InkML;
+using Microsoft.VisualBasic.FileIO;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -6,12 +7,20 @@ namespace Webfuel.Reporting
 {
     public class ReportSchemaBuilder<TContext> where TContext : class
     {
+        public ReportSchemaBuilder(ReportSchema schema, ReportMapping<TContext> mapping)
+        {
+            Schema = schema;
+            Mapping = mapping;
+        }
+
         public ReportSchemaBuilder(Guid reportProviderId)
         {
             Schema = new ReportSchema { ReportProviderId = reportProviderId };
         }
 
         public ReportSchema Schema { get; }
+
+        public ReportMapping<TContext>? Mapping { get; set; }
 
         public void AddField(ReportField field)
         {
@@ -29,6 +38,7 @@ namespace Webfuel.Reporting
                 Id = id,
                 Name = name ?? GetExprName(expr),
                 Accessor = o => expr.Compile()((TContext)o),
+                Mapping = Mapping,
                 FieldType = fieldType ?? GetExprFieldType(expr),
             });
         }
@@ -44,6 +54,7 @@ namespace Webfuel.Reporting
                 Id = id,
                 Name = name ?? GetExprName(expr),
                 Accessor = async o => await expr.Compile()((TContext)o),
+                Mapping = Mapping,
                 FieldType = fieldType ?? GetExprFieldType(expr),
             });
         }
@@ -107,6 +118,26 @@ namespace Webfuel.Reporting
                 Expression = expression,
                 FieldType = ReportFieldType.Expression,
             });
+        }
+
+        public ReportSchemaBuilder<TEntity> Map<TEntity>(Expression<Func<TContext, Guid?>> expr) where TEntity : class
+        {
+            var mapping = new ReportMapping<TEntity>
+            {
+                Accessor = o => expr.Compile()((TContext)o),
+                Mapping = Mapping
+            };
+            return new ReportSchemaBuilder<TEntity>(Schema, mapping);
+        }
+
+        public ReportSchemaBuilder<TEntity> Map<TEntity>(Expression<Func<TContext, Guid>> expr) where TEntity : class
+        {
+            var mapping = new ReportMapping<TEntity>
+            {
+                Accessor = o => expr.Compile()((TContext)o),
+                Mapping = Mapping
+            };
+            return new ReportSchemaBuilder<TEntity>(Schema, mapping);
         }
 
         // Helpers

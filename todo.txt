@@ -2,6 +2,8 @@ TODO:
 
 > Work out the "value pipeline" for the reporting engine  (Evaluate > [Dereference] > [Transform])
 
+> [SORT OUT REFERENCE/REFERENCELIST/MAPPING AND THE REST SHOULD FALL INTO PLACE]
+
 > [Non-selectable fields - control mappings?]
 
 > Reference - static data vs complex type (e.g. Project)
@@ -9,8 +11,6 @@ TODO:
 > Prototype Complex Filter : Reference => Guid / Guids
 
 > Prototype Complex Filter : Mapping => On support provided filter by Project.Created date range (report reference includes entity as property)
-
-> [SORT OUT REFERENCES/MAPPING AND THE REST SHOULD FALL INTO PLACE]
 
 > ReportFilterEditor (used on both)
 
