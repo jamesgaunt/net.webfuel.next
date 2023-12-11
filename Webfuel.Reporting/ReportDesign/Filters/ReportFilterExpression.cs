@@ -21,7 +21,7 @@ namespace Webfuel.Reporting
             base.ValidateFilter(schema);
         }
 
-        public override Task<bool> Apply(object context, StandardReportBuilder builder)
+        public override Task<bool> Apply(object context, ReportBuilder builder)
         {
             throw new NotImplementedException();
         }

@@ -12,7 +12,7 @@ namespace Webfuel.Reporting
         [JsonIgnore]
         public required Type ReferenceProviderType { get; init; }
 
-        public override async Task<object?> Evaluate(object context, ReportBuilder builder)
+        public override async Task<object?> Evaluate(object context, ReportBuilderBase builder)
         {
             var ids = Accessor(context);
             if (ids == null)

@@ -36,7 +36,7 @@ namespace Webfuel.Reporting
             base.ValidateFilter(schema);
         }
 
-        public override async Task<bool> Apply(object context, StandardReportBuilder builder)
+        public override async Task<bool> Apply(object context, ReportBuilder builder)
         {
             var field = builder.Schema.Fields.FirstOrDefault(f => f.Id == FieldId);
             if (field == null)

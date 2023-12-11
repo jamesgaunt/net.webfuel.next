@@ -10,7 +10,7 @@ namespace Webfuel.Reporting
 {
     internal interface IReportTaskService
     {
-        ReportTask RegisterTask(ReportBuilder builder);
+        ReportTask RegisterTask(ReportBuilderBase builder);
 
         ReportTask? RetrieveTask(Guid taskId);
 
@@ -27,7 +27,7 @@ namespace Webfuel.Reporting
             this._identityAccessor = identityAccessor;
         }
 
-        public ReportTask RegisterTask(ReportBuilder builder)
+        public ReportTask RegisterTask(ReportBuilderBase builder)
         {
             CleanupTasks();
 

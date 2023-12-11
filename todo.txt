@@ -1,5 +1,11 @@
 TODO:
 
+1. Get basic filtering working
+2. Replace ReportReference with DataSource
+3. Get references working
+4. Get reference lists working
+
+
 > Work out the "value pipeline" for the reporting engine  (Evaluate > [Dereference] > [Transform])
 
 > [SORT OUT REFERENCE/REFERENCELIST/MAPPING AND THE REST SHOULD FALL INTO PLACE]

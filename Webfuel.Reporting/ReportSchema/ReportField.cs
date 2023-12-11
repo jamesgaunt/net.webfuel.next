@@ -19,6 +19,6 @@ namespace Webfuel.Reporting
 
         public required ReportFieldType FieldType { get; init; }
 
-        public abstract Task<object?> Evaluate(object context, ReportBuilder builder);
+        public abstract Task<object?> Evaluate(object context, ReportBuilderBase builder);
     }
 }

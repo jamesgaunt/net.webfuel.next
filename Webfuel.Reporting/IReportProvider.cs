@@ -12,7 +12,7 @@ namespace Webfuel.Reporting
 
         ReportSchema Schema { get; }
 
-        ReportBuilder GetReportBuilder(ReportRequest request);
+        ReportBuilderBase GetReportBuilder(ReportRequest request);
 
         Task<IEnumerable<object>> QueryItems(int skip, int take);
 

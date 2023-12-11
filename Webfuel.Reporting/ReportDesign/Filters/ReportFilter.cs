@@ -21,7 +21,7 @@ namespace Webfuel.Reporting
         {
         }
 
-        public abstract Task<bool> Apply(object context, StandardReportBuilder builder);
+        public abstract Task<bool> Apply(object context, ReportBuilder builder);
 
         public virtual void Update(ReportFilter filter, ReportSchema schema)
         {

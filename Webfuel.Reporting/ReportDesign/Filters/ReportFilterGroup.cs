@@ -51,7 +51,7 @@ namespace Webfuel.Reporting
             };
         }
 
-        public override async Task<bool> Apply(object context, StandardReportBuilder builder)
+        public override async Task<bool> Apply(object context, ReportBuilder builder)
         {
             foreach(var filter in Filters)
             {

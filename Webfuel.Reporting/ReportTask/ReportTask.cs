@@ -9,7 +9,7 @@ namespace Webfuel.Reporting
     internal class ReportTask
     {
         public required Guid TaskId { get; init; }
-        public required ReportBuilder Builder { get; init; }
+        public required ReportBuilderBase Builder { get; init; }
 
 
         internal Guid? IdentityId { get; set; }

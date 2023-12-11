@@ -25,7 +25,7 @@ namespace Webfuel.Domain
                 ReportName = report.Name,
                 ReportProviderId = report.ReportProviderId,
                 Design = report.Design,
-                Arguments = request.Arguments ?? new Dictionary<string, object?>()
+                Arguments = request.Arguments ?? new List<ReportFilter>()
             });
         }
     }

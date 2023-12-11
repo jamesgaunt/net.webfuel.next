@@ -18,7 +18,7 @@ namespace Webfuel.Reporting
         [JsonIgnore]
         public ScribbleExpression<TContext> ScribbleScript { get; }
 
-        public override Task<object?> Evaluate(object context, ReportBuilder builder)
+        public override Task<object?> Evaluate(object context, ReportBuilderBase builder)
         {
             return ScribbleScript.EvaluateAsync((TContext)context);
         }
