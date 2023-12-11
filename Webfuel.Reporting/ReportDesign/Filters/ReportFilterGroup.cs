@@ -3,6 +3,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -69,8 +70,6 @@ namespace Webfuel.Reporting
             writer.WriteEndArray();
         }
 
-        // Validation
-
         public override void ValidateFilter(ReportSchema schema)
         {
             if (!Enum.IsDefined(Condition))
@@ -92,6 +91,15 @@ namespace Webfuel.Reporting
                 ReportFilterGroupCondition.None => "None",
                 _ => "All",
             };
+        }
+
+        public override void Apply(ReportFilter filter, ReportSchema schema)
+        {
+            if (filter is not ReportFilterGroup typed)
+                throw new Exception($"Cannot apply filter of type {filter.FilterType} to filter of type {FilterType}");
+
+            Condition = typed.Condition;
+            base.Apply(filter, schema);
         }
     }
 }

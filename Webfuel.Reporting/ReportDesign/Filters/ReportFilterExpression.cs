@@ -34,12 +34,19 @@ namespace Webfuel.Reporting
             writer.WriteString("expression", Expression);
         }
 
-        // Validation
-
         public override void ValidateFilter(ReportSchema schema)
         {
             DefaultName = "Custom Expression";
             base.ValidateFilter(schema);
+        }
+
+        public override void Apply(ReportFilter filter, ReportSchema schema)
+        {
+            if (filter is not ReportFilterExpression typed)
+                throw new Exception($"Cannot apply filter of type {filter.FilterType} to filter of type {FilterType}");
+
+            Expression = typed.Expression;
+            base.Apply(filter, schema);
         }
     }
 }

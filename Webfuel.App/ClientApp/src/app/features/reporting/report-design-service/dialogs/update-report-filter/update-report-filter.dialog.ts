@@ -7,6 +7,7 @@ import { FormService } from 'core/form.service';
 import { DialogBase, DialogComponentBase } from 'shared/common/dialog-base';
 import _ from 'shared/common/underscore';
 import { ReportDesignApi } from '../../../../../api/report-design.api';
+import { ReportFilterType } from '../../../../../api/api.enums';
 
 export interface UpdateReportFilterDialogData {
   schema: ReportSchema;
@@ -36,22 +37,29 @@ export class UpdateReportFilterDialogComponent extends DialogComponentBase<Repor
     this.form.patchValue({
       reportProviderId: this.data.schema.reportProviderId,
       design: this.data.design,
+      filter: this.data.filter
     });
     this.form.patchValue(this.data.filter);
+    this.form.controls.name.valueChanges.subscribe((s) => this.form.value.filter!.name = s);
+    this.form.controls.description.valueChanges.subscribe((s) => this.form.value.filter!.description = s);
   }
+
+  ReportFilterType = ReportFilterType;
 
   form = new FormGroup({
     reportProviderId: new FormControl('', { validators: [Validators.required], nonNullable: true }),
     design: new FormControl<ReportDesign>(null!, { validators: [Validators.required], nonNullable: true }),
-    id: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+    filter: new FormControl<ReportFilter>(null!, { validators: [Validators.required], nonNullable: true }),
+
     name: new FormControl<string>('', { nonNullable: true }),
+    description: new FormControl<string>('', { nonNullable: true }),
   });
 
   save() {
     if (this.formService.hasErrors(this.form))
       return;
 
-    //this.reportDesignApi.updateReportFilter(this.form.getRawValue()).subscribe((design) => this._closeDialog(design));
+    this.reportDesignApi.updateReportFilter(this.form.getRawValue()).subscribe((design) => this._closeDialog(design));
   }
 
   cancel() {

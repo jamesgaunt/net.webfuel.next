@@ -31,6 +31,18 @@ namespace Webfuel.Reporting
                         FieldId = request.FieldId,
                     }),
 
+                ReportFieldType.Boolean =>
+                    request.Design.InsertFilter(new ReportFilterBoolean
+                    {
+                        FieldId = request.FieldId,
+                    }),
+
+                ReportFieldType.Reference =>
+                    request.Design.InsertFilter(new ReportFilterReference
+                    {
+                        FieldId = request.FieldId,
+                    }),
+
                 _ => throw new NotImplementedException()
             };
 

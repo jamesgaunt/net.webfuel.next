@@ -1,0 +1,12 @@
+<div class="grid" [formGroup]="form">
+  <div class="field">
+    <label class="label">Condition</label>
+    <select class="select" formControlName="condition">
+      <option [ngValue]="ReportFilterGroupCondition.All">all of these conditions are true</option>
+      <option [ngValue]="ReportFilterGroupCondition.Any">any of these conditions are true</option>
+      <option [ngValue]="ReportFilterGroupCondition.None">none of these conditions are true</option>
+    </select>
+  </div>
+</div>
+
+

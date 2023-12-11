@@ -43,11 +43,18 @@ namespace Webfuel.Reporting
                 writer.WriteBoolean("value", Value.Value);
         }
 
-        // Validation
-
         public override void ValidateFilter(ReportSchema schema)
         {
             base.ValidateFilter(schema);
+        }
+
+        public override void Apply(ReportFilter filter, ReportSchema schema)
+        {
+            if(filter is not ReportFilterBoolean typed)
+                throw new Exception($"Cannot apply filter of type {filter.FilterType} to filter of type {FilterType}");
+
+            Value = typed.Value;
+            base.Apply(filter, schema);
         }
     }
 }

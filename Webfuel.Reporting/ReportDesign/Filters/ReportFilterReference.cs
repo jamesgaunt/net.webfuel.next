@@ -58,14 +58,22 @@ namespace Webfuel.Reporting
             JsonSerializer.Serialize(writer, Value, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
 
-        // Validation
-
         public override void ValidateFilter(ReportSchema schema)
         {
             if (!Enum.IsDefined(Condition))
                 Condition = ReportFilterReferenceCondition.OneOf;
 
             base.ValidateFilter(schema);
+        }
+
+        public override void Apply(ReportFilter filter, ReportSchema schema)
+        {
+            if (filter is not ReportFilterReference typed)
+                throw new Exception($"Cannot apply filter of type {filter.FilterType} to filter of type {FilterType}");
+
+            Value = typed.Value;
+            Condition = typed.Condition;
+            base.Apply(filter, schema);
         }
     }
 }

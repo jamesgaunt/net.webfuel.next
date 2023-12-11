@@ -17,7 +17,7 @@ namespace Webfuel.App
             app.MapPost("api/report-design/delete-column", DeleteReportColumn);
 
             app.MapPost("api/report-design/insert-filter", InsertReportFilter);
-            //app.MapPost("api/report-design/update-filter", UpdateReportFilter);
+            app.MapPost("api/report-design/update-filter", UpdateReportFilter);
             app.MapPost("api/report-design/delete-filter", DeleteReportFilter);
 
             // Helpers
@@ -50,11 +50,15 @@ namespace Webfuel.App
             return mediator.Send(command);
         }
 
-        public static Task<ReportDesign> DeleteReportFilter([FromBody] DeleteReportFilter command, IMediator mediator)
+        public static Task<ReportDesign> UpdateReportFilter([FromBody] UpdateReportFilter command, IMediator mediator)
         {
             return mediator.Send(command);
         }
 
+        public static Task<ReportDesign> DeleteReportFilter([FromBody] DeleteReportFilter command, IMediator mediator)
+        {
+            return mediator.Send(command);
+        }
 
         // Helpers
 

@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { InsertReportColumn, ReportDesign, UpdateReportColumn, DeleteReportColumn, InsertReportFilter, DeleteReportFilter, ReportSchema, GetReportReference, ReportReference, QueryReportReference, QueryResult, ValidateDesign } from './api.types';
+import { InsertReportColumn, ReportDesign, UpdateReportColumn, DeleteReportColumn, InsertReportFilter, UpdateReportFilter, DeleteReportFilter, ReportSchema, GetReportReference, ReportReference, QueryReportReference, QueryResult, ValidateDesign } from './api.types';
 
 @Injectable()
 export class ReportDesignApi {
@@ -23,6 +23,10 @@ export class ReportDesignApi {
     
     public insertReportFilter (body: InsertReportFilter, options?: ApiOptions): Observable<ReportDesign> {
         return this.apiService.request<InsertReportFilter, ReportDesign>("POST", "api/report-design/insert-filter", body, options);
+    }
+    
+    public updateReportFilter (body: UpdateReportFilter, options?: ApiOptions): Observable<ReportDesign> {
+        return this.apiService.request<UpdateReportFilter, ReportDesign>("POST", "api/report-design/update-filter", body, options);
     }
     
     public deleteReportFilter (body: DeleteReportFilter, options?: ApiOptions): Observable<ReportDesign> {

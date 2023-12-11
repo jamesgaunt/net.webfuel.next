@@ -1,0 +1,12 @@
+<div class="grid" [formGroup]="form">
+  <div class="field">
+    <label class="label">Value</label>
+    <select class="select" formControlName="value">
+      <option [ngValue]="null">NULL</option>
+      <option [ngValue]="true">true</option>
+      <option [ngValue]="false">false</option>
+    </select>
+  </div>
+</div>
+
+

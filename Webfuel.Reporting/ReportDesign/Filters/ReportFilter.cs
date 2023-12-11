@@ -57,6 +57,12 @@ namespace Webfuel.Reporting
         public virtual void ValidateFilter(ReportSchema schema)
         {
         }
+
+        public virtual void Apply(ReportFilter filter, ReportSchema schema)
+        {
+            Name = filter.Name;
+            Description = filter.Description;
+        }
     }
 
     public class ReportFilterConverter : JsonConverter<ReportFilter>

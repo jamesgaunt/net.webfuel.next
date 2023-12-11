@@ -105,6 +105,7 @@ export interface ReportColumn {
     title: string;
     width: number | null | null;
     format: string;
+    expression: string | null;
 }
 
 export interface ReportFilter {
@@ -191,7 +192,7 @@ export interface ReportDesign {
     filters: Array<ReportFilter>;
 }
 
-export interface ReportExpressionField extends ReportField {
+export interface ReportMethodField extends ReportField {
     id: string;
     name: string;
     fieldType: ReportFieldType;
@@ -201,12 +202,6 @@ export interface IReportMapping {
 }
 
 export interface ReportField {
-    id: string;
-    name: string;
-    fieldType: ReportFieldType;
-}
-
-export interface ReportMethodField extends ReportField {
     id: string;
     name: string;
     fieldType: ReportFieldType;
@@ -228,6 +223,15 @@ export interface ReportReferenceListField extends ReportField {
     id: string;
     name: string;
     fieldType: ReportFieldType;
+}
+
+export interface ReportScribbleField<TContext> extends ReportField {
+    id: string;
+    name: string;
+    fieldType: ReportFieldType;
+}
+
+export interface ScribbleExpression<T> {
 }
 
 export interface DashboardModel {
@@ -915,6 +919,12 @@ export interface InsertReportFilter {
     reportProviderId: string;
     design: ReportDesign;
     fieldId: string;
+}
+
+export interface UpdateReportFilter {
+    reportProviderId: string;
+    design: ReportDesign;
+    filter: ReportFilter;
 }
 
 export interface DeleteReportFilter {

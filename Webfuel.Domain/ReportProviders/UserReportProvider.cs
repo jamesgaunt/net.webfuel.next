@@ -80,8 +80,6 @@ namespace Webfuel.Domain
 
                     bldr.Map<UserGroup>(p => p.UserGroupId)
                         .Add(Guid.Parse("7e6f3ce5-2a0b-4b9c-a364-4b3c4a8f4c3c"), p => p.Name);
-                            
-                            
 
                     _schema = bldr.Schema;
                 }

@@ -60,14 +60,21 @@ namespace Webfuel.Reporting
                 writer.WriteNumber("value", Value.Value);
         }
 
-        // Validation
-
         public override void ValidateFilter(ReportSchema schema)
         {
             if (!Enum.IsDefined(Condition))
                 Condition = ReportFilterNumberCondition.EqualTo;
 
             base.ValidateFilter(schema);
+        }
+        public override void Apply(ReportFilter filter, ReportSchema schema)
+        {
+            if (filter is not ReportFilterNumber typed)
+                throw new Exception($"Cannot apply filter of type {filter.FilterType} to filter of type {FilterType}");
+
+            Value = typed.Value;
+            Condition = typed.Condition;
+            base.Apply(filter, schema);
         }
     }
 }

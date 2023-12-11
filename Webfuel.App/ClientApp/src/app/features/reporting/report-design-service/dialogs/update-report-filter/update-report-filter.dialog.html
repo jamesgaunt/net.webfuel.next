@@ -8,6 +8,18 @@
         <label class="label">Name</label>
         <input class="input" type="text" [placeholder]="data.filter.defaultName" formControlName="name" />
       </div>
+      <div class="field">
+        <label class="label">Description</label>
+        <textarea class="textarea" placeholder="optional" formControlName="description"></textarea>
+      </div>
+      <div [ngSwitch]="data.filter.filterType">
+        <report-filter-group *ngSwitchCase="ReportFilterType.Group" formControlName="filter"></report-filter-group>
+        <report-filter-number *ngSwitchCase="ReportFilterType.Number" formControlName="filter"></report-filter-number>
+        <report-filter-string *ngSwitchCase="ReportFilterType.String" formControlName="filter"></report-filter-string>
+        <report-filter-boolean *ngSwitchCase="ReportFilterType.Boolean" formControlName="filter"></report-filter-boolean>
+        <report-filter-reference *ngSwitchCase="ReportFilterType.Reference" formControlName="filter"></report-filter-reference>
+        <report-filter-expression *ngSwitchCase="ReportFilterType.Expression" formControlName="filter"></report-filter-expression>
+      </div>
     </div>
   </div>
   <div class="dialog-buttons">
