@@ -28,6 +28,53 @@ namespace Webfuel.Reporting
         public ReportFilterStringCondition Condition { get; set; } = ReportFilterStringCondition.Contains;
 
         public string Value { get; set; } = String.Empty;
+                
+        public override void ValidateFilter(ReportSchema schema)
+        {
+            if (!Enum.IsDefined(Condition))
+                Condition = ReportFilterStringCondition.Contains;
+
+            base.ValidateFilter(schema);
+        }
+
+        public override async Task<bool> Apply(object context, StandardReportBuilder builder)
+        {
+            var field = builder.Schema.Fields.FirstOrDefault(f => f.Id == FieldId);
+            if (field == null)
+                return false;
+
+            var value = await field.Evaluate(context, builder);
+
+            var typed = value?.ToString() ?? String.Empty;
+
+            switch (Condition)
+            {               
+                case ReportFilterStringCondition.Contains:
+                    return typed.Contains(Value);
+                case ReportFilterStringCondition.StartsWith:
+                    return typed.StartsWith(Value);
+                case ReportFilterStringCondition.EndsWith:
+                    return typed.EndsWith(Value);
+                case ReportFilterStringCondition.EqualTo:
+                    return typed == Value;
+                case ReportFilterStringCondition.IsEmpty:
+                    return typed == String.Empty;
+                case ReportFilterStringCondition.IsNotEmpty:
+                    return typed != String.Empty;
+            }
+
+            throw new InvalidOperationException($"Unknown condition {Condition}");
+        }
+
+        public override void Update(ReportFilter filter, ReportSchema schema)
+        {
+            if (filter is not ReportFilterString typed)
+                throw new Exception($"Cannot apply filter of type {filter.FilterType} to filter of type {FilterType}");
+
+            Value = typed.Value;
+            Condition = typed.Condition;
+            base.Update(filter, schema);
+        }
 
         // Serialization
 
@@ -53,23 +100,6 @@ namespace Webfuel.Reporting
             base.WriteProperties(writer);
             writer.WriteNumber("condition", (int)Condition);
             writer.WriteString("value", Value);
-        }
-
-        public override void ValidateFilter(ReportSchema schema)
-        {
-            if (!Enum.IsDefined(Condition))
-                Condition = ReportFilterStringCondition.Contains;
-
-            base.ValidateFilter(schema);
-        }
-        public override void Apply(ReportFilter filter, ReportSchema schema)
-        {
-            if (filter is not ReportFilterString typed)
-                throw new Exception($"Cannot apply filter of type {filter.FilterType} to filter of type {FilterType}");
-
-            Value = typed.Value;
-            Condition = typed.Condition;
-            base.Apply(filter, schema);
         }
     }
 }

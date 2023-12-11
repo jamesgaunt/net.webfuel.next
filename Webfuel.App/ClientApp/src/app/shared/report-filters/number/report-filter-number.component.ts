@@ -52,7 +52,7 @@ export class ReportFilterNumberComponent implements ControlValueAccessor, OnInit
 
   form = new FormGroup({
     condition: new FormControl<ReportFilterNumberCondition>(ReportFilterNumberCondition.EqualTo),
-    value: new FormControl<number | null>(null)
+    value: new FormControl<number>(0, { validators: [Validators.required], nonNullable: true })
   });
 
   // Inputs

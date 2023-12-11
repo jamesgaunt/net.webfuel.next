@@ -48,7 +48,7 @@ export class ReportFilterBooleanComponent implements ControlValueAccessor, OnIni
   filter!: ReportFilterBoolean;
 
   form = new FormGroup({
-    value: new FormControl<boolean | null>(null)
+    value: new FormControl<boolean>(true, { nonNullable: true })
   });
 
   // Inputs

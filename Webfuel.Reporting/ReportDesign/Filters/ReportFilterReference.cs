@@ -25,6 +25,29 @@ namespace Webfuel.Reporting
 
         public List<Guid> Value { get; set; } = new List<Guid>();
 
+        public override void ValidateFilter(ReportSchema schema)
+        {
+            if (!Enum.IsDefined(Condition))
+                Condition = ReportFilterReferenceCondition.OneOf;
+
+            base.ValidateFilter(schema);
+        }
+
+        public override Task<bool> Apply(object context, StandardReportBuilder builder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Update(ReportFilter filter, ReportSchema schema)
+        {
+            if (filter is not ReportFilterReference typed)
+                throw new Exception($"Cannot apply filter of type {filter.FilterType} to filter of type {FilterType}");
+
+            Value = typed.Value;
+            Condition = typed.Condition;
+            base.Update(filter, schema);
+        }
+
         // Serialization
 
         public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
@@ -45,10 +68,9 @@ namespace Webfuel.Reporting
                 return true;
             }
 
-
             return base.ReadProperty(propertyName, ref reader);
         }
-        
+
         public override void WriteProperties(Utf8JsonWriter writer)
         {
             base.WriteProperties(writer);
@@ -56,24 +78,6 @@ namespace Webfuel.Reporting
 
             writer.WritePropertyName("value");
             JsonSerializer.Serialize(writer, Value, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-        }
-
-        public override void ValidateFilter(ReportSchema schema)
-        {
-            if (!Enum.IsDefined(Condition))
-                Condition = ReportFilterReferenceCondition.OneOf;
-
-            base.ValidateFilter(schema);
-        }
-
-        public override void Apply(ReportFilter filter, ReportSchema schema)
-        {
-            if (filter is not ReportFilterReference typed)
-                throw new Exception($"Cannot apply filter of type {filter.FilterType} to filter of type {FilterType}");
-
-            Value = typed.Value;
-            Condition = typed.Condition;
-            base.Apply(filter, schema);
         }
     }
 }

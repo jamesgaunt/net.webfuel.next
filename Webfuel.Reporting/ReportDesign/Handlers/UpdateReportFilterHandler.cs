@@ -17,7 +17,7 @@ namespace Webfuel.Reporting
         {
             var schema = _reportDesignService.GetReportSchema(request.ReportProviderId);
             var filter = request.Design.GetFilter(request.Filter.Id);
-            filter.Apply(request.Filter, schema);
+            filter.Update(request.Filter, schema);
             request.Design.ValidateDesign(schema);
             return Task.FromResult(request.Design);
         }

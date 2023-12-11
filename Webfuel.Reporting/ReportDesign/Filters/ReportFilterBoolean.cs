@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
+﻿using DocumentFormat.OpenXml.Presentation;
+using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,35 @@ namespace Webfuel.Reporting
     {
         public override ReportFilterType FilterType => ReportFilterType.Boolean;
 
-        public bool? Value { get; set; }
+        public bool Value { get; set; } = true;
+
+        public override void ValidateFilter(ReportSchema schema)
+        {
+            base.ValidateFilter(schema);
+        }
+
+        public override async Task<bool> Apply(object context, StandardReportBuilder builder)
+        {
+            var field = builder.Schema.Fields.FirstOrDefault(f => f.Id == FieldId);
+            if (field == null)
+                return false;
+
+            var value = await field.Evaluate(context, builder);
+
+            if (value is not bool typed)
+                return false;
+
+            return Value == typed;
+        }
+
+        public override void Update(ReportFilter filter, ReportSchema schema)
+        {
+            if (filter is not ReportFilterBoolean typed)
+                throw new Exception($"Cannot apply filter of type {filter.FilterType} to filter of type {FilterType}");
+
+            Value = typed.Value;
+            base.Update(filter, schema);
+        }
 
         // Serialization
 
@@ -24,37 +53,18 @@ namespace Webfuel.Reporting
             {
                 if (reader.TokenType == JsonTokenType.True)
                     Value = true;
-                else if (reader.TokenType == JsonTokenType.False)
+                else
                     Value = false;
                 return true;
             }
 
-
             return base.ReadProperty(propertyName, ref reader);
         }
-        
+
         public override void WriteProperties(Utf8JsonWriter writer)
         {
             base.WriteProperties(writer);
-
-            if(Value == null)
-                writer.WriteNull("value");
-            else
-                writer.WriteBoolean("value", Value.Value);
-        }
-
-        public override void ValidateFilter(ReportSchema schema)
-        {
-            base.ValidateFilter(schema);
-        }
-
-        public override void Apply(ReportFilter filter, ReportSchema schema)
-        {
-            if(filter is not ReportFilterBoolean typed)
-                throw new Exception($"Cannot apply filter of type {filter.FilterType} to filter of type {FilterType}");
-
-            Value = typed.Value;
-            base.Apply(filter, schema);
+            writer.WriteBoolean("value", Value);
         }
     }
 }

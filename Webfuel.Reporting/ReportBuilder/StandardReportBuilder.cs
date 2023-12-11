@@ -21,7 +21,7 @@ namespace Webfuel.Reporting
         const long MICROSECONDS_PER_LOAD = 1000 * 25;
 
         const long MICROSECONDS_PER_STEP = 1000 * 100;
-        
+
         protected int ItemsPerLoad { get; set; } = 10; // Initial value, will auto-tune
 
         public StandardReportBuilder(ReportRequest request)
@@ -35,6 +35,19 @@ namespace Webfuel.Reporting
         public ExcelWorkbook? Workbook { get; set; }
         public ReportResult? Result { get; set; }
 
+        public ReportSchema Schema
+        {
+            get
+            {
+                if(_schema == null) { 
+                    _schema = ServiceProvider.GetRequiredService<IReportDesignService>()
+                        .GetReportSchema(Request.ReportProviderId);
+                }
+                return _schema;
+            }
+        }
+        ReportSchema? _schema = null;
+
         public async Task<IEnumerable<object>> QueryItems(int skip, int take)
         {
             return await ServiceProvider.GetRequiredService<IReportDesignService>().QueryItems(Request.ReportProviderId, StageCount, ItemsPerLoad);
@@ -42,7 +55,7 @@ namespace Webfuel.Reporting
 
         public async Task<int> GetTotalCount()
         {
-            return await ServiceProvider.GetRequiredService<IReportDesignService>().GetTotalCount(Request.ReportProviderId); 
+            return await ServiceProvider.GetRequiredService<IReportDesignService>().GetTotalCount(Request.ReportProviderId);
         }
 
         public override async Task GenerateReport()
@@ -180,14 +193,20 @@ namespace Webfuel.Reporting
             }
         }
 
-        public virtual Task<Boolean> FilterItem(object item)
+        public virtual async Task<bool> FilterItem(object item)
         {
-            return Task.FromResult(true);
+            foreach (var filter in Request.Design.Filters)
+            {
+                var result = await filter.Apply(item, this);
+                if (result == false)
+                    return false;
+            }
+            return true;
         }
 
         public virtual async Task ProcessItem(object item)
         {
-            if(!await FilterItem(item))
+            if (!await FilterItem(item))
                 return;
 
             var row = Data.AddRow();

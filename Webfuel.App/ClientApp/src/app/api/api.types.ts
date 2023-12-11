@@ -118,7 +118,7 @@ export interface ReportFilter {
 
 export interface ReportFilterBoolean extends ReportFilterField {
     filterType: ReportFilterType;
-    value: boolean | null | null;
+    value: boolean;
     fieldId: string;
     id: string;
     name: string;
@@ -157,7 +157,7 @@ export interface ReportFilterGroup extends ReportFilter {
 export interface ReportFilterNumber extends ReportFilterField {
     filterType: ReportFilterType;
     condition: ReportFilterNumberCondition;
-    value: number | null | null;
+    value: number;
     fieldId: string;
     id: string;
     name: string;

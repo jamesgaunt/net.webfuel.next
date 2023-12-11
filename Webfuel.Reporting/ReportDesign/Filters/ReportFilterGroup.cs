@@ -28,6 +28,57 @@ namespace Webfuel.Reporting
 
         public List<ReportFilter> Filters { get; set; } = new List<ReportFilter>();
 
+        public override void ValidateFilter(ReportSchema schema)
+        {
+            if (!Enum.IsDefined(Condition))
+                Condition = ReportFilterGroupCondition.All;
+
+            foreach (var filter in Filters)
+                filter.ValidateFilter(schema);
+
+            DefaultName = $"{GetConditionDescription()} of these conditions are true:";
+            base.ValidateFilter(schema);
+        }
+
+        string GetConditionDescription()
+        {
+            return Condition switch
+            {
+                ReportFilterGroupCondition.All => "All",
+                ReportFilterGroupCondition.Any => "Any",
+                ReportFilterGroupCondition.None => "None",
+                _ => "All",
+            };
+        }
+
+        public override async Task<bool> Apply(object context, StandardReportBuilder builder)
+        {
+            foreach(var filter in Filters)
+            {
+                var result = await filter.Apply(context, builder);
+
+                if(result == true && Condition == ReportFilterGroupCondition.Any)
+                    return true;
+
+                if(result == true && Condition == ReportFilterGroupCondition.None)
+                    return false;
+
+                if (result == false && Condition == ReportFilterGroupCondition.All)
+                    return false;
+            }
+
+            return true;
+        }
+
+        public override void Update(ReportFilter filter, ReportSchema schema)
+        {
+            if (filter is not ReportFilterGroup typed)
+                throw new Exception($"Cannot apply filter of type {filter.FilterType} to filter of type {FilterType}");
+
+            Condition = typed.Condition;
+            base.Update(filter, schema);
+        }
+
         // Serialization
 
         public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
@@ -68,38 +119,6 @@ namespace Webfuel.Reporting
                 }
             }
             writer.WriteEndArray();
-        }
-
-        public override void ValidateFilter(ReportSchema schema)
-        {
-            if (!Enum.IsDefined(Condition))
-                Condition = ReportFilterGroupCondition.All;
-
-            foreach (var filter in Filters)
-                filter.ValidateFilter(schema);
-
-            DefaultName = $"{GetConditionDescription()} of these conditions are true:";
-            base.ValidateFilter(schema);
-        }
-
-        string GetConditionDescription()
-        {
-            return Condition switch
-            {
-                ReportFilterGroupCondition.All => "All",
-                ReportFilterGroupCondition.Any => "Any",
-                ReportFilterGroupCondition.None => "None",
-                _ => "All",
-            };
-        }
-
-        public override void Apply(ReportFilter filter, ReportSchema schema)
-        {
-            if (filter is not ReportFilterGroup typed)
-                throw new Exception($"Cannot apply filter of type {filter.FilterType} to filter of type {FilterType}");
-
-            Condition = typed.Condition;
-            base.Apply(filter, schema);
         }
     }
 }

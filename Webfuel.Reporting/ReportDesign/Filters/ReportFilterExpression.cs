@@ -15,6 +15,26 @@ namespace Webfuel.Reporting
 
         public string Expression { get; set; } = String.Empty;
 
+        public override void ValidateFilter(ReportSchema schema)
+        {
+            DefaultName = "Custom Expression";
+            base.ValidateFilter(schema);
+        }
+
+        public override Task<bool> Apply(object context, StandardReportBuilder builder)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Update(ReportFilter filter, ReportSchema schema)
+        {
+            if (filter is not ReportFilterExpression typed)
+                throw new Exception($"Cannot apply filter of type {filter.FilterType} to filter of type {FilterType}");
+
+            Expression = typed.Expression;
+            base.Update(filter, schema);
+        }
+
         // Serialization
 
         public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
@@ -32,21 +52,6 @@ namespace Webfuel.Reporting
         {
             base.WriteProperties(writer);
             writer.WriteString("expression", Expression);
-        }
-
-        public override void ValidateFilter(ReportSchema schema)
-        {
-            DefaultName = "Custom Expression";
-            base.ValidateFilter(schema);
-        }
-
-        public override void Apply(ReportFilter filter, ReportSchema schema)
-        {
-            if (filter is not ReportFilterExpression typed)
-                throw new Exception($"Cannot apply filter of type {filter.FilterType} to filter of type {FilterType}");
-
-            Expression = typed.Expression;
-            base.Apply(filter, schema);
         }
     }
 }

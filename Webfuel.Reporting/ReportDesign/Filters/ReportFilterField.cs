@@ -18,25 +18,6 @@ namespace Webfuel.Reporting
 
         public Guid FieldId { get; set; }
 
-        // Serialization
-
-        public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
-        {
-            if (String.Compare(nameof(FieldId), propertyName, true) == 0)
-            {
-                FieldId = reader.GetGuid();
-                return true;
-            }
-
-            return base.ReadProperty(propertyName, ref reader);
-        }
-        
-        public override void WriteProperties(Utf8JsonWriter writer)
-        {
-            base.WriteProperties(writer);
-            writer.WriteString("fieldId", FieldId);
-        }
-
         public override void ValidateFilter(ReportSchema schema)
         {
             DefaultName = GetFieldName(schema);
@@ -49,6 +30,25 @@ namespace Webfuel.Reporting
             if (field == null)
                 return "Unknown field";
             return field.Name;
+        }
+
+        // Serialization
+
+        public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
+        {
+            if (String.Compare(nameof(FieldId), propertyName, true) == 0)
+            {
+                FieldId = reader.GetGuid();
+                return true;
+            }
+
+            return base.ReadProperty(propertyName, ref reader);
+        }
+
+        public override void WriteProperties(Utf8JsonWriter writer)
+        {
+            base.WriteProperties(writer);
+            writer.WriteString("fieldId", FieldId);
         }
     }
 }

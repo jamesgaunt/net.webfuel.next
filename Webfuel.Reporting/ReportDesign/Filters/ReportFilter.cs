@@ -16,6 +16,20 @@ namespace Webfuel.Reporting
         public string DefaultName { get; set; } = String.Empty;
 
         public string Description { get; set; } = String.Empty;
+        
+        public virtual void ValidateFilter(ReportSchema schema)
+        {
+        }
+
+        public abstract Task<bool> Apply(object context, StandardReportBuilder builder);
+
+        public virtual void Update(ReportFilter filter, ReportSchema schema)
+        {
+            Name = filter.Name;
+            Description = filter.Description;
+        }
+
+        // Serialization
 
         public virtual bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
         {
@@ -52,16 +66,6 @@ namespace Webfuel.Reporting
             writer.WriteString("name", Name);
             writer.WriteString("defaultName", DefaultName);
             writer.WriteString("description", Description);
-        }
-
-        public virtual void ValidateFilter(ReportSchema schema)
-        {
-        }
-
-        public virtual void Apply(ReportFilter filter, ReportSchema schema)
-        {
-            Name = filter.Name;
-            Description = filter.Description;
         }
     }
 
