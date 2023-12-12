@@ -15,13 +15,18 @@ namespace Webfuel.Reporting
 
         public string DefaultName { get; set; } = String.Empty;
 
+        public string Title { get; set; } = String.Empty;
+
         public string Description { get; set; } = String.Empty;
         
         public virtual void ValidateFilter(ReportSchema schema)
         {
+            Title = GetTitle(schema);
         }
 
         public abstract Task<bool> Apply(object context, ReportBuilder builder);
+
+        public abstract string GetTitle(ReportSchema schema);
 
         public virtual void Update(ReportFilter filter, ReportSchema schema)
         {
@@ -36,25 +41,31 @@ namespace Webfuel.Reporting
             if (String.Compare(nameof(Id), propertyName, true) == 0)
             {
                 Id = reader.GetGuid();
-                return true;
+                return reader.Read();
             }
 
             if (String.Compare(nameof(Name), propertyName, true) == 0)
             {
                 Name = reader.GetString() ?? String.Empty;
-                return true;
+                return reader.Read();
             }
 
             if (String.Compare(nameof(DefaultName), propertyName, true) == 0)
             {
                 DefaultName = reader.GetString() ?? String.Empty;
-                return true;
+                return reader.Read();
+            }
+
+            if (String.Compare(nameof(Title), propertyName, true) == 0)
+            {
+                Title = reader.GetString() ?? String.Empty;
+                return reader.Read();
             }
 
             if (String.Compare(nameof(Description), propertyName, true) == 0)
             {
                 Description = reader.GetString() ?? String.Empty;
-                return true;
+                return reader.Read();
             }
 
             return false;
@@ -65,6 +76,7 @@ namespace Webfuel.Reporting
             writer.WriteString("id", Id.ToString());
             writer.WriteString("name", Name);
             writer.WriteString("defaultName", DefaultName);
+            writer.WriteString("title", Title);
             writer.WriteString("description", Description);
         }
     }
@@ -75,13 +87,14 @@ namespace Webfuel.Reporting
         {
             if (reader.TokenType != JsonTokenType.StartObject)
                 throw new JsonException();
-
             reader.Read();
+
             if (reader.TokenType != JsonTokenType.PropertyName || reader.GetString() != "filterType")
                 throw new JsonException();
-
             reader.Read();
+            
             var propertyType = (ReportFilterType)reader.GetInt32();
+            reader.Read();
 
             ReportFilter filter = propertyType switch
             {
@@ -94,20 +107,17 @@ namespace Webfuel.Reporting
                 _ => throw new JsonException()
             };
 
-            while (reader.Read())
+            while (reader.TokenType != JsonTokenType.EndObject)
             {
                 if (reader.TokenType != JsonTokenType.PropertyName)
-                    break;
+                    throw new JsonException();
 
                 var propertyName = reader.GetString() ?? String.Empty;
-
                 reader.Read();
+
                 if (!filter.ReadProperty(propertyName, ref reader))
                     reader.Skip();
             }
-
-            if (reader.TokenType != JsonTokenType.EndObject)
-                throw new JsonException();
 
             return filter;
         }

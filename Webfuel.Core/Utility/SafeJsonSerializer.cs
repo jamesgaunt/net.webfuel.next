@@ -16,7 +16,7 @@ namespace Webfuel
 
             try
             {
-                return JsonSerializer.Deserialize<T>(json) ?? new T();
+                return JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new T();
             }
             catch
             {
@@ -28,7 +28,7 @@ namespace Webfuel
         {
             try
             {
-                return JsonSerializer.Serialize(item) ?? "{}";
+                return JsonSerializer.Serialize(item, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }) ?? "{}";
             }
             catch
             {

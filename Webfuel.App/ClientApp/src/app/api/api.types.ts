@@ -112,6 +112,7 @@ export interface ReportFilter {
     id: string;
     name: string;
     defaultName: string;
+    title: string;
     description: string;
 }
 
@@ -122,6 +123,7 @@ export interface ReportFilterBoolean extends ReportFilterField {
     id: string;
     name: string;
     defaultName: string;
+    title: string;
     description: string;
 }
 
@@ -131,6 +133,7 @@ export interface ReportFilterField extends ReportFilter {
     id: string;
     name: string;
     defaultName: string;
+    title: string;
     description: string;
 }
 
@@ -140,6 +143,7 @@ export interface ReportFilterExpression extends ReportFilter {
     id: string;
     name: string;
     defaultName: string;
+    title: string;
     description: string;
 }
 
@@ -150,6 +154,7 @@ export interface ReportFilterGroup extends ReportFilter {
     id: string;
     name: string;
     defaultName: string;
+    title: string;
     description: string;
 }
 
@@ -161,6 +166,7 @@ export interface ReportFilterNumber extends ReportFilterField {
     id: string;
     name: string;
     defaultName: string;
+    title: string;
     description: string;
 }
 
@@ -172,6 +178,7 @@ export interface ReportFilterReference extends ReportFilterField {
     id: string;
     name: string;
     defaultName: string;
+    title: string;
     description: string;
 }
 
@@ -183,6 +190,7 @@ export interface ReportFilterString extends ReportFilterField {
     id: string;
     name: string;
     defaultName: string;
+    title: string;
     description: string;
 }
 

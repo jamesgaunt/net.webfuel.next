@@ -75,21 +75,41 @@ namespace Webfuel.Reporting
             base.Update(filter, schema);
         }
 
+        public override string GetTitle(ReportSchema schema)
+        {
+            return $"{GetFieldName(schema)} {GetConditionDescription()} {Value}";
+        }
+
+        string GetConditionDescription()
+        {
+            return Condition switch
+            {
+                ReportFilterNumberCondition.EqualTo => "=",
+                ReportFilterNumberCondition.LessThan => "<",
+                ReportFilterNumberCondition.LessThanOrEqualTo => "<=",
+                ReportFilterNumberCondition.GreaterThan => ">",
+                ReportFilterNumberCondition.GreaterThanOrEqualTo => ">=",
+                _ => "=",
+            };
+        }
+
         // Serialization
 
         public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
         {
             if (String.Compare(nameof(Condition), propertyName, true) == 0)
             {
-                Condition = (ReportFilterNumberCondition)reader.GetInt32();
-                return true;
+                return reader.Read();
             }
 
             if (String.Compare(nameof(Value), propertyName, true) == 0)
             {
                 if (reader.TokenType == JsonTokenType.Number)
                     Value = reader.GetDouble();
-                return true;
+                else
+                    throw new JsonException();
+
+                return reader.Read();
             }
 
             return base.ReadProperty(propertyName, ref reader);

@@ -35,6 +35,11 @@ namespace Webfuel.Reporting
             base.Update(filter, schema);
         }
 
+        public override string GetTitle(ReportSchema schema)
+        {
+            return $"{Expression}";
+        }
+
         // Serialization
 
         public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
@@ -42,7 +47,7 @@ namespace Webfuel.Reporting
             if (String.Compare(nameof(Expression), propertyName, true) == 0)
             {
                 Expression = reader.GetString() ?? String.Empty;
-                return true;
+                return reader.Read();
             }
 
             return base.ReadProperty(propertyName, ref reader);

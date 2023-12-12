@@ -36,8 +36,13 @@ namespace Webfuel.Reporting
             foreach (var filter in Filters)
                 filter.ValidateFilter(schema);
 
-            DefaultName = $"{GetConditionDescription()} of these conditions are true:";
+            DefaultName = "Group";
             base.ValidateFilter(schema);
+        }
+
+        public override string GetTitle(ReportSchema schema)
+        {
+            return $"{GetConditionDescription()} of these conditions are true";
         }
 
         string GetConditionDescription()
@@ -86,7 +91,7 @@ namespace Webfuel.Reporting
             if (String.Compare(nameof(Condition), propertyName, true) == 0)
             {
                 Condition = (ReportFilterGroupCondition)reader.GetInt32();
-                return true;
+                return reader.Read();
             }
 
             if (String.Compare(nameof(Filters), propertyName, true) == 0)
@@ -100,9 +105,9 @@ namespace Webfuel.Reporting
                     var filter = JsonSerializer.Deserialize<ReportFilter>(ref reader, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
                     if (filter != null)
                         Filters.Add(filter);
-                    reader.Read();  
+                    reader.Read();
                 }
-                return true;
+                return reader.Read();
             }
 
             return base.ReadProperty(propertyName, ref reader);

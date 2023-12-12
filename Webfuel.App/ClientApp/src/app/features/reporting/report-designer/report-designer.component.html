@@ -52,7 +52,7 @@
 
 
 <ng-template #filterTemplate let-filters>
-  <div class="report-slots" cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="dropFilter($event)" [cdkDropListDisabled]="false">
+  <div class="report-slots" cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="dropFilter($event, filters)" [cdkDropListDisabled]="false">
     <div *ngFor="let filter of filters" cdkDrag>
       <div class="report-slot">
         <div class="columns">
@@ -60,7 +60,7 @@
             <span cdkDragHandle>
               <i class="fas fa-fw fa-bars"></i>
             </span>
-            {{ filter.name || filter.defaultName }}
+            {{ filter.title }}
           </div>
           <div class="column is-right is-narrow">
             <a class="link is-success" (click)="addFilter(filter.id)" *ngIf="filter.filterType == ReportFilterType.Group">add</a>
@@ -76,6 +76,9 @@
                       [ngTemplateOutlet]="filterTemplate"
                       [ngTemplateOutletContext]="{ $implicit: filter.filters }">
         </ng-container>
+        <div class="report-slot" *ngIf="filter.filters.length == 0">
+          Click to <a class="link is-success" (click)="addFilter(filter.id)">add</a> a condition to this group.
+        </div>
       </div>
     </div>
   </div>

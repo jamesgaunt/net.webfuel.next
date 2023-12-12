@@ -78,12 +78,15 @@ namespace Webfuel.Reporting
             return null;
         }
 
-        internal ReportFilter InsertFilter(ReportFilter filter)
+        internal ReportFilter InsertFilter(ReportFilter filter, ReportFilterGroup? group)
         {
             if (filter.Id == Guid.Empty)
                 filter.Id = Guid.NewGuid();
 
-            Filters.Add(filter);
+            if(group != null)
+                group.Filters.Add(filter);
+            else
+                Filters.Add(filter);
             return filter;
         }
 

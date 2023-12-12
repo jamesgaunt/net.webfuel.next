@@ -28,7 +28,7 @@ namespace Webfuel.Reporting
         {
             var field = schema.Fields.FirstOrDefault(f => f.Id == FieldId);
             if (field == null)
-                return "Unknown field";
+                return "Unknown Field";
             return field.Name;
         }
 
@@ -39,7 +39,7 @@ namespace Webfuel.Reporting
             if (String.Compare(nameof(FieldId), propertyName, true) == 0)
             {
                 FieldId = reader.GetGuid();
-                return true;
+                return reader.Read();
             }
 
             return base.ReadProperty(propertyName, ref reader);

@@ -16,7 +16,11 @@ namespace Webfuel.Reporting
         public Task<ReportDesign> Handle(UpdateReportFilter request, CancellationToken cancellationToken)
         {
             var schema = _reportDesignService.GetReportSchema(request.ReportProviderId);
+            
             var filter = request.Design.GetFilter(request.Filter.Id);
+            if(filter == null)
+                throw new ValidationException($"Filter with id {request.Filter.Id} not found");
+
             filter.Update(request.Filter, schema);
             request.Design.ValidateDesign(schema);
             return Task.FromResult(request.Design);

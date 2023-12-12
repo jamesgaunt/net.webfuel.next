@@ -24,11 +24,12 @@ namespace Webfuel.Reporting
                 var parent = request.Design.GetFilter(request.ParentId.Value);
                 if(parent is not ReportFilterGroup group)
                     throw new ValidationException($"Parent filter  group with id {request.ParentId} not found");
-                group.Filters.Add(filter);
+
+                request.Design.InsertFilter(filter, group);
             }
             else
             {
-                request.Design.Filters.Add(filter);
+                request.Design.InsertFilter(filter, null);
             }
 
             request.Design.ValidateDesign(schema);

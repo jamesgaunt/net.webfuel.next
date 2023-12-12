@@ -45,6 +45,11 @@ namespace Webfuel.Reporting
             base.Update(filter, schema);
         }
 
+        public override string GetTitle(ReportSchema schema)
+        {
+            return $"{GetFieldName(schema)} is {(Value ? "True" : "False")}";
+        }
+
         // Serialization
 
         public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
@@ -53,9 +58,12 @@ namespace Webfuel.Reporting
             {
                 if (reader.TokenType == JsonTokenType.True)
                     Value = true;
-                else
+                else if (reader.TokenType == JsonTokenType.False)
                     Value = false;
-                return true;
+                else
+                    throw new JsonException();
+
+                return reader.Read();
             }
 
             return base.ReadProperty(propertyName, ref reader);

@@ -64,6 +64,21 @@ namespace Webfuel.Reporting
             base.Update(filter, schema);
         }
 
+        public override string GetTitle(ReportSchema schema)
+        {
+            return $"{GetFieldName(schema)} {GetConditionDescription()} ...";
+        }
+
+        string GetConditionDescription()
+        {
+            return Condition switch
+            {
+                ReportFilterReferenceCondition.OneOf => "One of",
+                ReportFilterReferenceCondition.NotOneOf => "Not one of",
+                _ => "One of",
+            };
+        }
+
         // Serialization
 
         public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
@@ -71,7 +86,7 @@ namespace Webfuel.Reporting
             if (String.Compare(nameof(Condition), propertyName, true) == 0)
             {
                 Condition = (ReportFilterReferenceCondition)reader.GetInt32();
-                return true;
+                return reader.Read();
             }
 
             if (String.Compare(nameof(Value), propertyName, true) == 0)

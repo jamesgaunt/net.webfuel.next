@@ -102,7 +102,14 @@ export class ReportDesignerComponent implements ControlValueAccessor, OnInit {
     });
   }
 
-  dropFilter($event: any) {
+  dropFilter($event: any, filters: ReportFilter[]) {
+    var currentIndex = <number>$event.currentIndex;
+    var previousIndex = <number>$event.previousIndex;
+
+    // Client side only, reordring stuff can't really break anything
+    const item = filters.splice(previousIndex, 1);
+    filters.splice(currentIndex, 0, item[0]);
+
     this.emitChanges();
   }
 

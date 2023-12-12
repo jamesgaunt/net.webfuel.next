@@ -76,6 +76,36 @@ namespace Webfuel.Reporting
             base.Update(filter, schema);
         }
 
+        public override string GetTitle(ReportSchema schema)
+        {           
+            if (Condition == ReportFilterStringCondition.IsEmpty)
+            {
+                return $"{GetFieldName(schema)} is empty";
+            }
+            else if (Condition == ReportFilterStringCondition.IsNotEmpty)
+            {
+                return $"{GetFieldName(schema)} is not empty";
+            }
+            else
+            {
+                return $"{GetFieldName(schema)} {GetConditionDescription()} '{Value}'";
+            }
+        }
+
+        string GetConditionDescription()
+        {
+            return Condition switch
+            {
+                ReportFilterStringCondition.Contains => "contains",
+                ReportFilterStringCondition.StartsWith => "starts with",
+                ReportFilterStringCondition.EndsWith => "ends with",
+                ReportFilterStringCondition.EqualTo => "is equal to",
+                ReportFilterStringCondition.IsEmpty => "is empty",
+                ReportFilterStringCondition.IsNotEmpty => "is not empty",
+                _ => "contains",
+            };
+        }
+
         // Serialization
 
         public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
@@ -83,13 +113,13 @@ namespace Webfuel.Reporting
             if (String.Compare(nameof(Condition), propertyName, true) == 0)
             {
                 Condition = (ReportFilterStringCondition)reader.GetInt32();
-                return true;
+                return reader.Read();
             }
 
             if (String.Compare(nameof(Value), propertyName, true) == 0)
             {
                 Value = reader.GetString() ?? String.Empty;
-                return true;
+                return reader.Read();
             }
 
             return base.ReadProperty(propertyName, ref reader);
