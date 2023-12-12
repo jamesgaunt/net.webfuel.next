@@ -3,27 +3,30 @@ using System.Text.Json.Serialization;
 
 namespace Webfuel.Reporting
 {
-    public class ReportReferenceField : ReportField
+    public interface IReportReferenceField
     {
-        [JsonIgnore]
-        public required Func<object, Guid?> Accessor { get; init; }
+        Task<ReportReference?> GetReference(Guid id, IServiceProvider services);
 
-        [JsonIgnore]
-        public required Type ReferenceProviderType { get; init; }
+        Task<QueryResult<ReportReference>> QueryReference(Query query, IServiceProvider services);
+    }
 
-        public override async Task<object?> Evaluate(object context, ReportBuilderBase builder)
+    public class ReportReferenceField<TEntity> : ReportField, IReportReferenceField where TEntity : class
+    {
+        protected override Task<object?> Evaluate(object context, ReportBuilder builder)
         {
-            var id = Accessor(context);
-            if (id == null)
-                return null;
+            throw new NotImplementedException();
+        }
 
-            var referenceProvider = (IReportReferenceProvider)builder.ServiceProvider.GetRequiredService(ReferenceProviderType);
+        public async Task<ReportReference?> GetReference(Guid id, IServiceProvider services)
+        {
+            var referenceProvider = services.GetRequiredService<IReportReferenceProvider<TEntity>>();
+            return await referenceProvider.Get(id);
+        }
 
-            var reference = await referenceProvider.GetReportReference(id.Value);
-            if(reference == null)
-                return null;
-
-            return reference.Name;
+        public async Task<QueryResult<ReportReference>> QueryReference(Query query, IServiceProvider services)
+        {
+            var referenceProvider = services.GetRequiredService<IReportReferenceProvider<TEntity>>();
+            return await referenceProvider.Query(query);
         }
     }
 }

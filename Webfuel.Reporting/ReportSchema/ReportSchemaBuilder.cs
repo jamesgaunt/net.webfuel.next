@@ -7,20 +7,31 @@ namespace Webfuel.Reporting
 {
     public class ReportSchemaBuilder<TContext> where TContext : class
     {
-        public ReportSchemaBuilder(ReportSchema schema, ReportMapping<TContext> mapping)
+        internal ReportSchemaBuilder(ReportSchema schema, ReportMapping<TContext> mapping)
         {
             Schema = schema;
             Mapping = mapping;
         }
 
-        public ReportSchemaBuilder(Guid reportProviderId)
+        ReportSchemaBuilder(Guid reportProviderId)
         {
-            Schema = new ReportSchema { ReportProviderId = reportProviderId };
+            Schema = new ReportSchema
+            {
+                ReportProviderId = reportProviderId
+            };
+        }
+
+        public static ReportSchemaBuilder<TContext> Create(Guid reportProviderId) 
+        {
+            return new ReportSchemaBuilder<TContext>(reportProviderId);
         }
 
         public ReportSchema Schema { get; }
 
-        public ReportMapping<TContext>? Mapping { get; set; }
+        internal ReportMapping<TContext>? Mapping { get; set; }
+
+        /////////////////////////////////////////////////////////////////////////////
+        // Add Expressions
 
         // Add Property Expression
         public ReportSchemaBuilder<TContext> Add<TField>(
@@ -58,66 +69,43 @@ namespace Webfuel.Reporting
             return this;
         }
 
-        public void Ref<TReferenceProvider>(
-            Guid id,
-            Expression<Func<TContext, Guid?>> expr,
-            string? name = null) where TReferenceProvider : IReportReferenceProvider
-        {
-            Schema.AddField(new ReportReferenceField
-            {
-                Id = id,
-                Name = name ?? GetExprName(expr),
-                Accessor = o => expr.Compile()((TContext)o),
-                ReferenceProviderType = typeof(TReferenceProvider),
-                FieldType = ReportFieldType.Reference,
-            });
-        }
-
-        public ReportReferenceField Ref<TReferenceProvider>(
-            Guid id,
-            Expression<Func<TContext, Guid>> expr,
-            string? name = null) where TReferenceProvider : IReportReferenceProvider
-        {
-            var field = new ReportReferenceField
-            {
-                Id = id,
-                Name = name ?? GetExprName(expr),
-                Accessor = o => expr.Compile()((TContext)o),
-                ReferenceProviderType = typeof(TReferenceProvider),
-                FieldType = ReportFieldType.Reference,
-            };
-            Schema.AddField(field);
-            return field;
-        }
-
-        public void Ref<TReferenceProvider>(
-            Guid id,
-            Expression<Func<TContext, IEnumerable<Guid>>> expr,
-            string? name = null) where TReferenceProvider : IReportReferenceProvider
-        {
-            Schema.AddField(new ReportReferenceListField
-            {
-                Id = id,
-                Name = name ?? GetExprName(expr),
-                Accessor = o => expr.Compile()((TContext)o),
-                ReferenceProviderType = typeof(TReferenceProvider),
-                FieldType = ReportFieldType.ReferenceList,
-            });
-        }
-
         // Add Scribble Expression
-        public void Add(
+        public ReportSchemaBuilder<TContext> Add(
             Guid id,
             string name,
             string scribble)
         {
-            Schema.AddField(new ReportScribbleField<TContext>(scribble)
+            Schema.AddField(new ReportExpressionField<TContext>(scribble)
             {
                 Id = id,
                 Name = name,
                 FieldType = ReportFieldType.Expression,
             });
+            return this;
         }
+
+        /////////////////////////////////////////////////////////////////////////////
+        // References 
+
+        public ReportSchemaBuilder<TContext> Ref(
+            Guid id,
+            string? name = null)
+        {
+            if (Mapping == null)
+                throw new ArgumentException("Mapping is null");
+
+            Schema.AddField(new ReportReferenceField<TContext>
+            {
+                Id = id,
+                Name = name ?? Mapping.Name,
+                Mapping = Mapping,
+                FieldType = ReportFieldType.Reference,
+            });
+            return this;
+        }
+
+        /////////////////////////////////////////////////////////////////////////////
+        // Mapping
 
         public ReportSchemaBuilder<TEntity> Map<TEntity>(Expression<Func<TContext, Guid?>> expr) where TEntity : class
         {
@@ -141,6 +129,7 @@ namespace Webfuel.Reporting
             return new ReportSchemaBuilder<TEntity>(Schema, mapping);
         }
 
+        /////////////////////////////////////////////////////////////////////////////
         // Helpers
 
         string GetExprName<TProperty>(Expression<Func<TContext, TProperty>> accessor)
@@ -185,7 +174,7 @@ namespace Webfuel.Reporting
             if (input.EndsWith(" Ids"))
                 input = input.Substring(0, input.Length - 4);
 
-            if(Mapping != null)
+            if (Mapping != null)
                 input = Mapping.Name + " " + input;
 
             return input;

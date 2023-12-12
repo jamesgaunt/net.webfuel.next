@@ -3,12 +3,12 @@ using System.Text.Json.Serialization;
 
 namespace Webfuel.Reporting
 {
-    public interface IReportMapping
+    internal interface IReportMapping
     {
-        Task<object?> Map(object context, IServiceProvider services);
+        Task<ReportReference?> Map(object context, ReportBuilder builder);
     }
 
-    public class ReportMapping<TEntity> : IReportMapping where TEntity : class
+    internal class ReportMapping<TEntity> : IReportMapping where TEntity : class
     {
         [JsonIgnore]
         public required Func<object, Guid?> Accessor { get; init; }
@@ -18,27 +18,27 @@ namespace Webfuel.Reporting
 
         public required string Name { get; init; }
 
-        public async Task<object?> Map(object context, IServiceProvider services)
+        public async Task<ReportReference?> Map(object context, ReportBuilder builder)
         {
             if (Mapping != null)
             {
-                var temp = await Mapping.Map(context, services);
+                var temp = await Mapping.Map(context, builder);
                 if (temp == null)
                     return null;
-                context = temp;
+                context = temp.Entity;
             }
 
             var id = Accessor(context);
             if (id == null)
                 return null;
 
-            var mapper = services.GetRequiredService<IDataSource<TEntity>>();
+            var mapper = builder.ServiceProvider.GetRequiredService<IReportReferenceProvider<TEntity>>();
 
-            var entity = await mapper.Get(id.Value);
-            if (entity == null)
+            var reference = await mapper.Get(id.Value);
+            if (reference == null)
                 return null;
 
-            return entity;
+            return reference;
         }
     }
 }

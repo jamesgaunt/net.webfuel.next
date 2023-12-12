@@ -33,9 +33,25 @@ namespace Webfuel.Reporting
             base.ValidateFilter(schema);
         }
 
-        public override Task<bool> Apply(object context, ReportBuilder builder)
+        public override async Task<bool> Apply(object context, ReportBuilder builder)
         {
-            throw new NotImplementedException();
+            var field = builder.Schema.Fields.FirstOrDefault(f => f.Id == FieldId);
+            if (field == null)
+                return false;
+
+            var value = await field.Extract(context, builder);
+            if (value is not ReportReference reference)
+                return false;
+
+            switch (Condition)
+            {
+                case ReportFilterReferenceCondition.OneOf:
+                    return Value.Contains(reference.Id);
+                case ReportFilterReferenceCondition.NotOneOf:
+                    return !Value.Contains(reference.Id);
+            }
+
+            throw new InvalidOperationException($"Unknown condition {Condition}");
         }
 
         public override void Update(ReportFilter filter, ReportSchema schema)
@@ -60,11 +76,8 @@ namespace Webfuel.Reporting
 
             if (String.Compare(nameof(Value), propertyName, true) == 0)
             {
-                if (reader.TokenType == JsonTokenType.String)
-                {
-                    Value = JsonSerializer.Deserialize<List<Guid>>(ref reader, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
-                        ?? new List<Guid>();
-                }
+                Value = JsonSerializer.Deserialize<List<Guid>>(ref reader, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+                                       ?? new List<Guid>();
                 return true;
             }
 

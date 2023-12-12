@@ -2,9 +2,11 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, forw
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { debounceTime, noop, tap } from 'rxjs';
-import { ReportFilterReference } from '../../../api/api.types';
+import { ReportFilterReference, ReportReference, ReportSchema } from '../../../api/api.types';
 import _ from 'shared/common/underscore';
 import { ReportFilterReferenceCondition } from '../../../api/api.enums';
+import { ReportDesignApi } from '../../../api/report-design.api';
+import { IDataSource } from '../../common/data-source';
 
 @Component({
   selector: 'report-filter-reference',
@@ -25,6 +27,7 @@ export class ReportFilterReferenceComponent implements ControlValueAccessor, OnI
   destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
+    private readonly reportDesignApi: ReportDesignApi
   ) {
   }
 
@@ -46,6 +49,10 @@ export class ReportFilterReferenceComponent implements ControlValueAccessor, OnI
     this.form.patchValue(filter);
   }
 
+  referenceDataSource: IDataSource<ReportReference> = {
+    query: (query) => this.reportDesignApi.queryReferenceField({ query: query, fieldId: this.filter.fieldId, reportProviderId: this.schema.reportProviderId })
+  }
+
   ReportFilterReferenceCondition = ReportFilterReferenceCondition;
 
   filter!: ReportFilterReference;
@@ -56,6 +63,9 @@ export class ReportFilterReferenceComponent implements ControlValueAccessor, OnI
   });
 
   // Inputs
+
+  @Input({ required: true })
+  schema!: ReportSchema;
 
   // ControlValueAccessor API
 

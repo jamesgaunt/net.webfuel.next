@@ -12,8 +12,6 @@
         Date = 50,
 
         Reference = 1000,
-        ReferenceList = 1010,
-
         Expression = 1020,
     }
 }

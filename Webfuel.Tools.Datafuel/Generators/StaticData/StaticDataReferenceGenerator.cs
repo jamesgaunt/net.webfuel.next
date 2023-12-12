@@ -13,7 +13,7 @@ namespace Webfuel.Tools.Datafuel
         public static void GenerateStaticDataReferenceProvider(SchemaEntity entity)
         {
 
-            File.WriteAllText(entity.GeneratedDirectory + $@"\{entity.Name}\{entity.Name}ReferenceProvider.cs", Reference(entity));
+            File.WriteAllText(entity.GeneratedDirectory + $@"\{entity.Name}\{entity.Name}ReportReferenceProvider.cs", Reference(entity));
         }
 
         static string Reference(SchemaEntity entity)
@@ -24,38 +24,32 @@ namespace Webfuel.Tools.Datafuel
 
             sb.Write($@"namespace Webfuel.Domain.StaticData
 {{
-    public interface I{ entity.Name }ReferenceProvider: IReportReferenceProvider
-    {{
-    }}
-
-    [Service(typeof(I{entity.Name}ReferenceProvider))]
-    internal class {entity.Name}ReferenceProvider : I{entity.Name}ReferenceProvider
+    [Service(typeof(IReportReferenceProvider<{entity.Name}>))]
+    internal class {entity.Name}ReportReferenceProvider : IReportReferenceProvider<{entity.Name}>
     {{
         private readonly I{entity.Name}Repository _repository;
         private readonly IStaticDataCache _staticDataCache;
 
-        public {entity.Name}ReferenceProvider(I{entity.Name}Repository repository, IStaticDataCache staticDataCache)
+        public {entity.Name}ReportReferenceProvider(I{entity.Name}Repository repository, IStaticDataCache staticDataCache)
         {{
             _repository = repository;
             _staticDataCache = staticDataCache;
         }}
 
-        public async Task<ReportReference?> GetReportReference(Guid id)
+        public async Task<ReportReference?> Get(Guid id)
         {{
             var staticData = await _staticDataCache.GetStaticData();
-            var item = staticData.{entity.Name}.FirstOrDefault(x => x.Id == id);
-            if (item == null)
-                return null;
+            var entity = staticData.{entity.Name}.FirstOrDefault(x => x.Id == id);
 
-            return new ReportReference
+            return entity == null ? null : new ReportReference
             {{
-                Id = item.Id,
-                Name = item.Name,
-                Entity = item,
+                Id = entity.Id,
+                Name = entity.Name,
+                Entity = entity
             }};
         }}
 
-        public async Task<QueryResult<ReportReference>> QueryReportReference(Query query)
+        public async Task<QueryResult<ReportReference>> Query(Query query)
         {{
             var result = await _repository.Query{entity.Name}(query);
 
@@ -66,8 +60,8 @@ namespace Webfuel.Tools.Datafuel
                 {{
                     Id = x.Id,
                     Name = x.Name,
-                    Entity = x,
-                }}).ToList(),
+                    Entity = x
+                }}).ToList()
             }};
         }}
     }}

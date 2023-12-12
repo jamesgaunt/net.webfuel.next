@@ -19,11 +19,9 @@ namespace Webfuel.Reporting
 
         Task<int> GetTotalCount(Guid reportProviderId);
 
-        Task<ReportReference?> GetReportReference(Guid reportProviderId, Guid fieldId, Guid id);
-
-        Task<QueryResult<ReportReference>> QueryReportReference(Guid reportProviderId, Guid fieldId, Query query);
-
         void ValidateDesign(Guid reportProviderId, ReportDesign design);
+
+        Task<QueryResult<ReportReference>> QueryReferenceField(Guid reportProviderId, Guid fieldId, Query query);
     }
 
     [Service(typeof(IReportDesignService))]
@@ -63,22 +61,21 @@ namespace Webfuel.Reporting
             return provider.GetTotalCount();
         }
 
-        public async Task<ReportReference?> GetReportReference(Guid reportProviderId, Guid fieldId, Guid id)
-        {
-            var referenceProvider = GetReferenceProvider(reportProviderId, fieldId);
-            return await referenceProvider.GetReportReference(id);
-        }
-
-        public async Task<QueryResult<ReportReference>> QueryReportReference(Guid reportProviderId, Guid fieldId, Query query)
-        {
-            var referenceProvider = GetReferenceProvider(reportProviderId, fieldId);
-            return await referenceProvider.QueryReportReference(query);
-        }
-
         public void ValidateDesign(Guid reportProviderId, ReportDesign design)
         {
             var schema = GetReportSchema(reportProviderId);
             design.ValidateDesign(schema);
+        }
+
+        public Task<QueryResult<ReportReference>> QueryReferenceField(Guid reportProviderId, Guid fieldId, Query query)
+        {
+            var provider = GetReportProvider(reportProviderId);
+            var field = provider.Schema.GetField(fieldId);
+
+            if(field is not IReportReferenceField referenceField)
+                throw new InvalidOperationException($"Field {field.Name} is not a reference field");
+
+            return referenceField.QueryReference(query, _serviceProvider);
         }
 
         // Helpers
@@ -89,27 +86,6 @@ namespace Webfuel.Reporting
 
             return providers.FirstOrDefault(p => p.Id == id)
                 ?? throw new InvalidOperationException("The specified report provider does not exist.");
-        }
-
-        public IReportReferenceProvider GetReferenceProvider(Guid reportProviderId, Guid fieldId)
-        {
-            var schema = GetReportSchema(reportProviderId);
-
-            var field = schema.Fields.FirstOrDefault(f => f.Id == fieldId)
-                ?? throw new InvalidOperationException("The specified field does not exist.");
-
-            var referenceProviderType = typeof(void);
-
-            if (field is ReportReferenceField referenceField)
-                referenceProviderType = referenceField.ReferenceProviderType;
-
-            else if (field is ReportReferenceListField referenceListField)
-                referenceProviderType = referenceListField.ReferenceProviderType;
-
-            else
-                throw new InvalidOperationException("The specified field is not a reference field.");
-
-            return (IReportReferenceProvider)_serviceProvider.GetRequiredService(referenceProviderType);
         }
     }
 }

@@ -19,10 +19,12 @@ namespace Webfuel.Domain
     internal class ProjectReportProvider : IProjectReportProvider
     {
         private readonly IProjectRepository _projectRepository;
+        private readonly IServiceProvider _serviceProvider;
 
-        public ProjectReportProvider(IProjectRepository projectRepository)
+        public ProjectReportProvider(IProjectRepository projectRepository, IServiceProvider serviceProvider)
         {
             _projectRepository = projectRepository;
+            _serviceProvider = serviceProvider;
         }
 
         public Guid Id => ReportProviderEnum.Project;
@@ -44,18 +46,28 @@ namespace Webfuel.Domain
             return result.TotalCount;
         }
 
+        public async Task<QueryResult<ReportReference>> QueryReferenceField(Guid fieldId, Query query)
+        {
+            var field = Schema.GetField(fieldId);
+
+            if (field is not IReportReferenceField referenceField)
+                throw new InvalidOperationException($"Field {field.Name} is not a reference field");
+
+            return await referenceField.QueryReference(query, _serviceProvider);
+        }
+
         public ReportSchema Schema
         {
             get
             {
                 if (_schema == null)
                 {
-                    var builder = new ReportSchemaBuilder<Project>(ReportProviderEnum.Project);
+                    var builder = ReportSchemaBuilder<Project>.Create(ReportProviderEnum.Project);
 
                     builder.Add(Guid.Parse("82b05021-9512-4217-9e71-bb0bc9bc8384"), p => p.Number);
                     builder.Add(Guid.Parse("c3b0b5a0-5b1a-4b7e-9b9a-0b6b8b8b6b8b"), p => p.PrefixedNumber);
 
-                    builder.Ref<IProjectStatusReferenceProvider>(Guid.Parse("10a8218f-9de8-4835-930f-3c0f06bdbcfa"), p => p.StatusId);
+                    // builder.Ref<IProjectStatusReferenceProvider>(Guid.Parse("10a8218f-9de8-4835-930f-3c0f06bdbcfa"), p => p.StatusId);
 
                     builder.Add(Guid.Parse("cbeb9e2d-59a2-4896-a3c5-01c5c2aa42c7"), p => p.Title);
                     builder.Add(Guid.Parse("edde730a-8424-4415-b23c-29c4ae3e36b8"), p => p.DateOfRequest);

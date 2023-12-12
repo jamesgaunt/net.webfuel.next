@@ -17,7 +17,7 @@
         <report-filter-number *ngSwitchCase="ReportFilterType.Number" formControlName="filter"></report-filter-number>
         <report-filter-string *ngSwitchCase="ReportFilterType.String" formControlName="filter"></report-filter-string>
         <report-filter-boolean *ngSwitchCase="ReportFilterType.Boolean" formControlName="filter"></report-filter-boolean>
-        <report-filter-reference *ngSwitchCase="ReportFilterType.Reference" formControlName="filter"></report-filter-reference>
+        <report-filter-reference *ngSwitchCase="ReportFilterType.Reference" formControlName="filter" [schema]="data.schema"></report-filter-reference>
         <report-filter-expression *ngSwitchCase="ReportFilterType.Expression" formControlName="filter"></report-filter-expression>
       </div>
     </div>

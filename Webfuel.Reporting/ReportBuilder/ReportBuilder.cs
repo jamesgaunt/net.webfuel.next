@@ -234,7 +234,7 @@ namespace Webfuel.Reporting
                 .GetReportSchema(Request.ReportProviderId)
                 .GetField(column.FieldId);
 
-            return field.Evaluate(item, this);
+            return field.Extract(item, this);
         }
 
         public override ReportResult RenderReport()

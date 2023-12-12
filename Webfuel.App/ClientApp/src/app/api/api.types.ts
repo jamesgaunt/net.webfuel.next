@@ -213,16 +213,13 @@ export interface ReportPropertyField extends ReportField {
     fieldType: ReportFieldType;
 }
 
-export interface ReportReferenceField extends ReportField {
+export interface ReportReferenceField<TEntity> extends ReportField, IReportReferenceField {
     id: string;
     name: string;
     fieldType: ReportFieldType;
 }
 
-export interface ReportReferenceListField extends ReportField {
-    id: string;
-    name: string;
-    fieldType: ReportFieldType;
+export interface IReportReferenceField {
 }
 
 export interface ReportScribbleField<TContext> extends ReportField {
@@ -884,7 +881,7 @@ export interface UpdateReport {
 
 export interface RunReport {
     reportId: string;
-    arguments: any | null;
+    arguments: Array<ReportFilter> | null;
 }
 
 export interface QueryReport extends Query {
@@ -944,21 +941,10 @@ export interface ReportReference {
     entity: any;
 }
 
-export interface GetReportReference {
-    reportProviderId: string;
-    fieldId: string;
-    id: string;
-}
-
 export interface QueryReportReference {
     reportProviderId: string;
     fieldId: string;
     query: Query;
-}
-
-export interface ValidateDesign {
-    reportProviderId: string;
-    design: ReportDesign;
 }
 
 export interface ReportGroup {

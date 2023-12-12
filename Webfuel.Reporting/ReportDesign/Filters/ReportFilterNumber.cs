@@ -42,7 +42,7 @@ namespace Webfuel.Reporting
             if (field == null)
                 return false;
 
-            var value = await field.Evaluate(context, builder);
+            var value = await field.Extract(context, builder);
 
             var typed = ToDouble(value);
             if (typed == null)

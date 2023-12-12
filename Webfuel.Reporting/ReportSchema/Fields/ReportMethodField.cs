@@ -7,9 +7,9 @@ namespace Webfuel.Reporting
         [JsonIgnore]
         public required Func<object, Task<object?>> Accessor { get; init; }
 
-        public override Task<object?> Evaluate(object context, ReportBuilderBase builder)
+        protected override async Task<object?> Evaluate(object context, ReportBuilder builder)
         {
-            return Accessor(context);
+            return await Accessor(context);
         }
     }
 }

@@ -15,10 +15,28 @@ namespace Webfuel.Reporting
         public required String Name { get; init; }
 
         [JsonIgnore]
-        public IReportMapping? Mapping { get; init; }
+        internal IReportMapping? Mapping { get; init; }
 
         public required ReportFieldType FieldType { get; init; }
 
-        public abstract Task<object?> Evaluate(object context, ReportBuilderBase builder);
+        protected abstract Task<object?> Evaluate(object context, ReportBuilder builder);
+
+        internal async Task<object?> Extract(object context, ReportBuilder builder)
+        {
+            if (Mapping != null)
+            {
+                var temp = await Mapping.Map(context, builder);
+                if (temp == null)
+                    return null;
+
+                // If this is a reference field we can short circuit the evaluation
+                if (this is IReportReferenceField referenceField)
+                    return temp;
+
+                context = temp.Entity;
+            }
+
+            return await Evaluate(context, builder);
+        }
     }
 }
