@@ -7,6 +7,7 @@ import { StaticDataCache } from '../../../../../api/static-data.cache';
 import _ from 'shared/common/underscore';
 import { GrowlService } from '../../../../../core/growl.service';
 import { ReportDesignApi } from '../../../../../api/report-design.api';
+import { ReportFilterTypeIdentifiers } from '../../../../../api/api.enums';
 
 export interface InsertReportFilterDialogData {
   schema: ReportSchema;
@@ -36,6 +37,17 @@ export class InsertReportFilterDialogComponent extends DialogComponentBase<Repor
       reportProviderId: this.data.schema.reportProviderId,
       design: this.data.design,
     })
+
+    this.fields = [{
+      id: ReportFilterTypeIdentifiers.Group,
+      name: "Condition Group",
+      fieldType: 0
+    }, {
+      id: ReportFilterTypeIdentifiers.Expression,
+      name: "Expression",
+      fieldType: 0
+    },
+    ...this.data.schema.fields];
   }
 
   form = new FormGroup({
@@ -43,6 +55,8 @@ export class InsertReportFilterDialogComponent extends DialogComponentBase<Repor
     design: new FormControl<ReportDesign>(null!, { validators: [Validators.required], nonNullable: true }),
     fieldId: new FormControl('', { validators: [Validators.required], nonNullable: true }),
   });
+
+  fields: ReportField[] = [];
 
   save() {
     if (this.formService.hasErrors(this.form))

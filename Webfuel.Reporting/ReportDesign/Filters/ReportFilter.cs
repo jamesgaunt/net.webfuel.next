@@ -90,6 +90,7 @@ namespace Webfuel.Reporting
                 ReportFilterType.Number => new ReportFilterNumber(),
                 ReportFilterType.Boolean => new ReportFilterBoolean(),
                 ReportFilterType.Reference => new ReportFilterReference(),
+                ReportFilterType.Expression => new ReportFilterExpression(),
                 _ => throw new JsonException()
             };
 

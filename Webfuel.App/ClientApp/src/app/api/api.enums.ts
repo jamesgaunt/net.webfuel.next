@@ -54,6 +54,11 @@ export enum ReportFilterStringCondition {
     IsNotEmpty = 200,
 }
 
+export enum ReportFilterTypeIdentifiers {
+    Group = "00000000-0000-0000-0000-000000000001",
+    Expression = "00000000-0000-0000-0000-000000000002",
+}
+
 export enum ReportFieldType {
     Unspecified = 0,
     String = 10,
@@ -62,7 +67,6 @@ export enum ReportFieldType {
     DateTime = 40,
     Date = 50,
     Reference = 1000,
-    ReferenceList = 1010,
     Expression = 1020,
 }
 

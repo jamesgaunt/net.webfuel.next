@@ -46,7 +46,6 @@ export enum ReportFieldType {
     DateTime = 40,
     Date = 50,
     Reference = 1000,
-    ReferenceList = 1010,
     Expression = 1020,
 }
 
@@ -192,16 +191,22 @@ export interface ReportDesign {
     filters: Array<ReportFilter>;
 }
 
-export interface ReportMethodField extends ReportField {
+export interface ReportExpressionField<TContext> extends ReportField {
     id: string;
     name: string;
     fieldType: ReportFieldType;
 }
 
-export interface IReportMapping {
+export interface ScribbleExpression<T> {
 }
 
 export interface ReportField {
+    id: string;
+    name: string;
+    fieldType: ReportFieldType;
+}
+
+export interface ReportMethodField extends ReportField {
     id: string;
     name: string;
     fieldType: ReportFieldType;
@@ -220,15 +225,6 @@ export interface ReportReferenceField<TEntity> extends ReportField, IReportRefer
 }
 
 export interface IReportReferenceField {
-}
-
-export interface ReportScribbleField<TContext> extends ReportField {
-    id: string;
-    name: string;
-    fieldType: ReportFieldType;
-}
-
-export interface ScribbleExpression<T> {
 }
 
 export interface DashboardModel {

@@ -30,7 +30,7 @@ namespace Webfuel.Reporting
                     return null;
 
                 // If this is a reference field we can short circuit the evaluation
-                if (this is IReportReferenceField referenceField)
+                if (this is IReportReferenceField)
                     return temp;
 
                 context = temp.Entity;

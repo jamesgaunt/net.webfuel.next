@@ -21,4 +21,12 @@ namespace Webfuel.Reporting
         Group = 1000,
         Expression = 2000,
     }
+
+    [ApiEnum]
+    public static class ReportFilterTypeIdentifiers
+    {
+        public static readonly Guid Group = new Guid("00000000-0000-0000-0000-000000000001");
+
+        public static readonly Guid Expression = new Guid("00000000-0000-0000-0000-000000000002");
+    }
 }
