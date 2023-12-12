@@ -100,6 +100,7 @@ namespace Webfuel.Reporting
                     var filter = JsonSerializer.Deserialize<ReportFilter>(ref reader, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
                     if (filter != null)
                         Filters.Add(filter);
+                    reader.Read();  
                 }
                 return true;
             }

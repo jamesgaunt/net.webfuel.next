@@ -36,20 +36,19 @@ export class DeleteReportFilterDialogComponent extends DialogComponentBase<Repor
     this.form.patchValue({
       reportProviderId: this.data.schema.reportProviderId,
       design: this.data.design,
+      id: this.data.filter.id
     });
-    this.form.patchValue(this.data.filter);
   }
 
   form = new FormGroup({
     reportProviderId: new FormControl('', { validators: [Validators.required], nonNullable: true }),
     design: new FormControl<ReportDesign>(null!, { validators: [Validators.required], nonNullable: true }),
-    id: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+    id: new FormControl('', { nonNullable: true }),
   });
 
   save() {
     if (this.formService.hasErrors(this.form))
       return;
-
     this.reportDesignApi.deleteReportFilter(this.form.getRawValue()).subscribe((design) => this._closeDialog(design));
   }
 

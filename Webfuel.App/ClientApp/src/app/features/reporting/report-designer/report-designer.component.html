@@ -41,7 +41,7 @@
           </div>
         </div>
         <ng-container *ngIf="design.filters.length > 0"
-                      [ngTemplateOutlet]="filters"
+                      [ngTemplateOutlet]="filterTemplate"
                       [ngTemplateOutletContext]="{ $implicit: design.filters }">
         </ng-container>
         <button class="button" (click)="addFilter()">Add Filter</button>
@@ -51,7 +51,7 @@
 </div>
 
 
-<ng-template #filters let-filters>
+<ng-template #filterTemplate let-filters>
   <div class="report-slots" cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="dropFilter($event)" [cdkDropListDisabled]="false">
     <div *ngFor="let filter of filters" cdkDrag>
       <div class="report-slot">
@@ -73,7 +73,7 @@
       </div>
       <div *ngIf="filter.filterType == ReportFilterType.Group" style="padding-left: 2rem">
         <ng-container *ngIf="filter.filters.length > 0"
-                      [ngTemplateOutlet]="filters"
+                      [ngTemplateOutlet]="filterTemplate"
                       [ngTemplateOutletContext]="{ $implicit: filter.filters }">
         </ng-container>
       </div>

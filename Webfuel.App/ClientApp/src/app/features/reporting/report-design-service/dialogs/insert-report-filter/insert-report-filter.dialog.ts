@@ -37,6 +37,7 @@ export class InsertReportFilterDialogComponent extends DialogComponentBase<Repor
     this.form.patchValue({
       reportProviderId: this.data.schema.reportProviderId,
       design: this.data.design,
+      parentId: this.data.parentId,
     })
 
     this.fields = [{

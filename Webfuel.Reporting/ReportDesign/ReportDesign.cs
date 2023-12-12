@@ -39,18 +39,43 @@ namespace Webfuel.Reporting
 
         public List<ReportFilter> Filters { get; set; } = new List<ReportFilter>();
 
-        internal ReportFilter GetFilter(Guid id)
+        internal ReportFilter? GetFilter(Guid id)
         {
-            return GetFilterWithParent(id).filter;
+            return GetFilterWithGroup(id)?.filter;
         }
-        internal (ReportFilter filter, List<ReportFilter> parent) GetFilterWithParent(Guid id)
+
+        internal (ReportFilter filter, ReportFilterGroup? group)? GetFilterWithGroup(Guid id)
         {
-            foreach (var filter in FilterIterator())
+            foreach (var filter in Filters)
             {
-                if (filter.filter.Id == id)
-                    return filter;
+                if (filter.Id == id)
+                    return (filter, null);
+
+                if(filter is ReportFilterGroup group)
+                {
+                    var result = GetFilterWithGroup(id, group);
+                    if(result != null)
+                        return result;
+                }
             }
-            throw new InvalidOperationException("The specified filter does not exist");
+            return null;
+        }
+
+        (ReportFilter filter, ReportFilterGroup group)? GetFilterWithGroup(Guid id, ReportFilterGroup parent)
+        {
+            foreach (var filter in parent.Filters)
+            {
+                if (filter.Id == id)
+                    return (filter, parent);
+
+                if (filter is ReportFilterGroup group)
+                {
+                    var result = GetFilterWithGroup(id, group);
+                    if (result != null)
+                        return result;
+                }
+            }
+            return null;
         }
 
         internal ReportFilter InsertFilter(ReportFilter filter)
@@ -64,8 +89,14 @@ namespace Webfuel.Reporting
 
         internal void DeleteFilter(Guid id)
         {
-            var filter = GetFilterWithParent(id);
-            filter.parent.Remove(filter.filter);
+            var filter = GetFilterWithGroup(id);
+            if (filter == null)
+                throw new InvalidOperationException("The specified filter does not exist");
+
+            if (filter.Value.group == null)
+                Filters.RemoveAt(Filters.FindIndex(p => p.Id == filter.Value.filter.Id));
+            else
+                filter.Value.group.Filters.RemoveAt(filter.Value.group.Filters.FindIndex(p => p.Id == filter.Value.filter.Id));
         }
 
         // Validation
@@ -79,26 +110,6 @@ namespace Webfuel.Reporting
                 filter.ValidateFilter(schema);
         }
 
-        // Helpers
 
-        IEnumerable<(ReportFilter filter, List<ReportFilter> parent)> FilterIterator()
-        {
-            foreach(var filter in FilterIterator(Filters))
-                yield return filter;
-        }
-
-        IEnumerable<(ReportFilter filter, List<ReportFilter> parent)> FilterIterator(List<ReportFilter> filters)
-        {
-            foreach (var filter in Filters)
-            {
-                yield return (filter, Filters);
-
-                if (filter is ReportFilterGroup group)
-                {
-                    foreach (var child in FilterIterator(group.Filters))
-                        yield return child;
-                }
-            }
-        }
     }
 }
