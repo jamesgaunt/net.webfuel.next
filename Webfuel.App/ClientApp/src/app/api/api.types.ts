@@ -101,6 +101,7 @@ export interface UploadFileStorageEntry {
 export interface ReportColumn {
     id: string;
     fieldId: string;
+    fieldName: string;
     title: string;
     width: number | null | null;
     format: string;
@@ -111,8 +112,6 @@ export interface ReportFilter {
     filterType: ReportFilterType;
     id: string;
     name: string;
-    defaultName: string;
-    title: string;
     description: string;
 }
 
@@ -120,20 +119,18 @@ export interface ReportFilterBoolean extends ReportFilterField {
     filterType: ReportFilterType;
     value: boolean;
     fieldId: string;
+    fieldName: string;
     id: string;
     name: string;
-    defaultName: string;
-    title: string;
     description: string;
 }
 
 export interface ReportFilterField extends ReportFilter {
     fieldId: string;
+    fieldName: string;
     filterType: ReportFilterType;
     id: string;
     name: string;
-    defaultName: string;
-    title: string;
     description: string;
 }
 
@@ -142,8 +139,6 @@ export interface ReportFilterExpression extends ReportFilter {
     expression: string;
     id: string;
     name: string;
-    defaultName: string;
-    title: string;
     description: string;
 }
 
@@ -153,8 +148,6 @@ export interface ReportFilterGroup extends ReportFilter {
     filters: Array<ReportFilter>;
     id: string;
     name: string;
-    defaultName: string;
-    title: string;
     description: string;
 }
 
@@ -163,10 +156,9 @@ export interface ReportFilterNumber extends ReportFilterField {
     condition: ReportFilterNumberCondition;
     value: number;
     fieldId: string;
+    fieldName: string;
     id: string;
     name: string;
-    defaultName: string;
-    title: string;
     description: string;
 }
 
@@ -175,10 +167,9 @@ export interface ReportFilterReference extends ReportFilterField {
     condition: ReportFilterReferenceCondition;
     value: Array<string>;
     fieldId: string;
+    fieldName: string;
     id: string;
     name: string;
-    defaultName: string;
-    title: string;
     description: string;
 }
 
@@ -187,16 +178,17 @@ export interface ReportFilterString extends ReportFilterField {
     condition: ReportFilterStringCondition;
     value: string;
     fieldId: string;
+    fieldName: string;
     id: string;
     name: string;
-    defaultName: string;
-    title: string;
     description: string;
 }
 
 export interface ReportDesign {
     columns: Array<ReportColumn>;
+    latestColumnId: string;
     filters: Array<ReportFilter>;
+    latestFilterId: string;
 }
 
 export interface ReportExpressionField<TContext> extends ReportField {

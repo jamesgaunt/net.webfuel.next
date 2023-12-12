@@ -29,12 +29,12 @@ namespace Webfuel.Reporting
 
         public string Value { get; set; } = String.Empty;
                 
-        public override void ValidateFilter(ReportSchema schema)
+        public override bool ValidateFilter(ReportSchema schema)
         {
             if (!Enum.IsDefined(Condition))
                 Condition = ReportFilterStringCondition.Contains;
 
-            base.ValidateFilter(schema);
+            return base.ValidateFilter(schema);
         }
 
         public override async Task<bool> Apply(object context, ReportBuilder builder)
@@ -76,19 +76,19 @@ namespace Webfuel.Reporting
             base.Update(filter, schema);
         }
 
-        public override string GetTitle(ReportSchema schema)
+        public override string GenerateDescription(ReportSchema schema)
         {           
             if (Condition == ReportFilterStringCondition.IsEmpty)
             {
-                return $"{GetFieldName(schema)} is empty";
+                return $"{FieldName} is empty";
             }
             else if (Condition == ReportFilterStringCondition.IsNotEmpty)
             {
-                return $"{GetFieldName(schema)} is not empty";
+                return $"{FieldName} is not empty";
             }
             else
             {
-                return $"{GetFieldName(schema)} {GetConditionDescription()} '{Value}'";
+                return $"{FieldName} {GetConditionDescription()} {Value}";
             }
         }
 

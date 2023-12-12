@@ -29,9 +29,9 @@ namespace Webfuel.Reporting
             _fields.Add(field);
         }
 
-        public ReportField GetField(Guid fieldId)
+        public ReportField? GetField(Guid fieldId)
         {
-            return _fields.FirstOrDefault(p => p.Id == fieldId) ?? throw new InvalidOperationException("The specified field does not exist");
+            return _fields.FirstOrDefault(p => p.Id == fieldId);
         }
     }
 }

@@ -18,18 +18,16 @@ namespace Webfuel.Reporting
 
         public Guid FieldId { get; set; }
 
-        public override void ValidateFilter(ReportSchema schema)
-        {
-            DefaultName = GetFieldName(schema);
-            base.ValidateFilter(schema);
-        }
+        public string FieldName { get; set; } = String.Empty;
 
-        protected string GetFieldName(ReportSchema schema)
+        public override bool ValidateFilter(ReportSchema schema)
         {
-            var field = schema.Fields.FirstOrDefault(f => f.Id == FieldId);
+            var field = schema.GetField(FieldId);
             if (field == null)
-                return "Unknown Field";
-            return field.Name;
+                return false;
+
+            FieldName = field.Name;
+            return base.ValidateFilter(schema);
         }
 
         // Serialization
@@ -42,6 +40,12 @@ namespace Webfuel.Reporting
                 return reader.Read();
             }
 
+            if (String.Compare(nameof(FieldName), propertyName, true) == 0)
+            {
+                FieldName = reader.GetString() ?? String.Empty;
+                return reader.Read();
+            }
+
             return base.ReadProperty(propertyName, ref reader);
         }
 
@@ -49,6 +53,7 @@ namespace Webfuel.Reporting
         {
             base.WriteProperties(writer);
             writer.WriteString("fieldId", FieldId);
+            writer.WriteString("fieldName", FieldName);
         }
     }
 }

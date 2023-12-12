@@ -17,9 +17,9 @@ namespace Webfuel.Reporting
 
         public bool Value { get; set; } = true;
 
-        public override void ValidateFilter(ReportSchema schema)
+        public override bool ValidateFilter(ReportSchema schema)
         {
-            base.ValidateFilter(schema);
+            return base.ValidateFilter(schema);
         }
 
         public override async Task<bool> Apply(object context, ReportBuilder builder)
@@ -45,9 +45,9 @@ namespace Webfuel.Reporting
             base.Update(filter, schema);
         }
 
-        public override string GetTitle(ReportSchema schema)
+        public override string GenerateDescription(ReportSchema schema)
         {
-            return $"{GetFieldName(schema)} is {(Value ? "True" : "False")}";
+            return $"{FieldName} is {(Value ? "True" : "False")}";
         }
 
         // Serialization

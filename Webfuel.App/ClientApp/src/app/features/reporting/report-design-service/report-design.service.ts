@@ -49,5 +49,24 @@ export class ReportDesignService {
   deleteFilter(schema: ReportSchema, design: ReportDesign, filter: ReportFilter) {
     return this.deleteReportFilterDialog.open({ schema: schema, design: design, filter: filter });
   }
+
+  // Helpers
+
+  findFilter(filterId: string, filters: ReportFilter[]): ReportFilter | null {
+    for (const filter of filters) {
+      if (filter.id === filterId) {
+        return filter;
+      }
+
+      if (filter.filterType === ReportFilterType.Group) {
+        const group = <ReportFilterGroup>filter;
+        const childFilter = this.findFilter(filterId, group.filters);
+        if (childFilter) {
+          return childFilter;
+        }
+      }
+    }
+    return null;
+  }
 }
 

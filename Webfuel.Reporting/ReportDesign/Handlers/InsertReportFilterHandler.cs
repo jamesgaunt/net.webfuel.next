@@ -45,6 +45,8 @@ namespace Webfuel.Reporting
                 return new ReportFilterExpression();
 
             var field = schema.GetField(request.FieldId);
+            if (field == null)
+                throw new ValidationException($"The specified field does not exist");
 
             return field.FieldType switch
             {

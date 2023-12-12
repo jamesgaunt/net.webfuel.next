@@ -28,12 +28,12 @@ namespace Webfuel.Reporting
 
         public double Value { get; set; }
 
-        public override void ValidateFilter(ReportSchema schema)
+        public override bool ValidateFilter(ReportSchema schema)
         {
             if (!Enum.IsDefined(Condition))
                 Condition = ReportFilterNumberCondition.EqualTo;
 
-            base.ValidateFilter(schema);
+            return  base.ValidateFilter(schema);
         }
 
         public override async Task<bool> Apply(object context, ReportBuilder builder)
@@ -75,9 +75,9 @@ namespace Webfuel.Reporting
             base.Update(filter, schema);
         }
 
-        public override string GetTitle(ReportSchema schema)
+        public override string GenerateDescription(ReportSchema schema)
         {
-            return $"{GetFieldName(schema)} {GetConditionDescription()} {Value}";
+            return $"{FieldName} {GetConditionDescription()} {Value}";
         }
 
         string GetConditionDescription()
@@ -99,6 +99,7 @@ namespace Webfuel.Reporting
         {
             if (String.Compare(nameof(Condition), propertyName, true) == 0)
             {
+                Condition = (ReportFilterNumberCondition)reader.GetInt32();
                 return reader.Read();
             }
 

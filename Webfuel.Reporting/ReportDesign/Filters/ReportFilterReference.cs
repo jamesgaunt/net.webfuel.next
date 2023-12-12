@@ -25,12 +25,12 @@ namespace Webfuel.Reporting
 
         public List<Guid> Value { get; set; } = new List<Guid>();
 
-        public override void ValidateFilter(ReportSchema schema)
+        public override bool ValidateFilter(ReportSchema schema)
         {
             if (!Enum.IsDefined(Condition))
                 Condition = ReportFilterReferenceCondition.OneOf;
 
-            base.ValidateFilter(schema);
+            return base.ValidateFilter(schema);
         }
 
         public override async Task<bool> Apply(object context, ReportBuilder builder)
@@ -64,9 +64,9 @@ namespace Webfuel.Reporting
             base.Update(filter, schema);
         }
 
-        public override string GetTitle(ReportSchema schema)
+        public override string GenerateDescription(ReportSchema schema)
         {
-            return $"{GetFieldName(schema)} {GetConditionDescription()} ...";
+            return $"{FieldName} {GetConditionDescription()} ...";
         }
 
         string GetConditionDescription()

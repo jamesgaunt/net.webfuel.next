@@ -60,7 +60,7 @@
             <span cdkDragHandle>
               <i class="fas fa-fw fa-bars"></i>
             </span>
-            {{ filter.title }}
+            {{ filter.description }}
           </div>
           <div class="column is-right is-narrow">
             <a class="link is-success" (click)="addFilter(filter.id)" *ngIf="filter.filterType == ReportFilterType.Group">add</a>

@@ -37,11 +37,11 @@ export class UpdateReportFilterDialogComponent extends DialogComponentBase<Repor
     this.form.patchValue({
       reportProviderId: this.data.schema.reportProviderId,
       design: this.data.design,
-      filter: this.data.filter
+      filter: this.data.filter,
     });
-    this.form.patchValue(this.data.filter);
-    this.form.controls.name.valueChanges.subscribe((s) => this.form.value.filter!.name = s);
-    this.form.controls.description.valueChanges.subscribe((s) => this.form.value.filter!.description = s);
+
+    if ((<any>this.data.filter).fieldName)
+      this.fieldName = (<any>this.data.filter).fieldName;
   }
 
   ReportFilterType = ReportFilterType;
@@ -50,10 +50,9 @@ export class UpdateReportFilterDialogComponent extends DialogComponentBase<Repor
     reportProviderId: new FormControl('', { validators: [Validators.required], nonNullable: true }),
     design: new FormControl<ReportDesign>(null!, { validators: [Validators.required], nonNullable: true }),
     filter: new FormControl<ReportFilter>(null!, { validators: [Validators.required], nonNullable: true }),
-
-    name: new FormControl<string>('', { nonNullable: true }),
-    description: new FormControl<string>('', { nonNullable: true }),
   });
+
+  fieldName: string | null = null;
 
   save() {
     if (this.formService.hasErrors(this.form))

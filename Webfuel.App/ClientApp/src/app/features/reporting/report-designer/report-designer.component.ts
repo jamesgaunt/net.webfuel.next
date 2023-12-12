@@ -11,7 +11,7 @@ import { ReportFilterType } from '../../../api/api.enums';
 @Component({
   selector: 'report-designer',
   templateUrl: './report-designer.component.html',
-  styleUrls: [ './report-designer.component.scss'],
+  styleUrls: ['./report-designer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
@@ -72,7 +72,7 @@ export class ReportDesignerComponent implements ControlValueAccessor, OnInit {
     var currentIndex = <number>$event.currentIndex;
     var previousIndex = <number>$event.previousIndex;
 
-    // Client side only, reordring stuff can't really break anything
+    // Client side only, reordering stuff can't really break anything
     const item = this.design.columns.splice(previousIndex, 1);
     this.design.columns.splice(currentIndex, 0, item[0]);
 
@@ -85,7 +85,15 @@ export class ReportDesignerComponent implements ControlValueAccessor, OnInit {
     this.reportDesignService.insertFilter(this.schema, this.design, parentId || null).subscribe((design) => {
       this.design = design;
       this.emitChanges();
-   });
+
+      var filter = this.reportDesignService.findFilter(design.latestFilterId, design.filters);
+      if (filter) {
+        this.reportDesignService.updateFilter(this.schema, this.design, filter).subscribe((design) => {
+          this.design = design;
+          this.emitChanges();
+        });
+      }
+    });
   }
 
   editFilter(filter: ReportFilter) {
@@ -106,7 +114,7 @@ export class ReportDesignerComponent implements ControlValueAccessor, OnInit {
     var currentIndex = <number>$event.currentIndex;
     var previousIndex = <number>$event.previousIndex;
 
-    // Client side only, reordring stuff can't really break anything
+    // Client side only, reordering stuff can't really break anything
     const item = filters.splice(previousIndex, 1);
     filters.splice(currentIndex, 0, item[0]);
 

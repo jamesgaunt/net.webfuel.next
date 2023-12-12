@@ -70,7 +70,10 @@ namespace Webfuel.Reporting
         public Task<QueryResult<ReportReference>> QueryReferenceField(Guid reportProviderId, Guid fieldId, Query query)
         {
             var provider = GetReportProvider(reportProviderId);
+
             var field = provider.Schema.GetField(fieldId);
+            if(field == null)
+                throw new InvalidOperationException($"The specified field does not exist");
 
             if(field is not IReportReferenceField referenceField)
                 throw new InvalidOperationException($"Field {field.Name} is not a reference field");

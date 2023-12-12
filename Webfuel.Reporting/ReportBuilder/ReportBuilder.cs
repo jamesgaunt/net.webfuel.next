@@ -234,6 +234,9 @@ namespace Webfuel.Reporting
                 .GetReportSchema(Request.ReportProviderId)
                 .GetField(column.FieldId);
 
+            if (field == null)
+                return Task.FromResult<object?>(null);
+
             return field.Extract(item, this);
         }
 

@@ -16,7 +16,10 @@ namespace Webfuel.Reporting
         public Task<ReportDesign> Handle(InsertReportColumn request, CancellationToken cancellationToken)
         {
             var schema = _reportDesignService.GetReportSchema(request.ReportProviderId);
+
             var field = schema.GetField(request.FieldId);
+            if (field == null)
+                throw new Exception($"The specified field does not exist");
 
             request.Design.InsertColumn(new ReportColumn
             {

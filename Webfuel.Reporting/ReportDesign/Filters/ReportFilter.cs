@@ -13,25 +13,21 @@ namespace Webfuel.Reporting
 
         public string Name { get; set; } = String.Empty;
 
-        public string DefaultName { get; set; } = String.Empty;
-
-        public string Title { get; set; } = String.Empty;
-
         public string Description { get; set; } = String.Empty;
         
-        public virtual void ValidateFilter(ReportSchema schema)
+        public virtual bool ValidateFilter(ReportSchema schema)
         {
-            Title = GetTitle(schema);
+            Description = GenerateDescription(schema);
+            return true;
         }
 
         public abstract Task<bool> Apply(object context, ReportBuilder builder);
 
-        public abstract string GetTitle(ReportSchema schema);
+        public abstract string GenerateDescription(ReportSchema schema);
 
         public virtual void Update(ReportFilter filter, ReportSchema schema)
         {
             Name = filter.Name;
-            Description = filter.Description;
         }
 
         // Serialization
@@ -50,18 +46,6 @@ namespace Webfuel.Reporting
                 return reader.Read();
             }
 
-            if (String.Compare(nameof(DefaultName), propertyName, true) == 0)
-            {
-                DefaultName = reader.GetString() ?? String.Empty;
-                return reader.Read();
-            }
-
-            if (String.Compare(nameof(Title), propertyName, true) == 0)
-            {
-                Title = reader.GetString() ?? String.Empty;
-                return reader.Read();
-            }
-
             if (String.Compare(nameof(Description), propertyName, true) == 0)
             {
                 Description = reader.GetString() ?? String.Empty;
@@ -75,8 +59,6 @@ namespace Webfuel.Reporting
         {
             writer.WriteString("id", Id.ToString());
             writer.WriteString("name", Name);
-            writer.WriteString("defaultName", DefaultName);
-            writer.WriteString("title", Title);
             writer.WriteString("description", Description);
         }
     }

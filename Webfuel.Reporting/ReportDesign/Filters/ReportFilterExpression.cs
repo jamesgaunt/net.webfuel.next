@@ -15,10 +15,9 @@ namespace Webfuel.Reporting
 
         public string Expression { get; set; } = String.Empty;
 
-        public override void ValidateFilter(ReportSchema schema)
+        public override bool ValidateFilter(ReportSchema schema)
         {
-            DefaultName = "Custom Expression";
-            base.ValidateFilter(schema);
+            return base.ValidateFilter(schema);
         }
 
         public override Task<bool> Apply(object context, ReportBuilder builder)
@@ -35,9 +34,11 @@ namespace Webfuel.Reporting
             base.Update(filter, schema);
         }
 
-        public override string GetTitle(ReportSchema schema)
+        public override string GenerateDescription(ReportSchema schema)
         {
-            return $"{Expression}";
+            if (String.IsNullOrWhiteSpace(Expression))
+                return "Custom Expression";
+            return Expression;
         }
 
         // Serialization

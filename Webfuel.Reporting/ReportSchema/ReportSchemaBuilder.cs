@@ -2,6 +2,7 @@
 using Microsoft.VisualBasic.FileIO;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
 
 namespace Webfuel.Reporting
 {
@@ -245,7 +246,26 @@ namespace Webfuel.Reporting
 
         static string SplitCamelCase(string input)
         {
-            return System.Text.RegularExpressions.Regex.Replace(input, "([A-Z])", " $1", System.Text.RegularExpressions.RegexOptions.Compiled).Trim();
+            var result = new StringBuilder();
+
+            for(var i = 0; i < input.Length; i++)
+            {
+                if(i == 0)
+                {
+                    result.Append(input[i]);
+                    continue;
+                }
+
+                if (char.IsUpper(input[i]) && char.IsLower(input[i - 1]))
+                    result.Append(" ");
+
+                else if (char.IsUpper(input[i]) && i < input.Length - 1 && char.IsLower(input[i + 1]))
+                    result.Append(" ");
+
+                result.Append(input[i]);
+            }
+
+            return result.ToString();
         }
     }
 }

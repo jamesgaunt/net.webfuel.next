@@ -10,7 +10,7 @@
       <option [ngValue]="ReportFilterStringCondition.IsNotEmpty">is not empty</option>
     </select>
   </div>
-  <div class="field">
+  <div class="field" *ngIf="form.value.condition != ReportFilterStringCondition.IsEmpty && form.value.condition != ReportFilterStringCondition.IsNotEmpty">
     <label class="label">Value</label>
     <input type="text" class="input" placeholder="optional" formControlName="value" />
   </div>

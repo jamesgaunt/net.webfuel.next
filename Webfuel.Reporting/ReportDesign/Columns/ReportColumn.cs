@@ -9,6 +9,8 @@ namespace Webfuel.Reporting
 
         public Guid FieldId { get; set; }
 
+        public string FieldName { get; set; } = String.Empty;
+
         public string Title { get; set; } = String.Empty;
 
         // TODO:
@@ -19,10 +21,14 @@ namespace Webfuel.Reporting
 
         public string? Expression { get; set; }
 
-
-        public virtual void ValidateColumn(ReportSchema schema)
+        internal bool ValidateColumn(ReportSchema schema)
         {
-            // TODO: Description / Calcuation information
+            var field = schema.GetField(FieldId);
+            if (field == null)
+                return false;
+
+            FieldName = field.Name;
+            return true;
         }
     }
 }

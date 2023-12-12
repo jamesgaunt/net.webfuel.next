@@ -28,19 +28,21 @@ namespace Webfuel.Reporting
 
         public List<ReportFilter> Filters { get; set; } = new List<ReportFilter>();
 
-        public override void ValidateFilter(ReportSchema schema)
+        public override bool ValidateFilter(ReportSchema schema)
         {
             if (!Enum.IsDefined(Condition))
                 Condition = ReportFilterGroupCondition.All;
 
-            foreach (var filter in Filters)
-                filter.ValidateFilter(schema);
+            foreach (var filter in Filters) {
+                if (!filter.ValidateFilter(schema))
+                    filter.Id = Guid.Empty;
+            }
+            Filters.RemoveAll(f => f.Id == Guid.Empty);
 
-            DefaultName = "Group";
-            base.ValidateFilter(schema);
+            return base.ValidateFilter(schema);
         }
 
-        public override string GetTitle(ReportSchema schema)
+        public override string GenerateDescription(ReportSchema schema)
         {
             return $"{GetConditionDescription()} of these conditions are true";
         }

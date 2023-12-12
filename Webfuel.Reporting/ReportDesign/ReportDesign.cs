@@ -16,9 +16,11 @@ namespace Webfuel.Reporting
 
         public List<ReportColumn> Columns { get; set; } = new List<ReportColumn>();
 
-        internal ReportColumn GetColumn(Guid id)
+        public Guid LatestColumnId { get; set; }
+
+        internal ReportColumn? GetColumn(Guid id)
         {
-            return Columns.FirstOrDefault(c => c.Id == id) ?? throw new InvalidOperationException("The specified column does not exist");
+            return Columns.FirstOrDefault(c => c.Id == id);
         }
 
         internal ReportColumn InsertColumn(ReportColumn column)
@@ -27,17 +29,23 @@ namespace Webfuel.Reporting
                 column.Id = Guid.NewGuid();
 
             Columns.Add(column);
+            LatestColumnId = column.Id;
             return column;
         }
 
         internal void DeleteColumn(Guid id)
         {
-            Columns.Remove(GetColumn(id));
+            var column = GetColumn(id);
+            if (column == null)
+                return;
+            Columns.Remove(column);
         }
 
         // Filters
 
         public List<ReportFilter> Filters { get; set; } = new List<ReportFilter>();
+
+        public Guid LatestFilterId { get; set; }
 
         internal ReportFilter? GetFilter(Guid id)
         {
@@ -51,10 +59,10 @@ namespace Webfuel.Reporting
                 if (filter.Id == id)
                     return (filter, null);
 
-                if(filter is ReportFilterGroup group)
+                if (filter is ReportFilterGroup group)
                 {
                     var result = GetFilterWithGroup(id, group);
-                    if(result != null)
+                    if (result != null)
                         return result;
                 }
             }
@@ -83,10 +91,12 @@ namespace Webfuel.Reporting
             if (filter.Id == Guid.Empty)
                 filter.Id = Guid.NewGuid();
 
-            if(group != null)
+            if (group != null)
                 group.Filters.Add(filter);
             else
                 Filters.Add(filter);
+
+            LatestFilterId = filter.Id;
             return filter;
         }
 
@@ -107,12 +117,16 @@ namespace Webfuel.Reporting
         public void ValidateDesign(ReportSchema schema)
         {
             foreach (var column in Columns)
-                column.ValidateColumn(schema);
+            {
+                if (!column.ValidateColumn(schema))
+                    column.FieldId = Guid.Empty; // Flag for deletion
+            }
+            Columns.RemoveAll(c => c.FieldId == Guid.Empty);
 
             foreach (var filter in Filters)
+            {
                 filter.ValidateFilter(schema);
+            }
         }
-
-
     }
 }

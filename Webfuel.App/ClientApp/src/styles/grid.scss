@@ -5,6 +5,10 @@
   gap: var(--gap);
   margin-bottom: var(--gap);
 
+  .grid {
+      margin-bottom: 0;
+  }
+
   &.has-columns-2 {
     grid-template-columns: repeat(2, 1fr);
   }
