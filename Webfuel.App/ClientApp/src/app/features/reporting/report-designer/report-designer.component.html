@@ -35,36 +35,48 @@
     <div class="column">
       <div class="field">
         <label class="label">Filters</label>
-        <div class="report-slots" cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="dropFilter($event)" [cdkDropListDisabled]="false">
-          <div class="report-slot" *ngFor="let filter of design.filters" cdkDrag>
-            <div class="columns">
-              <div class="column">
-                <span cdkDragHandle>
-                  <i class="fas fa-fw fa-bars"></i>
-                </span>
-                {{ filter.name || filter.defaultName }}
-              </div>
-              <div class="column is-right is-narrow">
-                <a class="link is-primary" (click)="editFilter(filter)">edit</a>
-                &nbsp;
-                <a class="link is-danger" (click)="deleteFilter(filter)">delete</a>
-              </div>
-            </div>
-          </div>
-          <div class="report-slot" *ngIf="design.filters.length == 0">
+        <div class="report-slots" *ngIf="design.filters.length == 0">
+          <div class="report-slot">
             There are no filters specified on this report.
           </div>
         </div>
+        <ng-container *ngIf="design.filters.length > 0"
+                      [ngTemplateOutlet]="filters"
+                      [ngTemplateOutletContext]="{ $implicit: design.filters }">
+        </ng-container>
         <button class="button" (click)="addFilter()">Add Filter</button>
       </div>
     </div>
-
   </div>
-
-
-
 </div>
 
 
-
-
+<ng-template #filters let-filters>
+  <div class="report-slots" cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="dropFilter($event)" [cdkDropListDisabled]="false">
+    <div *ngFor="let filter of filters" cdkDrag>
+      <div class="report-slot">
+        <div class="columns">
+          <div class="column">
+            <span cdkDragHandle>
+              <i class="fas fa-fw fa-bars"></i>
+            </span>
+            {{ filter.name || filter.defaultName }}
+          </div>
+          <div class="column is-right is-narrow">
+            <a class="link is-success" (click)="addFilter(filter.id)" *ngIf="filter.filterType == ReportFilterType.Group">add</a>
+            &nbsp;
+            <a class="link is-primary" (click)="editFilter(filter)">edit</a>
+            &nbsp;
+            <a class="link is-danger" (click)="deleteFilter(filter)">delete</a>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="filter.filterType == ReportFilterType.Group" style="padding-left: 2rem">
+        <ng-container *ngIf="filter.filters.length > 0"
+                      [ngTemplateOutlet]="filters"
+                      [ngTemplateOutletContext]="{ $implicit: filter.filters }">
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-template>

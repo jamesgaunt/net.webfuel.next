@@ -38,8 +38,8 @@ export class ReportDesignService {
 
   // Filters
 
-  insertFilter(schema: ReportSchema, design: ReportDesign) {
-    return this.insertReportFilterDialog.open({ schema: schema, design: design })
+  insertFilter(schema: ReportSchema, design: ReportDesign, parentId: string | null) {
+    return this.insertReportFilterDialog.open({ schema: schema, design: design, parentId: parentId })
   }
 
   updateFilter(schema: ReportSchema, design: ReportDesign, filter: ReportFilter) {

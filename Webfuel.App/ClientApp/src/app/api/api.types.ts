@@ -912,6 +912,7 @@ export interface InsertReportFilter {
     reportProviderId: string;
     design: ReportDesign;
     fieldId: string;
+    parentId: string | null | null;
 }
 
 export interface UpdateReportFilter {

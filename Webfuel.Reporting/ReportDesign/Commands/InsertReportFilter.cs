@@ -14,5 +14,7 @@ namespace Webfuel.Reporting
         public required ReportDesign Design { get; init; }
 
         public required Guid FieldId { get; init; }
+
+        public Guid? ParentId { get; init; }
     }
 }

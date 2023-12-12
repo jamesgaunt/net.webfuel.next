@@ -17,7 +17,19 @@ namespace Webfuel.Reporting
             var schema = _reportDesignService.GetReportSchema(request.ReportProviderId);
 
             var filter = MapReportFilter(schema, request);
-            request.Design.InsertFilter(filter);
+
+
+            if(request.ParentId.HasValue)
+            {
+                var parent = request.Design.GetFilter(request.ParentId.Value);
+                if(parent is not ReportFilterGroup group)
+                    throw new ValidationException($"Parent filter  group with id {request.ParentId} not found");
+                group.Filters.Add(filter);
+            }
+            else
+            {
+                request.Design.Filters.Add(filter);
+            }
 
             request.Design.ValidateDesign(schema);
             return Task.FromResult(request.Design);

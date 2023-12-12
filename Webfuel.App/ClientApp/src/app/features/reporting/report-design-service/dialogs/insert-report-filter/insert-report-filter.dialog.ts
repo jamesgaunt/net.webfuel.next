@@ -10,6 +10,7 @@ import { ReportDesignApi } from '../../../../../api/report-design.api';
 import { ReportFilterTypeIdentifiers } from '../../../../../api/api.enums';
 
 export interface InsertReportFilterDialogData {
+  parentId: string | null;
   schema: ReportSchema;
   design: ReportDesign;
 }
@@ -54,6 +55,7 @@ export class InsertReportFilterDialogComponent extends DialogComponentBase<Repor
     reportProviderId: new FormControl('', { validators: [Validators.required], nonNullable: true }),
     design: new FormControl<ReportDesign>(null!, { validators: [Validators.required], nonNullable: true }),
     fieldId: new FormControl('', { validators: [Validators.required], nonNullable: true }),
+    parentId: new FormControl<string | null>(null),
   });
 
   fields: ReportField[] = [];

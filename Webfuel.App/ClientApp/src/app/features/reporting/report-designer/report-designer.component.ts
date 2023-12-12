@@ -6,6 +6,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { noop } from 'rxjs';
 import _ from 'shared/common/underscore';
 import { ReportDesignService } from '../report-design-service/report-design.service';
+import { ReportFilterType } from '../../../api/api.enums';
 
 @Component({
   selector: 'report-designer',
@@ -34,6 +35,8 @@ export class ReportDesignerComponent implements ControlValueAccessor, OnInit {
 
   ngOnInit() {
   }
+
+  ReportFilterType = ReportFilterType;
 
   @Input({ required: true })
   schema!: ReportSchema;
@@ -78,8 +81,8 @@ export class ReportDesignerComponent implements ControlValueAccessor, OnInit {
 
   // Filters
 
-  addFilter() {
-    this.reportDesignService.insertFilter(this.schema, this.design).subscribe((design) => {
+  addFilter(parentId?: string) {
+    this.reportDesignService.insertFilter(this.schema, this.design, parentId || null).subscribe((design) => {
       this.design = design;
       this.emitChanges();
    });
