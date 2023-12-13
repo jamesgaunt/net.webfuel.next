@@ -2,12 +2,18 @@ export enum ReportFilterType {
     String = 10,
     Number = 20,
     Boolean = 30,
-    DateTime = 40,
     Date = 50,
     Reference = 200,
-    ReferenceList = 210,
     Group = 1000,
     Expression = 2000,
+}
+
+export enum ReportFilterDateCondition {
+    EqualTo = 10,
+    LessThan = 20,
+    LessThanOrEqualTo = 30,
+    GreaterThan = 40,
+    GreaterThanOrEqualTo = 50,
 }
 
 export enum ReportFilterGroupCondition {
@@ -134,6 +140,17 @@ export interface ReportFilterField extends ReportFilter {
     description: string;
 }
 
+export interface ReportFilterDate extends ReportFilterField {
+    filterType: ReportFilterType;
+    condition: ReportFilterDateCondition;
+    value: string;
+    fieldId: string;
+    fieldName: string;
+    id: string;
+    name: string;
+    description: string;
+}
+
 export interface ReportFilterExpression extends ReportFilter {
     filterType: ReportFilterType;
     expression: string;
@@ -218,13 +235,10 @@ export interface ReportPropertyField extends ReportField {
     fieldType: ReportFieldType;
 }
 
-export interface ReportReferenceField<TEntity> extends ReportField, IReportReferenceField {
+export interface ReportReferenceField extends ReportField {
     id: string;
     name: string;
     fieldType: ReportFieldType;
-}
-
-export interface IReportReferenceField {
 }
 
 export interface DashboardModel {
@@ -930,12 +944,6 @@ export interface DeleteReportFilter {
 export interface ReportSchema {
     reportProviderId: string;
     fields: Array<ReportField>;
-}
-
-export interface ReportReference {
-    id: string;
-    name: string;
-    entity: any;
 }
 
 export interface QueryReportReference {

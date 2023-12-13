@@ -46,14 +46,16 @@ namespace Webfuel.Domain
             return result.TotalCount;
         }
 
-        public async Task<QueryResult<ReportReference>> QueryReferenceField(Guid fieldId, Query query)
+        public Task<QueryResult<object>> QueryReferenceField(Guid fieldId, Query query)
         {
             var field = Schema.GetField(fieldId);
+            if(field == null)
+                throw new InvalidOperationException($"Field {fieldId} not found");
 
-            if (field is not IReportReferenceField referenceField)
+            if (field is not ReportReferenceField referenceField)
                 throw new InvalidOperationException($"Field {field.Name} is not a reference field");
 
-            return await referenceField.QueryReference(query, _serviceProvider);
+            return referenceField.GetMapper(_serviceProvider).Query(query);
         }
 
         public ReportSchema Schema

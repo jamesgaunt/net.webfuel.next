@@ -40,6 +40,8 @@ TODO:
 
 > User title optional
 
+> Project Summary Service (cached project summaries for user interface enrichment)
+
 > Remove Iframe resizer, not needed any more
 
 > Tab selection of controls (think it's kinda important now) - mainly dates to do

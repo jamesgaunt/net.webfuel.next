@@ -13,7 +13,7 @@ namespace Webfuel.Tools.Datafuel
         public static void GenerateStaticDataReferenceProvider(SchemaEntity entity)
         {
 
-            File.WriteAllText(entity.GeneratedDirectory + $@"\{entity.Name}\{entity.Name}ReportReferenceProvider.cs", Reference(entity));
+            File.WriteAllText(entity.GeneratedDirectory + $@"\{entity.Name}\{entity.Name}ReportMapper.cs", Reference(entity));
         }
 
         static string Reference(SchemaEntity entity)
@@ -24,45 +24,47 @@ namespace Webfuel.Tools.Datafuel
 
             sb.Write($@"namespace Webfuel.Domain.StaticData
 {{
-    [Service(typeof(IReportReferenceProvider<{entity.Name}>))]
-    internal class {entity.Name}ReportReferenceProvider : IReportReferenceProvider<{entity.Name}>
+    [Service(typeof(IReportMapper<{entity.Name}>))]
+    internal class {entity.Name}ReportMapper : IReportMapper<{entity.Name}>
     {{
         private readonly I{entity.Name}Repository _repository;
         private readonly IStaticDataCache _staticDataCache;
 
-        public {entity.Name}ReportReferenceProvider(I{entity.Name}Repository repository, IStaticDataCache staticDataCache)
+        public {entity.Name}ReportMapper(I{entity.Name}Repository repository, IStaticDataCache staticDataCache)
         {{
             _repository = repository;
             _staticDataCache = staticDataCache;
         }}
 
-        public async Task<ReportReference?> Get(Guid id)
+        public async Task<object?> Get(Guid id)
         {{
             var staticData = await _staticDataCache.GetStaticData();
-            var entity = staticData.{entity.Name}.FirstOrDefault(x => x.Id == id);
-
-            return entity == null ? null : new ReportReference
-            {{
-                Id = entity.Id,
-                Name = entity.Name,
-                Entity = entity
-            }};
+            return staticData.{entity.Name}.FirstOrDefault(x => x.Id == id);
         }}
 
-        public async Task<QueryResult<ReportReference>> Query(Query query)
+        public async Task<QueryResult<object>> Query(Query query)
         {{
             var result = await _repository.Query{entity.Name}(query);
 
-            return new QueryResult<ReportReference>
+            return new QueryResult<object>
             {{
                 TotalCount = result.TotalCount,
-                Items = result.Items.Select(x => new ReportReference
-                {{
-                    Id = x.Id,
-                    Name = x.Name,
-                    Entity = x
-                }}).ToList()
+                Items = result.Items
             }};
+        }}
+
+        public Guid Id(object reference)
+        {{
+            if (reference is not {entity.Name} entity)
+                throw new Exception($""Cannot get id of type {{reference.GetType()}}"");
+            return entity.Id;
+        }}
+
+        public string DisplayName(object reference)
+        {{
+            if (reference is not {entity.Name} entity)
+                throw new Exception($""Cannot get display name of type {{reference.GetType()}}"");
+            return entity.Name;
         }}
     }}
 }}");

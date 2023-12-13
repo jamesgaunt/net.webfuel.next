@@ -95,7 +95,7 @@ namespace Webfuel.Reporting
             if (Mapping == null)
                 throw new ArgumentException("Mapping is null");
 
-            Schema.AddField(new ReportReferenceField<TContext>
+            Schema.AddField(new ReportReferenceField
             {
                 Id = id,
                 Name = name ?? Mapping.Name,
@@ -113,7 +113,7 @@ namespace Webfuel.Reporting
             var mapping = new ReportMapping<TEntity>
             {
                 Accessor = o => expr.Compile()((TContext)o),
-                Mapping = Mapping,
+                ParentMapping = Mapping,
                 Name = GetExprName(expr)
             };
             return new ReportSchemaBuilder<TEntity>(Schema, mapping);
@@ -124,7 +124,7 @@ namespace Webfuel.Reporting
             var mapping = new ReportMapping<TEntity>
             {
                 Accessor = o => expr.Compile()((TContext)o),
-                Mapping = Mapping,
+                ParentMapping = Mapping,
                 Name = GetExprName(expr)
             };
             return new ReportSchemaBuilder<TEntity>(Schema, mapping);

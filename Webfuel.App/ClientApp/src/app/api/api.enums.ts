@@ -18,12 +18,18 @@ export enum ReportFilterType {
     String = 10,
     Number = 20,
     Boolean = 30,
-    DateTime = 40,
     Date = 50,
     Reference = 200,
-    ReferenceList = 210,
     Group = 1000,
     Expression = 2000,
+}
+
+export enum ReportFilterDateCondition {
+    EqualTo = 10,
+    LessThan = 20,
+    LessThanOrEqualTo = 30,
+    GreaterThan = 40,
+    GreaterThanOrEqualTo = 50,
 }
 
 export enum ReportFilterGroupCondition {

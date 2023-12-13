@@ -65,7 +65,7 @@ namespace Webfuel.App
             return reportDesignService.GetReportSchema(reportProviderId);
         }
 
-        public static Task<QueryResult<ReportReference>> QueryReferenceField([FromBody] QueryReportReference command, IReportDesignService reportDesignService)
+        public static Task<QueryResult<object>> QueryReferenceField([FromBody] QueryReportReference command, IReportDesignService reportDesignService)
         {
             return reportDesignService.QueryReferenceField(command.ReportProviderId, command.FieldId, command.Query);
         }

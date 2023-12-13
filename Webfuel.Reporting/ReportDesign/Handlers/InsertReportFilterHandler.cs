@@ -50,6 +50,8 @@ namespace Webfuel.Reporting
 
             return field.FieldType switch
             {
+                // Primatives
+
                 ReportFieldType.String =>
                     new ReportFilterString
                     {
@@ -67,6 +69,20 @@ namespace Webfuel.Reporting
                     {
                         FieldId = request.FieldId,
                     },
+
+                ReportFieldType.DateTime =>
+                    new ReportFilterDate
+                    {
+                        FieldId = request.FieldId,
+                    },
+
+                ReportFieldType.Date =>
+                    new ReportFilterDate
+                    {
+                        FieldId = request.FieldId,
+                    },
+
+                // Complex
 
                 ReportFieldType.Reference =>
                     new ReportFilterReference

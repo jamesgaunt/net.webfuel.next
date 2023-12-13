@@ -28,7 +28,7 @@ namespace Webfuel.Domain
                     nameof(Report.OwnerUserId)
                 }
             });
-            return reports.Items;
+            return reports.Items.ToList();
         }
     }
 }

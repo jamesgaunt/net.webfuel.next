@@ -21,22 +21,26 @@ namespace Webfuel.Reporting
 
         protected abstract Task<object?> Evaluate(object context, ReportBuilder builder);
 
-        internal async Task<object?> Extract(object context, ReportBuilder builder)
+        internal async Task<object?> Map(object context, ReportBuilder builder)
         {
             if (Mapping != null)
-            {
-                var temp = await Mapping.Map(context, builder);
-                if (temp == null)
-                    return null;
+                return await Mapping.Map(context, builder);
+            return context;
+        }
 
-                // If this is a reference field we can short circuit the evaluation
-                if (this is IReportReferenceField)
-                    return temp;
+        internal async Task<object?> Extract(object context, ReportBuilder builder)
+        {
+            var mapped = await Map(context, builder);
+            if(mapped == null)
+                return null;
+            return await Evaluate(mapped, builder);
+        }
 
-                context = temp.Entity;
-            }
-
-            return await Evaluate(context, builder);
+        public IReportMapper GetMapper(IServiceProvider services)
+        {
+            if (Mapping == null)
+                throw new InvalidOperationException($"Mapping is not set for field {Name}");
+            return Mapping.GetMapper(services);
         }
     }
 }

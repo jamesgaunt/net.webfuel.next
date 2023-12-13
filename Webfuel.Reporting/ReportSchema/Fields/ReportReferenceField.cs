@@ -3,30 +3,13 @@ using System.Text.Json.Serialization;
 
 namespace Webfuel.Reporting
 {
-    public interface IReportReferenceField
-    {
-        Task<ReportReference?> GetReference(Guid id, IServiceProvider services);
-
-        Task<QueryResult<ReportReference>> QueryReference(Query query, IServiceProvider services);
-    }
-
-    public class ReportReferenceField<TEntity> : ReportField, IReportReferenceField where TEntity : class
-    {
+    public class ReportReferenceField : ReportField
+    { 
         protected override Task<object?> Evaluate(object context, ReportBuilder builder)
         {
-            throw new NotImplementedException();
+            var mapper = GetMapper(builder.ServiceProvider);
+            return Task.FromResult<object?>(mapper.DisplayName(context));
         }
 
-        public async Task<ReportReference?> GetReference(Guid id, IServiceProvider services)
-        {
-            var referenceProvider = services.GetRequiredService<IReportReferenceProvider<TEntity>>();
-            return await referenceProvider.Get(id);
-        }
-
-        public async Task<QueryResult<ReportReference>> QueryReference(Query query, IServiceProvider services)
-        {
-            var referenceProvider = services.GetRequiredService<IReportReferenceProvider<TEntity>>();
-            return await referenceProvider.Query(query);
-        }
     }
 }

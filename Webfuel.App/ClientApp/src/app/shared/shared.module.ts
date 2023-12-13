@@ -45,6 +45,7 @@ import { FileViewerDialog, FileViewerDialogComponent } from './dialogs/file-view
 import { AlertDialog, AlertDialogComponent } from './dialogs/alert/alert.dialog';
 
 // Report Filters
+import { ReportFilterDateComponent } from './report-filters/date/report-filter-date.component';
 import { ReportFilterGroupComponent } from './report-filters/group/report-filter-group.component';
 import { ReportFilterNumberComponent } from './report-filters/number/report-filter-number.component';
 import { ReportFilterStringComponent } from './report-filters/string/report-filter-string.component';
@@ -105,6 +106,7 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
     AlertDialogComponent,
 
     // Report Filters
+    ReportFilterDateComponent,
     ReportFilterGroupComponent,
     ReportFilterNumberComponent,
     ReportFilterStringComponent,
@@ -162,6 +164,7 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
     AlertDialogComponent,
 
     // Report Filters
+    ReportFilterDateComponent,
     ReportFilterGroupComponent,
     ReportFilterNumberComponent,
     ReportFilterStringComponent,

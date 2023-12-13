@@ -14,7 +14,7 @@
             TotalCount = totalCount;
         }
 
-        public List<TItem> Items { get; set; }
+        public IReadOnlyList<TItem> Items { get; set; }
 
         public int TotalCount { get; set; }
     }

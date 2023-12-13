@@ -21,7 +21,7 @@ namespace Webfuel.Reporting
 
         void ValidateDesign(Guid reportProviderId, ReportDesign design);
 
-        Task<QueryResult<ReportReference>> QueryReferenceField(Guid reportProviderId, Guid fieldId, Query query);
+        Task<QueryResult<object>> QueryReferenceField(Guid reportProviderId, Guid fieldId, Query query);
     }
 
     [Service(typeof(IReportDesignService))]
@@ -67,7 +67,7 @@ namespace Webfuel.Reporting
             design.ValidateDesign(schema);
         }
 
-        public Task<QueryResult<ReportReference>> QueryReferenceField(Guid reportProviderId, Guid fieldId, Query query)
+        public Task<QueryResult<object>> QueryReferenceField(Guid reportProviderId, Guid fieldId, Query query)
         {
             var provider = GetReportProvider(reportProviderId);
 
@@ -75,10 +75,10 @@ namespace Webfuel.Reporting
             if(field == null)
                 throw new InvalidOperationException($"The specified field does not exist");
 
-            if(field is not IReportReferenceField referenceField)
+            if(field is not ReportReferenceField referenceField)
                 throw new InvalidOperationException($"Field {field.Name} is not a reference field");
 
-            return referenceField.QueryReference(query, _serviceProvider);
+            return referenceField.GetMapper(_serviceProvider).Query(query);
         }
 
         // Helpers

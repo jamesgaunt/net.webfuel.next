@@ -39,16 +39,21 @@ namespace Webfuel.Reporting
             if (field == null)
                 return false;
 
-            var value = await field.Extract(context, builder);
-            if (value is not ReportReference reference)
+            if (field is not ReportReferenceField referenceField)
+                throw new InvalidOperationException($"Field {field.Name} is not a reference field");
+
+            var mapped = await field.Map(context, builder);
+            if(mapped == null)
                 return false;
+
+            var id = referenceField.GetMapper(builder.ServiceProvider).Id(mapped);
 
             switch (Condition)
             {
                 case ReportFilterReferenceCondition.OneOf:
-                    return Value.Contains(reference.Id);
+                    return Value.Contains(id);
                 case ReportFilterReferenceCondition.NotOneOf:
-                    return !Value.Contains(reference.Id);
+                    return !Value.Contains(id);
             }
 
             throw new InvalidOperationException($"Unknown condition {Condition}");
@@ -93,7 +98,7 @@ namespace Webfuel.Reporting
             {
                 Value = JsonSerializer.Deserialize<List<Guid>>(ref reader, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
                                        ?? new List<Guid>();
-                return true;
+                return reader.Read();
             }
 
             return base.ReadProperty(propertyName, ref reader);

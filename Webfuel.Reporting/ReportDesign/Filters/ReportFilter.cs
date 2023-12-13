@@ -80,6 +80,7 @@ namespace Webfuel.Reporting
 
             ReportFilter filter = propertyType switch
             {
+                ReportFilterType.Date => new ReportFilterDate(),
                 ReportFilterType.Group => new ReportFilterGroup(),
                 ReportFilterType.String => new ReportFilterString(),
                 ReportFilterType.Number => new ReportFilterNumber(),

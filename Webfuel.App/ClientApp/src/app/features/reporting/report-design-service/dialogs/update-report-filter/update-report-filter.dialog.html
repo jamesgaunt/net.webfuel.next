@@ -6,10 +6,12 @@
   <div class="dialog-body">
     <div class="grid">
       <div [ngSwitch]="data.filter.filterType">
-        <report-filter-group *ngSwitchCase="ReportFilterType.Group" formControlName="filter"></report-filter-group>
+        <report-filter-date *ngSwitchCase="ReportFilterType.Date" formControlName="filter"></report-filter-date>
         <report-filter-number *ngSwitchCase="ReportFilterType.Number" formControlName="filter"></report-filter-number>
         <report-filter-string *ngSwitchCase="ReportFilterType.String" formControlName="filter"></report-filter-string>
         <report-filter-boolean *ngSwitchCase="ReportFilterType.Boolean" formControlName="filter"></report-filter-boolean>
+
+        <report-filter-group *ngSwitchCase="ReportFilterType.Group" formControlName="filter"></report-filter-group>
         <report-filter-reference *ngSwitchCase="ReportFilterType.Reference" formControlName="filter" [schema]="data.schema"></report-filter-reference>
         <report-filter-expression *ngSwitchCase="ReportFilterType.Expression" formControlName="filter"></report-filter-expression>
       </div>

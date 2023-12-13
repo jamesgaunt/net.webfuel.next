@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { InsertReportColumn, ReportDesign, UpdateReportColumn, DeleteReportColumn, InsertReportFilter, UpdateReportFilter, DeleteReportFilter, ReportSchema, QueryReportReference, QueryResult, ReportReference } from './api.types';
+import { InsertReportColumn, ReportDesign, UpdateReportColumn, DeleteReportColumn, InsertReportFilter, UpdateReportFilter, DeleteReportFilter, ReportSchema, QueryReportReference, QueryResult } from './api.types';
 
 @Injectable()
 export class ReportDesignApi {
@@ -37,8 +37,8 @@ export class ReportDesignApi {
         return this.apiService.request<undefined, ReportSchema>("GET", "api/report-design/schema/" + params.reportProviderId + "", undefined, options);
     }
     
-    public queryReferenceField (body: QueryReportReference, options?: ApiOptions): Observable<QueryResult<ReportReference>> {
-        return this.apiService.request<QueryReportReference, QueryResult<ReportReference>>("POST", "api/report-design/schema/query-reference-field", body, options);
+    public queryReferenceField (body: QueryReportReference, options?: ApiOptions): Observable<QueryResult<any>> {
+        return this.apiService.request<QueryReportReference, QueryResult<any>>("POST", "api/report-design/schema/query-reference-field", body, options);
     }
 }
 
