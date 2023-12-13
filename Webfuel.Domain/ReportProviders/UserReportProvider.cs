@@ -76,8 +76,8 @@ namespace Webfuel.Domain
                         .Ref(Guid.Parse("59fe53ed-0b1f-435a-98e8-a02abaa90648"))
                         .Add(Guid.Parse("a2738dd2-173b-47f8-8fbd-0c84f5e52cef"), p => p.Name);
    
-                    bldr.Add(Guid.Parse(Guid.Parse("6fb3950e-5db7-4941-b4e2-6550705528ee").ToString()), p => p.Hidden);
-                    bldr.Add(Guid.Parse(Guid.Parse("9f8e536b-1249-4b30-9596-1c811a7c83b6").ToString()), p => p.Disabled);
+                    bldr.Add(Guid.Parse("6fb3950e-5db7-4941-b4e2-6550705528ee"), p => p.Hidden);
+                    bldr.Add(Guid.Parse("9f8e536b-1249-4b30-9596-1c811a7c83b6"), p => p.Disabled);
 
                     _schema = bldr.Schema;
                 }

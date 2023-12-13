@@ -1,12 +1,16 @@
 TODO:
 
+> Unit Tests on the Reporting Engine ( + copy over scribble tests for good measure) -  setup a solid foundation so we can dig deeper
+
+> Experiment on more features in SchemaBuilder
+
 > Soluton for filter parameterisation (assume default on/off - options for visible/locked)
 > Multi-references! Go big or small on this??
-> Get Date Filter DLS up and running
+> Get Date Filter DLS up and running (look at RDS DSL for inspiration)
 
-1. Get basic filtering working
-2. Replace ReportReference with DataSource
-3. Get references working
+1. Get basic filtering working [DONE]
+2. Replace ReportReference with DataSource [DONE = IReportMapper]
+3. Get references working [DONE]
 4. Get reference lists working
 
 > Work out the "value pipeline" for the reporting engine  (Evaluate > [Dereference] > [Transform])

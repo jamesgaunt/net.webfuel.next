@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Webfuel.Reporting
 {
+    /// <summary>
+    /// Marker interface that marks this service as the IReportMapper for a specific entity type
+    /// </summary>
     public interface IReportMapper<TEntity> : IReportMapper where TEntity : class
     {
     }
