@@ -49,7 +49,7 @@ TODO:
 
 > Tab selection of controls (think it's kinda important now) - mainly dates to do
 
-> Project Metrics Calculation (Lazy?)
+> Project Metrics Calculation (Lazy - or just rely on reporting engine now)
 
 > Change Log Utility : Format Primative (NULL -> (NONE) + on empty strings)
 
