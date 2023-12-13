@@ -28,12 +28,16 @@ namespace Webfuel.Reporting
 
         public string Value { get; set; } = String.Empty;
 
-        public override bool ValidateFilter(ReportSchema schema)
+        public override async Task<bool> Validate(ReportSchema schema, IServiceProvider services)
         {
+            if (!await base.Validate(schema, services))
+                return false;
+
             if (!Enum.IsDefined(Condition))
                 Condition = ReportFilterDateCondition.EqualTo;
 
-            return  base.ValidateFilter(schema);
+            Description = $"{FieldName} is {GetConditionDescription()} {Value}";
+            return true;
         }
 
         public override async Task<bool> Apply(object context, ReportBuilder builder)
@@ -42,7 +46,7 @@ namespace Webfuel.Reporting
             if (field == null)
                 return false;
 
-            var value = await field.Extract(context, builder);
+            var value = await field.Evaluate(context, builder);
 
             throw new NotImplementedException();
         }
@@ -57,11 +61,6 @@ namespace Webfuel.Reporting
             base.Update(filter, schema);
         }
 
-        public override string GenerateDescription(ReportSchema schema)
-        {
-            return $"{FieldName} {GetConditionDescription()} {Value}";
-        }
-
         string GetConditionDescription()
         {
             return Condition switch
@@ -71,7 +70,7 @@ namespace Webfuel.Reporting
                 ReportFilterDateCondition.LessThanOrEqualTo => "<=",
                 ReportFilterDateCondition.GreaterThan => ">",
                 ReportFilterDateCondition.GreaterThanOrEqualTo => ">=",
-                _ => "=",
+                _ => "INVALID",
             };
         }
 

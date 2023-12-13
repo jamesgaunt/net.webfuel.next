@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.InkML;
+using Irony.Ast;
 using Microsoft.VisualBasic.FileIO;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -6,6 +7,35 @@ using System.Text;
 
 namespace Webfuel.Reporting
 {
+
+    public interface IReportSchemaBuilderAdd<TContext> where TContext : class
+    {
+        ReportSchemaBuilder<TContext> Add<TField>(
+            Guid id,
+            Expression<Func<TContext, TField>> expr,
+            string? name = null,
+            ReportFieldType? fieldType = null);
+
+        ReportSchemaBuilder<TContext> Add<TField>(
+            Guid id,
+            Expression<Func<TContext, Task<TField>>> expr,
+            string? name = null,
+            ReportFieldType? fieldType = null);
+    }
+
+    public interface IReportSchemaBuilerMap<TContext> where TContext : class
+    {
+        ReportSchemaBuilder<TEntity> Map<TEntity>(Expression<Func<TContext, Guid?>> expr) where TEntity : class;
+
+        ReportSchemaBuilder<TEntity> Map<TEntity>(Expression<Func<TContext, Guid>> expr) where TEntity : class;
+    }
+    public interface IReportSchemaBuilerRef<TContext> where TContext : class
+    {
+        ReportSchemaBuilder<TContext> Ref(
+            Guid id,
+            string? name = null);
+    }
+
     public class ReportSchemaBuilder<TContext> where TContext : class
     {
         internal ReportSchemaBuilder(ReportSchema schema, ReportMapping<TContext> mapping)

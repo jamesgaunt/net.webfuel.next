@@ -17,9 +17,13 @@ namespace Webfuel.Reporting
 
         public bool Value { get; set; } = true;
 
-        public override bool ValidateFilter(ReportSchema schema)
+        public override async Task<bool> Validate(ReportSchema schema, IServiceProvider services)
         {
-            return base.ValidateFilter(schema);
+            if(!await base.Validate(schema, services))
+                return false;
+
+            Description = $"{FieldName} is {(Value ? "true" : "false")}";
+            return true;
         }
 
         public override async Task<bool> Apply(object context, ReportBuilder builder)
@@ -28,7 +32,7 @@ namespace Webfuel.Reporting
             if (field == null)
                 return false;
 
-            var value = await field.Extract(context, builder);
+            var value = await field.Evaluate(context, builder);
 
             if (value is not bool typed)
                 return false;
@@ -43,11 +47,6 @@ namespace Webfuel.Reporting
 
             Value = typed.Value;
             base.Update(filter, schema);
-        }
-
-        public override string GenerateDescription(ReportSchema schema)
-        {
-            return $"{FieldName} is {(Value ? "True" : "False")}";
         }
 
         // Serialization

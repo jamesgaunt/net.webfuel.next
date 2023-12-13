@@ -15,16 +15,13 @@ namespace Webfuel.Reporting
 
         public Task<ReportDesign> Handle(UpdateReportColumn request, CancellationToken cancellationToken)
         {
-            var schema = _reportDesignService.GetReportSchema(request.ReportProviderId);
-
             var column = request.Design.GetColumn(request.Id);
             if(column == null)
                 throw new Exception($"The specified column does not exist");
 
             column.Title = request.Title;
 
-            request.Design.ValidateDesign(schema);
-            return Task.FromResult(request.Design);
+            return _reportDesignService.ValidateDesign(request.Design);
         }
     }
 }

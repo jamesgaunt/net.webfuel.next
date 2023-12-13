@@ -27,8 +27,7 @@ namespace Webfuel.Reporting
                 Title = field.Name,
             });
 
-            request.Design.ValidateDesign(schema);
-            return Task.FromResult(request.Design);
+            return _reportDesignService.ValidateDesign(request.Design);
         }
     }
 }

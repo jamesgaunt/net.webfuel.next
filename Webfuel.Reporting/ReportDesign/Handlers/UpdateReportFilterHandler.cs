@@ -22,8 +22,8 @@ namespace Webfuel.Reporting
                 throw new ValidationException($"Filter with id {request.Filter.Id} not found");
 
             filter.Update(request.Filter, schema);
-            request.Design.ValidateDesign(schema);
-            return Task.FromResult(request.Design);
+
+            return _reportDesignService.ValidateDesign(request.Design);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Webfuel.Reporting
     [ApiType]
     public class ReportDesign
     {
-        // public Guid ReportProviderId { get; set; }
+        public Guid ReportProviderId { get; set; }
 
         // Columns
 
@@ -116,19 +116,21 @@ namespace Webfuel.Reporting
 
         // Validation
 
-        public void ValidateDesign(ReportSchema schema)
+        public async Task Validate(ReportSchema schema, IServiceProvider services)
         {
             foreach (var column in Columns)
             {
-                if (!column.ValidateColumn(schema))
+                if (!await column.Validate(schema, services))
                     column.FieldId = Guid.Empty; // Flag for deletion
             }
             Columns.RemoveAll(c => c.FieldId == Guid.Empty);
 
             foreach (var filter in Filters)
             {
-                filter.ValidateFilter(schema);
+                if(!await filter.Validate(schema, services))
+                    filter.Id = Guid.Empty; // Flag for deletion
             }
+            Filters.RemoveAll(f => f.Id == Guid.Empty);
         }
     }
 }

@@ -14,12 +14,9 @@ namespace Webfuel.Reporting
 
         public Task<ReportDesign> Handle(DeleteReportColumn request, CancellationToken cancellationToken)
         {
-            var schema = _reportDesignService.GetReportSchema(request.ReportProviderId);
-
             request.Design.DeleteColumn(request.Id);
 
-            request.Design.ValidateDesign(schema);
-            return Task.FromResult(request.Design);
+            return _reportDesignService.ValidateDesign(request.Design);
         }
     }
 }

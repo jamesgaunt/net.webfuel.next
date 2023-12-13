@@ -20,20 +20,20 @@ namespace Webfuel.Reporting
 
         public string Expression { get; set; } = String.Empty;
 
-        internal bool ValidateColumn(ReportSchema schema)
+        internal Task<bool> Validate(ReportSchema schema, IServiceProvider services)
         {
             if (FieldId == ReportColumnTypeIdentifiers.Expression)
             {
                 // TODO: Validate the expression
-                return true;
+                return Task.FromResult(true);
             }
 
             var field = schema.GetField(FieldId);
             if (field == null)
-                return false;
+                return Task.FromResult(false);
 
             FieldName = field.Name;
-            return true;
+            return Task.FromResult(true);
         }
     }
 }

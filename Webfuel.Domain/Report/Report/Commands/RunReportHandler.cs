@@ -23,7 +23,6 @@ namespace Webfuel.Domain
             return _reportDesignService.RegisterReport(new ReportRequest
             {
                 ReportName = report.Name,
-                ReportProviderId = report.ReportProviderId,
                 Design = report.Design,
                 Arguments = request.Arguments ?? new List<ReportFilter>()
             });

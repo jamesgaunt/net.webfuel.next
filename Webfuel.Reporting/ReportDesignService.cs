@@ -19,7 +19,7 @@ namespace Webfuel.Reporting
 
         Task<int> GetTotalCount(Guid reportProviderId);
 
-        void ValidateDesign(Guid reportProviderId, ReportDesign design);
+        Task<ReportDesign> ValidateDesign(ReportDesign design);
 
         Task<QueryResult<object>> QueryReferenceField(Guid reportProviderId, Guid fieldId, Query query);
     }
@@ -44,7 +44,7 @@ namespace Webfuel.Reporting
 
         public ReportStep RegisterReport(ReportRequest request)
         {
-            var provider = GetReportProvider(request.ReportProviderId);
+            var provider = GetReportProvider(request.Design.ReportProviderId);
             var builder = provider.GetReportBuilder(request);
             return _reportGeneratorService.RegisterReport(builder);
         }
@@ -61,10 +61,11 @@ namespace Webfuel.Reporting
             return provider.GetTotalCount();
         }
 
-        public void ValidateDesign(Guid reportProviderId, ReportDesign design)
+        public async Task<ReportDesign> ValidateDesign(ReportDesign design)
         {
-            var schema = GetReportSchema(reportProviderId);
-            design.ValidateDesign(schema);
+            var schema = GetReportSchema(design.ReportProviderId);
+            await design.Validate(schema, _serviceProvider);
+            return design;
         }
 
         public Task<QueryResult<object>> QueryReferenceField(Guid reportProviderId, Guid fieldId, Query query)

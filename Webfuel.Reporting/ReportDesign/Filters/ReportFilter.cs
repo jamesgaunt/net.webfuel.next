@@ -14,20 +14,16 @@ namespace Webfuel.Reporting
         public string Name { get; set; } = String.Empty;
 
         public string Description { get; set; } = String.Empty;
-        
-        public virtual bool ValidateFilter(ReportSchema schema)
-        {
-            Description = GenerateDescription(schema);
-            return true;
-        }
-
+       
         public abstract Task<bool> Apply(object context, ReportBuilder builder);
-
-        public abstract string GenerateDescription(ReportSchema schema);
 
         public virtual void Update(ReportFilter filter, ReportSchema schema)
         {
             Name = filter.Name;
+        }
+        public virtual Task<bool> Validate(ReportSchema schema, IServiceProvider services)
+        {
+            return Task.FromResult(true);
         }
 
         // Serialization

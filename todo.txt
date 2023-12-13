@@ -1,7 +1,5 @@
 TODO:
 
-> Report Design to include ReportProviderId
-> Async Design Validation => Check and describe reference values
 > Soluton for filter parameterisation (assume default on/off - options for visible/locked)
 > Multi-references! Go big or small on this??
 > Get Date Filter DLS up and running
@@ -13,11 +11,7 @@ TODO:
 
 > Work out the "value pipeline" for the reporting engine  (Evaluate > [Dereference] > [Transform])
 
-> [SORT OUT REFERENCE/REFERENCELIST/MAPPING AND THE REST SHOULD FALL INTO PLACE]
-
 > [Non-selectable fields - control mappings?]
-
-> Reference - static data vs complex type (e.g. Project)
 
 > Prototype Complex Filter : Reference => Guid / Guids
 
@@ -64,12 +58,6 @@ TODO:
 > Remove IStaticDataWithFreeText (leave Has method with lambda)
 
 ----- Future ------
-
-Integrate Scribble
-
-Integrate Excel Generation (start with ClosedXML - but fully wrapped)
-
-Prototype Report Generation
 
 Activity/History Log
 

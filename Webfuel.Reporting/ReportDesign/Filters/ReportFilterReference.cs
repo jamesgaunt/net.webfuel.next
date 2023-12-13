@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,12 +26,49 @@ namespace Webfuel.Reporting
 
         public List<Guid> Value { get; set; } = new List<Guid>();
 
-        public override bool ValidateFilter(ReportSchema schema)
+        public override async Task<bool> Validate(ReportSchema schema, IServiceProvider services)
         {
+            if (!await base.Validate(schema, services))
+                return false;
+
             if (!Enum.IsDefined(Condition))
                 Condition = ReportFilterReferenceCondition.OneOf;
 
-            return base.ValidateFilter(schema);
+            var valueDescription = new StringBuilder();
+            if (Value.Count > 0)
+            {
+                var field = schema.GetField(FieldId);
+                if (field == null)
+                    return false;
+
+                var mapper = field.GetMapper(services);
+                if (mapper == null)
+                    return false;
+
+                for (var i = 0; i < Value.Count; i++)
+                {
+                    var entity = await mapper.Get(Value[i]);
+                    if (entity == null)
+                    {
+                        Value[i] = Guid.Empty; // flag for deletion
+                        continue;
+                    }
+
+                    var name = mapper.DisplayName(entity);
+                    if (valueDescription.Length > 0)
+                        valueDescription.Append(", ");
+
+                    valueDescription.Append(name);
+                }
+                Value.RemoveAll(v => v == Guid.Empty);
+            }
+            if (Value.Count == 0)
+            {
+                valueDescription.Append("(empty list)");
+            }
+
+            Description = $"{FieldName} is {GetConditionDescription()} {valueDescription}";
+            return true;
         }
 
         public override async Task<bool> Apply(object context, ReportBuilder builder)
@@ -43,7 +81,7 @@ namespace Webfuel.Reporting
                 throw new InvalidOperationException($"Field {field.Name} is not a reference field");
 
             var mapped = await field.Map(context, builder);
-            if(mapped == null)
+            if (mapped == null)
                 return false;
 
             var id = referenceField.GetMapper(builder.ServiceProvider).Id(mapped);
@@ -69,17 +107,12 @@ namespace Webfuel.Reporting
             base.Update(filter, schema);
         }
 
-        public override string GenerateDescription(ReportSchema schema)
-        {
-            return $"{FieldName} {GetConditionDescription()} ...";
-        }
-
         string GetConditionDescription()
         {
             return Condition switch
             {
-                ReportFilterReferenceCondition.OneOf => "One of",
-                ReportFilterReferenceCondition.NotOneOf => "Not one of",
+                ReportFilterReferenceCondition.OneOf => "one of",
+                ReportFilterReferenceCondition.NotOneOf => "not one of",
                 _ => "One of",
             };
         }

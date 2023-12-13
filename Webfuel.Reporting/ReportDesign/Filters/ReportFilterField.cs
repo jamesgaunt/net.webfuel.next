@@ -20,14 +20,14 @@ namespace Webfuel.Reporting
 
         public string FieldName { get; set; } = String.Empty;
 
-        public override bool ValidateFilter(ReportSchema schema)
+        public override Task<bool> Validate(ReportSchema schema, IServiceProvider services)
         {
             var field = schema.GetField(FieldId);
             if (field == null)
-                return false;
-
+                return Task.FromResult(false);
             FieldName = field.Name;
-            return base.ValidateFilter(schema);
+
+            return base.Validate(schema, services);
         }
 
         // Serialization

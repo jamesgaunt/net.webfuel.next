@@ -19,7 +19,7 @@ namespace Webfuel.Reporting
 
         public required ReportFieldType FieldType { get; init; }
 
-        protected abstract Task<object?> Evaluate(object context, ReportBuilder builder);
+        protected abstract Task<object?> EvaluateImpl(object context, ReportBuilder builder);
 
         internal async Task<object?> Map(object context, ReportBuilder builder)
         {
@@ -28,12 +28,12 @@ namespace Webfuel.Reporting
             return context;
         }
 
-        internal async Task<object?> Extract(object context, ReportBuilder builder)
+        internal async Task<object?> Evaluate(object context, ReportBuilder builder)
         {
             var mapped = await Map(context, builder);
             if (mapped == null)
                 return null;
-            return await Evaluate(mapped, builder);
+            return await EvaluateImpl(mapped, builder);
         }
 
         public IReportMapper GetMapper(IServiceProvider services)

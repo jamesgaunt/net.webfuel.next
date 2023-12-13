@@ -28,13 +28,22 @@ namespace Webfuel.Reporting
         public ReportFilterStringCondition Condition { get; set; } = ReportFilterStringCondition.Contains;
 
         public string Value { get; set; } = String.Empty;
-                
-        public override bool ValidateFilter(ReportSchema schema)
+
+        public override async Task<bool> Validate(ReportSchema schema, IServiceProvider services)
         {
+            if (!await base.Validate(schema, services))
+                return false;
+
             if (!Enum.IsDefined(Condition))
                 Condition = ReportFilterStringCondition.Contains;
 
-            return base.ValidateFilter(schema);
+            Description = Condition switch
+            {
+                ReportFilterStringCondition.IsEmpty => $"{FieldName} is empty",
+                ReportFilterStringCondition.IsNotEmpty => $"{FieldName} is not empty",
+                _ => $"{FieldName} {GetConditionDescription()} {(String.IsNullOrEmpty(Value) ? "(empty string)" : Value)}",
+            };
+            return true;
         }
 
         public override async Task<bool> Apply(object context, ReportBuilder builder)
@@ -43,7 +52,7 @@ namespace Webfuel.Reporting
             if (field == null)
                 return false;
 
-            var value = await field.Extract(context, builder);
+            var value = await field.Evaluate(context, builder);
 
             var typed = value?.ToString() ?? String.Empty;
 
@@ -74,22 +83,6 @@ namespace Webfuel.Reporting
             Value = typed.Value;
             Condition = typed.Condition;
             base.Update(filter, schema);
-        }
-
-        public override string GenerateDescription(ReportSchema schema)
-        {           
-            if (Condition == ReportFilterStringCondition.IsEmpty)
-            {
-                return $"{FieldName} is empty";
-            }
-            else if (Condition == ReportFilterStringCondition.IsNotEmpty)
-            {
-                return $"{FieldName} is not empty";
-            }
-            else
-            {
-                return $"{FieldName} {GetConditionDescription()} {Value}";
-            }
         }
 
         string GetConditionDescription()

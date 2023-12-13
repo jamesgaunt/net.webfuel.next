@@ -32,8 +32,7 @@ namespace Webfuel.Reporting
                 request.Design.InsertFilter(filter, null);
             }
 
-            request.Design.ValidateDesign(schema);
-            return Task.FromResult(request.Design);
+            return _reportDesignService.ValidateDesign(request.Design);
         }
 
         ReportFilter MapReportFilter(ReportSchema schema, InsertReportFilter request)

@@ -28,33 +28,32 @@ namespace Webfuel.Reporting
 
         public List<ReportFilter> Filters { get; set; } = new List<ReportFilter>();
 
-        public override bool ValidateFilter(ReportSchema schema)
+        public override async Task<bool> Validate(ReportSchema schema, IServiceProvider services)
         {
+            if (!await base.Validate(schema, services))
+                return false;
+
             if (!Enum.IsDefined(Condition))
                 Condition = ReportFilterGroupCondition.All;
 
             foreach (var filter in Filters) {
-                if (!filter.ValidateFilter(schema))
+                if (!await filter.Validate(schema, services))
                     filter.Id = Guid.Empty;
             }
             Filters.RemoveAll(f => f.Id == Guid.Empty);
 
-            return base.ValidateFilter(schema);
-        }
-
-        public override string GenerateDescription(ReportSchema schema)
-        {
-            return $"{GetConditionDescription()} of these conditions are true";
+            Description = $"{GetConditionDescription()} of the following are true:";
+            return true;
         }
 
         string GetConditionDescription()
         {
             return Condition switch
             {
-                ReportFilterGroupCondition.All => "All",
-                ReportFilterGroupCondition.Any => "Any",
-                ReportFilterGroupCondition.None => "None",
-                _ => "All",
+                ReportFilterGroupCondition.All => "all",
+                ReportFilterGroupCondition.Any => "any",
+                ReportFilterGroupCondition.None => "none",
+                _ => "INVALID",
             };
         }
 

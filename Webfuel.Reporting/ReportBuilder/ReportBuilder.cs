@@ -47,7 +47,7 @@ namespace Webfuel.Reporting
             {
                 if(_schema == null) { 
                     _schema = ServiceProvider.GetRequiredService<IReportDesignService>()
-                        .GetReportSchema(Request.ReportProviderId);
+                        .GetReportSchema(Request.Design.ReportProviderId);
                 }
                 return _schema;
             }
@@ -56,12 +56,12 @@ namespace Webfuel.Reporting
 
         public async Task<IEnumerable<object>> QueryItems(int skip, int take)
         {
-            return await ServiceProvider.GetRequiredService<IReportDesignService>().QueryItems(Request.ReportProviderId, StageCount, ItemsPerLoad);
+            return await ServiceProvider.GetRequiredService<IReportDesignService>().QueryItems(Request.Design.ReportProviderId, StageCount, ItemsPerLoad);
         }
 
         public async Task<int> GetTotalCount()
         {
-            return await ServiceProvider.GetRequiredService<IReportDesignService>().GetTotalCount(Request.ReportProviderId);
+            return await ServiceProvider.GetRequiredService<IReportDesignService>().GetTotalCount(Request.Design.ReportProviderId);
         }
 
         public override async Task GenerateReport()
@@ -231,13 +231,13 @@ namespace Webfuel.Reporting
         public virtual Task<object?> EvaluateColumn(object item, ReportColumn column)
         {
             var field = ServiceProvider.GetRequiredService<IReportDesignService>()
-                .GetReportSchema(Request.ReportProviderId)
+                .GetReportSchema(Request.Design.ReportProviderId)
                 .GetField(column.FieldId);
 
             if (field == null)
                 return Task.FromResult<object?>(null);
 
-            return field.Extract(item, this);
+            return field.Evaluate(item, this);
         }
 
         public override ReportResult RenderReport()

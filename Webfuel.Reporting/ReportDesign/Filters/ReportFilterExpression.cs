@@ -15,9 +15,13 @@ namespace Webfuel.Reporting
 
         public string Expression { get; set; } = String.Empty;
 
-        public override bool ValidateFilter(ReportSchema schema)
+        public override async Task<bool> Validate(ReportSchema schema, IServiceProvider services)
         {
-            return base.ValidateFilter(schema);
+            if (!await base.Validate(schema, services))
+                return false;
+
+            Description = String.IsNullOrWhiteSpace(Expression) ? "(empty expression)" : Expression;
+            return true;
         }
 
         public override Task<bool> Apply(object context, ReportBuilder builder)
@@ -32,13 +36,6 @@ namespace Webfuel.Reporting
 
             Expression = typed.Expression;
             base.Update(filter, schema);
-        }
-
-        public override string GenerateDescription(ReportSchema schema)
-        {
-            if (String.IsNullOrWhiteSpace(Expression))
-                return "Custom Expression";
-            return Expression;
         }
 
         // Serialization
