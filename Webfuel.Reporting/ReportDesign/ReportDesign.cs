@@ -12,6 +12,8 @@ namespace Webfuel.Reporting
     [ApiType]
     public class ReportDesign
     {
+        // public Guid ReportProviderId { get; set; }
+
         // Columns
 
         public List<ReportColumn> Columns { get; set; } = new List<ReportColumn>();

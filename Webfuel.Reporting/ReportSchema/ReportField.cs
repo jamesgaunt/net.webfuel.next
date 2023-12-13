@@ -31,7 +31,7 @@ namespace Webfuel.Reporting
         internal async Task<object?> Extract(object context, ReportBuilder builder)
         {
             var mapped = await Map(context, builder);
-            if(mapped == null)
+            if (mapped == null)
                 return null;
             return await Evaluate(mapped, builder);
         }

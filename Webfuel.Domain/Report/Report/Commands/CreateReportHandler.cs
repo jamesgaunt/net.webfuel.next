@@ -21,7 +21,7 @@ namespace Webfuel.Domain
                 Name = request.Name,
                 ReportGroupId = request.ReportGroupId,
                 ReportProviderId = request.ReportProviderId,
-                Design = new ReportDesign()
+                Design = new ReportDesign() // { ReportProviderId = request.ReportProviderId },
             };
 
             report.OwnerUserId = _identityAccessor.User?.Id ?? throw new DomainException("Unable to create report without identity context");

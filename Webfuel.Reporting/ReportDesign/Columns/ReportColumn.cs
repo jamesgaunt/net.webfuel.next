@@ -1,5 +1,4 @@
-﻿using DocumentFormat.OpenXml.Office2010.Excel;
-
+﻿
 namespace Webfuel.Reporting
 {
     [ApiType]
@@ -19,10 +18,16 @@ namespace Webfuel.Reporting
 
         public string Format { get; set; } = String.Empty;
 
-        public string? Expression { get; set; }
+        public string Expression { get; set; } = String.Empty;
 
         internal bool ValidateColumn(ReportSchema schema)
         {
+            if (FieldId == ReportColumnTypeIdentifiers.Expression)
+            {
+                // TODO: Validate the expression
+                return true;
+            }
+
             var field = schema.GetField(FieldId);
             if (field == null)
                 return false;

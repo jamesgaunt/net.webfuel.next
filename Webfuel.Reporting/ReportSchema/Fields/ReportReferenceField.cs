@@ -10,6 +10,5 @@ namespace Webfuel.Reporting
             var mapper = GetMapper(builder.ServiceProvider);
             return Task.FromResult<object?>(mapper.DisplayName(context));
         }
-
     }
 }

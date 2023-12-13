@@ -1,10 +1,15 @@
 TODO:
 
+> Report Design to include ReportProviderId
+> Async Design Validation => Check and describe reference values
+> Soluton for filter parameterisation (assume default on/off - options for visible/locked)
+> Multi-references! Go big or small on this??
+> Get Date Filter DLS up and running
+
 1. Get basic filtering working
 2. Replace ReportReference with DataSource
 3. Get references working
 4. Get reference lists working
-
 
 > Work out the "value pipeline" for the reporting engine  (Evaluate > [Dereference] > [Transform])
 

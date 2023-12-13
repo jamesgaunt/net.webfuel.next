@@ -10,8 +10,6 @@
         Boolean = 30,
         DateTime = 40,
         Date = 50,
-
         Reference = 1000,
-        Expression = 1020,
     }
 }

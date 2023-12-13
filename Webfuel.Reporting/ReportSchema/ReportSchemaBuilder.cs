@@ -70,21 +70,6 @@ namespace Webfuel.Reporting
             return this;
         }
 
-        // Add Scribble Expression
-        public ReportSchemaBuilder<TContext> Add(
-            Guid id,
-            string name,
-            string scribble)
-        {
-            Schema.AddField(new ReportExpressionField<TContext>(scribble)
-            {
-                Id = id,
-                Name = name,
-                FieldType = ReportFieldType.Expression,
-            });
-            return this;
-        }
-
         /////////////////////////////////////////////////////////////////////////////
         // References 
 

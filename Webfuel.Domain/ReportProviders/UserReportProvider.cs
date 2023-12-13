@@ -56,10 +56,6 @@ namespace Webfuel.Domain
                     bldr.Add(Guid.Parse("54f8f29e-926b-4b26-a0d5-cb08f4fcdf09"), p => p.FirstName);
                     bldr.Add(Guid.Parse("755f3b11-3df9-4bd9-97ba-883a45f0fcf5"), p => p.LastName);
 
-                    bldr.Add(Guid.Parse("6fbdb961-0cc8-4852-92fe-efba4e60c930"),
-                        name: "Email Plus",
-                        scribble: "Email + \" Plus\"");
-
                     bldr.Map<UserGroup>(p => p.UserGroupId)
                         .Ref(Guid.Parse("fafbe3e6-14f2-42c3-b702-88d0178e720b"))
                         .Add(Guid.Parse("7e6f3ce5-2a0b-4b9c-a364-4b3c4a8f4c3c"), p => p.Name)
