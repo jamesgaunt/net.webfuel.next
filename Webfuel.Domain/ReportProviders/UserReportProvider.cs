@@ -43,6 +43,13 @@ namespace Webfuel.Domain
             return result.TotalCount;
         }
 
+        // Schema
+
+        public string FullName(User user)
+        {
+            return "The Awesome " + user.FirstName + " " + user.LastName;
+        }
+
         public ReportSchema Schema
         {
             get

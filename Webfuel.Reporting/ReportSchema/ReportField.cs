@@ -19,7 +19,7 @@ namespace Webfuel.Reporting
 
         public required ReportFieldType FieldType { get; init; }
 
-        protected abstract Task<object?> EvaluateImpl(object context, ReportBuilder builder);
+        protected abstract Task<object?> GetValue(object context, ReportBuilder builder);
 
         internal async Task<object?> Map(object context, ReportBuilder builder)
         {
@@ -33,13 +33,13 @@ namespace Webfuel.Reporting
             var mapped = await Map(context, builder);
             if (mapped == null)
                 return null;
-            return await EvaluateImpl(mapped, builder);
+            return await GetValue(mapped, builder);
         }
 
         public IReportMapper GetMapper(IServiceProvider services)
         {
             if (Mapping == null)
-                throw new InvalidOperationException($"Mapping is not set for field {Name}");
+                throw new InvalidOperationException($"Field {Name} is not a mapped field.");
             return Mapping.GetMapper(services);
         }
     }

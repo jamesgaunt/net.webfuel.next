@@ -10,8 +10,9 @@ namespace Webfuel.Tests.Reporting
     public class SchemaMessageTests
     {
         [Fact]
-        public async Task Tests()
+        public Task Tests()
         {
+            return Task.CompletedTask;
         }
     }
 }

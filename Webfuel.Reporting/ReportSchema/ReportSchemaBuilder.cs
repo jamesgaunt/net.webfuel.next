@@ -23,7 +23,7 @@ namespace Webfuel.Reporting
             };
         }
 
-        public static ReportSchemaBuilder<TContext> Create(Guid reportProviderId) 
+        public static ReportSchemaBuilder<TContext> Create(Guid reportProviderId)
         {
             return new ReportSchemaBuilder<TContext>(reportProviderId);
         }
@@ -58,7 +58,7 @@ namespace Webfuel.Reporting
             string name,
             Func<TContext, Task<TField>> accessor)
         {
-            Schema.AddField(new ReportMethodField
+            Schema.AddField(new ReportAsyncField
             {
                 Id = id,
                 Name = name,
@@ -66,6 +66,13 @@ namespace Webfuel.Reporting
                 Mapping = Mapping,
                 FieldType = MapFieldType(typeof(TField)),
             });
+            return this;
+        }
+
+        // Add Custom Field
+        public ReportSchemaBuilder<TContext> Add(ReportField field)
+        {
+            Schema.AddField(field);
             return this;
         }
 
@@ -121,6 +128,9 @@ namespace Webfuel.Reporting
         {
             var type = UnwrapBaseType(clrType);
 
+            if(type == typeof(string))
+                return ReportFieldType.String;
+
             if (IsNumericType(type))
                 return ReportFieldType.Number;
 
@@ -133,7 +143,7 @@ namespace Webfuel.Reporting
             if (type == typeof(bool))
                 return ReportFieldType.Boolean;
 
-            return ReportFieldType.String;
+            throw new InvalidOperationException("Cannot map type " + type.FullName + " to a report field type.");
         }
 
         static Type UnwrapBaseType(Type type)
@@ -184,9 +194,9 @@ namespace Webfuel.Reporting
         {
             var result = new StringBuilder();
 
-            for(var i = 0; i < input.Length; i++)
+            for (var i = 0; i < input.Length; i++)
             {
-                if(i == 0)
+                if (i == 0)
                 {
                     result.Append(input[i]);
                     continue;

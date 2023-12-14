@@ -7,7 +7,7 @@ namespace Webfuel.Reporting
         [JsonIgnore]
         public required Func<object, object?> Accessor { get; init; }
 
-        protected override Task<object?> EvaluateImpl(object context, ReportBuilder builder)
+        protected override Task<object?> GetValue(object context, ReportBuilder builder)
         {
             return Task.FromResult(Accessor(context));
         }
