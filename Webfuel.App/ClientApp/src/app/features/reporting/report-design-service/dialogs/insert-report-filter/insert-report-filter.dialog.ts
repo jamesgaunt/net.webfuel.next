@@ -40,16 +40,20 @@ export class InsertReportFilterDialogComponent extends DialogComponentBase<Repor
       parentId: this.data.parentId,
     })
 
-    this.fields = [{
+    _.forEach(this.data.schema.fields, (field) => {
+      if (field.filterable)
+        this.fields.push(field);
+    });
+
+    this.fields.push(<any>{
       id: ReportFilterTypeIdentifiers.Group,
       name: "Condition Group",
-      fieldType: 0
-    }, {
+    });
+
+    this.fields.push(<any>{
       id: ReportFilterTypeIdentifiers.Expression,
       name: "Expression",
-      fieldType: 0
-    },
-    ...this.data.schema.fields];
+    });
   }
 
   form = new FormGroup({

@@ -78,7 +78,8 @@ namespace Webfuel.Domain
                     bldr.Add(Guid.Parse("a1733340-097c-49ab-b0ba-f45a1f428cfc"), "RSS FTE", p => p.FullTimeEquivalentForRSS);
 
                     bldr.Map<UserDiscipline>(p => p.DisciplineIds)
-                        .Ref(Guid.Parse("32a8c15f-b8a6-4569-86c4-0b23735e38c9"), "Disciplines");
+                        .Ref(Guid.Parse("32a8c15f-b8a6-4569-86c4-0b23735e38c9"), "Disciplines")
+                        .Add(Guid.Parse("fbe6a84b-5555-4a4d-8952-6ca54d13b0a0"), "Discipline Ids", p => p.Id.ToString());
 
                     bldr.Map<Site>(p => p.SiteId)
                         .Ref(Guid.Parse("59fe53ed-0b1f-435a-98e8-a02abaa90648"), "Site")

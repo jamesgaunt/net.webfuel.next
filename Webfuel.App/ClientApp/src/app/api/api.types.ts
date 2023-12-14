@@ -52,7 +52,6 @@ export enum ReportFieldType {
     DateTime = 40,
     Date = 50,
     Reference = 1000,
-    Expression = 1020,
 }
 
 export interface ClientConfiguration {
@@ -111,7 +110,7 @@ export interface ReportColumn {
     title: string;
     width: number | null | null;
     format: string;
-    expression: string | null;
+    expression: string;
 }
 
 export interface ReportFilter {
@@ -202,43 +201,39 @@ export interface ReportFilterString extends ReportFilterField {
 }
 
 export interface ReportDesign {
+    reportProviderId: string;
     columns: Array<ReportColumn>;
     latestColumnId: string;
     filters: Array<ReportFilter>;
     latestFilterId: string;
 }
 
-export interface ReportExpressionField<TContext> extends ReportField {
+export interface ReportAsyncField extends ReportField {
     id: string;
     name: string;
     fieldType: ReportFieldType;
-}
-
-export interface ScribbleExpression<T> {
+    filterable: boolean;
 }
 
 export interface ReportField {
     id: string;
     name: string;
     fieldType: ReportFieldType;
-}
-
-export interface ReportMethodField extends ReportField {
-    id: string;
-    name: string;
-    fieldType: ReportFieldType;
+    filterable: boolean;
 }
 
 export interface ReportPropertyField extends ReportField {
     id: string;
     name: string;
     fieldType: ReportFieldType;
+    filterable: boolean;
 }
 
 export interface ReportReferenceField extends ReportField {
     id: string;
     name: string;
     fieldType: ReportFieldType;
+    filterable: boolean;
 }
 
 export interface DashboardModel {

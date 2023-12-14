@@ -14,6 +14,10 @@ export enum QueryOp {
     Or = "or",
 }
 
+export enum ReportColumnTypeIdentifiers {
+    Expression = "00000000-0000-0000-0000-000000000001",
+}
+
 export enum ReportFilterType {
     String = 10,
     Number = 20,
@@ -73,7 +77,6 @@ export enum ReportFieldType {
     DateTime = 40,
     Date = 50,
     Reference = 1000,
-    Expression = 1020,
 }
 
 export enum IsCTUTeamContributionEnum {

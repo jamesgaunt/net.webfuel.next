@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace Webfuel.Reporting
@@ -14,7 +15,21 @@ namespace Webfuel.Reporting
                 return Task.FromResult<object?>(null);
 
             if (entities.Count > 1)
-                return Task.FromResult<object?>("MULTI-VALUE NOT SUPPORTED");
+            {
+                var sb = new StringBuilder();
+                foreach (var entity in entities)
+                {
+                    var value = Accessor(entity);
+                    if (value == null)
+                        continue;
+
+                    if (sb.Length > 0)
+                        sb.Append(", ");
+
+                    sb.Append(value.ToString());
+                }
+                return Task.FromResult<object?>(sb.ToString());
+            }
 
             return Task.FromResult(Accessor(entities[0]));
         }

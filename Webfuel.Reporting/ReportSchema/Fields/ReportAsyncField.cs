@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Webfuel.Reporting
 {
@@ -13,7 +14,21 @@ namespace Webfuel.Reporting
                 return null;
 
             if (entities.Count > 1)
-                return "MULTI-VALUE NOT SUPPORTED";
+            {
+                var sb = new StringBuilder();
+                foreach (var entity in entities)
+                {
+                    var value = await Accessor(entity);
+                    if (value == null)
+                        continue;
+
+                    if (sb.Length > 0)
+                        sb.Append(", ");
+
+                    sb.Append(value.ToString());
+                }
+                return Task.FromResult<object?>(sb.ToString());
+            }
 
             return await Accessor(entities[0]);
         }
