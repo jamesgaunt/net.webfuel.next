@@ -5,15 +5,7 @@ TODO:
 > Experiment on more features in SchemaBuilder
 
 > Soluton for filter parameterisation (assume default on/off - options for visible/locked)
-> Multi-references! Go big or small on this??
 > Get Date Filter DLS up and running (look at RDS DSL for inspiration)
-
-1. Get basic filtering working [DONE]
-2. Replace ReportReference with DataSource [DONE = IReportMapper]
-3. Get references working [DONE]
-4. Get reference lists working
-
-> Work out the "value pipeline" for the reporting engine  (Evaluate > [Dereference] > [Transform])
 
 > [Non-selectable fields - control mappings?]
 

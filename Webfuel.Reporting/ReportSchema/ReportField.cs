@@ -14,26 +14,36 @@ namespace Webfuel.Reporting
 
         public required String Name { get; init; }
 
+        public required ReportFieldType FieldType { get; init; }
+
+        public bool Filterable
+        {
+            get
+            {
+                if (FieldType == ReportFieldType.Unspecified || FieldType == ReportFieldType.DateTime)
+                    return false;
+
+                if (Mapping != null && Mapping.MultiValued)
+                    return false;
+
+                return true;
+            }
+        }
+
         [JsonIgnore]
         internal IReportMapping? Mapping { get; init; }
 
-        public required ReportFieldType FieldType { get; init; }
-
-        protected abstract Task<object?> GetValue(object context, ReportBuilder builder);
-
-        internal async Task<object?> Map(object context, ReportBuilder builder)
-        {
-            if (Mapping != null)
-                return await Mapping.Map(context, builder);
-            return context;
-        }
-
         internal async Task<object?> Evaluate(object context, ReportBuilder builder)
         {
-            var mapped = await Map(context, builder);
-            if (mapped == null)
-                return null;
-            return await GetValue(mapped, builder);
+            var entities = await MapContextToEntities(context, builder);
+            return await MapEntitiesToValue(entities, builder);
+        }
+
+        internal async Task<List<object>> MapContextToEntities(object context, ReportBuilder builder)
+        {
+            return Mapping == null ?
+                new List<object> { context } :
+                await Mapping.MapContextsToEntities(new List<object> { context }, builder);
         }
 
         public IReportMapper GetMapper(IServiceProvider services)
@@ -42,5 +52,7 @@ namespace Webfuel.Reporting
                 throw new InvalidOperationException($"Field {Name} is not a mapped field.");
             return Mapping.GetMapper(services);
         }
+
+        protected abstract Task<object?> MapEntitiesToValue(List<object> entities, ReportBuilder builder);
     }
 }

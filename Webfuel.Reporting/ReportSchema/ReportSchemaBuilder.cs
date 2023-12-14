@@ -9,7 +9,7 @@ namespace Webfuel.Reporting
 {
     public class ReportSchemaBuilder<TContext> where TContext : class
     {
-        internal ReportSchemaBuilder(ReportSchema schema, ReportMapping<TContext> mapping)
+        internal ReportSchemaBuilder(ReportSchema schema, IReportMapping mapping)
         {
             Schema = schema;
             Mapping = mapping;
@@ -30,7 +30,7 @@ namespace Webfuel.Reporting
 
         public ReportSchema Schema { get; }
 
-        internal ReportMapping<TContext>? Mapping { get; set; }
+        internal IReportMapping? Mapping { get; set; }
 
         /////////////////////////////////////////////////////////////////////////////
         // Add Expressions
@@ -111,9 +111,9 @@ namespace Webfuel.Reporting
         }
 
         public ReportSchemaBuilder<TEntity> Map<TEntity>(
-            Func<TContext, Guid> accessor) where TEntity : class
+            Func<TContext, List<Guid>> accessor) where TEntity : class
         {
-            var mapping = new ReportMapping<TEntity>
+            var mapping = new ReportMultiMapping<TEntity>
             {
                 Accessor = o => accessor((TContext)o),
                 ParentMapping = Mapping,

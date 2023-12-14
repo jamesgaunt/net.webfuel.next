@@ -80,11 +80,14 @@ namespace Webfuel.Reporting
             if (field is not ReportReferenceField referenceField)
                 throw new InvalidOperationException($"Field {field.Name} is not a reference field");
 
-            var mapped = await field.Map(context, builder);
-            if (mapped == null)
+            var entities = await field.MapContextToEntities(context, builder);
+            if (entities.Count == 0)
                 return false;
 
-            var id = referenceField.GetMapper(builder.ServiceProvider).Id(mapped);
+            if (entities.Count > 1)
+                throw new InvalidOperationException("Multi-value references not supported by this filter");
+
+            var id = referenceField.GetMapper(builder.ServiceProvider).Id(entities[0]);
 
             switch (Condition)
             {

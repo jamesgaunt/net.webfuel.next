@@ -3,25 +3,16 @@ using System.Text.Json.Serialization;
 
 namespace Webfuel.Reporting
 {
-    internal interface IReportMapping
-    {
-        bool MultiValued { get; }
-
-        Task<List<object>> MapContextsToEntities(List<object> contexts, ReportBuilder builder);
-
-        IReportMapper GetMapper(IServiceProvider services);
-    }
-
-    internal class ReportMapping<TEntity> : IReportMapping 
+    internal class ReportMultiMapping<TEntity> : IReportMapping 
         where TEntity : class 
     {
-        public bool MultiValued => ParentMapping?.MultiValued ?? false;
+        public bool MultiValued => true;
 
         [JsonIgnore]
         public IReportMapping? ParentMapping { get; init; }
 
         [JsonIgnore]
-        public required Func<object, Guid?> Accessor { get; init; }
+        public required Func<object, List<Guid>> Accessor { get; init; }
 
         public IReportMapper GetMapper(IServiceProvider services)
         {
@@ -39,15 +30,17 @@ namespace Webfuel.Reporting
 
             foreach (var context in contexts)
             {
-                var id = Accessor(context);
-                if (id == null)
+                var ids = Accessor(context);
+                if (ids.Count == 0)
                     continue;
 
-                var entity = await mapper.Get(id.Value);
-                if (entity == null)
-                    continue;
-
-                entities.Add(entity);
+                foreach(var id in ids)
+                {
+                    var entity = await mapper.Get(id);
+                    if (entity == null)
+                        continue;
+                    entities.Add(entity);
+                }
             }
 
             return entities;
