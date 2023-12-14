@@ -24,6 +24,8 @@ namespace Webfuel.Reporting
     {
         public override ReportFilterType FilterType => ReportFilterType.Group;
 
+        public override string DisplayName => "Group";
+
         public ReportFilterGroupCondition Condition { get; set; } = ReportFilterGroupCondition.All;
 
         public List<ReportFilter> Filters { get; set; } = new List<ReportFilter>();

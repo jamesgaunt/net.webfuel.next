@@ -18,6 +18,8 @@ namespace Webfuel.Domain
         Task<int> CountProject();
         Task<List<Project>> SelectProject();
         Task<List<Project>> SelectProjectWithPage(int skip, int take);
+        Task<List<Project>> SelectProjectByDateOfRequest(DateOnly dateOfRequest);
+        Task<List<Project>> SelectProjectByStatusId(Guid statusId);
         Task<List<Project>> SelectProjectByNumber(int number);
     }
     [Service(typeof(IProjectRepository))]
@@ -91,6 +93,24 @@ namespace Webfuel.Domain
             {
                 new SqlParameter("@Skip", skip),
                 new SqlParameter("@Take", take),
+            };
+            return await _connection.ExecuteReader<Project, ProjectMetadata>(sql, parameters);
+        }
+        public async Task<List<Project>> SelectProjectByDateOfRequest(DateOnly dateOfRequest)
+        {
+            var sql = @"SELECT * FROM [Project] WHERE DateOfRequest = @DateOfRequest ORDER BY Number DESC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@DateOfRequest", dateOfRequest),
+            };
+            return await _connection.ExecuteReader<Project, ProjectMetadata>(sql, parameters);
+        }
+        public async Task<List<Project>> SelectProjectByStatusId(Guid statusId)
+        {
+            var sql = @"SELECT * FROM [Project] WHERE StatusId = @StatusId ORDER BY Number DESC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@StatusId", statusId),
             };
             return await _connection.ExecuteReader<Project, ProjectMetadata>(sql, parameters);
         }

@@ -12,11 +12,9 @@ namespace Webfuel.Reporting
 
         public string Title { get; set; } = String.Empty;
 
-        // TODO:
-
         public double? Width { get; set; }
 
-        public string Format { get; set; } = String.Empty;
+        public bool Bold { get; set; }
 
         public string Expression { get; set; } = String.Empty;
 

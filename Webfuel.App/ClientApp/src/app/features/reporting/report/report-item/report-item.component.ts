@@ -6,6 +6,7 @@ import { ReportSchema, Report, ReportDesign } from '../../../../api/api.types';
 import { FormService } from '../../../../core/form.service';
 import { ReportDesignApi } from '../../../../api/report-design.api';
 import _ from 'shared/common/underscore';
+import { ReportLauncherDialog } from '../../../../core/dialogs/report/report-launcher.dialog';
 
 @Component({
   selector: 'report-item',
@@ -18,7 +19,8 @@ export class ReportItemComponent implements OnInit {
     private router: Router,
     private formService: FormService,
     public reportApi: ReportApi,
-    public reportDesignApi: ReportDesignApi
+    public reportDesignApi: ReportDesignApi,
+    private reportLauncherDialog: ReportLauncherDialog
   ) {
   }
 
@@ -62,4 +64,11 @@ export class ReportItemComponent implements OnInit {
   // Report Designer
 
   reportSchema!: ReportSchema;
+
+  run() {
+    this.reportApi.update(this.form.getRawValue(), { successGrowl: "Report  Updated" }).subscribe((result) => {
+      this.reset(result);
+      this.reportLauncherDialog.open({ reportId: this.item.id });
+    });
+  }
 }

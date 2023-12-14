@@ -16,5 +16,9 @@ namespace Webfuel.Reporting
         public required Guid Id { get; init; }
 
         public required string Title { get; init; }
+
+        public double? Width { get; set; }
+
+        public bool Bold { get; set; }
     }
 }

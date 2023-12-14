@@ -17,15 +17,18 @@ namespace Webfuel.Reporting
         {
             var schema = _reportDesignService.GetReportSchema(request.ReportProviderId);
 
-            var field = schema.GetField(request.FieldId);
-            if (field == null)
-                throw new Exception($"The specified field does not exist");
-
-            request.Design.InsertColumn(new ReportColumn
+            foreach(var fieldId in request.FieldIds)
             {
-                FieldId = request.FieldId,
-                Title = field.Name,
-            });
+                var field = schema.GetField(fieldId);
+                if (field == null)
+                    throw new Exception($"The specified field does not exist");
+
+                request.Design.InsertColumn(new ReportColumn
+                {
+                    FieldId = fieldId,
+                    Title = field.Name,
+                });
+            }
 
             return _reportDesignService.ValidateDesign(request.Design);
         }

@@ -8,6 +8,12 @@ export enum ReportFilterType {
     Expression = 2000,
 }
 
+export enum ReportFilterEditability {
+    None = 1,
+    Value = 10,
+    ValueAndCondition = 20,
+}
+
 export enum ReportFilterDateCondition {
     EqualTo = 10,
     LessThan = 20,
@@ -109,15 +115,17 @@ export interface ReportColumn {
     fieldName: string;
     title: string;
     width: number | null | null;
-    format: string;
+    bold: boolean;
     expression: string;
 }
 
 export interface ReportFilter {
-    filterType: ReportFilterType;
     id: string;
     name: string;
+    displayName: string;
     description: string;
+    filterType: ReportFilterType;
+    editability: ReportFilterEditability;
 }
 
 export interface ReportFilterBoolean extends ReportFilterField {
@@ -125,18 +133,22 @@ export interface ReportFilterBoolean extends ReportFilterField {
     value: boolean;
     fieldId: string;
     fieldName: string;
+    displayName: string;
     id: string;
     name: string;
     description: string;
+    editability: ReportFilterEditability;
 }
 
 export interface ReportFilterField extends ReportFilter {
     fieldId: string;
     fieldName: string;
-    filterType: ReportFilterType;
+    displayName: string;
     id: string;
     name: string;
     description: string;
+    filterType: ReportFilterType;
+    editability: ReportFilterEditability;
 }
 
 export interface ReportFilterDate extends ReportFilterField {
@@ -145,26 +157,32 @@ export interface ReportFilterDate extends ReportFilterField {
     value: string;
     fieldId: string;
     fieldName: string;
+    displayName: string;
     id: string;
     name: string;
     description: string;
+    editability: ReportFilterEditability;
 }
 
 export interface ReportFilterExpression extends ReportFilter {
     filterType: ReportFilterType;
+    displayName: string;
     expression: string;
     id: string;
     name: string;
     description: string;
+    editability: ReportFilterEditability;
 }
 
 export interface ReportFilterGroup extends ReportFilter {
     filterType: ReportFilterType;
+    displayName: string;
     condition: ReportFilterGroupCondition;
     filters: Array<ReportFilter>;
     id: string;
     name: string;
     description: string;
+    editability: ReportFilterEditability;
 }
 
 export interface ReportFilterNumber extends ReportFilterField {
@@ -173,9 +191,11 @@ export interface ReportFilterNumber extends ReportFilterField {
     value: number;
     fieldId: string;
     fieldName: string;
+    displayName: string;
     id: string;
     name: string;
     description: string;
+    editability: ReportFilterEditability;
 }
 
 export interface ReportFilterReference extends ReportFilterField {
@@ -184,9 +204,11 @@ export interface ReportFilterReference extends ReportFilterField {
     value: Array<string>;
     fieldId: string;
     fieldName: string;
+    displayName: string;
     id: string;
     name: string;
     description: string;
+    editability: ReportFilterEditability;
 }
 
 export interface ReportFilterString extends ReportFilterField {
@@ -195,9 +217,11 @@ export interface ReportFilterString extends ReportFilterField {
     value: string;
     fieldId: string;
     fieldName: string;
+    displayName: string;
     id: string;
     name: string;
     description: string;
+    editability: ReportFilterEditability;
 }
 
 export interface ReportDesign {
@@ -865,6 +889,7 @@ export interface QueryProjectTeamSupport extends Query {
 export interface Report {
     id: string;
     name: string;
+    description: string;
     design: ReportDesign;
     sortOrder: number;
     reportProviderId: string;
@@ -886,7 +911,17 @@ export interface UpdateReport {
 
 export interface RunReport {
     reportId: string;
-    arguments: Array<ReportFilter> | null;
+    arguments: Array<ReportArgument> | null;
+}
+
+export interface ReportArgument {
+    filterId: string;
+    condition: number;
+    guidsValue: Array<string>;
+    doubleValue: number | null | null;
+    stringValue: string;
+    dateValue: string | null | null;
+    booleanValue: boolean | null | null;
 }
 
 export interface QueryReport extends Query {
@@ -901,7 +936,7 @@ export interface QueryReport extends Query {
 export interface InsertReportColumn {
     reportProviderId: string;
     design: ReportDesign;
-    fieldId: string;
+    fieldIds: Array<string>;
 }
 
 export interface UpdateReportColumn {
@@ -909,6 +944,8 @@ export interface UpdateReportColumn {
     design: ReportDesign;
     id: string;
     title: string;
+    width: number | null | null;
+    bold: boolean;
 }
 
 export interface DeleteReportColumn {

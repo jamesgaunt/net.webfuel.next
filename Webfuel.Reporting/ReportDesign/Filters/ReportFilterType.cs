@@ -16,7 +16,6 @@ namespace Webfuel.Reporting
         Date = 50,
 
         Reference = 200,
-        // ReferenceList = 210,
 
         Group = 1000,
         Expression = 2000,

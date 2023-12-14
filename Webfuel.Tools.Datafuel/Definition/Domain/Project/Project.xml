@@ -27,6 +27,8 @@
 
     <!-- ========== Replicated from Support Request (Keep All Field Names Identical) ========== -->
 
+    <!-- Project Details -->
+
     <Property Name="DateOfRequest" Type="Date" />
     <Property Name="Title" Type="string[1000]" />
     <Property Name="IsFellowshipId" Type="IsFellowship?" />
@@ -89,5 +91,12 @@
     <Index Unique="false">
       <Member Name="Number" />
     </Index>
+    <Index Unique="false">
+      <Member Name="StatusId" />
+    </Index>
+    <Index Unique="false">
+      <Member Name="DateOfRequest" />
+    </Index>
+
   </Entity>
 </Schema>

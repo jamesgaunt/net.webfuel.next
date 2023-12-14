@@ -2,32 +2,28 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, forw
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { debounceTime, noop, tap } from 'rxjs';
-import { ReportFilterReference, ReportSchema } from '../../../api/api.types';
+import { ReportFilterDate, ReportFilterDateCondition, ReportFilterEditability, ReportFilterString } from '../../../../api/api.types';
 import _ from 'shared/common/underscore';
-import { ReportFilterReferenceCondition } from '../../../api/api.enums';
-import { ReportDesignApi } from '../../../api/report-design.api';
-import { IDataSource } from '../../common/data-source';
 
 @Component({
-  selector: 'report-filter-reference',
-  templateUrl: './report-filter-reference.component.html',
+  selector: 'report-filter-date',
+  templateUrl: './report-filter-date.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ReportFilterReferenceComponent),
+      useExisting: forwardRef(() => ReportFilterDateComponent),
       multi: true
     }
   ]
 })
-export class ReportFilterReferenceComponent implements ControlValueAccessor, OnInit {
+export class ReportFilterDateComponent implements ControlValueAccessor, OnInit {
 
   cd: ChangeDetectorRef = inject(ChangeDetectorRef);
 
   destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
-    private readonly reportDesignApi: ReportDesignApi
   ) {
   }
 
@@ -44,28 +40,25 @@ export class ReportFilterReferenceComponent implements ControlValueAccessor, OnI
       .subscribe();
   }
 
-  reset(filter: ReportFilterReference) {
+  reset(filter: ReportFilterDate) {
     this.filter = filter;
     this.form.patchValue(filter);
   }
 
-  referenceDataSource: IDataSource<any> = {
-    query: (query) => this.reportDesignApi.queryReferenceField({ query: query, fieldId: this.filter.fieldId, reportProviderId: this.schema.reportProviderId })
-  }
+  ReportFilterDateCondition = ReportFilterDateCondition;
 
-  ReportFilterReferenceCondition = ReportFilterReferenceCondition;
+  ReportFilterEditability = ReportFilterEditability;
 
-  filter!: ReportFilterReference;
+  filter!: ReportFilterDate;
 
   form = new FormGroup({
-    condition: new FormControl<ReportFilterReferenceCondition>(ReportFilterReferenceCondition.OneOf, { validators: [Validators.required], nonNullable: true }),
-    value: new FormControl<string[]>([])
+    name: new FormControl<string>('', { nonNullable: true }),
+    condition: new FormControl<ReportFilterDateCondition>(ReportFilterDateCondition.EqualTo),
+    value: new FormControl<string>(''),
+    editability: new FormControl<ReportFilterEditability>(ReportFilterEditability.None, { nonNullable: true })
   });
 
   // Inputs
-
-  @Input({ required: true })
-  schema!: ReportSchema;
 
   // ControlValueAccessor API
 
@@ -74,14 +67,14 @@ export class ReportFilterReferenceComponent implements ControlValueAccessor, OnI
     this.onChange(_.deepClone(this.filter));
   }
 
-  onChange: (value: ReportFilterReference) => void = noop;
+  onChange: (value: ReportFilterDate) => void = noop;
   onTouched: () => void = noop;
 
-  public writeValue(value: ReportFilterReference): void {
+  public writeValue(value: ReportFilterDate): void {
     this.reset(_.deepClone(value));
   }
 
-  public registerOnChange(fn: (value: ReportFilterReference) => void): void {
+  public registerOnChange(fn: (value: ReportFilterDate) => void): void {
     this.onChange = fn;
   }
 

@@ -1,0 +1,22 @@
+<div class="grid" [formGroup]="form">
+  <div class="field">
+    <label class="label">Name</label>
+    <input type="text" class="input" [placeholder]="filter.fieldName" formControlName="name" />
+  </div>
+  <div class="field">
+    <label class="label">Value</label>
+    <select class="select" formControlName="value">
+      <option [ngValue]="true"> is true</option>
+      <option [ngValue]="false">is false</option>
+    </select>
+  </div>
+  <div class="field">
+    <label class="label">Is this filter editable by report users?</label>
+    <select class="select" formControlName="editability">
+      <option [ngValue]="ReportFilterEditability.None">No</option>
+      <option [ngValue]="ReportFilterEditability.Value">Value is editable</option>
+    </select>
+  </div>
+</div>
+
+

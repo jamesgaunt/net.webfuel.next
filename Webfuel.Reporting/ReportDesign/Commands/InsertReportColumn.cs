@@ -13,6 +13,6 @@ namespace Webfuel.Reporting
 
         public required ReportDesign Design { get; init; }
 
-        public required Guid FieldId { get; init; }
+        public required List<Guid> FieldIds { get; init; }
     }
 }

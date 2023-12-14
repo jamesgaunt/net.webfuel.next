@@ -67,7 +67,7 @@ namespace Webfuel.Reporting
                 valueDescription.Append("(empty list)");
             }
 
-            Description = $"{FieldName} is {GetConditionDescription()} {valueDescription}";
+            Description = $"{DisplayName} is {GetConditionDescription()} {valueDescription}";
             return true;
         }
 

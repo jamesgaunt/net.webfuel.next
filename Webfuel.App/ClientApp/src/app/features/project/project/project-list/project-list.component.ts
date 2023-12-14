@@ -53,7 +53,7 @@ export class ProjectListComponent {
 
   export() {
     this.projectExportApi.initialiseReport(this.filterForm.getRawValue()).subscribe((result) => {
-      this.reportService.generateReport(result);
+      this.reportService.runReport(result);
     });
   }
 }

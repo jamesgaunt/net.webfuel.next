@@ -1,0 +1,18 @@
+<div class="dialog">
+  <div class="dialog-head is-primary">
+    {{ title }}
+  </div>
+  <div class="dialog-body">
+    <div *ngFor="let filter of filters">
+      <div class="field">
+        <label class="label">{{ filter.displayName }}</label>
+      </div>
+    </div>
+  </div>
+  <div class="dialog-buttons">
+    <button type="submit" class="is-primary" (click)="run()">Run Report</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+  </div>
+</div>
+
+

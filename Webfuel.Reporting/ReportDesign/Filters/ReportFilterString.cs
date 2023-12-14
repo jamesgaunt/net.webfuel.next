@@ -39,9 +39,9 @@ namespace Webfuel.Reporting
 
             Description = Condition switch
             {
-                ReportFilterStringCondition.IsEmpty => $"{FieldName} is empty",
-                ReportFilterStringCondition.IsNotEmpty => $"{FieldName} is not empty",
-                _ => $"{FieldName} {GetConditionDescription()} {(String.IsNullOrEmpty(Value) ? "(empty string)" : Value)}",
+                ReportFilterStringCondition.IsEmpty => $"{DisplayName} is empty",
+                ReportFilterStringCondition.IsNotEmpty => $"{DisplayName} is not empty",
+                _ => $"{DisplayName} {GetConditionDescription()} {(String.IsNullOrEmpty(Value) ? "(empty string)" : Value)}",
             };
             return true;
         }

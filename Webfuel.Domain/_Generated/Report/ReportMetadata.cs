@@ -26,6 +26,9 @@ namespace Webfuel.Domain
                     case nameof(Report.Name):
                         result.Add(new SqlParameter(nameof(Report.Name), entity.Name));
                         break;
+                    case nameof(Report.Description):
+                        result.Add(new SqlParameter(nameof(Report.Description), entity.Description));
+                        break;
                     case nameof(Report.Design):
                         result.Add(new SqlParameter(nameof(Report.Design), entity.DesignJson));
                         break;
@@ -69,6 +72,7 @@ namespace Webfuel.Domain
             {
                 yield return "Id";
                 yield return "Name";
+                yield return "Description";
                 yield return "Design";
                 yield return "SortOrder";
                 yield return "ReportProviderId";
@@ -83,6 +87,7 @@ namespace Webfuel.Domain
             {
                 yield return "Id";
                 yield return "Name";
+                yield return "Description";
                 yield return "Design";
                 yield return "SortOrder";
                 yield return "ReportProviderId";
@@ -96,6 +101,7 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Name";
+                yield return "Description";
                 yield return "Design";
                 yield return "SortOrder";
                 yield return "ReportProviderId";
@@ -110,18 +116,28 @@ namespace Webfuel.Domain
         {
             entity.Name = entity.Name ?? String.Empty;
             entity.Name = entity.Name.Trim();
+            entity.Description = entity.Description ?? String.Empty;
+            entity.Description = entity.Description.Trim();
             Validator.ValidateAndThrow(entity);
         }
         
         public static ReportRepositoryValidator Validator { get; } = new ReportRepositoryValidator();
         
         public const int Name_MaxLength = 128;
+        public const int Description_MaxLength = 1024;
         
         public static void Name_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull()
                 .MaximumLength(Name_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void Description_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(Description_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
     }
     
@@ -130,6 +146,7 @@ namespace Webfuel.Domain
         public ReportRepositoryValidator()
         {
             RuleFor(x => x.Name).Use(ReportMetadata.Name_ValidationRules);
+            RuleFor(x => x.Description).Use(ReportMetadata.Description_ValidationRules);
             Validation();
         }
         

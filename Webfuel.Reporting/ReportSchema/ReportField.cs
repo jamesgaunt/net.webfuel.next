@@ -10,6 +10,8 @@ namespace Webfuel.Reporting
     [ApiType]
     public abstract class ReportField
     {
+        // Server + Client Side
+
         public required Guid Id { get; init; }
 
         public required String Name { get; init; }
@@ -20,15 +22,14 @@ namespace Webfuel.Reporting
         {
             get
             {
-                if (FieldType == ReportFieldType.Unspecified || FieldType == ReportFieldType.DateTime)
-                    return false;
-
                 if (Mapping != null && Mapping.MultiValued)
                     return false;
 
                 return true;
             }
         }
+
+        // Server Side
 
         [JsonIgnore]
         internal IReportMapping? Mapping { get; init; }

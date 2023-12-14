@@ -45,6 +45,8 @@ export class UpdateReportColumnDialogComponent extends DialogComponentBase<Repor
     design: new FormControl<ReportDesign>(null!, { validators: [Validators.required], nonNullable: true }),
     id: new FormControl('', { validators: [Validators.required], nonNullable: true }),
     title: new FormControl<string>('', { nonNullable: true }),
+    bold: new FormControl<boolean>(false, { nonNullable: true }),
+    width: new FormControl<number | null>(null)
   });
 
   save() {

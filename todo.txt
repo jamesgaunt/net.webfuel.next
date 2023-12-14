@@ -1,27 +1,22 @@
 TODO:
 
-> Unit Tests on the Reporting Engine ( + copy over scribble tests for good measure) -  setup a solid foundation so we can dig deeper
+// Reporting
 
-> Experiment on more features in SchemaBuilder
+> Expose conditions dynamically to the UI 
 
-> Soluton for filter parameterisation (assume default on/off - options for visible/locked)
-> Get Date Filter DLS up and running (look at RDS DSL for inspiration)
+> ReportArgumentType => Union type for sending back arguments
 
-> [Non-selectable fields - control mappings?]
+> Parameterisation
 
-> Prototype Complex Filter : Reference => Guid / Guids
+> Aggregation [CAN WAIT]
 
-> Prototype Complex Filter : Mapping => On support provided filter by Project.Created date range (report reference includes entity as property)
+> Standard Exports
 
-> ReportFilterEditor (used on both)
+> Report Ownership / Access Control [CAN WAIT]
 
-> Ensure reporting enums use exhaustive switch
-
-> Is it worth supporting multi-value filters? [think it's a no]
+// Non-Reporting
 
 > Rename boolean domain poperties to use the Is prefix
-
-> ReportReference / ReportLookup  ????
 
 > Heartbeats
 

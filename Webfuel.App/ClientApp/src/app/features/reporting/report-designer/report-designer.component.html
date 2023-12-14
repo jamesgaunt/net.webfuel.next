@@ -14,7 +14,8 @@
                 <span cdkDragHandle>
                   <i class="fas fa-fw fa-bars"></i>
                 </span>
-                {{ column.title }}
+                &nbsp;
+                <span [style.font-weight]="column.bold ? 'bold' : 'normal'">{{ column.title }}</span>
               </div>
               <div class="column is-right is-narrow">
                 <a class="link is-primary" (click)="editColumn(column)">edit</a>
@@ -27,7 +28,7 @@
             There are no columns specified on this report.
           </div>
         </div>
-        <button class="button" (click)="addColumn()">Add Column</button>
+        <button class="button" (click)="addColumn()">Add Columns</button>
       </div>
     </div>
 
@@ -50,7 +51,6 @@
   </div>
 </div>
 
-
 <ng-template #filterTemplate let-filters>
   <div class="report-slots" cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="dropFilter($event, filters)" [cdkDropListDisabled]="false">
     <div *ngFor="let filter of filters" cdkDrag>
@@ -60,7 +60,10 @@
             <span cdkDragHandle>
               <i class="fas fa-fw fa-bars"></i>
             </span>
-            {{ filter.description }}
+            &nbsp;
+            <span>
+              {{ filter.description }} <i *ngIf="filter.editability != ReportFilterEditability.None" class="fas fa-pencil"></i>
+            </span>
           </div>
           <div class="column is-right is-narrow">
             <a class="link is-success" (click)="addFilter(filter.id)" *ngIf="filter.filterType == ReportFilterType.Group">add</a>

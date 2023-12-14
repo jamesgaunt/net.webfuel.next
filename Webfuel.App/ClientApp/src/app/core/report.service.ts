@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ReportApi } from '../api/report.api';
-import { ReportDialog, ReportDialogData } from './dialogs/report/report.dialog';
+import { ReportRunnerDialog, ReportRunnerDialogData } from './dialogs/report/report-runner.dialog';
 import { ReportStep } from '../api/api.types';
 import { DialogHandle } from './dialog.service';
 import { ReportGeneratorApi } from '../api/report-generator.api';
@@ -12,12 +12,12 @@ export class ReportService {
   constructor(
     private router: Router,
     private reportGeneratorApi: ReportGeneratorApi,
-    private reportDialog: ReportDialog,
+    private reportDialog: ReportRunnerDialog,
   ) { }
   
-  dialogData: ReportDialogData | null = null;
+  dialogData: ReportRunnerDialogData | null = null;
 
-  generateReport(reportStep: ReportStep) {
+  runReport(reportStep: ReportStep) {
 
     if (this.dialogData != null)
       return;
@@ -34,10 +34,10 @@ export class ReportService {
       }
     });
 
-    this._generateReport(reportStep);
+    this._runReport(reportStep);
   }
 
-  private _generateReport(reportStep: ReportStep) {
+  private _runReport(reportStep: ReportStep) {
     if (!this.dialogData)
       return;
 
@@ -49,7 +49,7 @@ export class ReportService {
         this._renderReport(result);
       } else {
         setTimeout(() => {
-          this._generateReport(result);
+          this._runReport(result);
         }, 250);
       }
     });

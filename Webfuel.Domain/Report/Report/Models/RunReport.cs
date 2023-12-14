@@ -8,6 +8,6 @@ namespace Webfuel.Domain
     {
         public required Guid ReportId { get; set; }
 
-        public List<ReportFilter>? Arguments { get; set; }
+        public List<ReportArgument>? Arguments { get; set; }
     }
 }

@@ -28,7 +28,7 @@ export class ReportRunnerComponent implements OnInit {
 
   runReport() {
     this.reportApi.run({ reportId: this.report.id, arguments: null }).subscribe((reportStep) => {
-      this.reportService.generateReport(reportStep);
+      this.reportService.runReport(reportStep);
     });
   }
 

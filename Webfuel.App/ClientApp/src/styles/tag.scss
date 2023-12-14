@@ -90,3 +90,28 @@
     justify-content: center;
   }
 }
+
+.checklist {
+
+  @include form-input;
+  display: block;
+  max-height: 20rem;
+  overflow: auto;
+  padding:  0;
+
+  > a {
+    display: flex;
+    align-content: center;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    font-size: 1rem;
+
+    &:hover {
+        background-color: #FAFAFA;
+    }
+
+    i {
+        font-size: 1.5rem;
+        margin-right: 0.5rem;
+    }
+  }
+}

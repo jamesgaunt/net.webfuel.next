@@ -2,23 +2,22 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, forw
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { debounceTime, noop, tap } from 'rxjs';
-import { ReportFilterDate, ReportFilterDateCondition, ReportFilterString } from '../../../api/api.types';
+import { ReportFilterBoolean, ReportFilterEditability } from '../../../../api/api.types';
 import _ from 'shared/common/underscore';
-import { ReportFilterStringCondition } from '../../../api/api.enums';
 
 @Component({
-  selector: 'report-filter-date',
-  templateUrl: './report-filter-date.component.html',
+  selector: 'report-filter-boolean',
+  templateUrl: './report-filter-boolean.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ReportFilterDateComponent),
+      useExisting: forwardRef(() => ReportFilterBooleanComponent),
       multi: true
     }
   ]
 })
-export class ReportFilterDateComponent implements ControlValueAccessor, OnInit {
+export class ReportFilterBooleanComponent implements ControlValueAccessor, OnInit {
 
   cd: ChangeDetectorRef = inject(ChangeDetectorRef);
 
@@ -41,18 +40,19 @@ export class ReportFilterDateComponent implements ControlValueAccessor, OnInit {
       .subscribe();
   }
 
-  reset(filter: ReportFilterDate) {
+  reset(filter: ReportFilterBoolean) {
     this.filter = filter;
     this.form.patchValue(filter);
   }
+  
+  ReportFilterEditability = ReportFilterEditability;
 
-  ReportFilterDateCondition = ReportFilterDateCondition;
-
-  filter!: ReportFilterDate;
+  filter!: ReportFilterBoolean;
 
   form = new FormGroup({
-    condition: new FormControl<ReportFilterDateCondition>(ReportFilterDateCondition.EqualTo),
-    value: new FormControl<string>('')
+    name: new FormControl<string>('', { nonNullable: true }),
+    value: new FormControl<boolean>(true, { nonNullable: true }),
+    editability: new FormControl<ReportFilterEditability>(ReportFilterEditability.None, { nonNullable: true})
   });
 
   // Inputs
@@ -64,14 +64,14 @@ export class ReportFilterDateComponent implements ControlValueAccessor, OnInit {
     this.onChange(_.deepClone(this.filter));
   }
 
-  onChange: (value: ReportFilterDate) => void = noop;
+  onChange: (value: ReportFilterBoolean) => void = noop;
   onTouched: () => void = noop;
 
-  public writeValue(value: ReportFilterDate): void {
+  public writeValue(value: ReportFilterBoolean): void {
     this.reset(_.deepClone(value));
   }
 
-  public registerOnChange(fn: (value: ReportFilterDate) => void): void {
+  public registerOnChange(fn: (value: ReportFilterBoolean) => void): void {
     this.onChange = fn;
   }
 

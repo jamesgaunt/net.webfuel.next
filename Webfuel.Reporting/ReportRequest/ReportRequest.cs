@@ -12,6 +12,6 @@ namespace Webfuel.Reporting
 
         public required ReportDesign Design { get; init; }
 
-        public required List<ReportFilter> Arguments { get; init; }
+        public required List<ReportArgument> Arguments { get; init; }
     }
 }

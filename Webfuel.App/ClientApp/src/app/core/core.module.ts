@@ -20,7 +20,8 @@ import { LoginService } from './login.service';
 import { QueryService } from './query.service';
 import { UserService } from './user.service';
 import { ReportService } from './report.service';
-import { ReportDialog, ReportDialogComponent } from './dialogs/report/report.dialog';
+import { ReportRunnerDialog, ReportRunnerDialogComponent } from './dialogs/report/report-runner.dialog';
+import { ReportLauncherDialog, ReportLauncherDialogComponent } from './dialogs/report/report-launcher.dialog';
 
 @NgModule({
   imports: [
@@ -28,10 +29,12 @@ import { ReportDialog, ReportDialogComponent } from './dialogs/report/report.dia
     SharedModule,
   ],
   declarations: [
-    ReportDialogComponent
+    ReportRunnerDialogComponent,
+    ReportLauncherDialogComponent,
   ],
   exports: [
-    ReportDialogComponent
+    ReportRunnerDialogComponent,
+    ReportLauncherDialogComponent,
   ],
   providers: [
     ApiService,
@@ -47,7 +50,8 @@ import { ReportDialog, ReportDialogComponent } from './dialogs/report/report.dia
     UserService,
     ReportService,
     DeactivateService,
-    ReportDialog,
+    ReportRunnerDialog,
+    ReportLauncherDialog,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthorizationInterceptor,

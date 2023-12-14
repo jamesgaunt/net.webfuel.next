@@ -5,8 +5,17 @@
   <div class="dialog-body">
     <div class="grid">
       <div class="field">
-        <label class="label">Name</label>
-        <dropdown-select [items]="data.schema.fields" placeholder="required" formControlName="fieldId" />
+        <label class="label">
+          Select columns to add
+          <span style="float: right">
+            <a (click)="selectAll()" class="link is-success">all</a>
+            &nbsp;
+            <a (click)="selectNone()" class="link is-warning">none</a>
+          </span>
+        </label>
+        <div class="checklist">
+          <a (click)="toggleField(field)" *ngFor="let field of fields"><i class="far {{ field.selected ? 'fa-check-square' : 'fa-square' }}"></i>&nbsp;{{ field.name }}</a>
+        </div>
       </div>
     </div>
   </div>

@@ -30,6 +30,8 @@ namespace Webfuel.Reporting
             return base.Validate(schema, services);
         }
 
+        public override string DisplayName => String.IsNullOrWhiteSpace(Name) ? FieldName : Name;
+
         // Serialization
 
         public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)

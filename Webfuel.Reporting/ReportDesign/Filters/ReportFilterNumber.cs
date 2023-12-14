@@ -36,7 +36,7 @@ namespace Webfuel.Reporting
             if (!Enum.IsDefined(Condition))
                 Condition = ReportFilterNumberCondition.EqualTo;
 
-            Description = $"{FieldName} is {GetConditionDescription()} {Value}";
+            Description = $"{DisplayName} is {GetConditionDescription()} {Value}";
             return true;
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Builder;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,8 @@ namespace Webfuel.Reporting
     public class ReportFilterExpression : ReportFilter
     {
         public override ReportFilterType FilterType => ReportFilterType.Expression;
+
+        public override string DisplayName => "Expression";
 
         public string Expression { get; set; } = String.Empty;
 

@@ -1,4 +1,7 @@
-﻿using System.Text.Json;
+﻿using DocumentFormat.OpenXml.Presentation;
+using Microsoft.Identity.Client;
+using System.ComponentModel;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Webfuel.Reporting
@@ -7,19 +10,30 @@ namespace Webfuel.Reporting
     [JsonConverter(typeof(ReportFilterConverter))]
     public abstract class ReportFilter
     {
-        public abstract ReportFilterType FilterType { get; }
+        // Server + Client Side
 
         public Guid Id { get; set; }
 
         public string Name { get; set; } = String.Empty;
 
+        public abstract string DisplayName { get; }
+
         public string Description { get; set; } = String.Empty;
-       
+
+        public abstract ReportFilterType FilterType { get; }
+
+        public ReportFilterEditability Editability { get; set; } = ReportFilterEditability.None;
+
+        // public virtual IEnumerable<ReportFilterCondition> Conditions => Enumerable.Empty<ReportFilterCondition>();
+
+        // Server Side
+
         public abstract Task<bool> Apply(object context, ReportBuilder builder);
 
         public virtual void Update(ReportFilter filter, ReportSchema schema)
         {
             Name = filter.Name;
+            Editability = filter.Editability;
         }
         public virtual Task<bool> Validate(ReportSchema schema, IServiceProvider services)
         {
@@ -48,6 +62,12 @@ namespace Webfuel.Reporting
                 return reader.Read();
             }
 
+            if (String.Compare(nameof(Editability), propertyName, true) == 0)
+            {
+                Editability = (ReportFilterEditability)reader.GetInt32();
+                return reader.Read();
+            }
+
             return false;
         }
 
@@ -56,6 +76,8 @@ namespace Webfuel.Reporting
             writer.WriteString("id", Id.ToString());
             writer.WriteString("name", Name);
             writer.WriteString("description", Description);
+            writer.WriteString("displayName", DisplayName);
+            writer.WriteNumber("editability", (int)Editability);
         }
     }
 
@@ -70,7 +92,7 @@ namespace Webfuel.Reporting
             if (reader.TokenType != JsonTokenType.PropertyName || reader.GetString() != "filterType")
                 throw new JsonException();
             reader.Read();
-            
+
             var propertyType = (ReportFilterType)reader.GetInt32();
             reader.Read();
 
@@ -95,7 +117,10 @@ namespace Webfuel.Reporting
                 reader.Read();
 
                 if (!filter.ReadProperty(propertyName, ref reader))
+                {
                     reader.Skip();
+                    reader.Read();
+                }
             }
 
             return filter;

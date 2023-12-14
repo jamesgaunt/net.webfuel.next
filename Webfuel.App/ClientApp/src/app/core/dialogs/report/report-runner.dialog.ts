@@ -3,7 +3,7 @@ import { DialogBase, DialogComponentBase } from '../../../shared/common/dialog-b
 import { environment } from '../../../../environments/environment';
 import { ReportStep } from '../../../api/api.types';
 
-export interface ReportDialogData {
+export interface ReportRunnerDialogData {
   title: string;
   reportStep: ReportStep;
   downloadUrl?: string;
@@ -11,17 +11,17 @@ export interface ReportDialogData {
 }
 
 @Injectable()
-export class ReportDialog extends DialogBase<true, ReportDialogData> {
-  open(data: ReportDialogData) {
-    return this._open(ReportDialogComponent, data);
+export class ReportRunnerDialog extends DialogBase<true, ReportRunnerDialogData> {
+  open(data: ReportRunnerDialogData) {
+    return this._open(ReportRunnerDialogComponent, data);
   }
 }
 
 @Component({
-  selector: 'report-dialog',
-  templateUrl: './report.dialog.html'
+  selector: 'report-runner-dialog',
+  templateUrl: './report-runner.dialog.html'
 })
-export class ReportDialogComponent extends DialogComponentBase<true, ReportDialogData> {
+export class ReportRunnerDialogComponent extends DialogComponentBase<true, ReportRunnerDialogData> {
 
   constructor(
   ) {

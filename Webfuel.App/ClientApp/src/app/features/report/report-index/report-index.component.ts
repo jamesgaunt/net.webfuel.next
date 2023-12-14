@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ReportApi } from 'api/report.api';
 import { ReportGroupApi } from 'api/report-group.api';
 import { Report, ReportGroup } from '../../../api/api.types';
+import { ReportLauncherDialog } from '../../../core/dialogs/report/report-launcher.dialog';
+import { UserService } from '../../../core/user.service';
 
 @Component({
   selector: 'report-index',
@@ -13,20 +15,15 @@ export class ReportIndexComponent implements OnInit {
   constructor(
     private router: Router,
     public reportApi: ReportApi,
-    public reportGroupApi: ReportGroupApi
+    public reportGroupApi: ReportGroupApi,
+    public userService: UserService,
+    private reportLauncherDialog: ReportLauncherDialog
   ) {
   }
 
-  ngOnInit(): void {
-    this.reportApi.listHead().subscribe((result) => this.reports = result);
-    this.reportGroupApi.query({ skip: 0, take: 1000 }).subscribe((result) => this.reportGroups = result.items);
-  }
+  ngOnInit() { }
 
-  reports: Report[] = [];
-
-  reportGroups: ReportGroup[] = [];
-
-  runReport(report: Report) {
-    this.router.navigateByUrl("/report/report-runner/" + report.id);
+  launchReport(report: Report) {
+    this.reportLauncherDialog.open({ reportId: report.id });
   }
 }

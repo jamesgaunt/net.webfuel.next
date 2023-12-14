@@ -22,7 +22,7 @@ namespace Webfuel.Reporting
             if(!await base.Validate(schema, services))
                 return false;
 
-            Description = $"{FieldName} is {(Value ? "true" : "false")}";
+            Description = $"{DisplayName} is {(Value ? "true" : "false")}";
             return true;
         }
 

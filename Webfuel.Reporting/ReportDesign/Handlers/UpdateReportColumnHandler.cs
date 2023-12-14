@@ -20,6 +20,8 @@ namespace Webfuel.Reporting
                 throw new Exception($"The specified column does not exist");
 
             column.Title = request.Title;
+            column.Width = request.Width;
+            column.Bold = request.Bold;
 
             return _reportDesignService.ValidateDesign(request.Design);
         }

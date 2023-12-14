@@ -155,6 +155,12 @@ namespace Webfuel.Excel
             _column.Width = width;
             return this;
         }
+
+        public ExcelColumn SetBold(bool value)
+        {
+            _column.Style.Font.Bold = value;
+            return this;
+        }
     }
 
     public class ExcelCell

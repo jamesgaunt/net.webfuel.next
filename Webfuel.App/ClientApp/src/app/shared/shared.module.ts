@@ -44,14 +44,7 @@ import { UpdateUserActivityDialog, UpdateUserActivityDialogComponent } from './d
 import { FileViewerDialog, FileViewerDialogComponent } from './dialogs/file-viewer/file-viewer.dialog';
 import { AlertDialog, AlertDialogComponent } from './dialogs/alert/alert.dialog';
 
-// Report Filters
-import { ReportFilterDateComponent } from './report-filters/date/report-filter-date.component';
-import { ReportFilterGroupComponent } from './report-filters/group/report-filter-group.component';
-import { ReportFilterNumberComponent } from './report-filters/number/report-filter-number.component';
-import { ReportFilterStringComponent } from './report-filters/string/report-filter-string.component';
-import { ReportFilterBooleanComponent } from './report-filters/boolean/report-filter-boolean.component';
-import { ReportFilterReferenceComponent } from './report-filters/reference/report-filter-reference.component';
-import { ReportFilterExpressionComponent } from './report-filters/expression/report-filter-expression.component';
+
 
 // Misc
 import { FileBrowserComponent } from './file-browser/file-browser.component';
@@ -105,15 +98,6 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
     FileViewerDialogComponent,
     AlertDialogComponent,
 
-    // Report Filters
-    ReportFilterDateComponent,
-    ReportFilterGroupComponent,
-    ReportFilterNumberComponent,
-    ReportFilterStringComponent,
-    ReportFilterBooleanComponent,
-    ReportFilterReferenceComponent,
-    ReportFilterExpressionComponent,
-
     // Misc
     FileBrowserComponent
   ],
@@ -162,15 +146,6 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
     UpdateUserActivityDialogComponent,
     FileViewerDialogComponent,
     AlertDialogComponent,
-
-    // Report Filters
-    ReportFilterDateComponent,
-    ReportFilterGroupComponent,
-    ReportFilterNumberComponent,
-    ReportFilterStringComponent,
-    ReportFilterBooleanComponent,
-    ReportFilterReferenceComponent,
-    ReportFilterExpressionComponent,
 
     // Misc
     FileBrowserComponent

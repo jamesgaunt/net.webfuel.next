@@ -8,6 +8,16 @@
         <label class="label">Title</label>
         <input class="input" type="text" placeholder="required" formControlName="title" />
       </div>
+      <div class="grid has-columns-2">
+        <div class="field">
+          <label class="label">Width</label>
+          <input class="input" type="number" formControlName="width" placeholder="Size to contents" />
+        </div>
+        <div class="field">
+          <label class="label">Bold</label>
+          <toggle-input formControlName="bold" />
+        </div>
+      </div>
     </div>
   </div>
   <div class="dialog-buttons">

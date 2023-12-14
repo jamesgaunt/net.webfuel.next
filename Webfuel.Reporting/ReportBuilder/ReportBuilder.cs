@@ -196,6 +196,9 @@ namespace Webfuel.Reporting
                     worksheet.Column(i + 1).AdjustToContents();
                 else
                     worksheet.Column(i + 1).SetWidth(width.Value);
+
+                if (Request.Design.Columns[i].Bold)
+                    worksheet.Column(i+ 1).SetBold(true);
             }
         }
 

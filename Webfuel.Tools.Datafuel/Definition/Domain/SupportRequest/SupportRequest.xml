@@ -8,6 +8,8 @@
     <Property Name="FileStorageGroupId" Type="FileStorageGroup" Tags="ChangeLog:Ignore" />
     <Property Name="StatusId" Type="SupportRequestStatus" />
 
+    <!-- ========== Replicated to Project (Keep All Field Names Identical) ========== -->
+
     <!-- Project Details -->
 
     <Property Name="DateOfRequest" Type="Date" />
@@ -62,7 +64,9 @@
     <Property Name="LeadApplicantAgeRangeId" Type="AgeRange?" />
     <Property Name="LeadApplicantGenderId" Type="Gender?" />
     <Property Name="LeadApplicantEthnicityId" Type="Ethnicity?" />
-    
+
+    <!-- ========== /Replicated to Project (Keep All Field Names Identical) ========== -->
+
     <!-- Replicated from Project -->
     
     <Property Name="ProjectId" Type="Guid?" Tags="ChangeLog:Ignore" />

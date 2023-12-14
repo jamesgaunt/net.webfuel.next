@@ -2,23 +2,22 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, forw
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { debounceTime, noop, tap } from 'rxjs';
-import { ReportFilterGroup } from '../../../api/api.types';
+import { ReportFilterExpression } from '../../../../api/api.types';
 import _ from 'shared/common/underscore';
-import { ReportFilterGroupCondition } from '../../../api/api.enums';
 
 @Component({
-  selector: 'report-filter-group',
-  templateUrl: './report-filter-group.component.html',
+  selector: 'report-filter-expression',
+  templateUrl: './report-filter-expression.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ReportFilterGroupComponent),
+      useExisting: forwardRef(() => ReportFilterExpressionComponent),
       multi: true
     }
   ]
 })
-export class ReportFilterGroupComponent implements ControlValueAccessor, OnInit {
+export class ReportFilterExpressionComponent implements ControlValueAccessor, OnInit {
 
   cd: ChangeDetectorRef = inject(ChangeDetectorRef);
 
@@ -41,17 +40,15 @@ export class ReportFilterGroupComponent implements ControlValueAccessor, OnInit 
       .subscribe();
   }
 
-  reset(filter: ReportFilterGroup) {
+  reset(filter: ReportFilterExpression) {
     this.filter = filter;
     this.form.patchValue(filter);
   }
 
-  ReportFilterGroupCondition = ReportFilterGroupCondition;
-
-  filter!: ReportFilterGroup;
+  filter!: ReportFilterExpression;
 
   form = new FormGroup({
-    condition: new FormControl<ReportFilterGroupCondition>(ReportFilterGroupCondition.All, { nonNullable: true })
+    expression: new FormControl<string>('')
   });
 
   // Inputs
@@ -63,14 +60,14 @@ export class ReportFilterGroupComponent implements ControlValueAccessor, OnInit 
     this.onChange(_.deepClone(this.filter));
   }
 
-  onChange: (value: ReportFilterGroup) => void = noop;
+  onChange: (value: ReportFilterExpression) => void = noop;
   onTouched: () => void = noop;
 
-  public writeValue(value: ReportFilterGroup): void {
+  public writeValue(value: ReportFilterExpression): void {
     this.reset(_.deepClone(value));
   }
 
-  public registerOnChange(fn: (value: ReportFilterGroup) => void): void {
+  public registerOnChange(fn: (value: ReportFilterExpression) => void): void {
     this.onChange = fn;
   }
 
