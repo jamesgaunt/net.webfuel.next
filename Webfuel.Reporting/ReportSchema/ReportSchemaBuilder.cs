@@ -7,35 +7,6 @@ using System.Text;
 
 namespace Webfuel.Reporting
 {
-
-    public interface IReportSchemaBuilderAdd<TContext> where TContext : class
-    {
-        ReportSchemaBuilder<TContext> Add<TField>(
-            Guid id,
-            Expression<Func<TContext, TField>> expr,
-            string? name = null,
-            ReportFieldType? fieldType = null);
-
-        ReportSchemaBuilder<TContext> Add<TField>(
-            Guid id,
-            Expression<Func<TContext, Task<TField>>> expr,
-            string? name = null,
-            ReportFieldType? fieldType = null);
-    }
-
-    public interface IReportSchemaBuilerMap<TContext> where TContext : class
-    {
-        ReportSchemaBuilder<TEntity> Map<TEntity>(Expression<Func<TContext, Guid?>> expr) where TEntity : class;
-
-        ReportSchemaBuilder<TEntity> Map<TEntity>(Expression<Func<TContext, Guid>> expr) where TEntity : class;
-    }
-    public interface IReportSchemaBuilerRef<TContext> where TContext : class
-    {
-        ReportSchemaBuilder<TContext> Ref(
-            Guid id,
-            string? name = null);
-    }
-
     public class ReportSchemaBuilder<TContext> where TContext : class
     {
         internal ReportSchemaBuilder(ReportSchema schema, ReportMapping<TContext> mapping)
@@ -67,17 +38,16 @@ namespace Webfuel.Reporting
         // Add Property Expression
         public ReportSchemaBuilder<TContext> Add<TField>(
             Guid id,
-            Expression<Func<TContext, TField>> expr,
-            string? name = null,
-            ReportFieldType? fieldType = null)
+            string name,
+            Func<TContext, TField> accessor)
         {
             Schema.AddField(new ReportPropertyField
             {
                 Id = id,
-                Name = name ?? GetExprName(expr),
-                Accessor = o => expr.Compile()((TContext)o),
+                Name = name,
+                Accessor = o => accessor((TContext)o),
                 Mapping = Mapping,
-                FieldType = fieldType ?? GetExprFieldType(expr),
+                FieldType = MapFieldType(typeof(TField)),
             });
             return this;
         }
@@ -85,17 +55,16 @@ namespace Webfuel.Reporting
         // Add Async Expression
         public ReportSchemaBuilder<TContext> Add<TField>(
             Guid id,
-            Expression<Func<TContext, Task<TField>>> expr,
-            string? name = null,
-            ReportFieldType? fieldType = null)
+            string name,
+            Func<TContext, Task<TField>> accessor)
         {
             Schema.AddField(new ReportMethodField
             {
                 Id = id,
-                Name = name ?? GetExprName(expr),
-                Accessor = async o => await expr.Compile()((TContext)o),
+                Name = name,
+                Accessor = async o => await accessor((TContext)o),
                 Mapping = Mapping,
-                FieldType = fieldType ?? GetExprFieldType(expr),
+                FieldType = MapFieldType(typeof(TField)),
             });
             return this;
         }
@@ -105,7 +74,7 @@ namespace Webfuel.Reporting
 
         public ReportSchemaBuilder<TContext> Ref(
             Guid id,
-            string? name = null)
+            string name)
         {
             if (Mapping == null)
                 throw new ArgumentException("Mapping is null");
@@ -113,7 +82,7 @@ namespace Webfuel.Reporting
             Schema.AddField(new ReportReferenceField
             {
                 Id = id,
-                Name = name ?? Mapping.Name,
+                Name = name,
                 Mapping = Mapping,
                 FieldType = ReportFieldType.Reference,
             });
@@ -123,78 +92,30 @@ namespace Webfuel.Reporting
         /////////////////////////////////////////////////////////////////////////////
         // Mapping
 
-        public ReportSchemaBuilder<TEntity> Map<TEntity>(Expression<Func<TContext, Guid?>> expr) where TEntity : class
+        public ReportSchemaBuilder<TEntity> Map<TEntity>(
+            Func<TContext, Guid?> accessor) where TEntity : class
         {
             var mapping = new ReportMapping<TEntity>
             {
-                Accessor = o => expr.Compile()((TContext)o),
+                Accessor = o => accessor((TContext)o),
                 ParentMapping = Mapping,
-                Name = GetExprName(expr)
             };
             return new ReportSchemaBuilder<TEntity>(Schema, mapping);
         }
 
-        public ReportSchemaBuilder<TEntity> Map<TEntity>(Expression<Func<TContext, Guid>> expr) where TEntity : class
+        public ReportSchemaBuilder<TEntity> Map<TEntity>(
+            Func<TContext, Guid> accessor) where TEntity : class
         {
             var mapping = new ReportMapping<TEntity>
             {
-                Accessor = o => expr.Compile()((TContext)o),
+                Accessor = o => accessor((TContext)o),
                 ParentMapping = Mapping,
-                Name = GetExprName(expr)
             };
             return new ReportSchemaBuilder<TEntity>(Schema, mapping);
         }
 
         /////////////////////////////////////////////////////////////////////////////
         // Helpers
-
-        string GetExprName<TProperty>(Expression<Func<TContext, TProperty>> accessor)
-        {
-            if (accessor.Body is MethodCallExpression methodCall)
-                return FormatName(methodCall.Method.Name);
-
-            if (accessor.Body is MemberExpression member)
-                return FormatName(member.Member.Name);
-
-            throw new ArgumentException(string.Format(
-                "Expression '{0}' does not refer to a field, method or property.",
-                accessor.ToString()));
-        }
-
-        ReportFieldType GetExprFieldType<TProperty>(Expression<Func<TContext, TProperty>> accessor)
-        {
-            if (accessor.Body is MethodCallExpression methodCall)
-                return MapFieldType(methodCall.Method.ReturnType);
-
-            if (accessor.Body is MemberExpression member)
-            {
-                if (member.Member is FieldInfo fieldInfo)
-                    return MapFieldType(fieldInfo.FieldType);
-
-                if (member.Member is PropertyInfo propertyInfo)
-                    return MapFieldType(propertyInfo.PropertyType);
-            }
-
-            throw new ArgumentException(string.Format(
-                "Expression '{0}' does not refer to a field, method or property.",
-                accessor.ToString()));
-        }
-
-        string FormatName(string input)
-        {
-            input = SplitCamelCase(input);
-
-            if (input.EndsWith(" Id"))
-                input = input.Substring(0, input.Length - 3);
-
-            if (input.EndsWith(" Ids"))
-                input = input.Substring(0, input.Length - 4);
-
-            if (Mapping != null)
-                input = Mapping.Name + " " + input;
-
-            return input;
-        }
 
         static ReportFieldType MapFieldType(Type clrType)
         {

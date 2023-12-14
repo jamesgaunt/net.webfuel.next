@@ -8,8 +8,6 @@ namespace Webfuel.Reporting
     {
         public bool MultiValued => false;
 
-        public required string Name { get; init; }
-
         [JsonIgnore]
         public IReportMapping? ParentMapping { get; init; }
 

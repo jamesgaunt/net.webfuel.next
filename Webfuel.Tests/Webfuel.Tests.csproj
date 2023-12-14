@@ -21,8 +21,4 @@
     <ProjectReference Include="..\Webfuel.Scribble\Webfuel.Scribble.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Reporting\" />
-  </ItemGroup>
-
 </Project>
