@@ -24,7 +24,14 @@ namespace Webfuel.Reporting
     {
         public override ReportFilterType FilterType => ReportFilterType.Date;
 
-        public ReportFilterDateCondition Condition { get; set; } = ReportFilterDateCondition.EqualTo;
+        public override IEnumerable<ReportFilterCondition> Conditions => new List<ReportFilterCondition>()
+        {
+            new ReportFilterCondition { Value = (int)ReportFilterDateCondition.EqualTo, Description = "is equal to", Unary = false },
+            new ReportFilterCondition { Value = (int)ReportFilterDateCondition.LessThan, Description = "is less than", Unary = false },
+            new ReportFilterCondition { Value = (int)ReportFilterDateCondition.LessThanOrEqualTo, Description = "is less than or equal to", Unary = false },
+            new ReportFilterCondition { Value = (int)ReportFilterDateCondition.GreaterThan, Description = "is greater than", Unary = false },
+            new ReportFilterCondition { Value = (int)ReportFilterDateCondition.GreaterThanOrEqualTo, Description = "is greater than or equal to", Unary = false },
+        };
 
         public string Value { get; set; } = String.Empty;
 
@@ -33,10 +40,7 @@ namespace Webfuel.Reporting
             if (!await base.Validate(schema, services))
                 return false;
 
-            if (!Enum.IsDefined(Condition))
-                Condition = ReportFilterDateCondition.EqualTo;
-
-            Description = $"{DisplayName} is {GetConditionDescription()} {Value}";
+            Description = $"{DisplayName} {ConditionDescription} {Value}";
             return true;
         }
 
@@ -57,33 +61,13 @@ namespace Webfuel.Reporting
                 throw new Exception($"Cannot apply filter of type {filter.FilterType} to filter of type {FilterType}");
 
             Value = typed.Value;
-            Condition = typed.Condition;
             base.Update(filter, schema);
-        }
-
-        string GetConditionDescription()
-        {
-            return Condition switch
-            {
-                ReportFilterDateCondition.EqualTo => "=",
-                ReportFilterDateCondition.LessThan => "<",
-                ReportFilterDateCondition.LessThanOrEqualTo => "<=",
-                ReportFilterDateCondition.GreaterThan => ">",
-                ReportFilterDateCondition.GreaterThanOrEqualTo => ">=",
-                _ => "INVALID",
-            };
         }
 
         // Serialization
 
         public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
         {
-            if (String.Compare(nameof(Condition), propertyName, true) == 0)
-            {
-                Condition = (ReportFilterDateCondition)reader.GetInt32();
-                return reader.Read();
-            }
-
             if (String.Compare(nameof(Value), propertyName, true) == 0)
             {
                 if (reader.TokenType == JsonTokenType.String)
@@ -100,7 +84,6 @@ namespace Webfuel.Reporting
         public override void WriteProperties(Utf8JsonWriter writer)
         {
             base.WriteProperties(writer);
-            writer.WriteNumber("condition", (int)Condition);
             writer.WriteString("value", Value);
         }
     }

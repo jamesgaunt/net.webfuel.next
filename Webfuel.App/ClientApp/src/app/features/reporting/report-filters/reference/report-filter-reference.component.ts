@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, forw
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { debounceTime, noop, tap } from 'rxjs';
-import { ReportFilterEditability, ReportFilterReference, ReportSchema } from '../../../../api/api.types';
+import { ReportFilterReference, ReportSchema } from '../../../../api/api.types';
 import _ from 'shared/common/underscore';
 import { ReportFilterReferenceCondition } from '../../../../api/api.enums';
 import { ReportDesignApi } from '../../../../api/report-design.api';
@@ -53,17 +53,13 @@ export class ReportFilterReferenceComponent implements ControlValueAccessor, OnI
     query: (query) => this.reportDesignApi.queryReferenceField({ query: query, fieldId: this.filter.fieldId, reportProviderId: this.schema.reportProviderId })
   }
 
-  ReportFilterReferenceCondition = ReportFilterReferenceCondition;
-
-  ReportFilterEditability = ReportFilterEditability;
-
   filter!: ReportFilterReference;
 
   form = new FormGroup({
     name: new FormControl<string>('', { nonNullable: true }),
+    editable: new FormControl<boolean>(false, { nonNullable: true }),
     condition: new FormControl<ReportFilterReferenceCondition>(ReportFilterReferenceCondition.OneOf, { validators: [Validators.required], nonNullable: true }),
     value: new FormControl<string[]>([]),
-    editability: new FormControl<ReportFilterEditability>(ReportFilterEditability.None, { nonNullable: true })
   });
 
   // Inputs

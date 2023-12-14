@@ -26,7 +26,12 @@ namespace Webfuel.Reporting
 
         public override string DisplayName => "Group";
 
-        public ReportFilterGroupCondition Condition { get; set; } = ReportFilterGroupCondition.All;
+        public override IEnumerable<ReportFilterCondition> Conditions => new List<ReportFilterCondition>
+        {
+            new ReportFilterCondition { Value = (int)ReportFilterGroupCondition.All, Description = "All of the following are true", Unary = true },
+            new ReportFilterCondition { Value = (int)ReportFilterGroupCondition.Any, Description = "Any of the following are true", Unary = true },
+            new ReportFilterCondition { Value = (int)ReportFilterGroupCondition.None, Description = "None of the following are true", Unary = true },
+        };
 
         public List<ReportFilter> Filters { get; set; } = new List<ReportFilter>();
 
@@ -35,28 +40,14 @@ namespace Webfuel.Reporting
             if (!await base.Validate(schema, services))
                 return false;
 
-            if (!Enum.IsDefined(Condition))
-                Condition = ReportFilterGroupCondition.All;
-
             foreach (var filter in Filters) {
                 if (!await filter.Validate(schema, services))
                     filter.Id = Guid.Empty;
             }
             Filters.RemoveAll(f => f.Id == Guid.Empty);
 
-            Description = $"{GetConditionDescription()} of the following are true:";
+            Description = $"{ConditionDescription}";
             return true;
-        }
-
-        string GetConditionDescription()
-        {
-            return Condition switch
-            {
-                ReportFilterGroupCondition.All => "all",
-                ReportFilterGroupCondition.Any => "any",
-                ReportFilterGroupCondition.None => "none",
-                _ => "INVALID",
-            };
         }
 
         public override async Task<bool> Apply(object context, ReportBuilder builder)
@@ -65,13 +56,13 @@ namespace Webfuel.Reporting
             {
                 var result = await filter.Apply(context, builder);
 
-                if(result == true && Condition == ReportFilterGroupCondition.Any)
+                if(result == true && Condition == (int)ReportFilterGroupCondition.Any)
                     return true;
 
-                if(result == true && Condition == ReportFilterGroupCondition.None)
+                if(result == true && Condition == (int)ReportFilterGroupCondition.None)
                     return false;
 
-                if (result == false && Condition == ReportFilterGroupCondition.All)
+                if (result == false && Condition == (int)ReportFilterGroupCondition.All)
                     return false;
             }
 
@@ -83,7 +74,6 @@ namespace Webfuel.Reporting
             if (filter is not ReportFilterGroup typed)
                 throw new Exception($"Cannot apply filter of type {filter.FilterType} to filter of type {FilterType}");
 
-            Condition = typed.Condition;
             base.Update(filter, schema);
         }
 
@@ -91,12 +81,6 @@ namespace Webfuel.Reporting
 
         public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
         {
-            if (String.Compare(nameof(Condition), propertyName, true) == 0)
-            {
-                Condition = (ReportFilterGroupCondition)reader.GetInt32();
-                return reader.Read();
-            }
-
             if (String.Compare(nameof(Filters), propertyName, true) == 0)
             {
                 if (reader.TokenType != JsonTokenType.StartArray)
@@ -119,7 +103,6 @@ namespace Webfuel.Reporting
         public override void WriteProperties(Utf8JsonWriter writer)
         {
             base.WriteProperties(writer);
-            writer.WriteNumber("condition", (int)Condition);
             writer.WriteStartArray("filters");
             {
                 foreach (var filter in Filters)

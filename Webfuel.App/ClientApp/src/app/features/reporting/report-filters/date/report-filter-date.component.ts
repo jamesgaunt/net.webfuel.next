@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, forw
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { debounceTime, noop, tap } from 'rxjs';
-import { ReportFilterDate, ReportFilterDateCondition, ReportFilterEditability, ReportFilterString } from '../../../../api/api.types';
+import { ReportFilterDate, ReportFilterDateCondition } from '../../../../api/api.types';
 import _ from 'shared/common/underscore';
 
 @Component({
@@ -45,17 +45,13 @@ export class ReportFilterDateComponent implements ControlValueAccessor, OnInit {
     this.form.patchValue(filter);
   }
 
-  ReportFilterDateCondition = ReportFilterDateCondition;
-
-  ReportFilterEditability = ReportFilterEditability;
-
   filter!: ReportFilterDate;
 
   form = new FormGroup({
     name: new FormControl<string>('', { nonNullable: true }),
+    editable: new FormControl<boolean>(false, { nonNullable: true }),
     condition: new FormControl<ReportFilterDateCondition>(ReportFilterDateCondition.EqualTo),
     value: new FormControl<string>(''),
-    editability: new FormControl<ReportFilterEditability>(ReportFilterEditability.None, { nonNullable: true })
   });
 
   // Inputs

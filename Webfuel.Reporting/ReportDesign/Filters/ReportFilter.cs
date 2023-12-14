@@ -10,6 +10,8 @@ namespace Webfuel.Reporting
     [JsonConverter(typeof(ReportFilterConverter))]
     public abstract class ReportFilter
     {
+        public abstract ReportFilterType FilterType { get; }
+
         // Server + Client Side
 
         public Guid Id { get; set; }
@@ -20,11 +22,7 @@ namespace Webfuel.Reporting
 
         public string Description { get; set; } = String.Empty;
 
-        public abstract ReportFilterType FilterType { get; }
-
-        public ReportFilterEditability Editability { get; set; } = ReportFilterEditability.None;
-
-        // public virtual IEnumerable<ReportFilterCondition> Conditions => Enumerable.Empty<ReportFilterCondition>();
+        public bool Editable { get; set; } = false;
 
         // Server Side
 
@@ -33,12 +31,38 @@ namespace Webfuel.Reporting
         public virtual void Update(ReportFilter filter, ReportSchema schema)
         {
             Name = filter.Name;
-            Editability = filter.Editability;
+            Editable = filter.Editable;
+            Condition = filter.Condition;
         }
+
         public virtual Task<bool> Validate(ReportSchema schema, IServiceProvider services)
         {
+            if (Conditions.Count() > 0)
+            {
+                var condition = Conditions.FirstOrDefault(p => p.Value == Condition);
+                if (condition == null)
+                {
+                    condition = Conditions.First();
+                    Condition = condition.Value;
+                }
+                ConditionDescription = condition.Description;
+            }
+            else
+            {
+                Condition = 0;
+                ConditionDescription = String.Empty;
+            }
+
             return Task.FromResult(true);
         }
+
+        // Conditions
+
+        public abstract IEnumerable<ReportFilterCondition> Conditions { get; }
+
+        public int Condition { get; set; } = 0;
+
+        public string ConditionDescription { get; set; } = String.Empty;
 
         // Serialization
 
@@ -62,9 +86,21 @@ namespace Webfuel.Reporting
                 return reader.Read();
             }
 
-            if (String.Compare(nameof(Editability), propertyName, true) == 0)
+            if (String.Compare(nameof(Editable), propertyName, true) == 0)
             {
-                Editability = (ReportFilterEditability)reader.GetInt32();
+                Editable = reader.TokenType == JsonTokenType.True;
+                return reader.Read();
+            }
+
+            if (String.Compare(nameof(Condition), propertyName, true) == 0)
+            {
+                Condition = reader.GetInt32();
+                return reader.Read();
+            }
+
+            if (String.Compare(nameof(ConditionDescription), propertyName, true) == 0)
+            {
+                ConditionDescription = reader.GetString() ?? String.Empty;
                 return reader.Read();
             }
 
@@ -77,7 +113,12 @@ namespace Webfuel.Reporting
             writer.WriteString("name", Name);
             writer.WriteString("description", Description);
             writer.WriteString("displayName", DisplayName);
-            writer.WriteNumber("editability", (int)Editability);
+            writer.WriteBoolean("editable", Editable);
+
+            writer.WriteNumber("condition", Condition);
+            writer.WriteString("conditionDescription", ConditionDescription);
+            writer.WritePropertyName("conditions");
+            JsonSerializer.Serialize(writer, Conditions, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
         }
     }
 

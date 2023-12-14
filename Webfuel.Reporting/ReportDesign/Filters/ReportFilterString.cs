@@ -25,7 +25,16 @@ namespace Webfuel.Reporting
     {
         public override ReportFilterType FilterType => ReportFilterType.String;
 
-        public ReportFilterStringCondition Condition { get; set; } = ReportFilterStringCondition.Contains;
+        public override IEnumerable<ReportFilterCondition> Conditions => new List<ReportFilterCondition>()
+        {
+            new ReportFilterCondition { Value = (int)ReportFilterStringCondition.Contains, Description = "contains", Unary = false },
+            new ReportFilterCondition { Value = (int)ReportFilterStringCondition.StartsWith, Description = "starts with", Unary = false },
+            new ReportFilterCondition { Value = (int)ReportFilterStringCondition.EndsWith, Description = "ends with", Unary = false },
+            new ReportFilterCondition { Value = (int)ReportFilterStringCondition.EqualTo, Description = "is equal to", Unary = false },
+
+            new ReportFilterCondition { Value = (int)ReportFilterStringCondition.IsEmpty, Description = "is empty", Unary = true },
+            new ReportFilterCondition { Value = (int)ReportFilterStringCondition.IsNotEmpty, Description = "is not empty", Unary = true },
+        };
 
         public string Value { get; set; } = String.Empty;
 
@@ -34,14 +43,11 @@ namespace Webfuel.Reporting
             if (!await base.Validate(schema, services))
                 return false;
 
-            if (!Enum.IsDefined(Condition))
-                Condition = ReportFilterStringCondition.Contains;
-
             Description = Condition switch
             {
-                ReportFilterStringCondition.IsEmpty => $"{DisplayName} is empty",
-                ReportFilterStringCondition.IsNotEmpty => $"{DisplayName} is not empty",
-                _ => $"{DisplayName} {GetConditionDescription()} {(String.IsNullOrEmpty(Value) ? "(empty string)" : Value)}",
+                (int)ReportFilterStringCondition.IsEmpty => $"{DisplayName} {ConditionDescription}",
+                (int)ReportFilterStringCondition.IsNotEmpty => $"{DisplayName} {ConditionDescription}",
+                _ => $"{DisplayName} {ConditionDescription} {(String.IsNullOrEmpty(Value) ? "(empty string)" : Value)}",
             };
             return true;
         }
@@ -58,17 +64,17 @@ namespace Webfuel.Reporting
 
             switch (Condition)
             {               
-                case ReportFilterStringCondition.Contains:
+                case (int)ReportFilterStringCondition.Contains:
                     return typed.Contains(Value);
-                case ReportFilterStringCondition.StartsWith:
+                case (int)ReportFilterStringCondition.StartsWith:
                     return typed.StartsWith(Value);
-                case ReportFilterStringCondition.EndsWith:
+                case (int)ReportFilterStringCondition.EndsWith:
                     return typed.EndsWith(Value);
-                case ReportFilterStringCondition.EqualTo:
+                case (int)ReportFilterStringCondition.EqualTo:
                     return typed == Value;
-                case ReportFilterStringCondition.IsEmpty:
+                case (int)ReportFilterStringCondition.IsEmpty:
                     return typed == String.Empty;
-                case ReportFilterStringCondition.IsNotEmpty:
+                case (int)ReportFilterStringCondition.IsNotEmpty:
                     return typed != String.Empty;
             }
 
@@ -85,30 +91,10 @@ namespace Webfuel.Reporting
             base.Update(filter, schema);
         }
 
-        string GetConditionDescription()
-        {
-            return Condition switch
-            {
-                ReportFilterStringCondition.Contains => "contains",
-                ReportFilterStringCondition.StartsWith => "starts with",
-                ReportFilterStringCondition.EndsWith => "ends with",
-                ReportFilterStringCondition.EqualTo => "is equal to",
-                ReportFilterStringCondition.IsEmpty => "is empty",
-                ReportFilterStringCondition.IsNotEmpty => "is not empty",
-                _ => "contains",
-            };
-        }
-
         // Serialization
 
         public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
         {
-            if (String.Compare(nameof(Condition), propertyName, true) == 0)
-            {
-                Condition = (ReportFilterStringCondition)reader.GetInt32();
-                return reader.Read();
-            }
-
             if (String.Compare(nameof(Value), propertyName, true) == 0)
             {
                 Value = reader.GetString() ?? String.Empty;
@@ -121,7 +107,6 @@ namespace Webfuel.Reporting
         public override void WriteProperties(Utf8JsonWriter writer)
         {
             base.WriteProperties(writer);
-            writer.WriteNumber("condition", (int)Condition);
             writer.WriteString("value", Value);
         }
     }

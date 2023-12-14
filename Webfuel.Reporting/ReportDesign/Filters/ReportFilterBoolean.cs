@@ -10,19 +10,32 @@ using System.Threading.Tasks;
 
 namespace Webfuel.Reporting
 {
+    [ApiEnum]
+    public enum ReportFilterBooleanCondition
+    {
+        True = 10,
+        False = 20,
+        Any = 99,
+    }
+
     [ApiType]
     public class ReportFilterBoolean : ReportFilterField
     {
         public override ReportFilterType FilterType => ReportFilterType.Boolean;
 
-        public bool Value { get; set; } = true;
+        public override IEnumerable<ReportFilterCondition> Conditions => new List<ReportFilterCondition>
+        {
+            new ReportFilterCondition { Value = (int)ReportFilterBooleanCondition.True, Description = "is true", Unary = true },
+            new ReportFilterCondition { Value = (int)ReportFilterBooleanCondition.False, Description = "is false", Unary = true },
+            new ReportFilterCondition { Value = (int)ReportFilterBooleanCondition.Any, Description = "is any value", Unary = true },
+        };
 
         public override async Task<bool> Validate(ReportSchema schema, IServiceProvider services)
         {
             if(!await base.Validate(schema, services))
                 return false;
 
-            Description = $"{DisplayName} is {(Value ? "true" : "false")}";
+            Description = $"{DisplayName} {ConditionDescription}";
             return true;
         }
 
@@ -32,12 +45,18 @@ namespace Webfuel.Reporting
             if (field == null)
                 return false;
 
+            if (Condition == (int)ReportFilterBooleanCondition.Any)
+                return true;
+
             var value = await field.Evaluate(context, builder);
 
             if (value is not bool typed)
                 return false;
 
-            return Value == typed;
+            if(Condition == (int)ReportFilterBooleanCondition.True)
+                return typed;
+
+            return !typed;
         }
 
         public override void Update(ReportFilter filter, ReportSchema schema)
@@ -45,7 +64,6 @@ namespace Webfuel.Reporting
             if (filter is not ReportFilterBoolean typed)
                 throw new Exception($"Cannot apply filter of type {filter.FilterType} to filter of type {FilterType}");
 
-            Value = typed.Value;
             base.Update(filter, schema);
         }
 
@@ -53,25 +71,12 @@ namespace Webfuel.Reporting
 
         public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
         {
-            if (String.Compare(nameof(Value), propertyName, true) == 0)
-            {
-                if (reader.TokenType == JsonTokenType.True)
-                    Value = true;
-                else if (reader.TokenType == JsonTokenType.False)
-                    Value = false;
-                else
-                    throw new JsonException();
-
-                return reader.Read();
-            }
-
             return base.ReadProperty(propertyName, ref reader);
         }
 
         public override void WriteProperties(Utf8JsonWriter writer)
         {
             base.WriteProperties(writer);
-            writer.WriteBoolean("value", Value);
         }
     }
 }

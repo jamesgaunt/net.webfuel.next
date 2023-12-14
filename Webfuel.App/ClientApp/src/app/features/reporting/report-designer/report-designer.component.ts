@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, forwardRef, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormService } from '../../../core/form.service';
-import { ReportSchema, ReportDesign, ReportColumn, ReportFilter, ReportFilterEditability } from '../../../api/api.types';
+import { ReportSchema, ReportDesign, ReportColumn, ReportFilter } from '../../../api/api.types';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { noop } from 'rxjs';
 import _ from 'shared/common/underscore';
@@ -37,8 +37,6 @@ export class ReportDesignerComponent implements ControlValueAccessor, OnInit {
   }
 
   ReportFilterType = ReportFilterType;
-
-  ReportFilterEditability = ReportFilterEditability;
 
   @Input({ required: true })
   schema!: ReportSchema;

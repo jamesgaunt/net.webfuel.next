@@ -28,10 +28,10 @@ export enum ReportFilterType {
     Expression = 2000,
 }
 
-export enum ReportFilterEditability {
-    None = 1,
-    Value = 10,
-    ValueAndCondition = 20,
+export enum ReportFilterBooleanCondition {
+    True = 10,
+    False = 20,
+    Any = 99,
 }
 
 export enum ReportFilterDateCondition {

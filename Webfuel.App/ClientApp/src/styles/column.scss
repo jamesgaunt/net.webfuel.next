@@ -5,6 +5,7 @@
   flex-flow: row nowrap;
   gap: var(--gap);
 
+
   &.is-gapless {
     gap: 0;
   }
@@ -19,10 +20,12 @@
     flex-basis: 0;
 
     &.is-050, &.is-half {
+      flex: none;
       width: 50%;
     }
 
     &.is-025 {
+      flex: none;
       width: 25%;
     }
 
@@ -31,8 +34,8 @@
     }
 
     &.is-narrow {
-        flex-grow: 0;
-        white-space: nowrap;
+      flex-grow: 0;
+      white-space: nowrap;
     }
   }
 }

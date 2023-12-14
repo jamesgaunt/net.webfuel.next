@@ -14,6 +14,8 @@ namespace Webfuel.Reporting
     {
         public override ReportFilterType FilterType => ReportFilterType.Expression;
 
+        public override IEnumerable<ReportFilterCondition> Conditions => Enumerable.Empty<ReportFilterCondition>();
+
         public override string DisplayName => "Expression";
 
         public string Expression { get; set; } = String.Empty;

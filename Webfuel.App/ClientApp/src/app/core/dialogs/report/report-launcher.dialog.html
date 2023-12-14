@@ -3,10 +3,8 @@
     {{ title }}
   </div>
   <div class="dialog-body">
-    <div *ngFor="let filter of filters">
-      <div class="field">
-        <label class="label">{{ filter.displayName }}</label>
-      </div>
+    <div class="grid" *ngFor="let filter of filters">
+      <report-argument [filter]="filter" [reportProviderId]="report!.design.reportProviderId" />
     </div>
   </div>
   <div class="dialog-buttons">

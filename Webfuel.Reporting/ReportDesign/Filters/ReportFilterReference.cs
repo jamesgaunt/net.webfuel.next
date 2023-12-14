@@ -22,7 +22,11 @@ namespace Webfuel.Reporting
     {
         public override ReportFilterType FilterType => ReportFilterType.Reference;
 
-        public ReportFilterReferenceCondition Condition { get; set; } = ReportFilterReferenceCondition.OneOf;
+        public override IEnumerable<ReportFilterCondition> Conditions => new List<ReportFilterCondition>
+        {
+            new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.OneOf, Description = "is one of", Unary = false },
+            new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.NotOneOf, Description = "is not one of", Unary = false },
+        };
 
         public List<Guid> Value { get; set; } = new List<Guid>();
 
@@ -30,9 +34,6 @@ namespace Webfuel.Reporting
         {
             if (!await base.Validate(schema, services))
                 return false;
-
-            if (!Enum.IsDefined(Condition))
-                Condition = ReportFilterReferenceCondition.OneOf;
 
             var valueDescription = new StringBuilder();
             if (Value.Count > 0)
@@ -67,7 +68,7 @@ namespace Webfuel.Reporting
                 valueDescription.Append("(empty list)");
             }
 
-            Description = $"{DisplayName} is {GetConditionDescription()} {valueDescription}";
+            Description = $"{DisplayName} {ConditionDescription} {valueDescription}";
             return true;
         }
 
@@ -91,9 +92,9 @@ namespace Webfuel.Reporting
 
             switch (Condition)
             {
-                case ReportFilterReferenceCondition.OneOf:
+                case (int)ReportFilterReferenceCondition.OneOf:
                     return Value.Contains(id);
-                case ReportFilterReferenceCondition.NotOneOf:
+                case (int)ReportFilterReferenceCondition.NotOneOf:
                     return !Value.Contains(id);
             }
 
@@ -106,30 +107,13 @@ namespace Webfuel.Reporting
                 throw new Exception($"Cannot apply filter of type {filter.FilterType} to filter of type {FilterType}");
 
             Value = typed.Value;
-            Condition = typed.Condition;
             base.Update(filter, schema);
-        }
-
-        string GetConditionDescription()
-        {
-            return Condition switch
-            {
-                ReportFilterReferenceCondition.OneOf => "one of",
-                ReportFilterReferenceCondition.NotOneOf => "not one of",
-                _ => "One of",
-            };
         }
 
         // Serialization
 
         public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
         {
-            if (String.Compare(nameof(Condition), propertyName, true) == 0)
-            {
-                Condition = (ReportFilterReferenceCondition)reader.GetInt32();
-                return reader.Read();
-            }
-
             if (String.Compare(nameof(Value), propertyName, true) == 0)
             {
                 Value = JsonSerializer.Deserialize<List<Guid>>(ref reader, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
@@ -143,7 +127,6 @@ namespace Webfuel.Reporting
         public override void WriteProperties(Utf8JsonWriter writer)
         {
             base.WriteProperties(writer);
-            writer.WriteNumber("condition", (int)Condition);
 
             writer.WritePropertyName("value");
             JsonSerializer.Serialize(writer, Value, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });

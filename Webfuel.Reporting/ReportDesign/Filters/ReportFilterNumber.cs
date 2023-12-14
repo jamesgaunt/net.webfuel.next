@@ -24,7 +24,14 @@ namespace Webfuel.Reporting
     {
         public override ReportFilterType FilterType => ReportFilterType.Number;
 
-        public ReportFilterNumberCondition Condition { get; set; } = ReportFilterNumberCondition.EqualTo;
+        public override IEnumerable<ReportFilterCondition> Conditions => new List<ReportFilterCondition>()
+        {
+            new ReportFilterCondition { Value = (int)ReportFilterNumberCondition.EqualTo, Description = "is equal to", Unary = false },
+            new ReportFilterCondition { Value = (int)ReportFilterNumberCondition.LessThan, Description = "is less than", Unary = false },
+            new ReportFilterCondition { Value = (int)ReportFilterNumberCondition.LessThanOrEqualTo, Description = "is less than or equal to", Unary = false },
+            new ReportFilterCondition { Value = (int)ReportFilterNumberCondition.GreaterThan, Description = "is greater than", Unary = false },
+            new ReportFilterCondition { Value = (int)ReportFilterNumberCondition.GreaterThanOrEqualTo, Description = "is greater than or equal to", Unary = false },
+        };
 
         public double Value { get; set; }
 
@@ -33,10 +40,7 @@ namespace Webfuel.Reporting
             if (!await base.Validate(schema, services))
                 return false;
 
-            if (!Enum.IsDefined(Condition))
-                Condition = ReportFilterNumberCondition.EqualTo;
-
-            Description = $"{DisplayName} is {GetConditionDescription()} {Value}";
+            Description = $"{DisplayName} {ConditionDescription} {Value}";
             return true;
         }
 
@@ -54,15 +58,15 @@ namespace Webfuel.Reporting
 
             switch(Condition)
             {
-                case ReportFilterNumberCondition.EqualTo:
+                case (int)ReportFilterNumberCondition.EqualTo:
                     return Value == typed;
-                case ReportFilterNumberCondition.LessThan:
+                case (int)ReportFilterNumberCondition.LessThan:
                     return Value > typed;
-                case ReportFilterNumberCondition.LessThanOrEqualTo:
+                case (int)ReportFilterNumberCondition.LessThanOrEqualTo:
                     return Value >= typed;
-                case ReportFilterNumberCondition.GreaterThan:
+                case (int)ReportFilterNumberCondition.GreaterThan:
                     return Value < typed;
-                case ReportFilterNumberCondition.GreaterThanOrEqualTo:
+                case (int)ReportFilterNumberCondition.GreaterThanOrEqualTo:
                     return Value <= typed;
             }
 
@@ -75,33 +79,13 @@ namespace Webfuel.Reporting
                 throw new Exception($"Cannot apply filter of type {filter.FilterType} to filter of type {FilterType}");
 
             Value = typed.Value;
-            Condition = typed.Condition;
             base.Update(filter, schema);
-        }
-
-        string GetConditionDescription()
-        {
-            return Condition switch
-            {
-                ReportFilterNumberCondition.EqualTo => "=",
-                ReportFilterNumberCondition.LessThan => "<",
-                ReportFilterNumberCondition.LessThanOrEqualTo => "<=",
-                ReportFilterNumberCondition.GreaterThan => ">",
-                ReportFilterNumberCondition.GreaterThanOrEqualTo => ">=",
-                _ => "INVALID",
-            };
         }
 
         // Serialization
 
         public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)
         {
-            if (String.Compare(nameof(Condition), propertyName, true) == 0)
-            {
-                Condition = (ReportFilterNumberCondition)reader.GetInt32();
-                return reader.Read();
-            }
-
             if (String.Compare(nameof(Value), propertyName, true) == 0)
             {
                 if (reader.TokenType == JsonTokenType.Number)
@@ -118,7 +102,6 @@ namespace Webfuel.Reporting
         public override void WriteProperties(Utf8JsonWriter writer)
         {
             base.WriteProperties(writer);
-            writer.WriteNumber("condition", (int)Condition);
             writer.WriteNumber("value", Value);
         }
 

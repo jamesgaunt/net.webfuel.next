@@ -46,8 +46,6 @@ export class ReportFilterGroupComponent implements ControlValueAccessor, OnInit 
     this.form.patchValue(filter);
   }
 
-  ReportFilterGroupCondition = ReportFilterGroupCondition;
-
   filter!: ReportFilterGroup;
 
   form = new FormGroup({

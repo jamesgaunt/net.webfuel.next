@@ -8,10 +8,10 @@ export enum ReportFilterType {
     Expression = 2000,
 }
 
-export enum ReportFilterEditability {
-    None = 1,
-    Value = 10,
-    ValueAndCondition = 20,
+export enum ReportFilterBooleanCondition {
+    True = 10,
+    False = 20,
+    Any = 99,
 }
 
 export enum ReportFilterDateCondition {
@@ -120,40 +120,54 @@ export interface ReportColumn {
 }
 
 export interface ReportFilter {
+    filterType: ReportFilterType;
     id: string;
     name: string;
     displayName: string;
     description: string;
-    filterType: ReportFilterType;
-    editability: ReportFilterEditability;
+    editable: boolean;
+    conditions: Array<ReportFilterCondition>;
+    condition: number;
+    conditionDescription: string;
+}
+
+export interface ReportFilterCondition {
+    value: number;
+    description: string;
+    unary: boolean;
 }
 
 export interface ReportFilterBoolean extends ReportFilterField {
     filterType: ReportFilterType;
-    value: boolean;
+    conditions: Array<ReportFilterCondition>;
     fieldId: string;
     fieldName: string;
     displayName: string;
     id: string;
     name: string;
     description: string;
-    editability: ReportFilterEditability;
+    editable: boolean;
+    condition: number;
+    conditionDescription: string;
 }
 
 export interface ReportFilterField extends ReportFilter {
     fieldId: string;
     fieldName: string;
     displayName: string;
+    filterType: ReportFilterType;
     id: string;
     name: string;
     description: string;
-    filterType: ReportFilterType;
-    editability: ReportFilterEditability;
+    editable: boolean;
+    conditions: Array<ReportFilterCondition>;
+    condition: number;
+    conditionDescription: string;
 }
 
 export interface ReportFilterDate extends ReportFilterField {
     filterType: ReportFilterType;
-    condition: ReportFilterDateCondition;
+    conditions: Array<ReportFilterCondition>;
     value: string;
     fieldId: string;
     fieldName: string;
@@ -161,33 +175,40 @@ export interface ReportFilterDate extends ReportFilterField {
     id: string;
     name: string;
     description: string;
-    editability: ReportFilterEditability;
+    editable: boolean;
+    condition: number;
+    conditionDescription: string;
 }
 
 export interface ReportFilterExpression extends ReportFilter {
     filterType: ReportFilterType;
+    conditions: Array<ReportFilterCondition>;
     displayName: string;
     expression: string;
     id: string;
     name: string;
     description: string;
-    editability: ReportFilterEditability;
+    editable: boolean;
+    condition: number;
+    conditionDescription: string;
 }
 
 export interface ReportFilterGroup extends ReportFilter {
     filterType: ReportFilterType;
     displayName: string;
-    condition: ReportFilterGroupCondition;
+    conditions: Array<ReportFilterCondition>;
     filters: Array<ReportFilter>;
     id: string;
     name: string;
     description: string;
-    editability: ReportFilterEditability;
+    editable: boolean;
+    condition: number;
+    conditionDescription: string;
 }
 
 export interface ReportFilterNumber extends ReportFilterField {
     filterType: ReportFilterType;
-    condition: ReportFilterNumberCondition;
+    conditions: Array<ReportFilterCondition>;
     value: number;
     fieldId: string;
     fieldName: string;
@@ -195,12 +216,14 @@ export interface ReportFilterNumber extends ReportFilterField {
     id: string;
     name: string;
     description: string;
-    editability: ReportFilterEditability;
+    editable: boolean;
+    condition: number;
+    conditionDescription: string;
 }
 
 export interface ReportFilterReference extends ReportFilterField {
     filterType: ReportFilterType;
-    condition: ReportFilterReferenceCondition;
+    conditions: Array<ReportFilterCondition>;
     value: Array<string>;
     fieldId: string;
     fieldName: string;
@@ -208,12 +231,14 @@ export interface ReportFilterReference extends ReportFilterField {
     id: string;
     name: string;
     description: string;
-    editability: ReportFilterEditability;
+    editable: boolean;
+    condition: number;
+    conditionDescription: string;
 }
 
 export interface ReportFilterString extends ReportFilterField {
     filterType: ReportFilterType;
-    condition: ReportFilterStringCondition;
+    conditions: Array<ReportFilterCondition>;
     value: string;
     fieldId: string;
     fieldName: string;
@@ -221,7 +246,9 @@ export interface ReportFilterString extends ReportFilterField {
     id: string;
     name: string;
     description: string;
-    editability: ReportFilterEditability;
+    editable: boolean;
+    condition: number;
+    conditionDescription: string;
 }
 
 export interface ReportDesign {

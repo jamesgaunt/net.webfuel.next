@@ -1,20 +1,22 @@
 <div class="grid" [formGroup]="form">
-  <div class="field">
-    <label class="label">Name</label>
-    <input type="text" class="input" [placeholder]="filter.fieldName" formControlName="name" />
+  <div class="columns">
+    <div class="column">
+      <div class="field">
+        <label class="label">Name</label>
+        <input type="text" class="input" [placeholder]="filter.fieldName" formControlName="name" />
+      </div>
+    </div>
+    <div class="column is-narrow">
+      <div class="field">
+        <label class="label">Editable</label>
+        <toggle-input formControlName="editable" />
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <label class="label">Value</label>
-    <select class="select" formControlName="value">
-      <option [ngValue]="true"> is true</option>
-      <option [ngValue]="false">is false</option>
-    </select>
-  </div>
-  <div class="field">
-    <label class="label">Is this filter editable by report users?</label>
-    <select class="select" formControlName="editability">
-      <option [ngValue]="ReportFilterEditability.None">No</option>
-      <option [ngValue]="ReportFilterEditability.Value">Value is editable</option>
+  <div class="field" *ngIf="filter.conditions.length > 0">
+    <label class="label">Condition</label>
+    <select class="select" formControlName="condition">
+      <option *ngFor="let condition of filter.conditions" [ngValue]="condition.value">{{ condition.description }}</option>
     </select>
   </div>
 </div>

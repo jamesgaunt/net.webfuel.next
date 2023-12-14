@@ -5,7 +5,6 @@ import { Report, ReportDesign, ReportFilter, ReportFilterField, ReportFilterType
 import { ReportRunnerDialog } from './report-runner.dialog';
 import { ReportService } from '../../report.service';
 import _ from 'shared/common/underscore';
-import { ReportFilterEditability } from '../../../api/api.enums';
 
 export interface ReportLauncherDialogData {
   reportId: string;
@@ -66,7 +65,7 @@ export class ReportLauncherDialogComponent extends DialogComponentBase<true, Rep
     _.forEach(filters, (filter) => {
       if (filter.filterType == ReportFilterType.Group) {
         this.extractFilters((<ReportFilterGroup>filter).filters);
-      } else if(filter.editability > ReportFilterEditability.None) {
+      } else if(filter.editable) {
         this.filters.push(_.deepClone(filter));
       }
     });

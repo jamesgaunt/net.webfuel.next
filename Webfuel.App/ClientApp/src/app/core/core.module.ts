@@ -22,6 +22,7 @@ import { UserService } from './user.service';
 import { ReportService } from './report.service';
 import { ReportRunnerDialog, ReportRunnerDialogComponent } from './dialogs/report/report-runner.dialog';
 import { ReportLauncherDialog, ReportLauncherDialogComponent } from './dialogs/report/report-launcher.dialog';
+import { ReportArgumentComponent } from './dialogs/report/report-argument.component';
 
 @NgModule({
   imports: [
@@ -31,10 +32,12 @@ import { ReportLauncherDialog, ReportLauncherDialogComponent } from './dialogs/r
   declarations: [
     ReportRunnerDialogComponent,
     ReportLauncherDialogComponent,
+    ReportArgumentComponent,
   ],
   exports: [
     ReportRunnerDialogComponent,
     ReportLauncherDialogComponent,
+    ReportArgumentComponent,
   ],
   providers: [
     ApiService,

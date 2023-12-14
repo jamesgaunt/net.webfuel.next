@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, forw
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { debounceTime, noop, tap } from 'rxjs';
-import { ReportFilterBoolean, ReportFilterEditability } from '../../../../api/api.types';
+import { ReportFilterBoolean, ReportFilterBooleanCondition } from '../../../../api/api.types';
 import _ from 'shared/common/underscore';
 
 @Component({
@@ -44,15 +44,13 @@ export class ReportFilterBooleanComponent implements ControlValueAccessor, OnIni
     this.filter = filter;
     this.form.patchValue(filter);
   }
-  
-  ReportFilterEditability = ReportFilterEditability;
 
   filter!: ReportFilterBoolean;
 
   form = new FormGroup({
     name: new FormControl<string>('', { nonNullable: true }),
-    value: new FormControl<boolean>(true, { nonNullable: true }),
-    editability: new FormControl<ReportFilterEditability>(ReportFilterEditability.None, { nonNullable: true})
+    editable: new FormControl<boolean>(false, { nonNullable: true }),
+    condition: new FormControl<number>(ReportFilterBooleanCondition.True),
   });
 
   // Inputs
