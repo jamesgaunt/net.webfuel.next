@@ -64,6 +64,20 @@ namespace Webfuel.Reporting
             base.Update(filter, schema);
         }
 
+        public override Task<ReportArgument?> GenerateArgument(IServiceProvider services)
+        {
+            return Task.FromResult<ReportArgument?>(new ReportArgument
+            {
+                Name = DisplayName,
+                FilterId = Id,
+                FieldId = FieldId,
+                FieldType = ReportFieldType.Date,
+                Condition = Condition,
+                Conditions = Conditions.ToList(),
+                DateValue = DateOnly.FromDateTime(DateTime.Today) // TODO: Date generation DSL
+            });
+        }
+
         // Serialization
 
         public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)

@@ -350,6 +350,54 @@ export interface Query {
     search?: string;
 }
 
+export interface Heartbeat {
+    id: string;
+    name: string;
+    live: boolean;
+    sortOrder: number;
+    providerName: string;
+    providerParameter: string;
+    minTime: string;
+    maxTime: string;
+    schedule: string;
+    nextExecutionScheduledAt: string | null | null;
+    schedulerExceptionMessage: string;
+    logSuccessfulExecutions: boolean;
+    lastExecutionAt: string | null | null;
+    lastExecutionMessage: string;
+    lastExecutionSuccess: boolean;
+    lastExecutionMicroseconds: number;
+    lastExecutionMetadataJson: string;
+    recentExecutionSuccessCount: number;
+    recentExecutionFailureCount: number;
+    recentExecutionMicrosecondsAverage: number;
+}
+
+export interface CreateHeartbeat {
+    name: string;
+}
+
+export interface UpdateHeartbeat {
+    id: string;
+    name: string;
+    live: boolean;
+    logSuccessfulExecutions: boolean;
+    providerName: string;
+    providerParameter: string;
+    minTime: string;
+    maxTime: string;
+    schedule: string;
+}
+
+export interface QueryHeartbeat extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
 export interface PingResponse {
     timestamp: string;
 }
@@ -942,13 +990,17 @@ export interface RunReport {
 }
 
 export interface ReportArgument {
+    name: string;
     filterId: string;
+    fieldId: string;
+    reportProviderId: string;
+    fieldType: ReportFieldType;
     condition: number;
-    guidsValue: Array<string>;
+    conditions: Array<ReportFilterCondition>;
+    guidsValue: Array<string> | null;
     doubleValue: number | null | null;
-    stringValue: string;
+    stringValue: string | null;
     dateValue: string | null | null;
-    booleanValue: boolean | null | null;
 }
 
 export interface QueryReport extends Query {

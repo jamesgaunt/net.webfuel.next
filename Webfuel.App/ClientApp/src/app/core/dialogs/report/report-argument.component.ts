@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, forw
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { debounceTime, noop, tap } from 'rxjs';
 import _ from 'shared/common/underscore';
-import { ReportFilter, ReportFilterType } from '../../../api/api.types';
+import { ReportArgument, ReportFilter, ReportFilterType } from '../../../api/api.types';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ReportDesignApi } from '../../../api/report-design.api';
 import { IDataSource } from '../../../shared/common/data-source';
@@ -24,13 +24,8 @@ export class ReportArgumentComponent implements OnInit {
     this.setup();
   }
 
-  ReportFilterType = ReportFilterType;
-
   @Input({ required: true })
-  reportProviderId!: string;
-
-  @Input({ required: true })
-  filter!: ReportFilter;
+  argument!: ReportArgument
 
   form = new FormGroup({
     condition: new FormControl<number>(0, { nonNullable: true }),
@@ -38,13 +33,10 @@ export class ReportArgumentComponent implements OnInit {
   });
 
   setup() {
-    let f = <any>this.filter;
-
-    this.form.patchValue({ condition: f.condition });
-    this.form.patchValue({ value: f.value });
+    this.form.patchValue({ condition: this.argument.condition });
   }
 
   referenceDataSource: IDataSource<any> = {
-    query: (query) => this.reportDesignApi.queryReferenceField({ query: query, fieldId: (<any>(this.filter)).fieldId, reportProviderId: this.reportProviderId })
+    query: (query) => this.reportDesignApi.queryReferenceField({ query: query, fieldId: this.argument.fieldId, reportProviderId: this.argument.reportProviderId })
   }
 }

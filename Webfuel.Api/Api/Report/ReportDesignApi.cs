@@ -24,6 +24,7 @@ namespace Webfuel.App
 
             app.MapGet("api/report-design/schema/{reportProviderId:guid}", GetReportSchema);
             app.MapPost("api/report-design/schema/query-reference-field", QueryReferenceField);
+            app.MapPost("api/report-design/generate-arguments", GenerateArguments);
         }
 
         // Report Design Modification
@@ -68,6 +69,11 @@ namespace Webfuel.App
         public static Task<QueryResult<object>> QueryReferenceField([FromBody] QueryReportReference command, IReportDesignService reportDesignService)
         {
             return reportDesignService.QueryReferenceField(command.ReportProviderId, command.FieldId, command.Query);
+        }
+
+        public static Task<List<ReportArgument>> GenerateArguments([FromBody] ReportDesign design, IReportDesignService reportDesignService)
+        {
+            return reportDesignService.GenerateArguments(design);
         }
     }
 

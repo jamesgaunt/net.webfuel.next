@@ -1,23 +1,25 @@
 <div class="field" [formGroup]="form">
-  <label class="label">{{ filter.displayName }}</label>
+  <label class="label">{{ argument.name }}</label>
   <div class="columns">
-    <div class="column" *ngIf="filter.conditions.length > 0">
+    <div class="column" *ngIf="argument.conditions.length > 0">
       <select class="select" formControlName="condition">
         <option *ngFor="let condition of filter.conditions" [ngValue]="condition.value">{{ condition.description }}</option>
       </select>
     </div>
-    <div class="column" *ngIf="filter.filterType == ReportFilterType.Date">
-      <input type="text" class="input" formControlName="value" placeholder="optional" />
-    </div>
-    <div class="column" *ngIf="filter.filterType == ReportFilterType.Number">
-      <input type="number" class="input" formControlName="value" placeholder="optional" />
-    </div>
-    <div class="column" *ngIf="filter.filterType == ReportFilterType.String">
-      <input type="text" class="input" formControlName="value" placeholder="optional" />
-    </div>
-    <div class="column is-fullwidth" *ngIf="filter.filterType == ReportFilterType.Reference">
-      <dropdown-multi-select formControlName="value" [dataSource]="referenceDataSource" placeholder="optional"></dropdown-multi-select>
-    </div>
+    <!--
+  <div class="column" *ngIf="filter.filterType == ReportFilterType.Date">
+    <input type="text" class="input" formControlName="value" placeholder="optional" />
+  </div>
+  <div class="column" *ngIf="filter.filterType == ReportFilterType.Number">
+    <input type="number" class="input" formControlName="value" placeholder="optional" />
+  </div>
+  <div class="column" *ngIf="filter.filterType == ReportFilterType.String">
+    <input type="text" class="input" formControlName="value" placeholder="optional" />
+  </div>
+  <div class="column is-fullwidth" *ngIf="filter.filterType == ReportFilterType.Reference">
+    <dropdown-multi-select formControlName="value" [dataSource]="referenceDataSource" placeholder="optional"></dropdown-multi-select>
+  </div>
+    -->
   </div>
 </div>
 

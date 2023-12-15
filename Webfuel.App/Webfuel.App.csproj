@@ -29,6 +29,7 @@
   <ItemGroup>
     <Folder Include="ClientApp\dist\" />
     <Folder Include="ClientApp\src\app\api\" />
+    <Folder Include="ClientApp\src\app\features\developer\heartbeat\dialogs\" />
     <Folder Include="ClientApp\src\app\features\project\project\shared\" />
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>

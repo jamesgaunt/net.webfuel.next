@@ -1,10 +1,11 @@
 import { Component, Injectable } from '@angular/core';
 import { DialogBase, DialogComponentBase } from '../../../shared/common/dialog-base';
 import { ReportApi } from '../../../api/report.api';
-import { Report, ReportDesign, ReportFilter, ReportFilterField, ReportFilterType, ReportFilterGroup } from '../../../api/api.types';
+import { Report, ReportDesign, ReportFilter, ReportFilterField, ReportFilterType, ReportFilterGroup, ReportArgument } from '../../../api/api.types';
 import { ReportRunnerDialog } from './report-runner.dialog';
 import { ReportService } from '../../report.service';
 import _ from 'shared/common/underscore';
+import { ReportDesignApi } from '../../../api/report-design.api';
 
 export interface ReportLauncherDialogData {
   reportId: string;
@@ -25,6 +26,7 @@ export class ReportLauncherDialogComponent extends DialogComponentBase<true, Rep
 
   constructor(
     private reportApi: ReportApi,
+    private reportDesignApi: ReportDesignApi,
     private reportService: ReportService
   ) {
     super();
@@ -34,7 +36,7 @@ export class ReportLauncherDialogComponent extends DialogComponentBase<true, Rep
   reset(report: Report) {
     this.report = report;
     this.title = report.name;
-    this.initialiseFilters(report.design);
+    this.reportDesignApi.generateArguments(this.report.design).subscribe((result) => this.arguments = result);
   }
 
   ReportFilterType = ReportFilterType;
@@ -57,19 +59,6 @@ export class ReportLauncherDialogComponent extends DialogComponentBase<true, Rep
     });
   }
 
-  initialiseFilters(design: ReportDesign) {
-    this.extractFilters(design.filters);
-  }
-
-  extractFilters(filters: ReportFilter[]) {
-    _.forEach(filters, (filter) => {
-      if (filter.filterType == ReportFilterType.Group) {
-        this.extractFilters((<ReportFilterGroup>filter).filters);
-      } else if(filter.editable) {
-        this.filters.push(_.deepClone(filter));
-      }
-    });
-  };
-
-  filters: ReportFilter[] = [];
+  arguments: ReportArgument[] | null = null;
 }
+

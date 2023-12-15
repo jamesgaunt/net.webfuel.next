@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { ConfigurationApi } from './configuration.api';
 import { DashboardApi } from './dashboard.api';
 import { FileStorageEntryApi } from './file-storage-entry.api';
+import { HeartbeatApi } from './heartbeat.api';
 import { PingApi } from './ping.api';
 import { StaticDataApi } from './static-data.api';
 import { ProjectApi } from './project.api';
@@ -59,6 +60,7 @@ import { StaticDataCache } from './static-data.cache';
         ConfigurationApi,
         DashboardApi,
         FileStorageEntryApi,
+        HeartbeatApi,
         PingApi,
         StaticDataApi,
         ProjectApi,

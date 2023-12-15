@@ -1,4 +1,5 @@
-﻿namespace Webfuel
+﻿
+namespace Webfuel
 {
     public interface IClientConfigurationProvider
     {

@@ -110,6 +110,20 @@ namespace Webfuel.Reporting
             base.Update(filter, schema);
         }
 
+        public override Task<ReportArgument?> GenerateArgument(IServiceProvider services)
+        {
+            return Task.FromResult<ReportArgument?>(new ReportArgument
+            {
+                Name = DisplayName,
+                FilterId = Id,
+                FieldId = FieldId,
+                FieldType = ReportFieldType.Reference,
+                Condition = Condition,
+                Conditions = Conditions.ToList(),
+                GuidsValue = Value
+            });
+        }
+
         // Serialization
 
         public override bool ReadProperty(string propertyName, ref Utf8JsonReader reader)

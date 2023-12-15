@@ -56,6 +56,11 @@ namespace Webfuel.Reporting
             return Task.FromResult(true);
         }
 
+        public virtual Task<ReportArgument?> GenerateArgument(IServiceProvider services)
+        {
+            return Task.FromResult<ReportArgument?>(null);
+        }
+
         // Conditions
 
         public abstract IEnumerable<ReportFilterCondition> Conditions { get; }

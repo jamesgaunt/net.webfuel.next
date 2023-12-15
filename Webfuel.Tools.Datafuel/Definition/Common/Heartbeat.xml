@@ -40,6 +40,10 @@
     <Property Name="Success" Type="boolean" />
     <Property Name="Microseconds" Type="int" />
     <Property Name="MetadataJson" Type="string" />
+
+    <Index IsUnique="false">
+      <Member Name="HeartbeatId" />
+    </Index>
   </Entity>
 
 </Schema>

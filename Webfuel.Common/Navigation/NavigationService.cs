@@ -46,7 +46,8 @@ namespace Webfuel.Common
                 if (_identityAccessor.Claims.CanEditUserGroups)
                     clientConfiguration.SettingsMenu.AddChild(name: "User Groups", action: "/user/user-group-list", icon: "fas fa-users-cog");
 
-                if (_identityAccessor.Claims.Developer) { 
+                if (_identityAccessor.Claims.Developer) {
+                    clientConfiguration.SettingsMenu.AddChild(name: "Heartbeats", action: "/developer/heartbeat-list", icon: "fas fa-heartbeat");
                     clientConfiguration.SettingsMenu.AddChild(name: "User Logins", action: "/developer/user-login", icon: "fas fa-sign-in");
                     clientConfiguration.SettingsMenu.AddChild(name: "Report Groups", action: "/reporting/report-group-list", icon: "fas fa-layer-group");
                     clientConfiguration.SettingsMenu.AddChild(name: "Report Designer", action: "/reporting/report-list", icon: "fas fa-pencil-ruler");

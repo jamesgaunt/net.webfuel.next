@@ -3,8 +3,8 @@
     {{ title }}
   </div>
   <div class="dialog-body">
-    <div class="grid" *ngFor="let filter of filters">
-      <report-argument [filter]="filter" [reportProviderId]="report!.design.reportProviderId" />
+    <div class="grid" *ngFor="let argument of arguments">
+      <report-argument [argument]="argument" />
     </div>
   </div>
   <div class="dialog-buttons">

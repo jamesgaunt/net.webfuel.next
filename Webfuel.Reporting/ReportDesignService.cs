@@ -21,6 +21,8 @@ namespace Webfuel.Reporting
 
         Task<ReportDesign> ValidateDesign(ReportDesign design);
 
+        Task<List<ReportArgument>> GenerateArguments(ReportDesign design);
+
         Task<QueryResult<object>> QueryReferenceField(Guid reportProviderId, Guid fieldId, Query query);
     }
 
@@ -66,6 +68,11 @@ namespace Webfuel.Reporting
             var schema = GetReportSchema(design.ReportProviderId);
             await design.Validate(schema, _serviceProvider);
             return design;
+        }
+
+        public Task<List<ReportArgument>> GenerateArguments(ReportDesign design)
+        {
+            return design.GenerateArguments(_serviceProvider);
         }
 
         public Task<QueryResult<object>> QueryReferenceField(Guid reportProviderId, Guid fieldId, Query query)

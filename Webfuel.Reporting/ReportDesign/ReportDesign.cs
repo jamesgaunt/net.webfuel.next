@@ -54,6 +54,33 @@ namespace Webfuel.Reporting
             return GetFilterWithGroup(id)?.filter;
         }
 
+        public async Task<List<ReportArgument>> GenerateArguments(IServiceProvider services)
+        {
+            var result = new List<ReportArgument>();
+            await GenerateArguments(Filters, result, services);
+            return result;
+        }
+
+        async Task GenerateArguments(IEnumerable<ReportFilter> filters, List<ReportArgument> arguments, IServiceProvider services)
+        {
+            foreach (var filter in filters)
+            {
+                if (filter is ReportFilterGroup group)
+                {
+                    await GenerateArguments(group.Filters, arguments, services);
+                }
+                else if (filter.Editable)
+                {
+                    var argument = await filter.GenerateArgument(services);
+                    if (argument == null)
+                        throw new InvalidOperationException($"The filter {filter.Name} did not supply a default argument");
+
+                    argument.ReportProviderId = ReportProviderId;
+                    arguments.Add(argument);
+                }
+            }
+        }
+
         internal (ReportFilter filter, ReportFilterGroup? group)? GetFilterWithGroup(Guid id)
         {
             foreach (var filter in Filters)
@@ -127,7 +154,7 @@ namespace Webfuel.Reporting
 
             foreach (var filter in Filters)
             {
-                if(!await filter.Validate(schema, services))
+                if (!await filter.Validate(schema, services))
                     filter.Id = Guid.Empty; // Flag for deletion
             }
             Filters.RemoveAll(f => f.Id == Guid.Empty);
