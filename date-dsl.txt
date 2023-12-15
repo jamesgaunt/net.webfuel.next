@@ -1,0 +1,39 @@
+
+
+today
+
+yesterday
+
+start of month
+
+end of month
+
+start of last month
+
+end of last month
+
+start of annual reporting year
+
+end of annual reporting year
+
+start of year - 3 months
+
+
+
+[date] +/- offset
+
+12/3/2019
+
+12 Jan  2019
+
+
+today, tomorrow, yesterday
+
+start of last month, this month, next month
+
+last week, this week, next week
+
+start of -2 month
+
+
+
