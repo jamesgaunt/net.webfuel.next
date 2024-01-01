@@ -14,6 +14,7 @@ namespace Webfuel.Domain
             this.LessThanOrEqual(nameof(Project.DateOfRequest), ToDate, ToDate != null);
             this.Equal(nameof(Project.StatusId), StatusId, StatusId != null);
             this.Equal(nameof(Project.SubmittedFundingStreamId), FundingStreamId, FundingStreamId != null);
+            this.Equal(nameof(Project.LeadAdviserUserId), LeadAdviserUserId, LeadAdviserUserId != null);
 
             return this;
         }
@@ -29,5 +30,7 @@ namespace Webfuel.Domain
         public Guid? StatusId { get; set; }
 
         public Guid? FundingStreamId { get; set; }
+
+        public Guid? LeadAdviserUserId { get; set; }
     }
 }

@@ -1,12 +1,14 @@
 <div class="field" [formGroup]="form">
   <label class="label">{{ argument.name }}</label>
   <div class="columns">
+    <!--
+
+
     <div class="column" *ngIf="argument.conditions.length > 0">
       <select class="select" formControlName="condition">
         <option *ngFor="let condition of filter.conditions" [ngValue]="condition.value">{{ condition.description }}</option>
       </select>
     </div>
-    <!--
   <div class="column" *ngIf="filter.filterType == ReportFilterType.Date">
     <input type="text" class="input" formControlName="value" placeholder="optional" />
   </div>

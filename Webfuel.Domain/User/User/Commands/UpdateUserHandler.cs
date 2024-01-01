@@ -20,6 +20,7 @@ namespace Webfuel.Domain
             updated.Title = request.Title;
             updated.FirstName = request.FirstName;
             updated.LastName = request.LastName;
+            updated.FullName = request.FirstName + " " + request.LastName;
             updated.UserGroupId = request.UserGroupId;
 
             updated.RSSJobTitle = request.RSSJobTitle;

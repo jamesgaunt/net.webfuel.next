@@ -10,6 +10,9 @@
     <Property Name="SupportRequestId" Type="Guid?" Tags="ChangeLog:Ignore" />
     <Property Name="ClosureDate" Type="Date?" />
 
+    <!-- Ownership -->
+    <Property Name="LeadAdviserUserId" Type="User?" />
+    
     <Property Name="SubmittedFundingStreamId" Type="FundingStream?" />
     <Property Name="SubmittedFundingStreamFreeText" Type="meta:name" />
     <Property Name="SubmittedFundingStreamName" Type="meta:name" />
@@ -90,6 +93,9 @@
     <!-- Indexes -->
     <Index Unique="false">
       <Member Name="Number" />
+    </Index>
+    <Index Unique="false">
+      <Member Name="LeadAdviserUserId" />
     </Index>
     <Index Unique="false">
       <Member Name="StatusId" />

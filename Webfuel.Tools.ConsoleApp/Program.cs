@@ -48,7 +48,7 @@ namespace Webfuel.Tools.ConsoleApp
             Console.Clear();
 
             Console.WriteLine("Commands:");
-            Console.WriteLine("-- user test data");
+            Console.WriteLine("-- fix users");
             Console.WriteLine("-- exit");
 
             Console.Write("> ");
@@ -59,8 +59,8 @@ namespace Webfuel.Tools.ConsoleApp
 
             switch (command)
             {
-                case "user test data":
-                    await serviceProvider.GetRequiredService<IUserTestData>().GenerateTestData();
+                case "fix users":
+                    await serviceProvider.GetRequiredService<IUserFix>().FixUsers();
                     break;
 
                 default:

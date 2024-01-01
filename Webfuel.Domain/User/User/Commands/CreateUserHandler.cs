@@ -19,6 +19,7 @@ namespace Webfuel.Domain
                 Title = request.Title,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
+                FullName = request.FirstName + " " + request.LastName,
                 UserGroupId = request.UserGroupId,
                 CreatedAt = DateTimeOffset.UtcNow
             });

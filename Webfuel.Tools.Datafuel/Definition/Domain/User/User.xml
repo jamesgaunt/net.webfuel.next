@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Schema>
-  <Entity Name="User">
+  <Entity Name="User" OrderBy="LastName">
     <Key Name="Id" Type="guid" />
     <Property Name="Email" Type="meta:email" />
     <Reference Name="UserGroupId" Type="UserGroup" />
@@ -11,7 +11,8 @@
     <Property Name="Title" Type="string[16]" />
     <Property Name="FirstName" Type="meta:name" />
     <Property Name="LastName" Type="meta:name" />
-
+    <Property Name="FullName" Type="meta:name" />
+    
     <Property Name="RSSJobTitle" Type="meta:name" />
     <Property Name="UniversityJobTitle" Type="meta:name" />
     
@@ -40,6 +41,9 @@
 
     <Index Unique="true">
       <Member Name="Email" />
+    </Index>
+    <Index Unique="false">
+      <Member Name="LastName" />
     </Index>
 
     <Data>

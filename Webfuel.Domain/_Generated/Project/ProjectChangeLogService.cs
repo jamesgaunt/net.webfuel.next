@@ -155,6 +155,10 @@ namespace Webfuel.Domain
             {
                 sb.Append("Lead Applicant O R C I D: ").Append(original.LeadApplicantORCID).Append(" -> ").Append(updated.LeadApplicantORCID).Append(delimiter);
             }
+            if(original.LeadAdviserUserId != updated.LeadAdviserUserId)
+            {
+                sb.Append("Lead Adviser User: ").Append(original.LeadAdviserUserId?.ToString() ?? "NULL").Append(" -> ").Append(updated.LeadAdviserUserId?.ToString() ?? "NULL").Append(delimiter);
+            }
             if(original.SubmittedFundingStreamId != updated.SubmittedFundingStreamId)
             {
                 var o = original.SubmittedFundingStreamId.HasValue ? (await _staticDataService.GetFundingStream(original.SubmittedFundingStreamId.Value))?.Name ?? "UNKNOWN" : "NULL";

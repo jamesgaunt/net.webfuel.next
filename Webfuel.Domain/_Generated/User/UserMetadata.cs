@@ -10,7 +10,7 @@ namespace Webfuel.Domain
         
         public static string DatabaseTable => "User";
         
-        public static string DefaultOrderBy => "ORDER BY Id ASC";
+        public static string DefaultOrderBy => "ORDER BY LastName ASC";
         
         public static User DataReader(SqlDataReader dr) => new User(dr);
         
@@ -37,6 +37,9 @@ namespace Webfuel.Domain
                         break;
                     case nameof(User.LastName):
                         result.Add(new SqlParameter(nameof(User.LastName), entity.LastName));
+                        break;
+                    case nameof(User.FullName):
+                        result.Add(new SqlParameter(nameof(User.FullName), entity.FullName));
                         break;
                     case nameof(User.RSSJobTitle):
                         result.Add(new SqlParameter(nameof(User.RSSJobTitle), entity.RSSJobTitle));
@@ -130,6 +133,7 @@ namespace Webfuel.Domain
                 yield return "Title";
                 yield return "FirstName";
                 yield return "LastName";
+                yield return "FullName";
                 yield return "RSSJobTitle";
                 yield return "UniversityJobTitle";
                 yield return "ProfessionalBackground";
@@ -163,6 +167,7 @@ namespace Webfuel.Domain
                 yield return "Title";
                 yield return "FirstName";
                 yield return "LastName";
+                yield return "FullName";
                 yield return "RSSJobTitle";
                 yield return "UniversityJobTitle";
                 yield return "ProfessionalBackground";
@@ -195,6 +200,7 @@ namespace Webfuel.Domain
                 yield return "Title";
                 yield return "FirstName";
                 yield return "LastName";
+                yield return "FullName";
                 yield return "RSSJobTitle";
                 yield return "UniversityJobTitle";
                 yield return "ProfessionalBackground";
@@ -230,6 +236,8 @@ namespace Webfuel.Domain
             entity.FirstName = entity.FirstName.Trim();
             entity.LastName = entity.LastName ?? String.Empty;
             entity.LastName = entity.LastName.Trim();
+            entity.FullName = entity.FullName ?? String.Empty;
+            entity.FullName = entity.FullName.Trim();
             entity.RSSJobTitle = entity.RSSJobTitle ?? String.Empty;
             entity.RSSJobTitle = entity.RSSJobTitle.Trim();
             entity.UniversityJobTitle = entity.UniversityJobTitle ?? String.Empty;
@@ -253,6 +261,7 @@ namespace Webfuel.Domain
         public const int Title_MaxLength = 16;
         public const int FirstName_MaxLength = 128;
         public const int LastName_MaxLength = 128;
+        public const int FullName_MaxLength = 128;
         public const int RSSJobTitle_MaxLength = 128;
         public const int UniversityJobTitle_MaxLength = 128;
         public const int ProfessionalBackground_MaxLength = 1024;
@@ -287,6 +296,13 @@ namespace Webfuel.Domain
             ruleBuilder
                 .NotNull()
                 .MaximumLength(LastName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void FullName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(FullName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
         public static void RSSJobTitle_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
@@ -347,6 +363,7 @@ namespace Webfuel.Domain
             RuleFor(x => x.Title).Use(UserMetadata.Title_ValidationRules);
             RuleFor(x => x.FirstName).Use(UserMetadata.FirstName_ValidationRules);
             RuleFor(x => x.LastName).Use(UserMetadata.LastName_ValidationRules);
+            RuleFor(x => x.FullName).Use(UserMetadata.FullName_ValidationRules);
             RuleFor(x => x.RSSJobTitle).Use(UserMetadata.RSSJobTitle_ValidationRules);
             RuleFor(x => x.UniversityJobTitle).Use(UserMetadata.UniversityJobTitle_ValidationRules);
             RuleFor(x => x.ProfessionalBackground).Use(UserMetadata.ProfessionalBackground_ValidationRules);

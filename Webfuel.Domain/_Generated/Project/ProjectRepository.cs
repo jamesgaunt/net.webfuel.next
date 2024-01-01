@@ -20,6 +20,7 @@ namespace Webfuel.Domain
         Task<List<Project>> SelectProjectWithPage(int skip, int take);
         Task<List<Project>> SelectProjectByDateOfRequest(DateOnly dateOfRequest);
         Task<List<Project>> SelectProjectByStatusId(Guid statusId);
+        Task<List<Project>> SelectProjectByLeadAdviserUserId(Guid? leadAdviserUserId);
         Task<List<Project>> SelectProjectByNumber(int number);
     }
     [Service(typeof(IProjectRepository))]
@@ -111,6 +112,15 @@ namespace Webfuel.Domain
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@StatusId", statusId),
+            };
+            return await _connection.ExecuteReader<Project, ProjectMetadata>(sql, parameters);
+        }
+        public async Task<List<Project>> SelectProjectByLeadAdviserUserId(Guid? leadAdviserUserId)
+        {
+            var sql = @"SELECT * FROM [Project] WHERE ((LeadAdviserUserId = @LeadAdviserUserId) OR (LeadAdviserUserId IS NULL AND @LeadAdviserUserId IS NULL)) ORDER BY Number DESC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@LeadAdviserUserId", (object?)leadAdviserUserId ?? DBNull.Value),
             };
             return await _connection.ExecuteReader<Project, ProjectMetadata>(sql, parameters);
         }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Webfuel.Domain
 {
-    public class UpdateProject: IRequest<Project>
+    public class UpdateProject : IRequest<Project>
     {
         public required Guid Id { get; set; }
         public required Guid StatusId { get; set; }
@@ -16,6 +16,10 @@ namespace Webfuel.Domain
         public Guid? SubmittedFundingStreamId { get; set; }
         public string SubmittedFundingStreamFreeText { get; set; } = String.Empty;
         public string SubmittedFundingStreamName { get; set; } = String.Empty;
+
+        // Ownership
+
+        public Guid? LeadAdviserUserId { get; set; }
 
         // Clinical Trial Submissions
 

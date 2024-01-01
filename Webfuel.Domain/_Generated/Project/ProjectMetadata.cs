@@ -149,6 +149,9 @@ namespace Webfuel.Domain
                     case nameof(Project.FileStorageGroupId):
                         result.Add(new SqlParameter(nameof(Project.FileStorageGroupId), entity.FileStorageGroupId));
                         break;
+                    case nameof(Project.LeadAdviserUserId):
+                        result.Add(new SqlParameter(nameof(Project.LeadAdviserUserId), entity.LeadAdviserUserId ?? (object?)DBNull.Value));
+                        break;
                     case nameof(Project.SubmittedFundingStreamId):
                         result.Add(new SqlParameter(nameof(Project.SubmittedFundingStreamId), entity.SubmittedFundingStreamId ?? (object?)DBNull.Value));
                         break;
@@ -266,6 +269,7 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantORCID";
                 yield return "CreatedAt";
                 yield return "FileStorageGroupId";
+                yield return "LeadAdviserUserId";
                 yield return "SubmittedFundingStreamId";
                 yield return "StatusId";
                 yield return "IsInternationalMultiSiteStudyId";
@@ -332,6 +336,7 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantORCID";
                 yield return "CreatedAt";
                 yield return "FileStorageGroupId";
+                yield return "LeadAdviserUserId";
                 yield return "SubmittedFundingStreamId";
                 yield return "StatusId";
                 yield return "IsInternationalMultiSiteStudyId";
@@ -397,6 +402,7 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantORCID";
                 yield return "CreatedAt";
                 yield return "FileStorageGroupId";
+                yield return "LeadAdviserUserId";
                 yield return "SubmittedFundingStreamId";
                 yield return "StatusId";
                 yield return "IsInternationalMultiSiteStudyId";

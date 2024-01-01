@@ -4,6 +4,7 @@ import { Project } from 'api/api.types';
 import { FormService } from 'core/form.service';
 import { ConfigurationService } from '../../../../core/configuration.service';
 import { ProjectComponentBase } from '../shared/project-component-base';
+import { UserApi } from '../../../../api/user.api';
 
 @Component({
   selector: 'project-item',
@@ -15,6 +16,7 @@ export class ProjectItemComponent extends ProjectComponentBase {
 
   constructor(
     private formService: FormService,
+    public userApi: UserApi,
     public configurationService: ConfigurationService
   ) {
     super();
@@ -54,6 +56,8 @@ export class ProjectItemComponent extends ProjectComponentBase {
     submittedFundingStreamId: new FormControl<string | null>(null),
     submittedFundingStreamFreeText: new FormControl<string>('', { nonNullable: true }),
     submittedFundingStreamName: new FormControl<string>('', { nonNullable: true }),
+
+    leadAdviserUserId: new FormControl<string | null>(null),
 
     projectStartDate: new FormControl<string | null>(null),
     recruitmentTarget: new FormControl<number | null>(null),

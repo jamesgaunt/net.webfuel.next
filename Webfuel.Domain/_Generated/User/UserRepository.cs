@@ -18,6 +18,7 @@ namespace Webfuel.Domain
         Task<int> CountUser();
         Task<List<User>> SelectUser();
         Task<List<User>> SelectUserWithPage(int skip, int take);
+        Task<List<User>> SelectUserByLastName(string lastName);
         Task<User?> GetUserByEmail(string email);
         Task<User> RequireUserByEmail(string email);
     }
@@ -82,12 +83,12 @@ namespace Webfuel.Domain
         }
         public async Task<List<User>> SelectUser()
         {
-            var sql = @"SELECT * FROM [User] ORDER BY Id ASC";
+            var sql = @"SELECT * FROM [User] ORDER BY LastName ASC";
             return await _connection.ExecuteReader<User, UserMetadata>(sql);
         }
         public async Task<List<User>> SelectUserWithPage(int skip, int take)
         {
-            var sql = @"SELECT * FROM [User] ORDER BY Id ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+            var sql = @"SELECT * FROM [User] ORDER BY LastName ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Skip", skip),
@@ -95,9 +96,18 @@ namespace Webfuel.Domain
             };
             return await _connection.ExecuteReader<User, UserMetadata>(sql, parameters);
         }
+        public async Task<List<User>> SelectUserByLastName(string lastName)
+        {
+            var sql = @"SELECT * FROM [User] WHERE LastName = @LastName ORDER BY LastName ASC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@LastName", lastName),
+            };
+            return await _connection.ExecuteReader<User, UserMetadata>(sql, parameters);
+        }
         public async Task<User?> GetUserByEmail(string email)
         {
-            var sql = @"SELECT * FROM [User] WHERE Email = @Email ORDER BY Id ASC";
+            var sql = @"SELECT * FROM [User] WHERE Email = @Email ORDER BY LastName ASC";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Email", email),

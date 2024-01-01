@@ -748,6 +748,7 @@ export interface Project {
     leadApplicantORCID: string;
     createdAt: string;
     fileStorageGroupId: string;
+    leadAdviserUserId: string | null | null;
     submittedFundingStreamId: string | null | null;
     statusId: string;
     isInternationalMultiSiteStudyId: string | null | null;
@@ -772,6 +773,7 @@ export interface UpdateProject {
     submittedFundingStreamId: string | null | null;
     submittedFundingStreamFreeText: string;
     submittedFundingStreamName: string;
+    leadAdviserUserId: string | null | null;
     projectStartDate: string | null | null;
     recruitmentTarget: number | null | null;
     numberOfProjectSites: number | null | null;
@@ -790,6 +792,7 @@ export interface QueryProject extends Query {
     toDate: string | null | null;
     statusId: string | null | null;
     fundingStreamId: string | null | null;
+    leadAdviserUserId: string | null | null;
     skip: number;
     take: number;
     projection?: Array<string>;

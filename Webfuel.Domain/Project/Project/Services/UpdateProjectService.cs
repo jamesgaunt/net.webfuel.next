@@ -44,6 +44,8 @@ namespace Webfuel.Domain
             updated.NumberOfProjectSites = request.NumberOfProjectSites;
             updated.IsInternationalMultiSiteStudyId = request.IsInternationalMultiSiteStudyId;
 
+            updated.LeadAdviserUserId = request.LeadAdviserUserId;
+
             updated.SubmittedFundingStreamId = request.SubmittedFundingStreamId;
             updated.SubmittedFundingStreamFreeText = request.SubmittedFundingStreamFreeText;
             updated.SubmittedFundingStreamName = request.SubmittedFundingStreamName;

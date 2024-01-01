@@ -7,6 +7,8 @@ import { StaticDataCache } from 'api/static-data.cache';
 import { ProjectExportApi } from '../../../../api/project-export.api';
 import { ConfigurationService } from '../../../../core/configuration.service';
 import { ReportService } from '../../../../core/report.service';
+import { UserApi } from '../../../../api/user.api';
+import { UserService } from '../../../../core/user.service';
 
 @Component({
   selector: 'project-list',
@@ -16,6 +18,8 @@ export class ProjectListComponent {
   constructor(
     private router: Router,
     public projectApi: ProjectApi,
+    public userApi: UserApi,
+    public userService: UserService,
     public staticDataCache: StaticDataCache,
     private projectExportApi: ProjectExportApi,
     private configurationService: ConfigurationService,
@@ -29,6 +33,7 @@ export class ProjectListComponent {
     toDate: new FormControl<string | null>(null),
     statusId: new FormControl<string | null>(null),
     fundingStreamId: new FormControl<string | null>(null),
+    leadAdviserUserId: new FormControl<string | null>(null),
     title: new FormControl<string>('', { nonNullable: true })
   });
 
@@ -39,6 +44,7 @@ export class ProjectListComponent {
       toDate: null,
       statusId: null,
       fundingStreamId: null,
+      leadAdviserUserId: null,
       title: ''
     });
   }

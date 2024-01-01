@@ -6,7 +6,7 @@ namespace Webfuel.Domain
     {
         public Query ApplyCustomFilters()
         {
-            this.Contains(nameof(User.Email), Search);
+            this.Contains(nameof(User.FullName), Search);
             return this;
         }
     }

@@ -147,6 +147,9 @@ namespace Webfuel.Domain
                     case nameof(Project.FileStorageGroupId):
                         FileStorageGroupId = (Guid)value!;
                         break;
+                    case nameof(Project.LeadAdviserUserId):
+                        LeadAdviserUserId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
                     case nameof(Project.SubmittedFundingStreamId):
                         SubmittedFundingStreamId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
@@ -241,6 +244,7 @@ namespace Webfuel.Domain
         public string LeadApplicantORCID  { get; set; } = String.Empty;
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid FileStorageGroupId { get; set; }
+        public Guid? LeadAdviserUserId { get; set; }
         public Guid? SubmittedFundingStreamId { get; set; }
         public Guid StatusId { get; set; }
         public Guid? IsInternationalMultiSiteStudyId { get; set; }
@@ -303,6 +307,7 @@ namespace Webfuel.Domain
             entity.LeadApplicantORCID = LeadApplicantORCID;
             entity.CreatedAt = CreatedAt;
             entity.FileStorageGroupId = FileStorageGroupId;
+            entity.LeadAdviserUserId = LeadAdviserUserId;
             entity.SubmittedFundingStreamId = SubmittedFundingStreamId;
             entity.StatusId = StatusId;
             entity.IsInternationalMultiSiteStudyId = IsInternationalMultiSiteStudyId;

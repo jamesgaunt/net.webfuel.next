@@ -36,6 +36,9 @@ namespace Webfuel.Domain
                     case nameof(User.LastName):
                         LastName = (string)value!;
                         break;
+                    case nameof(User.FullName):
+                        FullName = (string)value!;
+                        break;
                     case nameof(User.RSSJobTitle):
                         RSSJobTitle = (string)value!;
                         break;
@@ -105,6 +108,7 @@ namespace Webfuel.Domain
         public string Title  { get; set; } = String.Empty;
         public string FirstName  { get; set; } = String.Empty;
         public string LastName  { get; set; } = String.Empty;
+        public string FullName  { get; set; } = String.Empty;
         public string RSSJobTitle  { get; set; } = String.Empty;
         public string UniversityJobTitle  { get; set; } = String.Empty;
         public string ProfessionalBackground  { get; set; } = String.Empty;
@@ -150,6 +154,7 @@ namespace Webfuel.Domain
             entity.Title = Title;
             entity.FirstName = FirstName;
             entity.LastName = LastName;
+            entity.FullName = FullName;
             entity.RSSJobTitle = RSSJobTitle;
             entity.UniversityJobTitle = UniversityJobTitle;
             entity.ProfessionalBackground = ProfessionalBackground;

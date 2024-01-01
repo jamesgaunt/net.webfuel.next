@@ -19,7 +19,17 @@
         <div class="field is-3">
           <input class="input" type="text" formControlName="number" placeholder="Number" />
         </div>
-        <div class="field is-9">
+        <div class="field is-3">
+          <dropdown-select [dataSource]="userApi" placeholder="Lead Adviser" formControlName="leadAdviserUserId" [enableClear]="true" [enableSearch]="true">
+            <ng-template #optionTemplate let-item>
+              {{ item.fullName }}
+            </ng-template>
+            <ng-template #pickedTemplate let-item>
+              {{ item.fullName }}
+            </ng-template>
+          </dropdown-select>
+        </div>
+        <div class="field is-6">
           <input class="input" type="text" formControlName="title" placeholder="Title" />
         </div>
       </div>
@@ -47,6 +57,11 @@
     <grid-column name="prefixedNumber" label="Number" />
     <grid-date-column name="dateOfRequest" />
     <grid-reference-column [dataSource]="staticDataCache.projectStatus" name="statusId" />
+    <grid-column name="leadAdviserUserId" label="Lead Adviser">
+      <ng-template #itemTemplate let-item>
+        {{ userService.formatUser(item.leadAdviserUserId) | async }}
+      </ng-template>
+    </grid-column>
     <grid-column name="title" />
     <grid-reference-column [dataSource]="staticDataCache.fundingStream" name="submittedFundingStreamId" label="Funding Stream" />
     <grid-action-column [canAdd]="false" [canDelete]="false" (edit)="edit($event)" />

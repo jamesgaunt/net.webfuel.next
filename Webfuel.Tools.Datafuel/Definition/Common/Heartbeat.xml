@@ -41,7 +41,7 @@
     <Property Name="Microseconds" Type="int" />
     <Property Name="MetadataJson" Type="string" />
 
-    <Index IsUnique="false">
+    <Index Unique="false">
       <Member Name="HeartbeatId" />
     </Index>
   </Entity>

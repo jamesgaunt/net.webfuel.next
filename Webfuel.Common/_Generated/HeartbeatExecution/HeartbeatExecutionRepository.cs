@@ -18,6 +18,7 @@ namespace Webfuel.Common
         Task<int> CountHeartbeatExecution();
         Task<List<HeartbeatExecution>> SelectHeartbeatExecution();
         Task<List<HeartbeatExecution>> SelectHeartbeatExecutionWithPage(int skip, int take);
+        Task<List<HeartbeatExecution>> SelectHeartbeatExecutionByHeartbeatId(Guid heartbeatId);
     }
     [Service(typeof(IHeartbeatExecutionRepository))]
     internal partial class HeartbeatExecutionRepository: IHeartbeatExecutionRepository
@@ -90,6 +91,15 @@ namespace Webfuel.Common
             {
                 new SqlParameter("@Skip", skip),
                 new SqlParameter("@Take", take),
+            };
+            return await _connection.ExecuteReader<HeartbeatExecution, HeartbeatExecutionMetadata>(sql, parameters);
+        }
+        public async Task<List<HeartbeatExecution>> SelectHeartbeatExecutionByHeartbeatId(Guid heartbeatId)
+        {
+            var sql = @"SELECT * FROM [HeartbeatExecution] WHERE HeartbeatId = @HeartbeatId ORDER BY Id DESC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@HeartbeatId", heartbeatId),
             };
             return await _connection.ExecuteReader<HeartbeatExecution, HeartbeatExecutionMetadata>(sql, parameters);
         }
