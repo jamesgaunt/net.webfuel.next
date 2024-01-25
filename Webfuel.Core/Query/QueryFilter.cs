@@ -24,6 +24,10 @@ namespace Webfuel
         [ApiOptional]
         public object? Value { get; set; }
 
+        [ApiIgnore]
+        [JsonIgnore]
+        public string SQL { get; set; } = String.Empty;
+
         [ApiOptional]
         public List<QueryFilter>? Filters { get; set; }
     }
@@ -56,6 +60,10 @@ namespace Webfuel
                     {
                         reader.Read();
                         filter.Op = reader.GetString() ?? QueryOp.None;
+
+                        if (filter.Op == QueryOp.SQL)
+                            throw new InvalidOperationException("SQL Query operations cannot be serialised");
+
                     }
                     else if (String.Compare("Value", name, options.PropertyNameCaseInsensitive) == 0)
                     {

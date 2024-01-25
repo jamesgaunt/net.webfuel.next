@@ -106,7 +106,7 @@ namespace Webfuel
             var filterSql = RepositoryQueryUtility.FilterSql(query, parameters);
 
             var selectSql = RepositoryQueryUtility.SelectSql(query, fields);
-            var fromSql = $"FROM [{TEntityMetadata.DatabaseTable}]";
+            var fromSql = $"FROM [{TEntityMetadata.DatabaseTable}] AS e";
             var orderSql = RepositoryQueryUtility.OrderSql(query, fields, TEntityMetadata.DefaultOrderBy);
             var pageSql = RepositoryQueryUtility.PageSql(query);
 

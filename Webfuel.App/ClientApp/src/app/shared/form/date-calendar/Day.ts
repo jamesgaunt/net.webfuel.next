@@ -28,6 +28,10 @@ export class Day {
     return this.toDate().getDay();
   }
 
+  get ticks() {
+    return this.toDate().getTime();
+  }
+
   isSame(day: Day | null | undefined) {
     if (!_.isObject(day))
       return false;

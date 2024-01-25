@@ -9,6 +9,8 @@ import { debounceTime, takeUntil } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { ResearcherRoleEnum } from '../api/api.enums';
+import { Validate } from '../shared/common/validate';
 
 @Component({
   selector: 'support-request-form',
@@ -33,26 +35,22 @@ export class SupportRequestFormComponent {
       if (this.form.valid)
         this.errorMessage = "";
     });
-
-    this.staticDataCache.researcherRole.query({ filters: [{ field: "name", op: "eq", value: "Chief Investigator" }], skip: 0, take: 1 }).subscribe((result) => {
-      if (result.items.length > 0)
-        this.chiefInvestigatorRoleId = result.items[0].id;
-    });
   }
 
-  chiefInvestigatorRoleId = "???";
-
   isTeamContactAlsoChiefInvestigator() {
-    var value = this.form.value.teamContactRoleId == this.chiefInvestigatorRoleId;
-    if (value)
+    var isChief =
+      this.form.value.teamContactRoleId == ResearcherRoleEnum.ChiefInvestigator ||
+      this.form.value.teamContactRoleId == ResearcherRoleEnum.FellowshipApplicant;
+    if (isChief)
       this.syncTeamContactDetails();
-    return value;
+    return isChief;
   }
 
   syncTeamContactDetails() {
     this.form.patchValue({ leadApplicantTitle: this.form.value.teamContactTitle });
     this.form.patchValue({ leadApplicantFirstName: this.form.value.teamContactFirstName });
     this.form.patchValue({ leadApplicantLastName: this.form.value.teamContactLastName });
+    this.form.patchValue({ leadApplicantEmail: this.form.value.teamContactEmail });
   }
 
   stage: 'input' | 'submitted' | 'error' = 'input';
@@ -64,7 +62,7 @@ export class SupportRequestFormComponent {
     title: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     isFellowshipId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     proposedFundingStreamName: new FormControl<string>('', { nonNullable: true }),
-    targetSubmissionDate: new FormControl<string | null>(null),
+    targetSubmissionDate: new FormControl<string | null>(null, { validators: [Validate.dateMustBeInFuture()] }),
     experienceOfResearchAwards: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     isTeamMembersConsultedId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     isResubmissionId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
@@ -76,6 +74,9 @@ export class SupportRequestFormComponent {
     proposedFundingCallTypeId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     howDidYouFindUsId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     howDidYouFindUsFreeText: new FormControl<string>('', { nonNullable: true }),
+    whoElseIsOnTheStudyTeam: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    isCTUAlreadyInvolvedId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
+    isCTUAlreadyInvolvedFreeText: new FormControl<string>('', { nonNullable: true }),
 
     // Team Contact Details
 
@@ -93,6 +94,7 @@ export class SupportRequestFormComponent {
     leadApplicantTitle: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     leadApplicantFirstName: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     leadApplicantLastName: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    leadApplicantEmail: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
 
     leadApplicantJobRole: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     leadApplicantOrganisationTypeId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),

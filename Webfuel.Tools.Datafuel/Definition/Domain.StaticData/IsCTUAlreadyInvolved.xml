@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="IsCTUAlreadyInvolved" Tags="StaticData|Enum" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Property Name="FreeText" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="d51d2c40-578a-4797-b728-943b6dd9e87c" Name="Yes - we have already got a CTU involved" FreeText="true" />
+      <Row Id="78ccf6a2-e166-4774-9c0c-aedcb57fd789" Name="No - we have not got a CTU involved" />
+    </Data>
+  </Entity>
+</Schema>

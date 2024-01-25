@@ -25,5 +25,8 @@ namespace Webfuel.Domain
         public Guid? ProposedFundingCallTypeId { get; set; }
         public Guid? HowDidYouFindUsId { get; set; }
         public string HowDidYouFindUsFreeText { get; set; } = String.Empty;
+        public string WhoElseIsOnTheStudyTeam { get; set; } = String.Empty;
+        public Guid? IsCTUAlreadyInvolvedId { get; set; }
+        public string IsCTUAlreadyInvolvedFreeText { get; set; } = String.Empty;
     }
 }

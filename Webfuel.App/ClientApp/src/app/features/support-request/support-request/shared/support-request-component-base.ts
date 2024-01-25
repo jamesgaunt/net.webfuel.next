@@ -43,7 +43,7 @@ export abstract class SupportRequestComponentBase implements OnInit {
   resetStatus() {
     this.staticDataCache.supportRequestStatus.get({ id: this.item.statusId }).subscribe((result) => {
       this.supportRequestStatus = result;
-      this.item.statusId == SupportRequestStatusEnum.ToBeTriaged ? this.clearLock() : this.applyLock();
+      this.locked ? this.applyLock() : this.clearLock();
     });
   }
 
@@ -51,7 +51,7 @@ export abstract class SupportRequestComponentBase implements OnInit {
 
   protected clearLock() { };
 
-  get locked() { return this.item.statusId != SupportRequestStatusEnum.ToBeTriaged; }
+  get locked() { return this.item.statusId != SupportRequestStatusEnum.ToBeTriaged && this.item.statusId != SupportRequestStatusEnum.OnHold; }
 
   get referred() { return this.item.statusId == SupportRequestStatusEnum.ReferredToNIHRRSSExpertTeams; }
 

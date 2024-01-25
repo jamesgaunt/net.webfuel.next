@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Schema>
-  <Entity Name="ResearcherRole" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData, IStaticDataWithFreeText">
+  <Entity Name="ResearcherRole" Tags="StaticData | Enum" OrderBy="SortOrder" Interface="IStaticData, IStaticDataWithFreeText">
     <Key Name="Id" Type="guid" />
     <Property Name="Name" Type="meta:name" />
     <Property Name="SortOrder" Type="Int32" />

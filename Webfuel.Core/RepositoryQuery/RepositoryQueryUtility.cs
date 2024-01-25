@@ -108,6 +108,9 @@ namespace Webfuel
                 case QueryOp.GreaterThanOrEqual:
                     return $"{Field(filter.Field)} >= {PushParameter(filter.Value, parameters)}";
 
+                case QueryOp.SQL:
+                    return filter.SQL;
+
             }
             throw new InvalidOperationException("Unrecognised Filter");
         }
@@ -137,6 +140,11 @@ namespace Webfuel
                     if (filter.Filters == null || filter.Filters.Count == 0)
                         throw new InvalidOperationException("Empty filter clause found in query");
                     ValidateFields(filter.Filters, fields);
+                }
+                else if(filter.Op == QueryOp.SQL)
+                {
+                    if (String.IsNullOrEmpty(filter.SQL))
+                        throw new InvalidOperationException("Emply SQL clause found in query");
                 }
                 else
                 {

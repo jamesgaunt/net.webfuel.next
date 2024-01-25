@@ -7,46 +7,20 @@
   <div *ngIf="model === null">
     Loading...
   </div>
-  <div *ngIf="model !== null">
-    <h2>Team Support Requests</h2>
-    <div *ngIf="model.openTeamSupport.length === 0">
-      <div class="message is-success">
-        There are no outstanding team support requests.
-      </div>
-    </div>
-    <div *ngIf="model.openTeamSupport.length !== 0">
-      <div class="card" *ngFor="let teamSupport of model.openTeamSupport">
-        <div class="card-title">
-          <div *ngIf="teamSupport.completedAt === null" class="tag is-warning is-small">open</div>
-          <div *ngIf="teamSupport.completedAt !== null" class="tag is-success is-small">complete</div>
-          <b>{{ (staticDataCache.supportTeam.get({ id: teamSupport.supportTeamId }) | async)?.name }}</b>
-          support requested by
-          {{ userService.formatUser(teamSupport.createdByUserId) | async }}
-          [{{ teamSupport.createdAt | date: 'dd-MMM-yy HH:mm' }}]
-        </div>
-        <pre class="card-narrative">{{ teamSupport.createdNotes }}</pre>
-        <div class="card-buttons">
-          <button class="button is-small is-primary" (click)="viewTeamSupport(teamSupport)"><i class="fas fa-link"></i>&nbsp;{{ teamSupport.projectLabel }}</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!--
-  <div class="grid has-columns-3">
-    <div class="metric-box">
-      <div class="icon">
-        <i class="fas fa-database"></i>
-      </div>
-      <div class="description">
-        <div class="metric">24</div>
-        <div class="text">Active Projects</div>
-      </div>
-      <div class="action">
-        View Details &gt;
-      </div>
+  <div *ngIf="model !== null" class="dashboard-metrics">
+
+    <h3>Active Projects</h3>
+    <div class="support-teams">
+
+      <a *ngFor="let supportTeam of model.supportTeams" routerLink="/project/project-list" [queryParams]="{ supportTeam: supportTeam.id }">
+        <div class="name">{{ supportTeam.name }}</div>
+        <div class="open-projects">{{ supportTeam.openProjects }}</div>
+      </a>
+
     </div>
+
+
   </div>
-    -->
 
 </div>

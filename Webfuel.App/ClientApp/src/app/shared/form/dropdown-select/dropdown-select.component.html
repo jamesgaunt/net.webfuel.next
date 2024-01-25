@@ -17,7 +17,7 @@
     <i class="fas fa-chevron-down"></i>
   </div>
 </div>
-<input *ngIf="freeTextControl && pickedFreeText" [formControl]="freeTextControl" style="margin-top: 4px;" class="input" placeholder="please specify other..." />
+<input *ngIf="freeTextControl && pickedFreeText" [formControl]="freeTextControl" style="margin-top: 4px;" class="input" [placeholder]="freeTextPlaceholder || 'please specify other...'" />
 
 <ng-template #defaultOptionTemplate let-item>
   {{ item.name }}

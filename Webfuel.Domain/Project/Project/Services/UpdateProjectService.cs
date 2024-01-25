@@ -19,15 +19,18 @@ namespace Webfuel.Domain
     {
         private readonly IProjectRepository _projectRepository;
         private readonly IStaticDataService _staticDataService;
+        private readonly IEnrichProjectService _enrichProjectService;
         private readonly IProjectChangeLogService _projectChangeLogService;
 
         public UpdateProjectService(
-            IProjectRepository projectRepository, 
+            IProjectRepository projectRepository,
             IStaticDataService staticDataService,
+            IEnrichProjectService enrichProjectService,
             IProjectChangeLogService projectChangeLogService)
         {
             _projectRepository = projectRepository;
             _staticDataService = staticDataService;
+            _enrichProjectService = enrichProjectService;
             _projectChangeLogService = projectChangeLogService;
         }
 
@@ -62,7 +65,8 @@ namespace Webfuel.Domain
             }
 
             await _projectChangeLogService.InsertChangeLog(original: original, updated: updated);
-            return updated;
+
+            return await _enrichProjectService.EnrichProject(updated);
         }
 
         public async Task<Project> UpdateProjectStatus(UpdateProjectStatus request)

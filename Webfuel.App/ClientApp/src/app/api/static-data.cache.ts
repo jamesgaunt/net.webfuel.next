@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IDataSource, IDataSourceWithGet } from 'shared/common/data-source';
 import { StaticDataService } from '../core/static-data.service';
-import { AgeRange, ApplicationStage, Disability, Ethnicity, FundingBody, FundingCallType, FundingStream, Gender, HowDidYouFindUs, IsCTUTeamContribution, IsFellowship, IsInternationalMultiSiteStudy, IsLeadApplicantNHS, IsPPIEAndEDIContribution, IsQuantativeTeamContribution, IsResubmission, IsTeamMembersConsulted, ProjectStatus, ReportProvider, ResearcherOrganisationType, ResearcherRole, ResearchMethodology, Site, SubmissionOutcome, SubmissionStage, SupportProvided, SupportRequestStatus, SupportTeam, Title, UserDiscipline, WorkActivity } from './api.types';
+import { AgeRange, ApplicationStage, Disability, Ethnicity, FundingBody, FundingCallType, FundingStream, Gender, HowDidYouFindUs, IsCTUAlreadyInvolved, IsCTUTeamContribution, IsFellowship, IsInternationalMultiSiteStudy, IsLeadApplicantNHS, IsPPIEAndEDIContribution, IsQuantativeTeamContribution, IsResubmission, IsTeamMembersConsulted, ProjectStatus, ReportProvider, ResearcherOrganisationType, ResearcherRole, ResearchMethodology, Site, SubmissionOutcome, SubmissionStage, SupportProvided, SupportRequestStatus, SupportTeam, Title, UserDiscipline, WorkActivity } from './api.types';
 
 @Injectable()
 export class StaticDataCache {
@@ -52,6 +52,11 @@ export class StaticDataCache {
     howDidYouFindUs: IDataSourceWithGet<HowDidYouFindUs> = {
         query: (query) => this.staticDataService.queryFactory(query, s => s.howDidYouFindUs),
         get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.howDidYouFindUs),
+    };
+    
+    isCTUAlreadyInvolved: IDataSourceWithGet<IsCTUAlreadyInvolved> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.isCTUAlreadyInvolved),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.isCTUAlreadyInvolved),
     };
     
     isCTUTeamContribution: IDataSourceWithGet<IsCTUTeamContribution> = {

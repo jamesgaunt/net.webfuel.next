@@ -81,6 +81,12 @@ namespace Webfuel.Domain
                     case nameof(Project.HowDidYouFindUsFreeText):
                         HowDidYouFindUsFreeText = (string)value!;
                         break;
+                    case nameof(Project.WhoElseIsOnTheStudyTeam):
+                        WhoElseIsOnTheStudyTeam = (string)value!;
+                        break;
+                    case nameof(Project.IsCTUAlreadyInvolvedFreeText):
+                        IsCTUAlreadyInvolvedFreeText = (string)value!;
+                        break;
                     case nameof(Project.TeamContactTitle):
                         TeamContactTitle = (string)value!;
                         break;
@@ -111,6 +117,9 @@ namespace Webfuel.Domain
                     case nameof(Project.LeadApplicantLastName):
                         LeadApplicantLastName = (string)value!;
                         break;
+                    case nameof(Project.LeadApplicantEmail):
+                        LeadApplicantEmail = (string)value!;
+                        break;
                     case nameof(Project.LeadApplicantJobRole):
                         LeadApplicantJobRole = (string)value!;
                         break;
@@ -140,6 +149,9 @@ namespace Webfuel.Domain
                         break;
                     case nameof(Project.LeadApplicantORCID):
                         LeadApplicantORCID = (string)value!;
+                        break;
+                    case nameof(Project.SearchTeamContactFullName):
+                        SearchTeamContactFullName = (string)value!;
                         break;
                     case nameof(Project.CreatedAt):
                         CreatedAt = (DateTimeOffset)value!;
@@ -179,6 +191,9 @@ namespace Webfuel.Domain
                         break;
                     case nameof(Project.HowDidYouFindUsId):
                         HowDidYouFindUsId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(Project.IsCTUAlreadyInvolvedId):
+                        IsCTUAlreadyInvolvedId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
                     case nameof(Project.TeamContactRoleId):
                         TeamContactRoleId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
@@ -222,6 +237,8 @@ namespace Webfuel.Domain
         public string BriefDescription  { get; set; } = String.Empty;
         public string SupportRequested  { get; set; } = String.Empty;
         public string HowDidYouFindUsFreeText  { get; set; } = String.Empty;
+        public string WhoElseIsOnTheStudyTeam  { get; set; } = String.Empty;
+        public string IsCTUAlreadyInvolvedFreeText  { get; set; } = String.Empty;
         public string TeamContactTitle  { get; set; } = String.Empty;
         public string TeamContactFirstName  { get; set; } = String.Empty;
         public string TeamContactLastName  { get; set; } = String.Empty;
@@ -232,6 +249,7 @@ namespace Webfuel.Domain
         public string LeadApplicantTitle  { get; set; } = String.Empty;
         public string LeadApplicantFirstName  { get; set; } = String.Empty;
         public string LeadApplicantLastName  { get; set; } = String.Empty;
+        public string LeadApplicantEmail  { get; set; } = String.Empty;
         public string LeadApplicantJobRole  { get; set; } = String.Empty;
         public string LeadApplicantOrganisation  { get; set; } = String.Empty;
         public string LeadApplicantDepartment  { get; set; } = String.Empty;
@@ -242,6 +260,7 @@ namespace Webfuel.Domain
         public string LeadApplicantAddressCountry  { get; set; } = String.Empty;
         public string LeadApplicantAddressPostcode  { get; set; } = String.Empty;
         public string LeadApplicantORCID  { get; set; } = String.Empty;
+        public string SearchTeamContactFullName  { get; set; } = String.Empty;
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid FileStorageGroupId { get; set; }
         public Guid? LeadAdviserUserId { get; set; }
@@ -255,6 +274,7 @@ namespace Webfuel.Domain
         public Guid? IsTeamMembersConsultedId { get; set; }
         public Guid? IsResubmissionId { get; set; }
         public Guid? HowDidYouFindUsId { get; set; }
+        public Guid? IsCTUAlreadyInvolvedId { get; set; }
         public Guid? TeamContactRoleId { get; set; }
         public Guid? LeadApplicantOrganisationTypeId { get; set; }
         public Guid? IsLeadApplicantNHSId { get; set; }
@@ -285,6 +305,8 @@ namespace Webfuel.Domain
             entity.BriefDescription = BriefDescription;
             entity.SupportRequested = SupportRequested;
             entity.HowDidYouFindUsFreeText = HowDidYouFindUsFreeText;
+            entity.WhoElseIsOnTheStudyTeam = WhoElseIsOnTheStudyTeam;
+            entity.IsCTUAlreadyInvolvedFreeText = IsCTUAlreadyInvolvedFreeText;
             entity.TeamContactTitle = TeamContactTitle;
             entity.TeamContactFirstName = TeamContactFirstName;
             entity.TeamContactLastName = TeamContactLastName;
@@ -295,6 +317,7 @@ namespace Webfuel.Domain
             entity.LeadApplicantTitle = LeadApplicantTitle;
             entity.LeadApplicantFirstName = LeadApplicantFirstName;
             entity.LeadApplicantLastName = LeadApplicantLastName;
+            entity.LeadApplicantEmail = LeadApplicantEmail;
             entity.LeadApplicantJobRole = LeadApplicantJobRole;
             entity.LeadApplicantOrganisation = LeadApplicantOrganisation;
             entity.LeadApplicantDepartment = LeadApplicantDepartment;
@@ -305,6 +328,7 @@ namespace Webfuel.Domain
             entity.LeadApplicantAddressCountry = LeadApplicantAddressCountry;
             entity.LeadApplicantAddressPostcode = LeadApplicantAddressPostcode;
             entity.LeadApplicantORCID = LeadApplicantORCID;
+            entity.SearchTeamContactFullName = SearchTeamContactFullName;
             entity.CreatedAt = CreatedAt;
             entity.FileStorageGroupId = FileStorageGroupId;
             entity.LeadAdviserUserId = LeadAdviserUserId;
@@ -318,6 +342,7 @@ namespace Webfuel.Domain
             entity.IsTeamMembersConsultedId = IsTeamMembersConsultedId;
             entity.IsResubmissionId = IsResubmissionId;
             entity.HowDidYouFindUsId = HowDidYouFindUsId;
+            entity.IsCTUAlreadyInvolvedId = IsCTUAlreadyInvolvedId;
             entity.TeamContactRoleId = TeamContactRoleId;
             entity.LeadApplicantOrganisationTypeId = LeadApplicantOrganisationTypeId;
             entity.IsLeadApplicantNHSId = IsLeadApplicantNHSId;

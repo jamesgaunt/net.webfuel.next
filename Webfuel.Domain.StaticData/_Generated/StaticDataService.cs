@@ -31,6 +31,9 @@ namespace Webfuel.Domain.StaticData
         Task<IReadOnlyList<HowDidYouFindUs>> SelectHowDidYouFindUs();
         Task<HowDidYouFindUs?> GetHowDidYouFindUs(Guid id);
         Task<HowDidYouFindUs> RequireHowDidYouFindUs(Guid id);
+        Task<IReadOnlyList<IsCTUAlreadyInvolved>> SelectIsCTUAlreadyInvolved();
+        Task<IsCTUAlreadyInvolved?> GetIsCTUAlreadyInvolved(Guid id);
+        Task<IsCTUAlreadyInvolved> RequireIsCTUAlreadyInvolved(Guid id);
         Task<IReadOnlyList<IsCTUTeamContribution>> SelectIsCTUTeamContribution();
         Task<IsCTUTeamContribution?> GetIsCTUTeamContribution(Guid id);
         Task<IsCTUTeamContribution> RequireIsCTUTeamContribution(Guid id);
@@ -233,6 +236,21 @@ namespace Webfuel.Domain.StaticData
         public async Task<HowDidYouFindUs> RequireHowDidYouFindUs(Guid id)
         {
             return (await GetStaticData()).HowDidYouFindUs.First(p => p.Id == id);
+        }
+        
+        public async Task<IReadOnlyList<IsCTUAlreadyInvolved>> SelectIsCTUAlreadyInvolved()
+        {
+            return (await GetStaticData()).IsCTUAlreadyInvolved;
+        }
+        
+        public async Task<IsCTUAlreadyInvolved?> GetIsCTUAlreadyInvolved(Guid id)
+        {
+            return (await GetStaticData()).IsCTUAlreadyInvolved.FirstOrDefault(p => p.Id == id);
+        }
+        
+        public async Task<IsCTUAlreadyInvolved> RequireIsCTUAlreadyInvolved(Guid id)
+        {
+            return (await GetStaticData()).IsCTUAlreadyInvolved.First(p => p.Id == id);
         }
         
         public async Task<IReadOnlyList<IsCTUTeamContribution>> SelectIsCTUTeamContribution()

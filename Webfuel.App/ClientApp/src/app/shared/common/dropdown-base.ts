@@ -208,6 +208,9 @@ export abstract class DropDownBase<TItem> {
   @Input()
   freeTextControl: FormControl | null = null;
 
+  @Input()
+  freeTextPlaceholder: string | null = null;
+
   get pickedFreeText() {
     return _.some(this.pickedItems, (p: any) => p.freeText);
   }

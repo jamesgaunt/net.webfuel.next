@@ -1,4 +1,5 @@
 using MediatR;
+using Webfuel.Domain.Dashboard;
 
 namespace Webfuel.Domain
 {
@@ -13,6 +14,8 @@ namespace Webfuel.Domain
 
         public async Task Handle(DeleteProjectTeamSupport request, CancellationToken cancellationToken)
         {
+            DashboardService.FlushSupportTeams();
+
             await _projectTeamSupportRepository.DeleteProjectTeamSupport(request.Id);
         }
     }

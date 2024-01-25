@@ -10,6 +10,7 @@ export enum QueryOp {
     Contains = "contains",
     StartsWith = "startswith",
     EndsWith = "endswith",
+    SQL = "sql",
     And = "and",
     Or = "or",
 }
@@ -85,6 +86,11 @@ export enum ReportFieldType {
     Reference = 1000,
 }
 
+export enum IsCTUAlreadyInvolvedEnum {
+    YesWeHaveAlreadyGotACTUInvolved = "d51d2c40-578a-4797-b728-943b6dd9e87c",
+    NoWeHaveNotGotACTUInvolved = "78ccf6a2-e166-4774-9c0c-aedcb57fd789",
+}
+
 export enum IsCTUTeamContributionEnum {
     Yes = "3e1f2673-e708-44a8-8768-cbf9fe1afb7c",
     No = "5b18a6b2-1169-4f7c-91b7-e738ea4527c6",
@@ -139,6 +145,15 @@ export enum ReportProviderEnum {
     User = "96124eea-4434-4669-b377-580bbf85a96d",
 }
 
+export enum ResearcherRoleEnum {
+    ChiefInvestigator = "4c6fbfca-3601-4c24-81aa-d372e0d0320e",
+    ResearchFellowAssociate = "1c4b0501-821c-4a62-a560-f50b42d55657",
+    FellowshipApplicant = "d2791155-7b9e-416f-a169-9ecc7b1aa0cc",
+    CoInvestigator = "93a1de9c-ccbe-4bc4-8896-e34e97d217af",
+    Administator = "c26a348a-1581-4678-8d69-aa218d11bb36",
+    Other = "45013058-6dc8-4a3c-90e4-49a4da46efc8",
+}
+
 export enum SubmissionOutcomeEnum {
     Unknown = "32b584a9-c539-447b-a542-df3e5283ef3c",
     Shortlisted = "36969c16-31b1-4c1e-81eb-b4ccf626a98c",
@@ -157,8 +172,10 @@ export enum SubmissionStageEnum {
 
 export enum SupportRequestStatusEnum {
     ToBeTriaged = "206b6f9d-feee-4b28-9795-1e1a2b7b887f",
-    ClosedAsNotEligibleForNIHRRSS = "1fa7ae4c-8bb7-49da-9efc-f9aa96de4c1d",
-    ClosedAsReferredToAnotherNIHRRSS = "3d344c3c-9964-4079-877e-bc3b6864f52d",
+    OnHold = "667ccd51-00f4-4890-9d54-3c925332124d",
+    ClosedNotEligibleForNIHRRSS = "1fa7ae4c-8bb7-49da-9efc-f9aa96de4c1d",
+    ClosedReferredToAnotherNIHRRSS = "3d344c3c-9964-4079-877e-bc3b6864f52d",
+    ClosedOutOfRemit = "529aaebf-5e02-4003-825e-265a6271c816",
     ReferredToNIHRRSSExpertTeams = "c22df21d-30ed-49d5-bee0-0f304b74a365",
 }
 

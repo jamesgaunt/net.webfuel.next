@@ -40,6 +40,11 @@
     width: 60%;
   }
 
+  & > .is-8 {
+    flex: none;
+    width: 66.66%;
+  }
+
   & > .is-12 {
     flex: none;
     width: 100%;
@@ -104,6 +109,11 @@
     }
 
     & > .is-7 {
+      flex: none;
+      width: 100%;
+    }
+
+    & > .is-8 {
       flex: none;
       width: 100%;
     }

@@ -18,6 +18,8 @@
         public const string StartsWith = "startswith";
         public const string EndsWith = "endswith";
 
+        public const string SQL = "sql";
+
         public const string And = "and";
         public const string Or = "or";
 

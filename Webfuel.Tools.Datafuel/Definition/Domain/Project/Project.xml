@@ -48,6 +48,9 @@
     <Property Name="SupportRequested" Type="string[2000]" />
     <Property Name="HowDidYouFindUsId" Type="HowDidYouFindUs?" />
     <Property Name="HowDidYouFindUsFreeText" Type="meta:name" />
+    <Property Name="WhoElseIsOnTheStudyTeam" Type="string[2000]" /> <!-- NEW -->
+    <Property Name="IsCTUAlreadyInvolvedId" Type="IsCTUAlreadyInvolved?" /> <!-- NEW -->
+    <Property Name="IsCTUAlreadyInvolvedFreeText" Type="meta:name" /> <!-- NEW -->
 
     <!-- Team Contact Details -->
 
@@ -65,6 +68,7 @@
     <Property Name="LeadApplicantTitle" Type="meta:name" />
     <Property Name="LeadApplicantFirstName" Type="meta:name" />
     <Property Name="LeadApplicantLastName" Type="meta:name" />
+    <Property Name="LeadApplicantEmail" Type="meta:name" /> <!-- NEW -->
 
     <Property Name="LeadApplicantJobRole" Type="meta:name" />
     <Property Name="LeadApplicantOrganisationTypeId" Type="ResearcherOrganisationType?" />
@@ -86,6 +90,13 @@
     <Property Name="LeadApplicantEthnicityId" Type="Ethnicity?" />
 
     <!-- ========== /Replicated from Support Request (Keep All Field Names Identical) ========== -->
+
+    <!-- ========== Calculated Properties ========== -->
+
+    <!-- Denormalised Search Fields -->
+    <Property Name="SearchTeamContactFullName" Type="meta:name" />
+
+    <!-- ========== /Calculated Properties ========== -->
     
     <!-- Audit -->
     <Property Name="CreatedAt" Type="DateTime" Tags="ChangeLog:Ignore" />

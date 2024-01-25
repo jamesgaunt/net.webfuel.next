@@ -8,10 +8,6 @@ namespace Webfuel.Domain.StaticData
 {
     internal partial interface IResearcherRoleRepository
     {
-        Task<ResearcherRole> InsertResearcherRole(ResearcherRole entity, RepositoryCommandBuffer? commandBuffer = null);
-        Task<ResearcherRole> UpdateResearcherRole(ResearcherRole entity, RepositoryCommandBuffer? commandBuffer = null);
-        Task<ResearcherRole> UpdateResearcherRole(ResearcherRole updated, ResearcherRole original, RepositoryCommandBuffer? commandBuffer = null);
-        Task DeleteResearcherRole(Guid key, RepositoryCommandBuffer? commandBuffer = null);
         Task<QueryResult<ResearcherRole>> QueryResearcherRole(Query query, bool selectItems = true, bool countTotal = true);
         Task<ResearcherRole?> GetResearcherRole(Guid id);
         Task<ResearcherRole> RequireResearcherRole(Guid id);
@@ -29,34 +25,6 @@ namespace Webfuel.Domain.StaticData
         public ResearcherRoleRepository(IRepositoryConnection connection)
         {
             _connection = connection;
-        }
-        public async Task<ResearcherRole> InsertResearcherRole(ResearcherRole entity, RepositoryCommandBuffer? commandBuffer = null)
-        {
-            if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
-            ResearcherRoleMetadata.Validate(entity);
-            var sql = ResearcherRoleMetadata.InsertSQL();
-            var parameters = ResearcherRoleMetadata.ExtractParameters(entity, ResearcherRoleMetadata.InsertProperties);
-            await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
-            return entity;
-        }
-        public async Task<ResearcherRole> UpdateResearcherRole(ResearcherRole entity, RepositoryCommandBuffer? commandBuffer = null)
-        {
-            ResearcherRoleMetadata.Validate(entity);
-            var sql = ResearcherRoleMetadata.UpdateSQL();
-            var parameters = ResearcherRoleMetadata.ExtractParameters(entity, ResearcherRoleMetadata.UpdateProperties);
-            await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
-            return entity;
-        }
-        public async Task<ResearcherRole> UpdateResearcherRole(ResearcherRole updated, ResearcherRole original, RepositoryCommandBuffer? commandBuffer = null)
-        {
-            await UpdateResearcherRole(updated, commandBuffer);
-            return updated;
-        }
-        public async Task DeleteResearcherRole(Guid id, RepositoryCommandBuffer? commandBuffer = null)
-        {
-            var sql = ResearcherRoleMetadata.DeleteSQL();
-            var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
-            await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
         public async Task<QueryResult<ResearcherRole>> QueryResearcherRole(Query query, bool selectItems = true, bool countTotal = true)
         {

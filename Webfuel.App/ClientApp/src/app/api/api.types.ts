@@ -288,20 +288,13 @@ export interface ReportReferenceField extends ReportField {
 }
 
 export interface DashboardModel {
-    openTeamSupport: Array<ProjectTeamSupport>;
+    supportTeams: Array<DashboardSupportTeam>;
 }
 
-export interface ProjectTeamSupport {
+export interface DashboardSupportTeam {
     id: string;
-    projectLabel: string;
-    createdNotes: string;
-    createdAt: string;
-    completedNotes: string;
-    completedAt: string | null | null;
-    projectId: string;
-    supportTeamId: string;
-    createdByUserId: string;
-    completedByUserId: string | null | null;
+    name: string;
+    openProjects: number | null | null;
 }
 
 export interface QueryResult<TItem> {
@@ -412,6 +405,7 @@ export interface IStaticDataModel {
     fundingStream: Array<FundingStream>;
     gender: Array<Gender>;
     howDidYouFindUs: Array<HowDidYouFindUs>;
+    isCTUAlreadyInvolved: Array<IsCTUAlreadyInvolved>;
     isCTUTeamContribution: Array<IsCTUTeamContribution>;
     isFellowship: Array<IsFellowship>;
     isInternationalMultiSiteStudy: Array<IsInternationalMultiSiteStudy>;
@@ -524,6 +518,14 @@ export interface HowDidYouFindUs extends IStaticData {
     sortOrder: number;
     default: boolean;
     hidden: boolean;
+    freeText: boolean;
+}
+
+export interface IsCTUAlreadyInvolved extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
     freeText: boolean;
 }
 
@@ -726,6 +728,8 @@ export interface Project {
     briefDescription: string;
     supportRequested: string;
     howDidYouFindUsFreeText: string;
+    whoElseIsOnTheStudyTeam: string;
+    isCTUAlreadyInvolvedFreeText: string;
     teamContactTitle: string;
     teamContactFirstName: string;
     teamContactLastName: string;
@@ -736,6 +740,7 @@ export interface Project {
     leadApplicantTitle: string;
     leadApplicantFirstName: string;
     leadApplicantLastName: string;
+    leadApplicantEmail: string;
     leadApplicantJobRole: string;
     leadApplicantOrganisation: string;
     leadApplicantDepartment: string;
@@ -746,6 +751,7 @@ export interface Project {
     leadApplicantAddressCountry: string;
     leadApplicantAddressPostcode: string;
     leadApplicantORCID: string;
+    searchTeamContactFullName: string;
     createdAt: string;
     fileStorageGroupId: string;
     leadAdviserUserId: string | null | null;
@@ -759,6 +765,7 @@ export interface Project {
     isTeamMembersConsultedId: string | null | null;
     isResubmissionId: string | null | null;
     howDidYouFindUsId: string | null | null;
+    isCTUAlreadyInvolvedId: string | null | null;
     teamContactRoleId: string | null | null;
     leadApplicantOrganisationTypeId: string | null | null;
     isLeadApplicantNHSId: string | null | null;
@@ -791,8 +798,10 @@ export interface QueryProject extends Query {
     fromDate: string | null | null;
     toDate: string | null | null;
     statusId: string | null | null;
-    fundingStreamId: string | null | null;
     leadAdviserUserId: string | null | null;
+    proposedFundingStreamId: string | null | null;
+    teamContactName: string;
+    requestedSupportTeamId: string | null | null;
     skip: number;
     take: number;
     projection?: Array<string>;
@@ -858,7 +867,7 @@ export interface ProjectExportRequest {
     fromDate: string | null | null;
     toDate: string | null | null;
     statusId: string | null | null;
-    fundingStreamId: string | null | null;
+    proposedFundingStreamId: string | null | null;
 }
 
 export interface ProjectSubmission {
@@ -935,6 +944,19 @@ export interface QueryProjectSupport extends Query {
     filters?: Array<QueryFilter>;
     sort?: Array<QuerySort>;
     search?: string;
+}
+
+export interface ProjectTeamSupport {
+    id: string;
+    projectLabel: string;
+    createdNotes: string;
+    createdAt: string;
+    completedNotes: string;
+    completedAt: string | null | null;
+    projectId: string;
+    supportTeamId: string;
+    createdByUserId: string;
+    completedByUserId: string | null | null;
 }
 
 export interface CreateProjectTeamSupport {
@@ -1107,6 +1129,8 @@ export interface SupportRequest {
     briefDescription: string;
     supportRequested: string;
     howDidYouFindUsFreeText: string;
+    whoElseIsOnTheStudyTeam: string;
+    isCTUAlreadyInvolvedFreeText: string;
     teamContactTitle: string;
     teamContactFirstName: string;
     teamContactLastName: string;
@@ -1117,6 +1141,7 @@ export interface SupportRequest {
     leadApplicantTitle: string;
     leadApplicantFirstName: string;
     leadApplicantLastName: string;
+    leadApplicantEmail: string;
     leadApplicantJobRole: string;
     leadApplicantOrganisation: string;
     leadApplicantDepartment: string;
@@ -1138,6 +1163,7 @@ export interface SupportRequest {
     isTeamMembersConsultedId: string | null | null;
     isResubmissionId: string | null | null;
     howDidYouFindUsId: string | null | null;
+    isCTUAlreadyInvolvedId: string | null | null;
     teamContactRoleId: string | null | null;
     leadApplicantOrganisationTypeId: string | null | null;
     isLeadApplicantNHSId: string | null | null;
@@ -1163,6 +1189,9 @@ export interface CreateSupportRequest {
     proposedFundingCallTypeId: string | null | null;
     howDidYouFindUsId: string | null | null;
     howDidYouFindUsFreeText: string;
+    whoElseIsOnTheStudyTeam: string;
+    isCTUAlreadyInvolvedId: string | null | null;
+    isCTUAlreadyInvolvedFreeText: string;
     teamContactTitle: string;
     teamContactFirstName: string;
     teamContactLastName: string;
@@ -1174,6 +1203,7 @@ export interface CreateSupportRequest {
     leadApplicantTitle: string;
     leadApplicantFirstName: string;
     leadApplicantLastName: string;
+    leadApplicantEmail: string;
     leadApplicantJobRole: string;
     leadApplicantOrganisationTypeId: string | null | null;
     leadApplicantOrganisation: string;
@@ -1208,6 +1238,9 @@ export interface UpdateSupportRequest {
     proposedFundingCallTypeId: string | null | null;
     howDidYouFindUsId: string | null | null;
     howDidYouFindUsFreeText: string;
+    whoElseIsOnTheStudyTeam: string;
+    isCTUAlreadyInvolvedId: string | null | null;
+    isCTUAlreadyInvolvedFreeText: string;
 }
 
 export interface UpdateSupportRequestResearcher {
@@ -1223,6 +1256,7 @@ export interface UpdateSupportRequestResearcher {
     leadApplicantTitle: string;
     leadApplicantFirstName: string;
     leadApplicantLastName: string;
+    leadApplicantEmail: string;
     leadApplicantJobRole: string;
     leadApplicantOrganisationTypeId: string | null | null;
     leadApplicantOrganisation: string;
@@ -1346,13 +1380,13 @@ export interface QueryUserActivity extends Query {
 }
 
 export interface User {
-    fullName: string;
     id: string;
     email: string;
     developer: boolean;
     title: string;
     firstName: string;
     lastName: string;
+    fullName: string;
     rssJobTitle: string;
     universityJobTitle: string;
     professionalBackground: string;
@@ -1745,6 +1779,15 @@ export interface QueryHowDidYouFindUs extends Query {
     search?: string;
 }
 
+export interface QueryIsCTUAlreadyInvolved extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
 export interface QueryIsCTUTeamContribution extends Query {
     skip: number;
     take: number;
@@ -1861,25 +1904,6 @@ export interface QueryResearcherOrganisationType extends Query {
     filters?: Array<QueryFilter>;
     sort?: Array<QuerySort>;
     search?: string;
-}
-
-export interface CreateResearcherRole {
-    name: string;
-    default: boolean;
-    hidden: boolean;
-    freeText: boolean;
-}
-
-export interface UpdateResearcherRole {
-    id: string;
-    name: string;
-    default: boolean;
-    hidden: boolean;
-    freeText: boolean;
-}
-
-export interface SortResearcherRole {
-    ids: Array<string>;
 }
 
 export interface QueryResearcherRole extends Query {

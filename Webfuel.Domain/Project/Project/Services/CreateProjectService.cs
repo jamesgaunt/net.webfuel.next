@@ -19,13 +19,16 @@ namespace Webfuel.Domain
     internal class CreateProjectService : ICreateProjectService
     {
         private readonly IProjectRepository _projectRepository;
+        private readonly IEnrichProjectService _enrichProjectService;
         private readonly IConfigurationService _configurationService;
 
         public CreateProjectService(
             IProjectRepository projectRepository, 
+            IEnrichProjectService enrichProjectService,
             IConfigurationService configurationService)
         {
             _projectRepository = projectRepository;
+            _enrichProjectService = enrichProjectService;
             _configurationService = configurationService;
         }
 
@@ -41,7 +44,9 @@ namespace Webfuel.Domain
             project.CreatedAt = DateTimeOffset.UtcNow;
             project.SupportRequestId = supportRequest.Id;
 
-            return await _projectRepository.InsertProject(project);
+            await _projectRepository.InsertProject(project);
+
+            return await _enrichProjectService.EnrichProject(project);
         }
 
         // Implementation

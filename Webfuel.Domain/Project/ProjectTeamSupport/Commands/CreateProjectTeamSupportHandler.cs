@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Webfuel.Domain.Dashboard;
 
 namespace Webfuel.Domain
 {
@@ -33,6 +34,8 @@ namespace Webfuel.Domain
 
             if(_identityAccessor.User != null)
                 projectTeamSupport.CreatedByUserId = _identityAccessor.User.Id;
+
+            DashboardService.FlushSupportTeams();
 
             return await _projectTeamSupportRepository.InsertProjectTeamSupport(projectTeamSupport);
         }

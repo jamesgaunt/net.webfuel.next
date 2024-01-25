@@ -27,6 +27,7 @@ namespace Webfuel.Domain
         public string LeadApplicantTitle { get; set; } = String.Empty;
         public string LeadApplicantFirstName { get; set; } = String.Empty;
         public string LeadApplicantLastName { get; set; } = String.Empty;
+        public string LeadApplicantEmail { get; set; } = String.Empty;
 
         public string LeadApplicantJobRole { get; set; } = String.Empty;
         public Guid? LeadApplicantOrganisationTypeId { get; set; }

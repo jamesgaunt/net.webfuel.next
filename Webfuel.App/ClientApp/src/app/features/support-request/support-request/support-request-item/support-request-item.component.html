@@ -55,6 +55,10 @@
         <dropdown-select [dataSource]="staticDataCache.isResubmission" placeholder="required" formControlName="isResubmissionId"></dropdown-select>
       </div>
       <div class="field is-6">
+        <label class="label">Have you already got a CTU involved and if so which one?</label>
+        <dropdown-select [dataSource]="staticDataCache.isCTUAlreadyInvolved" [freeTextControl]="form.controls.isCTUAlreadyInvolvedFreeText" freeTextPlaceholder="Please specify which CTU is already involved..." placeholder="required" formControlName="isCTUAlreadyInvolvedId"></dropdown-select>
+      </div>
+      <div class="field is-6">
         <label class="label">How did you hear about our hub?</label>
         <dropdown-select [dataSource]="staticDataCache.howDidYouFindUs" [freeTextControl]="form.controls.howDidYouFindUsFreeText" placeholder="required" formControlName="howDidYouFindUsId"></dropdown-select>
       </div>
@@ -73,6 +77,12 @@
           What support are you looking for from RSS?  Eg funding advice, methods advice, PPIE and EDI advice, CTU support, training in methods for grants?
         </label>
         <textarea class="textarea" formControlName="supportRequested" placeholder="required"></textarea>
+      </div>
+      <div class="field is-12">
+        <label class="label">
+          Who else is on your study team and what is their expertise?
+        </label>
+        <textarea class="textarea" formControlName="whoElseIsOnTheStudyTeam" placeholder="required" maxlength="2000"></textarea>
       </div>
     </div>
     <div class="floating-buttons" *ngIf="!locked">

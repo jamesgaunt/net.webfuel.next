@@ -75,6 +75,14 @@ namespace Webfuel.Domain
             {
                 sb.Append("How Did You Find Us Free Text: ").Append(original.HowDidYouFindUsFreeText).Append(" -> ").Append(updated.HowDidYouFindUsFreeText).Append(delimiter);
             }
+            if(original.WhoElseIsOnTheStudyTeam != updated.WhoElseIsOnTheStudyTeam)
+            {
+                sb.Append("Who Else Is On The Study Team: ").Append(original.WhoElseIsOnTheStudyTeam).Append(" -> ").Append(updated.WhoElseIsOnTheStudyTeam).Append(delimiter);
+            }
+            if(original.IsCTUAlreadyInvolvedFreeText != updated.IsCTUAlreadyInvolvedFreeText)
+            {
+                sb.Append("Is C T U Already Involved Free Text: ").Append(original.IsCTUAlreadyInvolvedFreeText).Append(" -> ").Append(updated.IsCTUAlreadyInvolvedFreeText).Append(delimiter);
+            }
             if(original.TeamContactTitle != updated.TeamContactTitle)
             {
                 sb.Append("Team Contact Title: ").Append(original.TeamContactTitle).Append(" -> ").Append(updated.TeamContactTitle).Append(delimiter);
@@ -115,6 +123,10 @@ namespace Webfuel.Domain
             {
                 sb.Append("Lead Applicant Last Name: ").Append(original.LeadApplicantLastName).Append(" -> ").Append(updated.LeadApplicantLastName).Append(delimiter);
             }
+            if(original.LeadApplicantEmail != updated.LeadApplicantEmail)
+            {
+                sb.Append("Lead Applicant Email: ").Append(original.LeadApplicantEmail).Append(" -> ").Append(updated.LeadApplicantEmail).Append(delimiter);
+            }
             if(original.LeadApplicantJobRole != updated.LeadApplicantJobRole)
             {
                 sb.Append("Lead Applicant Job Role: ").Append(original.LeadApplicantJobRole).Append(" -> ").Append(updated.LeadApplicantJobRole).Append(delimiter);
@@ -154,6 +166,10 @@ namespace Webfuel.Domain
             if(original.LeadApplicantORCID != updated.LeadApplicantORCID)
             {
                 sb.Append("Lead Applicant O R C I D: ").Append(original.LeadApplicantORCID).Append(" -> ").Append(updated.LeadApplicantORCID).Append(delimiter);
+            }
+            if(original.SearchTeamContactFullName != updated.SearchTeamContactFullName)
+            {
+                sb.Append("Search Team Contact Full Name: ").Append(original.SearchTeamContactFullName).Append(" -> ").Append(updated.SearchTeamContactFullName).Append(delimiter);
             }
             if(original.LeadAdviserUserId != updated.LeadAdviserUserId)
             {
@@ -218,6 +234,12 @@ namespace Webfuel.Domain
                 var o = original.HowDidYouFindUsId.HasValue ? (await _staticDataService.GetHowDidYouFindUs(original.HowDidYouFindUsId.Value))?.Name ?? "UNKNOWN" : "NULL";
                 var u = updated.HowDidYouFindUsId.HasValue ? (await _staticDataService.GetHowDidYouFindUs(updated.HowDidYouFindUsId.Value))?.Name ?? "UNKNOWN" : "NULL";
                 sb.Append("How Did You Find Us: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
+            }
+            if(original.IsCTUAlreadyInvolvedId != updated.IsCTUAlreadyInvolvedId)
+            {
+                var o = original.IsCTUAlreadyInvolvedId.HasValue ? (await _staticDataService.GetIsCTUAlreadyInvolved(original.IsCTUAlreadyInvolvedId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                var u = updated.IsCTUAlreadyInvolvedId.HasValue ? (await _staticDataService.GetIsCTUAlreadyInvolved(updated.IsCTUAlreadyInvolvedId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                sb.Append("Is C T U Already Involved: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
             }
             if(original.TeamContactRoleId != updated.TeamContactRoleId)
             {

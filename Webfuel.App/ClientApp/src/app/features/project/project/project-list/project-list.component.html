@@ -16,6 +16,11 @@
   <div class="filter-form">
     <form class="form" [formGroup]="filterForm">
       <div class="flex">
+        <div class="field is-12">
+          <input class="input" type="text" formControlName="title" placeholder="Title" />
+        </div>
+      </div>
+      <div class="flex">
         <div class="field is-3">
           <input class="input" type="text" formControlName="number" placeholder="Number" />
         </div>
@@ -29,8 +34,11 @@
             </ng-template>
           </dropdown-select>
         </div>
-        <div class="field is-6">
-          <input class="input" type="text" formControlName="title" placeholder="Title" />
+        <div class="field is-3">
+          <input class="input" type="text" formControlName="teamContactName" placeholder="Contact Name" />
+        </div>
+        <div class="field is-3">
+          <dropdown-select [dataSource]="staticDataCache.supportTeam" placeholder="Support Team" formControlName="requestedSupportTeamId" [enableClear]="true"></dropdown-select>
         </div>
       </div>
       <div class="flex">
@@ -44,7 +52,7 @@
           <date-picker placeholder="To Date" formControlName="toDate" [enableClear]="true" />
         </div>
         <div class="field is-3">
-          <dropdown-select [dataSource]="staticDataCache.fundingStream" placeholder="Funding Stream" formControlName="fundingStreamId" [enableClear]="true"></dropdown-select>
+          <dropdown-select [dataSource]="staticDataCache.fundingStream" placeholder="Proposed Funding Stream" formControlName="proposedFundingStreamId" [enableClear]="true"></dropdown-select>
         </div>
         <div class="is-12 is-right">
           <button (click)="resetFilterForm()" class="button is-small">show all</button>
@@ -57,13 +65,14 @@
     <grid-column name="prefixedNumber" label="Number" />
     <grid-date-column name="dateOfRequest" />
     <grid-reference-column [dataSource]="staticDataCache.projectStatus" name="statusId" />
+    <grid-column name="searchTeamContactFullName" label="Contact Name" />
     <grid-column name="leadAdviserUserId" label="Lead Adviser">
       <ng-template #itemTemplate let-item>
         {{ userService.formatUser(item.leadAdviserUserId) | async }}
       </ng-template>
     </grid-column>
     <grid-column name="title" />
-    <grid-reference-column [dataSource]="staticDataCache.fundingStream" name="submittedFundingStreamId" label="Funding Stream" />
+    <grid-reference-column [dataSource]="staticDataCache.fundingStream" name="proposedFundingStreamId" label="Proposed Funding Stream" />
     <grid-action-column [canAdd]="false" [canDelete]="false" (edit)="edit($event)" />
   </grid>
 </div>

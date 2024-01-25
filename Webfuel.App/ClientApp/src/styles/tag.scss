@@ -1,5 +1,7 @@
 @import 'config.scss';
 
+// Welcome to the dumping ground!
+
 .tag {
   display: flex;
   background-color: var(--palette-secondary-background);
@@ -97,7 +99,7 @@
   display: block;
   max-height: 20rem;
   overflow: auto;
-  padding:  0;
+  padding: 0;
 
   > a {
     display: flex;
@@ -106,12 +108,55 @@
     font-size: 1rem;
 
     &:hover {
-        background-color: #FAFAFA;
+      background-color: #FAFAFA;
     }
 
     i {
-        font-size: 1.5rem;
-        margin-right: 0.5rem;
+      font-size: 1.5rem;
+      margin-right: 0.5rem;
     }
   }
+}
+
+.dashboard-metrics {
+
+  .support-teams {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: var(--gap);
+
+    a {
+        display: block;
+        border: 1px solid var(--palette-control-border);
+        background-color: var(--palette-control-background);
+        padding: var(--gap);
+        transition: box-shadow 0.25s ease;
+
+        .name {
+            font-size: 1.3rem;
+            line-height: 1.4rem;
+            min-height: 2.8rem;
+            margin-bottom: var(--gap);
+        }
+
+        .open-projects {
+            font-size: 3rem;
+            line-height: 3rem;
+        }
+
+        &:hover {
+            box-shadow: 0 0 20px RGBA(0, 0, 0, 0.3);
+        }
+        
+    }
+  }
+}
+
+@media (max-width: $breakpoint-sm - 1) {
+
+    .dashboard-metrics {
+        .support-teams {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
 }

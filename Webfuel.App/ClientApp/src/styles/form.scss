@@ -38,6 +38,10 @@
     font-weight: var(--bold-if-light);
     margin-bottom: 0.4rem;
     line-height: 1.6;
+
+    .error {
+        color: var(--palette-danger-text);
+    }
   }
 }
 

@@ -31,6 +31,7 @@ import { FundingCallTypeApi } from './funding-call-type.api';
 import { FundingStreamApi } from './funding-stream.api';
 import { GenderApi } from './gender.api';
 import { HowDidYouFindUsApi } from './how-did-you-find-us.api';
+import { IsCTUAlreadyInvolvedApi } from './is-ctualready-involved.api';
 import { IsCTUTeamContributionApi } from './is-ctuteam-contribution.api';
 import { IsFellowshipApi } from './is-fellowship.api';
 import { IsInternationalMultiSiteStudyApi } from './is-international-multi-site-study.api';
@@ -89,6 +90,7 @@ import { StaticDataCache } from './static-data.cache';
         FundingStreamApi,
         GenderApi,
         HowDidYouFindUsApi,
+        IsCTUAlreadyInvolvedApi,
         IsCTUTeamContributionApi,
         IsFellowshipApi,
         IsInternationalMultiSiteStudyApi,

@@ -1,5 +1,6 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
 import _ from 'shared/common/underscore';
+import { Day } from "../form/date-calendar/Day";
 
 export class Validate {
 
@@ -12,6 +13,16 @@ export class Validate {
     };
   }
 
+  static dateMustBeInFuture(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      var day = Day.parse(control.value);
+      console.log(day?.format('dd-MMM-yyyy'));
+      if (!day || Day.today().ticks < day.ticks)
+        return null;
+
+      return { dateMustBeInFuture: true };
+    };
+  }
 
 }
 

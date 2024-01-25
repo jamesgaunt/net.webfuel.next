@@ -54,6 +54,9 @@ export class SupportRequestItemComponent extends SupportRequestComponentBase {
     proposedFundingCallTypeId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
     howDidYouFindUsId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
     howDidYouFindUsFreeText: new FormControl<string>('', { nonNullable: true }),
+    whoElseIsOnTheStudyTeam: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    isCTUAlreadyInvolvedId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
+    isCTUAlreadyInvolvedFreeText: new FormControl<string>('', { nonNullable: true }),
   });
 
   save(close: boolean) {

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Project } from 'api/api.types';
 import { ProjectApi } from 'api/project.api';
 import { StaticDataCache } from 'api/static-data.cache';
@@ -17,6 +17,7 @@ import { UserService } from '../../../../core/user.service';
 export class ProjectListComponent {
   constructor(
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     public projectApi: ProjectApi,
     public userApi: UserApi,
     public userService: UserService,
@@ -27,14 +28,25 @@ export class ProjectListComponent {
   ) {
   }
 
+  ngAfterViewInit(): void {
+    this.activatedRoute.queryParams.subscribe(params => {
+      const supportTeam = params['supportTeam'];
+      if (supportTeam) {
+        this.filterForm.patchValue({ requestedSupportTeamId: supportTeam });
+      }
+    })
+  }
+
   filterForm = new FormGroup({
     number: new FormControl<string>('', { nonNullable: true }),
     fromDate: new FormControl<string | null>(null),
     toDate: new FormControl<string | null>(null),
     statusId: new FormControl<string | null>(null),
-    fundingStreamId: new FormControl<string | null>(null),
+    proposedFundingStreamId: new FormControl<string | null>(null),
     leadAdviserUserId: new FormControl<string | null>(null),
-    title: new FormControl<string>('', { nonNullable: true })
+    title: new FormControl<string>('', { nonNullable: true }),
+    teamContactName: new FormControl<string>('', { nonNullable: true }),
+    requestedSupportTeamId: new FormControl<string | null>(null),
   });
 
   resetFilterForm() {
@@ -43,9 +55,11 @@ export class ProjectListComponent {
       fromDate: null,
       toDate: null,
       statusId: null,
-      fundingStreamId: null,
+      proposedFundingStreamId: null,
       leadAdviserUserId: null,
-      title: ''
+      title: '',
+      teamContactName: '',
+      requestedSupportTeamId: null,
     });
   }
 

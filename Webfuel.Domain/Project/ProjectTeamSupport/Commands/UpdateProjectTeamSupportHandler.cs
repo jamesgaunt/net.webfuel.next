@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Webfuel.Domain.Dashboard;
 
 namespace Webfuel.Domain
 {

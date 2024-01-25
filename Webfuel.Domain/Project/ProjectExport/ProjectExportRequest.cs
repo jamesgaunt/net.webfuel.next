@@ -12,7 +12,7 @@
 
         public Guid? StatusId { get; set; }
 
-        public Guid? FundingStreamId { get; set; }
+        public Guid? ProposedFundingStreamId { get; set; }
 
         public Query ToQuery()
         {
@@ -23,7 +23,7 @@
                 FromDate = FromDate,
                 ToDate = ToDate,
                 StatusId = StatusId,
-                FundingStreamId = FundingStreamId,
+                ProposedFundingStreamId = ProposedFundingStreamId,
 
                 Skip = 0,
                 Take = 1

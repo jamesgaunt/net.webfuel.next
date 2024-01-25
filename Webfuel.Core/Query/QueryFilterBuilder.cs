@@ -1,4 +1,6 @@
-﻿namespace Webfuel
+﻿using System.Security.Cryptography.Xml;
+
+namespace Webfuel
 {
     [ApiIgnore]
     public interface IQueryFilterBuilder
@@ -18,6 +20,15 @@
 
     public static class QueryFilterBuilderExtensions
     {
+        public static IQueryFilterBuilder SQL(this IQueryFilterBuilder builder, string sql, bool condition = true)
+        {
+            if (!condition)
+                return builder;
+
+            builder.Filters.Add(new QueryFilter { Op = QueryOp.SQL, SQL = sql });
+            return builder;
+        }
+
         public static IQueryFilterBuilder Equal(this IQueryFilterBuilder builder, string field, object? value, bool condition)
         {
             if (!condition)

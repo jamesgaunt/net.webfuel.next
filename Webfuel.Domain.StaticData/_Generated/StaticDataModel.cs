@@ -13,6 +13,7 @@ namespace Webfuel.Domain.StaticData
         IReadOnlyList<FundingStream> FundingStream { get; }
         IReadOnlyList<Gender> Gender { get; }
         IReadOnlyList<HowDidYouFindUs> HowDidYouFindUs { get; }
+        IReadOnlyList<IsCTUAlreadyInvolved> IsCTUAlreadyInvolved { get; }
         IReadOnlyList<IsCTUTeamContribution> IsCTUTeamContribution { get; }
         IReadOnlyList<IsFellowship> IsFellowship { get; }
         IReadOnlyList<IsInternationalMultiSiteStudy> IsInternationalMultiSiteStudy { get; }
@@ -48,6 +49,7 @@ namespace Webfuel.Domain.StaticData
         public required IReadOnlyList<FundingStream> FundingStream { get; init; }
         public required IReadOnlyList<Gender> Gender { get; init; }
         public required IReadOnlyList<HowDidYouFindUs> HowDidYouFindUs { get; init; }
+        public required IReadOnlyList<IsCTUAlreadyInvolved> IsCTUAlreadyInvolved { get; init; }
         public required IReadOnlyList<IsCTUTeamContribution> IsCTUTeamContribution { get; init; }
         public required IReadOnlyList<IsFellowship> IsFellowship { get; init; }
         public required IReadOnlyList<IsInternationalMultiSiteStudy> IsInternationalMultiSiteStudy { get; init; }
@@ -85,6 +87,7 @@ namespace Webfuel.Domain.StaticData
                 FundingStream = await serviceProvider.GetRequiredService<IFundingStreamRepository>().SelectFundingStream(),
                 Gender = await serviceProvider.GetRequiredService<IGenderRepository>().SelectGender(),
                 HowDidYouFindUs = await serviceProvider.GetRequiredService<IHowDidYouFindUsRepository>().SelectHowDidYouFindUs(),
+                IsCTUAlreadyInvolved = await serviceProvider.GetRequiredService<IIsCTUAlreadyInvolvedRepository>().SelectIsCTUAlreadyInvolved(),
                 IsCTUTeamContribution = await serviceProvider.GetRequiredService<IIsCTUTeamContributionRepository>().SelectIsCTUTeamContribution(),
                 IsFellowship = await serviceProvider.GetRequiredService<IIsFellowshipRepository>().SelectIsFellowship(),
                 IsInternationalMultiSiteStudy = await serviceProvider.GetRequiredService<IIsInternationalMultiSiteStudyRepository>().SelectIsInternationalMultiSiteStudy(),

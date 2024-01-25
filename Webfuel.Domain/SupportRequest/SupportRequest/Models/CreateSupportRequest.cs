@@ -31,6 +31,9 @@ namespace Webfuel.Domain
         public Guid? ProposedFundingCallTypeId { get; set; }
         public Guid? HowDidYouFindUsId { get; set; }
         public string HowDidYouFindUsFreeText { get; set; } = String.Empty;
+        public string WhoElseIsOnTheStudyTeam { get; set; } = String.Empty;
+        public Guid? IsCTUAlreadyInvolvedId { get; set; }
+        public string IsCTUAlreadyInvolvedFreeText { get; set; } = String.Empty;
 
         // Team Contact Details
 
@@ -48,7 +51,8 @@ namespace Webfuel.Domain
         public string LeadApplicantTitle { get; set; } = String.Empty;
         public string LeadApplicantFirstName { get; set; } = String.Empty;
         public string LeadApplicantLastName { get; set; } = String.Empty;
-        
+        public string LeadApplicantEmail { get; set; } = String.Empty;
+
         public string LeadApplicantJobRole { get; set; } = String.Empty;
         public Guid? LeadApplicantOrganisationTypeId { get; set; }  
         public string LeadApplicantOrganisation { get; set;} = String.Empty;

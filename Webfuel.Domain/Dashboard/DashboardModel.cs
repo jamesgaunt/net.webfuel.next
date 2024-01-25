@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Identity.Client;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,15 @@ namespace Webfuel.Domain
 {
     public class DashboardModel
     {
-        public List<ProjectTeamSupport> OpenTeamSupport { get; } = new List<ProjectTeamSupport>();
+        public List<DashboardSupportTeam> SupportTeams { get; } = new List<DashboardSupportTeam>();
+    }
+
+    public class DashboardSupportTeam
+    {
+        public Guid Id { get; set; }
+
+        public string Name { get; set; } = String.Empty;
+
+        public int OpenProjects { get; set; } 
     }
 }
