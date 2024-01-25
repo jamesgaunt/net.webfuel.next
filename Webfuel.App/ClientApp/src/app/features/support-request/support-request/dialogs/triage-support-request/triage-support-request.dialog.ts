@@ -43,7 +43,8 @@ export class TriageSupportRequestDialogComponent extends DialogComponentBase<Sup
     id: new FormControl<string>('', { validators: Validators.required, nonNullable: true }),
     statusId: new FormControl<string>(null!, { validators: Validators.required, nonNullable: true }),
     supportProvidedIds: new FormControl<string[]>([], { nonNullable: true }),
-    description: new FormControl<string>('', { nonNullable: true })
+    description: new FormControl<string>('', { nonNullable: true }),
+    workTimeInHours: new FormControl<number>(null!, { validators: [Validators.required, Validators.min(0), Validators.max(8)], nonNullable: true }),
   });
 
   get referring() {

@@ -30,7 +30,7 @@ namespace Webfuel.Domain
                         result.Add(new SqlParameter(nameof(UserActivity.Description), entity.Description));
                         break;
                     case nameof(UserActivity.WorkTimeInHours):
-                        result.Add(new SqlParameter(nameof(UserActivity.WorkTimeInHours), entity.WorkTimeInHours ?? (object?)DBNull.Value));
+                        result.Add(new SqlParameter(nameof(UserActivity.WorkTimeInHours), entity.WorkTimeInHours));
                         break;
                     case nameof(UserActivity.ProjectPrefixedNumber):
                         result.Add(new SqlParameter(nameof(UserActivity.ProjectPrefixedNumber), entity.ProjectPrefixedNumber));

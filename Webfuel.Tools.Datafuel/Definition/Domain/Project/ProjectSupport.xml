@@ -6,6 +6,7 @@
     <Property Name="ProjectId" Type="Project" CascadeDelete="true" />
     <Property Name="Date" Type="Date" />
     <Property Name="Description" Type="meta:description" />
+    <Property Name="WorkTimeInHours" Type="decimal" />
 
     <Property Name="TeamIds" Type="Json:List{Guid}" />
     <Property Name="AdviserIds" Type="Json:List{Guid}" />

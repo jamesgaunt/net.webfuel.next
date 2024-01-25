@@ -8,19 +8,24 @@ namespace Webfuel.Domain
         private readonly IProjectRepository _projectRepository;
         private readonly IProjectSupportRepository _projectSupportRepository;
         private readonly IUserActivityRepository _userActivityRepository;
+        private readonly IUserSortService _userSortService;
 
         public CreateProjectSupportHandler(
             IProjectRepository projectRepository,
             IProjectSupportRepository projectSupportRepository,
-            IUserActivityRepository userActivityRepository)
+            IUserActivityRepository userActivityRepository,
+            IUserSortService userSortService)
         {
             _projectRepository = projectRepository;
             _projectSupportRepository = projectSupportRepository;
             _userActivityRepository = userActivityRepository;
+            _userSortService = userSortService;
         }
 
         public async Task<ProjectSupport> Handle(CreateProjectSupport request, CancellationToken cancellationToken)
         {
+            await Sanitize(request);
+
             var projectSupport = new ProjectSupport();
 
             projectSupport.ProjectId = request.ProjectId;
@@ -29,6 +34,7 @@ namespace Webfuel.Domain
             projectSupport.AdviserIds = request.AdviserIds;
             projectSupport.SupportProvidedIds = request.SupportProvidedIds;
             projectSupport.Description = request.Description;
+            projectSupport.WorkTimeInHours = request.WorkTimeInHours;
 
             var cb = new RepositoryCommandBuffer();
             {
@@ -51,6 +57,7 @@ namespace Webfuel.Domain
                     UserId = adviserId,
                     Date = projectSupport.Date,
                     Description = projectSupport.Description,
+                    WorkTimeInHours = projectSupport.WorkTimeInHours,
 
                     ProjectId = projectSupport.ProjectId,
                     ProjectSupportId = projectSupport.Id,
@@ -58,6 +65,16 @@ namespace Webfuel.Domain
                     ProjectSupportProvidedIds = projectSupport.SupportProvidedIds
                 }, cb);
             }
+        }
+
+        public async Task Sanitize(CreateProjectSupport request)
+        {
+            if (request.WorkTimeInHours < 0)
+                request.WorkTimeInHours = 0;
+            if (request.WorkTimeInHours > 8)
+                request.WorkTimeInHours = 8;
+
+            request.AdviserIds = await _userSortService.SortUserIds(request.AdviserIds);
         }
     }
 }

@@ -57,6 +57,7 @@
           </div>
           <div class="card-title">
             <span *ngFor="let id of projectSupport.adviserIds; index as i"><span *ngIf="i > 0">&nbsp;|&nbsp;</span>{{ userService.formatUser(id) | async }}</span>
+            <span *ngIf="projectSupport.workTimeInHours">| {{ projectSupport.workTimeInHours }} hour{{ projectSupport.workTimeInHours == 1 ? '' : 's' }}</span>
           </div>
           <div class="card-title">
             <span class="tag" *ngFor="let id of projectSupport.supportProvidedIds">{{ (staticDataCache.supportProvided.get({ id: id }) | async)?.name }}</span>

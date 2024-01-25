@@ -24,8 +24,7 @@ namespace Webfuel.Domain
                 if(m.ProjectId == null)
                 {
                     return
-                        m.WorkActivityId.HasValue &&
-                        m.WorkTimeInHours.HasValue;
+                        m.WorkActivityId.HasValue;
                 }
 
                 return false; 

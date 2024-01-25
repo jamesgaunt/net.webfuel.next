@@ -7,21 +7,26 @@ namespace Webfuel.Domain
         private readonly IProjectSupportRepository _projectSupportRepository;
         private readonly IUserActivityRepository _userActivityRepository;
         private readonly IProjectRepository _projectRepository;
+        private readonly IUserSortService _userSortService;
 
-        public UpdateProjectSupportHandler(IProjectSupportRepository projectSupportRepository, IUserActivityRepository userActivityRepository, IProjectRepository projectRepository)
+        public UpdateProjectSupportHandler(IProjectSupportRepository projectSupportRepository, IUserActivityRepository userActivityRepository, IProjectRepository projectRepository, IUserSortService userSortService)
         {
             _projectSupportRepository = projectSupportRepository;
             _userActivityRepository = userActivityRepository;
-            _projectRepository = projectRepository; 
+            _projectRepository = projectRepository;
+            _userSortService = userSortService;
         }
 
         public async Task<ProjectSupport> Handle(UpdateProjectSupport request, CancellationToken cancellationToken)
         {
+            await Sanitize(request);
+
             var projectSupport = await _projectSupportRepository.RequireProjectSupport(request.Id);
 
             var updated = projectSupport.Copy();
             updated.Date = request.Date;
             updated.Description = request.Description;
+            updated.WorkTimeInHours = request.WorkTimeInHours;
             updated.TeamIds = request.TeamIds;
             updated.AdviserIds = request.AdviserIds;
             updated.SupportProvidedIds = request.SupportProvidedIds;
@@ -48,6 +53,7 @@ namespace Webfuel.Domain
                     var updated = userActivity.Copy();
                     updated.Date = projectSupport.Date;
                     updated.Description = projectSupport.Description;
+                    updated.WorkTimeInHours = projectSupport.WorkTimeInHours;
                     updated.ProjectSupportProvidedIds = projectSupport.SupportProvidedIds;
 
                     await _userActivityRepository.UpdateUserActivity(updated: updated, original: userActivity, commandBuffer: cb);
@@ -78,6 +84,7 @@ namespace Webfuel.Domain
                             UserId = adviserId,
                             Date = projectSupport.Date,
                             Description = projectSupport.Description,
+                            WorkTimeInHours = projectSupport.WorkTimeInHours,
 
                             ProjectId = projectSupport.ProjectId,
                             ProjectSupportId = projectSupport.Id,
@@ -87,6 +94,16 @@ namespace Webfuel.Domain
                     }
                 }
             }
+        }
+
+        public async Task Sanitize(UpdateProjectSupport request)
+        {
+            if (request.WorkTimeInHours < 0)
+                request.WorkTimeInHours = 0;
+            if (request.WorkTimeInHours > 8)
+                request.WorkTimeInHours = 8;
+
+            request.AdviserIds = await _userSortService.SortUserIds(request.AdviserIds);
         }
     }
 }

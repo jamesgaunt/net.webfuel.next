@@ -7,12 +7,12 @@
 
     <Property Name="Date" Type="Date" />
     <Property Name="Description" Type="meta:description" />
+    <Property Name="WorkTimeInHours" Type="decimal" />
 
     <!-- === Only one of these sections should be populated === -->
     
     <!-- Work Activity -->
     <Property Name="WorkActivityId" Type="WorkActivity?" />
-    <Property Name="WorkTimeInHours" Type="decimal?" />
     <!-- /Work Activity -->
 
     <!-- Project Activity -->

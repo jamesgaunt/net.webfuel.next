@@ -57,7 +57,7 @@ export abstract class SupportRequestComponentBase implements OnInit {
 
   unlock() {
     this.confirmDialog.open({ title: "Unlock Support Request", message: "Are you sure you want to return this support request to triage status?" }).subscribe(() => {
-      this.supportRequestApi.updateStatus({ id: this.item.id, statusId: SupportRequestStatusEnum.ToBeTriaged, supportProvidedIds: [], description: '' }, { successGrowl: "Support Request Unlocked" }).subscribe((result) => {
+      this.supportRequestApi.updateStatus({ id: this.item.id, statusId: SupportRequestStatusEnum.ToBeTriaged, supportProvidedIds: [], description: '', workTimeInHours: 0 }, { successGrowl: "Support Request Unlocked" }).subscribe((result) => {
         this.reset(result);
       })
     });

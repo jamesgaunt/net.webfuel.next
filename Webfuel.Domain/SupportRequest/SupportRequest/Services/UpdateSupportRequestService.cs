@@ -115,7 +115,8 @@ namespace Webfuel.Domain
                         AdviserIds = new List<Guid> { _identityAccessor.User.Id },
                         TeamIds = new List<Guid> { SupportTeamEnum.TriageTeam },
                         SupportProvidedIds = request.SupportProvidedIds,
-                        Description = request.Description
+                        Description = request.Description,
+                        WorkTimeInHours = request.WorkTimeInHours
                     });
                 }
 

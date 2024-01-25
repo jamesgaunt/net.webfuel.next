@@ -294,7 +294,7 @@ export interface DashboardModel {
 export interface DashboardSupportTeam {
     id: string;
     name: string;
-    openProjects: number | null | null;
+    openProjects: number;
 }
 
 export interface QueryResult<TItem> {
@@ -912,6 +912,7 @@ export interface ProjectSupport {
     id: string;
     date: string;
     description: string;
+    workTimeInHours: number;
     teamIds: Array<string>;
     adviserIds: Array<string>;
     supportProvidedIds: Array<string>;
@@ -925,6 +926,7 @@ export interface CreateProjectSupport {
     adviserIds: Array<string>;
     supportProvidedIds: Array<string>;
     description: string;
+    workTimeInHours: number;
 }
 
 export interface UpdateProjectSupport {
@@ -934,6 +936,7 @@ export interface UpdateProjectSupport {
     adviserIds: Array<string>;
     supportProvidedIds: Array<string>;
     description: string;
+    workTimeInHours: number;
 }
 
 export interface QueryProjectSupport extends Query {
@@ -1279,6 +1282,7 @@ export interface UpdateSupportRequestStatus {
     statusId: string;
     supportProvidedIds: Array<string>;
     description: string;
+    workTimeInHours: number;
 }
 
 export interface QuerySupportRequest extends Query {
@@ -1345,7 +1349,7 @@ export interface UserActivity {
     id: string;
     date: string;
     description: string;
-    workTimeInHours: number | null | null;
+    workTimeInHours: number;
     projectPrefixedNumber: string;
     projectSupportProvidedIds: Array<string>;
     userId: string;

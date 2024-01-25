@@ -20,5 +20,7 @@ namespace Webfuel.Domain
         public required List<Guid> SupportProvidedIds { get; set; }
 
         public string Description { get; set; } = String.Empty;
+
+        public required Decimal WorkTimeInHours { get; set; }
     }
 }

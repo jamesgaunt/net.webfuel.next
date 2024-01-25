@@ -27,6 +27,9 @@ namespace Webfuel.Domain
                     case nameof(ProjectSupport.Description):
                         Description = (string)value!;
                         break;
+                    case nameof(ProjectSupport.WorkTimeInHours):
+                        WorkTimeInHours = (Decimal)value!;
+                        break;
                     case nameof(ProjectSupport.TeamIds):
                         TeamIdsJson = (string)value!;
                         break;
@@ -45,6 +48,7 @@ namespace Webfuel.Domain
         public Guid Id  { get; set; } = Guid.Empty;
         public DateOnly Date  { get; set; } = new DateOnly(1900, 1, 1);
         public string Description  { get; set; } = String.Empty;
+        public Decimal WorkTimeInHours  { get; set; } = 0M;
         public List<Guid> TeamIds
         {
             get { return _TeamIds ?? (_TeamIds = SafeJsonSerializer.Deserialize<List<Guid>>(_TeamIdsJson)); }
@@ -88,6 +92,7 @@ namespace Webfuel.Domain
             entity.Id = Id;
             entity.Date = Date;
             entity.Description = Description;
+            entity.WorkTimeInHours = WorkTimeInHours;
             entity.TeamIdsJson = TeamIdsJson;
             entity.AdviserIdsJson = AdviserIdsJson;
             entity.SupportProvidedIdsJson = SupportProvidedIdsJson;

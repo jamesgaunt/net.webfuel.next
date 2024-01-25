@@ -44,7 +44,8 @@ export class CreateProjectSupportDialogComponent extends DialogComponentBase<Pro
     teamIds: new FormControl<string[]>([], { validators: [Validate.minArrayLength(1)], nonNullable: true }),
     adviserIds: new FormControl<string[]>([], { validators: [Validate.minArrayLength(1)], nonNullable: true }),
     supportProvidedIds: new FormControl<string[]>([], { validators: [Validate.minArrayLength(1)], nonNullable: true }),
-    description: new FormControl<string>('', { validators: [Validators.required], nonNullable: true })
+    description: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    workTimeInHours: new FormControl<number>(null!, { validators: [Validators.required, Validators.min(0), Validators.max(8)], nonNullable: true }),
   });
 
   save() {

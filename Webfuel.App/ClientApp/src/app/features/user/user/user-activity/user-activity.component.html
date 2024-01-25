@@ -13,11 +13,11 @@
 
   <grid [dataSource]="userActivityApi" (filter)="filter($event)">
     <grid-date-column name="date" />
-    <grid-number-column name="workTimeInHours" label="Hours" />
+    <grid-number-column name="workTimeInHours" label="Hours" format="0.2-2" />
     <grid-column name="Activity">
       <ng-template #itemTemplate let-item>
         <div *ngIf="item.isProjectActivity">
-          <div class="text" *ngFor="let supportProvidedId of item.projectSupportProvidedIds">
+          <div *ngFor="let supportProvidedId of item.projectSupportProvidedIds">
             {{ (staticDataCache.supportProvided.get({ id: supportProvidedId }) | async)?.name }}
           </div>
         </div>
@@ -29,7 +29,7 @@
 
     <grid-column name="description">
       <ng-template #itemTemplate let-item>
-        <pre class="grid-pre">{{ item.description }}</pre>
+        <pre class="grid-pre" style="padding: 0">{{ item.description }}</pre>
       </ng-template>
     </grid-column>
 
