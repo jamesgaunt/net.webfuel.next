@@ -1,0 +1,5 @@
+<div class="text-area control">
+  <textarea class="textarea auto-resize" [placeholder]="placeholder" [formControl]="formControl" [maxlength]="_maxlength" cdkTextareaAutosize></textarea>
+  <span *ngIf="remaining < 250" class="message-overlay is-warning">{{ remaining }} characters remaining</span>
+</div>
+

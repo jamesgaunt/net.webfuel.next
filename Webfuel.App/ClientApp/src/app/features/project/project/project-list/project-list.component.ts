@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Project } from 'api/api.types';
 import { ProjectApi } from 'api/project.api';
 import { StaticDataCache } from 'api/static-data.cache';
@@ -9,6 +9,7 @@ import { ConfigurationService } from '../../../../core/configuration.service';
 import { ReportService } from '../../../../core/report.service';
 import { UserApi } from '../../../../api/user.api';
 import { UserService } from '../../../../core/user.service';
+import { ProjectStatusEnum } from '../../../../api/api.enums';
 
 @Component({
   selector: 'project-list',
@@ -29,12 +30,7 @@ export class ProjectListComponent {
   }
 
   ngAfterViewInit(): void {
-    this.activatedRoute.queryParams.subscribe(params => {
-      const supportTeam = params['supportTeam'];
-      if (supportTeam) {
-        this.filterForm.patchValue({ requestedSupportTeamId: supportTeam });
-      }
-    })
+    this.activatedRoute.queryParams.subscribe(params => this.applyFilterParams(params));
   }
 
   filterForm = new FormGroup({
@@ -75,5 +71,26 @@ export class ProjectListComponent {
     this.projectExportApi.initialiseReport(this.filterForm.getRawValue()).subscribe((result) => {
       this.reportService.runReport(result);
     });
+  }
+
+  applyFilterParams(params: Params) {
+    const show = params['show'];
+    switch (show) {
+      case 'all':
+        this.resetFilterForm();
+        return;
+
+      case 'active':
+        this.resetFilterForm();
+        this.filterForm.patchValue({ statusId: ProjectStatusEnum.Active });
+        return;
+    }
+    
+    const supportTeam = params['supportTeam'];
+    if (supportTeam) {
+      this.resetFilterForm();
+      this.filterForm.patchValue({ statusId: ProjectStatusEnum.Active });
+      this.filterForm.patchValue({ requestedSupportTeamId: supportTeam });
+    }
   }
 }

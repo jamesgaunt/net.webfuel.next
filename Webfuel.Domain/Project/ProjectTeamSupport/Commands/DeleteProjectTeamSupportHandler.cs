@@ -14,7 +14,7 @@ namespace Webfuel.Domain
 
         public async Task Handle(DeleteProjectTeamSupport request, CancellationToken cancellationToken)
         {
-            DashboardService.FlushSupportTeams();
+            DashboardService.FlushSupportTeamMetrics();
 
             await _projectTeamSupportRepository.DeleteProjectTeamSupport(request.Id);
         }

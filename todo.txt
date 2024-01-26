@@ -34,8 +34,6 @@ TODO:
 
 > Project Summary Service (cached project summaries for user interface enrichment)
 
-> Remove Iframe resizer, not needed any more
-
 > Tab selection of controls (think it's kinda important now) - mainly dates to do
 
 > Project Metrics Calculation (Lazy - or just rely on reporting engine now)
@@ -47,8 +45,6 @@ TODO:
 > Project / Support Request Change Status => Unlock (to mirror can unlock permission) [API should mirror claims]
 
 > More mobile goodness
-
-> Remove IStaticDataWithFreeText (leave Has method with lambda)
 
 ----- Future ------
 

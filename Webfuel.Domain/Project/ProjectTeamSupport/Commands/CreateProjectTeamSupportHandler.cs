@@ -35,7 +35,7 @@ namespace Webfuel.Domain
             if(_identityAccessor.User != null)
                 projectTeamSupport.CreatedByUserId = _identityAccessor.User.Id;
 
-            DashboardService.FlushSupportTeams();
+            DashboardService.FlushSupportTeamMetrics();
 
             return await _projectTeamSupportRepository.InsertProjectTeamSupport(projectTeamSupport);
         }

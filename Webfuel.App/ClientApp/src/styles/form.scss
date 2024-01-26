@@ -58,6 +58,7 @@
 
 .textarea {
   height: 8em;
+  max-height: 32em !important;
 }
 
 .checkbox {
@@ -100,6 +101,7 @@
 
 .control {
   display: flex;
+  position: relative;
 
   & > .icon {
     font-size: 1rem;
@@ -119,6 +121,20 @@
         }
       }
     }
+  }
+
+  .message-overlay {
+      display: inline-block;
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      font-size: 0.8em;
+      background-color: #FFF;
+      padding: 2px;
+
+      &.is-warning {
+          color: var(--palette-warning-text);
+      }
   }
 }
 

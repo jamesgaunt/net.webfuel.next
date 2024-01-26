@@ -16,11 +16,4 @@ namespace Webfuel.Domain.StaticData
 
         bool Default { get; }
     }
-
-    public interface IStaticDataWithFreeText
-    {
-        Guid Id { get; }
-
-        bool FreeText { get; }
-    }
 }

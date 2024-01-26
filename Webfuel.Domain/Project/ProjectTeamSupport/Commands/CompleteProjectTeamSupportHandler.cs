@@ -32,7 +32,7 @@ namespace Webfuel.Domain
             if(_identityAccessor.User != null)
                 updated.CompletedByUserId = _identityAccessor.User.Id;
 
-            DashboardService.FlushSupportTeams();
+            DashboardService.FlushSupportTeamMetrics();
 
             return await _projectTeamSupportRepository.UpdateProjectTeamSupport(updated: updated, original: existing);
         }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Webfuel.Common;
+using Webfuel.Domain.Dashboard;
 using Webfuel.Domain.StaticData;
 
 namespace Webfuel.Domain
@@ -45,6 +46,8 @@ namespace Webfuel.Domain
             project.SupportRequestId = supportRequest.Id;
 
             await _projectRepository.InsertProject(project);
+
+            DashboardService.FlushProjectMetrics();
 
             return await _enrichProjectService.EnrichProject(project);
         }

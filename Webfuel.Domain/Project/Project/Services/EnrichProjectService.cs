@@ -46,7 +46,6 @@ namespace Webfuel.Domain
 
         Task GenerateSearchFields(Project project)
         {
-
             // SearchTeamContactFullName
             {
                 var searchTeamContactFullName = $"{project.TeamContactTitle} {project.TeamContactFirstName} {project.TeamContactLastName}";

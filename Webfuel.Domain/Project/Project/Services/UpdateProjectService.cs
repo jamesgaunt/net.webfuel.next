@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Webfuel.Domain.Dashboard;
 using Webfuel.Domain.StaticData;
 
 namespace Webfuel.Domain
@@ -75,6 +76,8 @@ namespace Webfuel.Domain
             var updated = original.Copy();
 
             updated = await UpdateProjectStatus(updated, request);
+
+            DashboardService.FlushProjectMetrics();
 
             await _projectChangeLogService.InsertChangeLog(original: original, updated: updated);
             return updated;

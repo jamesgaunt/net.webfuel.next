@@ -13,62 +13,124 @@ namespace Webfuel.Domain.Dashboard
     }
 
     [Service(typeof(IDashboardService))]
-    internal class DashboardService: IDashboardService
+    internal class DashboardService : IDashboardService
     {
         private readonly IStaticDataService _staticDataService;
         private readonly IProjectRepository _projectRepository;
+        private readonly IIdentityAccessor _identityAccessor;
 
         public DashboardService(
             IStaticDataService staticDataService,
-            IProjectRepository projectRepository)
+            IProjectRepository projectRepository,
+            IIdentityAccessor identityAccessor)
         {
             _staticDataService = staticDataService;
             _projectRepository = projectRepository;
+            _identityAccessor = identityAccessor;
         }
 
         public async Task<DashboardModel> GetDashboardModel()
         {
-            var model = _dashboardModel;
-            if (model != null)
-                return model;
-
-            return _dashboardModel = await GenerateModel();
-        }
-
-        async Task<DashboardModel> GenerateModel()
-        {
-            var model = new DashboardModel();
-            var staticData = await _staticDataService.GetStaticData();
-            foreach(var supportTeam in staticData.SupportTeam)
+            return new DashboardModel
             {
-                model.SupportTeams.Add(await GenerateSupportTeam(supportTeam));
-            }
-            return model;
+                SupportTeamMetrics = await GenerateSupportTeamMetrics(),
+                ProjectMetrics = await GenerateProjectMetrics(),
+            };
         }
 
-        async Task<DashboardSupportTeam> GenerateSupportTeam(SupportTeam supportTeam)
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Project Metrics
+
+        async Task<List<DashboardMetric>> GenerateProjectMetrics()
+        {
+            var result = _projectMetrics;
+            if (result != null)
+                return result;
+
+            result = new List<DashboardMetric>();
+
+            { 
+                var query = new Query();
+                query.Equal(nameof(Project.StatusId), ProjectStatusEnum.Active);
+                var queryResult = await _projectRepository.QueryProject(query, selectItems: false, countTotal: true);
+
+                result.Add(new DashboardMetric
+                {
+                    Name = "Active Projects",
+                    Count = queryResult.TotalCount,
+                    Icon = "fas fa-database",
+                    RouterLink = "/project/project-list",
+                    RouterParams = $"{{ \"show\": \"active\" }}",
+                    BackgroundColor = "#d6bdcc"
+                });
+            }
+
+            // All Projects
+            {
+                result.Add(new DashboardMetric
+                {
+                    Name = "All Projects",
+                    Count = await _projectRepository.CountProject(),
+                    Icon = "fas fa-database",
+                    RouterLink = "/project/project-list",
+                    RouterParams = $"{{ \"show\": \"all\" }}",
+                    BackgroundColor = "#d6bdcc"
+
+                });
+            }
+
+            return _projectMetrics = result;
+        }
+
+        public static void FlushProjectMetrics()
+        {
+            _projectMetrics = null;
+        }
+
+        static List<DashboardMetric>? _projectMetrics = null;
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Support Team Metrics
+
+        async Task<List<DashboardMetric>> GenerateSupportTeamMetrics()
+        {
+            var result = _supportTeamMetrics;
+            if (result != null)
+                return result;
+
+            result = new List<DashboardMetric>();
+            var staticData = await _staticDataService.GetStaticData();
+            foreach (var supportTeam in staticData.SupportTeam)
+            {
+                result.Add(await GenerateSupportTeamMetric(supportTeam));
+            }
+
+            return _supportTeamMetrics = result;
+        }
+
+        async Task<DashboardMetric> GenerateSupportTeamMetric(SupportTeam supportTeam)
         {
             var query = new Query();
             query.Equal(nameof(Project.StatusId), ProjectStatusEnum.Active);
             query.SQL($"EXISTS (SELECT Id FROM [ProjectTeamSupport] AS pts WHERE pts.[ProjectId] = e.Id AND pts.[SupportTeamId] = '{supportTeam.Id}' AND pts.[CompletedAt] IS NULL)");
+            var queryResult = await _projectRepository.QueryProject(query, selectItems: false, countTotal: true);
 
-            var result = await _projectRepository.QueryProject(query, selectItems: false, countTotal: true);
-
-            return new DashboardSupportTeam
+            return new DashboardMetric
             {
-                Id = supportTeam.Id,
                 Name = supportTeam.Name,
-                OpenProjects = result.TotalCount
+                Count = queryResult.TotalCount,
+                Icon = "fas fa-user-headset",
+                RouterLink = "/project/project-list",
+                RouterParams = $"{{ \"supportTeam\": \"{supportTeam.Id}\" }}",
+                BackgroundColor = "#d6bdcc"
             };
         }
 
-        // Cached Model
-
-        public static void FlushSupportTeams()
+        public static void FlushSupportTeamMetrics()
         {
-            _dashboardModel = null;
+            _supportTeamMetrics = null;
         }
 
-        public static DashboardModel? _dashboardModel = null;
+        static List<DashboardMetric>? _supportTeamMetrics = null;
     }
 }

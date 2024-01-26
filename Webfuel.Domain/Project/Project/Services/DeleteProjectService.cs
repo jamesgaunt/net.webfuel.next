@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Webfuel.Domain.Dashboard;
 
 namespace Webfuel.Domain
 {
@@ -24,6 +25,8 @@ namespace Webfuel.Domain
         public async Task DeleteProject(DeleteProject request)
         {
             await _projectRepository.DeleteProject(request.Id);
+
+            DashboardService.FlushProjectMetrics();
         }
     }
 }

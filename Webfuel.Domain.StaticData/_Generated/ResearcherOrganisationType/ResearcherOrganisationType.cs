@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Webfuel.Domain.StaticData
 {
-    public partial class ResearcherOrganisationType: IStaticData, IStaticDataWithFreeText
+    public partial class ResearcherOrganisationType: IStaticData
     {
         public ResearcherOrganisationType() { }
         

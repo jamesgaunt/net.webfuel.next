@@ -19,17 +19,10 @@ namespace Webfuel.Domain.StaticData
 
             return items[0];
         }
+
         public static T RequireDefault<T>(this IReadOnlyList<T> items) where T : class, IStaticData
         {
             return items.GetDefault() ?? throw new InvalidOperationException($"No static data defined for {nameof(T)}");
-        }
-
-        public static bool HasFreeText<T>(this IReadOnlyList<T> items, Guid? id) where T : class, IStaticDataWithFreeText
-        {
-            var item = items.FirstOrDefault(p => p.Id == id);
-            if (item == null)
-                return false;
-            return item.FreeText;
         }
     }
 }

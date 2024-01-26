@@ -124,31 +124,55 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     gap: var(--gap);
+  }
+}
 
-    a {
-        display: block;
-        border: 1px solid var(--palette-control-border);
-        background-color: var(--palette-control-background);
-        padding: var(--gap);
-        transition: box-shadow 0.25s ease;
+.dashboard-metric {
+  border: 1px solid var(--palette-control-border);
+  background-color: var(--palette-control-background);
+  padding: 1rem 1rem 0.5rem 1rem;
+  transition: box-shadow 0.25s ease;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto auto;
+  grid-template-areas: "icon count" "name name" "cta cta";
+  color: var(--palette-control-text);
 
-        .name {
-            font-size: 1.3rem;
-            line-height: 1.4rem;
-            min-height: 2.8rem;
-            margin-bottom: var(--gap);
-        }
+  .icon {
+    grid-area: icon;
+    font-size: 3rem;
+    line-height: 3rem;
+    grid-area: icon;
+  }
 
-        .open-projects {
-            font-size: 3rem;
-            line-height: 3rem;
-        }
+  .count {
+    grid-area: count;
+    font-size: 3rem;
+    line-height: 3rem;
+    text-align: right;
+  }
 
-        &:hover {
-            box-shadow: 0 0 20px RGBA(0, 0, 0, 0.3);
-        }
-        
-    }
+  .name {
+    grid-area: name;
+    font-size: 1.0rem;
+    line-height: 1.2rem;
+    min-height: 2.4rem;
+    padding: 4px 0 4px 0;
+    text-align: right;
+  }
+
+  .cta {
+    grid-area: cta;
+    font-size: 1.0rem;
+    line-height: 1.2rem;
+    padding-top: 8px;
+    border-top: 1px solid var(--palette-control-border);
+    .fas { float: right; }
+  }
+
+
+  &:hover {
+    box-shadow: 0 0 20px RGBA(0, 0, 0, 0.3);
   }
 }
 

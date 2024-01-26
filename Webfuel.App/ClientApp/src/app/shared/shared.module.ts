@@ -5,12 +5,14 @@ import { RouterModule } from '@angular/router';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { DialogModule } from '@angular/cdk/dialog';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TextFieldModule } from '@angular/cdk/text-field';
 
 // Chrome
 import { ChromeComponent } from './chrome/chrome.component';
 
 // Form
 import { TextInputComponent } from './form/text-input/text-input.component';
+import { TextAreaComponent } from './form/text-area/text-area.component';
 import { NumberInputComponent } from './form/number-input/number-input.component';
 import { DropDownSelectComponent } from './form/dropdown-select/dropdown-select.component';
 import { DropDownMultiSelectComponent } from './form/dropdown-multi-select/dropdown-multi-select.component';
@@ -44,8 +46,6 @@ import { UpdateUserActivityDialog, UpdateUserActivityDialogComponent } from './d
 import { FileViewerDialog, FileViewerDialogComponent } from './dialogs/file-viewer/file-viewer.dialog';
 import { AlertDialog, AlertDialogComponent } from './dialogs/alert/alert.dialog';
 
-
-
 // Misc
 import { FileBrowserComponent } from './file-browser/file-browser.component';
 
@@ -57,6 +57,7 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
     OverlayModule,
     DialogModule,
     DragDropModule,
+    TextFieldModule
   ],
   declarations: [
 
@@ -65,6 +66,7 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
 
     // Form
     TextInputComponent,
+    TextAreaComponent,
     NumberInputComponent,
     DropDownSelectComponent,
     DropDownMultiSelectComponent,
@@ -108,12 +110,14 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
     OverlayModule,
     DragDropModule,
     DialogModule,
+    TextFieldModule,
 
     // Chrome
     ChromeComponent,
 
     // Form
     TextInputComponent,
+    TextAreaComponent,
     NumberInputComponent,
     DropDownSelectComponent,
     DropDownMultiSelectComponent,

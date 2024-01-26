@@ -9,15 +9,25 @@ namespace Webfuel.Domain
 {
     public class DashboardModel
     {
-        public List<DashboardSupportTeam> SupportTeams { get; } = new List<DashboardSupportTeam>();
+        public required List<DashboardMetric> SupportTeamMetrics { get; init; }
+
+        public required List<DashboardMetric> ProjectMetrics { get; init; }
     }
 
-    public class DashboardSupportTeam
+    public class DashboardMetric
     {
-        public Guid Id { get; set; }
+        public string Name { get; init; } = String.Empty;
 
-        public string Name { get; set; } = String.Empty;
+        public int? Count { get; init; }
 
-        public int OpenProjects { get; set; } 
+        public string Icon { get; init; } = String.Empty;
+
+        public string CTA { get; init; } = String.Empty;
+
+        public string RouterLink { get; init; } = String.Empty;
+
+        public string RouterParams { get; init; } = String.Empty;
+
+        public string BackgroundColor { get; init; } = String.Empty;
     }
 }

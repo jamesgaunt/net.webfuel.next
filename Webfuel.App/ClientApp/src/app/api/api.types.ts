@@ -288,13 +288,18 @@ export interface ReportReferenceField extends ReportField {
 }
 
 export interface DashboardModel {
-    supportTeams: Array<DashboardSupportTeam>;
+    supportTeamMetrics: Array<DashboardMetric>;
+    projectMetrics: Array<DashboardMetric>;
 }
 
-export interface DashboardSupportTeam {
-    id: string;
+export interface DashboardMetric {
     name: string;
-    openProjects: number;
+    count: number | null | null;
+    icon: string;
+    cta: string;
+    routerLink: string;
+    routerParams: string;
+    backgroundColor: string;
 }
 
 export interface QueryResult<TItem> {
@@ -445,17 +450,12 @@ export interface IStaticData {
     default: boolean;
 }
 
-export interface ApplicationStage extends IStaticData, IStaticDataWithFreeText {
+export interface ApplicationStage extends IStaticData {
     id: string;
     name: string;
     sortOrder: number;
     default: boolean;
     hidden: boolean;
-    freeText: boolean;
-}
-
-export interface IStaticDataWithFreeText {
-    id: string;
     freeText: boolean;
 }
 
@@ -477,7 +477,7 @@ export interface Ethnicity extends IStaticData {
     freeText: boolean;
 }
 
-export interface FundingBody extends IStaticData, IStaticDataWithFreeText {
+export interface FundingBody extends IStaticData {
     id: string;
     name: string;
     sortOrder: number;
@@ -494,7 +494,7 @@ export interface FundingCallType extends IStaticData {
     hidden: boolean;
 }
 
-export interface FundingStream extends IStaticData, IStaticDataWithFreeText {
+export interface FundingStream extends IStaticData {
     id: string;
     name: string;
     sortOrder: number;
@@ -603,7 +603,7 @@ export interface ReportProvider extends IStaticData {
     hidden: boolean;
 }
 
-export interface ResearcherOrganisationType extends IStaticData, IStaticDataWithFreeText {
+export interface ResearcherOrganisationType extends IStaticData {
     id: string;
     name: string;
     sortOrder: number;
@@ -612,7 +612,7 @@ export interface ResearcherOrganisationType extends IStaticData, IStaticDataWith
     freeText: boolean;
 }
 
-export interface ResearcherRole extends IStaticData, IStaticDataWithFreeText {
+export interface ResearcherRole extends IStaticData {
     id: string;
     name: string;
     sortOrder: number;
