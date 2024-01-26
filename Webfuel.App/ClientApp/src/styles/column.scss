@@ -29,6 +29,16 @@
       width: 25%;
     }
 
+    &.is-12 {
+      flex: none;
+      width: 100%;
+    }
+
+    &.is-4 {
+      flex: none;
+      width: 33.33%;
+    }
+
     &.is-right {
       text-align: right;
     }

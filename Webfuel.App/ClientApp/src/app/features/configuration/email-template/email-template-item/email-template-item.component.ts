@@ -43,6 +43,13 @@ export class EmailTemplateItemComponent implements OnInit {
   form = new FormGroup({
     id: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     name: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    sendTo: new FormControl<string>('', { nonNullable: true }),
+    sendCc: new FormControl<string>('', { nonNullable: true }),
+    sendBcc: new FormControl<string>('', { nonNullable: true }),
+    sentBy: new FormControl<string>('', { nonNullable: true }),
+    replyTo: new FormControl<string>('', { nonNullable: true }),
+    subject: new FormControl<string>('', { nonNullable: true }),
+    htmlTemplate: new FormControl<string>('', { nonNullable: true }),
   });
 
   save(close: boolean) {

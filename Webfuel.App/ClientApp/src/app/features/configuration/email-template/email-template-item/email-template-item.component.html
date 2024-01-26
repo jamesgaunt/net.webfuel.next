@@ -10,11 +10,40 @@
     </div>
   </div>
   <form class="form" [formGroup]="form">
-    <div class="columns">
-      <div class="column field">
+    <div class="flex">
+      <div class="field is-4">
         <label class="label">Name</label>
         <input type="text" class="input" formControlName="name" placeholder="required" />
       </div>
+      <div class="field is-4">
+        <label class="label">Sent By</label>
+        <input type="text" class="input" formControlName="sentBy" placeholder="optional" />
+      </div>
+      <div class="field is-4">
+        <label class="label">Reply To</label>
+        <input type="text" class="input" formControlName="replyTo" placeholder="optional" />
+      </div>
+      <div class="field is-4">
+        <label class="label">Send To</label>
+        <input type="text" class="input" formControlName="sendTo" placeholder="optional" />
+      </div>
+      <div class="field is-4">
+        <label class="label">Send Cc</label>
+        <input type="text" class="input" formControlName="sendCc" placeholder="optional" />
+      </div>
+      <div class="field is-4">
+        <label class="label">Send Bcc</label>
+        <input type="text" class="input" formControlName="sendBcc" placeholder="optional" />
+      </div>
+      <div class="field is-12">
+        <label class="label">Subject</label>
+        <input type="text" class="input" formControlName="subject" placeholder="optional" />
+      </div>
+      <div class="field is-12">
+        <label class="label">Template</label>
+        <text-area formControlName="htmlTemplate" placeholder="optional"></text-area>
+      </div>
+
     </div>
   </form>
   <div class="floating-buttons">

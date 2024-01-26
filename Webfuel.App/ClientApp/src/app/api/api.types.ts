@@ -321,6 +321,13 @@ export interface CreateEmailTemplate {
 export interface UpdateEmailTemplate {
     id: string;
     name: string;
+    sendTo: string;
+    sendCc: string;
+    sendBcc: string;
+    sentBy: string;
+    replyTo: string;
+    subject: string;
+    htmlTemplate: string;
 }
 
 export interface QueryResult<TItem> {
