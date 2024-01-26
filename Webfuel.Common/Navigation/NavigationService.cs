@@ -51,6 +51,7 @@ namespace Webfuel.Common
                     clientConfiguration.SettingsMenu.AddChild(name: "User Logins", action: "/developer/user-login", icon: "fas fa-sign-in");
                     clientConfiguration.SettingsMenu.AddChild(name: "Report Groups", action: "/reporting/report-group-list", icon: "fas fa-layer-group");
                     clientConfiguration.SettingsMenu.AddChild(name: "Report Designer", action: "/reporting/report-list", icon: "fas fa-pencil-ruler");
+                    clientConfiguration.SettingsMenu.AddChild(name: "Email Templates", action: "/configuration/email-template-list", icon: "fas fa-envelope-open-text");
                 }
             }
 

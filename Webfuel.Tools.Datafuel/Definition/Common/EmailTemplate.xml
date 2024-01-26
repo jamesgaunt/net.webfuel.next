@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="EmailTemplate">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name"  />
+    
+    <Property Name="SendTo" Type="string" />
+    <Property Name="SendCc" Type="string" />
+    <Property Name="SendBcc" Type="string" />
+
+    <Property Name="SentBy" Type="meta:name" />
+    <Property Name="ReplyTo" Type="meta:name" />
+
+    <Property Name="Subject" Type="string" />
+
+    <Property Name="HtmlTemplate" Type="string" />
+
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+  </Entity>
+</Schema>

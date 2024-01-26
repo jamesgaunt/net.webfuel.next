@@ -3,7 +3,6 @@ using MediatR;
 
 namespace Webfuel.Common
 {
-
     internal class GetHeartbeatHandler : IRequestHandler<GetHeartbeat, Heartbeat?>
     {
         private readonly IHeartbeatRepository _reportRepository;

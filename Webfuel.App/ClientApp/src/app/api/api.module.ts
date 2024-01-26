@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ConfigurationApi } from './configuration.api';
 import { DashboardApi } from './dashboard.api';
+import { EmailTemplateApi } from './email-template.api';
 import { FileStorageEntryApi } from './file-storage-entry.api';
 import { HeartbeatApi } from './heartbeat.api';
 import { PingApi } from './ping.api';
@@ -60,6 +61,7 @@ import { StaticDataCache } from './static-data.cache';
     providers: [
         ConfigurationApi,
         DashboardApi,
+        EmailTemplateApi,
         FileStorageEntryApi,
         HeartbeatApi,
         PingApi,

@@ -1,0 +1,27 @@
+<ul class="breadcrumbs">
+  <li><a routerLink="/home">Home</a></li>
+  <li><a routerLink="/configuration/configuration-menu">Configuration</a></li>
+  <li><a routerLink="/configuration/email-template-list">Email Template</a></li>
+</ul>
+<div class="container">
+  <div class="columns">
+    <div class="column">
+      <h1 class="title">Email Template</h1>
+    </div>
+  </div>
+  <form class="form" [formGroup]="form">
+    <div class="columns">
+      <div class="column field">
+        <label class="label">Name</label>
+        <input type="text" class="input" formControlName="name" placeholder="required" />
+      </div>
+    </div>
+  </form>
+  <div class="floating-buttons">
+    <button class="button is-success" (click)="save(false)">Save</button>
+    <button class="button is-success" (click)="save(true)">Save &amp; Close</button>
+    <button class="button" (click)="cancel()">Cancel</button>
+  </div>
+</div>
+
+

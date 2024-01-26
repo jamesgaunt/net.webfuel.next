@@ -58,7 +58,7 @@ namespace Webfuel.Domain.Dashboard
                 {
                     Name = "Active Projects",
                     Count = queryResult.TotalCount,
-                    Icon = "fas fa-database",
+                    Icon = "fas fa-books",
                     RouterLink = "/project/project-list",
                     RouterParams = $"{{ \"show\": \"active\" }}",
                     BackgroundColor = "#d6bdcc"
@@ -71,7 +71,7 @@ namespace Webfuel.Domain.Dashboard
                 {
                     Name = "All Projects",
                     Count = await _projectRepository.CountProject(),
-                    Icon = "fas fa-database",
+                    Icon = "fas fa-books",
                     RouterLink = "/project/project-list",
                     RouterParams = $"{{ \"show\": \"all\" }}",
                     BackgroundColor = "#d6bdcc"

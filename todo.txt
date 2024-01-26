@@ -2,6 +2,7 @@ TODO:
 
 //// SWITCHING UP EDITABILITY / CONDITIONS / ARGUMENTS
 
+/////////////////////
 // Reporting
 
 > Expose conditions dynamically to the UI 
@@ -18,6 +19,8 @@ TODO:
 
 > Report Ownership / Access Control [CAN WAIT]
 
+
+/////////////////////
 // Non-Reporting
 
 > Heartbeats

@@ -1,0 +1,18 @@
+<ul class="breadcrumbs">
+  <li><a routerLink="/home">Home</a></li>
+  <li><a routerLink="/configuration/configuration-menu">Configuration</a></li>
+  <li><a routerLink="/configuration/email-template-list">Email Templates</a></li>
+</ul>
+<div class="container">
+  <div class="columns">
+    <div class="column">
+      <h1 class="title">Email Templates</h1>
+    </div>
+  </div>
+  <grid [dataSource]="emailTemplateApi" stateKey="EmailTemplateList">
+    <grid-column name="name" />
+    <grid-action-column (add)="add()" (edit)="edit($event)" [canDelete]="false"  />
+  </grid>
+</div>
+
+

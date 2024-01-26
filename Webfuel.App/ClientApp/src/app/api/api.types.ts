@@ -302,23 +302,33 @@ export interface DashboardMetric {
     backgroundColor: string;
 }
 
+export interface EmailTemplate {
+    id: string;
+    name: string;
+    sendTo: string;
+    sendCc: string;
+    sendBcc: string;
+    sentBy: string;
+    replyTo: string;
+    subject: string;
+    htmlTemplate: string;
+}
+
+export interface CreateEmailTemplate {
+    name: string;
+}
+
+export interface UpdateEmailTemplate {
+    id: string;
+    name: string;
+}
+
 export interface QueryResult<TItem> {
     items: Array<TItem>;
     totalCount: number;
 }
 
-export interface FileStorageEntry {
-    id: string;
-    fileName: string;
-    sizeBytes: number;
-    uploadedAt: string | null | null;
-    description: string;
-    fileStorageGroupId: string;
-    uploadedByUserId: string | null | null;
-}
-
-export interface QueryFileStorageEntry extends Query {
-    fileStorageGroupId: string;
+export interface QueryEmailTemplate extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;
@@ -340,6 +350,26 @@ export interface QuerySort {
 }
 
 export interface Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface FileStorageEntry {
+    id: string;
+    fileName: string;
+    sizeBytes: number;
+    uploadedAt: string | null | null;
+    description: string;
+    fileStorageGroupId: string;
+    uploadedByUserId: string | null | null;
+}
+
+export interface QueryFileStorageEntry extends Query {
+    fileStorageGroupId: string;
     skip: number;
     take: number;
     projection?: Array<string>;
