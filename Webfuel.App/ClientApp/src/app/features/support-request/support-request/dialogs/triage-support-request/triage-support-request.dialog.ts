@@ -35,8 +35,18 @@ export class TriageSupportRequestDialogComponent extends DialogComponentBase<Sup
     this.form.patchValue({ id: this.data.id });
 
     this.staticDataCache.supportProvided.query({ skip: 0, take: 100 }).subscribe((result) => {
-      this.form.patchValue({ supportProvidedIds : _.map(_.filter(result.items, (p) => p.default), q => q.id) });
-    })
+      this.form.patchValue({ supportProvidedIds: _.map(_.filter(result.items, (p) => p.default), q => q.id) });
+    });
+
+    this.form.controls.statusId.valueChanges.subscribe(value => {
+      if (value == SupportRequestStatusEnum.ReferredToNIHRRSSExpertTeams) {
+        this.form.controls.workTimeInHours.setValidators([Validators.required, Validators.min(0), Validators.max(8)]);
+      }
+      else {
+        this.form.controls.workTimeInHours.setValidators([]);
+      }
+      this.form.controls.workTimeInHours.updateValueAndValidity();
+    });
   }
 
   form = new FormGroup({
@@ -44,7 +54,7 @@ export class TriageSupportRequestDialogComponent extends DialogComponentBase<Sup
     statusId: new FormControl<string>(null!, { validators: Validators.required, nonNullable: true }),
     supportProvidedIds: new FormControl<string[]>([], { nonNullable: true }),
     description: new FormControl<string>('', { nonNullable: true }),
-    workTimeInHours: new FormControl<number>(null!, { validators: [Validators.required, Validators.min(0), Validators.max(8)], nonNullable: true }),
+    workTimeInHours: new FormControl<number>(null!, { nonNullable: true }),
   });
 
   get referring() {

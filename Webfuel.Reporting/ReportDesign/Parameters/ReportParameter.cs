@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Webfuel.Reporting
 {
+    // Not Used
     public class ReportParameter
     {
         public string Name { get; internal set; } = String.Empty;

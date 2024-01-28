@@ -116,7 +116,7 @@ namespace Webfuel.Domain
                         TeamIds = new List<Guid> { SupportTeamEnum.TriageTeam },
                         SupportProvidedIds = request.SupportProvidedIds,
                         Description = request.Description,
-                        WorkTimeInHours = request.WorkTimeInHours
+                        WorkTimeInHours = request.WorkTimeInHours ?? 0
                     });
                 }
 
