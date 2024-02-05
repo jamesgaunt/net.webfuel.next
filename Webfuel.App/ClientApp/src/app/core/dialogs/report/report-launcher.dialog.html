@@ -1,9 +1,9 @@
-<div class="dialog">
+<div class="dialog" *ngIf="arguments !== null">
   <div class="dialog-head is-primary">
     {{ title }}
   </div>
   <div class="dialog-body">
-    <div class="grid" *ngFor="let argument of arguments">
+    <div class="grid" *ngFor="let argument of arguments" style="margin-bottom: 0">
       <report-argument [argument]="argument" />
     </div>
   </div>

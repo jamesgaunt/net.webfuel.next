@@ -39,9 +39,7 @@ export class ReportLauncherDialogComponent extends DialogComponentBase<true, Rep
     this.reportDesignApi.generateArguments(this.report.design).subscribe((result) => this.arguments = result);
   }
 
-  ReportFilterType = ReportFilterType;
-
-  report: Report | null = null;
+  report: Report | null = null; 
 
   title = "Initialising...";
 
@@ -53,7 +51,7 @@ export class ReportLauncherDialogComponent extends DialogComponentBase<true, Rep
     if (this.report == null)
       return;
 
-    this.reportApi.run({ reportId: this.report.id, arguments: null }).subscribe((reportStep) => {
+    this.reportApi.run({ reportId: this.report.id, arguments: this.arguments }).subscribe((reportStep) => {
       this._cancelDialog();
       this.reportService.runReport(reportStep);
     });

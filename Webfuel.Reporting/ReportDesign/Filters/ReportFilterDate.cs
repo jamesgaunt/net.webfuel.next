@@ -17,6 +17,8 @@ namespace Webfuel.Reporting
         LessThanOrEqualTo = 30,
         GreaterThan = 40,
         GreaterThanOrEqualTo = 50,
+        IsNotSet = 100,
+        IsSet = 200,
     }
 
     [ApiType]
@@ -31,6 +33,8 @@ namespace Webfuel.Reporting
             new ReportFilterCondition { Value = (int)ReportFilterDateCondition.LessThanOrEqualTo, Description = "is less than or equal to", Unary = false },
             new ReportFilterCondition { Value = (int)ReportFilterDateCondition.GreaterThan, Description = "is greater than", Unary = false },
             new ReportFilterCondition { Value = (int)ReportFilterDateCondition.GreaterThanOrEqualTo, Description = "is greater than or equal to", Unary = false },
+            new ReportFilterCondition { Value = (int)ReportFilterDateCondition.IsNotSet, Description = "is not set", Unary = true },
+            new ReportFilterCondition { Value = (int)ReportFilterDateCondition.IsSet, Description = "is set", Unary = true },
         };
 
         public string Value { get; set; } = String.Empty;
@@ -46,13 +50,40 @@ namespace Webfuel.Reporting
 
         public override async Task<bool> Apply(object context, ReportBuilder builder)
         {
+            var argument = builder.Request.Arguments.FirstOrDefault(a => a.FilterId == Id);
+            var condition = argument?.Condition ?? Condition;
+            var value = argument == null ? ParseDate(Value) : argument.DateValue;
+
             var field = builder.Schema.Fields.FirstOrDefault(f => f.Id == FieldId);
             if (field == null)
                 return false;
 
-            var value = await field.Evaluate(context, builder);
+            var untyped = await field.Evaluate(context, builder);
 
-            throw new NotImplementedException();
+            if (untyped == null)
+                return condition == (int)ReportFilterDateCondition.IsNotSet;
+
+            if (condition == (int)ReportFilterDateCondition.IsSet)
+                return true;
+
+            if (untyped is not DateOnly typed)
+                return false;
+            
+            switch(condition)
+            {
+                case (int)ReportFilterDateCondition.EqualTo:
+                    return typed == value;
+                case (int)ReportFilterDateCondition.LessThan:
+                    return typed < value;
+                case (int)ReportFilterDateCondition.LessThanOrEqualTo:
+                    return typed <= value;
+                case (int)ReportFilterDateCondition.GreaterThan:
+                    return typed > value;
+                case (int)ReportFilterDateCondition.GreaterThanOrEqualTo:
+                    return typed >= value;
+            }
+
+            throw new InvalidOperationException($"Unknown condition {condition}");
         }
 
         public override void Update(ReportFilter filter, ReportSchema schema)
@@ -64,7 +95,7 @@ namespace Webfuel.Reporting
             base.Update(filter, schema);
         }
 
-        public override Task<ReportArgument?> GenerateArgument(IServiceProvider services)
+        public override Task<ReportArgument?> GenerateArgument(ReportDesign design, IServiceProvider services)
         {
             return Task.FromResult<ReportArgument?>(new ReportArgument
             {
@@ -74,7 +105,9 @@ namespace Webfuel.Reporting
                 FieldType = ReportFieldType.Date,
                 Condition = Condition,
                 Conditions = Conditions.ToList(),
-                DateValue = DateOnly.FromDateTime(DateTime.Today) // TODO: Date generation DSL
+                DateValue = ParseDate(Value),
+                ReportProviderId = design.ReportProviderId,
+                FilterType = FilterType,
             });
         }
 
@@ -100,5 +133,37 @@ namespace Webfuel.Reporting
             base.WriteProperties(writer);
             writer.WriteString("value", Value);
         }
+
+        // Date Parser
+
+        DateOnly? ParseDate(string value)
+        {
+            if (String.IsNullOrEmpty(value))
+                return null;
+
+            var dsl = value.ToLower().Trim();
+
+            switch (dsl)
+            {
+                case "today":
+                    return DateOnly.FromDateTime(DateTime.Today);
+                case "yesterday":
+                    return DateOnly.FromDateTime(DateTime.Today.AddDays(-1));
+                case "start of month":
+                    return DateOnly.FromDateTime(new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1));
+                case "end of month":
+                    return DateOnly.FromDateTime(new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(1).AddDays(-1));
+                case "start of year":
+                    return DateOnly.FromDateTime(new DateTime(DateTime.Today.Year, 1, 1));
+                case "end of year":
+                    return DateOnly.FromDateTime(new DateTime(DateTime.Today.Year, 12, 31));
+            }
+
+            if (DateTime.TryParse(value, out DateTime date))
+                return DateOnly.FromDateTime(date);
+
+            throw new InvalidOperationException("Unable to parse date string '{value}' into a valid date.");
+        }
+
     }
 }

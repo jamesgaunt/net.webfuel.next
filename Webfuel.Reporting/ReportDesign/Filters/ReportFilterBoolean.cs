@@ -41,19 +41,21 @@ namespace Webfuel.Reporting
 
         public override async Task<bool> Apply(object context, ReportBuilder builder)
         {
+            var argument = builder.Request.Arguments.FirstOrDefault(a => a.FilterId == Id);
+            var condition = argument?.Condition ?? Condition;
+
             var field = builder.Schema.Fields.FirstOrDefault(f => f.Id == FieldId);
             if (field == null)
                 return false;
 
-            if (Condition == (int)ReportFilterBooleanCondition.Any)
+            if (condition == (int)ReportFilterBooleanCondition.Any)
                 return true;
 
-            var value = await field.Evaluate(context, builder);
-
-            if (value is not bool typed)
+            var untyped = await field.Evaluate(context, builder);
+            if (untyped is not bool typed)
                 return false;
 
-            if(Condition == (int)ReportFilterBooleanCondition.True)
+            if(condition == (int)ReportFilterBooleanCondition.True)
                 return typed;
 
             return !typed;
@@ -67,7 +69,7 @@ namespace Webfuel.Reporting
             base.Update(filter, schema);
         }
 
-        public override Task<ReportArgument?> GenerateArgument(IServiceProvider services)
+        public override Task<ReportArgument?> GenerateArgument(ReportDesign design, IServiceProvider services)
         {
             return Task.FromResult<ReportArgument?>(new ReportArgument
             {
@@ -77,6 +79,8 @@ namespace Webfuel.Reporting
                 FieldType = ReportFieldType.Boolean,
                 Condition = Condition,
                 Conditions = Conditions.ToList(),
+                ReportProviderId = design.ReportProviderId,
+                FilterType = FilterType,
             });
         }
 

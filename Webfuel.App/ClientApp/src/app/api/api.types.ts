@@ -1060,6 +1060,7 @@ export interface ReportArgument {
     fieldId: string;
     reportProviderId: string;
     fieldType: ReportFieldType;
+    filterType: ReportFilterType;
     condition: number;
     conditions: Array<ReportFilterCondition>;
     guidsValue: Array<string> | null;
@@ -1319,7 +1320,7 @@ export interface UpdateSupportRequestStatus {
     statusId: string;
     supportProvidedIds: Array<string>;
     description: string;
-    workTimeInHours: number;
+    workTimeInHours: number | null | null;
 }
 
 export interface QuerySupportRequest extends Query {

@@ -71,11 +71,10 @@ namespace Webfuel.Reporting
                 }
                 else if (filter.Editable)
                 {
-                    var argument = await filter.GenerateArgument(services);
+                    var argument = await filter.GenerateArgument(this, services);
                     if (argument == null)
                         throw new InvalidOperationException($"The filter {filter.Name} did not supply a default argument");
 
-                    argument.ReportProviderId = ReportProviderId;
                     arguments.Add(argument);
                 }
             }

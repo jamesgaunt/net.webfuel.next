@@ -9,15 +9,17 @@ namespace Webfuel.Reporting
 {
     public class ReportArgument
     {
-        public string Name { get; set; } = String.Empty;
+        public required string Name { get; set; }
 
-         public Guid FilterId { get; set; }
+        public required Guid FilterId { get; set; }
 
-        public Guid FieldId { get; set; }
+        public required Guid FieldId { get; set; }
 
-        public Guid ReportProviderId { get; set; }
+        public required Guid ReportProviderId { get; set; }
 
-        public ReportFieldType FieldType { get; set; }
+        public required ReportFieldType FieldType { get; set; }
+
+        public required ReportFilterType FilterType { get; set; }
 
         // Condition 
 

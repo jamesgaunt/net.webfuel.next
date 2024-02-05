@@ -54,31 +54,42 @@ namespace Webfuel.Reporting
 
         public override async Task<bool> Apply(object context, ReportBuilder builder)
         {
+            var argument = builder.Request.Arguments.FirstOrDefault(a => a.FilterId == Id);
+            var condition = argument?.Condition ?? Condition;
+            var value = argument == null ? Value : argument.StringValue;
+
             var field = builder.Schema.Fields.FirstOrDefault(f => f.Id == FieldId);
             if (field == null)
                 return false;
 
-            var value = await field.Evaluate(context, builder);
+            var untyped = await field.Evaluate(context, builder);
+            var typed = untyped?.ToString() ?? String.Empty;
 
-            var typed = value?.ToString() ?? String.Empty;
-
-            switch (Condition)
+            switch (condition)
             {               
                 case (int)ReportFilterStringCondition.Contains:
-                    return typed.Contains(Value);
+                    if (String.IsNullOrEmpty(value))
+                        return true;
+                    return typed.Contains(value);
                 case (int)ReportFilterStringCondition.StartsWith:
-                    return typed.StartsWith(Value);
+                    if (String.IsNullOrEmpty(value))
+                        return true;
+                    return typed.StartsWith(value);
                 case (int)ReportFilterStringCondition.EndsWith:
-                    return typed.EndsWith(Value);
+                    if (String.IsNullOrEmpty(value))
+                        return true;
+                    return typed.EndsWith(value);
                 case (int)ReportFilterStringCondition.EqualTo:
-                    return typed == Value;
+                    if (String.IsNullOrEmpty(value))
+                        return true;
+                    return typed == value;
                 case (int)ReportFilterStringCondition.IsEmpty:
                     return typed == String.Empty;
                 case (int)ReportFilterStringCondition.IsNotEmpty:
                     return typed != String.Empty;
             }
 
-            throw new InvalidOperationException($"Unknown condition {Condition}");
+            throw new InvalidOperationException($"Unknown condition {condition}");
         }
 
         public override void Update(ReportFilter filter, ReportSchema schema)
@@ -91,7 +102,7 @@ namespace Webfuel.Reporting
             base.Update(filter, schema);
         }
 
-        public override Task<ReportArgument?> GenerateArgument(IServiceProvider services)
+        public override Task<ReportArgument?> GenerateArgument(ReportDesign design, IServiceProvider services)
         {
             return Task.FromResult<ReportArgument?>(new ReportArgument
             {
@@ -102,6 +113,8 @@ namespace Webfuel.Reporting
                 Condition = Condition,
                 Conditions = Conditions.ToList(),
                 StringValue = Value,
+                ReportProviderId = design.ReportProviderId,
+                FilterType = FilterType,
             });
         }
 

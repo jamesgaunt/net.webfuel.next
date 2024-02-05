@@ -22,18 +22,42 @@ export class ReportArgumentComponent implements OnInit {
 
   ngOnInit(): void {
     this.setup();
+
+    this.form.valueChanges.pipe(
+      debounceTime(250),
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe(() => {
+
+      this.argument.condition = this.form.value.condition ?? this.argument.condition;
+      this.argument.guidsValue = this.form.value.guidsValue ?? this.argument.guidsValue;
+      this.argument.doubleValue = this.form.value.doubleValue ?? this.argument.doubleValue;
+      this.argument.stringValue = this.form.value.stringValue ?? this.argument.stringValue;
+      this.argument.dateValue = this.form.value.dateValue ?? this.argument.dateValue;
+    });
+
   }
+
+  ReportFilterType = ReportFilterType;
 
   @Input({ required: true })
   argument!: ReportArgument
 
   form = new FormGroup({
     condition: new FormControl<number>(0, { nonNullable: true }),
-    value: new FormControl<any>(null)
+    guidsValue: new FormControl<string[] | null>(null),
+    doubleValue: new FormControl<number | null>(null),
+    stringValue: new FormControl<string | null>(null),
+    dateValue: new FormControl<string | null>(null)
   });
 
   setup() {
-    this.form.patchValue({ condition: this.argument.condition });
+    this.form.patchValue({
+      condition: this.argument.condition,
+      guidsValue: this.argument.guidsValue,
+      doubleValue: this.argument.doubleValue,
+      stringValue: this.argument.stringValue,
+      dateValue: this.argument.dateValue
+    });
   }
 
   referenceDataSource: IDataSource<any> = {

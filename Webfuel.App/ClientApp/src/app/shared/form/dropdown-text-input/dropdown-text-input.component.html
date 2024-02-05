@@ -5,9 +5,14 @@
     <i class="fas fa-times"></i>
   </div>
   <!-- Open Icon -->
-  <div *ngIf="!_isDisabled" class="icon is-secondary" (click)="focus()">
+  <div *ngIf="!_isDisabled" class="icon is-secondary" (click)="openPopup()">
     <i class="fas fa-chevron-down"></i>
   </div>
+  <!-- Callback Icon -->
+  <div *ngIf="callbackIcon != null" class="icon is-secondary" (click)="onCallback()">
+    <i [class]="callbackIcon"></i>
+  </div>
+
 </div>
 
 <ng-template #defaultOptionTemplate let-item>

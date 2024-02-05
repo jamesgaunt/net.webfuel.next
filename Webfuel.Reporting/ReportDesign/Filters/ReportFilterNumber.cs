@@ -46,31 +46,44 @@ namespace Webfuel.Reporting
 
         public override async Task<bool> Apply(object context, ReportBuilder builder)
         {
+            var argument = builder.Request.Arguments.FirstOrDefault(a => a.FilterId == Id);
+            var condition = argument?.Condition ?? Condition;
+            var value = argument == null ? Value : argument.DoubleValue;
+
             var field = builder.Schema.Fields.FirstOrDefault(f => f.Id == FieldId);
             if (field == null)
                 return false;
 
-            var value = await field.Evaluate(context, builder);
-
-            var typed = ToDouble(value);
+            var untyped = await field.Evaluate(context, builder);
+            var typed = ToDouble(untyped);
             if (typed == null)
                 return false;
 
-            switch(Condition)
+            switch(condition)
             {
                 case (int)ReportFilterNumberCondition.EqualTo:
-                    return Value == typed;
+                    if (value == null)
+                        return true;
+                    return value == typed;
                 case (int)ReportFilterNumberCondition.LessThan:
-                    return Value > typed;
+                    if (value == null)
+                        return true;
+                    return value > typed;
                 case (int)ReportFilterNumberCondition.LessThanOrEqualTo:
-                    return Value >= typed;
+                    if (value == null)
+                        return true;
+                    return value >= typed;
                 case (int)ReportFilterNumberCondition.GreaterThan:
-                    return Value < typed;
+                    if (value == null)
+                        return true;
+                    return value < typed;
                 case (int)ReportFilterNumberCondition.GreaterThanOrEqualTo:
-                    return Value <= typed;
+                    if (value == null)
+                        return true;
+                    return value <= typed;
             }
 
-            throw new InvalidOperationException($"Unknown condition {Condition}");
+            throw new InvalidOperationException($"Unknown condition {condition}");
         }
 
         public override void Update(ReportFilter filter, ReportSchema schema)
@@ -82,7 +95,7 @@ namespace Webfuel.Reporting
             base.Update(filter, schema);
         }
 
-        public override Task<ReportArgument?> GenerateArgument(IServiceProvider services)
+        public override Task<ReportArgument?> GenerateArgument(ReportDesign design, IServiceProvider services)
         {
             return Task.FromResult<ReportArgument?>(new ReportArgument
             {
@@ -93,6 +106,8 @@ namespace Webfuel.Reporting
                 Condition = Condition,
                 Conditions = Conditions.ToList(),
                 DoubleValue = Value,
+                ReportProviderId = design.ReportProviderId,
+                FilterType = FilterType,
             });
         }
 

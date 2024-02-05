@@ -74,6 +74,10 @@ namespace Webfuel.Reporting
 
         public override async Task<bool> Apply(object context, ReportBuilder builder)
         {
+            var argument = builder.Request.Arguments.FirstOrDefault(a => a.FilterId == Id);
+            var condition = argument?.Condition ?? Condition;
+            var value = argument?.GuidsValue ?? Value;
+
             var field = builder.Schema.Fields.FirstOrDefault(f => f.Id == FieldId);
             if (field == null)
                 return false;
@@ -90,15 +94,15 @@ namespace Webfuel.Reporting
 
             var id = referenceField.GetMapper(builder.ServiceProvider).Id(entities[0]);
 
-            switch (Condition)
+            switch (condition)
             {
                 case (int)ReportFilterReferenceCondition.OneOf:
-                    return Value.Contains(id);
+                    return value.Contains(id);
                 case (int)ReportFilterReferenceCondition.NotOneOf:
-                    return !Value.Contains(id);
+                    return !value.Contains(id);
             }
 
-            throw new InvalidOperationException($"Unknown condition {Condition}");
+            throw new InvalidOperationException($"Unknown condition {condition}");
         }
 
         public override void Update(ReportFilter filter, ReportSchema schema)
@@ -110,7 +114,7 @@ namespace Webfuel.Reporting
             base.Update(filter, schema);
         }
 
-        public override Task<ReportArgument?> GenerateArgument(IServiceProvider services)
+        public override Task<ReportArgument?> GenerateArgument(ReportDesign design, IServiceProvider services)
         {
             return Task.FromResult<ReportArgument?>(new ReportArgument
             {
@@ -120,7 +124,9 @@ namespace Webfuel.Reporting
                 FieldType = ReportFieldType.Reference,
                 Condition = Condition,
                 Conditions = Conditions.ToList(),
-                GuidsValue = Value
+                GuidsValue = Value,
+                ReportProviderId = design.ReportProviderId,
+                FilterType = FilterType,
             });
         }
 

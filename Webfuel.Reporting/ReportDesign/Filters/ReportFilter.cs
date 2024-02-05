@@ -12,8 +12,6 @@ namespace Webfuel.Reporting
     {
         public abstract ReportFilterType FilterType { get; }
 
-        // Server + Client Side
-
         public Guid Id { get; set; }
 
         public string Name { get; set; } = String.Empty;
@@ -23,8 +21,6 @@ namespace Webfuel.Reporting
         public string Description { get; set; } = String.Empty;
 
         public bool Editable { get; set; } = false;
-
-        // Server Side
 
         public abstract Task<bool> Apply(object context, ReportBuilder builder);
 
@@ -56,7 +52,7 @@ namespace Webfuel.Reporting
             return Task.FromResult(true);
         }
 
-        public virtual Task<ReportArgument?> GenerateArgument(IServiceProvider services)
+        public virtual Task<ReportArgument?> GenerateArgument(ReportDesign design, IServiceProvider services)
         {
             return Task.FromResult<ReportArgument?>(null);
         }

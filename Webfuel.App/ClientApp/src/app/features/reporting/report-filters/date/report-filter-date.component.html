@@ -1,4 +1,4 @@
-<div class="grid" [formGroup]="form">
+<div class="grid" [formGroup]="form"  #popupAnchor>
   <div class="columns">
     <div class="column">
       <div class="field">
@@ -21,8 +21,14 @@
   </div>
   <div class="field">
     <label class="label">Value</label>
-    <input type="text" class="input" placeholder="optional" formControlName="value" />
+    <dropdown-text-input formControlName="value" placeholder="optional" [items]="options" callbackIcon="far fa-calendar" (callback)="onCallback()"></dropdown-text-input>
   </div>
 </div>
 
+
+<ng-template #popupTemplate>
+  <div class="date-picker-popup">
+    <date-calendar [formControl]="popupFormControl"></date-calendar>
+  </div>
+</ng-template>
 

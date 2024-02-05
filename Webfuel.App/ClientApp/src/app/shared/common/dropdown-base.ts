@@ -67,6 +67,18 @@ export abstract class DropDownBase<TItem> {
     };
   }
 
+  // Callback Icon
+
+  @Input()
+  callbackIcon: string | null = null;
+
+  @Output()
+  callback = new EventEmitter<any>();
+
+  onCallback() {
+    this.callback.emit(null);
+  }
+
   // Option Items
 
   optionItems: TItem[] = [];

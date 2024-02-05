@@ -100,6 +100,7 @@ namespace Webfuel.Reporting
         {
             List<Guid> toRemove = new List<Guid>();
 
+            // Remove any tasks that have not been accessed in the last 2 minutes
             foreach (var task in _tasks)
             {
                 if (task.Value.LastAccessedAt <= DateTimeOffset.UtcNow.AddMinutes(-2))

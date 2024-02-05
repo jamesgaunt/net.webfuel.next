@@ -31,7 +31,6 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   ) {
     this.popupFormControl.valueChanges
       .pipe(
-        //debounceTime(200),
         tap(value => {
           this.value = value;
           this.onChange(value);
