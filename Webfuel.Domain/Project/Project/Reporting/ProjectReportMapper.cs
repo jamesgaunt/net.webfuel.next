@@ -16,20 +16,24 @@ namespace Webfuel.Domain
         {
             return await _repository.GetProject(id);
         }
-        
-        public async Task<QueryResult<object>> Query(Query query)
+
+        public async Task<QueryResult<ReferenceLookup>> Lookup(Query query)
         {
             query.Contains(nameof(Project.PrefixedNumber), query.Search);
 
             var result = await _repository.QueryProject(query);
-            
-            return new QueryResult<object>
+
+            return new QueryResult<ReferenceLookup>
             {
                 TotalCount = result.TotalCount,
-                Items = result.Items
+                Items = result.Items.Select(p => new ReferenceLookup
+                {
+                    Id = p.Id,
+                    Name = p.PrefixedNumber
+                }).ToList()
             };
         }
-        
+
         public Guid Id(object reference)
         {
             if (reference is not Project entity)
@@ -37,10 +41,10 @@ namespace Webfuel.Domain
             return entity.Id;
         }
         
-        public string DisplayName(object reference)
+        public string Name(object reference)
         {
             if (reference is not Project entity)
-            throw new Exception($"Cannot get display name of type {reference.GetType()}");
+            throw new Exception($"Cannot get name of type {reference.GetType()}");
             return entity.PrefixedNumber;
         }
     }

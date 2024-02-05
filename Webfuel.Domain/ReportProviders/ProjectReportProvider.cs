@@ -46,18 +46,6 @@ namespace Webfuel.Domain
             return result.TotalCount;
         }
 
-        public Task<QueryResult<object>> QueryReferenceField(Guid fieldId, Query query)
-        {
-            var field = Schema.GetField(fieldId);
-            if (field == null)
-                throw new InvalidOperationException($"Field {fieldId} not found");
-
-            if (field is not ReportReferenceField referenceField)
-                throw new InvalidOperationException($"Field {field.Name} is not a reference field");
-
-            return referenceField.GetMapper(_serviceProvider).Query(query);
-        }
-
         public ReportSchema Schema
         {
             get
@@ -130,6 +118,21 @@ namespace Webfuel.Domain
                     builder.Map<AgeRange>(Guid.Parse("dccdb566-aa72-46b5-b579-6762d74e8c35"), "Age Range", p => p.LeadApplicantAgeRangeId);
                     builder.Map<Gender>(Guid.Parse("39345a45-4d8c-45d7-9c72-3419ac153ba9"), "Gender", p => p.LeadApplicantGenderId);
                     builder.Map<Ethnicity>(Guid.Parse("6081b152-2353-4d0a-a534-c8413dbb9ea2"), "Ethnicity", p => p.LeadApplicantEthnicityId);
+
+                    // Project Support
+
+                    builder.Map<ProjectSupport>(Guid.Parse("ebf7b778-e2cf-4378-9eec-b6e14b649131"), String.Empty, async (p, b) =>
+                    {
+                        var repository = b.ServiceProvider.GetRequiredService<IProjectSupportRepository>();
+                        var items = await repository.SelectProjectSupportByProjectId(p.Id);
+                        return items.Select(p => p.Id).ToList();
+                    }, 
+                    action =>
+                    {
+                        action.Map<User>(Guid.Parse("b25d8fae-f426-4890-a47e-21752a5d28f9"), "Support Advisers", p => p.AdviserIds);
+                        action.Map<SupportTeam>(Guid.Parse("7186191c-2128-497a-83d7-25240285b756"), "Support Teams", p => p.TeamIds);
+                        action.Map<SupportProvided>(Guid.Parse("db47a4e5-84b3-411c-b4f4-4bca919fde2e"), "Support Provided", p => p.SupportProvidedIds);
+                    });
 
                     _schema = builder.Schema;
                 }

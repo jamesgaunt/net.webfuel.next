@@ -70,7 +70,7 @@ namespace Webfuel.Reporting
                         continue;
                     }
 
-                    var name = mapper.DisplayName(entity);
+                    var name = mapper.Name(entity);
                     if (valueDescription.Length > 0)
                         valueDescription.Append(", ");
 

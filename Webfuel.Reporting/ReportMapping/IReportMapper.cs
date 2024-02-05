@@ -13,7 +13,6 @@ namespace Webfuel.Reporting
         public required string Name { get; set; }
     }
 
-
     /// <summary>
     /// Marker interface that marks this service as the IReportMapper for a specific entity type
     /// </summary>
@@ -25,20 +24,10 @@ namespace Webfuel.Reporting
     {
         Task<object?> Get(Guid id);
 
-        Task<QueryResult<object>> Query(Query query);
-
-        async Task<QueryResult<ReferenceLookup>> Lookup(Query query)
-        {
-            var result = await Query(query);
-            return new QueryResult<ReferenceLookup>
-            {
-                TotalCount = result.TotalCount,
-                Items = result.Items.Select(x => new ReferenceLookup { Id = Id(x), Name = DisplayName(x) }).ToList()
-            };
-        }
-
         Guid Id(object reference);
 
-        string DisplayName(object reference);
+        string Name(object reference);
+
+        Task<QueryResult<ReferenceLookup>> Lookup(Query query);
     }
 }

@@ -23,14 +23,18 @@ namespace Webfuel.Domain
             return await _userGroupRepository.GetUserGroup(id);
         }
 
-        public async Task<QueryResult<object>> Query(Query query)
+        public async Task<QueryResult<ReferenceLookup>> Lookup(Query query)
         {
             var result = await _userGroupRepository.QueryUserGroup(query);
 
-            return new QueryResult<object>
+            return new QueryResult<ReferenceLookup>
             {
                 TotalCount = result.TotalCount,
-                Items = result.Items
+                Items = result.Items.Select(p => new ReferenceLookup
+                {
+                    Id = p.Id,
+                    Name = p.Name
+                }).ToList()
             };
         }
 
@@ -41,10 +45,10 @@ namespace Webfuel.Domain
             return entity.Id;
         }
 
-        public string DisplayName(object reference)
+        public string Name(object reference)
         {
             if (reference is not UserGroup entity)
-                throw new Exception($"Cannot get display name of type {reference.GetType()}");
+                throw new Exception($"Cannot get name of type {reference.GetType()}");
             return entity.Name;
         }
     }

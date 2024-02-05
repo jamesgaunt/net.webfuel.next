@@ -59,7 +59,6 @@ namespace Webfuel.Reporting
         {
             var argument = builder.Request.Arguments.FirstOrDefault(a => a.FilterId == Id);
             var condition = argument?.Condition ?? Condition;
-            var value = argument == null ? ParseDate(Value) : argument.DateValue;
 
             var field = builder.Schema.Fields.FirstOrDefault(f => f.Id == FieldId);
             if (field == null)
@@ -76,8 +75,10 @@ namespace Webfuel.Reporting
 
             if (untyped is not DateOnly typed)
                 return false;
-            
-            switch(condition)
+
+            var value = argument == null ? ParseDate(Value) : argument.DateValue;
+
+            switch (condition)
             {
                 case (int)ReportFilterDateCondition.EqualTo:
                     return typed == value;

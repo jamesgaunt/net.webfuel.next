@@ -39,7 +39,7 @@ namespace Webfuel.Reporting
         // Add Expressions
 
         // Add Property Expression
-        public ReportSchemaBuilder<TContext> Add<TField>(
+        public void Add<TField>(
             Guid id,
             string name,
             Func<TContext, TField> accessor)
@@ -52,11 +52,10 @@ namespace Webfuel.Reporting
                 Mapping = Mapping,
                 FieldType = MapFieldType(typeof(TField)),
             });
-            return this;
         }
 
         // Add Async Expression
-        public ReportSchemaBuilder<TContext> Add<TField>(
+        public void Add<TField>(
             Guid id,
             string name,
             Func<TContext, Task<TField>> accessor)
@@ -69,14 +68,12 @@ namespace Webfuel.Reporting
                 Mapping = Mapping,
                 FieldType = MapFieldType(typeof(TField)),
             });
-            return this;
         }
 
         // Add Custom Field
-        public ReportSchemaBuilder<TContext> Add(ReportField field)
+        public void Add(ReportField field)
         {
             Schema.AddField(field);
-            return this;
         }
 
         /////////////////////////////////////////////////////////////////////////////
@@ -114,15 +111,18 @@ namespace Webfuel.Reporting
                 ParentMapping = Mapping,
             };
 
-            Schema.AddField(new ReportReferenceField
+            if (!String.IsNullOrEmpty(name))
             {
-                Id = id,
-                Name = name,
-                Mapping = mapping,
-                FieldType = ReportFieldType.Reference,
-            });
-             
-            if(action != null)
+                Schema.AddField(new ReportReferenceField
+                {
+                    Id = id,
+                    Name = name,
+                    Mapping = mapping,
+                    FieldType = ReportFieldType.Reference,
+                });
+            }
+
+            if (action != null)
                 action(new ReportSchemaBuilder<TEntity>(Schema, mapping));
         }
 
@@ -138,13 +138,43 @@ namespace Webfuel.Reporting
                 ParentMapping = Mapping,
             };
 
-            Schema.AddField(new ReportReferenceField
+            if (!String.IsNullOrEmpty(name))
             {
-                Id = id,
-                Name = name,
-                Mapping = mapping,
-                FieldType = ReportFieldType.Reference,
-            });
+                Schema.AddField(new ReportReferenceField
+                {
+                    Id = id,
+                    Name = name,
+                    Mapping = mapping,
+                    FieldType = ReportFieldType.Reference,
+                });
+            }
+
+            if (action != null)
+                action(new ReportSchemaBuilder<TEntity>(Schema, mapping));
+        }
+
+        public void Map<TEntity>(
+            Guid id,
+            string name,
+            Func<TContext, ReportBuilder, Task<List<Guid>>> accessor,
+            Action<ReportSchemaBuilder<TEntity>>? action = null) where TEntity : class
+        {
+            var mapping = new ReportAsyncMultiMapping<TEntity>
+            {
+                Accessor = (o, b) => accessor((TContext)o, b),
+                ParentMapping = Mapping,
+            };
+
+            if (!String.IsNullOrEmpty(name))
+            {
+                Schema.AddField(new ReportReferenceField
+                {
+                    Id = id,
+                    Name = name,
+                    Mapping = mapping,
+                    FieldType = ReportFieldType.Reference,
+                });
+            }
 
             if (action != null)
                 action(new ReportSchemaBuilder<TEntity>(Schema, mapping));
@@ -157,7 +187,7 @@ namespace Webfuel.Reporting
         {
             var type = UnwrapBaseType(clrType);
 
-            if(type == typeof(string))
+            if (type == typeof(string))
                 return ReportFieldType.String;
 
             if (IsNumericType(type))

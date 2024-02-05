@@ -10,7 +10,6 @@ using Webfuel.Reporting;
 
 namespace Webfuel.Domain
 {
-
     public interface IProjectExportService
     {
         Task<ReportStep> InitialiseReport(ProjectExportRequest request);

@@ -23,7 +23,6 @@ namespace Webfuel.App
             // Helpers
 
             app.MapGet("api/report-design/schema/{reportProviderId:guid}", GetReportSchema);
-            app.MapPost("api/report-design/schema/query-reference-field", QueryReferenceField);
             app.MapPost("api/report-design/schema/lookup-reference-field", LookupReferenceField);
             app.MapPost("api/report-design/generate-arguments", GenerateArguments);
         }
@@ -67,12 +66,7 @@ namespace Webfuel.App
             return reportDesignService.GetReportSchema(reportProviderId);
         }
 
-        public static Task<QueryResult<object>> QueryReferenceField([FromBody] QueryReportReference command, IReportDesignService reportDesignService)
-        {
-            return reportDesignService.QueryReferenceField(command.ReportProviderId, command.FieldId, command.Query);
-        }
-
-        public static Task<QueryResult<ReferenceLookup>> LookupReferenceField([FromBody] QueryReportReference command, IReportDesignService reportDesignService)
+        public static Task<QueryResult<ReferenceLookup>> LookupReferenceField([FromBody] LookupReferenceField command, IReportDesignService reportDesignService)
         {
             return reportDesignService.LookupReferenceField(command.ReportProviderId, command.FieldId, command.Query);
         }
@@ -83,30 +77,12 @@ namespace Webfuel.App
         }
     }
 
-    // TODO: Get rid of these!
-
-    public class GetReportReference
-    {
-        public required Guid ReportProviderId { get; set; }
-
-        public required Guid FieldId { get; set; }
-
-        public required Guid Id { get; set; }
-    }
-
-    public class QueryReportReference
+    public class LookupReferenceField
     {
         public required Guid ReportProviderId { get; set; }
 
         public required Guid FieldId { get; set; }
 
         public required Query Query { get; set; }
-    }
-
-    public class ValidateDesign
-    {
-        public required Guid ReportProviderId { get; set; }
-
-        public required ReportDesign Design { get; init; }
     }
 }

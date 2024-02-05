@@ -17,5 +17,7 @@ namespace Webfuel.Reporting
         Task<IEnumerable<object>> QueryItems(int skip, int take);
 
         Task<int> GetTotalCount();
+
+        // internal IReportMapping? GetMapping(string mappingName) { return null; }
     }
 }

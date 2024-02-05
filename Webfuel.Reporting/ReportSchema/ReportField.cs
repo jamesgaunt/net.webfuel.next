@@ -18,15 +18,7 @@ namespace Webfuel.Reporting
 
         public required ReportFieldType FieldType { get; init; }
 
-        public bool Filterable
-        {
-            get
-            {
-                //if (Mapping != null && Mapping.MultiValued)
-                //    return false;
-                return true;
-            }
-        }
+        public bool Filterable { get; init; } = true;
 
         // Server Side
 

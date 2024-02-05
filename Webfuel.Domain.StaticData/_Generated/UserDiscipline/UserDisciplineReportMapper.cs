@@ -20,16 +20,20 @@ namespace Webfuel.Domain.StaticData
             return staticData.UserDiscipline.FirstOrDefault(x => x.Id == id);
         }
         
-        public async Task<QueryResult<object>> Query(Query query)
+        public async Task<QueryResult<ReferenceLookup>> Lookup(Query query)
         {
             query.Contains(nameof(UserDiscipline.Name), query.Search);
             
             var result = await _repository.QueryUserDiscipline(query);
             
-            return new QueryResult<object>
+            return new QueryResult<ReferenceLookup>
             {
                 TotalCount = result.TotalCount,
-                Items = result.Items
+                Items = result.Items.Select(p => new ReferenceLookup
+                    {
+                        Id = p.Id,
+                        Name = p.Name
+                    }).ToList()
             };
         }
         
@@ -40,10 +44,10 @@ namespace Webfuel.Domain.StaticData
             return entity.Id;
         }
         
-        public string DisplayName(object reference)
+        public string Name(object reference)
         {
             if (reference is not UserDiscipline entity)
-            throw new Exception($"Cannot get display name of type {reference.GetType()}");
+            throw new Exception($"Cannot get name of type {reference.GetType()}");
             return entity.Name;
         }
     }

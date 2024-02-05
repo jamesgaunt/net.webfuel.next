@@ -14,7 +14,7 @@ namespace Webfuel.Reporting
                 if (sb.Length > 0)
                     sb.Append(", ");
 
-                sb.Append(GetMapper(builder.ServiceProvider).DisplayName(entity));
+                sb.Append(GetMapper(builder.ServiceProvider).Name(entity));
             }
             return Task.FromResult<object?>(sb.ToString());
         }
