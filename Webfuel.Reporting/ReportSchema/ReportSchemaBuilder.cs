@@ -77,26 +77,6 @@ namespace Webfuel.Reporting
         }
 
         /////////////////////////////////////////////////////////////////////////////
-        // References 
-
-        ReportSchemaBuilder<TContext> Ref(
-            Guid id,
-            string name)
-        {
-            if (Mapping == null)
-                throw new ArgumentException("Mapping is null");
-
-            Schema.AddField(new ReportReferenceField
-            {
-                Id = id,
-                Name = name,
-                Mapping = Mapping,
-                FieldType = ReportFieldType.Reference,
-            });
-            return this;
-        }
-
-        /////////////////////////////////////////////////////////////////////////////
         // Mapping
 
         public void Map<TEntity>(

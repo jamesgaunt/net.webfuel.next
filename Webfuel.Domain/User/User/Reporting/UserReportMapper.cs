@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Caching.Memory;
 using Webfuel.Reporting;
 
 namespace Webfuel.Domain
@@ -14,7 +15,18 @@ namespace Webfuel.Domain
 
         public async Task<object?> Get(Guid id)
         {
-            return await _repository.GetUser(id);
+            if(_getCache.TryGetValue(id, out var cached))
+                return cached;
+
+            var value = await _repository.GetUser(id);
+
+            _getCache.Set(id, value, new MemoryCacheEntryOptions
+            {
+                Size = 1,
+                SlidingExpiration = TimeSpan.FromMinutes(5)
+            });
+            
+            return value;
         }
 
         public async Task<QueryResult<ReferenceLookup>> Lookup(Query query)
@@ -47,5 +59,10 @@ namespace Webfuel.Domain
                 throw new Exception($"Cannot get name of type {reference.GetType()}");
             return entity.FullName;
         }
+
+        static MemoryCache _getCache = new MemoryCache(new MemoryCacheOptions
+        {
+            SizeLimit = 100,
+        });
     }
 }
