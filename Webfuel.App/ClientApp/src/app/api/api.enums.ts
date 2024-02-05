@@ -41,6 +41,8 @@ export enum ReportFilterDateCondition {
     LessThanOrEqualTo = 30,
     GreaterThan = 40,
     GreaterThanOrEqualTo = 50,
+    IsSet = 1000,
+    IsNotSet = 1001,
 }
 
 export enum ReportFilterGroupCondition {
@@ -55,11 +57,15 @@ export enum ReportFilterNumberCondition {
     LessThanOrEqualTo = 30,
     GreaterThan = 40,
     GreaterThanOrEqualTo = 50,
+    IsSet = 1000,
+    IsNotSet = 1001,
 }
 
 export enum ReportFilterReferenceCondition {
     OneOf = 10,
     NotOneOf = 20,
+    IsSet = 1000,
+    IsNotSet = 1001,
 }
 
 export enum ReportFilterStringCondition {
@@ -67,8 +73,8 @@ export enum ReportFilterStringCondition {
     StartsWith = 20,
     EndsWith = 30,
     EqualTo = 40,
-    IsEmpty = 100,
-    IsNotEmpty = 200,
+    IsEmpty = 1000,
+    IsNotEmpty = 1001,
 }
 
 export enum ReportFilterTypeIdentifiers {

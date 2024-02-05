@@ -5,7 +5,7 @@
     <Key Name="Id" Type="guid" />
     <Property Name="ProjectId" Type="Project" CascadeDelete="true" />
     <Property Name="Date" Type="Date" />
-    <Property Name="Description" Type="meta:4000" />
+    <Property Name="Description" Type="String[4000]" />
     <Property Name="WorkTimeInHours" Type="decimal" />
 
     <Property Name="TeamIds" Type="Json:List{Guid}" />

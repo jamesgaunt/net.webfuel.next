@@ -63,10 +63,7 @@ namespace Webfuel.Domain
                     bldr.Add(Guid.Parse("54f8f29e-926b-4b26-a0d5-cb08f4fcdf09"), "First Name", p => p.FirstName);
                     bldr.Add(Guid.Parse("755f3b11-3df9-4bd9-97ba-883a45f0fcf5"), "Last Name", p => p.LastName);
 
-                    bldr.Map<UserGroup>(p => p.UserGroupId)
-                        .Ref(Guid.Parse("fafbe3e6-14f2-42c3-b702-88d0178e720b"), "User Group")
-                        .Add(Guid.Parse("7e6f3ce5-2a0b-4b9c-a364-4b3c4a8f4c3c"), "User Group Name", p => p.Name)
-                        .Add(Guid.Parse("9e1ad2e5-a135-4928-abea-feb0992ad7cb"), "User Group Claims", p => p.ClaimsJson);
+                    bldr.Map<UserGroup>(Guid.Parse("fafbe3e6-14f2-42c3-b702-88d0178e720b"), "User Group", p => p.UserGroupId);
 
                     bldr.Add(Guid.Parse("caebc906-c010-4b77-b139-cac2d68e7a3e"), "RSS Job Title", p => p.RSSJobTitle);
                     bldr.Add(Guid.Parse("fe6019ca-9a97-4b3d-b1a4-7b361f1a64ed"), "University Job Title", p => p.UniversityJobTitle);
@@ -77,13 +74,9 @@ namespace Webfuel.Domain
                     bldr.Add(Guid.Parse("15a4be71-6860-48b7-b21a-25f4d666fd1c"), "RSS End Date", p => p.EndDateForRSS);
                     bldr.Add(Guid.Parse("a1733340-097c-49ab-b0ba-f45a1f428cfc"), "RSS FTE", p => p.FullTimeEquivalentForRSS);
 
-                    bldr.Map<UserDiscipline>(p => p.DisciplineIds)
-                        .Ref(Guid.Parse("32a8c15f-b8a6-4569-86c4-0b23735e38c9"), "Disciplines")
-                        .Add(Guid.Parse("fbe6a84b-5555-4a4d-8952-6ca54d13b0a0"), "Discipline Ids", p => p.Id.ToString());
+                    bldr.Map<UserDiscipline>(Guid.Parse("32a8c15f-b8a6-4569-86c4-0b23735e38c9"), "Disciplines", p => p.DisciplineIds);
 
-                    bldr.Map<Site>(p => p.SiteId)
-                        .Ref(Guid.Parse("59fe53ed-0b1f-435a-98e8-a02abaa90648"), "Site")
-                        .Add(Guid.Parse("a2738dd2-173b-47f8-8fbd-0c84f5e52cef"), "Site Name", p => p.Name);
+                    bldr.Map<Site>(Guid.Parse("59fe53ed-0b1f-435a-98e8-a02abaa90648"), "Site", p => p.SiteId);
    
                     bldr.Add(Guid.Parse("6fb3950e-5db7-4941-b4e2-6550705528ee"), "Hidden", p => p.Hidden);
                     bldr.Add(Guid.Parse("9f8e536b-1249-4b30-9596-1c811a7c83b6"), "Disabled", p => p.Disabled);

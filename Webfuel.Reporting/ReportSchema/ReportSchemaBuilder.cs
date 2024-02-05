@@ -1,5 +1,8 @@
 ﻿using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Irony.Ast;
+using Microsoft.Identity.Client;
 using Microsoft.VisualBasic.FileIO;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -79,7 +82,7 @@ namespace Webfuel.Reporting
         /////////////////////////////////////////////////////////////////////////////
         // References 
 
-        public ReportSchemaBuilder<TContext> Ref(
+        ReportSchemaBuilder<TContext> Ref(
             Guid id,
             string name)
         {
@@ -99,26 +102,52 @@ namespace Webfuel.Reporting
         /////////////////////////////////////////////////////////////////////////////
         // Mapping
 
-        public ReportSchemaBuilder<TEntity> Map<TEntity>(
-            Func<TContext, Guid?> accessor) where TEntity : class
+        public void Map<TEntity>(
+            Guid id,
+            string name,
+            Func<TContext, Guid?> accessor,
+            Action<ReportSchemaBuilder<TEntity>>? action = null) where TEntity : class
         {
             var mapping = new ReportMapping<TEntity>
             {
                 Accessor = o => accessor((TContext)o),
                 ParentMapping = Mapping,
             };
-            return new ReportSchemaBuilder<TEntity>(Schema, mapping);
+
+            Schema.AddField(new ReportReferenceField
+            {
+                Id = id,
+                Name = name,
+                Mapping = mapping,
+                FieldType = ReportFieldType.Reference,
+            });
+             
+            if(action != null)
+                action(new ReportSchemaBuilder<TEntity>(Schema, mapping));
         }
 
-        public ReportSchemaBuilder<TEntity> Map<TEntity>(
-            Func<TContext, List<Guid>> accessor) where TEntity : class
+        public void Map<TEntity>(
+            Guid id,
+            string name,
+            Func<TContext, List<Guid>> accessor,
+            Action<ReportSchemaBuilder<TEntity>>? action = null) where TEntity : class
         {
             var mapping = new ReportMultiMapping<TEntity>
             {
                 Accessor = o => accessor((TContext)o),
                 ParentMapping = Mapping,
             };
-            return new ReportSchemaBuilder<TEntity>(Schema, mapping);
+
+            Schema.AddField(new ReportReferenceField
+            {
+                Id = id,
+                Name = name,
+                Mapping = mapping,
+                FieldType = ReportFieldType.Reference,
+            });
+
+            if (action != null)
+                action(new ReportSchemaBuilder<TEntity>(Schema, mapping));
         }
 
         /////////////////////////////////////////////////////////////////////////////

@@ -55,6 +55,13 @@ export class ReportFilterNumberComponent implements ControlValueAccessor, OnInit
     value: new FormControl<number>(0, { validators: [Validators.required], nonNullable: true }),
   });
 
+  get unary() {
+    var condition = this.filter.conditions.find(c => c.value == this.form.value.condition);
+    if (condition == undefined)
+      return false;
+    return condition.unary;
+  }
+
   // Inputs
 
   // ControlValueAccessor API

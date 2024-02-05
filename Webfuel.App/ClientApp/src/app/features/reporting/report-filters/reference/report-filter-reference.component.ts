@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, forw
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { debounceTime, noop, tap } from 'rxjs';
-import { ReportFilterReference, ReportSchema } from '../../../../api/api.types';
+import { ReferenceLookup, ReportFilterReference, ReportSchema } from '../../../../api/api.types';
 import _ from 'shared/common/underscore';
 import { ReportFilterReferenceCondition } from '../../../../api/api.enums';
 import { ReportDesignApi } from '../../../../api/report-design.api';
@@ -49,8 +49,8 @@ export class ReportFilterReferenceComponent implements ControlValueAccessor, OnI
     this.form.patchValue(filter);
   }
 
-  referenceDataSource: IDataSource<any> = {
-    query: (query) => this.reportDesignApi.queryReferenceField({ query: query, fieldId: this.filter.fieldId, reportProviderId: this.schema.reportProviderId })
+  referenceDataSource: IDataSource<ReferenceLookup> = {
+    query: (query) => this.reportDesignApi.lookupReferenceField({ query: query, fieldId: this.filter.fieldId, reportProviderId: this.schema.reportProviderId })
   }
 
   filter!: ReportFilterReference;
@@ -61,6 +61,13 @@ export class ReportFilterReferenceComponent implements ControlValueAccessor, OnI
     condition: new FormControl<ReportFilterReferenceCondition>(ReportFilterReferenceCondition.OneOf, { validators: [Validators.required], nonNullable: true }),
     value: new FormControl<string[]>([]),
   });
+
+  get unary() {
+    var condition = this.filter.conditions.find(c => c.value == this.form.value.condition);
+    if (condition == undefined)
+      return false;
+    return condition.unary;
+  }
 
   // Inputs
 

@@ -77,6 +77,13 @@ export class ReportFilterDateComponent implements ControlValueAccessor, OnInit {
     value: new FormControl<string>(''),
   });
 
+  get unary() {
+    var condition = this.filter.conditions.find(c => c.value == this.form.value.condition);
+    if (condition == undefined)
+      return false;
+    return condition.unary;
+  }
+
   // Drop Down Options
 
   options: { id: string, name: string }[] = [

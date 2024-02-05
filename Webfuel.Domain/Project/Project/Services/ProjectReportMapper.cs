@@ -1,30 +1,27 @@
 using Webfuel.Reporting;
 
-namespace Webfuel.Domain.StaticData
+namespace Webfuel.Domain
 {
-    [Service(typeof(IReportMapper<Site>))]
-    internal class SiteReportMapper : IReportMapper<Site>
+    [Service(typeof(IReportMapper<Project>))]
+    internal class ProjectReportMapper : IReportMapper<Project>
     {
-        private readonly ISiteRepository _repository;
-        private readonly IStaticDataCache _staticDataCache;
+        private readonly IProjectRepository _repository;
         
-        public SiteReportMapper(ISiteRepository repository, IStaticDataCache staticDataCache)
+        public ProjectReportMapper(IProjectRepository repository)
         {
             _repository = repository;
-            _staticDataCache = staticDataCache;
         }
         
         public async Task<object?> Get(Guid id)
         {
-            var staticData = await _staticDataCache.GetStaticData();
-            return staticData.Site.FirstOrDefault(x => x.Id == id);
+            return await _repository.GetProject(id);
         }
         
         public async Task<QueryResult<object>> Query(Query query)
         {
-            query.Contains(nameof(Site.Name), query.Search);
-            
-            var result = await _repository.QuerySite(query);
+            query.Contains(nameof(Project.PrefixedNumber), query.Search);
+
+            var result = await _repository.QueryProject(query);
             
             return new QueryResult<object>
             {
@@ -35,16 +32,16 @@ namespace Webfuel.Domain.StaticData
         
         public Guid Id(object reference)
         {
-            if (reference is not Site entity)
+            if (reference is not Project entity)
             throw new Exception($"Cannot get id of type {reference.GetType()}");
             return entity.Id;
         }
         
         public string DisplayName(object reference)
         {
-            if (reference is not Site entity)
+            if (reference is not Project entity)
             throw new Exception($"Cannot get display name of type {reference.GetType()}");
-            return entity.Name;
+            return entity.PrefixedNumber;
         }
     }
 }

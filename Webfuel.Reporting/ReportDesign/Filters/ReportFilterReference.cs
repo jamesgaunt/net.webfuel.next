@@ -15,6 +15,13 @@ namespace Webfuel.Reporting
     {
         OneOf = 10,
         NotOneOf = 20,
+
+        AllOf = 30,
+        Only = 40,
+        AllOfAndOnly,
+
+        IsSet = 1000,
+        IsNotSet = 1001,
     }
 
     [ApiType]
@@ -26,6 +33,12 @@ namespace Webfuel.Reporting
         {
             new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.OneOf, Description = "is one of", Unary = false },
             new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.NotOneOf, Description = "is not one of", Unary = false },
+            new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.AllOf, Description = "is all of", Unary = false },
+            new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.Only, Description = "is only", Unary = false },
+            new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.AllOfAndOnly, Description = "is all of and only", Unary = false },
+
+            new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.IsSet, Description = "is set", Unary = true },
+            new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.IsNotSet, Description = "is not set", Unary = true },
         };
 
         public List<Guid> Value { get; set; } = new List<Guid>();
@@ -45,6 +58,8 @@ namespace Webfuel.Reporting
                 var mapper = field.GetMapper(services);
                 if (mapper == null)
                     return false;
+
+                Value = Value.Distinct().ToList();
 
                 for (var i = 0; i < Value.Count; i++)
                 {
@@ -68,7 +83,12 @@ namespace Webfuel.Reporting
                 valueDescription.Append("(empty list)");
             }
 
-            Description = $"{DisplayName} {ConditionDescription} {valueDescription}";
+            Description = Condition switch
+            {
+                (int)ReportFilterReferenceCondition.IsNotSet => $"{DisplayName} {ConditionDescription}",
+                (int)ReportFilterReferenceCondition.IsSet => $"{DisplayName} {ConditionDescription}",
+                _ => $"{DisplayName} {ConditionDescription} {valueDescription}",
+            };
             return true;
         }
 
@@ -86,20 +106,70 @@ namespace Webfuel.Reporting
                 throw new InvalidOperationException($"Field {field.Name} is not a reference field");
 
             var entities = await field.MapContextToEntities(context, builder);
-            if (entities.Count == 0)
-                return false;
 
-            if (entities.Count > 1)
-                throw new InvalidOperationException("Multi-value references not supported by this filter");
+            if (condition == (int)ReportFilterReferenceCondition.IsSet)
+                return entities.Count > 0;
 
-            var id = referenceField.GetMapper(builder.ServiceProvider).Id(entities[0]);
+            if (condition == (int)ReportFilterReferenceCondition.IsNotSet)
+                return entities.Count == 0;
 
-            switch (condition)
+            var ids = new List<Guid>();
+            foreach(var entity in entities)
+                ids.Add(referenceField.GetMapper(builder.ServiceProvider).Id(entity));
+
+            if(condition == (int)ReportFilterReferenceCondition.OneOf)
             {
-                case (int)ReportFilterReferenceCondition.OneOf:
-                    return value.Contains(id);
-                case (int)ReportFilterReferenceCondition.NotOneOf:
-                    return !value.Contains(id);
+                foreach(var v in value)
+                {
+                    if(ids.Contains(v))
+                        return true;
+                }
+                return false;
+            }
+
+            if (condition == (int)ReportFilterReferenceCondition.NotOneOf)
+            {
+                foreach (var v in value)
+                {
+                    if (ids.Contains(v))
+                        return false;
+                }
+                return true;
+            }
+
+            if (condition == (int)ReportFilterReferenceCondition.AllOf)
+            {
+                foreach(var v in value)
+                {
+                    if(!ids.Contains(v))
+                        return false;
+                }
+                return true;
+            }
+
+            if(condition == (int)ReportFilterReferenceCondition.Only)
+            {
+                foreach(var id in ids)
+                {
+                    if(!value.Contains(id))
+                        return false;
+                }
+                return true;
+            }
+
+            if (condition == (int)ReportFilterReferenceCondition.AllOfAndOnly)
+            {
+                foreach (var v in value)
+                {
+                    if (!ids.Contains(v))
+                        return false;
+                }
+                foreach (var id in ids)
+                {
+                    if (!value.Contains(id))
+                        return false;
+                }
+                return true;
             }
 
             throw new InvalidOperationException($"Unknown condition {condition}");

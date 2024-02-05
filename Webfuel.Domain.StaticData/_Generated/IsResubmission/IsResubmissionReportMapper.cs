@@ -22,6 +22,8 @@ namespace Webfuel.Domain.StaticData
         
         public async Task<QueryResult<object>> Query(Query query)
         {
+            query.Contains(nameof(IsResubmission.Name), query.Search);
+            
             var result = await _repository.QueryIsResubmission(query);
             
             return new QueryResult<object>

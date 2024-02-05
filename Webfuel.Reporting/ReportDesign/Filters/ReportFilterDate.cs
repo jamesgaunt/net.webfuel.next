@@ -17,8 +17,9 @@ namespace Webfuel.Reporting
         LessThanOrEqualTo = 30,
         GreaterThan = 40,
         GreaterThanOrEqualTo = 50,
-        IsNotSet = 100,
-        IsSet = 200,
+
+        IsSet = 1000,
+        IsNotSet = 1001,
     }
 
     [ApiType]
@@ -33,8 +34,9 @@ namespace Webfuel.Reporting
             new ReportFilterCondition { Value = (int)ReportFilterDateCondition.LessThanOrEqualTo, Description = "is less than or equal to", Unary = false },
             new ReportFilterCondition { Value = (int)ReportFilterDateCondition.GreaterThan, Description = "is greater than", Unary = false },
             new ReportFilterCondition { Value = (int)ReportFilterDateCondition.GreaterThanOrEqualTo, Description = "is greater than or equal to", Unary = false },
-            new ReportFilterCondition { Value = (int)ReportFilterDateCondition.IsNotSet, Description = "is not set", Unary = true },
+
             new ReportFilterCondition { Value = (int)ReportFilterDateCondition.IsSet, Description = "is set", Unary = true },
+            new ReportFilterCondition { Value = (int)ReportFilterDateCondition.IsNotSet, Description = "is not set", Unary = true },
         };
 
         public string Value { get; set; } = String.Empty;
@@ -44,7 +46,12 @@ namespace Webfuel.Reporting
             if (!await base.Validate(schema, services))
                 return false;
 
-            Description = $"{DisplayName} {ConditionDescription} {Value}";
+            Description = Condition switch
+            {
+                (int)ReportFilterDateCondition.IsNotSet => $"{DisplayName} {ConditionDescription}",
+                (int)ReportFilterDateCondition.IsSet => $"{DisplayName} {ConditionDescription}",
+                _ => $"{DisplayName} {ConditionDescription} {Value}",
+            };
             return true;
         }
 
@@ -62,9 +69,10 @@ namespace Webfuel.Reporting
 
             if (untyped == null)
                 return condition == (int)ReportFilterDateCondition.IsNotSet;
-
             if (condition == (int)ReportFilterDateCondition.IsSet)
                 return true;
+            if(condition == (int)ReportFilterDateCondition.IsNotSet)
+                return false;   
 
             if (untyped is not DateOnly typed)
                 return false;

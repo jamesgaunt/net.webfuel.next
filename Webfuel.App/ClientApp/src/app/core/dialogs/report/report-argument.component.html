@@ -6,17 +6,17 @@
         <option *ngFor="let condition of argument.conditions" [ngValue]="condition.value">{{ condition.description }}</option>
       </select>
     </div>
-    <div class="column" *ngIf="argument.filterType == ReportFilterType.Date">
+    <div class="column" *ngIf="!unary && argument.filterType == ReportFilterType.Date">
       <date-picker formControlName="dateValue" placeholder="optional"></date-picker>
     </div>
-    <div class="column" *ngIf="argument.filterType == ReportFilterType.Number">
+    <div class="column" *ngIf="!unary && argument.filterType == ReportFilterType.Number">
       <input type="number" class="input" formControlName="doubleValue" placeholder="optional" />
     </div>
-    <div class="column" *ngIf="argument.filterType == ReportFilterType.String">
+    <div class="column" *ngIf="!unary && argument.filterType == ReportFilterType.String">
       <input type="text" class="input" formControlName="stringValue" placeholder="optional" />
     </div>
-    <div class="column is-fullwidth" *ngIf="argument.filterType == ReportFilterType.Reference">
-      <dropdown-multi-select formControlName="guidsValue" [dataSource]="referenceDataSource" placeholder="optional"></dropdown-multi-select>
+    <div class="column is-fullwidth" *ngIf="!unary && argument.filterType == ReportFilterType.Reference">
+      <dropdown-multi-select formControlName="guidsValue" [dataSource]="referenceDataSource" [enableSearch]="true" [enableClear]="true" placeholder="optional"></dropdown-multi-select>
     </div>
   </div>
 </div>

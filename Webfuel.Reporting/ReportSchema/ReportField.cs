@@ -22,9 +22,8 @@ namespace Webfuel.Reporting
         {
             get
             {
-                if (Mapping != null && Mapping.MultiValued)
-                    return false;
-
+                //if (Mapping != null && Mapping.MultiValued)
+                //    return false;
                 return true;
             }
         }

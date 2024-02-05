@@ -226,7 +226,10 @@ namespace Webfuel.Excel
             if(value is int i)
                 return SetValue(i);
 
-            if(value is DateTime dt)
+            if (value is Decimal dc)
+                return SetValue(Decimal.ToDouble(dc));
+
+            if (value is DateTime dt)
                 return SetValue(dt);
 
             if (value is DateOnly donly)

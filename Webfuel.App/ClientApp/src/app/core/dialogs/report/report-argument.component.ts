@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, forw
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { debounceTime, noop, tap } from 'rxjs';
 import _ from 'shared/common/underscore';
-import { ReportArgument, ReportFilter, ReportFilterType } from '../../../api/api.types';
+import { ReferenceLookup, ReportArgument, ReportFilter, ReportFilterType } from '../../../api/api.types';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ReportDesignApi } from '../../../api/report-design.api';
 import { IDataSource } from '../../../shared/common/data-source';
@@ -60,7 +60,14 @@ export class ReportArgumentComponent implements OnInit {
     });
   }
 
-  referenceDataSource: IDataSource<any> = {
-    query: (query) => this.reportDesignApi.queryReferenceField({ query: query, fieldId: this.argument.fieldId, reportProviderId: this.argument.reportProviderId })
+  referenceDataSource: IDataSource<ReferenceLookup> = {
+    query: (query) => this.reportDesignApi.lookupReferenceField({ query: query, fieldId: this.argument.fieldId, reportProviderId: this.argument.reportProviderId })
+  }
+
+  get unary() {
+    var condition = this.argument.conditions.find(c => c.value == this.form.value.condition);
+    if (condition == undefined)
+      return false;
+    return condition.unary;
   }
 }

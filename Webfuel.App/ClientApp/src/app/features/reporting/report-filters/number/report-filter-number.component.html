@@ -13,16 +13,23 @@
       </div>
     </div>
   </div>
-  <div class="field" *ngIf="filter.conditions.length > 0">
-    <label class="label">Condition</label>
-    <select class="select" formControlName="condition">
-      <option *ngFor="let condition of filter.conditions" [ngValue]="condition.value">{{ condition.description }}</option>
-    </select>
+  <div class="columns">
+    <div class="column" *ngIf="filter.conditions.length > 0">
+      <div class="field">
+        <label class="label">Condition</label>
+        <select class="select" formControlName="condition">
+          <option *ngFor="let condition of filter.conditions" [ngValue]="condition.value">{{ condition.description }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="column" *ngIf="!unary">
+      <div class="field">
+        <label class="label">Value</label>
+        <input type="number" class="input" placeholder="required" formControlName="value" />
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <label class="label">Value</label>
-    <input type="number" class="input" placeholder="required" formControlName="value" />
-  </div>
+
 </div>
 
 

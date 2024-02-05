@@ -16,8 +16,8 @@ namespace Webfuel.Reporting
         EndsWith = 30,
         EqualTo = 40,
 
-        IsEmpty = 100,
-        IsNotEmpty = 200,
+        IsEmpty = 1000,
+        IsNotEmpty = 1001,
     }
 
     [ApiType]

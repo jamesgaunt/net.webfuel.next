@@ -44,6 +44,8 @@ namespace Webfuel.Tools.Datafuel
 
         public async Task<QueryResult<object>> Query(Query query)
         {{
+            query.Contains(nameof({entity.Name}.Name), query.Search); 
+
             var result = await _repository.Query{entity.Name}(query);
 
             return new QueryResult<object>

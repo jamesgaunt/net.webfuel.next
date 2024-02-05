@@ -17,6 +17,9 @@ namespace Webfuel.Reporting
         LessThanOrEqualTo = 30,
         GreaterThan = 40,
         GreaterThanOrEqualTo = 50,
+
+        IsSet = 1000,
+        IsNotSet = 1001,
     }
 
     [ApiType]
@@ -31,6 +34,9 @@ namespace Webfuel.Reporting
             new ReportFilterCondition { Value = (int)ReportFilterNumberCondition.LessThanOrEqualTo, Description = "is less than or equal to", Unary = false },
             new ReportFilterCondition { Value = (int)ReportFilterNumberCondition.GreaterThan, Description = "is greater than", Unary = false },
             new ReportFilterCondition { Value = (int)ReportFilterNumberCondition.GreaterThanOrEqualTo, Description = "is greater than or equal to", Unary = false },
+            
+            new ReportFilterCondition { Value = (int)ReportFilterNumberCondition.IsSet, Description = "is set", Unary = true },
+            new ReportFilterCondition { Value = (int)ReportFilterNumberCondition.IsNotSet, Description = "is not set", Unary = true },
         };
 
         public double Value { get; set; }
@@ -40,7 +46,12 @@ namespace Webfuel.Reporting
             if (!await base.Validate(schema, services))
                 return false;
 
-            Description = $"{DisplayName} {ConditionDescription} {Value}";
+            Description = Condition switch
+            {
+                (int)ReportFilterNumberCondition.IsNotSet => $"{DisplayName} {ConditionDescription}",
+                (int)ReportFilterNumberCondition.IsSet => $"{DisplayName} {ConditionDescription}",
+                _ => $"{DisplayName} {ConditionDescription} {Value}",
+            };
             return true;
         }
 
@@ -55,6 +66,14 @@ namespace Webfuel.Reporting
                 return false;
 
             var untyped = await field.Evaluate(context, builder);
+
+            if (untyped == null)
+                return condition == (int)ReportFilterNumberCondition.IsNotSet;
+            if (condition == (int)ReportFilterNumberCondition.IsSet)
+                return true;
+            if (condition == (int)ReportFilterNumberCondition.IsNotSet)
+                return false;
+
             var typed = ToDouble(untyped);
             if (typed == null)
                 return false;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System.Net.NetworkInformation;
 using System.Text.Json.Serialization;
 
 namespace Webfuel.Reporting
