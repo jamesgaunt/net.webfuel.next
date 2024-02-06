@@ -43,6 +43,9 @@ export enum ReportFilterNumberCondition {
 export enum ReportFilterReferenceCondition {
     OneOf = 10,
     NotOneOf = 20,
+    AllOf = 30,
+    Only = 40,
+    AllOfAndOnly = 41,
     IsSet = 1000,
     IsNotSet = 1001,
 }
@@ -853,24 +856,6 @@ export interface QueryProject extends Query {
     search?: string;
 }
 
-export interface ProjectChangeLog {
-    id: string;
-    message: string;
-    createdAt: string;
-    projectId: string;
-    createdByUserId: string | null | null;
-}
-
-export interface QueryProjectChangeLog extends Query {
-    projectId: string;
-    skip: number;
-    take: number;
-    projection?: Array<string>;
-    filters?: Array<QueryFilter>;
-    sort?: Array<QuerySort>;
-    search?: string;
-}
-
 export interface ReportStep {
     taskId: string;
     stage: string;
@@ -904,13 +889,22 @@ export interface ReportBuilderMetrics {
     generationMaxMicroseconds: number;
 }
 
-export interface ProjectExportRequest {
-    number: string;
-    title: string;
-    fromDate: string | null | null;
-    toDate: string | null | null;
-    statusId: string | null | null;
-    proposedFundingStreamId: string | null | null;
+export interface ProjectChangeLog {
+    id: string;
+    message: string;
+    createdAt: string;
+    projectId: string;
+    createdByUserId: string | null | null;
+}
+
+export interface QueryProjectChangeLog extends Query {
+    projectId: string;
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
 }
 
 export interface ProjectSubmission {
@@ -1038,6 +1032,7 @@ export interface Report {
     description: string;
     design: ReportDesign;
     sortOrder: number;
+    primaryReport: boolean;
     reportProviderId: string;
     ownerUserId: string;
     reportGroupId: string;
@@ -1052,6 +1047,7 @@ export interface CreateReport {
 export interface UpdateReport {
     id: string;
     name: string;
+    primaryReport: boolean;
     design: ReportDesign;
 }
 
@@ -1129,15 +1125,15 @@ export interface ReportSchema {
     fields: Array<ReportField>;
 }
 
-export interface QueryReportReference {
-    reportProviderId: string;
-    fieldId: string;
-    query: Query;
-}
-
 export interface ReferenceLookup {
     id: string;
     name: string;
+}
+
+export interface LookupReferenceField {
+    reportProviderId: string;
+    fieldId: string;
+    query: Query;
 }
 
 export interface ReportGroup {
@@ -1424,6 +1420,9 @@ export interface UpdateUserActivity {
 
 export interface QueryUserActivity extends Query {
     userId: string | null | null;
+    fromDate: string | null | null;
+    toDate: string | null | null;
+    description: string;
     skip: number;
     take: number;
     projection?: Array<string>;

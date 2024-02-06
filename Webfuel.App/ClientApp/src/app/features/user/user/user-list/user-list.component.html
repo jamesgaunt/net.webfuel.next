@@ -3,7 +3,16 @@
   <li><a routerLink="/user/user-list">Users</a></li>
 </ul>
 <div class="container">
-  <h1 class="title">Users</h1>
+  <div class="columns">
+    <div class="column">
+      <h1 class="title">Users</h1>
+    </div>
+    <div class="column">
+      <div class="header-buttons">
+        <button class="button is-primary" (click)="export()">Export</button>
+      </div>
+    </div>
+  </div>
   <grid [dataSource]="userApi" [search]="true">
     <grid-column name="fullName" label="Name" />
     <grid-column name="email" />

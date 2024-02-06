@@ -14,10 +14,8 @@ namespace Webfuel.Reporting
 
         ReportBuilderBase GetReportBuilder(ReportRequest request);
 
-        Task<IEnumerable<object>> QueryItems(int skip, int take);
+        Task<IEnumerable<object>> QueryItems(Query query);
 
-        Task<int> GetTotalCount();
-
-        // internal IReportMapping? GetMapping(string mappingName) { return null; }
+        Task<int> GetTotalCount(Query query);
     }
 }

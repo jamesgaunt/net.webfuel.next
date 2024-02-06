@@ -25,15 +25,15 @@ namespace Webfuel.Domain
             return new ReportBuilder(request);
         }
 
-        public async Task<IEnumerable<object>> QueryItems(int skip, int take)
+        public async Task<IEnumerable<object>> QueryItems(Query query)
         {
-            var result = await _supportRequestRepository.QuerySupportRequest(new Query { Skip = skip, Take = take }, countTotal: false);
+            var result = await _supportRequestRepository.QuerySupportRequest(query, countTotal: false);
             return result.Items;
         }
 
-        public async Task<int> GetTotalCount()
+        public async Task<int> GetTotalCount(Query query)
         {
-            var result = await _supportRequestRepository.QuerySupportRequest(new Query(), selectItems: false, countTotal: true);
+            var result = await _supportRequestRepository.QuerySupportRequest(query, selectItems: false, countTotal: true);
             return result.TotalCount;
         }
 

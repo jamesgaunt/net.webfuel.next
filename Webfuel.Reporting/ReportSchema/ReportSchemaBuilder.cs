@@ -6,6 +6,7 @@ using Microsoft.Identity.Client;
 using Microsoft.VisualBasic.FileIO;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Webfuel.Reporting
@@ -133,28 +134,17 @@ namespace Webfuel.Reporting
                 action(new ReportSchemaBuilder<TEntity>(Schema, mapping));
         }
 
-        public void Map<TEntity>(
-            Guid id,
-            string name,
-            Func<TContext, ReportBuilder, Task<List<Guid>>> accessor,
-            Action<ReportSchemaBuilder<TEntity>>? action = null) where TEntity : class
+        public void Map<TEntity, TMapper>(
+            Func<TContext, TMapper, Task<List<Guid>>> accessor,
+            Action<ReportSchemaBuilder<TEntity>>? action = null)
+            where TEntity : class
+            where TMapper : class
         {
-            var mapping = new ReportAsyncMultiMapping<TEntity>
+            var mapping = new ReportAsyncMultiMapping<TEntity, TMapper>
             {
                 Accessor = (o, b) => accessor((TContext)o, b),
                 ParentMapping = Mapping,
             };
-
-            if (!String.IsNullOrEmpty(name))
-            {
-                Schema.AddField(new ReportReferenceField
-                {
-                    Id = id,
-                    Name = name,
-                    Mapping = mapping,
-                    FieldType = ReportFieldType.Reference,
-                });
-            }
 
             if (action != null)
                 action(new ReportSchemaBuilder<TEntity>(Schema, mapping));

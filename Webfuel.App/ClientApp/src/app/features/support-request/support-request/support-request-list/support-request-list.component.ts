@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SupportRequest } from 'api/api.types';
 import { StaticDataCache } from 'api/static-data.cache';
 import { SupportRequestApi } from 'api/support-request.api';
-import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
-import { FormControl, FormGroup } from '@angular/forms';
+import _ from 'shared/common/underscore';
+import { ReportService } from '../../../../core/report.service';
 
 @Component({
   selector: 'support-request-list',
@@ -13,9 +14,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class SupportRequestListComponent {
   constructor(
     private router: Router,
-    private confirmDeleteDialog: ConfirmDeleteDialog,
     public supportRequestApi: SupportRequestApi,
-    public staticDataCache: StaticDataCache
+    public staticDataCache: StaticDataCache,
+    private reportService: ReportService
   ) {
   }
 
@@ -43,5 +44,11 @@ export class SupportRequestListComponent {
 
   edit(item: SupportRequest) {
     this.router.navigate(['support-request/support-request-item', item.id]);
+  }
+
+  export() {
+    this.supportRequestApi.export(_.merge(this.filterForm.getRawValue(), { skip: 0, take: 0 })).subscribe((result) => {
+      this.reportService.runReport(result);
+    });
   }
 }

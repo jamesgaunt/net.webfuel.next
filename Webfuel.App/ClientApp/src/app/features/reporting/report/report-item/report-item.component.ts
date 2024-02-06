@@ -43,6 +43,7 @@ export class ReportItemComponent implements OnInit {
     id: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     name: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     design: new FormControl<ReportDesign>(null!, { validators: [Validators.required], nonNullable: true }),
+    primaryReport: new FormControl(false, { nonNullable: true }),
   });
 
   save(close: boolean) {

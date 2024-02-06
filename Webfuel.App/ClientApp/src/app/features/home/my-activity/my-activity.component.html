@@ -8,13 +8,33 @@
     </div>
     <div class="column">
       <div class="header-buttons">
-        <button class="button is-primary" (click)="createUserActivity()">Add Activity</button>
+        <button class="button is-success" (click)="createUserActivity()">Add Activity</button>
+        <button class="button is-primary" (click)="export()">Export</button>
       </div>
     </div>
   </div>
-  <br/>
 
-  <grid [dataSource]="userActivityApi" (filter)="filter($event)">
+  <div class="filter-form">
+    <form class="form" [formGroup]="filterForm">
+      <div class="flex">
+        <div class="field is-3">
+          <date-picker placeholder="From Date" formControlName="fromDate" [enableClear]="true" />
+        </div>
+        <div class="field is-3">
+          <date-picker placeholder="To Date" formControlName="toDate" [enableClear]="true" />
+        </div>
+        <div class="field is-6">
+          <input class="input" type="text" formControlName="description" placeholder="Description" />
+        </div>
+        <div class="is-12 is-right">
+          <button (click)="resetFilterForm()" class="button is-small">show all</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+  <grid [dataSource]="userActivityApi" [filterForm]="filterForm">
     <grid-date-column name="date" />
     <grid-number-column name="workTimeInHours" label="Hours" format="0.2-2" />
     <grid-column name="Activity">

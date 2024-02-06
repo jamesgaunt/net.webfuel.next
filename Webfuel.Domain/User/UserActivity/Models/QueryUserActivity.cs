@@ -11,9 +11,18 @@ namespace Webfuel.Domain
     {
         public required Guid? UserId { get; set; }
 
+        public DateOnly? FromDate { get; set; }
+
+        public DateOnly? ToDate { get; set; }
+
+        public string Description { get; set; } = String.Empty;
+
         public Query ApplyCustomFilters()
         {
             this.Equal(nameof(UserActivity.UserId), UserId, UserId != null);
+            this.GreaterThanOrEqual(nameof(UserActivity.Date), FromDate, FromDate != null);
+            this.LessThanOrEqual(nameof(UserActivity.Date), ToDate, ToDate != null);
+            this.Contains(nameof(UserActivity.Description), Description);
             return this;
         }
     }

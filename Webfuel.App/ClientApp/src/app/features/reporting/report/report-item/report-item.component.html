@@ -15,12 +15,20 @@
     </div>
   </div>
   <form class="form" [formGroup]="form">
-    <div class="grid">
-      <div class="field">
-        <label class="label">Name</label>
-        <input class="input" type="text" placeholder="required" formControlName="name" />
+    <div class="columns is-wrap">
+      <div class="column">
+        <div class="field">
+          <label class="label">Name</label>
+          <input class="input" type="text" placeholder="required" formControlName="name" />
+        </div>
       </div>
-      <div class="field">
+      <div class="column is-narrow">
+        <div class="field">
+          <label class="label">Primary</label>
+          <toggle-input formControlName="primaryReport" />
+        </div>
+      </div>
+      <div class="column is-12">
         <report-designer [schema]="reportSchema" formControlName="design" />
       </div>
     </div>

@@ -5,6 +5,8 @@ import { User } from '../../../../api/api.types';
 import { UserGroupApi } from '../../../../api/user-group.api';
 import { CreateUserDialog } from '../dialogs/create-user/create-user.dialog';
 import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
+import { ReportService } from '../../../../core/report.service';
+import _ from 'shared/common/underscore';
 
 @Component({
   selector: 'user-list',
@@ -16,7 +18,8 @@ export class UserListComponent {
     private createUserDialog: CreateUserDialog,
     private confirmDeleteDialog: ConfirmDeleteDialog,
     public userApi: UserApi,
-    public userGroupApi: UserGroupApi
+    public userGroupApi: UserGroupApi,
+    public reportService: ReportService,
   ) {
   }
 
@@ -31,6 +34,12 @@ export class UserListComponent {
   delete(item: User) {
     this.confirmDeleteDialog.open({ title: "User" }).subscribe(() => {
       this.userApi.delete({ id: item.id }, { successGrowl: "User Deleted" }).subscribe();
+    });
+  }
+
+  export() {
+    this.userApi.export({ skip: 0, take: 0 }).subscribe((result) => {
+      this.reportService.runReport(result);
     });
   }
 }

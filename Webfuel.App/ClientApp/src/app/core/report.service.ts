@@ -46,7 +46,12 @@ export class ReportService {
 
     this.reportGeneratorApi.generateReport({ taskId: reportStep.taskId }).subscribe((result) => {
       if (result.complete) {
-        this._renderReport(result);
+
+        this.dialogData!.progressPercentage = 100;
+        setTimeout(() => {
+          this._renderReport(result);
+        }, 500);
+        
       } else {
         setTimeout(() => {
           this._runReport(result);
@@ -58,8 +63,6 @@ export class ReportService {
   private _renderReport(reportStep: ReportStep) {
     if (!this.dialogData)
       return;
-
-    this.dialogData.progressPercentage = null;
 
     console.log("Report Metrics: ", reportStep.metrics);
     this.dialogData.downloadUrl = "download-report/" + reportStep.taskId;

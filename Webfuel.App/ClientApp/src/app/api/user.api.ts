@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { CreateUser, User, UpdateUser, QueryUser, QueryResult } from './api.types';
+import { CreateUser, User, UpdateUser, QueryUser, QueryResult, ReportStep } from './api.types';
 
 @Injectable()
 export class UserApi implements IDataSource<User, QueryUser, CreateUser, UpdateUser> {
@@ -27,6 +27,10 @@ export class UserApi implements IDataSource<User, QueryUser, CreateUser, UpdateU
     
     public get (params: { id: string }, options?: ApiOptions): Observable<User> {
         return this.apiService.request<undefined, User>("GET", "api/user/" + params.id + "", undefined, options);
+    }
+    
+    public export (body: QueryUser, options?: ApiOptions): Observable<ReportStep> {
+        return this.apiService.request<QueryUser, ReportStep>("PUT", "api/user/export", body, options);
     }
     
     changed = new EventEmitter<any>();

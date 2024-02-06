@@ -4,12 +4,12 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Project } from 'api/api.types';
 import { ProjectApi } from 'api/project.api';
 import { StaticDataCache } from 'api/static-data.cache';
-import { ProjectExportApi } from '../../../../api/project-export.api';
 import { ConfigurationService } from '../../../../core/configuration.service';
 import { ReportService } from '../../../../core/report.service';
 import { UserApi } from '../../../../api/user.api';
 import { UserService } from '../../../../core/user.service';
 import { ProjectStatusEnum } from '../../../../api/api.enums';
+import _ from 'shared/common/underscore';
 
 @Component({
   selector: 'project-list',
@@ -23,7 +23,6 @@ export class ProjectListComponent {
     public userApi: UserApi,
     public userService: UserService,
     public staticDataCache: StaticDataCache,
-    private projectExportApi: ProjectExportApi,
     private configurationService: ConfigurationService,
     private reportService: ReportService,
   ) {
@@ -63,12 +62,8 @@ export class ProjectListComponent {
     this.router.navigate(['project/project-item', item.id]);
   }
 
-  canExport() {
-    return this.configurationService.hasClaim(c => c.claims.developer);
-  }
-
   export() {
-    this.projectExportApi.initialiseReport(this.filterForm.getRawValue()).subscribe((result) => {
+    this.projectApi.export(_.merge(this.filterForm.getRawValue(), { skip: 0, take: 0 })).subscribe((result) => {
       this.reportService.runReport(result);
     });
   }

@@ -10,6 +10,8 @@ namespace Webfuel.Domain
 
         public required string Name { get; set; }
 
+        public bool PrimaryReport { get; set; }
+
         public required ReportDesign Design { get; set; }
     }
 }

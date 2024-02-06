@@ -33,6 +33,9 @@ namespace Webfuel.Domain
                     case nameof(Report.SortOrder):
                         SortOrder = (int)value!;
                         break;
+                    case nameof(Report.PrimaryReport):
+                        PrimaryReport = (bool)value!;
+                        break;
                     case nameof(Report.ReportProviderId):
                         ReportProviderId = (Guid)value!;
                         break;
@@ -61,6 +64,7 @@ namespace Webfuel.Domain
         }
         string _DesignJson = String.Empty;
         public int SortOrder  { get; set; } = 0;
+        public bool PrimaryReport  { get; set; } = false;
         public Guid ReportProviderId { get; set; }
         public Guid OwnerUserId { get; set; }
         public Guid ReportGroupId { get; set; }
@@ -72,6 +76,7 @@ namespace Webfuel.Domain
             entity.Description = Description;
             entity.DesignJson = DesignJson;
             entity.SortOrder = SortOrder;
+            entity.PrimaryReport = PrimaryReport;
             entity.ReportProviderId = ReportProviderId;
             entity.OwnerUserId = OwnerUserId;
             entity.ReportGroupId = ReportGroupId;

@@ -40,7 +40,6 @@ const routes: Routes = [
     path: 'user-activity/:id',
     component: UserActivityComponent,
     resolve: { user: UserApi.userResolver('id') },
-    canDeactivate: [DeactivateService.isPristine<UserActivityComponent>()],
     data: { activeSideMenu: 'Users' }
   },
   {

@@ -23,7 +23,7 @@ namespace Webfuel.Domain
             _getCache.Set(id, value, new MemoryCacheEntryOptions
             {
                 Size = 1,
-                SlidingExpiration = TimeSpan.FromMinutes(5)
+                AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(1)
             });
             
             return value;

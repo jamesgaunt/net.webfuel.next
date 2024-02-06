@@ -4,8 +4,9 @@ using System.Text.Json.Serialization;
 
 namespace Webfuel.Reporting
 {
-    internal class ReportAsyncMultiMapping<TEntity> : IReportMapping 
-        where TEntity : class 
+    internal class ReportAsyncMultiMapping<TEntity, TMapper> : IReportMapping 
+        where TEntity : class
+        where TMapper : class
     {
         public bool MultiValued => true;
 
@@ -13,7 +14,7 @@ namespace Webfuel.Reporting
         public IReportMapping? ParentMapping { get; init; }
 
         [JsonIgnore]
-        public required Func<object, ReportBuilder, Task<List<Guid>>> Accessor { get; init; }
+        public required Func<object, TMapper, Task<List<Guid>>> Accessor { get; init; }
 
         public IReportMapper GetMapper(IServiceProvider services)
         {
@@ -32,7 +33,7 @@ namespace Webfuel.Reporting
 
             foreach (var context in contexts)
             {
-                var ids = await Accessor(context, builder);
+                var ids = await Accessor(context, builder.ServiceProvider.GetRequiredService<TMapper>());
                 if (ids.Count == 0)
                     continue;
 

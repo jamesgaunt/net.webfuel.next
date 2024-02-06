@@ -64,6 +64,9 @@ export enum ReportFilterNumberCondition {
 export enum ReportFilterReferenceCondition {
     OneOf = 10,
     NotOneOf = 20,
+    AllOf = 30,
+    Only = 40,
+    AllOfAndOnly = 41,
     IsSet = 1000,
     IsNotSet = 1001,
 }
@@ -149,6 +152,7 @@ export enum ReportProviderEnum {
     ProjectSupport = "2af96eb5-e52d-4163-9247-c34e7b170f62",
     SupportRequest = "bb41b6b6-ef1a-4982-95d0-9f41f80c91cb",
     User = "96124eea-4434-4669-b377-580bbf85a96d",
+    UserActivity = "3fd56f37-05f8-4418-bc57-d79a393e0ee9",
 }
 
 export enum ResearcherRoleEnum {

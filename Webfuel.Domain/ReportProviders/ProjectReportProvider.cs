@@ -34,15 +34,15 @@ namespace Webfuel.Domain
             return new ReportBuilder(request);
         }
 
-        public async Task<IEnumerable<object>> QueryItems(int skip, int take)
+        public async Task<IEnumerable<object>> QueryItems(Query query)
         {
-            var result = await _projectRepository.QueryProject(new Query { Skip = skip, Take = take }, countTotal: false);
+            var result = await _projectRepository.QueryProject(query, countTotal: false);
             return result.Items;
         }
 
-        public async Task<int> GetTotalCount()
+        public async Task<int> GetTotalCount(Query query)
         {
-            var result = await _projectRepository.QueryProject(new Query(), selectItems: false, countTotal: true);
+            var result = await _projectRepository.QueryProject(query, selectItems: false, countTotal: true);
             return result.TotalCount;
         }
 
@@ -59,13 +59,13 @@ namespace Webfuel.Domain
                     builder.Add(Guid.Parse("82b05021-9512-4217-9e71-bb0bc9bc8384"), "Number", p => p.Number);
                     builder.Add(Guid.Parse("c3b0b5a0-5b1a-4b7e-9b9a-0b6b8b8b6b8b"), "Prefixed Number", p => p.PrefixedNumber);
                     builder.Map<ProjectStatus>(Guid.Parse("10a8218f-9de8-4835-930f-3c0f06bdbcfa"), "Status", p => p.StatusId);
-                        
+
                     builder.Add(Guid.Parse("cbeb9e2d-59a2-4896-a3c5-01c5c2aa42c7"), "Title", p => p.Title);
                     builder.Add(Guid.Parse("edde730a-8424-4415-b23c-29c4ae3e36b8"), "Date of Request", p => p.DateOfRequest);
                     builder.Add(Guid.Parse("f64ac394-a697-4f22-92cc-274571bc65ae"), "Closure Date", p => p.ClosureDate);
                     builder.Map<User>(Guid.Parse("9228be1d-1a09-4be6-b90f-67bc7b54427c"), "Lead Adviser", p => p.LeadAdviserUserId);
                     builder.Map<FundingStream>(Guid.Parse("19f8e8ee-bc08-4a3c-8de3-7718809ca36d"), "Funding Stream Submitted To", p => p.SubmittedFundingStreamId);
-                        
+
                     builder.Add(Guid.Parse("e324749c-f8fb-453f-8093-f2f0f3901380"), "Funding Stream Other", p => p.SubmittedFundingStreamFreeText);
                     builder.Add(Guid.Parse("abb43da3-2c5a-4f00-84a6-b66ad03ba9a9"), "Funding Stream Submitted To Name", p => p.SubmittedFundingStreamName);
 
@@ -90,7 +90,7 @@ namespace Webfuel.Domain
                     builder.Add(Guid.Parse("68f5f5cd-085d-4f8f-8e17-50561840ac3e"), "Team Contact Last Name", p => p.TeamContactLastName);
                     builder.Add(Guid.Parse("252017cf-4058-4d20-b124-53cccc05c55d"), "Team Contact Email", p => p.TeamContactEmail);
                     builder.Map<ResearcherRole>(Guid.Parse("826b34c2-b3f4-4841-bb9a-4c553e5237ce"), "Team Contact Role In Application", p => p.TeamContactRoleId);
-             
+
                     // Lead Applicant
 
                     builder.Add(Guid.Parse("784354ed-fc21-43de-bc31-4be238894f1c"), "Chief Investigator Title", p => p.LeadApplicantTitle);
@@ -99,7 +99,7 @@ namespace Webfuel.Domain
                     builder.Add(Guid.Parse("02280a72-14c2-49f0-b080-a5f79018ee54"), "Chief Investigator Email", p => p.LeadApplicantEmail);
                     builder.Add(Guid.Parse("8664d91e-2fac-45c7-9313-1244d0e1b2d6"), "Chief Investigator Job Role", p => p.LeadApplicantJobRole);
                     builder.Map<ResearcherOrganisationType>(Guid.Parse("7202793d-bbee-433c-bdae-81ad3112174f"), "Chief Investigator Organisation Type", p => p.LeadApplicantOrganisationTypeId);
-                        
+
                     builder.Add(Guid.Parse("fe308cbf-6fe5-402f-b883-726a26eb72bc"), "Chief Investigator Organisation", p => p.LeadApplicantOrganisation);
                     builder.Add(Guid.Parse("3b086edd-23ac-4630-875b-473372e2f2f9"), "Chief Investigator Department", p => p.LeadApplicantDepartment);
                     builder.Add(Guid.Parse("919dd385-2990-44d9-ad09-d04b5d84e071"), "Chief Investigator ORCID", p => p.LeadApplicantORCID);
@@ -121,17 +121,11 @@ namespace Webfuel.Domain
 
                     // Project Support
 
-                    builder.Map<ProjectSupport>(Guid.Parse("ebf7b778-e2cf-4378-9eec-b6e14b649131"), String.Empty, async (p, b) =>
+                    builder.Map<ProjectSupport, IProjectSupportReportMapper>((p, m) => m.MapByProjectId(p.Id), a =>
                     {
-                        var repository = b.ServiceProvider.GetRequiredService<IProjectSupportRepository>();
-                        var items = await repository.SelectProjectSupportByProjectId(p.Id);
-                        return items.Select(p => p.Id).ToList();
-                    }, 
-                    action =>
-                    {
-                        action.Map<User>(Guid.Parse("b25d8fae-f426-4890-a47e-21752a5d28f9"), "Support Advisers", p => p.AdviserIds);
-                        action.Map<SupportTeam>(Guid.Parse("7186191c-2128-497a-83d7-25240285b756"), "Support Teams", p => p.TeamIds);
-                        action.Map<SupportProvided>(Guid.Parse("db47a4e5-84b3-411c-b4f4-4bca919fde2e"), "Support Provided", p => p.SupportProvidedIds);
+                        a.Map<User>(Guid.Parse("b25d8fae-f426-4890-a47e-21752a5d28f9"), "Support Advisers", p => p.AdviserIds);
+                        a.Map<SupportTeam>(Guid.Parse("7186191c-2128-497a-83d7-25240285b756"), "Support Teams", p => p.TeamIds);
+                        a.Map<SupportProvided>(Guid.Parse("db47a4e5-84b3-411c-b4f4-4bca919fde2e"), "Support Provided", p => p.SupportProvidedIds);
                     });
 
                     _schema = builder.Schema;

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Webfuel.Domain;
+using Webfuel.Reporting;
 
 namespace Webfuel.App
 {
@@ -29,6 +30,8 @@ namespace Webfuel.App
             app.MapGet("api/user/{id:guid}", Get)
                 .RequireIdentity();
 
+            app.MapPut("api/user/export", Export)
+                    .RequireIdentity();
         }
 
         public static Task<User> Create([FromBody] CreateUser command, IMediator mediator)
@@ -54,6 +57,11 @@ namespace Webfuel.App
         public static async Task<User?> Get(Guid id, IMediator mediator)
         {
             return await mediator.Send(new GetUser { Id = id });
+        }
+
+        public static Task<ReportStep> Export([FromBody] QueryUser request, IExportUserService service)
+        {
+            return service.InitialiseReport(request);
         }
     }
 }

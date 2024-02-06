@@ -11,6 +11,8 @@
     <grid-reference-column name="reportGroupId" [dataSource]="reportGroupApi" />
     <grid-reference-column name="reportProviderId" label="Data Type" [dataSource]="staticDataCache.reportProvider" />
 
+    <grid-boolean-column name="primaryReport" label="Primary" />
+
     <grid-action-column (add)="add()" (edit)="edit($event)" (delete)="delete($event)" />
   </grid>
 </div>

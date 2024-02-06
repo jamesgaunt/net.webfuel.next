@@ -15,9 +15,9 @@ namespace Webfuel.Reporting
 
         ReportStep RegisterReport(ReportRequest request);
 
-        Task<IEnumerable<object>> QueryItems(Guid reportProviderId, int skip, int take);
+        Task<IEnumerable<object>> QueryItems(Guid reportProviderId, Query query);
 
-        Task<int> GetTotalCount(Guid reportProviderId);
+        Task<int> GetTotalCount(Guid reportProviderId, Query query);
 
         Task<ReportDesign> ValidateDesign(ReportDesign design);
 
@@ -51,16 +51,16 @@ namespace Webfuel.Reporting
             return _reportGeneratorService.RegisterReport(builder);
         }
 
-        public Task<IEnumerable<object>> QueryItems(Guid reportProviderId, int skip, int take)
+        public Task<IEnumerable<object>> QueryItems(Guid reportProviderId, Query query)
         {
             var provider = GetReportProvider(reportProviderId);
-            return provider.QueryItems(skip, take);
+            return provider.QueryItems(query);
         }
 
-        public Task<int> GetTotalCount(Guid reportProviderId)
+        public Task<int> GetTotalCount(Guid reportProviderId, Query query)
         {
             var provider = GetReportProvider(reportProviderId);
-            return provider.GetTotalCount();
+            return provider.GetTotalCount(query);
         }
 
         public async Task<ReportDesign> ValidateDesign(ReportDesign design)

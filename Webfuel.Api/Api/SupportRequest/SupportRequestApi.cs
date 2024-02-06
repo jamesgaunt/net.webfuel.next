@@ -4,6 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Webfuel.Common;
 using Webfuel.Domain;
+using Webfuel.Reporting;
 
 namespace Webfuel.App
 {
@@ -40,6 +41,9 @@ namespace Webfuel.App
 
             app.MapGet("api/support-request/{id:guid}", Get)
                 .RequireIdentity();
+
+            app.MapPut("api/support-request/export", Export)
+                     .RequireIdentity();
         }
 
         public static async Task<SupportRequest> SubmitFiles(
@@ -107,6 +111,11 @@ namespace Webfuel.App
         public static async Task<SupportRequest?> Get(Guid id, IMediator mediator)
         {
             return await mediator.Send(new GetSupportRequest { Id = id });
+        }
+
+        public static Task<ReportStep> Export([FromBody] QuerySupportRequest request, IExportSupportRequestService service)
+        {
+            return service.InitialiseReport(request);
         }
     }
 }

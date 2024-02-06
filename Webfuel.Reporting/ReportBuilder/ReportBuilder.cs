@@ -31,6 +31,7 @@ namespace Webfuel.Reporting
         {
             Request = request;
             Stage = ReportStage.Initialisation;
+            Query = request.Query;
         }
 
         public ReportRequest Request { get; }
@@ -40,6 +41,8 @@ namespace Webfuel.Reporting
         public ExcelWorkbook? Workbook { get; set; }
         
         public ReportResult? Result { get; set; }
+
+        public Query Query { get; set; }
 
         public ReportSchema Schema
         {
@@ -54,14 +57,16 @@ namespace Webfuel.Reporting
         }
         ReportSchema? _schema = null;
 
-        public async Task<IEnumerable<object>> QueryItems(int skip, int take)
+        async Task<IEnumerable<object>> QueryItems(int skip, int take)
         {
-            return await ServiceProvider.GetRequiredService<IReportDesignService>().QueryItems(Request.Design.ReportProviderId, StageCount, ItemsPerLoad);
+            Query.Skip = StageCount;
+            Query.Take = ItemsPerLoad;
+            return await ServiceProvider.GetRequiredService<IReportDesignService>().QueryItems(Request.Design.ReportProviderId, Query);
         }
 
-        public async Task<int> GetTotalCount()
+        async Task<int> GetTotalCount()
         {
-            return await ServiceProvider.GetRequiredService<IReportDesignService>().GetTotalCount(Request.Design.ReportProviderId);
+            return await ServiceProvider.GetRequiredService<IReportDesignService>().GetTotalCount(Request.Design.ReportProviderId, Query);
         }
 
         public override async Task GenerateReport()

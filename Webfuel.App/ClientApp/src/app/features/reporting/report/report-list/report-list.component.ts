@@ -23,7 +23,9 @@ export class ReportListComponent {
   }
 
   add() {
-    this.createReportDialog.open();
+    this.createReportDialog.open().subscribe((report) => {
+      this.router.navigate(['reporting/report-item', report.id]);
+    });
   }
 
   edit(item: Report) {

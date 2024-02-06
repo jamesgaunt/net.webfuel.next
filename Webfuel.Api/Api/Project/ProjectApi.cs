@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Webfuel.Domain;
+using Webfuel.Reporting;
 
 namespace Webfuel.App
 {
@@ -28,6 +29,9 @@ namespace Webfuel.App
 
             app.MapGet("api/project/{id:guid}", Get)
                 .RequireIdentity();
+
+            app.MapPut("api/project/export", Export)
+                .RequireIdentity();
         }
 
         public static Task<Project> Update([FromBody] UpdateProject command, IMediator mediator)
@@ -53,6 +57,11 @@ namespace Webfuel.App
         public static async Task<Project?> Get(Guid id, IMediator mediator)
         {
             return await mediator.Send(new GetProject { Id = id });
+        }
+
+        public static Task<ReportStep> Export([FromBody] QueryProject request, IExportProjectService service)
+        {
+            return service.InitialiseReport(request);
         }
     }
 }

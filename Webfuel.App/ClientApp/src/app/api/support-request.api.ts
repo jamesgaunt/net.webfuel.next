@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { SupportRequest, CreateSupportRequest, UpdateSupportRequest, UpdateSupportRequestResearcher, UpdateSupportRequestStatus, QuerySupportRequest, QueryResult } from './api.types';
+import { SupportRequest, CreateSupportRequest, UpdateSupportRequest, UpdateSupportRequestResearcher, UpdateSupportRequestStatus, QuerySupportRequest, QueryResult, ReportStep } from './api.types';
 
 @Injectable()
 export class SupportRequestApi implements IDataSource<SupportRequest, QuerySupportRequest, any, UpdateSupportRequest> {
@@ -39,6 +39,10 @@ export class SupportRequestApi implements IDataSource<SupportRequest, QuerySuppo
     
     public get (params: { id: string }, options?: ApiOptions): Observable<SupportRequest> {
         return this.apiService.request<undefined, SupportRequest>("GET", "api/support-request/" + params.id + "", undefined, options);
+    }
+    
+    public export (body: QuerySupportRequest, options?: ApiOptions): Observable<ReportStep> {
+        return this.apiService.request<QuerySupportRequest, ReportStep>("PUT", "api/support-request/export", body, options);
     }
     
     changed = new EventEmitter<any>();

@@ -18,6 +18,8 @@ namespace Webfuel.Domain
         Task<int> CountReport();
         Task<List<Report>> SelectReport();
         Task<List<Report>> SelectReportWithPage(int skip, int take);
+        Task<List<Report>> SelectReportByOwnerUserId(Guid ownerUserId);
+        Task<List<Report>> SelectReportByNameAndReportProviderId(string name, Guid reportProviderId);
     }
     [Service(typeof(IReportRepository))]
     internal partial class ReportRepository: IReportRepository
@@ -90,6 +92,25 @@ namespace Webfuel.Domain
             {
                 new SqlParameter("@Skip", skip),
                 new SqlParameter("@Take", take),
+            };
+            return await _connection.ExecuteReader<Report, ReportMetadata>(sql, parameters);
+        }
+        public async Task<List<Report>> SelectReportByOwnerUserId(Guid ownerUserId)
+        {
+            var sql = @"SELECT * FROM [Report] WHERE OwnerUserId = @OwnerUserId ORDER BY Id ASC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@OwnerUserId", ownerUserId),
+            };
+            return await _connection.ExecuteReader<Report, ReportMetadata>(sql, parameters);
+        }
+        public async Task<List<Report>> SelectReportByNameAndReportProviderId(string name, Guid reportProviderId)
+        {
+            var sql = @"SELECT * FROM [Report] WHERE Name = @Name AND ReportProviderId = @ReportProviderId ORDER BY Id ASC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@Name", name),
+                new SqlParameter("@ReportProviderId", reportProviderId),
             };
             return await _connection.ExecuteReader<Report, ReportMetadata>(sql, parameters);
         }

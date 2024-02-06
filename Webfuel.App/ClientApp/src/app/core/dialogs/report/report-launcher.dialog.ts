@@ -36,7 +36,11 @@ export class ReportLauncherDialogComponent extends DialogComponentBase<true, Rep
   reset(report: Report) {
     this.report = report;
     this.title = report.name;
-    this.reportDesignApi.generateArguments(this.report.design).subscribe((result) => this.arguments = result);
+    this.reportDesignApi.generateArguments(this.report.design).subscribe((result) => {
+      this.arguments = result;
+      if (this.arguments.length == 0)
+        this.run();
+    });
   }
 
   report: Report | null = null; 

@@ -3,7 +3,17 @@
   <li><a routerLink="/support-request/support-request-list">Triage Support Requests</a></li>
 </ul>
 <div class="container">
-  <h1 class="title">Triage Support Requests</h1>
+
+  <div class="columns">
+    <div class="column">
+      <h1 class="title">Triage Support Requests</h1>
+    </div>
+    <div class="column">
+      <div class="header-buttons">
+        <button class="button is-primary" (click)="export()">Export</button>
+      </div>
+    </div>
+  </div>
 
   <div class="filter-form">
     <form class="form" [formGroup]="filterForm">
@@ -30,9 +40,6 @@
   </div>
 
   <grid [dataSource]="supportRequestApi" [filterForm]="filterForm" stateKey="SupportRequestList">
-    <!--
-      <grid-column name="prefixedNumber" label="Number" />
-    -->
     <grid-date-column name="dateOfRequest" label="Date" />
     <grid-reference-column [dataSource]="staticDataCache.supportRequestStatus" name="statusId" />
     <grid-column name="title" />

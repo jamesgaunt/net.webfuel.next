@@ -12,5 +12,16 @@
     <Property Name="SortOrder" Type="int" />
     <Property Name="OwnerUserId" Type="User" />
     <Property Name="ReportGroupId" Type="ReportGroup" />
+
+    <Property Name="PrimaryReport" Type="bool" />
+
+    <Index Unique="false">
+      <Member Name="Name" />
+      <Member Name="ReportProviderId" />
+    </Index>
+    <Index Unique="false">
+      <Member Name="OwnerUserId" />
+    </Index>
+
   </Entity>
 </Schema>

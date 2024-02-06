@@ -1,10 +1,16 @@
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.Extensions.Caching.Memory;
 using Webfuel.Reporting;
 
 namespace Webfuel.Domain
 {
-    [Service(typeof(IReportMapper<ProjectSupport>))]
-    internal class ProjectSupportReportMapper : IReportMapper<ProjectSupport>
+    public interface IProjectSupportReportMapper : IReportMapper<ProjectSupport>
+    {
+        Task<List<Guid>> MapByProjectId(Guid projectId);
+    }
+
+    [Service(typeof(IProjectSupportReportMapper), typeof(IReportMapper<ProjectSupport>))]
+    internal class ProjectSupportReportMapper : IProjectSupportReportMapper
     {
         private readonly IProjectSupportRepository _repository;
         
@@ -23,10 +29,24 @@ namespace Webfuel.Domain
             _getCache.Set(id, value, new MemoryCacheEntryOptions
             {
                 Size = 1,
-                SlidingExpiration = TimeSpan.FromMinutes(5)
+                AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(1)
             });
 
             return value;
+        }
+
+        public async Task<List<Guid>> MapByProjectId(Guid projectId)
+        {
+            var items = await _repository.SelectProjectSupportByProjectId(projectId);
+            foreach(var item in items)
+            {
+                _getCache.Set(item.Id, item, new MemoryCacheEntryOptions
+                {
+                    Size = 1,
+                    AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(1)
+                });
+            }
+            return items.Select(x => x.Id).ToList();
         }
 
         public Task<QueryResult<ReferenceLookup>> Lookup(Query query)

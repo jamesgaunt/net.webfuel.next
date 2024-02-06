@@ -71,6 +71,8 @@
 
 .progress-bar {
   position: relative;
+  background-color: #555555;
+  border-radius: 6px;
   height: 3rem;
 
   .progress-bar-slider {
@@ -78,7 +80,11 @@
     top: 0;
     left: 0;
     bottom: 0;
+    width: 0%;
     background-color: #b5e0fb;
+    transition: width 0.25s linear;
+    background-color: #3AAA90;
+    border-radius: 6px;
   }
 
   .progress-bar-content {
@@ -90,6 +96,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    color: #FFF;
   }
 }
 
