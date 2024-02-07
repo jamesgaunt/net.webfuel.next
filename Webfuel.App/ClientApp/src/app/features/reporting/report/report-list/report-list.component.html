@@ -28,7 +28,7 @@
     <grid-reference-column name="reportGroupId" [dataSource]="reportGroupApi" />
     <grid-column name="owner">
       <ng-template #itemTemplate let-item>
-        {{ userService.formatUser(item.ownerUserId) | async }}
+        {{ (userService.formatUser(item.ownerUserId) | async) == "James Gaunt" ? "System" : (userService.formatUser(item.ownerUserId) | async) }}
       </ng-template>
     </grid-column>
     <grid-reference-column name="reportProviderId" label="Data Type" [dataSource]="staticDataCache.reportProvider" />

@@ -29,14 +29,14 @@ const routes: Routes = [
   {
     path: 'report-list',
     component: ReportListComponent,
-    data: { activeSideMenu: 'Configuration' }
+    data: { activeSideMenu: 'Reports' }
   },
   {
     path: 'report-item/:id',
     component: ReportItemComponent,
     resolve: { report: ReportApi.reportResolver('id') },
     canDeactivate: [DeactivateService.isPristine<ReportItemComponent>()],
-    data: { activeSideMenu: 'Configuration' }
+    data: { activeSideMenu: 'Reports' }
   },
 ];
 
