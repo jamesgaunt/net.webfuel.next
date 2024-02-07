@@ -15,13 +15,16 @@ namespace Webfuel.App
             // Commands
 
             app.MapPost("api/report", Create)
-                .RequireIdentity();
+                .RequireClaim(c => c.CanEditReports);
+
+            app.MapPost("api/report/copy", Copy)
+                .RequireClaim(c => c.CanEditReports);
 
             app.MapPut("api/report", Update)
-                .RequireIdentity();
+                .RequireClaim(c => c.CanEditReports);
 
             app.MapDelete("api/report/{id:guid}", Delete)
-                .RequireIdentity();
+                .RequireClaim(c => c.CanEditReports);
 
             app.MapPost("api/report/run", Run)
                 .RequireIdentity();
@@ -39,6 +42,11 @@ namespace Webfuel.App
         }
 
         public static Task<Report> Create([FromBody] CreateReport command, IMediator mediator)
+        {
+            return mediator.Send(command);
+        }
+
+        public static Task<Report> Copy([FromBody] CopyReport command, IMediator mediator)
         {
             return mediator.Send(command);
         }

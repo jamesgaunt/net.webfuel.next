@@ -7,6 +7,8 @@ import { FormService } from '../../../../core/form.service';
 import { ReportDesignApi } from '../../../../api/report-design.api';
 import _ from 'shared/common/underscore';
 import { ReportLauncherDialog } from '../../../../core/dialogs/report/report-launcher.dialog';
+import { ReportGroupApi } from '../../../../api/report-group.api';
+import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
 
 @Component({
   selector: 'report-item',
@@ -19,8 +21,10 @@ export class ReportItemComponent implements OnInit {
     private router: Router,
     private formService: FormService,
     public reportApi: ReportApi,
+    public reportGroupApi: ReportGroupApi,
     public reportDesignApi: ReportDesignApi,
-    private reportLauncherDialog: ReportLauncherDialog
+    private reportLauncherDialog: ReportLauncherDialog,
+    private confirmDeleteDialog: ConfirmDeleteDialog,
   ) {
   }
 
@@ -42,8 +46,10 @@ export class ReportItemComponent implements OnInit {
   form = new FormGroup({
     id: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     name: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    description: new FormControl<string>('', { nonNullable: true }),
     design: new FormControl<ReportDesign>(null!, { validators: [Validators.required], nonNullable: true }),
-    primaryReport: new FormControl(false, { nonNullable: true }),
+    isPublic: new FormControl(false, { nonNullable: true }),
+    reportGroupId: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
   });
 
   save(close: boolean) {
@@ -60,6 +66,15 @@ export class ReportItemComponent implements OnInit {
   cancel() {
     this.reset(this.item);
     this.router.navigate(['reporting/report-list']);
+  }
+
+  delete() {
+    this.confirmDeleteDialog.open({ title: "Report " }).subscribe(() => {
+      this.reportApi.delete({ id: this.item.id }, { successGrowl: "Report  Deleted" }).subscribe(() => {
+        this.reset(this.item);
+        this.router.navigate(['reporting/report-list']);
+      });
+    });
   }
 
   // Report Designer

@@ -23,8 +23,9 @@ export class ReportService {
       return;
 
     this.dialogData = {
-      title: "Generate Report",
+      title: "Running Report",
       reportStep: reportStep,
+      stageIndex: 0,
       progressPercentage: null
     };
 
@@ -37,25 +38,40 @@ export class ReportService {
     this._runReport(reportStep);
   }
 
+  private setProgress(count: number, total: number) {
+    var pct = total > 0 ? count * 100.0 / total : 0;
+    this.dialogData!.progressPercentage = pct;
+  }
+
   private _runReport(reportStep: ReportStep) {
     if (!this.dialogData)
       return;
 
     this.dialogData.reportStep = reportStep;
-    this.dialogData.progressPercentage = reportStep.stageTotal > 0 ? reportStep.stageCount * 100.0 / reportStep.stageTotal : 0; 
+    this.setProgress(reportStep.stageCount, reportStep.stageTotal);
 
     this.reportGeneratorApi.generateReport({ taskId: reportStep.taskId }).subscribe((result) => {
       if (result.complete) {
-
         this.dialogData!.progressPercentage = 100;
         setTimeout(() => {
           this._renderReport(result);
-        }, 500);
-        
+        }, 1000);
       } else {
-        setTimeout(() => {
-          this._runReport(result);
-        }, 250);
+        if (reportStep.stage == result.stage) {
+          setTimeout(() => {
+            this._runReport(result);
+          }, 250);
+        } else {
+          this.setProgress(100, 100);
+          setTimeout(() => {
+            this.dialogData!.reportStep.stage = result.stage;
+            this.dialogData!.progressPercentage = null;
+            this.dialogData!.stageIndex++;
+            setTimeout(() => {
+              this._runReport(result);
+            }, 1000);
+          }, 1000);
+        }
       }
     });
   }

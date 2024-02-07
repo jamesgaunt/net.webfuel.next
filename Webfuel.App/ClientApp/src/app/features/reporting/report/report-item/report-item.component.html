@@ -1,6 +1,5 @@
 <ul class="breadcrumbs">
   <li><a routerLink="/home">Home</a></li>
-  <li><a routerLink="/configuration/configuration-menu">Configuration</a></li>
   <li><a routerLink="/reporting/report-list">Reports</a></li>
   <li><a routerLink="/reporting/report-item/{{ item.id }}">Report</a></li>
 </ul>
@@ -22,10 +21,22 @@
           <input class="input" type="text" placeholder="required" formControlName="name" />
         </div>
       </div>
+      <div class="column is-3">
+        <div class="field">
+          <label class="label">Report Group</label>
+          <dropdown-select formControlName="reportGroupId" [dataSource]="reportGroupApi" placeholder="required" />
+        </div>
+      </div>
       <div class="column is-narrow">
         <div class="field">
-          <label class="label">Primary</label>
-          <toggle-input formControlName="primaryReport" />
+          <label class="label">Public</label>
+          <toggle-input formControlName="isPublic" />
+        </div>
+      </div>
+      <div class="column is-12">
+        <div class="field">
+          <label class="label">Description</label>
+          <input class="input" type="text" placeholder="optional" formControlName="description" />
         </div>
       </div>
       <div class="column is-12">
@@ -36,6 +47,8 @@
       <button class="button is-success" (click)="save(false)">Save</button>
       <button class="button is-success" (click)="save(true)">Save &amp; Close</button>
       <button class="button" (click)="cancel()">Cancel</button>
+      <span>&nbsp;|&nbsp;</span>
+      <button class="button is-danger" (click)="delete()">Delete</button>
       <span>&nbsp;|&nbsp;</span>
       <button class="button is-primary" (click)="run()">Save &amp; Run</button>
     </div>

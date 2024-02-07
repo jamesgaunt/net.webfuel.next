@@ -30,11 +30,8 @@ namespace Webfuel.Domain
                     case nameof(Report.Design):
                         DesignJson = (string)value!;
                         break;
-                    case nameof(Report.SortOrder):
-                        SortOrder = (int)value!;
-                        break;
-                    case nameof(Report.PrimaryReport):
-                        PrimaryReport = (bool)value!;
+                    case nameof(Report.IsPublic):
+                        IsPublic = (bool)value!;
                         break;
                     case nameof(Report.ReportProviderId):
                         ReportProviderId = (Guid)value!;
@@ -63,8 +60,7 @@ namespace Webfuel.Domain
             set { _DesignJson = value; _Design = null; }
         }
         string _DesignJson = String.Empty;
-        public int SortOrder  { get; set; } = 0;
-        public bool PrimaryReport  { get; set; } = false;
+        public bool IsPublic  { get; set; } = false;
         public Guid ReportProviderId { get; set; }
         public Guid OwnerUserId { get; set; }
         public Guid ReportGroupId { get; set; }
@@ -75,8 +71,7 @@ namespace Webfuel.Domain
             entity.Name = Name;
             entity.Description = Description;
             entity.DesignJson = DesignJson;
-            entity.SortOrder = SortOrder;
-            entity.PrimaryReport = PrimaryReport;
+            entity.IsPublic = IsPublic;
             entity.ReportProviderId = ReportProviderId;
             entity.OwnerUserId = OwnerUserId;
             entity.ReportGroupId = ReportGroupId;

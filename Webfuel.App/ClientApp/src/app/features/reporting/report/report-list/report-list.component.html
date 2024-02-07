@@ -1,20 +1,53 @@
 <ul class="breadcrumbs">
   <li><a routerLink="/home">Home</a></li>
-  <li><a routerLink="/configuration/configuration-menu">Configuration</a></li>
   <li><a routerLink="/reporting/report-list">Reports</a></li>
 </ul>
 <div class="container">
   <h1 class="title">Reports</h1>
-  <grid [dataSource]="reportApi" [search]="true">
+  <div class="filter-form">
+    <form class="form" [formGroup]="filterForm">
+      <div class="flex">
+        <div class="field is-6">
+          <input class="input" type="text" formControlName="name" placeholder="Name" />
+        </div>
+        <div class="field is-3">
+          <dropdown-select [dataSource]="reportGroupApi" placeholder="Report Group" formControlName="reportGroupId" [enableClear]="true" />
+        </div>
+        <div class="field is-3">
+          <dropdown-select [items]="ownReportsOnlyItems" placeholder="optional" formControlName="ownReportsOnly" />
+        </div>
+        <div class="is-12 is-right">
+          <button (click)="resetFilterForm()" class="button is-small">show all</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <grid [dataSource]="reportApi" [filterForm]="filterForm">
     <grid-column name="name" />
-
     <grid-reference-column name="reportGroupId" [dataSource]="reportGroupApi" />
+    <grid-column name="owner">
+      <ng-template #itemTemplate let-item>
+        {{ userService.formatUser(item.ownerUserId) | async }}
+      </ng-template>
+    </grid-column>
     <grid-reference-column name="reportProviderId" label="Data Type" [dataSource]="staticDataCache.reportProvider" />
+    <grid-boolean-column name="isPublic" label="Public" />
+    <grid-column justify="right">
+      <ng-template #itemTemplate let-item>
+        <a *ngIf="canEditReport(item)" class="link is-primary" (click)="edit(item)">edit</a>
+        &nbsp;
+        <a class="link is-success" (click)="copy(item)">copy</a>
+        &nbsp;
+        <a class="link is-warning" (click)="run(item)">run</a>
 
-    <grid-boolean-column name="primaryReport" label="Primary" />
-
-    <grid-action-column (add)="add()" (edit)="edit($event)" (delete)="delete($event)" />
+      </ng-template>
+      <ng-template #headTemplate>
+        <a class="link is-success" (click)="add()">add</a>
+      </ng-template>
+    </grid-column>
   </grid>
 </div>
+
 
 

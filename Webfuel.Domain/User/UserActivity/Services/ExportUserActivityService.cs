@@ -35,7 +35,7 @@ namespace Webfuel.Domain
             if (request.UserId == null)
                 request.UserId = _identityAccessor.User?.Id ?? throw new InvalidOperationException("No current user");
 
-            var report = await _reportService.GetReportByName("User Activity Export", ReportProviderEnum.UserActivity);
+            var report = await _reportService.GetDefaultNamedReport("User Activity Export", ReportProviderEnum.UserActivity);
 
             return _reportDesignService.RegisterReport(new ReportRequest
             {

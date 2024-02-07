@@ -7,6 +7,7 @@ export interface ReportRunnerDialogData {
   title: string;
   reportStep: ReportStep;
   downloadUrl?: string;
+  stageIndex: number;
   progressPercentage: number | null;
 }
 

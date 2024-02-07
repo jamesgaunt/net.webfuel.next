@@ -30,7 +30,7 @@ namespace Webfuel.Domain
 
         public async Task<ReportStep> InitialiseReport(QueryProject request)
         {
-            var report = await _reportService.GetReportByName("Project Export", ReportProviderEnum.Project);
+            var report = await _reportService.GetDefaultNamedReport("Project Export", ReportProviderEnum.Project);
 
             return _reportDesignService.RegisterReport(new ReportRequest
             {

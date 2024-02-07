@@ -34,8 +34,8 @@ namespace Webfuel.Common
                 if (_identityAccessor.Claims.CanEditUsers)
                     clientConfiguration.SideMenu.AddChild(name: "Users", action: "/user/user-list", icon: "fas fa-fw fa-users");
 
-                if(_identityAccessor.Claims.Developer)
-                    clientConfiguration.SideMenu.AddChild(name: "Reports", action: "/report/report-index", icon: "fas fa-fw fa-file-excel");
+                if (_identityAccessor.Claims.CanEditReports)
+                    clientConfiguration.SideMenu.AddChild(name: "Reports", action: "/reporting/report-list", icon: "fas fa-fw fa-file-excel");
 
                 if (_identityAccessor.Claims.CanAccessConfiguration)
                     clientConfiguration.SideMenu.AddChild(name: "Configuration", action: "/configuration/configuration-menu", icon: "fas fa-fw fa-cogs");
@@ -44,14 +44,20 @@ namespace Webfuel.Common
             // Settings Menu
             {
                 if (_identityAccessor.Claims.CanEditUserGroups)
+                {
                     clientConfiguration.SettingsMenu.AddChild(name: "User Groups", action: "/user/user-group-list", icon: "fas fa-users-cog");
+                }
 
-                if (_identityAccessor.Claims.Developer) {
+                if (_identityAccessor.Claims.Developer)
+                {
                     clientConfiguration.SettingsMenu.AddChild(name: "Heartbeats", action: "/developer/heartbeat-list", icon: "fas fa-heartbeat");
                     clientConfiguration.SettingsMenu.AddChild(name: "User Logins", action: "/developer/user-login", icon: "fas fa-sign-in");
-                    clientConfiguration.SettingsMenu.AddChild(name: "Report Groups", action: "/reporting/report-group-list", icon: "fas fa-layer-group");
-                    clientConfiguration.SettingsMenu.AddChild(name: "Report Designer", action: "/reporting/report-list", icon: "fas fa-pencil-ruler");
                     clientConfiguration.SettingsMenu.AddChild(name: "Email Templates", action: "/configuration/email-template-list", icon: "fas fa-envelope-open-text");
+                }
+
+                if (_identityAccessor.Claims.CanEditStaticData)
+                {
+                    clientConfiguration.SettingsMenu.AddChild(name: "Report Groups", action: "/reporting/report-group-list", icon: "fas fa-layer-group");
                 }
             }
 

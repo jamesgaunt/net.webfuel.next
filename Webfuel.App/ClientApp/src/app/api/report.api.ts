@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { CreateReport, Report, UpdateReport, RunReport, ReportStep, QueryReport, QueryResult } from './api.types';
+import { CreateReport, Report, CopyReport, UpdateReport, RunReport, ReportStep, QueryReport, QueryResult } from './api.types';
 
 @Injectable()
 export class ReportApi implements IDataSource<Report, QueryReport, CreateReport, UpdateReport> {
@@ -11,6 +11,10 @@ export class ReportApi implements IDataSource<Report, QueryReport, CreateReport,
     
     public create (body: CreateReport, options?: ApiOptions): Observable<Report> {
         return this.apiService.request<CreateReport, Report>("POST", "api/report", body, options).pipe(tap(_ => this.changed.emit()));
+    }
+    
+    public copy (body: CopyReport, options?: ApiOptions): Observable<Report> {
+        return this.apiService.request<CopyReport, Report>("POST", "api/report/copy", body, options);
     }
     
     public update (body: UpdateReport, options?: ApiOptions): Observable<Report> {

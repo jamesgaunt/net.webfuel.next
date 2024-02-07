@@ -4,7 +4,7 @@
   </div>
   <div class="dialog-body">
     <div style="text-align: center; font-size: 1.2em">
-      <div class="progress-bar" *ngIf="!data.downloadUrl">
+      <div class="progress-bar stage-index-{{ data.stageIndex }} " *ngIf="!data.downloadUrl">
         <div *ngIf="data.progressPercentage !== null" class="progress-bar-slider" [style.width]="data.progressPercentage + '%'">
         </div>
         <div class="progress-bar-content">
@@ -12,8 +12,6 @@
         </div>
       </div>
       <div class="progress-bar" *ngIf="data.downloadUrl">
-        <div class="progress-bar-slider" style="width: 100%">
-        </div>
         <div class="progress-bar-content">
           Your report is ready to download.
         </div>

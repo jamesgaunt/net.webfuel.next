@@ -20,6 +20,7 @@ namespace Webfuel.Domain
             updated.Claims.CanEditUsers = request.CanEditUsers;
             updated.Claims.CanEditUserGroups = request.CanEditUserGroups;
             updated.Claims.CanEditStaticData = request.CanEditStaticData;
+            updated.Claims.CanEditReports = request.CanEditReports;
             updated.Claims.CanUnlockProjects = request.CanUnlockProjects;
             updated.Claims.CanTriageSupportRequests = request.CanTriageSupportRequests;
 

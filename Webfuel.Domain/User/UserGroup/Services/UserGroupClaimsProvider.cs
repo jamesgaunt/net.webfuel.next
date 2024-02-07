@@ -28,6 +28,7 @@ namespace Webfuel.Domain
             claims.CanEditUsers |= userGroup.Claims.CanEditUsers;
             claims.CanEditUserGroups |= userGroup.Claims.CanEditUserGroups;
             claims.CanEditStaticData |= userGroup.Claims.CanEditStaticData;
+            claims.CanEditReports |= userGroup.Claims.CanEditReports;
             claims.CanUnlockProjects |= userGroup.Claims.CanUnlockProjects;
             claims.CanTriageSupportRequests |= userGroup.Claims.CanTriageSupportRequests;
         }

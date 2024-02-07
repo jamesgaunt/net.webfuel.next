@@ -9,11 +9,12 @@
 
     <Property Name="Design" Type="Json:Webfuel.Reporting.ReportDesign" />
 
-    <Property Name="SortOrder" Type="int" />
+    <Property Name="IsPublic" Type="bool" />
     <Property Name="OwnerUserId" Type="User" />
     <Property Name="ReportGroupId" Type="ReportGroup" />
 
-    <Property Name="PrimaryReport" Type="bool" />
+    <!-- Audit -->
+    <Property Name="CreatedAt" Type="DateTime" />
 
     <Index Unique="false">
       <Member Name="Name" />

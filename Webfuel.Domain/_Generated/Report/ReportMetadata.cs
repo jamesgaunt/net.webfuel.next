@@ -32,11 +32,8 @@ namespace Webfuel.Domain
                     case nameof(Report.Design):
                         result.Add(new SqlParameter(nameof(Report.Design), entity.DesignJson));
                         break;
-                    case nameof(Report.SortOrder):
-                        result.Add(new SqlParameter(nameof(Report.SortOrder), entity.SortOrder));
-                        break;
-                    case nameof(Report.PrimaryReport):
-                        result.Add(new SqlParameter(nameof(Report.PrimaryReport), entity.PrimaryReport));
+                    case nameof(Report.IsPublic):
+                        result.Add(new SqlParameter(nameof(Report.IsPublic), entity.IsPublic));
                         break;
                     case nameof(Report.ReportProviderId):
                         result.Add(new SqlParameter(nameof(Report.ReportProviderId), entity.ReportProviderId));
@@ -77,8 +74,7 @@ namespace Webfuel.Domain
                 yield return "Name";
                 yield return "Description";
                 yield return "Design";
-                yield return "SortOrder";
-                yield return "PrimaryReport";
+                yield return "IsPublic";
                 yield return "ReportProviderId";
                 yield return "OwnerUserId";
                 yield return "ReportGroupId";
@@ -93,8 +89,7 @@ namespace Webfuel.Domain
                 yield return "Name";
                 yield return "Description";
                 yield return "Design";
-                yield return "SortOrder";
-                yield return "PrimaryReport";
+                yield return "IsPublic";
                 yield return "ReportProviderId";
                 yield return "OwnerUserId";
                 yield return "ReportGroupId";
@@ -108,8 +103,7 @@ namespace Webfuel.Domain
                 yield return "Name";
                 yield return "Description";
                 yield return "Design";
-                yield return "SortOrder";
-                yield return "PrimaryReport";
+                yield return "IsPublic";
                 yield return "ReportProviderId";
                 yield return "OwnerUserId";
                 yield return "ReportGroupId";

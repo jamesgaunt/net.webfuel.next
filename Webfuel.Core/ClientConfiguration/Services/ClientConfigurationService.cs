@@ -25,6 +25,7 @@ namespace Webfuel
             if (_identityAccessor.User == null)
                 throw new NotAuthenticatedException();
 
+            clientConfiguration.UserId = _identityAccessor.User.Id;
             clientConfiguration.Email = _identityAccessor.User.Email;
             clientConfiguration.Claims = _identityAccessor.Claims;
 

@@ -37,6 +37,7 @@ export class UserGroupClaimsComponent implements OnInit {
     canEditUsers: new FormControl<boolean>(false, { nonNullable: true }),
     canEditUserGroups: new FormControl<boolean>(false, { nonNullable: true }),
     canEditStaticData: new FormControl<boolean>(false, { nonNullable: true }),
+    canEditReports: new FormControl<boolean>(false, { nonNullable: true }),
     canUnlockProjects: new FormControl<boolean>(false, { nonNullable: true }),
     canTriageSupportRequests: new FormControl<boolean>(false, { nonNullable: true }),
   });

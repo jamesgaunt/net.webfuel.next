@@ -1,3 +1,4 @@
+using DocumentFormat.OpenXml.Presentation;
 using MediatR;
 using Webfuel.Reporting;
 
@@ -18,7 +19,13 @@ namespace Webfuel.Domain
 
         public async Task<ReportStep> Handle(RunReport request, CancellationToken cancellationToken)
         {
+            if (_identityAccessor.User == null)
+                throw new DomainException("User not authenticated");
+
             var report = await _reportRepository.RequireReport(request.ReportId);
+
+            if (report.IsPublic == false && report.OwnerUserId != _identityAccessor.User.Id)
+                throw new DomainException("User does not have permission to run this report");
 
             return _reportDesignService.RegisterReport(new ReportRequest
             {

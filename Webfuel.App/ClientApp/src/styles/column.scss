@@ -5,7 +5,7 @@
   flex-flow: row nowrap;
   gap: var(--gap);
 
-  &.is-wrap{
+  &.is-wrap {
     flex-wrap: wrap;
   }
 
@@ -40,6 +40,11 @@
     &.is-4 {
       flex: none;
       width: 33.33%;
+    }
+
+    &.is-3 {
+      flex: none;
+      width: 25%;
     }
 
     &.is-right {

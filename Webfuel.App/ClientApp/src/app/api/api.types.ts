@@ -70,6 +70,7 @@ export enum ReportFieldType {
 }
 
 export interface ClientConfiguration {
+    userId: string;
     email: string;
     sideMenu: ClientConfigurationMenu;
     settingsMenu: ClientConfigurationMenu;
@@ -89,6 +90,7 @@ export interface IdentityClaims {
     canEditUsers: boolean;
     canEditUserGroups: boolean;
     canEditStaticData: boolean;
+    canEditReports: boolean;
     canUnlockProjects: boolean;
     canTriageSupportRequests: boolean;
     canAccessConfiguration: boolean;
@@ -1031,8 +1033,7 @@ export interface Report {
     name: string;
     description: string;
     design: ReportDesign;
-    sortOrder: number;
-    primaryReport: boolean;
+    isPublic: boolean;
     reportProviderId: string;
     ownerUserId: string;
     reportGroupId: string;
@@ -1044,10 +1045,17 @@ export interface CreateReport {
     reportProviderId: string;
 }
 
+export interface CopyReport {
+    id: string;
+    name: string;
+}
+
 export interface UpdateReport {
     id: string;
     name: string;
-    primaryReport: boolean;
+    description: string;
+    isPublic: boolean;
+    reportGroupId: string;
     design: ReportDesign;
 }
 
@@ -1072,6 +1080,9 @@ export interface ReportArgument {
 }
 
 export interface QueryReport extends Query {
+    name: string;
+    reportGroupId: string | null | null;
+    ownReportsOnly: string;
     skip: number;
     take: number;
     projection?: Array<string>;
@@ -1504,6 +1515,7 @@ export interface UserGroupClaims {
     canEditUsers: boolean;
     canEditUserGroups: boolean;
     canEditStaticData: boolean;
+    canEditReports: boolean;
     canUnlockProjects: boolean;
     canTriageSupportRequests: boolean;
 }
@@ -1522,6 +1534,7 @@ export interface UpdateUserGroupClaims {
     canEditUsers: boolean;
     canEditUserGroups: boolean;
     canEditStaticData: boolean;
+    canEditReports: boolean;
     canUnlockProjects: boolean;
     canTriageSupportRequests: boolean;
 }

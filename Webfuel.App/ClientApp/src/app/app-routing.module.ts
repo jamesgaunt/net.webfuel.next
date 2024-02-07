@@ -73,11 +73,6 @@ const routes: Routes = [
     loadChildren: () => import('./features/reporting/reporting.module').then(m => m.ReportingModule),
     canActivate: [isAuthenticated]
   },
-  {
-    path: 'report',
-    loadChildren: () => import('./features/report/report.module').then(m => m.ReportModule),
-    canActivate: [isAuthenticated]
-  },
 ];
 
 @NgModule({
