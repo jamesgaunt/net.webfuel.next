@@ -35,6 +35,9 @@ namespace Webfuel.Domain
                     case nameof(Report.IsPublic):
                         result.Add(new SqlParameter(nameof(Report.IsPublic), entity.IsPublic));
                         break;
+                    case nameof(Report.CreatedAt):
+                        result.Add(new SqlParameter(nameof(Report.CreatedAt), entity.CreatedAt));
+                        break;
                     case nameof(Report.ReportProviderId):
                         result.Add(new SqlParameter(nameof(Report.ReportProviderId), entity.ReportProviderId));
                         break;
@@ -75,6 +78,7 @@ namespace Webfuel.Domain
                 yield return "Description";
                 yield return "Design";
                 yield return "IsPublic";
+                yield return "CreatedAt";
                 yield return "ReportProviderId";
                 yield return "OwnerUserId";
                 yield return "ReportGroupId";
@@ -90,6 +94,7 @@ namespace Webfuel.Domain
                 yield return "Description";
                 yield return "Design";
                 yield return "IsPublic";
+                yield return "CreatedAt";
                 yield return "ReportProviderId";
                 yield return "OwnerUserId";
                 yield return "ReportGroupId";
@@ -104,6 +109,7 @@ namespace Webfuel.Domain
                 yield return "Description";
                 yield return "Design";
                 yield return "IsPublic";
+                yield return "CreatedAt";
                 yield return "ReportProviderId";
                 yield return "OwnerUserId";
                 yield return "ReportGroupId";

@@ -20,12 +20,16 @@ namespace Webfuel.Reporting
 
         public string FieldName { get; set; } = String.Empty;
 
+        public bool MultiValued { get; set; } = false;
+
         public override Task<bool> Validate(ReportSchema schema, IServiceProvider services)
         {
             var field = schema.GetField(FieldId);
             if (field == null)
                 return Task.FromResult(false);
+
             FieldName = field.Name;
+            MultiValued = field.MultiValued;
 
             return base.Validate(schema, services);
         }

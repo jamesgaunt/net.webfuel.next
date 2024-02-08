@@ -270,32 +270,15 @@ export interface ReportDesign {
     latestFilterId: string;
 }
 
-export interface ReportAsyncField extends ReportField {
-    id: string;
-    name: string;
-    fieldType: ReportFieldType;
-    filterable: boolean;
-}
-
 export interface ReportField {
     id: string;
     name: string;
     fieldType: ReportFieldType;
+    multiValued: boolean;
     filterable: boolean;
 }
 
-export interface ReportPropertyField extends ReportField {
-    id: string;
-    name: string;
-    fieldType: ReportFieldType;
-    filterable: boolean;
-}
-
-export interface ReportReferenceField extends ReportField {
-    id: string;
-    name: string;
-    fieldType: ReportFieldType;
-    filterable: boolean;
+export interface IReportAccessor {
 }
 
 export interface DashboardModel {
@@ -1034,6 +1017,7 @@ export interface Report {
     description: string;
     design: ReportDesign;
     isPublic: boolean;
+    createdAt: string;
     reportProviderId: string;
     ownerUserId: string;
     reportGroupId: string;

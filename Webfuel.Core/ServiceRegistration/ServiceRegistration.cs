@@ -14,8 +14,9 @@ namespace Webfuel
                     continue;
 
                 // Primary Interface
-                if (!type.ImplementedInterfaces.Contains(attribute.Implements))
+                if (attribute.Implements.IsInterface && !type.ImplementedInterfaces.Contains(attribute.Implements))
                     throw new InvalidOperationException($"Type {type.Name} does not implement service interface {attribute.Implements.Name}");
+                
                 services.AddTransient(attribute.Implements, type);
 
                 // Secondary Interfaces

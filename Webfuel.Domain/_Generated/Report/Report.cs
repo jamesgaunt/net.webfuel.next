@@ -33,6 +33,9 @@ namespace Webfuel.Domain
                     case nameof(Report.IsPublic):
                         IsPublic = (bool)value!;
                         break;
+                    case nameof(Report.CreatedAt):
+                        CreatedAt = (DateTimeOffset)value!;
+                        break;
                     case nameof(Report.ReportProviderId):
                         ReportProviderId = (Guid)value!;
                         break;
@@ -61,6 +64,7 @@ namespace Webfuel.Domain
         }
         string _DesignJson = String.Empty;
         public bool IsPublic  { get; set; } = false;
+        public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid ReportProviderId { get; set; }
         public Guid OwnerUserId { get; set; }
         public Guid ReportGroupId { get; set; }
@@ -72,6 +76,7 @@ namespace Webfuel.Domain
             entity.Description = Description;
             entity.DesignJson = DesignJson;
             entity.IsPublic = IsPublic;
+            entity.CreatedAt = CreatedAt;
             entity.ReportProviderId = ReportProviderId;
             entity.OwnerUserId = OwnerUserId;
             entity.ReportGroupId = ReportGroupId;

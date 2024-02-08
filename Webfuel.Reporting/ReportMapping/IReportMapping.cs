@@ -6,6 +6,12 @@
 
         Task<List<object>> MapContextsToEntities(List<object> contexts, ReportBuilder builder);
 
-        IReportMapper GetMapper(IServiceProvider services);
+        Type MapType { get; }
+    }
+
+    public interface IReportMapping<TEntity, TMap> : IReportMapping
+        where TEntity : class
+        where TMap : class, IReportMap<TEntity>
+    {
     }
 }

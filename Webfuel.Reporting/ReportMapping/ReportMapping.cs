@@ -4,21 +4,21 @@ using System.Text.Json.Serialization;
 namespace Webfuel.Reporting
 {
 
-    internal class ReportMapping<TEntity> : IReportMapping 
+    internal class ReportMapping<TEntity, TMap> : IReportMapping<TEntity, TMap>
         where TEntity : class 
+        where TMap : class, IReportMap<TEntity>
     {
         public bool MultiValued => ParentMapping?.MultiValued ?? false;
+
+        [JsonIgnore]
+        public Type MapType => typeof(TMap);
+
 
         [JsonIgnore]
         public IReportMapping? ParentMapping { get; init; }
 
         [JsonIgnore]
         public required Func<object, Guid?> Accessor { get; init; }
-
-        public IReportMapper GetMapper(IServiceProvider services)
-        {
-            return (IReportMapper)services.GetRequiredService(typeof(IReportMapper<>).MakeGenericType(typeof(TEntity)));
-        }
 
         public async Task<List<object>> MapContextsToEntities(List<object> contexts, ReportBuilder builder)
         {
@@ -27,7 +27,7 @@ namespace Webfuel.Reporting
             if (ParentMapping != null)
                 contexts = await ParentMapping.MapContextsToEntities(contexts, builder);
 
-            var mapper = GetMapper(builder.ServiceProvider);
+            var map = builder.ServiceProvider.GetRequiredService<TMap>();
 
             foreach (var context in contexts)
             {
@@ -35,7 +35,7 @@ namespace Webfuel.Reporting
                 if (id == null)
                     continue;
 
-                var entity = await mapper.Get(id.Value);
+                var entity = await map.Get(id.Value);
                 if (entity == null)
                     continue;
 

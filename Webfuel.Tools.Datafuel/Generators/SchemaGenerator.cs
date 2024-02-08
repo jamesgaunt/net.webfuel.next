@@ -26,7 +26,7 @@ namespace Webfuel.Tools.Datafuel
                     ChangeLoggerGenerator.GenerateChangeLogger(entity);
 
                 if(entity.StaticData)
-                    StaticDataReferenceProviderGenerator.GenerateStaticDataReferenceProvider(entity);
+                    StaticDataReportMapGenerator.GenerateStaticDataReportMap(entity);
             }
 
             // Static Data Features

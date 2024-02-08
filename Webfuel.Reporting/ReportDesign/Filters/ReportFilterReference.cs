@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Webfuel.Reporting;
 
 namespace Webfuel.Reporting
 {
@@ -29,17 +30,7 @@ namespace Webfuel.Reporting
     {
         public override ReportFilterType FilterType => ReportFilterType.Reference;
 
-        public override IEnumerable<ReportFilterCondition> Conditions => new List<ReportFilterCondition>
-        {
-            new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.OneOf, Description = "is one of", Unary = false },
-            new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.NotOneOf, Description = "is not one of", Unary = false },
-            new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.AllOf, Description = "is all of", Unary = false },
-            new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.Only, Description = "is only", Unary = false },
-            new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.AllOfAndOnly, Description = "is all of and only", Unary = false },
-
-            new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.IsSet, Description = "is set", Unary = true },
-            new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.IsNotSet, Description = "is not set", Unary = true },
-        };
+        public override IEnumerable<ReportFilterCondition> Conditions => MultiValued ? MultiValuedConditions : SingleValuedConditions;
 
         public List<Guid> Value { get; set; } = new List<Guid>();
 
@@ -55,22 +46,20 @@ namespace Webfuel.Reporting
                 if (field == null)
                     return false;
 
-                var mapper = field.GetMapper(services);
-                if (mapper == null)
-                    return false;
+                var map = field.GetMap(services);
 
                 Value = Value.Distinct().ToList();
 
                 for (var i = 0; i < Value.Count; i++)
                 {
-                    var entity = await mapper.Get(Value[i]);
+                    var entity = await map.Get(Value[i]);
                     if (entity == null)
                     {
                         Value[i] = Guid.Empty; // flag for deletion
                         continue;
                     }
 
-                    var name = mapper.Name(entity);
+                    var name = map.Name(entity);
                     if (valueDescription.Length > 0)
                         valueDescription.Append(", ");
 
@@ -102,7 +91,7 @@ namespace Webfuel.Reporting
             if (field == null)
                 return false;
 
-            if (field is not ReportReferenceField referenceField)
+            if (field.FieldType != ReportFieldType.Reference)
                 throw new InvalidOperationException($"Field {field.Name} is not a reference field");
 
             var entities = await field.MapContextToEntities(context, builder);
@@ -115,7 +104,7 @@ namespace Webfuel.Reporting
 
             var ids = new List<Guid>();
             foreach(var entity in entities)
-                ids.Add(referenceField.GetMapper(builder.ServiceProvider).Id(entity));
+                ids.Add(field.GetMap(builder.ServiceProvider).Id(entity));
 
             if(condition == (int)ReportFilterReferenceCondition.OneOf)
             {
@@ -221,5 +210,30 @@ namespace Webfuel.Reporting
             writer.WritePropertyName("value");
             JsonSerializer.Serialize(writer, Value, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
         }
+
+        // Static
+
+        static IEnumerable<ReportFilterCondition> MultiValuedConditions = new List<ReportFilterCondition>
+        {
+            new ReportFilterCondition { Value = (int) ReportFilterReferenceCondition.OneOf, Description = "is one of", Unary = false },
+            new ReportFilterCondition { Value = (int) ReportFilterReferenceCondition.NotOneOf, Description = "is not one of", Unary = false },
+
+            new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.AllOf, Description = "is all of", Unary = false },
+            new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.Only, Description = "is only", Unary = false },
+            new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.AllOfAndOnly, Description = "is all of and only", Unary = false },
+
+            new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.IsSet, Description = "is set", Unary = true },
+            new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.IsNotSet, Description = "is not set", Unary = true },
+        };
+
+        static IEnumerable<ReportFilterCondition> SingleValuedConditions = new List<ReportFilterCondition>
+        {
+            new ReportFilterCondition { Value = (int) ReportFilterReferenceCondition.OneOf, Description = "is one of", Unary = false },
+            new ReportFilterCondition { Value = (int) ReportFilterReferenceCondition.NotOneOf, Description = "is not one of", Unary = false },
+
+            new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.IsSet, Description = "is set", Unary = true },
+            new ReportFilterCondition { Value = (int)ReportFilterReferenceCondition.IsNotSet, Description = "is not set", Unary = true },
+        };
+
     }
 }

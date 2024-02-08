@@ -10,7 +10,7 @@ namespace Webfuel.Domain
         
         public static string DatabaseTable => "ReportGroup";
         
-        public static string DefaultOrderBy => "ORDER BY Id ASC";
+        public static string DefaultOrderBy => "ORDER BY SortOrder ASC";
         
         public static ReportGroup DataReader(SqlDataReader dr) => new ReportGroup(dr);
         

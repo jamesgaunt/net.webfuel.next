@@ -68,7 +68,7 @@ namespace Webfuel.App
 
         public static Task<QueryResult<ReferenceLookup>> LookupReferenceField([FromBody] LookupReferenceField command, IReportDesignService reportDesignService)
         {
-            return reportDesignService.LookupReferenceField(command.ReportProviderId, command.FieldId, command.Query);
+            return reportDesignService.QueryReferenceField(command.ReportProviderId, command.FieldId, command.Query);
         }
 
         public static Task<List<ReportArgument>> GenerateArguments([FromBody] ReportDesign design, IReportDesignService reportDesignService)

@@ -80,12 +80,12 @@ namespace Webfuel.Domain
         }
         public async Task<List<ReportGroup>> SelectReportGroup()
         {
-            var sql = @"SELECT * FROM [ReportGroup] ORDER BY Id ASC";
+            var sql = @"SELECT * FROM [ReportGroup] ORDER BY SortOrder ASC";
             return await _connection.ExecuteReader<ReportGroup, ReportGroupMetadata>(sql);
         }
         public async Task<List<ReportGroup>> SelectReportGroupWithPage(int skip, int take)
         {
-            var sql = @"SELECT * FROM [ReportGroup] ORDER BY Id ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+            var sql = @"SELECT * FROM [ReportGroup] ORDER BY SortOrder ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Skip", skip),

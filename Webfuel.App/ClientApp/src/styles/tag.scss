@@ -72,7 +72,6 @@
 .progress-bar {
   position: relative;
   background-color: #555555;
-  border-radius: 2.5rem;
   height: 5rem;
 
   .progress-bar-slider {
@@ -83,7 +82,6 @@
     width: 0%;
     transition: width 0.25s linear;
     background-color: #3AAA90;
-    border-radius: 2.5rem;
   }
 
   .progress-bar-content {
