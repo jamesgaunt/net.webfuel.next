@@ -62,7 +62,7 @@ namespace Webfuel.Reporting
             if (field == null)
                 return false;
 
-            var untyped = await field.Evaluate(context, builder);
+            var untyped = await field.GetValue(context, builder);
             var typed = untyped?.ToString() ?? String.Empty;
 
             switch (condition)

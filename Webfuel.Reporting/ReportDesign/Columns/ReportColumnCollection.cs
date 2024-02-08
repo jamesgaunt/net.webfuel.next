@@ -8,11 +8,9 @@ using System.Threading.Tasks;
 namespace Webfuel.Reporting
 {
     [ApiEnum]
-    public enum ReportColumnAggregation
+    public enum ReportColumnCollection
     {
-        None = 0,
-
-        Group = 10,
+        Default = 0,
 
         Sum = 100,
         Avg = 200,

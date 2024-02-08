@@ -3,7 +3,17 @@
   <li><a routerLink="/reporting/report-list">Reports</a></li>
 </ul>
 <div class="container">
-  <h1 class="title">Reports</h1>
+  <div class="columns">
+    <div class="column">
+      <h1 class="title">Reports</h1>
+    </div>
+    <div class="column">
+      <div class="header-buttons">
+        <button class="button is-success" (click)="add()">Add Report</button>
+      </div>
+    </div>
+  </div>
+
   <div class="filter-form">
     <form class="form" [formGroup]="filterForm">
       <div class="flex">
@@ -23,6 +33,63 @@
     </form>
   </div>
 
+  <div class="card header">
+    <div class="columns">
+      <div class="column is-3">
+        <h3 style="margin: 0">Report Name</h3>
+      </div>
+      <div class="column is-3">
+        <h3 style="margin: 0">Owner</h3>
+      </div>
+      <div class="column is-3">
+        <h3 style="margin: 0">Report Group</h3>
+      </div>
+      <div class="column is-3">
+        <h3 style="margin: 0">Data Type</h3>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="reports.length > 0">
+    <div *ngFor="let report of reports" class="card">
+      <div class="columns">
+        <div class="column is-3">
+          <h3 style="margin: 0">{{ report.name }}</h3>
+        </div>
+        <div class="column is-3">
+          <b style="margin: 0">{{ (userService.formatUser(report.ownerUserId) | async) == "James Gaunt" ? "System" : (userService.formatUser(report.ownerUserId) | async) }}</b>
+        </div>
+        <div class="column is-3">
+          <b style="margin: 0">{{ (reportGroupLookup.get({ id: report.reportGroupId }) | async)?.name }}</b>
+        </div>
+        <div class="column is-3">
+          <b style="margin: 0">{{ (reportProviderLookup.get({ id: report.reportProviderId }) | async)?.name }}</b>
+        </div>
+      </div>
+      <p style="margin: 8px 0 8px 0">{{ report.description }}&nbsp;</p>
+      <div class="columns">
+        <div class="column">
+          <b>Created:</b> {{ report.createdAt | date: 'dd/MM/yyyy' }} &nbsp;|&nbsp;
+          <span *ngIf="report.isPublic" class="text is-success is-bold">Public</span>
+          <span *ngIf="!report.isPublic" class="text is-warning is-bold">Private</span>
+        </div>
+        <div class="column">
+          <div class="text is-right-aligned">
+            <a *ngIf="canEditReport(report)" class="link is-primary" (click)="edit(report)">edit</a> &nbsp;
+            <a class="link is-success" (click)="copy(report)">copy</a> &nbsp;
+            <a class="link is-warning" (click)="run(report)">run</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="reports.length == 0">
+    <p>No reports found.</p>
+  </div>
+
+
+
+  <!--
   <grid [dataSource]="reportApi" [filterForm]="filterForm">
     <grid-column name="name" />
     <grid-reference-column name="reportGroupId" [dataSource]="reportGroupApi" />
@@ -47,6 +114,7 @@
       </ng-template>
     </grid-column>
   </grid>
+  -->
 </div>
 
 

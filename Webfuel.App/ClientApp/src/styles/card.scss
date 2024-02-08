@@ -1,11 +1,20 @@
 @import 'config.scss';
 
 .card {
-  margin-bottom: calc(var(--gap) * 2);
+  margin-bottom: calc(var(--gap));
   border: 2px solid var(--palette-control-border);
-  padding: 0.5rem 1rem 0.5rem 1rem;
+  padding: 1rem;
   box-shadow: 0 0 12px RGBA(0, 0, 0, 0.1);
-  background-color: var(--palette-body-background-alt);
+  background-color: var(--palette-control-background);
+  color: var(--palette-control-text);
+
+  &.header {
+      background-color: transparent;
+      color: var(--palette-body-text);
+      border: none;
+      box-shadow: none;
+      border-bottom: 2px solid var(--palette-body-border);
+  }
 
   .card-title {
     margin: 0.5rem 0 0.5rem;

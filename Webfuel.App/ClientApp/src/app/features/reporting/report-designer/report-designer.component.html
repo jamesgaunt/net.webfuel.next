@@ -16,6 +16,8 @@
                 </span>
                 &nbsp;
                 <span [style.font-weight]="column.bold ? 'bold' : 'normal'">{{ column.title }}</span>
+                &nbsp;
+                {{ collectionDescription(column) }}
               </div>
               <div class="column is-right is-narrow">
                 <a class="link is-primary" (click)="editColumn(column)">edit</a>

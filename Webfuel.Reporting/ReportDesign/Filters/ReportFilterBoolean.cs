@@ -51,7 +51,7 @@ namespace Webfuel.Reporting
             if (condition == (int)ReportFilterBooleanCondition.Any)
                 return true;
 
-            var untyped = await field.Evaluate(context, builder);
+            var untyped = await field.GetValue(context, builder);
             if (untyped is not bool typed)
                 return false;
 

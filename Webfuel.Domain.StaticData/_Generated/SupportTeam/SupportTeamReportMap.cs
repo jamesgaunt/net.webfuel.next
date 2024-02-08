@@ -20,16 +20,16 @@ namespace Webfuel.Domain.StaticData
             return staticData.SupportTeam.FirstOrDefault(x => x.Id == id);
         }
         
-        public async Task<QueryResult<ReferenceLookup>> Query(Query query)
+        public async Task<QueryResult<ReportMapEntity>> Query(Query query)
         {
             query.Contains(nameof(SupportTeam.Name), query.Search);
             
             var result = await _repository.QuerySupportTeam(query);
             
-            return new QueryResult<ReferenceLookup>
+            return new QueryResult<ReportMapEntity>
             {
                 TotalCount = result.TotalCount,
-                Items = result.Items.Select(p => new ReferenceLookup
+                Items = result.Items.Select(p => new ReportMapEntity
                     {
                         Id = p.Id,
                         Name = p.Name

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Webfuel.Reporting
 {
-    public class ReferenceLookup
+    public class ReportMapEntity
     {
         public required Guid Id { get; set; }
 
@@ -25,6 +25,6 @@ namespace Webfuel.Reporting
 
         string Name(object reference);
 
-        Task<QueryResult<ReferenceLookup>> Query(Query query);
+        Task<QueryResult<ReportMapEntity>> Query(Query query);
     }
 }

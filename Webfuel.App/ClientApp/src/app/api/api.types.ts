@@ -1,3 +1,36 @@
+export enum ReportFieldType {
+    Unspecified = 0,
+    String = 10,
+    Number = 20,
+    Boolean = 30,
+    DateTime = 40,
+    Date = 50,
+    Reference = 1000,
+}
+
+export enum ReportColumnCollection {
+    Default = 0,
+    Sum = 100,
+    Avg = 200,
+    Min = 300,
+    Max = 400,
+    Count = 500,
+    List = 1000,
+    ListDistinct = 1100,
+}
+
+export enum ReportColumnAggregation {
+    None = 0,
+    Group = 10,
+    Sum = 100,
+    Avg = 200,
+    Min = 300,
+    Max = 400,
+    Count = 500,
+    List = 1000,
+    ListDistinct = 1100,
+}
+
 export enum ReportFilterType {
     String = 10,
     Number = 20,
@@ -59,16 +92,6 @@ export enum ReportFilterStringCondition {
     IsNotEmpty = 1001,
 }
 
-export enum ReportFieldType {
-    Unspecified = 0,
-    String = 10,
-    Number = 20,
-    Boolean = 30,
-    DateTime = 40,
-    Date = 50,
-    Reference = 1000,
-}
-
 export interface ClientConfiguration {
     userId: string;
     email: string;
@@ -124,10 +147,13 @@ export interface ReportColumn {
     id: string;
     fieldId: string;
     fieldName: string;
+    fieldType: ReportFieldType;
+    multiValued: boolean;
     title: string;
     width: number | null | null;
     bold: boolean;
     expression: string;
+    collection: ReportColumnCollection;
 }
 
 export interface ReportFilter {
@@ -153,6 +179,7 @@ export interface ReportFilterBoolean extends ReportFilterField {
     conditions: Array<ReportFilterCondition>;
     fieldId: string;
     fieldName: string;
+    multiValued: boolean;
     displayName: string;
     id: string;
     name: string;
@@ -165,6 +192,7 @@ export interface ReportFilterBoolean extends ReportFilterField {
 export interface ReportFilterField extends ReportFilter {
     fieldId: string;
     fieldName: string;
+    multiValued: boolean;
     displayName: string;
     filterType: ReportFilterType;
     id: string;
@@ -182,6 +210,7 @@ export interface ReportFilterDate extends ReportFilterField {
     value: string;
     fieldId: string;
     fieldName: string;
+    multiValued: boolean;
     displayName: string;
     id: string;
     name: string;
@@ -223,6 +252,7 @@ export interface ReportFilterNumber extends ReportFilterField {
     value: number;
     fieldId: string;
     fieldName: string;
+    multiValued: boolean;
     displayName: string;
     id: string;
     name: string;
@@ -238,6 +268,7 @@ export interface ReportFilterReference extends ReportFilterField {
     value: Array<string>;
     fieldId: string;
     fieldName: string;
+    multiValued: boolean;
     displayName: string;
     id: string;
     name: string;
@@ -253,6 +284,7 @@ export interface ReportFilterString extends ReportFilterField {
     value: string;
     fieldId: string;
     fieldName: string;
+    multiValued: boolean;
     displayName: string;
     id: string;
     name: string;
@@ -1120,7 +1152,7 @@ export interface ReportSchema {
     fields: Array<ReportField>;
 }
 
-export interface ReferenceLookup {
+export interface ReportMapEntity {
     id: string;
     name: string;
 }

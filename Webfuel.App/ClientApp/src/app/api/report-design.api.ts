@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { InsertReportColumn, ReportDesign, UpdateReportColumn, DeleteReportColumn, InsertReportFilter, UpdateReportFilter, DeleteReportFilter, ReportSchema, LookupReferenceField, QueryResult, ReferenceLookup, ReportArgument } from './api.types';
+import { InsertReportColumn, ReportDesign, UpdateReportColumn, DeleteReportColumn, InsertReportFilter, UpdateReportFilter, DeleteReportFilter, ReportSchema, LookupReferenceField, QueryResult, ReportMapEntity, ReportArgument } from './api.types';
 
 @Injectable()
 export class ReportDesignApi {
@@ -37,8 +37,8 @@ export class ReportDesignApi {
         return this.apiService.request<undefined, ReportSchema>("GET", "api/report-design/schema/" + params.reportProviderId + "", undefined, options);
     }
     
-    public lookupReferenceField (body: LookupReferenceField, options?: ApiOptions): Observable<QueryResult<ReferenceLookup>> {
-        return this.apiService.request<LookupReferenceField, QueryResult<ReferenceLookup>>("POST", "api/report-design/schema/lookup-reference-field", body, options);
+    public lookupReferenceField (body: LookupReferenceField, options?: ApiOptions): Observable<QueryResult<ReportMapEntity>> {
+        return this.apiService.request<LookupReferenceField, QueryResult<ReportMapEntity>>("POST", "api/report-design/schema/lookup-reference-field", body, options);
     }
     
     public generateArguments (body: ReportDesign, options?: ApiOptions): Observable<Array<ReportArgument>> {

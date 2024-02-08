@@ -23,14 +23,14 @@ namespace Webfuel.Domain
             return await _userGroupRepository.GetUserGroup(id);
         }
 
-        public async Task<QueryResult<ReferenceLookup>> Query(Query query)
+        public async Task<QueryResult<ReportMapEntity>> Query(Query query)
         {
             var result = await _userGroupRepository.QueryUserGroup(query);
 
-            return new QueryResult<ReferenceLookup>
+            return new QueryResult<ReportMapEntity>
             {
                 TotalCount = result.TotalCount,
-                Items = result.Items.Select(p => new ReferenceLookup
+                Items = result.Items.Select(p => new ReportMapEntity
                 {
                     Id = p.Id,
                     Name = p.Name

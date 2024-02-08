@@ -207,7 +207,7 @@ namespace Webfuel.Reporting
             }
         }
 
-        public virtual async Task<bool> FilterItem(object item)
+        public virtual async ValueTask<bool> FilterItem(object item)
         {
             foreach (var filter in Request.Design.Filters)
             {
@@ -218,7 +218,7 @@ namespace Webfuel.Reporting
             return true;
         }
 
-        public virtual async Task ProcessItem(object item)
+        public virtual async ValueTask ProcessItem(object item)
         {
             if (!await FilterItem(item))
                 return;
@@ -230,13 +230,13 @@ namespace Webfuel.Reporting
             }
         }
 
-        public virtual async Task ProcessColumn(object item, ReportColumn column, ReportRow row)
+        public virtual async ValueTask ProcessColumn(object item, ReportColumn column, ReportRow row)
         {
             var value = await EvaluateColumn(item, column);
             row.AddCell().Value = value;
         }
 
-        public virtual Task<object?> EvaluateColumn(object item, ReportColumn column)
+        public virtual async ValueTask<object?> EvaluateColumn(object item, ReportColumn column)
         {
             var field = ServiceProvider.GetRequiredService<IReportDesignService>()
                 .GetReportSchema(Request.Design.ReportProviderId)
@@ -245,7 +245,9 @@ namespace Webfuel.Reporting
             if (field == null)
                 return Task.FromResult<object?>(null);
 
-            return field.Evaluate(item, this);
+            var values = await field.GetValues(item, this);
+
+            return ReportBuilderCollect.Collect(column, values);
         }
 
         public override ReportResult RenderReport()

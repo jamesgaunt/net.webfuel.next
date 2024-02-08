@@ -20,5 +20,7 @@ namespace Webfuel.Reporting
         public double? Width { get; set; }
 
         public bool Bold { get; set; }
+
+        public ReportColumnCollection Collection { get; set; } = ReportColumnCollection.Default;
     }
 }

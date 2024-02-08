@@ -22,6 +22,7 @@ namespace Webfuel.Reporting
             column.Title = request.Title;
             column.Width = request.Width;
             column.Bold = request.Bold;
+            column.Collection = request.Collection;
 
             return _reportDesignService.ValidateDesign(request.Design);
         }

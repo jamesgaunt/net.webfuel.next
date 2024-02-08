@@ -32,15 +32,28 @@ namespace Webfuel.Reporting
         [JsonIgnore]
         public IReportAccessor? Accessor { get; init; }
 
-        internal async Task<object?> Evaluate(object context, ReportBuilder builder)
+        internal async ValueTask<List<object>> GetValues(object context, ReportBuilder builder)
         {
             var entities = await MapContextToEntities(context, builder);
-            var values = await MapEntitiesToValues(entities, builder);
-
-            return CollectValues(values);
+            return await MapEntitiesToValues(entities, builder);
         }
 
-        internal async Task<List<object>> MapContextToEntities(object context, ReportBuilder builder)
+        internal async ValueTask<object?> GetValue(object context, ReportBuilder builder)
+        {
+            var values = await GetValues(context, builder);
+
+            if (values.Count == 0)
+                return null;
+
+            if (values.Count == 1)
+                return values[0];
+
+            if (FieldType == ReportFieldType.Number)
+                return ReportBuilderCollect.Sum(values);
+            return ReportBuilderCollect.List(values);
+        }
+
+        internal async ValueTask<List<object>> MapContextToEntities(object context, ReportBuilder builder)
         {
             return Mapping == null ?
                 new List<object> { context } :
@@ -70,51 +83,6 @@ namespace Webfuel.Reporting
                 result.Add(value);
             }
             return result;
-        }
-
-        object? CollectValues(List<object> values)
-        {
-            if (values.Count == 0)
-                return null;
-
-            if(values.Count == 1)
-                return values[0];
-
-            if(FieldType == ReportFieldType.Number)
-            {
-                var sum = 0D;
-                foreach (var value in values)
-                {
-                    if (IsNumericType(value.GetType()))
-                        sum += Convert.ToDouble(value);
-                    else
-                        throw new InvalidOperationException("The field is of type number but the value is not numeric");
-                }
-                return sum;
-            }
-
-            return String.Join(", ", values);
-        }
-
-        static bool IsNumericType(Type type)
-        {
-            switch (Type.GetTypeCode(type))
-            {
-                case TypeCode.Byte:
-                case TypeCode.SByte:
-                case TypeCode.UInt16:
-                case TypeCode.UInt32:
-                case TypeCode.UInt64:
-                case TypeCode.Int16:
-                case TypeCode.Int32:
-                case TypeCode.Int64:
-                case TypeCode.Decimal:
-                case TypeCode.Double:
-                case TypeCode.Single:
-                    return true;
-                default:
-                    return false;
-            }
         }
     }
 }

@@ -25,4 +25,8 @@ p {
   &.is-bold {
       font-weight: bold;
   }
+
+  &.is-right-aligned {
+      text-align: right;
+  }
 }

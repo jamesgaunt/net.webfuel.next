@@ -17,6 +17,10 @@
     align-items: center;
   }
 
+  &.is-align-right {
+    align-items: center;
+  }
+
   .column {
     flex-grow: 1;
     flex-shrink: 1;
@@ -35,6 +39,11 @@
     &.is-12 {
       flex: none;
       width: 100%;
+    }
+
+    &.is-6 {
+      flex: none;
+      width: 50%;
     }
 
     &.is-4 {

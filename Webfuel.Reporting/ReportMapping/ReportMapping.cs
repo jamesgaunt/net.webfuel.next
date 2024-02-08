@@ -13,7 +13,6 @@ namespace Webfuel.Reporting
         [JsonIgnore]
         public Type MapType => typeof(TMap);
 
-
         [JsonIgnore]
         public IReportMapping? ParentMapping { get; init; }
 

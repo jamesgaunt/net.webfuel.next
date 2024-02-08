@@ -45,7 +45,7 @@ namespace Webfuel.Domain
             return items.Select(x => x.Id).ToList();
         }
 
-        public Task<QueryResult<ReferenceLookup>> Query(Query query)
+        public Task<QueryResult<ReportMapEntity>> Query(Query query)
         {
             throw new NotImplementedException();
         }

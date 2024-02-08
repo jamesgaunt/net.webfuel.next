@@ -29,16 +29,16 @@ namespace Webfuel.Domain
             return value;
         }
 
-        public async Task<QueryResult<ReferenceLookup>> Query(Query query)
+        public async Task<QueryResult<ReportMapEntity>> Query(Query query)
         {
             query.Contains(nameof(Project.PrefixedNumber), query.Search);
 
             var result = await _repository.QueryProject(query);
 
-            return new QueryResult<ReferenceLookup>
+            return new QueryResult<ReportMapEntity>
             {
                 TotalCount = result.TotalCount,
-                Items = result.Items.Select(p => new ReferenceLookup
+                Items = result.Items.Select(p => new ReportMapEntity
                 {
                     Id = p.Id,
                     Name = p.PrefixedNumber

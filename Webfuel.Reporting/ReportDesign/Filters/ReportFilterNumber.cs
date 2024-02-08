@@ -65,7 +65,7 @@ namespace Webfuel.Reporting
             if (field == null)
                 return false;
 
-            var untyped = await field.Evaluate(context, builder);
+            var untyped = await field.GetValue(context, builder);
 
             if (untyped == null)
                 return condition == (int)ReportFilterNumberCondition.IsNotSet;

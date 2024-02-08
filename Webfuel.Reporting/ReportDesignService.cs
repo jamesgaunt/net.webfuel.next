@@ -23,7 +23,7 @@ namespace Webfuel.Reporting
 
         Task<List<ReportArgument>> GenerateArguments(ReportDesign design);
 
-        Task<QueryResult<ReferenceLookup>> QueryReferenceField(Guid reportProviderId, Guid fieldId, Query query);
+        Task<QueryResult<ReportMapEntity>> QueryReferenceField(Guid reportProviderId, Guid fieldId, Query query);
     }
 
     [Service(typeof(IReportDesignService))]
@@ -75,7 +75,7 @@ namespace Webfuel.Reporting
             return design.GenerateArguments(_serviceProvider);
         }
 
-        public Task<QueryResult<ReferenceLookup>> QueryReferenceField(Guid reportProviderId, Guid fieldId, Query query)
+        public Task<QueryResult<ReportMapEntity>> QueryReferenceField(Guid reportProviderId, Guid fieldId, Query query)
         {
             var provider = GetReportProvider(reportProviderId);
 

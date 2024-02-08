@@ -15,6 +15,39 @@ export enum QueryOp {
     Or = "or",
 }
 
+export enum ReportFieldType {
+    Unspecified = 0,
+    String = 10,
+    Number = 20,
+    Boolean = 30,
+    DateTime = 40,
+    Date = 50,
+    Reference = 1000,
+}
+
+export enum ReportColumnCollection {
+    Default = 0,
+    Sum = 100,
+    Avg = 200,
+    Min = 300,
+    Max = 400,
+    Count = 500,
+    List = 1000,
+    ListDistinct = 1100,
+}
+
+export enum ReportColumnAggregation {
+    None = 0,
+    Group = 10,
+    Sum = 100,
+    Avg = 200,
+    Min = 300,
+    Max = 400,
+    Count = 500,
+    List = 1000,
+    ListDistinct = 1100,
+}
+
 export enum ReportColumnTypeIdentifiers {
     Expression = "00000000-0000-0000-0000-000000000001",
 }
@@ -83,16 +116,6 @@ export enum ReportFilterStringCondition {
 export enum ReportFilterTypeIdentifiers {
     Group = "00000000-0000-0000-0000-000000000001",
     Expression = "00000000-0000-0000-0000-000000000002",
-}
-
-export enum ReportFieldType {
-    Unspecified = 0,
-    String = 10,
-    Number = 20,
-    Boolean = 30,
-    DateTime = 40,
-    Date = 50,
-    Reference = 1000,
 }
 
 export enum IsCTUAlreadyInvolvedEnum {

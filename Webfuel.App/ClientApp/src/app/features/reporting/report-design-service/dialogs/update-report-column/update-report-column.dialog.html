@@ -18,6 +18,12 @@
           <toggle-input formControlName="bold" />
         </div>
       </div>
+      <div class="field" *ngIf="collectionOptions.length > 0">
+        <label class="label">Combine Multiple Values Using</label>
+        <select class="select" formControlName="collection">
+          <option *ngFor="let option of collectionOptions" [ngValue]="option.id">{{ option.name }}</option>
+        </select>
+      </div>
     </div>
   </div>
   <div class="dialog-buttons">

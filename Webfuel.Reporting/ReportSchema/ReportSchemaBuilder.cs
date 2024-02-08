@@ -43,7 +43,7 @@ namespace Webfuel.Reporting
                 Name = name,
                 Accessor = new ReportPropertyAccessor { Accessor = o => accessor((TContext)o) },
                 Mapping = Mapping,
-                MultiValued = false,
+                MultiValued = Mapping?.MultiValued ?? false,
                 Filterable = true,
                 FieldType = MapFieldType(typeof(TField)),
             });
@@ -61,7 +61,7 @@ namespace Webfuel.Reporting
                 Name = name,
                 Accessor = new ReportAsyncAccessor { Accessor = async o => await accessor((TContext)o) },
                 Mapping = Mapping,
-                MultiValued = false,
+                MultiValued = Mapping?.MultiValued ?? false,
                 Filterable = true,
                 FieldType = MapFieldType(typeof(TField)),
             });
