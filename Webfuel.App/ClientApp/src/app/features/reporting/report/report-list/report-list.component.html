@@ -50,34 +50,37 @@
     </div>
   </div>
 
+
   <div *ngIf="reports.length > 0">
-    <div *ngFor="let report of reports" class="card">
-      <div class="columns">
-        <div class="column is-3">
-          <h3 style="margin: 0">{{ report.name }}</h3>
+    <div class="card-set">
+      <div *ngFor="let report of reports" class="card">
+        <div class="columns">
+          <div class="column is-3">
+            <h3 style="margin: 0"><i class="fas fa-file-spreadsheet"></i> {{ report.name }}</h3>
+          </div>
+          <div class="column is-3">
+            <b style="margin: 0">{{ (userService.formatUser(report.ownerUserId) | async) == "James Gaunt" ? "System" : (userService.formatUser(report.ownerUserId) | async) }}</b>
+          </div>
+          <div class="column is-3">
+            <b style="margin: 0">{{ (reportGroupLookup.get({ id: report.reportGroupId }) | async)?.name }}</b>
+          </div>
+          <div class="column is-3">
+            <b style="margin: 0">{{ (reportProviderLookup.get({ id: report.reportProviderId }) | async)?.name }}</b>
+          </div>
         </div>
-        <div class="column is-3">
-          <b style="margin: 0">{{ (userService.formatUser(report.ownerUserId) | async) == "James Gaunt" ? "System" : (userService.formatUser(report.ownerUserId) | async) }}</b>
-        </div>
-        <div class="column is-3">
-          <b style="margin: 0">{{ (reportGroupLookup.get({ id: report.reportGroupId }) | async)?.name }}</b>
-        </div>
-        <div class="column is-3">
-          <b style="margin: 0">{{ (reportProviderLookup.get({ id: report.reportProviderId }) | async)?.name }}</b>
-        </div>
-      </div>
-      <p style="margin: 8px 0 8px 0">{{ report.description }}&nbsp;</p>
-      <div class="columns">
-        <div class="column">
-          <b>Created:</b> {{ report.createdAt | date: 'dd/MM/yyyy' }} &nbsp;|&nbsp;
-          <span *ngIf="report.isPublic" class="text is-success is-bold">Public</span>
-          <span *ngIf="!report.isPublic" class="text is-warning is-bold">Private</span>
-        </div>
-        <div class="column">
-          <div class="text is-right-aligned">
-            <a *ngIf="canEditReport(report)" class="link is-primary" (click)="edit(report)">edit</a> &nbsp;
-            <a class="link is-success" (click)="copy(report)">copy</a> &nbsp;
-            <a class="link is-warning" (click)="run(report)">run</a>
+        <p style="margin: 8px 0 8px 0">{{ report.description }}&nbsp;</p>
+        <div class="columns">
+          <div class="column">
+            {{ report.createdAt | date: 'dd/MM/yyyy' }} &nbsp;|&nbsp;
+            <span *ngIf="report.isPublic" class="text is-success is-bold">Public</span>
+            <span *ngIf="!report.isPublic" class="text is-warning is-bold">Private</span>
+          </div>
+          <div class="column">
+            <div class="text is-right-aligned">
+              <span *ngIf="canEditReport(report)"><a class="link is-primary" (click)="edit(report)"><i class="fas fa-fw fa-pencil"></i>&nbsp;Edit</a>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+              <a class="link is-success" (click)="copy(report)"><i class="fas fa-fw fa-copy"></i>&nbsp;Copy</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+              <a class="link is-warning" (click)="run(report)"><i class="fas fa-fw fa-cogs"></i>&nbsp;Run</a>
+            </div>
           </div>
         </div>
       </div>

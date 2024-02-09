@@ -35,7 +35,7 @@ namespace Webfuel.Common
                     clientConfiguration.SideMenu.AddChild(name: "Users", action: "/user/user-list", icon: "fas fa-fw fa-users");
 
                 if (_identityAccessor.Claims.CanEditReports)
-                    clientConfiguration.SideMenu.AddChild(name: "Reports", action: "/reporting/report-list", icon: "fas fa-fw fa-file-excel");
+                    clientConfiguration.SideMenu.AddChild(name: "Reports", action: "/reporting/report-list", icon: "fas fa-fw fa-file-spreadsheet");
 
                 if (_identityAccessor.Claims.CanAccessConfiguration)
                     clientConfiguration.SideMenu.AddChild(name: "Configuration", action: "/configuration/configuration-menu", icon: "fas fa-fw fa-cogs");

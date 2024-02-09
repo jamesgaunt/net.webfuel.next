@@ -50,10 +50,10 @@ export class InsertReportFilterDialogComponent extends DialogComponentBase<Repor
       name: "Condition Group",
     });
 
-    this.fields.push(<any>{
-      id: ReportFilterTypeIdentifiers.Expression,
-      name: "Expression",
-    });
+    //this.fields.push(<any>{
+    //  id: ReportFilterTypeIdentifiers.Expression,
+    //  name: "Expression",
+    //});
   }
 
   form = new FormGroup({

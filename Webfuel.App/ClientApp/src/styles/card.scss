@@ -4,16 +4,15 @@
   margin-bottom: calc(var(--gap));
   border: 2px solid var(--palette-control-border);
   padding: 1rem;
-  box-shadow: 0 0 12px RGBA(0, 0, 0, 0.1);
-  background-color: var(--palette-control-background);
-  color: var(--palette-control-text);
+  background-color: var(--palette-body-background-alt);
+  color: var(--palette-body-text);
 
   &.header {
-      background-color: transparent;
-      color: var(--palette-body-text);
-      border: none;
-      box-shadow: none;
-      border-bottom: 2px solid var(--palette-body-border);
+    background-color: transparent;
+    color: var(--palette-body-text);
+    border: none;
+    box-shadow: none;
+    border-bottom: 2px solid var(--palette-body-border);
   }
 
   .card-title {
@@ -40,4 +39,20 @@
     line-height: 1.5;
     white-space: pre-wrap;
   }
+}
+
+.card-set {
+  .card {
+    margin-bottom: 0;
+    box-shadow: none;
+    border-bottom: none;
+  }
+
+  .card:nth-child(2n+1){
+    background-color: var(--palette-body-background);
+  }
+
+  box-shadow: 0 0 12px RGBA(0, 0, 0, 0.1);
+  margin-bottom: calc(var(--gap));
+  border-bottom: 2px solid var(--palette-control-border);
 }
