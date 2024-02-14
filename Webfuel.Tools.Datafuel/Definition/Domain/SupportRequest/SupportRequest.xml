@@ -8,6 +8,10 @@
     <Property Name="FileStorageGroupId" Type="FileStorageGroup" Tags="ChangeLog:Ignore" />
     <Property Name="StatusId" Type="SupportRequestStatus" />
 
+    <!-- Meta (not converted to project data) -->
+
+    <Property Name="IsThisRequestLinkedToAnExistingProject" Type="boolean" /><!-- 1.2 Development -->
+    
     <!-- ========== Replicated to Project (Keep All Field Names Identical) ========== -->
 
     <!-- Project Details -->
@@ -28,10 +32,12 @@
     <Property Name="SupportRequested" Type="string[2000]" />
     <Property Name="HowDidYouFindUsId" Type="HowDidYouFindUs?" />
     <Property Name="HowDidYouFindUsFreeText" Type="meta:name" />
-    <Property Name="WhoElseIsOnTheStudyTeam" Type="string[2000]" /> <!-- NEW -->
-    <Property Name="IsCTUAlreadyInvolvedId" Type="IsCTUAlreadyInvolved?" /> <!-- NEW -->
-    <Property Name="IsCTUAlreadyInvolvedFreeText" Type="meta:name" /> <!-- NEW -->
-
+    <Property Name="WhoElseIsOnTheStudyTeam" Type="string[2000]" /> 
+    <Property Name="IsCTUAlreadyInvolvedId" Type="IsCTUAlreadyInvolved?" />
+    <Property Name="IsCTUAlreadyInvolvedFreeText" Type="meta:name" />
+    <Property Name="ProfessionalBackgroundIds"  Type="Json:List{Guid}" Default="[]" /><!-- 1.2 Development -->
+    <Property Name="ProfessionalBackgroundFreeText" Type="meta:name" /><!-- 1.2 Development -->
+    
     <!-- Team Contact Details -->
 
     <Property Name="TeamContactTitle" Type="meta:name" />
@@ -48,9 +54,10 @@
     <Property Name="LeadApplicantTitle" Type="meta:name" />
     <Property Name="LeadApplicantFirstName" Type="meta:name" />
     <Property Name="LeadApplicantLastName" Type="meta:name" />
-    <Property Name="LeadApplicantEmail" Type="meta:name" /> <!-- NEW -->
+    <Property Name="LeadApplicantEmail" Type="meta:name" /> 
 
     <Property Name="LeadApplicantJobRole" Type="meta:name" />
+    <Property Name="LeadApplicantCareerStage" Type="meta:name" /><!-- 1.2 Development -->
     <Property Name="LeadApplicantOrganisationTypeId" Type="ResearcherOrganisationType?" />
     <Property Name="LeadApplicantOrganisation" Type="meta:name" />
     <Property Name="LeadApplicantDepartment" Type="meta:name" />

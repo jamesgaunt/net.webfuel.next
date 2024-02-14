@@ -8,7 +8,7 @@ namespace Webfuel.Tools.Typefuel
     {
         // Solution
 
-        public static string SolutionRoot { get { return @"C:\Repo\net.webfuel.next"; } }
+        public static string SolutionRoot { get { return @"C:\Repo\net.webfuel.rss_icl"; } }
 
         // Calculated
 

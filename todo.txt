@@ -1,25 +1,5 @@
 TODO:
 
-//// SWITCHING UP EDITABILITY / CONDITIONS / ARGUMENTS
-
-/////////////////////
-// Reporting
-
-> Expose conditions dynamically to the UI 
-
-> ReportArgumentType => Union type for sending back arguments
-
-> Autotune cleanups
-
-> Parameterisation
-
-> Standard Exports
-
-> Report Ownership / Access Control [CAN WAIT]
-
-> Aggregation [CAN WAIT]
-
-
 /////////////////////
 // Non-Reporting
 
@@ -62,9 +42,5 @@ Email Template / Test Email Distribution
 > Repository entity pristene tracking?
 
 ====== TODO ======
-
-Update to .net 8
-
-Update to Angular 17
 
 Transition to standalone components

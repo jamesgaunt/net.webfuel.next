@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="WillStudyUseCTU" Tags="StaticData|Enum" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Property Name="FreeText" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="8ba8e39c-8792-4901-9a74-2788e972ac60" Name="No" />
+      <Row Id="4672a5ec-1c83-4a66-b0a8-a797db9e59a9" Name="Yes - External to this RSS" />
+      <Row Id="fc4ddc3d-9b1c-4cb6-970c-94c122ef2fdc" Name="Yes - Internal to this RSS" />
+    </Data>
+  </Entity>
+</Schema>

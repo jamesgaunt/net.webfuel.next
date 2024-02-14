@@ -5,6 +5,7 @@ import { Project } from 'api/api.types';
 import { ProjectApi } from 'api/project.api';
 import { StaticDataCache } from 'api/static-data.cache';
 import { FormService } from 'core/form.service';
+import { Validate } from '../../../../shared/common/validate';
 
 @Component({
   selector: 'project-request',
@@ -54,6 +55,8 @@ export class ProjectRequestComponent implements OnInit {
     whoElseIsOnTheStudyTeam: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     isCTUAlreadyInvolvedId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
     isCTUAlreadyInvolvedFreeText: new FormControl<string>('', { nonNullable: true }),
+    professionalBackgroundIds: new FormControl<string[]>([], { validators: [Validate.minArrayLength(1)], nonNullable: true }), // 1.2 Development
+    professionalBackgroundFreeText: new FormControl<string>('', { nonNullable: true }), // 1.2 Development
   });
 
   cancel() {

@@ -29,6 +29,9 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.PrefixedNumber):
                         result.Add(new SqlParameter(nameof(SupportRequest.PrefixedNumber), entity.PrefixedNumber));
                         break;
+                    case nameof(SupportRequest.IsThisRequestLinkedToAnExistingProject):
+                        result.Add(new SqlParameter(nameof(SupportRequest.IsThisRequestLinkedToAnExistingProject), entity.IsThisRequestLinkedToAnExistingProject));
+                        break;
                     case nameof(SupportRequest.DateOfRequest):
                         result.Add(new SqlParameter(nameof(SupportRequest.DateOfRequest), entity.DateOfRequest));
                         break;
@@ -61,6 +64,12 @@ namespace Webfuel.Domain
                         break;
                     case nameof(SupportRequest.IsCTUAlreadyInvolvedFreeText):
                         result.Add(new SqlParameter(nameof(SupportRequest.IsCTUAlreadyInvolvedFreeText), entity.IsCTUAlreadyInvolvedFreeText));
+                        break;
+                    case nameof(SupportRequest.ProfessionalBackgroundIds):
+                        result.Add(new SqlParameter(nameof(SupportRequest.ProfessionalBackgroundIds), entity.ProfessionalBackgroundIdsJson));
+                        break;
+                    case nameof(SupportRequest.ProfessionalBackgroundFreeText):
+                        result.Add(new SqlParameter(nameof(SupportRequest.ProfessionalBackgroundFreeText), entity.ProfessionalBackgroundFreeText));
                         break;
                     case nameof(SupportRequest.TeamContactTitle):
                         result.Add(new SqlParameter(nameof(SupportRequest.TeamContactTitle), entity.TeamContactTitle));
@@ -97,6 +106,9 @@ namespace Webfuel.Domain
                         break;
                     case nameof(SupportRequest.LeadApplicantJobRole):
                         result.Add(new SqlParameter(nameof(SupportRequest.LeadApplicantJobRole), entity.LeadApplicantJobRole));
+                        break;
+                    case nameof(SupportRequest.LeadApplicantCareerStage):
+                        result.Add(new SqlParameter(nameof(SupportRequest.LeadApplicantCareerStage), entity.LeadApplicantCareerStage));
                         break;
                     case nameof(SupportRequest.LeadApplicantOrganisation):
                         result.Add(new SqlParameter(nameof(SupportRequest.LeadApplicantOrganisation), entity.LeadApplicantOrganisation));
@@ -208,6 +220,7 @@ namespace Webfuel.Domain
                 yield return "Id";
                 yield return "Number";
                 yield return "PrefixedNumber";
+                yield return "IsThisRequestLinkedToAnExistingProject";
                 yield return "DateOfRequest";
                 yield return "Title";
                 yield return "ApplicationStageFreeText";
@@ -219,6 +232,8 @@ namespace Webfuel.Domain
                 yield return "HowDidYouFindUsFreeText";
                 yield return "WhoElseIsOnTheStudyTeam";
                 yield return "IsCTUAlreadyInvolvedFreeText";
+                yield return "ProfessionalBackgroundIds";
+                yield return "ProfessionalBackgroundFreeText";
                 yield return "TeamContactTitle";
                 yield return "TeamContactFirstName";
                 yield return "TeamContactLastName";
@@ -231,6 +246,7 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantLastName";
                 yield return "LeadApplicantEmail";
                 yield return "LeadApplicantJobRole";
+                yield return "LeadApplicantCareerStage";
                 yield return "LeadApplicantOrganisation";
                 yield return "LeadApplicantDepartment";
                 yield return "LeadApplicantAddressLine1";
@@ -268,6 +284,7 @@ namespace Webfuel.Domain
                 yield return "Id";
                 yield return "Number";
                 yield return "PrefixedNumber";
+                yield return "IsThisRequestLinkedToAnExistingProject";
                 yield return "DateOfRequest";
                 yield return "Title";
                 yield return "ApplicationStageFreeText";
@@ -279,6 +296,8 @@ namespace Webfuel.Domain
                 yield return "HowDidYouFindUsFreeText";
                 yield return "WhoElseIsOnTheStudyTeam";
                 yield return "IsCTUAlreadyInvolvedFreeText";
+                yield return "ProfessionalBackgroundIds";
+                yield return "ProfessionalBackgroundFreeText";
                 yield return "TeamContactTitle";
                 yield return "TeamContactFirstName";
                 yield return "TeamContactLastName";
@@ -291,6 +310,7 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantLastName";
                 yield return "LeadApplicantEmail";
                 yield return "LeadApplicantJobRole";
+                yield return "LeadApplicantCareerStage";
                 yield return "LeadApplicantOrganisation";
                 yield return "LeadApplicantDepartment";
                 yield return "LeadApplicantAddressLine1";
@@ -327,6 +347,7 @@ namespace Webfuel.Domain
             {
                 yield return "Number";
                 yield return "PrefixedNumber";
+                yield return "IsThisRequestLinkedToAnExistingProject";
                 yield return "DateOfRequest";
                 yield return "Title";
                 yield return "ApplicationStageFreeText";
@@ -338,6 +359,8 @@ namespace Webfuel.Domain
                 yield return "HowDidYouFindUsFreeText";
                 yield return "WhoElseIsOnTheStudyTeam";
                 yield return "IsCTUAlreadyInvolvedFreeText";
+                yield return "ProfessionalBackgroundIds";
+                yield return "ProfessionalBackgroundFreeText";
                 yield return "TeamContactTitle";
                 yield return "TeamContactFirstName";
                 yield return "TeamContactLastName";
@@ -350,6 +373,7 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantLastName";
                 yield return "LeadApplicantEmail";
                 yield return "LeadApplicantJobRole";
+                yield return "LeadApplicantCareerStage";
                 yield return "LeadApplicantOrganisation";
                 yield return "LeadApplicantDepartment";
                 yield return "LeadApplicantAddressLine1";
@@ -404,6 +428,8 @@ namespace Webfuel.Domain
             entity.WhoElseIsOnTheStudyTeam = entity.WhoElseIsOnTheStudyTeam.Trim();
             entity.IsCTUAlreadyInvolvedFreeText = entity.IsCTUAlreadyInvolvedFreeText ?? String.Empty;
             entity.IsCTUAlreadyInvolvedFreeText = entity.IsCTUAlreadyInvolvedFreeText.Trim();
+            entity.ProfessionalBackgroundFreeText = entity.ProfessionalBackgroundFreeText ?? String.Empty;
+            entity.ProfessionalBackgroundFreeText = entity.ProfessionalBackgroundFreeText.Trim();
             entity.TeamContactTitle = entity.TeamContactTitle ?? String.Empty;
             entity.TeamContactTitle = entity.TeamContactTitle.Trim();
             entity.TeamContactFirstName = entity.TeamContactFirstName ?? String.Empty;
@@ -424,6 +450,8 @@ namespace Webfuel.Domain
             entity.LeadApplicantEmail = entity.LeadApplicantEmail.Trim();
             entity.LeadApplicantJobRole = entity.LeadApplicantJobRole ?? String.Empty;
             entity.LeadApplicantJobRole = entity.LeadApplicantJobRole.Trim();
+            entity.LeadApplicantCareerStage = entity.LeadApplicantCareerStage ?? String.Empty;
+            entity.LeadApplicantCareerStage = entity.LeadApplicantCareerStage.Trim();
             entity.LeadApplicantOrganisation = entity.LeadApplicantOrganisation ?? String.Empty;
             entity.LeadApplicantOrganisation = entity.LeadApplicantOrganisation.Trim();
             entity.LeadApplicantDepartment = entity.LeadApplicantDepartment ?? String.Empty;
@@ -457,6 +485,7 @@ namespace Webfuel.Domain
         public const int HowDidYouFindUsFreeText_MaxLength = 128;
         public const int WhoElseIsOnTheStudyTeam_MaxLength = 2000;
         public const int IsCTUAlreadyInvolvedFreeText_MaxLength = 128;
+        public const int ProfessionalBackgroundFreeText_MaxLength = 128;
         public const int TeamContactTitle_MaxLength = 128;
         public const int TeamContactFirstName_MaxLength = 128;
         public const int TeamContactLastName_MaxLength = 128;
@@ -467,6 +496,7 @@ namespace Webfuel.Domain
         public const int LeadApplicantLastName_MaxLength = 128;
         public const int LeadApplicantEmail_MaxLength = 128;
         public const int LeadApplicantJobRole_MaxLength = 128;
+        public const int LeadApplicantCareerStage_MaxLength = 128;
         public const int LeadApplicantOrganisation_MaxLength = 128;
         public const int LeadApplicantDepartment_MaxLength = 128;
         public const int LeadApplicantAddressLine1_MaxLength = 128;
@@ -547,6 +577,13 @@ namespace Webfuel.Domain
                 .MaximumLength(IsCTUAlreadyInvolvedFreeText_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
+        public static void ProfessionalBackgroundFreeText_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(ProfessionalBackgroundFreeText_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
         public static void TeamContactTitle_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
@@ -615,6 +652,13 @@ namespace Webfuel.Domain
             ruleBuilder
                 .NotNull()
                 .MaximumLength(LeadApplicantJobRole_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void LeadApplicantCareerStage_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(LeadApplicantCareerStage_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
         public static void LeadApplicantOrganisation_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
@@ -695,6 +739,7 @@ namespace Webfuel.Domain
             RuleFor(x => x.HowDidYouFindUsFreeText).Use(SupportRequestMetadata.HowDidYouFindUsFreeText_ValidationRules);
             RuleFor(x => x.WhoElseIsOnTheStudyTeam).Use(SupportRequestMetadata.WhoElseIsOnTheStudyTeam_ValidationRules);
             RuleFor(x => x.IsCTUAlreadyInvolvedFreeText).Use(SupportRequestMetadata.IsCTUAlreadyInvolvedFreeText_ValidationRules);
+            RuleFor(x => x.ProfessionalBackgroundFreeText).Use(SupportRequestMetadata.ProfessionalBackgroundFreeText_ValidationRules);
             RuleFor(x => x.TeamContactTitle).Use(SupportRequestMetadata.TeamContactTitle_ValidationRules);
             RuleFor(x => x.TeamContactFirstName).Use(SupportRequestMetadata.TeamContactFirstName_ValidationRules);
             RuleFor(x => x.TeamContactLastName).Use(SupportRequestMetadata.TeamContactLastName_ValidationRules);
@@ -705,6 +750,7 @@ namespace Webfuel.Domain
             RuleFor(x => x.LeadApplicantLastName).Use(SupportRequestMetadata.LeadApplicantLastName_ValidationRules);
             RuleFor(x => x.LeadApplicantEmail).Use(SupportRequestMetadata.LeadApplicantEmail_ValidationRules);
             RuleFor(x => x.LeadApplicantJobRole).Use(SupportRequestMetadata.LeadApplicantJobRole_ValidationRules);
+            RuleFor(x => x.LeadApplicantCareerStage).Use(SupportRequestMetadata.LeadApplicantCareerStage_ValidationRules);
             RuleFor(x => x.LeadApplicantOrganisation).Use(SupportRequestMetadata.LeadApplicantOrganisation_ValidationRules);
             RuleFor(x => x.LeadApplicantDepartment).Use(SupportRequestMetadata.LeadApplicantDepartment_ValidationRules);
             RuleFor(x => x.LeadApplicantAddressLine1).Use(SupportRequestMetadata.LeadApplicantAddressLine1_ValidationRules);

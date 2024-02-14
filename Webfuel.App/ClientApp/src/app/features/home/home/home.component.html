@@ -3,34 +3,34 @@
 </ul>
 <div class="container">
   <h1 class="title">Dashboard</h1>
-
-  <div *ngIf="model === null">
+  @if(model === null) {
+  <div>
     Loading...
   </div>
-
-  <div *ngIf="model !== null" class="dashboard-metrics">
-
+  } @else {
+  <div class="dashboard-metrics">
     <h3>Projects</h3>
     <div class="support-teams">
-      <a class="dashboard-metric" *ngFor="let metric of model.projectMetrics" routerLink="{{ metric.routerLink }}" [queryParams]="routerParams(metric)">
+      @for(metric of model.projectMetrics; track $index) {
+      <a class="dashboard-metric" routerLink="{{ metric.routerLink }}" [queryParams]="routerParams(metric)">
         <div class="icon"><i class="{{ metric.icon }}"></i></div>
         <div class="count">{{ metric.count }}</div>
         <div class="name">{{ metric.name }}</div>
         <div class="cta">View Details <i class="fas fa-arrow-right"></i></div>
       </a>
+      }
     </div>
-
-
     <h3>Team Support</h3>
     <div class="support-teams">
-      <a class="dashboard-metric" *ngFor="let metric of model.supportTeamMetrics" routerLink="{{ metric.routerLink }}" [queryParams]="routerParams(metric)">
+      @for(metric of model.supportTeamMetrics; track $index) {
+      <a class="dashboard-metric" routerLink="{{ metric.routerLink }}" [queryParams]="routerParams(metric)">
         <div class="icon"><i class="{{ metric.icon }}"></i></div>
         <div class="count">{{ metric.count }}</div>
         <div class="name">{{ metric.name }}</div>
         <div class="cta">View Details <i class="fas fa-arrow-right"></i></div>
       </a>
+      }
     </div>
-
   </div>
-
+  }
 </div>

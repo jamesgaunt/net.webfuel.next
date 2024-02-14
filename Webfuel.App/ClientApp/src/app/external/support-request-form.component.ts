@@ -57,6 +57,10 @@ export class SupportRequestFormComponent {
 
   form = new FormGroup({
 
+    // Meta (not converted to project data)
+
+    isThisRequestLinkedToAnExistingProject: new FormControl<boolean>(false, { nonNullable: true }), // 1.2 Development
+
     // Project Details
 
     title: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
@@ -77,6 +81,8 @@ export class SupportRequestFormComponent {
     whoElseIsOnTheStudyTeam: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     isCTUAlreadyInvolvedId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     isCTUAlreadyInvolvedFreeText: new FormControl<string>('', { nonNullable: true }),
+    professionalBackgroundIds: new FormControl<string[]>([], { validators: [Validate.minArrayLength(1)], nonNullable: true }), // 1.2 Development
+    professionalBackgroundFreeText: new FormControl<string>('', { nonNullable: true }), // 1.2 Development
 
     // Team Contact Details
 
@@ -97,6 +103,7 @@ export class SupportRequestFormComponent {
     leadApplicantEmail: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
 
     leadApplicantJobRole: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    leadApplicantCareerStage: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     leadApplicantOrganisationTypeId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     leadApplicantOrganisation: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     leadApplicantDepartment: new FormControl<string>('', { nonNullable: true }),
@@ -116,6 +123,7 @@ export class SupportRequestFormComponent {
     leadApplicantEthnicityId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
 
     // Files
+
     files: new FormControl(null),
     fileStorageGroupId: new FormControl<string | null>(null),
   });

@@ -46,9 +46,18 @@ namespace Webfuel.Domain.StaticData
         Task<IReadOnlyList<IsLeadApplicantNHS>> SelectIsLeadApplicantNHS();
         Task<IsLeadApplicantNHS?> GetIsLeadApplicantNHS(Guid id);
         Task<IsLeadApplicantNHS> RequireIsLeadApplicantNHS(Guid id);
+        Task<IReadOnlyList<IsPaidRSSAdviserCoapplicant>> SelectIsPaidRSSAdviserCoapplicant();
+        Task<IsPaidRSSAdviserCoapplicant?> GetIsPaidRSSAdviserCoapplicant(Guid id);
+        Task<IsPaidRSSAdviserCoapplicant> RequireIsPaidRSSAdviserCoapplicant(Guid id);
+        Task<IReadOnlyList<IsPaidRSSAdviserLead>> SelectIsPaidRSSAdviserLead();
+        Task<IsPaidRSSAdviserLead?> GetIsPaidRSSAdviserLead(Guid id);
+        Task<IsPaidRSSAdviserLead> RequireIsPaidRSSAdviserLead(Guid id);
         Task<IReadOnlyList<IsPPIEAndEDIContribution>> SelectIsPPIEAndEDIContribution();
         Task<IsPPIEAndEDIContribution?> GetIsPPIEAndEDIContribution(Guid id);
         Task<IsPPIEAndEDIContribution> RequireIsPPIEAndEDIContribution(Guid id);
+        Task<IReadOnlyList<IsPrePostAward>> SelectIsPrePostAward();
+        Task<IsPrePostAward?> GetIsPrePostAward(Guid id);
+        Task<IsPrePostAward> RequireIsPrePostAward(Guid id);
         Task<IReadOnlyList<IsQuantativeTeamContribution>> SelectIsQuantativeTeamContribution();
         Task<IsQuantativeTeamContribution?> GetIsQuantativeTeamContribution(Guid id);
         Task<IsQuantativeTeamContribution> RequireIsQuantativeTeamContribution(Guid id);
@@ -58,6 +67,9 @@ namespace Webfuel.Domain.StaticData
         Task<IReadOnlyList<IsTeamMembersConsulted>> SelectIsTeamMembersConsulted();
         Task<IsTeamMembersConsulted?> GetIsTeamMembersConsulted(Guid id);
         Task<IsTeamMembersConsulted> RequireIsTeamMembersConsulted(Guid id);
+        Task<IReadOnlyList<ProfessionalBackground>> SelectProfessionalBackground();
+        Task<ProfessionalBackground?> GetProfessionalBackground(Guid id);
+        Task<ProfessionalBackground> RequireProfessionalBackground(Guid id);
         Task<IReadOnlyList<ProjectStatus>> SelectProjectStatus();
         Task<ProjectStatus?> GetProjectStatus(Guid id);
         Task<ProjectStatus> RequireProjectStatus(Guid id);
@@ -73,6 +85,9 @@ namespace Webfuel.Domain.StaticData
         Task<IReadOnlyList<ResearchMethodology>> SelectResearchMethodology();
         Task<ResearchMethodology?> GetResearchMethodology(Guid id);
         Task<ResearchMethodology> RequireResearchMethodology(Guid id);
+        Task<IReadOnlyList<RSSHub>> SelectRSSHub();
+        Task<RSSHub?> GetRSSHub(Guid id);
+        Task<RSSHub> RequireRSSHub(Guid id);
         Task<IReadOnlyList<Site>> SelectSite();
         Task<Site?> GetSite(Guid id);
         Task<Site> RequireSite(Guid id);
@@ -97,6 +112,9 @@ namespace Webfuel.Domain.StaticData
         Task<IReadOnlyList<UserDiscipline>> SelectUserDiscipline();
         Task<UserDiscipline?> GetUserDiscipline(Guid id);
         Task<UserDiscipline> RequireUserDiscipline(Guid id);
+        Task<IReadOnlyList<WillStudyUseCTU>> SelectWillStudyUseCTU();
+        Task<WillStudyUseCTU?> GetWillStudyUseCTU(Guid id);
+        Task<WillStudyUseCTU> RequireWillStudyUseCTU(Guid id);
         Task<IReadOnlyList<WorkActivity>> SelectWorkActivity();
         Task<WorkActivity?> GetWorkActivity(Guid id);
         Task<WorkActivity> RequireWorkActivity(Guid id);
@@ -313,6 +331,36 @@ namespace Webfuel.Domain.StaticData
             return (await GetStaticData()).IsLeadApplicantNHS.First(p => p.Id == id);
         }
         
+        public async Task<IReadOnlyList<IsPaidRSSAdviserCoapplicant>> SelectIsPaidRSSAdviserCoapplicant()
+        {
+            return (await GetStaticData()).IsPaidRSSAdviserCoapplicant;
+        }
+        
+        public async Task<IsPaidRSSAdviserCoapplicant?> GetIsPaidRSSAdviserCoapplicant(Guid id)
+        {
+            return (await GetStaticData()).IsPaidRSSAdviserCoapplicant.FirstOrDefault(p => p.Id == id);
+        }
+        
+        public async Task<IsPaidRSSAdviserCoapplicant> RequireIsPaidRSSAdviserCoapplicant(Guid id)
+        {
+            return (await GetStaticData()).IsPaidRSSAdviserCoapplicant.First(p => p.Id == id);
+        }
+        
+        public async Task<IReadOnlyList<IsPaidRSSAdviserLead>> SelectIsPaidRSSAdviserLead()
+        {
+            return (await GetStaticData()).IsPaidRSSAdviserLead;
+        }
+        
+        public async Task<IsPaidRSSAdviserLead?> GetIsPaidRSSAdviserLead(Guid id)
+        {
+            return (await GetStaticData()).IsPaidRSSAdviserLead.FirstOrDefault(p => p.Id == id);
+        }
+        
+        public async Task<IsPaidRSSAdviserLead> RequireIsPaidRSSAdviserLead(Guid id)
+        {
+            return (await GetStaticData()).IsPaidRSSAdviserLead.First(p => p.Id == id);
+        }
+        
         public async Task<IReadOnlyList<IsPPIEAndEDIContribution>> SelectIsPPIEAndEDIContribution()
         {
             return (await GetStaticData()).IsPPIEAndEDIContribution;
@@ -326,6 +374,21 @@ namespace Webfuel.Domain.StaticData
         public async Task<IsPPIEAndEDIContribution> RequireIsPPIEAndEDIContribution(Guid id)
         {
             return (await GetStaticData()).IsPPIEAndEDIContribution.First(p => p.Id == id);
+        }
+        
+        public async Task<IReadOnlyList<IsPrePostAward>> SelectIsPrePostAward()
+        {
+            return (await GetStaticData()).IsPrePostAward;
+        }
+        
+        public async Task<IsPrePostAward?> GetIsPrePostAward(Guid id)
+        {
+            return (await GetStaticData()).IsPrePostAward.FirstOrDefault(p => p.Id == id);
+        }
+        
+        public async Task<IsPrePostAward> RequireIsPrePostAward(Guid id)
+        {
+            return (await GetStaticData()).IsPrePostAward.First(p => p.Id == id);
         }
         
         public async Task<IReadOnlyList<IsQuantativeTeamContribution>> SelectIsQuantativeTeamContribution()
@@ -371,6 +434,21 @@ namespace Webfuel.Domain.StaticData
         public async Task<IsTeamMembersConsulted> RequireIsTeamMembersConsulted(Guid id)
         {
             return (await GetStaticData()).IsTeamMembersConsulted.First(p => p.Id == id);
+        }
+        
+        public async Task<IReadOnlyList<ProfessionalBackground>> SelectProfessionalBackground()
+        {
+            return (await GetStaticData()).ProfessionalBackground;
+        }
+        
+        public async Task<ProfessionalBackground?> GetProfessionalBackground(Guid id)
+        {
+            return (await GetStaticData()).ProfessionalBackground.FirstOrDefault(p => p.Id == id);
+        }
+        
+        public async Task<ProfessionalBackground> RequireProfessionalBackground(Guid id)
+        {
+            return (await GetStaticData()).ProfessionalBackground.First(p => p.Id == id);
         }
         
         public async Task<IReadOnlyList<ProjectStatus>> SelectProjectStatus()
@@ -446,6 +524,21 @@ namespace Webfuel.Domain.StaticData
         public async Task<ResearchMethodology> RequireResearchMethodology(Guid id)
         {
             return (await GetStaticData()).ResearchMethodology.First(p => p.Id == id);
+        }
+        
+        public async Task<IReadOnlyList<RSSHub>> SelectRSSHub()
+        {
+            return (await GetStaticData()).RSSHub;
+        }
+        
+        public async Task<RSSHub?> GetRSSHub(Guid id)
+        {
+            return (await GetStaticData()).RSSHub.FirstOrDefault(p => p.Id == id);
+        }
+        
+        public async Task<RSSHub> RequireRSSHub(Guid id)
+        {
+            return (await GetStaticData()).RSSHub.First(p => p.Id == id);
         }
         
         public async Task<IReadOnlyList<Site>> SelectSite()
@@ -566,6 +659,21 @@ namespace Webfuel.Domain.StaticData
         public async Task<UserDiscipline> RequireUserDiscipline(Guid id)
         {
             return (await GetStaticData()).UserDiscipline.First(p => p.Id == id);
+        }
+        
+        public async Task<IReadOnlyList<WillStudyUseCTU>> SelectWillStudyUseCTU()
+        {
+            return (await GetStaticData()).WillStudyUseCTU;
+        }
+        
+        public async Task<WillStudyUseCTU?> GetWillStudyUseCTU(Guid id)
+        {
+            return (await GetStaticData()).WillStudyUseCTU.FirstOrDefault(p => p.Id == id);
+        }
+        
+        public async Task<WillStudyUseCTU> RequireWillStudyUseCTU(Guid id)
+        {
+            return (await GetStaticData()).WillStudyUseCTU.First(p => p.Id == id);
         }
         
         public async Task<IReadOnlyList<WorkActivity>> SelectWorkActivity()

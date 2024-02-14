@@ -45,6 +45,12 @@ namespace Webfuel.Domain
                     case nameof(Project.Discarded):
                         Discarded = (bool)value!;
                         break;
+                    case nameof(Project.RSSHubProvidingAdviceIds):
+                        RSSHubProvidingAdviceIdsJson = (string)value!;
+                        break;
+                    case nameof(Project.MonetaryValueOfFundingApplication):
+                        MonetaryValueOfFundingApplication = value == DBNull.Value ? (Decimal?)null : (Decimal?)value;
+                        break;
                     case nameof(Project.ProjectStartDate):
                         ProjectStartDate = value == DBNull.Value ? (DateOnly?)null : DateOnly.FromDateTime((DateTime)value!);
                         break;
@@ -87,6 +93,12 @@ namespace Webfuel.Domain
                     case nameof(Project.IsCTUAlreadyInvolvedFreeText):
                         IsCTUAlreadyInvolvedFreeText = (string)value!;
                         break;
+                    case nameof(Project.ProfessionalBackgroundIds):
+                        ProfessionalBackgroundIdsJson = (string)value!;
+                        break;
+                    case nameof(Project.ProfessionalBackgroundFreeText):
+                        ProfessionalBackgroundFreeText = (string)value!;
+                        break;
                     case nameof(Project.TeamContactTitle):
                         TeamContactTitle = (string)value!;
                         break;
@@ -122,6 +134,9 @@ namespace Webfuel.Domain
                         break;
                     case nameof(Project.LeadApplicantJobRole):
                         LeadApplicantJobRole = (string)value!;
+                        break;
+                    case nameof(Project.LeadApplicantCareerStage):
+                        LeadApplicantCareerStage = (string)value!;
                         break;
                     case nameof(Project.LeadApplicantOrganisation):
                         LeadApplicantOrganisation = (string)value!;
@@ -167,6 +182,15 @@ namespace Webfuel.Domain
                         break;
                     case nameof(Project.StatusId):
                         StatusId = (Guid)value!;
+                        break;
+                    case nameof(Project.WillStudyUseCTUId):
+                        WillStudyUseCTUId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(Project.IsPaidRSSAdviserLeadId):
+                        IsPaidRSSAdviserLeadId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(Project.IsPaidRSSAdviserCoapplicantId):
+                        IsPaidRSSAdviserCoapplicantId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
                     case nameof(Project.IsInternationalMultiSiteStudyId):
                         IsInternationalMultiSiteStudyId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
@@ -225,6 +249,19 @@ namespace Webfuel.Domain
         public string SubmittedFundingStreamName  { get; set; } = String.Empty;
         public bool Locked  { get; set; } = false;
         public bool Discarded  { get; set; } = false;
+        public List<Guid> RSSHubProvidingAdviceIds
+        {
+            get { return _RSSHubProvidingAdviceIds ?? (_RSSHubProvidingAdviceIds = SafeJsonSerializer.Deserialize<List<Guid>>(_RSSHubProvidingAdviceIdsJson)); }
+            set { _RSSHubProvidingAdviceIds = value; }
+        }
+        List<Guid>? _RSSHubProvidingAdviceIds = null;
+        internal string RSSHubProvidingAdviceIdsJson
+        {
+            get { var result = _RSSHubProvidingAdviceIds == null ? _RSSHubProvidingAdviceIdsJson : (_RSSHubProvidingAdviceIdsJson = SafeJsonSerializer.Serialize(_RSSHubProvidingAdviceIds)); _RSSHubProvidingAdviceIds = null; return result; }
+            set { _RSSHubProvidingAdviceIdsJson = value; _RSSHubProvidingAdviceIds = null; }
+        }
+        string _RSSHubProvidingAdviceIdsJson = String.Empty;
+        public Decimal? MonetaryValueOfFundingApplication  { get; set; } = null;
         public DateOnly? ProjectStartDate  { get; set; } = null;
         public int? RecruitmentTarget  { get; set; } = null;
         public int? NumberOfProjectSites  { get; set; } = null;
@@ -239,6 +276,19 @@ namespace Webfuel.Domain
         public string HowDidYouFindUsFreeText  { get; set; } = String.Empty;
         public string WhoElseIsOnTheStudyTeam  { get; set; } = String.Empty;
         public string IsCTUAlreadyInvolvedFreeText  { get; set; } = String.Empty;
+        public List<Guid> ProfessionalBackgroundIds
+        {
+            get { return _ProfessionalBackgroundIds ?? (_ProfessionalBackgroundIds = SafeJsonSerializer.Deserialize<List<Guid>>(_ProfessionalBackgroundIdsJson)); }
+            set { _ProfessionalBackgroundIds = value; }
+        }
+        List<Guid>? _ProfessionalBackgroundIds = null;
+        internal string ProfessionalBackgroundIdsJson
+        {
+            get { var result = _ProfessionalBackgroundIds == null ? _ProfessionalBackgroundIdsJson : (_ProfessionalBackgroundIdsJson = SafeJsonSerializer.Serialize(_ProfessionalBackgroundIds)); _ProfessionalBackgroundIds = null; return result; }
+            set { _ProfessionalBackgroundIdsJson = value; _ProfessionalBackgroundIds = null; }
+        }
+        string _ProfessionalBackgroundIdsJson = String.Empty;
+        public string ProfessionalBackgroundFreeText  { get; set; } = String.Empty;
         public string TeamContactTitle  { get; set; } = String.Empty;
         public string TeamContactFirstName  { get; set; } = String.Empty;
         public string TeamContactLastName  { get; set; } = String.Empty;
@@ -251,6 +301,7 @@ namespace Webfuel.Domain
         public string LeadApplicantLastName  { get; set; } = String.Empty;
         public string LeadApplicantEmail  { get; set; } = String.Empty;
         public string LeadApplicantJobRole  { get; set; } = String.Empty;
+        public string LeadApplicantCareerStage  { get; set; } = String.Empty;
         public string LeadApplicantOrganisation  { get; set; } = String.Empty;
         public string LeadApplicantDepartment  { get; set; } = String.Empty;
         public string LeadApplicantAddressLine1  { get; set; } = String.Empty;
@@ -266,6 +317,9 @@ namespace Webfuel.Domain
         public Guid? LeadAdviserUserId { get; set; }
         public Guid? SubmittedFundingStreamId { get; set; }
         public Guid StatusId { get; set; }
+        public Guid? WillStudyUseCTUId { get; set; }
+        public Guid? IsPaidRSSAdviserLeadId { get; set; }
+        public Guid? IsPaidRSSAdviserCoapplicantId { get; set; }
         public Guid? IsInternationalMultiSiteStudyId { get; set; }
         public Guid? IsFellowshipId { get; set; }
         public Guid? ApplicationStageId { get; set; }
@@ -293,6 +347,8 @@ namespace Webfuel.Domain
             entity.SubmittedFundingStreamName = SubmittedFundingStreamName;
             entity.Locked = Locked;
             entity.Discarded = Discarded;
+            entity.RSSHubProvidingAdviceIdsJson = RSSHubProvidingAdviceIdsJson;
+            entity.MonetaryValueOfFundingApplication = MonetaryValueOfFundingApplication;
             entity.ProjectStartDate = ProjectStartDate;
             entity.RecruitmentTarget = RecruitmentTarget;
             entity.NumberOfProjectSites = NumberOfProjectSites;
@@ -307,6 +363,8 @@ namespace Webfuel.Domain
             entity.HowDidYouFindUsFreeText = HowDidYouFindUsFreeText;
             entity.WhoElseIsOnTheStudyTeam = WhoElseIsOnTheStudyTeam;
             entity.IsCTUAlreadyInvolvedFreeText = IsCTUAlreadyInvolvedFreeText;
+            entity.ProfessionalBackgroundIdsJson = ProfessionalBackgroundIdsJson;
+            entity.ProfessionalBackgroundFreeText = ProfessionalBackgroundFreeText;
             entity.TeamContactTitle = TeamContactTitle;
             entity.TeamContactFirstName = TeamContactFirstName;
             entity.TeamContactLastName = TeamContactLastName;
@@ -319,6 +377,7 @@ namespace Webfuel.Domain
             entity.LeadApplicantLastName = LeadApplicantLastName;
             entity.LeadApplicantEmail = LeadApplicantEmail;
             entity.LeadApplicantJobRole = LeadApplicantJobRole;
+            entity.LeadApplicantCareerStage = LeadApplicantCareerStage;
             entity.LeadApplicantOrganisation = LeadApplicantOrganisation;
             entity.LeadApplicantDepartment = LeadApplicantDepartment;
             entity.LeadApplicantAddressLine1 = LeadApplicantAddressLine1;
@@ -334,6 +393,9 @@ namespace Webfuel.Domain
             entity.LeadAdviserUserId = LeadAdviserUserId;
             entity.SubmittedFundingStreamId = SubmittedFundingStreamId;
             entity.StatusId = StatusId;
+            entity.WillStudyUseCTUId = WillStudyUseCTUId;
+            entity.IsPaidRSSAdviserLeadId = IsPaidRSSAdviserLeadId;
+            entity.IsPaidRSSAdviserCoapplicantId = IsPaidRSSAdviserCoapplicantId;
             entity.IsInternationalMultiSiteStudyId = IsInternationalMultiSiteStudyId;
             entity.IsFellowshipId = IsFellowshipId;
             entity.ApplicationStageId = ApplicationStageId;

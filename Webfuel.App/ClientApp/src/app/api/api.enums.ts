@@ -143,9 +143,24 @@ export enum IsLeadApplicantNHSEnum {
     NoTheyAreNot = "f9aa774f-616e-481a-9137-e5d55a9c99bd",
 }
 
+export enum IsPaidRSSAdviserCoapplicantEnum {
+    No = "4f8c3cb5-d96a-4cfe-b04c-35dc8b925b15",
+    Yes = "22f78a71-0e8c-4047-82b3-305736b2d3cc",
+}
+
+export enum IsPaidRSSAdviserLeadEnum {
+    No = "b2a969e5-6dff-4ef4-a629-a3cbd5105275",
+    Yes = "05213f9c-e901-4e63-82f8-4b558415f9ad",
+}
+
 export enum IsPPIEAndEDIContributionEnum {
     Yes = "547241ba-72d4-4901-bc1e-5fffc9aaadfa",
     No = "c2c2e7b5-f64d-421b-b4c7-de34cebbef53",
+}
+
+export enum IsPrePostAwardEnum {
+    PreAward = "d8c2fe26-3a35-4a49-b61d-b5abc41611f6",
+    PostAward = "6b7d87be-4ba2-4b47-9de5-42672114fcaf",
 }
 
 export enum IsQuantativeTeamContributionEnum {
@@ -218,6 +233,12 @@ export enum SupportTeamEnum {
     PPIETeam = "662067e9-875c-47f7-8427-26ac98078c20",
     ExpertQuantitativeTeam = "5283e9be-faf3-45f5-83b2-4c5288c090c3",
     ExpertQualitativeTeam = "b1bdcae3-7df9-404a-aad7-a9265392b5aa",
+}
+
+export enum WillStudyUseCTUEnum {
+    No = "8ba8e39c-8792-4901-9a74-2788e972ac60",
+    YesExternalToThisRSS = "4672a5ec-1c83-4a66-b0a8-a797db9e59a9",
+    YesInternalToThisRSS = "fc4ddc3d-9b1c-4cb6-970c-94c122ef2fdc",
 }
 
 

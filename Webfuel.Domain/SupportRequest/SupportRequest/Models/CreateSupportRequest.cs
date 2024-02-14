@@ -14,6 +14,9 @@ namespace Webfuel.Domain
         // File Storage (this may be null if no files were submitted)
         public Guid? FileStorageGroupId { get; set; }
 
+        // Meta (not converted to project data)
+        public bool IsThisRequestLinkedToAnExistingProject { get; set; } // 1.2 Development
+
         // Project Details
 
         public string Title { get; set; } = String.Empty;
@@ -34,6 +37,8 @@ namespace Webfuel.Domain
         public string WhoElseIsOnTheStudyTeam { get; set; } = String.Empty;
         public Guid? IsCTUAlreadyInvolvedId { get; set; }
         public string IsCTUAlreadyInvolvedFreeText { get; set; } = String.Empty;
+        public List<Guid> ProfessionalBackgroundIds { get; set; } = new List<Guid>(); // 1.2 Development
+        public string ProfessionalBackgroundFreeText { get; set; } = String.Empty; // 1.2 Development   
 
         // Team Contact Details
 
@@ -54,6 +59,7 @@ namespace Webfuel.Domain
         public string LeadApplicantEmail { get; set; } = String.Empty;
 
         public string LeadApplicantJobRole { get; set; } = String.Empty;
+        public string LeadApplicantCareerStage { get; set;} = String.Empty;
         public Guid? LeadApplicantOrganisationTypeId { get; set; }  
         public string LeadApplicantOrganisation { get; set;} = String.Empty;
         public string LeadApplicantDepartment { get; set; } = String.Empty;

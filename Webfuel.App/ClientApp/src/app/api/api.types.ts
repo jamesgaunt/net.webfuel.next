@@ -478,15 +478,20 @@ export interface IStaticDataModel {
     isFellowship: Array<IsFellowship>;
     isInternationalMultiSiteStudy: Array<IsInternationalMultiSiteStudy>;
     isLeadApplicantNHS: Array<IsLeadApplicantNHS>;
+    isPaidRSSAdviserCoapplicant: Array<IsPaidRSSAdviserCoapplicant>;
+    isPaidRSSAdviserLead: Array<IsPaidRSSAdviserLead>;
     isPPIEAndEDIContribution: Array<IsPPIEAndEDIContribution>;
+    isPrePostAward: Array<IsPrePostAward>;
     isQuantativeTeamContribution: Array<IsQuantativeTeamContribution>;
     isResubmission: Array<IsResubmission>;
     isTeamMembersConsulted: Array<IsTeamMembersConsulted>;
+    professionalBackground: Array<ProfessionalBackground>;
     projectStatus: Array<ProjectStatus>;
     reportProvider: Array<ReportProvider>;
     researcherOrganisationType: Array<ResearcherOrganisationType>;
     researcherRole: Array<ResearcherRole>;
     researchMethodology: Array<ResearchMethodology>;
+    rssHub: Array<RSSHub>;
     site: Array<Site>;
     submissionOutcome: Array<SubmissionOutcome>;
     submissionStage: Array<SubmissionStage>;
@@ -495,6 +500,7 @@ export interface IStaticDataModel {
     supportTeam: Array<SupportTeam>;
     title: Array<Title>;
     userDiscipline: Array<UserDiscipline>;
+    willStudyUseCTU: Array<WillStudyUseCTU>;
     workActivity: Array<WorkActivity>;
     loadedAt: string;
 }
@@ -620,7 +626,28 @@ export interface IsLeadApplicantNHS extends IStaticData {
     default: boolean;
 }
 
+export interface IsPaidRSSAdviserCoapplicant extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+}
+
+export interface IsPaidRSSAdviserLead extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+}
+
 export interface IsPPIEAndEDIContribution extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+}
+
+export interface IsPrePostAward extends IStaticData {
     id: string;
     name: string;
     sortOrder: number;
@@ -646,6 +673,15 @@ export interface IsTeamMembersConsulted extends IStaticData {
     name: string;
     sortOrder: number;
     default: boolean;
+}
+
+export interface ProfessionalBackground extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
 }
 
 export interface ProjectStatus extends IStaticData {
@@ -691,6 +727,13 @@ export interface ResearchMethodology extends IStaticData {
     default: boolean;
     hidden: boolean;
     freeText: boolean;
+}
+
+export interface RSSHub extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
 }
 
 export interface Site extends IStaticData {
@@ -760,6 +803,14 @@ export interface UserDiscipline extends IStaticData {
     freeText: boolean;
 }
 
+export interface WillStudyUseCTU extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+    freeText: boolean;
+}
+
 export interface WorkActivity extends IStaticData {
     id: string;
     name: string;
@@ -779,6 +830,8 @@ export interface Project {
     submittedFundingStreamName: string;
     locked: boolean;
     discarded: boolean;
+    rssHubProvidingAdviceIds: Array<string>;
+    monetaryValueOfFundingApplication: number | null | null;
     projectStartDate: string | null | null;
     recruitmentTarget: number | null | null;
     numberOfProjectSites: number | null | null;
@@ -793,6 +846,8 @@ export interface Project {
     howDidYouFindUsFreeText: string;
     whoElseIsOnTheStudyTeam: string;
     isCTUAlreadyInvolvedFreeText: string;
+    professionalBackgroundIds: Array<string>;
+    professionalBackgroundFreeText: string;
     teamContactTitle: string;
     teamContactFirstName: string;
     teamContactLastName: string;
@@ -805,6 +860,7 @@ export interface Project {
     leadApplicantLastName: string;
     leadApplicantEmail: string;
     leadApplicantJobRole: string;
+    leadApplicantCareerStage: string;
     leadApplicantOrganisation: string;
     leadApplicantDepartment: string;
     leadApplicantAddressLine1: string;
@@ -820,6 +876,9 @@ export interface Project {
     leadAdviserUserId: string | null | null;
     submittedFundingStreamId: string | null | null;
     statusId: string;
+    willStudyUseCTUId: string | null | null;
+    isPaidRSSAdviserLeadId: string | null | null;
+    isPaidRSSAdviserCoapplicantId: string | null | null;
     isInternationalMultiSiteStudyId: string | null | null;
     isFellowshipId: string | null | null;
     applicationStageId: string | null | null;
@@ -1120,6 +1179,7 @@ export interface UpdateReportColumn {
     title: string;
     width: number | null | null;
     bold: boolean;
+    collection: ReportColumnCollection;
 }
 
 export interface DeleteReportColumn {
@@ -1195,6 +1255,7 @@ export interface SupportRequest {
     id: string;
     number: number;
     prefixedNumber: string;
+    isThisRequestLinkedToAnExistingProject: boolean;
     dateOfRequest: string;
     title: string;
     applicationStageFreeText: string;
@@ -1206,6 +1267,8 @@ export interface SupportRequest {
     howDidYouFindUsFreeText: string;
     whoElseIsOnTheStudyTeam: string;
     isCTUAlreadyInvolvedFreeText: string;
+    professionalBackgroundIds: Array<string>;
+    professionalBackgroundFreeText: string;
     teamContactTitle: string;
     teamContactFirstName: string;
     teamContactLastName: string;
@@ -1218,6 +1281,7 @@ export interface SupportRequest {
     leadApplicantLastName: string;
     leadApplicantEmail: string;
     leadApplicantJobRole: string;
+    leadApplicantCareerStage: string;
     leadApplicantOrganisation: string;
     leadApplicantDepartment: string;
     leadApplicantAddressLine1: string;
@@ -1249,6 +1313,7 @@ export interface SupportRequest {
 
 export interface CreateSupportRequest {
     fileStorageGroupId: string | null | null;
+    isThisRequestLinkedToAnExistingProject: boolean;
     title: string;
     proposedFundingStreamName: string;
     targetSubmissionDate: string | null | null;
@@ -1267,6 +1332,8 @@ export interface CreateSupportRequest {
     whoElseIsOnTheStudyTeam: string;
     isCTUAlreadyInvolvedId: string | null | null;
     isCTUAlreadyInvolvedFreeText: string;
+    professionalBackgroundIds: Array<string>;
+    professionalBackgroundFreeText: string;
     teamContactTitle: string;
     teamContactFirstName: string;
     teamContactLastName: string;
@@ -1280,6 +1347,7 @@ export interface CreateSupportRequest {
     leadApplicantLastName: string;
     leadApplicantEmail: string;
     leadApplicantJobRole: string;
+    leadApplicantCareerStage: string;
     leadApplicantOrganisationTypeId: string | null | null;
     leadApplicantOrganisation: string;
     leadApplicantDepartment: string;
@@ -1316,6 +1384,8 @@ export interface UpdateSupportRequest {
     whoElseIsOnTheStudyTeam: string;
     isCTUAlreadyInvolvedId: string | null | null;
     isCTUAlreadyInvolvedFreeText: string;
+    professionalBackgroundIds: Array<string>;
+    professionalBackgroundFreeText: string;
 }
 
 export interface UpdateSupportRequestResearcher {
@@ -1333,6 +1403,7 @@ export interface UpdateSupportRequestResearcher {
     leadApplicantLastName: string;
     leadApplicantEmail: string;
     leadApplicantJobRole: string;
+    leadApplicantCareerStage: string;
     leadApplicantOrganisationTypeId: string | null | null;
     leadApplicantOrganisation: string;
     leadApplicantDepartment: string;
@@ -1905,7 +1976,34 @@ export interface QueryIsLeadApplicantNHS extends Query {
     search?: string;
 }
 
+export interface QueryIsPaidRSSAdviserCoapplicant extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface QueryIsPaidRSSAdviserLead extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
 export interface QueryIsPPIEAndEDIContribution extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface QueryIsPrePostAward extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;
@@ -1933,6 +2031,34 @@ export interface QueryIsResubmission extends Query {
 }
 
 export interface QueryIsTeamMembersConsulted extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface CreateProfessionalBackground {
+    name: string;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface UpdateProfessionalBackground {
+    id: string;
+    name: string;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface SortProfessionalBackground {
+    ids: Array<string>;
+}
+
+export interface QueryProfessionalBackground extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;
@@ -2016,6 +2142,30 @@ export interface SortResearchMethodology {
 }
 
 export interface QueryResearchMethodology extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface CreateRSSHub {
+    name: string;
+    default: boolean;
+}
+
+export interface UpdateRSSHub {
+    id: string;
+    name: string;
+    default: boolean;
+}
+
+export interface SortRSSHub {
+    ids: Array<string>;
+}
+
+export interface QueryRSSHub extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;
@@ -2156,6 +2306,15 @@ export interface SortUserDiscipline {
 }
 
 export interface QueryUserDiscipline extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface QueryWillStudyUseCTU extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;

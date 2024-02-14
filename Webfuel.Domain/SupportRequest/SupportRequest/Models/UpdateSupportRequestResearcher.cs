@@ -30,6 +30,7 @@ namespace Webfuel.Domain
         public string LeadApplicantEmail { get; set; } = String.Empty;
 
         public string LeadApplicantJobRole { get; set; } = String.Empty;
+        public string LeadApplicantCareerStage { get; set; } = String.Empty;
         public Guid? LeadApplicantOrganisationTypeId { get; set; }
         public string LeadApplicantOrganisation { get; set; } = String.Empty;
         public string LeadApplicantDepartment { get; set; } = String.Empty;

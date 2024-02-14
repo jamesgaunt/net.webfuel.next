@@ -69,6 +69,10 @@
         <input class="input" type="text" placeholder="required" formControlName="leadApplicantJobRole" />
       </div>
       <div class="field is-4">
+        <label class="label">Career Stage</label>
+        <input class="input" type="text" placeholder="required" formControlName="leadApplicantCareerStage" maxlength="64" />
+      </div>
+      <div class="field is-4">
         <label class="label">Organisation Type</label>
         <dropdown-select [dataSource]="staticDataCache.researcherOrganisationType" placeholder="required" formControlName="leadApplicantOrganisationTypeId"></dropdown-select>
       </div>

@@ -22,6 +22,13 @@
     <Property Name="Locked" Type="boolean" Tags="ChangeLog:Ignore" />
     <Property Name="Discarded" Type="boolean" Tags="ChangeLog:Ignore" />
 
+    <!-- 1.2 Development  -->
+    <Property Name="WillStudyUseCTUId" Type="WillStudyUseCTU?" />
+    <Property Name="IsPaidRSSAdviserLeadId" Type="IsPaidRSSAdviserLead?" /> 
+    <Property Name="IsPaidRSSAdviserCoapplicantId" Type="IsPaidRSSAdviserCoapplicant?" />
+    <Property Name="RSSHubProvidingAdviceIds"  Type="Json:List{Guid}" Default="[]" />
+    <Property Name="MonetaryValueOfFundingApplication" Type="decimal?" />
+    
     <!-- For clinical trial submissions -->
     <Property Name="ProjectStartDate" Type="Date?" />
     <Property Name="RecruitmentTarget" Type="Int32?" />
@@ -48,9 +55,11 @@
     <Property Name="SupportRequested" Type="string[2000]" />
     <Property Name="HowDidYouFindUsId" Type="HowDidYouFindUs?" />
     <Property Name="HowDidYouFindUsFreeText" Type="meta:name" />
-    <Property Name="WhoElseIsOnTheStudyTeam" Type="string[2000]" /> <!-- NEW -->
-    <Property Name="IsCTUAlreadyInvolvedId" Type="IsCTUAlreadyInvolved?" /> <!-- NEW -->
-    <Property Name="IsCTUAlreadyInvolvedFreeText" Type="meta:name" /> <!-- NEW -->
+    <Property Name="WhoElseIsOnTheStudyTeam" Type="string[2000]" />
+    <Property Name="IsCTUAlreadyInvolvedId" Type="IsCTUAlreadyInvolved?" />
+    <Property Name="IsCTUAlreadyInvolvedFreeText" Type="meta:name" />
+    <Property Name="ProfessionalBackgroundIds"  Type="Json:List{Guid}" Default="[]" /><!-- 1.2 Development -->
+    <Property Name="ProfessionalBackgroundFreeText" Type="meta:name" /><!-- 1.2 Development -->
 
     <!-- Team Contact Details -->
 
@@ -68,9 +77,10 @@
     <Property Name="LeadApplicantTitle" Type="meta:name" />
     <Property Name="LeadApplicantFirstName" Type="meta:name" />
     <Property Name="LeadApplicantLastName" Type="meta:name" />
-    <Property Name="LeadApplicantEmail" Type="meta:name" /> <!-- NEW -->
+    <Property Name="LeadApplicantEmail" Type="meta:name" />
 
     <Property Name="LeadApplicantJobRole" Type="meta:name" />
+    <Property Name="LeadApplicantCareerStage" Type="meta:name" /><!-- 1.2 Development -->
     <Property Name="LeadApplicantOrganisationTypeId" Type="ResearcherOrganisationType?" />
     <Property Name="LeadApplicantOrganisation" Type="meta:name" />
     <Property Name="LeadApplicantDepartment" Type="meta:name" />

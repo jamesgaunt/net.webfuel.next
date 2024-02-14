@@ -18,15 +18,20 @@ namespace Webfuel.Domain.StaticData
         IReadOnlyList<IsFellowship> IsFellowship { get; }
         IReadOnlyList<IsInternationalMultiSiteStudy> IsInternationalMultiSiteStudy { get; }
         IReadOnlyList<IsLeadApplicantNHS> IsLeadApplicantNHS { get; }
+        IReadOnlyList<IsPaidRSSAdviserCoapplicant> IsPaidRSSAdviserCoapplicant { get; }
+        IReadOnlyList<IsPaidRSSAdviserLead> IsPaidRSSAdviserLead { get; }
         IReadOnlyList<IsPPIEAndEDIContribution> IsPPIEAndEDIContribution { get; }
+        IReadOnlyList<IsPrePostAward> IsPrePostAward { get; }
         IReadOnlyList<IsQuantativeTeamContribution> IsQuantativeTeamContribution { get; }
         IReadOnlyList<IsResubmission> IsResubmission { get; }
         IReadOnlyList<IsTeamMembersConsulted> IsTeamMembersConsulted { get; }
+        IReadOnlyList<ProfessionalBackground> ProfessionalBackground { get; }
         IReadOnlyList<ProjectStatus> ProjectStatus { get; }
         IReadOnlyList<ReportProvider> ReportProvider { get; }
         IReadOnlyList<ResearcherOrganisationType> ResearcherOrganisationType { get; }
         IReadOnlyList<ResearcherRole> ResearcherRole { get; }
         IReadOnlyList<ResearchMethodology> ResearchMethodology { get; }
+        IReadOnlyList<RSSHub> RSSHub { get; }
         IReadOnlyList<Site> Site { get; }
         IReadOnlyList<SubmissionOutcome> SubmissionOutcome { get; }
         IReadOnlyList<SubmissionStage> SubmissionStage { get; }
@@ -35,6 +40,7 @@ namespace Webfuel.Domain.StaticData
         IReadOnlyList<SupportTeam> SupportTeam { get; }
         IReadOnlyList<Title> Title { get; }
         IReadOnlyList<UserDiscipline> UserDiscipline { get; }
+        IReadOnlyList<WillStudyUseCTU> WillStudyUseCTU { get; }
         IReadOnlyList<WorkActivity> WorkActivity { get; }
         DateTimeOffset LoadedAt { get; }
     }
@@ -54,15 +60,20 @@ namespace Webfuel.Domain.StaticData
         public required IReadOnlyList<IsFellowship> IsFellowship { get; init; }
         public required IReadOnlyList<IsInternationalMultiSiteStudy> IsInternationalMultiSiteStudy { get; init; }
         public required IReadOnlyList<IsLeadApplicantNHS> IsLeadApplicantNHS { get; init; }
+        public required IReadOnlyList<IsPaidRSSAdviserCoapplicant> IsPaidRSSAdviserCoapplicant { get; init; }
+        public required IReadOnlyList<IsPaidRSSAdviserLead> IsPaidRSSAdviserLead { get; init; }
         public required IReadOnlyList<IsPPIEAndEDIContribution> IsPPIEAndEDIContribution { get; init; }
+        public required IReadOnlyList<IsPrePostAward> IsPrePostAward { get; init; }
         public required IReadOnlyList<IsQuantativeTeamContribution> IsQuantativeTeamContribution { get; init; }
         public required IReadOnlyList<IsResubmission> IsResubmission { get; init; }
         public required IReadOnlyList<IsTeamMembersConsulted> IsTeamMembersConsulted { get; init; }
+        public required IReadOnlyList<ProfessionalBackground> ProfessionalBackground { get; init; }
         public required IReadOnlyList<ProjectStatus> ProjectStatus { get; init; }
         public required IReadOnlyList<ReportProvider> ReportProvider { get; init; }
         public required IReadOnlyList<ResearcherOrganisationType> ResearcherOrganisationType { get; init; }
         public required IReadOnlyList<ResearcherRole> ResearcherRole { get; init; }
         public required IReadOnlyList<ResearchMethodology> ResearchMethodology { get; init; }
+        public required IReadOnlyList<RSSHub> RSSHub { get; init; }
         public required IReadOnlyList<Site> Site { get; init; }
         public required IReadOnlyList<SubmissionOutcome> SubmissionOutcome { get; init; }
         public required IReadOnlyList<SubmissionStage> SubmissionStage { get; init; }
@@ -71,6 +82,7 @@ namespace Webfuel.Domain.StaticData
         public required IReadOnlyList<SupportTeam> SupportTeam { get; init; }
         public required IReadOnlyList<Title> Title { get; init; }
         public required IReadOnlyList<UserDiscipline> UserDiscipline { get; init; }
+        public required IReadOnlyList<WillStudyUseCTU> WillStudyUseCTU { get; init; }
         public required IReadOnlyList<WorkActivity> WorkActivity { get; init; }
         public DateTimeOffset LoadedAt { get; init; }
         
@@ -92,15 +104,20 @@ namespace Webfuel.Domain.StaticData
                 IsFellowship = await serviceProvider.GetRequiredService<IIsFellowshipRepository>().SelectIsFellowship(),
                 IsInternationalMultiSiteStudy = await serviceProvider.GetRequiredService<IIsInternationalMultiSiteStudyRepository>().SelectIsInternationalMultiSiteStudy(),
                 IsLeadApplicantNHS = await serviceProvider.GetRequiredService<IIsLeadApplicantNHSRepository>().SelectIsLeadApplicantNHS(),
+                IsPaidRSSAdviserCoapplicant = await serviceProvider.GetRequiredService<IIsPaidRSSAdviserCoapplicantRepository>().SelectIsPaidRSSAdviserCoapplicant(),
+                IsPaidRSSAdviserLead = await serviceProvider.GetRequiredService<IIsPaidRSSAdviserLeadRepository>().SelectIsPaidRSSAdviserLead(),
                 IsPPIEAndEDIContribution = await serviceProvider.GetRequiredService<IIsPPIEAndEDIContributionRepository>().SelectIsPPIEAndEDIContribution(),
+                IsPrePostAward = await serviceProvider.GetRequiredService<IIsPrePostAwardRepository>().SelectIsPrePostAward(),
                 IsQuantativeTeamContribution = await serviceProvider.GetRequiredService<IIsQuantativeTeamContributionRepository>().SelectIsQuantativeTeamContribution(),
                 IsResubmission = await serviceProvider.GetRequiredService<IIsResubmissionRepository>().SelectIsResubmission(),
                 IsTeamMembersConsulted = await serviceProvider.GetRequiredService<IIsTeamMembersConsultedRepository>().SelectIsTeamMembersConsulted(),
+                ProfessionalBackground = await serviceProvider.GetRequiredService<IProfessionalBackgroundRepository>().SelectProfessionalBackground(),
                 ProjectStatus = await serviceProvider.GetRequiredService<IProjectStatusRepository>().SelectProjectStatus(),
                 ReportProvider = await serviceProvider.GetRequiredService<IReportProviderRepository>().SelectReportProvider(),
                 ResearcherOrganisationType = await serviceProvider.GetRequiredService<IResearcherOrganisationTypeRepository>().SelectResearcherOrganisationType(),
                 ResearcherRole = await serviceProvider.GetRequiredService<IResearcherRoleRepository>().SelectResearcherRole(),
                 ResearchMethodology = await serviceProvider.GetRequiredService<IResearchMethodologyRepository>().SelectResearchMethodology(),
+                RSSHub = await serviceProvider.GetRequiredService<IRSSHubRepository>().SelectRSSHub(),
                 Site = await serviceProvider.GetRequiredService<ISiteRepository>().SelectSite(),
                 SubmissionOutcome = await serviceProvider.GetRequiredService<ISubmissionOutcomeRepository>().SelectSubmissionOutcome(),
                 SubmissionStage = await serviceProvider.GetRequiredService<ISubmissionStageRepository>().SelectSubmissionStage(),
@@ -109,6 +126,7 @@ namespace Webfuel.Domain.StaticData
                 SupportTeam = await serviceProvider.GetRequiredService<ISupportTeamRepository>().SelectSupportTeam(),
                 Title = await serviceProvider.GetRequiredService<ITitleRepository>().SelectTitle(),
                 UserDiscipline = await serviceProvider.GetRequiredService<IUserDisciplineRepository>().SelectUserDiscipline(),
+                WillStudyUseCTU = await serviceProvider.GetRequiredService<IWillStudyUseCTURepository>().SelectWillStudyUseCTU(),
                 WorkActivity = await serviceProvider.GetRequiredService<IWorkActivityRepository>().SelectWorkActivity(),
                 LoadedAt = DateTimeOffset.Now
             };

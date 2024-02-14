@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="IsPrePostAward" Tags="StaticData|Enum" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="d8c2fe26-3a35-4a49-b61d-b5abc41611f6" Name="Pre-Award" />
+      <Row Id="6b7d87be-4ba2-4b47-9de5-42672114fcaf" Name="Post-Award" />
+    </Data>
+  </Entity>
+</Schema>

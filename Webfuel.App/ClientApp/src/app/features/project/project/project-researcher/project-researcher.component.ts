@@ -60,6 +60,7 @@ export class ProjectResearcherComponent implements OnInit {
     leadApplicantEmail: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
 
     leadApplicantJobRole: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    leadApplicantCareerStage: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     leadApplicantOrganisationTypeId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
     leadApplicantOrganisation: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     leadApplicantDepartment: new FormControl<string>('', { nonNullable: true }),

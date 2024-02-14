@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="IsPaidRSSAdviserCoapplicant" Tags="StaticData|Enum" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="4f8c3cb5-d96a-4cfe-b04c-35dc8b925b15" Name="No" />
+      <Row Id="22f78a71-0e8c-4047-82b3-305736b2d3cc" Name="Yes" />
+    </Data>
+  </Entity>
+</Schema>

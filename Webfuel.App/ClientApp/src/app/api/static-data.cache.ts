@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IDataSource, IDataSourceWithGet } from 'shared/common/data-source';
 import { StaticDataService } from '../core/static-data.service';
-import { AgeRange, ApplicationStage, Disability, Ethnicity, FundingBody, FundingCallType, FundingStream, Gender, HowDidYouFindUs, IsCTUAlreadyInvolved, IsCTUTeamContribution, IsFellowship, IsInternationalMultiSiteStudy, IsLeadApplicantNHS, IsPPIEAndEDIContribution, IsQuantativeTeamContribution, IsResubmission, IsTeamMembersConsulted, ProjectStatus, ReportProvider, ResearcherOrganisationType, ResearcherRole, ResearchMethodology, Site, SubmissionOutcome, SubmissionStage, SupportProvided, SupportRequestStatus, SupportTeam, Title, UserDiscipline, WorkActivity } from './api.types';
+import { AgeRange, ApplicationStage, Disability, Ethnicity, FundingBody, FundingCallType, FundingStream, Gender, HowDidYouFindUs, IsCTUAlreadyInvolved, IsCTUTeamContribution, IsFellowship, IsInternationalMultiSiteStudy, IsLeadApplicantNHS, IsPaidRSSAdviserCoapplicant, IsPaidRSSAdviserLead, IsPPIEAndEDIContribution, IsPrePostAward, IsQuantativeTeamContribution, IsResubmission, IsTeamMembersConsulted, ProfessionalBackground, ProjectStatus, ReportProvider, ResearcherOrganisationType, ResearcherRole, ResearchMethodology, RSSHub, Site, SubmissionOutcome, SubmissionStage, SupportProvided, SupportRequestStatus, SupportTeam, Title, UserDiscipline, WillStudyUseCTU, WorkActivity } from './api.types';
 
 @Injectable()
 export class StaticDataCache {
@@ -79,9 +79,24 @@ export class StaticDataCache {
         get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.isLeadApplicantNHS),
     };
     
+    isPaidRSSAdviserCoapplicant: IDataSourceWithGet<IsPaidRSSAdviserCoapplicant> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.isPaidRSSAdviserCoapplicant),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.isPaidRSSAdviserCoapplicant),
+    };
+    
+    isPaidRSSAdviserLead: IDataSourceWithGet<IsPaidRSSAdviserLead> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.isPaidRSSAdviserLead),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.isPaidRSSAdviserLead),
+    };
+    
     isPPIEAndEDIContribution: IDataSourceWithGet<IsPPIEAndEDIContribution> = {
         query: (query) => this.staticDataService.queryFactory(query, s => s.isPPIEAndEDIContribution),
         get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.isPPIEAndEDIContribution),
+    };
+    
+    isPrePostAward: IDataSourceWithGet<IsPrePostAward> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.isPrePostAward),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.isPrePostAward),
     };
     
     isQuantativeTeamContribution: IDataSourceWithGet<IsQuantativeTeamContribution> = {
@@ -97,6 +112,11 @@ export class StaticDataCache {
     isTeamMembersConsulted: IDataSourceWithGet<IsTeamMembersConsulted> = {
         query: (query) => this.staticDataService.queryFactory(query, s => s.isTeamMembersConsulted),
         get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.isTeamMembersConsulted),
+    };
+    
+    professionalBackground: IDataSourceWithGet<ProfessionalBackground> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.professionalBackground),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.professionalBackground),
     };
     
     projectStatus: IDataSourceWithGet<ProjectStatus> = {
@@ -122,6 +142,11 @@ export class StaticDataCache {
     researchMethodology: IDataSourceWithGet<ResearchMethodology> = {
         query: (query) => this.staticDataService.queryFactory(query, s => s.researchMethodology),
         get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.researchMethodology),
+    };
+    
+    rssHub: IDataSourceWithGet<RSSHub> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.rssHub),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.rssHub),
     };
     
     site: IDataSourceWithGet<Site> = {
@@ -162,6 +187,11 @@ export class StaticDataCache {
     userDiscipline: IDataSourceWithGet<UserDiscipline> = {
         query: (query) => this.staticDataService.queryFactory(query, s => s.userDiscipline),
         get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.userDiscipline),
+    };
+    
+    willStudyUseCTU: IDataSourceWithGet<WillStudyUseCTU> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.willStudyUseCTU),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.willStudyUseCTU),
     };
     
     workActivity: IDataSourceWithGet<WorkActivity> = {

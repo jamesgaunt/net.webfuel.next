@@ -15,6 +15,10 @@ namespace Webfuel.Domain
             {
                 sb.Append("Prefixed Number: ").Append(original.PrefixedNumber).Append(" -> ").Append(updated.PrefixedNumber).Append(delimiter);
             }
+            if(original.IsThisRequestLinkedToAnExistingProject != updated.IsThisRequestLinkedToAnExistingProject)
+            {
+                sb.Append("Is This Request Linked To An Existing Project: ").Append(original.IsThisRequestLinkedToAnExistingProject).Append(" -> ").Append(updated.IsThisRequestLinkedToAnExistingProject).Append(delimiter);
+            }
             if(original.DateOfRequest != updated.DateOfRequest)
             {
                 sb.Append("Date Of Request: ").Append(original.DateOfRequest).Append(" -> ").Append(updated.DateOfRequest).Append(delimiter);
@@ -58,6 +62,14 @@ namespace Webfuel.Domain
             if(original.IsCTUAlreadyInvolvedFreeText != updated.IsCTUAlreadyInvolvedFreeText)
             {
                 sb.Append("Is C T U Already Involved Free Text: ").Append(original.IsCTUAlreadyInvolvedFreeText).Append(" -> ").Append(updated.IsCTUAlreadyInvolvedFreeText).Append(delimiter);
+            }
+            if(original.ProfessionalBackgroundIdsJson != updated.ProfessionalBackgroundIdsJson)
+            {
+                sb.Append("Professional Background: ").Append(original.ProfessionalBackgroundIds).Append(" -> ").Append(updated.ProfessionalBackgroundIds).Append(delimiter);
+            }
+            if(original.ProfessionalBackgroundFreeText != updated.ProfessionalBackgroundFreeText)
+            {
+                sb.Append("Professional Background Free Text: ").Append(original.ProfessionalBackgroundFreeText).Append(" -> ").Append(updated.ProfessionalBackgroundFreeText).Append(delimiter);
             }
             if(original.TeamContactTitle != updated.TeamContactTitle)
             {
@@ -106,6 +118,10 @@ namespace Webfuel.Domain
             if(original.LeadApplicantJobRole != updated.LeadApplicantJobRole)
             {
                 sb.Append("Lead Applicant Job Role: ").Append(original.LeadApplicantJobRole).Append(" -> ").Append(updated.LeadApplicantJobRole).Append(delimiter);
+            }
+            if(original.LeadApplicantCareerStage != updated.LeadApplicantCareerStage)
+            {
+                sb.Append("Lead Applicant Career Stage: ").Append(original.LeadApplicantCareerStage).Append(" -> ").Append(updated.LeadApplicantCareerStage).Append(delimiter);
             }
             if(original.LeadApplicantOrganisation != updated.LeadApplicantOrganisation)
             {

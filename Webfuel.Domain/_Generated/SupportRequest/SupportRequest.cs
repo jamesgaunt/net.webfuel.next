@@ -27,6 +27,9 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.PrefixedNumber):
                         PrefixedNumber = (string)value!;
                         break;
+                    case nameof(SupportRequest.IsThisRequestLinkedToAnExistingProject):
+                        IsThisRequestLinkedToAnExistingProject = (bool)value!;
+                        break;
                     case nameof(SupportRequest.DateOfRequest):
                         DateOfRequest = DateOnly.FromDateTime((DateTime)value!);
                         break;
@@ -59,6 +62,12 @@ namespace Webfuel.Domain
                         break;
                     case nameof(SupportRequest.IsCTUAlreadyInvolvedFreeText):
                         IsCTUAlreadyInvolvedFreeText = (string)value!;
+                        break;
+                    case nameof(SupportRequest.ProfessionalBackgroundIds):
+                        ProfessionalBackgroundIdsJson = (string)value!;
+                        break;
+                    case nameof(SupportRequest.ProfessionalBackgroundFreeText):
+                        ProfessionalBackgroundFreeText = (string)value!;
                         break;
                     case nameof(SupportRequest.TeamContactTitle):
                         TeamContactTitle = (string)value!;
@@ -95,6 +104,9 @@ namespace Webfuel.Domain
                         break;
                     case nameof(SupportRequest.LeadApplicantJobRole):
                         LeadApplicantJobRole = (string)value!;
+                        break;
+                    case nameof(SupportRequest.LeadApplicantCareerStage):
+                        LeadApplicantCareerStage = (string)value!;
                         break;
                     case nameof(SupportRequest.LeadApplicantOrganisation):
                         LeadApplicantOrganisation = (string)value!;
@@ -183,6 +195,7 @@ namespace Webfuel.Domain
         public Guid Id  { get; set; } = Guid.Empty;
         public int Number  { get; set; } = 0;
         public string PrefixedNumber  { get; set; } = String.Empty;
+        public bool IsThisRequestLinkedToAnExistingProject  { get; set; } = false;
         public DateOnly DateOfRequest  { get; set; } = new DateOnly(1900, 1, 1);
         public string Title  { get; set; } = String.Empty;
         public string ApplicationStageFreeText  { get; set; } = String.Empty;
@@ -194,6 +207,19 @@ namespace Webfuel.Domain
         public string HowDidYouFindUsFreeText  { get; set; } = String.Empty;
         public string WhoElseIsOnTheStudyTeam  { get; set; } = String.Empty;
         public string IsCTUAlreadyInvolvedFreeText  { get; set; } = String.Empty;
+        public List<Guid> ProfessionalBackgroundIds
+        {
+            get { return _ProfessionalBackgroundIds ?? (_ProfessionalBackgroundIds = SafeJsonSerializer.Deserialize<List<Guid>>(_ProfessionalBackgroundIdsJson)); }
+            set { _ProfessionalBackgroundIds = value; }
+        }
+        List<Guid>? _ProfessionalBackgroundIds = null;
+        internal string ProfessionalBackgroundIdsJson
+        {
+            get { var result = _ProfessionalBackgroundIds == null ? _ProfessionalBackgroundIdsJson : (_ProfessionalBackgroundIdsJson = SafeJsonSerializer.Serialize(_ProfessionalBackgroundIds)); _ProfessionalBackgroundIds = null; return result; }
+            set { _ProfessionalBackgroundIdsJson = value; _ProfessionalBackgroundIds = null; }
+        }
+        string _ProfessionalBackgroundIdsJson = String.Empty;
+        public string ProfessionalBackgroundFreeText  { get; set; } = String.Empty;
         public string TeamContactTitle  { get; set; } = String.Empty;
         public string TeamContactFirstName  { get; set; } = String.Empty;
         public string TeamContactLastName  { get; set; } = String.Empty;
@@ -206,6 +232,7 @@ namespace Webfuel.Domain
         public string LeadApplicantLastName  { get; set; } = String.Empty;
         public string LeadApplicantEmail  { get; set; } = String.Empty;
         public string LeadApplicantJobRole  { get; set; } = String.Empty;
+        public string LeadApplicantCareerStage  { get; set; } = String.Empty;
         public string LeadApplicantOrganisation  { get; set; } = String.Empty;
         public string LeadApplicantDepartment  { get; set; } = String.Empty;
         public string LeadApplicantAddressLine1  { get; set; } = String.Empty;
@@ -239,6 +266,7 @@ namespace Webfuel.Domain
             entity.Id = Id;
             entity.Number = Number;
             entity.PrefixedNumber = PrefixedNumber;
+            entity.IsThisRequestLinkedToAnExistingProject = IsThisRequestLinkedToAnExistingProject;
             entity.DateOfRequest = DateOfRequest;
             entity.Title = Title;
             entity.ApplicationStageFreeText = ApplicationStageFreeText;
@@ -250,6 +278,8 @@ namespace Webfuel.Domain
             entity.HowDidYouFindUsFreeText = HowDidYouFindUsFreeText;
             entity.WhoElseIsOnTheStudyTeam = WhoElseIsOnTheStudyTeam;
             entity.IsCTUAlreadyInvolvedFreeText = IsCTUAlreadyInvolvedFreeText;
+            entity.ProfessionalBackgroundIdsJson = ProfessionalBackgroundIdsJson;
+            entity.ProfessionalBackgroundFreeText = ProfessionalBackgroundFreeText;
             entity.TeamContactTitle = TeamContactTitle;
             entity.TeamContactFirstName = TeamContactFirstName;
             entity.TeamContactLastName = TeamContactLastName;
@@ -262,6 +292,7 @@ namespace Webfuel.Domain
             entity.LeadApplicantLastName = LeadApplicantLastName;
             entity.LeadApplicantEmail = LeadApplicantEmail;
             entity.LeadApplicantJobRole = LeadApplicantJobRole;
+            entity.LeadApplicantCareerStage = LeadApplicantCareerStage;
             entity.LeadApplicantOrganisation = LeadApplicantOrganisation;
             entity.LeadApplicantDepartment = LeadApplicantDepartment;
             entity.LeadApplicantAddressLine1 = LeadApplicantAddressLine1;

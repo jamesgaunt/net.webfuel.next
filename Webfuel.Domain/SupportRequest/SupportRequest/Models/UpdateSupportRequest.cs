@@ -28,5 +28,7 @@ namespace Webfuel.Domain
         public string WhoElseIsOnTheStudyTeam { get; set; } = String.Empty;
         public Guid? IsCTUAlreadyInvolvedId { get; set; }
         public string IsCTUAlreadyInvolvedFreeText { get; set; } = String.Empty;
+        public List<Guid> ProfessionalBackgroundIds { get; set; } = new List<Guid>(); // 1.2 Development
+        public string ProfessionalBackgroundFreeText { get; set; } = String.Empty; // 1.2 Development   
     }
 }

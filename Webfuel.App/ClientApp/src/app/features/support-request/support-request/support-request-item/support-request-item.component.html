@@ -22,6 +22,12 @@
         <label class="label">Working title of the project</label>
         <input class="input" type="text" placeholder="required" formControlName="title" />
       </div>
+      <div class="field is-12">
+        <label class="label">Is this request linked to a current project?</label>
+        <div class="checkbox">
+          <label><input type="checkbox" disabled formControlName="isThisRequestLinkedToAnExistingProject" /> Please tick this checkbox if you have already submitted a request in relation to this project.</label>
+        </div>
+      </div>
       <div class="field is-6">
         <label class="label">Stage of application</label>
         <dropdown-select [dataSource]="staticDataCache.applicationStage" [freeTextControl]="form.controls.applicationStageFreeText" placeholder="required" formControlName="applicationStageId"></dropdown-select>
@@ -83,6 +89,10 @@
           Who else is on your study team and what is their expertise?
         </label>
         <text-area formControlName="whoElseIsOnTheStudyTeam" placeholder="required" maxlength="2000"></text-area>
+      </div>
+      <div class="field is-12">
+        <label class="label">What is the professional background of all team/applicants? (select all that apply)</label>
+        <dropdown-multi-select [dataSource]="staticDataCache.professionalBackground" [enableClear]="true" [freeTextControl]="form.controls.professionalBackgroundFreeText" placeholder="required" formControlName="professionalBackgroundIds"></dropdown-multi-select>
       </div>
     </div>
     <div class="floating-buttons" *ngIf="!locked">

@@ -36,15 +36,20 @@ import { IsCTUTeamContributionApi } from './is-ctuteam-contribution.api';
 import { IsFellowshipApi } from './is-fellowship.api';
 import { IsInternationalMultiSiteStudyApi } from './is-international-multi-site-study.api';
 import { IsLeadApplicantNHSApi } from './is-lead-applicant-nhs.api';
+import { IsPaidRSSAdviserCoapplicantApi } from './is-paid-rssadviser-coapplicant.api';
+import { IsPaidRSSAdviserLeadApi } from './is-paid-rssadviser-lead.api';
 import { IsPPIEAndEDIContributionApi } from './is-ppieand-edicontribution.api';
+import { IsPrePostAwardApi } from './is-pre-post-award.api';
 import { IsQuantativeTeamContributionApi } from './is-quantative-team-contribution.api';
 import { IsResubmissionApi } from './is-resubmission.api';
 import { IsTeamMembersConsultedApi } from './is-team-members-consulted.api';
+import { ProfessionalBackgroundApi } from './professional-background.api';
 import { ProjectStatusApi } from './project-status.api';
 import { ReportProviderApi } from './report-provider.api';
 import { ResearcherOrganisationTypeApi } from './researcher-organisation-type.api';
 import { ResearcherRoleApi } from './researcher-role.api';
 import { ResearchMethodologyApi } from './research-methodology.api';
+import { RSSHubApi } from './rsshub.api';
 import { SiteApi } from './site.api';
 import { SubmissionOutcomeApi } from './submission-outcome.api';
 import { SubmissionStageApi } from './submission-stage.api';
@@ -53,6 +58,7 @@ import { SupportRequestStatusApi } from './support-request-status.api';
 import { SupportTeamApi } from './support-team.api';
 import { TitleApi } from './title.api';
 import { UserDisciplineApi } from './user-discipline.api';
+import { WillStudyUseCTUApi } from './will-study-use-ctu.api';
 import { WorkActivityApi } from './work-activity.api';
 import { StaticDataCache } from './static-data.cache';
 
@@ -95,15 +101,20 @@ import { StaticDataCache } from './static-data.cache';
         IsFellowshipApi,
         IsInternationalMultiSiteStudyApi,
         IsLeadApplicantNHSApi,
+        IsPaidRSSAdviserCoapplicantApi,
+        IsPaidRSSAdviserLeadApi,
         IsPPIEAndEDIContributionApi,
+        IsPrePostAwardApi,
         IsQuantativeTeamContributionApi,
         IsResubmissionApi,
         IsTeamMembersConsultedApi,
+        ProfessionalBackgroundApi,
         ProjectStatusApi,
         ReportProviderApi,
         ResearcherOrganisationTypeApi,
         ResearcherRoleApi,
         ResearchMethodologyApi,
+        RSSHubApi,
         SiteApi,
         SubmissionOutcomeApi,
         SubmissionStageApi,
@@ -112,6 +123,7 @@ import { StaticDataCache } from './static-data.cache';
         SupportTeamApi,
         TitleApi,
         UserDisciplineApi,
+        WillStudyUseCTUApi,
         WorkActivityApi,
         StaticDataCache,
     ]
