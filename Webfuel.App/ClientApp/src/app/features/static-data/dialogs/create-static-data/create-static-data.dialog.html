@@ -8,6 +8,10 @@
         <label class="label">Name</label>
         <input class="input" type="text" placeholder="required" formControlName="name" />
       </div>
+      <div class="field" *ngIf="data.enableAlias">
+        <label class="label">Alias</label>
+        <input class="input" type="text" placeholder="optional" formControlName="alias" />
+      </div>
       <div class="field">
         <label class="label">Default</label>
         <toggle-input formControlName="default" />

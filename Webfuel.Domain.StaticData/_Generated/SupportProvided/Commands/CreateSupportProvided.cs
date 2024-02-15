@@ -5,6 +5,7 @@ namespace Webfuel.Domain.StaticData
     public class CreateSupportProvided: IRequest<SupportProvided>
     {
         public required string Name { get; set; }
+        public string Alias { get; set; } = String.Empty;
         public bool Default { get; set; } = false;
         public bool Hidden { get; set; } = false;
         public bool FreeText { get; set; } = false;
@@ -25,6 +26,7 @@ namespace Webfuel.Domain.StaticData
         {
             var updated = await _supportProvidedRepository.InsertSupportProvided(new SupportProvided {
                     Name = request.Name,
+                    Alias = request.Alias,
                     Default = request.Default,
                     Hidden = request.Hidden,
                     FreeText = request.FreeText,

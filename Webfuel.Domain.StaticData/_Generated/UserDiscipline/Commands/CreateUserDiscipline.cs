@@ -5,6 +5,7 @@ namespace Webfuel.Domain.StaticData
     public class CreateUserDiscipline: IRequest<UserDiscipline>
     {
         public required string Name { get; set; }
+        public string Alias { get; set; } = String.Empty;
         public bool Default { get; set; } = false;
         public bool Hidden { get; set; } = false;
         public bool FreeText { get; set; } = false;
@@ -25,6 +26,7 @@ namespace Webfuel.Domain.StaticData
         {
             var updated = await _userDisciplineRepository.InsertUserDiscipline(new UserDiscipline {
                     Name = request.Name,
+                    Alias = request.Alias,
                     Default = request.Default,
                     Hidden = request.Hidden,
                     FreeText = request.FreeText,

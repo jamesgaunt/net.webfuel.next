@@ -7,6 +7,7 @@ export interface CreateStaticDataDialogData{
   typeName: string;
   enableHidden: boolean;
   enableFreeText: boolean;
+  enableAlias: boolean;
 }
 
 @Injectable()
@@ -33,6 +34,7 @@ export class CreateStaticDataDialogComponent extends DialogComponentBase<any, Cr
     hidden: new FormControl(false),
     default: new FormControl(false),
     freeText: new FormControl(false),
+    alias: new FormControl('', { nonNullable: true })
   });
 
   save() {

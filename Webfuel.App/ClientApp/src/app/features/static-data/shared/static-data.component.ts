@@ -28,6 +28,7 @@ export class StaticDataComponent<TItem, TQuery extends Query = Query, TCreate = 
       typeName: this.typeName,
       enableHidden: this.enableHidden,
       enableFreeText: this.enableFreeText,
+      enableAlias: this.enableAlias,
     }).subscribe((result) => {
       this.dataSource.create!(result).subscribe();
     });
@@ -43,6 +44,7 @@ export class StaticDataComponent<TItem, TQuery extends Query = Query, TCreate = 
       typeName: this.typeName,
       enableHidden: this.enableHidden,
       enableFreeText: this.enableFreeText,
+      enableAlias: this.enableAlias,
     }).subscribe((result) => {
       this.dataSource.update!(result).subscribe();
     });
@@ -59,6 +61,8 @@ export class StaticDataComponent<TItem, TQuery extends Query = Query, TCreate = 
   }
 
   // Flexible Fields
+
+  enableAlias = false;
 
   enableHidden = false;
 

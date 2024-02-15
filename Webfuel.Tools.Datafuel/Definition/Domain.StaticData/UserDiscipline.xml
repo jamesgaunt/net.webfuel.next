@@ -4,6 +4,7 @@
   <Entity Name="UserDiscipline" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
     <Key Name="Id" Type="guid" />
     <Property Name="Name" Type="meta:name" />
+    <Property Name="Alias" Type="meta:name" />
     <Property Name="SortOrder" Type="Int32" />
     <Property Name="Default" Type="boolean" />
     <Property Name="Hidden" Type="boolean" />

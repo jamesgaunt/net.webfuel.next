@@ -24,6 +24,9 @@ namespace Webfuel.Domain.StaticData
                     case nameof(SupportProvided.Name):
                         Name = (string)value!;
                         break;
+                    case nameof(SupportProvided.Alias):
+                        Alias = (string)value!;
+                        break;
                     case nameof(SupportProvided.SortOrder):
                         SortOrder = (int)value!;
                         break;
@@ -41,6 +44,7 @@ namespace Webfuel.Domain.StaticData
         }
         public Guid Id  { get; internal set; } = Guid.Empty;
         public string Name  { get; internal set; } = String.Empty;
+        public string Alias  { get; internal set; } = String.Empty;
         public int SortOrder  { get; internal set; } = 0;
         public bool Default  { get; internal set; } = false;
         public bool Hidden  { get; internal set; } = false;
@@ -50,6 +54,7 @@ namespace Webfuel.Domain.StaticData
             var entity = new SupportProvided();
             entity.Id = Id;
             entity.Name = Name;
+            entity.Alias = Alias;
             entity.SortOrder = SortOrder;
             entity.Default = Default;
             entity.Hidden = Hidden;

@@ -1,4 +1,5 @@
 ﻿using Azure.Core;
+using DocumentFormat.OpenXml.Office2010.Drawing;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.Extensions.DependencyInjection;
 using Webfuel.Domain.StaticData;
@@ -13,7 +14,7 @@ namespace Webfuel.Domain
         {
             cell.SetValue(value ? "Y" : "N");
             cell.CentreAlign();
-            if(value)
+            if (value)
                 cell.SetBackgroundColor(System.Drawing.Color.LightGreen);
             return cell;
         }
@@ -278,6 +279,7 @@ namespace Webfuel.Domain
         public async Task<AnnualReportData> GenerateData(Project project)
         {
             var support = await ServiceProvider.GetRequiredService<IProjectSupportRepository>().SelectProjectSupportByProjectId(project.Id);
+            var advisers = await ServiceProvider.GetRequiredService<IProjectAdviserRepository>().SelectProjectAdviserByProjectId(project.Id);
 
             var data = new AnnualReportData
             {
@@ -294,8 +296,8 @@ namespace Webfuel.Domain
                 IsAPaidRSSStaffMemberCoapplicant = project.IsPaidRSSAdviserCoapplicantId == IsPaidRSSAdviserCoapplicantEnum.Yes,
                 WasAdvicePrePostAward = "TODO",
                 TotalAmountOfSupportProvided = TotalAmountOfSupportProvided(project, support),
-                CategoriesOfSupportProvided = CategoriesOrSupportProvided(project, support),
-                AdviserDisciplines = "TODO",
+                CategoriesOfSupportProvided = CategoriesOfSupportProvided(project, support),
+                AdviserDisciplines = AdviserDisciplines(project, support, advisers),
                 WillThisStudyUseACTU = WillThisStudyUseACTU(project),
                 IsThisCTUInternalOrExternalToTheRSS = IsThisCTUInternalOrExternalToTheRSS(project),
                 SitesInvolvedInProvidingAdvice = SitesInvolvedInProvidingAdvice(project),
@@ -348,9 +350,9 @@ namespace Webfuel.Domain
             return "High";
         }
 
-        string CategoriesOrSupportProvided(Project project, List<ProjectSupport> support)
+        string CategoriesOfSupportProvided(Project project, List<ProjectSupport> support)
         {
-            var categories = support.SelectMany(s => s.SupportProvidedIds).Distinct().Select(id => StaticData.SupportProvided.Single(sc => sc.Id == id).Name);
+            var categories = support.SelectMany(s => s.SupportProvidedIds).Distinct().Select(id => Format(StaticData.SupportProvided.Single(sc => sc.Id == id)));
             return String.Join(", ", categories);
         }
 
@@ -399,6 +401,60 @@ namespace Webfuel.Domain
                 return "External";
 
             return "N/A";
+        }
+
+        string AdviserDisciplines(Project project, List<ProjectSupport> support, List<ProjectAdviser> advisers)
+        {
+            var disciplines = new List<string>();
+
+            var userIds = new List<Guid>();
+            {
+                if (project.LeadAdviserUserId != null)
+                    userIds.Add(project.LeadAdviserUserId.Value);
+                foreach (var s in support)
+                {
+                    userIds.AddRange(s.AdviserIds);
+                }
+                foreach (var a in advisers)
+                {
+                    userIds.Add(a.UserId);
+                }
+                userIds = userIds.Distinct().ToList();
+            }
+
+            var users = Users.Where(u => userIds.Contains(u.Id)).ToList();
+
+            var disciplineIds = new List<Guid>();
+            {
+                foreach (var userId in userIds)
+                {
+                    var user = users.Single(u => u.Id == userId);
+
+                    disciplineIds.AddRange(user.DisciplineIds);
+                    if (!String.IsNullOrEmpty(user.DisciplineFreeText))
+                        disciplines.Add(user.DisciplineFreeText);
+                }
+
+                disciplineIds = disciplineIds.Distinct().ToList();
+            }
+
+            disciplines.AddRange(disciplineIds.Select(id => Format(StaticData.UserDiscipline.Single(ud => ud.Id == id))));
+
+            return String.Join(", ", disciplines.Distinct());
+        }
+
+        string Format(SupportProvided supportProvided)
+        {
+            if (!String.IsNullOrEmpty(supportProvided.Alias))
+                return supportProvided.Alias;
+            return supportProvided.Name;
+        }
+
+        string Format(UserDiscipline userDiscipline)
+        {
+            if (!String.IsNullOrEmpty(userDiscipline.Alias))
+                return userDiscipline.Alias;
+            return userDiscipline.Name;
         }
 
         // Columns

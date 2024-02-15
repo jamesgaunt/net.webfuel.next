@@ -8,6 +8,7 @@ export interface UpdateStaticDataData {
   typeName: string;
   enableHidden: boolean;
   enableFreeText: boolean;
+  enableAlias: boolean;
 }
 
 @Injectable()
@@ -36,6 +37,7 @@ export class UpdateStaticDataDialogComponent extends DialogComponentBase<any, Up
     hidden: new FormControl(false),
     default: new FormControl(false),
     freeText: new FormControl(false),
+    alias: new FormControl('', { nonNullable: true })
   });
 
   save() {

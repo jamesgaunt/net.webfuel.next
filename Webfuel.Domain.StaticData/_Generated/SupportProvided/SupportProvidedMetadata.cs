@@ -26,6 +26,9 @@ namespace Webfuel.Domain.StaticData
                     case nameof(SupportProvided.Name):
                         result.Add(new SqlParameter(nameof(SupportProvided.Name), entity.Name));
                         break;
+                    case nameof(SupportProvided.Alias):
+                        result.Add(new SqlParameter(nameof(SupportProvided.Alias), entity.Alias));
+                        break;
                     case nameof(SupportProvided.SortOrder):
                         result.Add(new SqlParameter(nameof(SupportProvided.SortOrder), entity.SortOrder));
                         break;
@@ -66,6 +69,7 @@ namespace Webfuel.Domain.StaticData
             {
                 yield return "Id";
                 yield return "Name";
+                yield return "Alias";
                 yield return "SortOrder";
                 yield return "Default";
                 yield return "Hidden";
@@ -79,6 +83,7 @@ namespace Webfuel.Domain.StaticData
             {
                 yield return "Id";
                 yield return "Name";
+                yield return "Alias";
                 yield return "SortOrder";
                 yield return "Default";
                 yield return "Hidden";
@@ -91,6 +96,7 @@ namespace Webfuel.Domain.StaticData
             get
             {
                 yield return "Name";
+                yield return "Alias";
                 yield return "SortOrder";
                 yield return "Default";
                 yield return "Hidden";
@@ -104,18 +110,28 @@ namespace Webfuel.Domain.StaticData
         {
             entity.Name = entity.Name ?? String.Empty;
             entity.Name = entity.Name.Trim();
+            entity.Alias = entity.Alias ?? String.Empty;
+            entity.Alias = entity.Alias.Trim();
             Validator.ValidateAndThrow(entity);
         }
         
         public static SupportProvidedRepositoryValidator Validator { get; } = new SupportProvidedRepositoryValidator();
         
         public const int Name_MaxLength = 128;
+        public const int Alias_MaxLength = 128;
         
         public static void Name_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull()
                 .MaximumLength(Name_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void Alias_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(Alias_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
     }
     
@@ -124,6 +140,7 @@ namespace Webfuel.Domain.StaticData
         public SupportProvidedRepositoryValidator()
         {
             RuleFor(x => x.Name).Use(SupportProvidedMetadata.Name_ValidationRules);
+            RuleFor(x => x.Alias).Use(SupportProvidedMetadata.Alias_ValidationRules);
             Validation();
         }
         
