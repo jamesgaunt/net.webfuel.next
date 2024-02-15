@@ -158,22 +158,30 @@ namespace Webfuel.Tools.Datafuel
             get
             {
                 var orderBy = OrderBy.Replace(" ", "");
-                var descending = false;
-
+                
                 if (String.IsNullOrEmpty(orderBy))
                 {
                     if (Key != null)
-                        orderBy = Key.Name;
-                    else
-                        return String.Empty;
-                }
-                else if (orderBy.StartsWith("-"))
-                {
-                    orderBy = orderBy.Substring(1);
-                    descending = true;
+                        return $"ORDER BY {Key.Name} ASC";
+                    return String.Empty;
                 }
 
-                return $"ORDER BY {orderBy}{(descending ? " DESC" : " ASC")}";
+                var terms = new List<string>();
+                var fields = orderBy.Split(",");
+
+                foreach(var field in fields)
+                {
+                    var name = field;
+                    var descending = false;
+                    if (name.StartsWith("-"))
+                    {
+                        name = field.Substring(1);
+                        descending = true;
+                    }
+                    terms.Add($"{name}{(descending ? " DESC" : " ASC")}");
+                }
+
+                return $"ORDER BY {String.Join(", ", terms)}";
             }
         }
 

@@ -39,8 +39,17 @@ namespace Webfuel.Domain
                     case nameof(ProjectSupport.SupportProvidedIds):
                         SupportProvidedIdsJson = (string)value!;
                         break;
+                    case nameof(ProjectSupport.SupportRequestedCompletedAt):
+                        SupportRequestedCompletedAt = value == DBNull.Value ? (DateTimeOffset?)null : (DateTimeOffset?)value;
+                        break;
+                    case nameof(ProjectSupport.SupportRequestedNotes):
+                        SupportRequestedNotes = (string)value!;
+                        break;
                     case nameof(ProjectSupport.ProjectId):
                         ProjectId = (Guid)value!;
+                        break;
+                    case nameof(ProjectSupport.SupportRequestedTeamId):
+                        SupportRequestedTeamId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
                 }
             }
@@ -85,7 +94,10 @@ namespace Webfuel.Domain
             set { _SupportProvidedIdsJson = value; _SupportProvidedIds = null; }
         }
         string _SupportProvidedIdsJson = String.Empty;
+        public DateTimeOffset? SupportRequestedCompletedAt  { get; set; } = null;
+        public string SupportRequestedNotes  { get; set; } = String.Empty;
         public Guid ProjectId { get; set; }
+        public Guid? SupportRequestedTeamId { get; set; }
         public ProjectSupport Copy()
         {
             var entity = new ProjectSupport();
@@ -96,7 +108,10 @@ namespace Webfuel.Domain
             entity.TeamIdsJson = TeamIdsJson;
             entity.AdviserIdsJson = AdviserIdsJson;
             entity.SupportProvidedIdsJson = SupportProvidedIdsJson;
+            entity.SupportRequestedCompletedAt = SupportRequestedCompletedAt;
+            entity.SupportRequestedNotes = SupportRequestedNotes;
             entity.ProjectId = ProjectId;
+            entity.SupportRequestedTeamId = SupportRequestedTeamId;
             return entity;
         }
     }

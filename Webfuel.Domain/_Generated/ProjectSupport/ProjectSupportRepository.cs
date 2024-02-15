@@ -18,6 +18,8 @@ namespace Webfuel.Domain
         Task<int> CountProjectSupport();
         Task<List<ProjectSupport>> SelectProjectSupport();
         Task<List<ProjectSupport>> SelectProjectSupportWithPage(int skip, int take);
+        Task<List<ProjectSupport>> SelectProjectSupportBySupportRequestedCompletedAt(DateTimeOffset? supportRequestedCompletedAt);
+        Task<List<ProjectSupport>> SelectProjectSupportBySupportRequestedTeamId(Guid? supportRequestedTeamId);
         Task<List<ProjectSupport>> SelectProjectSupportByDate(DateOnly date);
         Task<List<ProjectSupport>> SelectProjectSupportByProjectId(Guid projectId);
     }
@@ -82,12 +84,12 @@ namespace Webfuel.Domain
         }
         public async Task<List<ProjectSupport>> SelectProjectSupport()
         {
-            var sql = @"SELECT * FROM [ProjectSupport] ORDER BY Date DESC";
+            var sql = @"SELECT * FROM [ProjectSupport] ORDER BY Date DESC, Id DESC";
             return await _connection.ExecuteReader<ProjectSupport, ProjectSupportMetadata>(sql);
         }
         public async Task<List<ProjectSupport>> SelectProjectSupportWithPage(int skip, int take)
         {
-            var sql = @"SELECT * FROM [ProjectSupport] ORDER BY Date DESC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+            var sql = @"SELECT * FROM [ProjectSupport] ORDER BY Date DESC, Id DESC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Skip", skip),
@@ -95,9 +97,27 @@ namespace Webfuel.Domain
             };
             return await _connection.ExecuteReader<ProjectSupport, ProjectSupportMetadata>(sql, parameters);
         }
+        public async Task<List<ProjectSupport>> SelectProjectSupportBySupportRequestedCompletedAt(DateTimeOffset? supportRequestedCompletedAt)
+        {
+            var sql = @"SELECT * FROM [ProjectSupport] WHERE ((SupportRequestedCompletedAt = @SupportRequestedCompletedAt) OR (SupportRequestedCompletedAt IS NULL AND @SupportRequestedCompletedAt IS NULL)) ORDER BY Date DESC, Id DESC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@SupportRequestedCompletedAt", (object?)supportRequestedCompletedAt ?? DBNull.Value),
+            };
+            return await _connection.ExecuteReader<ProjectSupport, ProjectSupportMetadata>(sql, parameters);
+        }
+        public async Task<List<ProjectSupport>> SelectProjectSupportBySupportRequestedTeamId(Guid? supportRequestedTeamId)
+        {
+            var sql = @"SELECT * FROM [ProjectSupport] WHERE ((SupportRequestedTeamId = @SupportRequestedTeamId) OR (SupportRequestedTeamId IS NULL AND @SupportRequestedTeamId IS NULL)) ORDER BY Date DESC, Id DESC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@SupportRequestedTeamId", (object?)supportRequestedTeamId ?? DBNull.Value),
+            };
+            return await _connection.ExecuteReader<ProjectSupport, ProjectSupportMetadata>(sql, parameters);
+        }
         public async Task<List<ProjectSupport>> SelectProjectSupportByDate(DateOnly date)
         {
-            var sql = @"SELECT * FROM [ProjectSupport] WHERE Date = @Date ORDER BY Date DESC";
+            var sql = @"SELECT * FROM [ProjectSupport] WHERE Date = @Date ORDER BY Date DESC, Id DESC";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Date", date),
@@ -106,7 +126,7 @@ namespace Webfuel.Domain
         }
         public async Task<List<ProjectSupport>> SelectProjectSupportByProjectId(Guid projectId)
         {
-            var sql = @"SELECT * FROM [ProjectSupport] WHERE ProjectId = @ProjectId ORDER BY Date DESC";
+            var sql = @"SELECT * FROM [ProjectSupport] WHERE ProjectId = @ProjectId ORDER BY Date DESC, Id DESC";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@ProjectId", projectId),

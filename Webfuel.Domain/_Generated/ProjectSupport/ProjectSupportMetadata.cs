@@ -10,7 +10,7 @@ namespace Webfuel.Domain
         
         public static string DatabaseTable => "ProjectSupport";
         
-        public static string DefaultOrderBy => "ORDER BY Date DESC";
+        public static string DefaultOrderBy => "ORDER BY Date DESC, Id DESC";
         
         public static ProjectSupport DataReader(SqlDataReader dr) => new ProjectSupport(dr);
         
@@ -41,8 +41,17 @@ namespace Webfuel.Domain
                     case nameof(ProjectSupport.SupportProvidedIds):
                         result.Add(new SqlParameter(nameof(ProjectSupport.SupportProvidedIds), entity.SupportProvidedIdsJson));
                         break;
+                    case nameof(ProjectSupport.SupportRequestedCompletedAt):
+                        result.Add(new SqlParameter(nameof(ProjectSupport.SupportRequestedCompletedAt), entity.SupportRequestedCompletedAt ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(ProjectSupport.SupportRequestedNotes):
+                        result.Add(new SqlParameter(nameof(ProjectSupport.SupportRequestedNotes), entity.SupportRequestedNotes));
+                        break;
                     case nameof(ProjectSupport.ProjectId):
                         result.Add(new SqlParameter(nameof(ProjectSupport.ProjectId), entity.ProjectId));
+                        break;
+                    case nameof(ProjectSupport.SupportRequestedTeamId):
+                        result.Add(new SqlParameter(nameof(ProjectSupport.SupportRequestedTeamId), entity.SupportRequestedTeamId ?? (object?)DBNull.Value));
                         break;
                 }
             }
@@ -77,7 +86,10 @@ namespace Webfuel.Domain
                 yield return "TeamIds";
                 yield return "AdviserIds";
                 yield return "SupportProvidedIds";
+                yield return "SupportRequestedCompletedAt";
+                yield return "SupportRequestedNotes";
                 yield return "ProjectId";
+                yield return "SupportRequestedTeamId";
             }
         }
         
@@ -92,7 +104,10 @@ namespace Webfuel.Domain
                 yield return "TeamIds";
                 yield return "AdviserIds";
                 yield return "SupportProvidedIds";
+                yield return "SupportRequestedCompletedAt";
+                yield return "SupportRequestedNotes";
                 yield return "ProjectId";
+                yield return "SupportRequestedTeamId";
             }
         }
         
@@ -106,7 +121,10 @@ namespace Webfuel.Domain
                 yield return "TeamIds";
                 yield return "AdviserIds";
                 yield return "SupportProvidedIds";
+                yield return "SupportRequestedCompletedAt";
+                yield return "SupportRequestedNotes";
                 yield return "ProjectId";
+                yield return "SupportRequestedTeamId";
             }
         }
         
@@ -116,18 +134,28 @@ namespace Webfuel.Domain
         {
             entity.Description = entity.Description ?? String.Empty;
             entity.Description = entity.Description.Trim();
+            entity.SupportRequestedNotes = entity.SupportRequestedNotes ?? String.Empty;
+            entity.SupportRequestedNotes = entity.SupportRequestedNotes.Trim();
             Validator.ValidateAndThrow(entity);
         }
         
         public static ProjectSupportRepositoryValidator Validator { get; } = new ProjectSupportRepositoryValidator();
         
         public const int Description_MaxLength = 4000;
+        public const int SupportRequestedNotes_MaxLength = 1024;
         
         public static void Description_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull()
                 .MaximumLength(Description_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void SupportRequestedNotes_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(SupportRequestedNotes_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
     }
     
@@ -136,6 +164,7 @@ namespace Webfuel.Domain
         public ProjectSupportRepositoryValidator()
         {
             RuleFor(x => x.Description).Use(ProjectSupportMetadata.Description_ValidationRules);
+            RuleFor(x => x.SupportRequestedNotes).Use(ProjectSupportMetadata.SupportRequestedNotes_ValidationRules);
             Validation();
         }
         

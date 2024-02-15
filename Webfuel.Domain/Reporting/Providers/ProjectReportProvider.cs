@@ -130,6 +130,13 @@ namespace Webfuel.Domain
                         a.Add(Guid.Parse("64c50d12-ab3a-4ce6-a584-c58aa788d153"), "Support Time In Hours", p => p.WorkTimeInHours);
                     });
 
+                    // Project Adviser
+
+                    builder.Map<ProjectAdviser, ProjectAdviserReportMap>((p, m) => m.MapByProjectId(p.Id), a =>
+                    {
+                        a.Map<User>(Guid.Parse("39b47f9a-cf66-44d6-90ca-ea553c0041e7"), "Support Adviser", p => p.UserId);
+                    });
+
                     _schema = builder.Schema;
                 }
 
