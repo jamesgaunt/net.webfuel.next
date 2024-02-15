@@ -56,7 +56,7 @@ export abstract class ProjectComponentBase implements OnInit {
 
   unlock() {
     this.confirmDialog.open({ title: "Unlock Project", message: "Are you sure you want to return this project to Active status?" }).subscribe(() => {
-      this.projectApi.updateStatus({ id: this.item.id, statusId: ProjectStatusEnum.Active }, { successGrowl: "Project Unlocked" }).subscribe((result) => {
+      this.projectApi.updateStatus({ id: this.item.id, statusId: ProjectStatusEnum.Active, closureDate: null }, { successGrowl: "Project Unlocked" }).subscribe((result) => {
         this.reset(result);
       })
     });

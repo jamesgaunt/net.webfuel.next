@@ -10,6 +10,8 @@ import { UserApi } from '../../../../api/user.api';
 import { UserService } from '../../../../core/user.service';
 import { ProjectStatusEnum } from '../../../../api/api.enums';
 import _ from 'shared/common/underscore';
+import { ReportApi } from '../../../../api/report.api';
+import { ConfirmDialog } from '../../../../shared/dialogs/confirm/confirm.dialog';
 
 @Component({
   selector: 'project-list',
@@ -22,9 +24,11 @@ export class ProjectListComponent {
     public projectApi: ProjectApi,
     public userApi: UserApi,
     public userService: UserService,
+    private reportApi: ReportApi,
     public staticDataCache: StaticDataCache,
     private configurationService: ConfigurationService,
     private reportService: ReportService,
+    private confirmDialog: ConfirmDialog,
   ) {
   }
 
@@ -39,6 +43,7 @@ export class ProjectListComponent {
     statusId: new FormControl<string | null>(null),
     proposedFundingStreamId: new FormControl<string | null>(null),
     leadAdviserUserId: new FormControl<string | null>(null),
+    supportAdviserUserId: new FormControl<string | null>(null),
     title: new FormControl<string>('', { nonNullable: true }),
     teamContactName: new FormControl<string>('', { nonNullable: true }),
     requestedSupportTeamId: new FormControl<string | null>(null),
@@ -65,6 +70,14 @@ export class ProjectListComponent {
   export() {
     this.projectApi.export(_.merge(this.filterForm.getRawValue(), { skip: 0, take: 0 })).subscribe((result) => {
       this.reportService.runReport(result);
+    });
+  }
+
+  annualReport() {
+    this.confirmDialog.open({ title: "Run Experimental Annual Report", message: "This report is under development and available for testing purposes only." }).subscribe((result) => {
+      this.reportApi.runAnnualReport().subscribe((result) => {
+        this.reportService.runReport(result);
+      });
     });
   }
 

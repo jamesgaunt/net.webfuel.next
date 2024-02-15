@@ -7,35 +7,43 @@ import { StaticDataCache } from 'api/static-data.cache';
 import { FormService } from 'core/form.service';
 import { Observable, debounceTime, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ConfigurationService } from '../../../../core/configuration.service';
+import { ProjectComponentBase } from '../shared/project-component-base';
 
 @Component({
   selector: 'project-researcher',
   templateUrl: './project-researcher.component.html'
 })
-export class ProjectResearcherComponent implements OnInit {
-
-  destroyRef: DestroyRef = inject(DestroyRef);
+export class ProjectResearcherComponent extends ProjectComponentBase {
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    public projectApi: ProjectApi,
     private formService: FormService,
-    public staticDataCache: StaticDataCache
+    public configurationService: ConfigurationService
   ) {
+    super();
   }
 
   ngOnInit() {
-    this.reset(this.route.snapshot.data.project);
+    super.ngOnInit();
+  }
+
+  canUnlock() {
+    return this.configurationService.hasClaim(p => p.claims.canUnlockProjects);
+  }
+
+  reset(item: Project) {
+    super.reset(item);
+
+    this.form.patchValue(item);
+    this.form.markAsPristine();
+  }
+
+  protected applyLock() {
     this.form.disable();
   }
 
-  item!: Project;
-
-  reset(item: Project) {
-    this.item = item;
-    this.form.patchValue(item);
-    this.form.markAsPristine();
+  protected clearLock() {
+    this.form.enable();
   }
 
   form = new FormGroup({
@@ -79,6 +87,17 @@ export class ProjectResearcherComponent implements OnInit {
     leadApplicantGenderId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
     leadApplicantEthnicityId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
   });
+
+  save(close: boolean) {
+    if (this.formService.hasErrors(this.form))
+      return;
+
+    this.projectApi.updateResearcher(this.form.getRawValue(), { successGrowl: "Project Updated" }).subscribe((result) => {
+      this.reset(result);
+      if (close)
+        this.router.navigate(['project/project-list']);
+    });
+  }
 
   cancel() {
     this.reset(this.item);

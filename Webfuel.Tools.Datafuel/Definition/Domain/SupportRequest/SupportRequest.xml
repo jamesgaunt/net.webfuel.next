@@ -10,8 +10,9 @@
 
     <!-- Meta (not converted to project data) -->
 
+    <Property Name="TriageNote" Type="meta:description" /><!-- 1.2 Development -->
     <Property Name="IsThisRequestLinkedToAnExistingProject" Type="boolean" /><!-- 1.2 Development -->
-    
+
     <!-- ========== Replicated to Project (Keep All Field Names Identical) ========== -->
 
     <!-- Project Details -->
@@ -24,6 +25,7 @@
     <Property Name="ProposedFundingCallTypeId" Type="FundingCallType?" />
     <Property Name="ProposedFundingStreamId" Type="FundingStream?" />
     <Property Name="ProposedFundingStreamName" Type="meta:name" />
+    <Property Name="NIHRApplicationId" Type="meta:name" />
     <Property Name="TargetSubmissionDate" Type="Date?" />
     <Property Name="ExperienceOfResearchAwards" Type="string[1000]" />
     <Property Name="IsTeamMembersConsultedId" Type="IsTeamMembersConsulted?" />

@@ -74,6 +74,9 @@ namespace Webfuel.Domain
                     case nameof(Project.ProposedFundingStreamName):
                         result.Add(new SqlParameter(nameof(Project.ProposedFundingStreamName), entity.ProposedFundingStreamName));
                         break;
+                    case nameof(Project.NIHRApplicationId):
+                        result.Add(new SqlParameter(nameof(Project.NIHRApplicationId), entity.NIHRApplicationId));
+                        break;
                     case nameof(Project.TargetSubmissionDate):
                         result.Add(new SqlParameter(nameof(Project.TargetSubmissionDate), entity.TargetSubmissionDate ?? (object?)DBNull.Value));
                         break;
@@ -283,6 +286,7 @@ namespace Webfuel.Domain
                 yield return "Title";
                 yield return "ApplicationStageFreeText";
                 yield return "ProposedFundingStreamName";
+                yield return "NIHRApplicationId";
                 yield return "TargetSubmissionDate";
                 yield return "ExperienceOfResearchAwards";
                 yield return "BriefDescription";
@@ -363,6 +367,7 @@ namespace Webfuel.Domain
                 yield return "Title";
                 yield return "ApplicationStageFreeText";
                 yield return "ProposedFundingStreamName";
+                yield return "NIHRApplicationId";
                 yield return "TargetSubmissionDate";
                 yield return "ExperienceOfResearchAwards";
                 yield return "BriefDescription";
@@ -442,6 +447,7 @@ namespace Webfuel.Domain
                 yield return "Title";
                 yield return "ApplicationStageFreeText";
                 yield return "ProposedFundingStreamName";
+                yield return "NIHRApplicationId";
                 yield return "TargetSubmissionDate";
                 yield return "ExperienceOfResearchAwards";
                 yield return "BriefDescription";
@@ -516,6 +522,8 @@ namespace Webfuel.Domain
             entity.ApplicationStageFreeText = entity.ApplicationStageFreeText.Trim();
             entity.ProposedFundingStreamName = entity.ProposedFundingStreamName ?? String.Empty;
             entity.ProposedFundingStreamName = entity.ProposedFundingStreamName.Trim();
+            entity.NIHRApplicationId = entity.NIHRApplicationId ?? String.Empty;
+            entity.NIHRApplicationId = entity.NIHRApplicationId.Trim();
             entity.ExperienceOfResearchAwards = entity.ExperienceOfResearchAwards ?? String.Empty;
             entity.ExperienceOfResearchAwards = entity.ExperienceOfResearchAwards.Trim();
             entity.BriefDescription = entity.BriefDescription ?? String.Empty;
@@ -583,6 +591,7 @@ namespace Webfuel.Domain
         public const int Title_MaxLength = 1000;
         public const int ApplicationStageFreeText_MaxLength = 128;
         public const int ProposedFundingStreamName_MaxLength = 128;
+        public const int NIHRApplicationId_MaxLength = 128;
         public const int ExperienceOfResearchAwards_MaxLength = 1000;
         public const int BriefDescription_MaxLength = 5000;
         public const int SupportRequested_MaxLength = 2000;
@@ -652,6 +661,13 @@ namespace Webfuel.Domain
             ruleBuilder
                 .NotNull()
                 .MaximumLength(ProposedFundingStreamName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void NIHRApplicationId_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(NIHRApplicationId_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
         public static void ExperienceOfResearchAwards_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
@@ -861,6 +877,7 @@ namespace Webfuel.Domain
             RuleFor(x => x.Title).Use(ProjectMetadata.Title_ValidationRules);
             RuleFor(x => x.ApplicationStageFreeText).Use(ProjectMetadata.ApplicationStageFreeText_ValidationRules);
             RuleFor(x => x.ProposedFundingStreamName).Use(ProjectMetadata.ProposedFundingStreamName_ValidationRules);
+            RuleFor(x => x.NIHRApplicationId).Use(ProjectMetadata.NIHRApplicationId_ValidationRules);
             RuleFor(x => x.ExperienceOfResearchAwards).Use(ProjectMetadata.ExperienceOfResearchAwards_ValidationRules);
             RuleFor(x => x.BriefDescription).Use(ProjectMetadata.BriefDescription_ValidationRules);
             RuleFor(x => x.SupportRequested).Use(ProjectMetadata.SupportRequested_ValidationRules);

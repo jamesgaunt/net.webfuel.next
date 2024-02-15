@@ -25,7 +25,7 @@ namespace Webfuel.Domain
 
             var original = await _reportRepository.RequireReport(request.Id);
 
-            if (original.OwnerUserId != _identityAccessor.User.Id)
+            if (_identityAccessor.Claims.Developer == false && original.OwnerUserId != _identityAccessor.User.Id)
                 throw new DomainException("User does not have permission to update this report");
 
             if (original.ReportProviderId != request.Design.ReportProviderId)

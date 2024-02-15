@@ -1,9 +1,9 @@
 <div #popupAnchor class="control">
-  <div class="input" (click)="stop($event); togglePopup();" [class.tags-input]="pickedItems.length > 0">
-    <span *ngIf="pickedItems.length == 0">
+  <div class="input" (click)="stop($event); togglePopup();" [class.tags-input]="showInlineTags">
+    <span *ngIf="!showInlineTags">
       {{ placeholder || "&nbsp;" }}
     </span>
-    <div class="tags" *ngIf="pickedItems.length !== 0">
+    <div class="tags" *ngIf="showInlineTags">
       <span class="tag" *ngFor="let item of pickedItems">
         <span class="text"><ng-container *ngTemplateOutlet="_pickedTemplate;context: { $implicit: item }"></ng-container></span><span (click)="stop($event); removeItem(item);" class="closer"><i class="fas fa-times"></i></span>
       </span>
@@ -18,6 +18,11 @@
   <div *ngIf="!_isDisabled" class="icon is-secondary" (click)="stop($event); togglePopup();">
     <i class="fas fa-chevron-down"></i>
   </div>
+</div>
+<div class="dropdown-vertical-stack" *ngIf="verticalStack && pickedItems.length > 0">
+  <span class="tag" *ngFor="let item of pickedItems">
+    <span class="text"><ng-container *ngTemplateOutlet="_pickedTemplate;context: { $implicit: item }"></ng-container></span><span (click)="stop($event); removeItem(item);" class="closer"><i class="fas fa-times"></i></span>
+  </span>
 </div>
 <input *ngIf="freeTextControl && pickedFreeText" [formControl]="freeTextControl" style="margin-top: 4px;" class="input" [placeholder]="freeTextPlaceholder || 'please specify other...'" />
 

@@ -11,15 +11,25 @@ namespace Webfuel.Domain
     {
         public required Guid Id { get; set; }
         public required Guid StatusId { get; set; }
-
-
-        public Guid? SubmittedFundingStreamId { get; set; }
-        public string SubmittedFundingStreamFreeText { get; set; } = String.Empty;
-        public string SubmittedFundingStreamName { get; set; } = String.Empty;
+        public DateOnly? ClosureDate { get; set; } = null;
 
         // Ownership
 
         public Guid? LeadAdviserUserId { get; set; }
+
+        // Annual Reporting
+
+        public Guid? WillStudyUseCTUId { get; set; }
+        public Guid? IsPaidRSSAdviserLeadId { get; set; }
+        public Guid? IsPaidRSSAdviserCoapplicantId { get; set; }
+        public List<Guid> RSSHubProvidingAdviceIds { get; set; } = new List<Guid>();
+        public Decimal? MonetaryValueOfFundingApplication { get; set; }
+
+        // Funding Stream
+
+        public Guid? SubmittedFundingStreamId { get; set; }
+        public string SubmittedFundingStreamFreeText { get; set; } = String.Empty;
+        public string SubmittedFundingStreamName { get; set; } = String.Empty;
 
         // Clinical Trial Submissions
 
@@ -27,5 +37,9 @@ namespace Webfuel.Domain
         public int? RecruitmentTarget { get; set; } = null;
         public int? NumberOfProjectSites { get; set; } = null;
         public Guid? IsInternationalMultiSiteStudyId { get; set; }
+
+        // Project Advisers
+
+        public List<Guid> ProjectAdviserUserIds { get; set; } = new List<Guid>();
     }
 }

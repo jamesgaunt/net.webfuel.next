@@ -93,6 +93,7 @@ namespace Webfuel.Domain
             {
                 var updated = supportRequest.Copy();
                 updated.StatusId = newStatus.Id;
+                updated.TriageNote = request.TriageNote;
                 updated = await _supportRequestRepository.UpdateSupportRequest(original: supportRequest, updated: updated);
                 return updated;
             }
@@ -104,6 +105,7 @@ namespace Webfuel.Domain
                 var updated = supportRequest.Copy();
                 updated.StatusId = newStatus.Id;
                 updated.ProjectId = project.Id;
+                updated.TriageNote = request.TriageNote;
                 await _supportRequestRepository.UpdateSupportRequest(updated: updated, original: supportRequest);
 
                 // Record a triage support provided event on the project

@@ -11,37 +11,99 @@
   </div>
   <project-tabs></project-tabs>
   <form class="form" [formGroup]="form">
-    <div class="flex">
-      <div class="field is-3">
-        <label class="label">
-          Status
-          <span class="text is-warning" *ngIf="projectStatus && projectStatus.id != form.value.statusId">(changing from {{ projectStatus.name }})</span>
-        </label>
-        <dropdown-select [dataSource]="staticDataCache.projectStatus" placeholder="required" formControlName="statusId"></dropdown-select>
-      </div>
 
-      <div class="field is-3">
-        <label class="label">Lead Adviser</label>
-        <dropdown-select [dataSource]="userApi" placeholder="required" formControlName="leadAdviserUserId"  [enableClear]="true" [enableSearch]="true">
-          <ng-template #optionTemplate let-item>
-            {{ item.fullName }}
-          </ng-template>
-          <ng-template #pickedTemplate let-item>
-            {{ item.fullName }}
-          </ng-template>
-        </dropdown-select>
+    <div class="flex no-margin">
+      <div class="is-9">
+
+        <div class="flex">
+          <div class="field is-4">
+            <label class="label">
+              Status
+              <span class="text is-warning" *ngIf="projectStatus && projectStatus.id != form.value.statusId">(changing from {{ projectStatus.name }})</span>
+            </label>
+            <dropdown-select [dataSource]="staticDataCache.projectStatus" placeholder="required" formControlName="statusId"></dropdown-select>
+          </div>
+          <div class="field is-4">
+            <label class="label">Closure date</label>
+            <date-picker placeholder="optional" formControlName="closureDate" [enableClear]="true"></date-picker>
+          </div>
+          <div class="field is-4">
+            <label class="label">Lead Adviser</label>
+            <dropdown-select [dataSource]="userApi" placeholder="required" formControlName="leadAdviserUserId" [enableClear]="true" [enableSearch]="true">
+              <ng-template #optionTemplate let-item>
+                {{ item.fullName }}
+              </ng-template>
+              <ng-template #pickedTemplate let-item>
+                {{ item.fullName }}
+              </ng-template>
+            </dropdown-select>
+          </div>
+        </div>
+
+        <div class="flex">
+          <div class="field is-6">
+            <label class="label">Will this study use a CTU?</label>
+            <dropdown-select [dataSource]="staticDataCache.willStudyUseCTU" placeholder="required" formControlName="willStudyUseCTUId"></dropdown-select>
+          </div>
+          <div class="field is-6">
+            <label class="label">Monetary value of funding application</label>
+            <input class="input" type="number" placeholder="required" formControlName="monetaryValueOfFundingApplication" />
+          </div>
+
+        </div>
+
+        <div class="flex">
+          <div class="field is-6">
+            <label class="label">Funding stream submitted to</label>
+            <dropdown-select [dataSource]="staticDataCache.fundingStream" [freeTextControl]="form.controls.submittedFundingStreamFreeText" placeholder="required" formControlName="submittedFundingStreamId"></dropdown-select>
+          </div>
+          <div class="field is-6">
+            <label class="label">Funding stream name</label>
+            <input class="input" type="text" placeholder="optional" formControlName="submittedFundingStreamName" />
+          </div>
+        </div>
+
+        <div class="flex">
+
+          <div class="field is-12">
+            <label class="label">
+              RSS hubs involved in providing advice (other than Imperial College London and Partners)
+            </label>
+            <dropdown-multi-select [dataSource]="staticDataCache.rssHub" placeholder="optional" formControlName="rssHubProvidingAdviceIds"></dropdown-multi-select>
+          </div>
+        </div>
+
+      </div>
+      <div class="is-3">
+        <div class="field">
+          <label class="label">Support Advisers</label>
+          <dropdown-multi-select [dataSource]="userApi" [verticalStack]="true" placeholder="click to add..." formControlName="projectAdviserUserIds" [enableSearch]="true">
+            <ng-template #optionTemplate let-item>
+              {{ item.fullName }}
+            </ng-template>
+            <ng-template #pickedTemplate let-item>
+              {{ item.fullName }}
+            </ng-template>
+          </dropdown-multi-select>
+        </div>
       </div>
     </div>
+
+
+
+
+
     <div class="flex">
       <div class="field is-6">
-        <label class="label">Funding stream submitted to</label>
-        <dropdown-select [dataSource]="staticDataCache.fundingStream" [freeTextControl]="form.controls.submittedFundingStreamFreeText" placeholder="optional" formControlName="submittedFundingStreamId"></dropdown-select>
+        <label class="label">Is a paid RSS staff member, who provided advice, the lead/co-lead for this application?</label>
+        <dropdown-select [dataSource]="staticDataCache.isPaidRSSAdviserLead" placeholder="required" formControlName="isPaidRSSAdviserLeadId"></dropdown-select>
       </div>
       <div class="field is-6">
-        <label class="label">Funding stream name</label>
-        <input class="input" type="text" placeholder="optional" formControlName="submittedFundingStreamName" />
+        <label class="label">Is a paid RSS staff member, who provided advice, a co-applicant for this application?</label>
+        <dropdown-select [dataSource]="staticDataCache.isPaidRSSAdviserCoapplicant" placeholder="required" formControlName="isPaidRSSAdviserCoapplicantId"></dropdown-select>
       </div>
     </div>
+
 
     <hr />
     <h3>For Clinical Trial Submissions</h3>
@@ -78,7 +140,6 @@
   </form>
   <p>
     <span>Created {{ item.createdAt | date: 'dd MMM yy'}}.</span>
-    <span *ngIf="item.closureDate">&nbsp;&nbsp;Closed {{ item.closureDate | date: 'dd MMM yy' }}.</span>
   </p>
 </div>
 

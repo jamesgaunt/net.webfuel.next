@@ -43,6 +43,10 @@
           <dropdown-select [dataSource]="staticDataCache.fundingCallType" placeholder="required" formControlName="proposedFundingCallTypeId"></dropdown-select>
         </div>
         <div class="field is-6">
+          <label class="label">NIHR application ID if known</label>
+          <input class="input" type="text" placeholder="optional" formControlName="nihrApplicationId" maxlength="64" />
+        </div>
+        <div class="field is-6">
           <label class="label">
             Target submission date (if known)
             <span class="error" *ngIf="form.controls.targetSubmissionDate.errors?.['dateMustBeInFuture']">(this date must be in the future)</span>

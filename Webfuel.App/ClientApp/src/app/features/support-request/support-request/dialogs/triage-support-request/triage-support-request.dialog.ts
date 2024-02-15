@@ -55,9 +55,10 @@ export class TriageSupportRequestDialogComponent extends DialogComponentBase<Sup
     supportProvidedIds: new FormControl<string[]>([], { nonNullable: true }),
     description: new FormControl<string>('', { nonNullable: true }),
     workTimeInHours: new FormControl<number>(null!, { nonNullable: true }),
+    triageNote: new FormControl<string>('', { nonNullable: true }),
   });
 
-  get referring() {
+  get promoting() {
     return this.form.value.statusId == SupportRequestStatusEnum.ReferredToNIHRRSSExpertTeams;
   }
 

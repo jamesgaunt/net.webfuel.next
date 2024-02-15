@@ -29,6 +29,9 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.PrefixedNumber):
                         result.Add(new SqlParameter(nameof(SupportRequest.PrefixedNumber), entity.PrefixedNumber));
                         break;
+                    case nameof(SupportRequest.TriageNote):
+                        result.Add(new SqlParameter(nameof(SupportRequest.TriageNote), entity.TriageNote));
+                        break;
                     case nameof(SupportRequest.IsThisRequestLinkedToAnExistingProject):
                         result.Add(new SqlParameter(nameof(SupportRequest.IsThisRequestLinkedToAnExistingProject), entity.IsThisRequestLinkedToAnExistingProject));
                         break;
@@ -43,6 +46,9 @@ namespace Webfuel.Domain
                         break;
                     case nameof(SupportRequest.ProposedFundingStreamName):
                         result.Add(new SqlParameter(nameof(SupportRequest.ProposedFundingStreamName), entity.ProposedFundingStreamName));
+                        break;
+                    case nameof(SupportRequest.NIHRApplicationId):
+                        result.Add(new SqlParameter(nameof(SupportRequest.NIHRApplicationId), entity.NIHRApplicationId));
                         break;
                     case nameof(SupportRequest.TargetSubmissionDate):
                         result.Add(new SqlParameter(nameof(SupportRequest.TargetSubmissionDate), entity.TargetSubmissionDate ?? (object?)DBNull.Value));
@@ -220,11 +226,13 @@ namespace Webfuel.Domain
                 yield return "Id";
                 yield return "Number";
                 yield return "PrefixedNumber";
+                yield return "TriageNote";
                 yield return "IsThisRequestLinkedToAnExistingProject";
                 yield return "DateOfRequest";
                 yield return "Title";
                 yield return "ApplicationStageFreeText";
                 yield return "ProposedFundingStreamName";
+                yield return "NIHRApplicationId";
                 yield return "TargetSubmissionDate";
                 yield return "ExperienceOfResearchAwards";
                 yield return "BriefDescription";
@@ -284,11 +292,13 @@ namespace Webfuel.Domain
                 yield return "Id";
                 yield return "Number";
                 yield return "PrefixedNumber";
+                yield return "TriageNote";
                 yield return "IsThisRequestLinkedToAnExistingProject";
                 yield return "DateOfRequest";
                 yield return "Title";
                 yield return "ApplicationStageFreeText";
                 yield return "ProposedFundingStreamName";
+                yield return "NIHRApplicationId";
                 yield return "TargetSubmissionDate";
                 yield return "ExperienceOfResearchAwards";
                 yield return "BriefDescription";
@@ -347,11 +357,13 @@ namespace Webfuel.Domain
             {
                 yield return "Number";
                 yield return "PrefixedNumber";
+                yield return "TriageNote";
                 yield return "IsThisRequestLinkedToAnExistingProject";
                 yield return "DateOfRequest";
                 yield return "Title";
                 yield return "ApplicationStageFreeText";
                 yield return "ProposedFundingStreamName";
+                yield return "NIHRApplicationId";
                 yield return "TargetSubmissionDate";
                 yield return "ExperienceOfResearchAwards";
                 yield return "BriefDescription";
@@ -410,12 +422,16 @@ namespace Webfuel.Domain
         {
             entity.PrefixedNumber = entity.PrefixedNumber ?? String.Empty;
             entity.PrefixedNumber = entity.PrefixedNumber.Trim();
+            entity.TriageNote = entity.TriageNote ?? String.Empty;
+            entity.TriageNote = entity.TriageNote.Trim();
             entity.Title = entity.Title ?? String.Empty;
             entity.Title = entity.Title.Trim();
             entity.ApplicationStageFreeText = entity.ApplicationStageFreeText ?? String.Empty;
             entity.ApplicationStageFreeText = entity.ApplicationStageFreeText.Trim();
             entity.ProposedFundingStreamName = entity.ProposedFundingStreamName ?? String.Empty;
             entity.ProposedFundingStreamName = entity.ProposedFundingStreamName.Trim();
+            entity.NIHRApplicationId = entity.NIHRApplicationId ?? String.Empty;
+            entity.NIHRApplicationId = entity.NIHRApplicationId.Trim();
             entity.ExperienceOfResearchAwards = entity.ExperienceOfResearchAwards ?? String.Empty;
             entity.ExperienceOfResearchAwards = entity.ExperienceOfResearchAwards.Trim();
             entity.BriefDescription = entity.BriefDescription ?? String.Empty;
@@ -476,9 +492,11 @@ namespace Webfuel.Domain
         public static SupportRequestRepositoryValidator Validator { get; } = new SupportRequestRepositoryValidator();
         
         public const int PrefixedNumber_MaxLength = 128;
+        public const int TriageNote_MaxLength = 1024;
         public const int Title_MaxLength = 1000;
         public const int ApplicationStageFreeText_MaxLength = 128;
         public const int ProposedFundingStreamName_MaxLength = 128;
+        public const int NIHRApplicationId_MaxLength = 128;
         public const int ExperienceOfResearchAwards_MaxLength = 1000;
         public const int BriefDescription_MaxLength = 5000;
         public const int SupportRequested_MaxLength = 2000;
@@ -514,6 +532,13 @@ namespace Webfuel.Domain
                 .MaximumLength(PrefixedNumber_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
+        public static void TriageNote_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(TriageNote_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
         public static void Title_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
@@ -533,6 +558,13 @@ namespace Webfuel.Domain
             ruleBuilder
                 .NotNull()
                 .MaximumLength(ProposedFundingStreamName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void NIHRApplicationId_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(NIHRApplicationId_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
         public static void ExperienceOfResearchAwards_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
@@ -730,9 +762,11 @@ namespace Webfuel.Domain
         public SupportRequestRepositoryValidator()
         {
             RuleFor(x => x.PrefixedNumber).Use(SupportRequestMetadata.PrefixedNumber_ValidationRules);
+            RuleFor(x => x.TriageNote).Use(SupportRequestMetadata.TriageNote_ValidationRules);
             RuleFor(x => x.Title).Use(SupportRequestMetadata.Title_ValidationRules);
             RuleFor(x => x.ApplicationStageFreeText).Use(SupportRequestMetadata.ApplicationStageFreeText_ValidationRules);
             RuleFor(x => x.ProposedFundingStreamName).Use(SupportRequestMetadata.ProposedFundingStreamName_ValidationRules);
+            RuleFor(x => x.NIHRApplicationId).Use(SupportRequestMetadata.NIHRApplicationId_ValidationRules);
             RuleFor(x => x.ExperienceOfResearchAwards).Use(SupportRequestMetadata.ExperienceOfResearchAwards_ValidationRules);
             RuleFor(x => x.BriefDescription).Use(SupportRequestMetadata.BriefDescription_ValidationRules);
             RuleFor(x => x.SupportRequested).Use(SupportRequestMetadata.SupportRequested_ValidationRules);

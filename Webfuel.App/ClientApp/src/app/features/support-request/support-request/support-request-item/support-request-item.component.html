@@ -15,7 +15,10 @@
     </div>
   </div>
   <support-request-tabs></support-request-tabs>
-  <div class="message is-primary">{{ supportRequestStatus?.name }}</div>
+  <div class="message is-primary">
+    {{ supportRequestStatus?.name }}
+    @if(item.triageNote){ <span>: {{ item.triageNote }}</span>}
+  </div>
   <form class="form" [formGroup]="form">
     <div class="flex">
       <div class="field is-12">
@@ -25,7 +28,7 @@
       <div class="field is-12">
         <label class="label">Is this request linked to a current project?</label>
         <div class="checkbox">
-          <label><input type="checkbox" disabled formControlName="isThisRequestLinkedToAnExistingProject" /> Please tick this checkbox if you have already submitted a request in relation to this project.</label>
+          <label><input type="checkbox" formControlName="isThisRequestLinkedToAnExistingProject" /> Please tick this checkbox if you have already submitted a request in relation to this project.</label>
         </div>
       </div>
       <div class="field is-6">
@@ -47,6 +50,10 @@
       <div class="field is-6">
         <label class="label">Type of call</label>
         <dropdown-select [dataSource]="staticDataCache.fundingCallType" placeholder="required" formControlName="proposedFundingCallTypeId"></dropdown-select>
+      </div>
+      <div class="field is-6">
+        <label class="label">NIHR application ID if known</label>
+        <input class="input" type="text" placeholder="optional" formControlName="nihrApplicationId" maxlength="64" />
       </div>
       <div class="field is-6">
         <label class="label">Target submission date (if known)</label>

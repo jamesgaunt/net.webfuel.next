@@ -12,6 +12,7 @@ namespace Webfuel.Domain
         public required Guid Id { get; set; }
         public string Title { get; set; } = String.Empty;
         public string ProposedFundingStreamName { get; set; } = String.Empty;
+        public string NIHRApplicationId { get; set; } = String.Empty;
         public DateOnly? TargetSubmissionDate { get; set; } = null;
         public string ExperienceOfResearchAwards { get; set; } = String.Empty;
         public string BriefDescription { get; set; } = String.Empty;

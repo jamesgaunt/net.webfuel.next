@@ -187,6 +187,19 @@
   }
 }
 
+.dropdown-vertical-stack {
+  background-color: var(--palette-control-background);
+  border: 2px solid var(--palette-control-border);
+  border-top: 0;
+  padding-top: 3px;
+
+  .tag {
+    margin: 0 3px 3px 3px;
+    justify-content: space-between;
+   
+  }
+}
+
 .date-picker-popup {
   box-shadow: 3px 3px 3px var(--palette-control-shadow);
 }

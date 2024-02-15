@@ -6,6 +6,7 @@ import { FileStorageEntryApi } from './file-storage-entry.api';
 import { HeartbeatApi } from './heartbeat.api';
 import { PingApi } from './ping.api';
 import { StaticDataApi } from './static-data.api';
+import { ProjectAdviserApi } from './project-adviser.api';
 import { ProjectApi } from './project.api';
 import { ProjectChangeLogApi } from './project-change-log.api';
 import { ProjectSubmissionApi } from './project-submission.api';
@@ -71,6 +72,7 @@ import { StaticDataCache } from './static-data.cache';
         HeartbeatApi,
         PingApi,
         StaticDataApi,
+        ProjectAdviserApi,
         ProjectApi,
         ProjectChangeLogApi,
         ProjectSubmissionApi,

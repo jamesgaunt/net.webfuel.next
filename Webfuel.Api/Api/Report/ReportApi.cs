@@ -29,6 +29,9 @@ namespace Webfuel.App
             app.MapPost("api/report/run", Run)
                 .RequireIdentity();
 
+            app.MapPost("api/report/run-annual", RunAnnualReport)
+                .RequireIdentity();
+
             // Querys
 
             app.MapPost("api/report/query", Query)
@@ -68,6 +71,11 @@ namespace Webfuel.App
         public static async Task<ReportStep> Run([FromBody] RunReport command, IMediator mediator)
         {
             return await mediator.Send(command);
+        }
+
+        public static async Task<ReportStep> RunAnnualReport(IMediator mediator)
+        {
+            return await mediator.Send(new RunAnnualReport());
         }
 
         public static async Task<Report?> Get(Guid id, IMediator mediator)

@@ -21,6 +21,13 @@ import { Query } from '../../../api/api.types';
 })
 export class DropDownMultiSelectComponent<TItem> extends DropDownBase<TItem> implements ControlValueAccessor {
 
+  @Input()
+  verticalStack: boolean = false;
+
+  get showInlineTags() {
+    return this.verticalStack === false && this.pickedItems.length > 0;
+  }
+
   // Client Events
 
   pickItem(item: TItem) {

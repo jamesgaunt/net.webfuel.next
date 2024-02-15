@@ -47,6 +47,7 @@
     <Property Name="ProposedFundingCallTypeId" Type="FundingCallType?" />
     <Property Name="ProposedFundingStreamId" Type="FundingStream?" />
     <Property Name="ProposedFundingStreamName" Type="meta:name" />
+    <Property Name="NIHRApplicationId" Type="meta:name" />    
     <Property Name="TargetSubmissionDate" Type="Date?" />
     <Property Name="ExperienceOfResearchAwards" Type="string[1000]" />
     <Property Name="IsTeamMembersConsultedId" Type="IsTeamMembersConsulted?" />

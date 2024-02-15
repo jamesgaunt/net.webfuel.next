@@ -142,7 +142,13 @@
         </div>
       </div>
     </div>
-    <div class="floating-buttons">
+    <div *ngIf="!locked" class="floating-buttons">
+      <button class="button is-success" (click)="save(false)">Save</button>
+      <button class="button is-success" (click)="save(true)">Save &amp; Close</button>
+      <button class="button" (click)="cancel()">Cancel</button>
+    </div>
+    <div *ngIf="locked" class="floating-buttons">
+      <button *ngIf="canUnlock()" class="button is-warning" (click)="unlock()">Unlock</button>
       <button class="button" (click)="cancel()">Close</button>
     </div>
   </form>

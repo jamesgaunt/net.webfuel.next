@@ -1,5 +1,6 @@
 ﻿using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
+using System.Drawing;
 
 namespace Webfuel.Excel
 {
@@ -103,6 +104,11 @@ namespace Webfuel.Excel
             return new ExcelColumn(_worksheet.Column(col));
         }
 
+        public ExcelRow Row(int row)
+        {
+            return new ExcelRow(_worksheet.Row(row));
+        }
+
         public int FindColumnIndex(string header)
         {
             var col = 1;
@@ -132,6 +138,34 @@ namespace Webfuel.Excel
                     return false;
             }
             return true;
+        }
+    }
+
+    public class ExcelRow
+    {
+        internal readonly IXLRow _row;
+
+        internal ExcelRow(IXLRow row)
+        {
+            _row = row;
+        }
+
+        public ExcelRow SetHeight(double height)
+        {
+            _row.Height = height;
+            return this;
+        }
+
+        public ExcelRow SetTextRotation(int value)
+        {
+            _row.Style.Alignment.TextRotation = value;
+            return this;
+        }
+
+        public ExcelRow CentreAlign()
+        {
+            _row.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            return this;
         }
     }
 
@@ -273,6 +307,37 @@ namespace Webfuel.Excel
         public ExcelCell SetItalic(bool value)
         {
             Italic = value;
+            return this;
+        }
+
+        public int TextRotation
+        {
+            get { return _cell.Style.Alignment.TextRotation; }
+            set { _cell.Style.Alignment.TextRotation = value; }
+        }
+
+        public ExcelCell SetTextRotation(int value)
+        {
+            TextRotation = value;
+            return this;
+        }
+
+        public ExcelCell CentreAlign()
+        {
+
+            _cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            return this;
+        }
+
+        public ExcelCell SetBackgroundColor(System.Drawing.Color color)
+        {
+            _cell.Style.Fill.BackgroundColor = XLColor.FromColor(color);
+            return this;
+        }
+
+        public ExcelCell SetWidth(double width)
+        {
+            _cell.WorksheetColumn().Width = width;
             return this;
         }
 

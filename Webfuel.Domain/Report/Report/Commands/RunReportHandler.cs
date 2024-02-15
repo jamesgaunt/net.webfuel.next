@@ -24,7 +24,8 @@ namespace Webfuel.Domain
 
             var report = await _reportRepository.RequireReport(request.ReportId);
 
-            if (report.IsPublic == false && report.OwnerUserId != _identityAccessor.User.Id)
+            
+            if (_identityAccessor.Claims.Developer == false && report.IsPublic == false && report.OwnerUserId != _identityAccessor.User.Id)
                 throw new DomainException("User does not have permission to run this report");
 
             return _reportDesignService.RegisterReport(new ReportRequest

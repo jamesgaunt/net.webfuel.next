@@ -9,23 +9,36 @@
     </div>
     <div class="column">
       <div class="header-buttons">
+        <button class="button is-primary" (click)="annualReport()">Annual Report</button>
         <button class="button is-primary" (click)="export()">Export</button>
       </div>
     </div>
   </div>
   <div class="filter-form">
     <form class="form" [formGroup]="filterForm">
-      <div class="flex">
-        <div class="field is-12">
-          <input class="input" type="text" formControlName="title" placeholder="Title" />
-        </div>
-      </div>
+
       <div class="flex">
         <div class="field is-3">
           <input class="input" type="text" formControlName="number" placeholder="Number" />
         </div>
+        <div class="field is-9">
+          <input class="input" type="text" formControlName="title" placeholder="Title" />
+        </div>
+      </div>
+      <div class="flex">
+
         <div class="field is-3">
           <dropdown-select [dataSource]="userApi" placeholder="Lead Adviser" formControlName="leadAdviserUserId" [enableClear]="true" [enableSearch]="true">
+            <ng-template #optionTemplate let-item>
+              {{ item.fullName }}
+            </ng-template>
+            <ng-template #pickedTemplate let-item>
+              {{ item.fullName }}
+            </ng-template>
+          </dropdown-select>
+        </div>
+        <div class="field is-3">
+          <dropdown-select [dataSource]="userApi" placeholder="Support Adviser" formControlName="supportAdviserUserId" [enableClear]="true" [enableSearch]="true">
             <ng-template #optionTemplate let-item>
               {{ item.fullName }}
             </ng-template>

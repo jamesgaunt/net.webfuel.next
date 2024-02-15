@@ -11,5 +11,6 @@ namespace Webfuel.Domain
     {
         public required Guid Id { get; set; }
         public required Guid StatusId { get; set; }
+        public DateOnly? ClosureDate { get; set; }
     }
 }

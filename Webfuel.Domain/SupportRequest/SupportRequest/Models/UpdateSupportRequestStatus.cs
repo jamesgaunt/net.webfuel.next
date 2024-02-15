@@ -13,6 +13,8 @@ namespace Webfuel.Domain
 
         public required Guid StatusId { get; set; }
 
+        public string TriageNote { get; set; } = String.Empty;
+
         public required List<Guid> SupportProvidedIds { get; set; }
 
         public string Description { get; set; } = String.Empty;

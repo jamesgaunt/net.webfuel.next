@@ -27,6 +27,9 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.PrefixedNumber):
                         PrefixedNumber = (string)value!;
                         break;
+                    case nameof(SupportRequest.TriageNote):
+                        TriageNote = (string)value!;
+                        break;
                     case nameof(SupportRequest.IsThisRequestLinkedToAnExistingProject):
                         IsThisRequestLinkedToAnExistingProject = (bool)value!;
                         break;
@@ -41,6 +44,9 @@ namespace Webfuel.Domain
                         break;
                     case nameof(SupportRequest.ProposedFundingStreamName):
                         ProposedFundingStreamName = (string)value!;
+                        break;
+                    case nameof(SupportRequest.NIHRApplicationId):
+                        NIHRApplicationId = (string)value!;
                         break;
                     case nameof(SupportRequest.TargetSubmissionDate):
                         TargetSubmissionDate = value == DBNull.Value ? (DateOnly?)null : DateOnly.FromDateTime((DateTime)value!);
@@ -195,11 +201,13 @@ namespace Webfuel.Domain
         public Guid Id  { get; set; } = Guid.Empty;
         public int Number  { get; set; } = 0;
         public string PrefixedNumber  { get; set; } = String.Empty;
+        public string TriageNote  { get; set; } = String.Empty;
         public bool IsThisRequestLinkedToAnExistingProject  { get; set; } = false;
         public DateOnly DateOfRequest  { get; set; } = new DateOnly(1900, 1, 1);
         public string Title  { get; set; } = String.Empty;
         public string ApplicationStageFreeText  { get; set; } = String.Empty;
         public string ProposedFundingStreamName  { get; set; } = String.Empty;
+        public string NIHRApplicationId  { get; set; } = String.Empty;
         public DateOnly? TargetSubmissionDate  { get; set; } = null;
         public string ExperienceOfResearchAwards  { get; set; } = String.Empty;
         public string BriefDescription  { get; set; } = String.Empty;
@@ -266,11 +274,13 @@ namespace Webfuel.Domain
             entity.Id = Id;
             entity.Number = Number;
             entity.PrefixedNumber = PrefixedNumber;
+            entity.TriageNote = TriageNote;
             entity.IsThisRequestLinkedToAnExistingProject = IsThisRequestLinkedToAnExistingProject;
             entity.DateOfRequest = DateOfRequest;
             entity.Title = Title;
             entity.ApplicationStageFreeText = ApplicationStageFreeText;
             entity.ProposedFundingStreamName = ProposedFundingStreamName;
+            entity.NIHRApplicationId = NIHRApplicationId;
             entity.TargetSubmissionDate = TargetSubmissionDate;
             entity.ExperienceOfResearchAwards = ExperienceOfResearchAwards;
             entity.BriefDescription = BriefDescription;

@@ -20,6 +20,9 @@ namespace Webfuel.Domain
             if(RequestedSupportTeamId.HasValue)
                 this.SQL($"EXISTS (SELECT Id FROM [ProjectTeamSupport] AS pts WHERE pts.[ProjectId] = e.Id AND pts.[SupportTeamId] = '{RequestedSupportTeamId.Value}' AND pts.[CompletedAt] IS NULL)");
 
+            if(SupportAdviserUserId.HasValue)
+                this.SQL($"EXISTS (SELECT Id FROM [ProjectAdviser] AS pa WHERE pa.[ProjectId] = e.Id AND pa.[UserId] = '{SupportAdviserUserId.Value}')");
+
             return this;
         }
 
@@ -34,7 +37,9 @@ namespace Webfuel.Domain
         public Guid? StatusId { get; set; }
 
         public Guid? LeadAdviserUserId { get; set; }
-        
+
+        public Guid? SupportAdviserUserId { get; set; }
+
         public Guid? ProposedFundingStreamId { get; set; }
 
         public string TeamContactName { get; set; } = String.Empty;

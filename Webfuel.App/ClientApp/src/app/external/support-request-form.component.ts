@@ -11,6 +11,7 @@ import { HttpClient, HttpEventType } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { ResearcherRoleEnum } from '../api/api.enums';
 import { Validate } from '../shared/common/validate';
+import { ConfirmDialog } from '../shared/dialogs/confirm/confirm.dialog';
 
 @Component({
   selector: 'support-request-form',
@@ -26,6 +27,7 @@ export class SupportRequestFormComponent {
     private supportRequestApi: SupportRequestApi,
     public staticDataCache: StaticDataCache,
     private httpClient: HttpClient,
+    private confirmDialog: ConfirmDialog,
   ) {
 
     this.form.valueChanges.pipe(
@@ -66,6 +68,7 @@ export class SupportRequestFormComponent {
     title: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     isFellowshipId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     proposedFundingStreamName: new FormControl<string>('', { nonNullable: true }),
+    nihrApplicationId: new FormControl<string>('', { nonNullable: true }),
     targetSubmissionDate: new FormControl<string | null>(null, { validators: [Validate.dateMustBeInFuture()] }),
     experienceOfResearchAwards: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     isTeamMembersConsultedId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
@@ -151,7 +154,12 @@ export class SupportRequestFormComponent {
     var fileData = this.buildFileData();
     if (fileData == null) {
       // no files to upload
-      this.submitForm(null);
+
+      this.submitting = false;
+      this.confirmDialog.open({ title: "Confirmation Required", message: "Are you sure you want to submit this request without any supporting documents?" }).subscribe(() => {
+        this.submitting = true;
+        this.submitForm(null);
+      });
       return;
     }
 

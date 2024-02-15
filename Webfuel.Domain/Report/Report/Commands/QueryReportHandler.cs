@@ -20,11 +20,24 @@ namespace Webfuel.Domain
 
             var query = request.ApplyCustomFilters();
 
-            query.Any(q =>
+            if (_identityAccessor.Claims.Developer)
             {
-                q.Equal(nameof(Report.OwnerUserId), _identityAccessor.User.Id);
-                q.Equal(nameof(Report.IsPublic), true, request.OwnReportsOnly == "NO");
-            });
+                if(request.OwnReportsOnly == "NO")
+                {
+                    query.Any(q =>
+                    {
+                        q.Equal(nameof(Report.OwnerUserId), _identityAccessor.User.Id);
+                    });
+                }
+            }
+            else
+            {
+                query.Any(q =>
+                {
+                    q.Equal(nameof(Report.OwnerUserId), _identityAccessor.User.Id);
+                    q.Equal(nameof(Report.IsPublic), true, request.OwnReportsOnly == "NO");
+                });
+            }
 
             return await _reportRepository.QueryReport(query);
         }

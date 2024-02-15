@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="ProjectAdviser" OrderBy="SortOrder">
+    <Key Name="Id" Type="guid" />
+    <Property Name="ProjectId" Type="Project" CascadeDelete="true" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="UserId" Type="User" />
+    
+    <Index Unique="false">
+      <Member Name="ProjectId" />
+    </Index>
+    <Index Unique="true">
+      <Member Name="ProjectId" />
+      <Member Name="UserId" />
+    </Index>
+  </Entity>
+</Schema>

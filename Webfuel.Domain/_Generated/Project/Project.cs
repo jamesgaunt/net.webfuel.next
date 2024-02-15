@@ -72,6 +72,9 @@ namespace Webfuel.Domain
                     case nameof(Project.ProposedFundingStreamName):
                         ProposedFundingStreamName = (string)value!;
                         break;
+                    case nameof(Project.NIHRApplicationId):
+                        NIHRApplicationId = (string)value!;
+                        break;
                     case nameof(Project.TargetSubmissionDate):
                         TargetSubmissionDate = value == DBNull.Value ? (DateOnly?)null : DateOnly.FromDateTime((DateTime)value!);
                         break;
@@ -269,6 +272,7 @@ namespace Webfuel.Domain
         public string Title  { get; set; } = String.Empty;
         public string ApplicationStageFreeText  { get; set; } = String.Empty;
         public string ProposedFundingStreamName  { get; set; } = String.Empty;
+        public string NIHRApplicationId  { get; set; } = String.Empty;
         public DateOnly? TargetSubmissionDate  { get; set; } = null;
         public string ExperienceOfResearchAwards  { get; set; } = String.Empty;
         public string BriefDescription  { get; set; } = String.Empty;
@@ -356,6 +360,7 @@ namespace Webfuel.Domain
             entity.Title = Title;
             entity.ApplicationStageFreeText = ApplicationStageFreeText;
             entity.ProposedFundingStreamName = ProposedFundingStreamName;
+            entity.NIHRApplicationId = NIHRApplicationId;
             entity.TargetSubmissionDate = TargetSubmissionDate;
             entity.ExperienceOfResearchAwards = ExperienceOfResearchAwards;
             entity.BriefDescription = BriefDescription;

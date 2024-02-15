@@ -15,6 +15,10 @@
     min-width: 20%;
   }
 
+  &.no-margin > * {
+    margin-bottom: 0;
+  }
+
   & > .is-3 {
     flex: none;
     width: 25%;

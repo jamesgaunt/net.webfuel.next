@@ -5,6 +5,7 @@ import { FormService } from 'core/form.service';
 import { ConfigurationService } from '../../../../core/configuration.service';
 import { ProjectComponentBase } from '../shared/project-component-base';
 import { UserApi } from '../../../../api/user.api';
+import { ProjectAdviserApi } from '../../../../api/project-adviser.api';
 
 @Component({
   selector: 'project-item',
@@ -17,6 +18,7 @@ export class ProjectItemComponent extends ProjectComponentBase {
   constructor(
     private formService: FormService,
     public userApi: UserApi,
+    private projectAdviserApi: ProjectAdviserApi,
     public configurationService: ConfigurationService
   ) {
     super();
@@ -24,6 +26,12 @@ export class ProjectItemComponent extends ProjectComponentBase {
 
   ngOnInit() {
     super.ngOnInit();
+
+    this.projectAdviserApi.selectUserIdsByProjectId({ projectId: this.item.id }).subscribe((result) => {
+      this.form.patchValue({
+        projectAdviserUserIds: result
+      })
+    });
   }
 
   canUnlock() {
@@ -48,10 +56,13 @@ export class ProjectItemComponent extends ProjectComponentBase {
   form = new FormGroup({
     id: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     statusId: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    closureDate: new FormControl<string | null>(null),
 
-    isQuantativeTeamContributionId: new FormControl<string | null>(null),
-    isCTUTeamContributionId: new FormControl<string | null>(null),
-    isPPIEAndEDIContributionId: new FormControl<string | null>(null),
+    willStudyUseCTUId: new FormControl<string | null>(null),
+    isPaidRSSAdviserLeadId: new FormControl<string | null>(null),
+    isPaidRSSAdviserCoapplicantId: new FormControl<string | null>(null),
+    rssHubProvidingAdviceIds: new FormControl<string[]>([], { nonNullable: true }),
+    monetaryValueOfFundingApplication: new FormControl<number | null>(null),
 
     submittedFundingStreamId: new FormControl<string | null>(null),
     submittedFundingStreamFreeText: new FormControl<string>('', { nonNullable: true }),
@@ -63,6 +74,8 @@ export class ProjectItemComponent extends ProjectComponentBase {
     recruitmentTarget: new FormControl<number | null>(null),
     numberOfProjectSites: new FormControl<number | null>(null),
     isInternationalMultiSiteStudyId: new FormControl<string | null>(null),
+
+    projectAdviserUserIds: new FormControl<string[]>([], { nonNullable: true }),
   });
 
   save(close: boolean) {

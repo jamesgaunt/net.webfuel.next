@@ -15,6 +15,10 @@ namespace Webfuel.Domain
             {
                 sb.Append("Prefixed Number: ").Append(original.PrefixedNumber).Append(" -> ").Append(updated.PrefixedNumber).Append(delimiter);
             }
+            if(original.TriageNote != updated.TriageNote)
+            {
+                sb.Append("Triage Note: ").Append(original.TriageNote).Append(" -> ").Append(updated.TriageNote).Append(delimiter);
+            }
             if(original.IsThisRequestLinkedToAnExistingProject != updated.IsThisRequestLinkedToAnExistingProject)
             {
                 sb.Append("Is This Request Linked To An Existing Project: ").Append(original.IsThisRequestLinkedToAnExistingProject).Append(" -> ").Append(updated.IsThisRequestLinkedToAnExistingProject).Append(delimiter);
@@ -34,6 +38,10 @@ namespace Webfuel.Domain
             if(original.ProposedFundingStreamName != updated.ProposedFundingStreamName)
             {
                 sb.Append("Proposed Funding Stream Name: ").Append(original.ProposedFundingStreamName).Append(" -> ").Append(updated.ProposedFundingStreamName).Append(delimiter);
+            }
+            if(original.NIHRApplicationId != updated.NIHRApplicationId)
+            {
+                sb.Append("N I H R Application: ").Append(original.NIHRApplicationId).Append(" -> ").Append(updated.NIHRApplicationId).Append(delimiter);
             }
             if(original.TargetSubmissionDate != updated.TargetSubmissionDate)
             {

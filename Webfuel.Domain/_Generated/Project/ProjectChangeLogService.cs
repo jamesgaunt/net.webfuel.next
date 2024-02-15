@@ -63,6 +63,10 @@ namespace Webfuel.Domain
             {
                 sb.Append("Proposed Funding Stream Name: ").Append(original.ProposedFundingStreamName).Append(" -> ").Append(updated.ProposedFundingStreamName).Append(delimiter);
             }
+            if(original.NIHRApplicationId != updated.NIHRApplicationId)
+            {
+                sb.Append("N I H R Application: ").Append(original.NIHRApplicationId).Append(" -> ").Append(updated.NIHRApplicationId).Append(delimiter);
+            }
             if(original.TargetSubmissionDate != updated.TargetSubmissionDate)
             {
                 sb.Append("Target Submission Date: ").Append(original.TargetSubmissionDate?.ToString() ?? "NULL").Append(" -> ").Append(updated.TargetSubmissionDate?.ToString() ?? "NULL").Append(delimiter);

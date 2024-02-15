@@ -49,6 +49,7 @@ export class SupportRequestItemComponent extends SupportRequestComponentBase {
 
     title: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     isFellowshipId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
+    nihrApplicationId: new FormControl<string>('', { nonNullable: true }),
     proposedFundingStreamName: new FormControl<string>('', { nonNullable: true }),
     targetSubmissionDate: new FormControl<string | null>(null),
     experienceOfResearchAwards: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),

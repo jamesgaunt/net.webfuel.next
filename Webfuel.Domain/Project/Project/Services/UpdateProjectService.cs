@@ -12,6 +12,10 @@ namespace Webfuel.Domain
     {
         Task<Project> UpdateProject(UpdateProject request);
 
+        Task<Project> UpdateProjectRequest(UpdateProjectRequest request);
+
+        Task<Project> UpdateProjectResearcher(UpdateProjectResearcher request);
+
         Task<Project> UpdateProjectStatus(UpdateProjectStatus request);
     }
 
@@ -21,39 +25,28 @@ namespace Webfuel.Domain
         private readonly IProjectRepository _projectRepository;
         private readonly IStaticDataService _staticDataService;
         private readonly IEnrichProjectService _enrichProjectService;
+        private readonly IProjectAdviserService _projectAdviserService;
         private readonly IProjectChangeLogService _projectChangeLogService;
 
         public UpdateProjectService(
             IProjectRepository projectRepository,
             IStaticDataService staticDataService,
             IEnrichProjectService enrichProjectService,
+            IProjectAdviserService projectAdviserService,
             IProjectChangeLogService projectChangeLogService)
         {
             _projectRepository = projectRepository;
             _staticDataService = staticDataService;
             _enrichProjectService = enrichProjectService;
+            _projectAdviserService = projectAdviserService;
             _projectChangeLogService = projectChangeLogService;
         }
 
         public async Task<Project> UpdateProject(UpdateProject request)
         {
             var original = await _projectRepository.RequireProject(request.Id);
-
-            var staticData = await _staticDataService.GetStaticData();
-
             var updated = original.Copy();
-
-            updated.ProjectStartDate = request.ProjectStartDate;
-            updated.RecruitmentTarget = request.RecruitmentTarget;
-            updated.NumberOfProjectSites = request.NumberOfProjectSites;
-            updated.IsInternationalMultiSiteStudyId = request.IsInternationalMultiSiteStudyId;
-
-            updated.LeadAdviserUserId = request.LeadAdviserUserId;
-
-            updated.SubmittedFundingStreamId = request.SubmittedFundingStreamId;
-            updated.SubmittedFundingStreamFreeText = request.SubmittedFundingStreamFreeText;
-            updated.SubmittedFundingStreamName = request.SubmittedFundingStreamName;
-
+            new ProjectMapper().Apply(request, updated);
             updated = await _projectRepository.UpdateProject(original: original, updated: updated);
 
             if (updated.StatusId != request.StatusId)
@@ -61,13 +54,38 @@ namespace Webfuel.Domain
                 updated = await UpdateProjectStatus(updated, new UpdateProjectStatus
                 {
                     Id = updated.Id,
-                    StatusId = request.StatusId
+                    StatusId = request.StatusId,
+                    ClosureDate = updated.ClosureDate
                 });
             }
 
             await _projectChangeLogService.InsertChangeLog(original: original, updated: updated);
 
+            await _projectAdviserService.UpdateProjectAdvisers(request.Id, request.ProjectAdviserUserIds);
+
             return await _enrichProjectService.EnrichProject(updated);
+        }
+
+        public async Task<Project> UpdateProjectRequest(UpdateProjectRequest request)
+        {
+            var original = await _projectRepository.RequireProject(request.Id);
+            var updated = original.Copy();
+            new ProjectMapper().Apply(request, updated);
+            updated = await _projectRepository.UpdateProject(original: original, updated: updated);
+
+            await _projectChangeLogService.InsertChangeLog(original: original, updated: updated);
+            return updated;
+        }
+
+        public async Task<Project> UpdateProjectResearcher(UpdateProjectResearcher request)
+        {
+            var original = await _projectRepository.RequireProject(request.Id);
+            var updated = original.Copy();
+            new ProjectMapper().Apply(request, updated);
+            updated = await _projectRepository.UpdateProject(original: original, updated: updated);
+
+            await _projectChangeLogService.InsertChangeLog(original: original, updated: updated);
+            return updated;
         }
 
         public async Task<Project> UpdateProjectStatus(UpdateProjectStatus request)
@@ -76,8 +94,6 @@ namespace Webfuel.Domain
             var updated = original.Copy();
 
             updated = await UpdateProjectStatus(updated, request);
-
-            DashboardService.FlushProjectMetrics();
 
             await _projectChangeLogService.InsertChangeLog(original: original, updated: updated);
             return updated;
@@ -90,7 +106,6 @@ namespace Webfuel.Domain
             if (project.StatusId == request.StatusId)
                 return project;
 
-            var oldStatus = await _staticDataService.RequireProjectStatus(project.StatusId);
             var newStatus = await _staticDataService.RequireProjectStatus(request.StatusId);
 
             var updated = project.Copy();
@@ -99,10 +114,12 @@ namespace Webfuel.Domain
             updated.Locked = newStatus.Locked;
             updated.Discarded = newStatus.Discarded;
 
-            if (newStatus.Id == ProjectStatusEnum.Closed && updated.ClosureDate == null)
-                updated.ClosureDate = DateOnly.FromDateTime(DateTime.Today);
+            if (newStatus.Id == ProjectStatusEnum.Closed)
+                updated.ClosureDate = request.ClosureDate ?? updated.ClosureDate ?? DateOnly.FromDateTime(DateTime.Today);
 
             updated = await _projectRepository.UpdateProject(original: project, updated: updated);
+
+            DashboardService.FlushProjectMetrics();
             return updated;
         }
     }

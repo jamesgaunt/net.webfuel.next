@@ -8,7 +8,7 @@
         <label class="label">Please select outcome of triage</label>
         <dropdown-select placeholder="required" formControlName="statusId" [dataSource]="staticDataCache.supportRequestStatus" (filter)="filterStatus($event)"></dropdown-select>
       </div>
-      <div *ngIf="referring">
+      <div *ngIf="promoting">
         <div class="field">
           <label class="label">Time in hours (0 - 8)</label>
           <input class="input" type="number" min="0" max="8" formControlName="workTimeInHours" placeholder="required" />
@@ -20,6 +20,12 @@
         <div class="field">
           <label class="label">Description of support</label>
           <textarea style="height: 200px" class="textarea" formControlName="description" placeholder="optional"></textarea>
+        </div>
+      </div>
+      <div *ngIf="!promoting">
+        <div class="field">
+          <label class="label">Reason for triage decision</label>
+          <input class="input" formControlName="triageNote" placeholder="optional" />
         </div>
       </div>
     </div>

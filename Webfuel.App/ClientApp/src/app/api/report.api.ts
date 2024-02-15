@@ -29,6 +29,10 @@ export class ReportApi implements IDataSource<Report, QueryReport, CreateReport,
         return this.apiService.request<RunReport, ReportStep>("POST", "api/report/run", body, options);
     }
     
+    public runAnnualReport (options?: ApiOptions): Observable<ReportStep> {
+        return this.apiService.request<undefined, ReportStep>("POST", "api/report/run-annual", undefined, options);
+    }
+    
     public query (body: QueryReport, options?: ApiOptions): Observable<QueryResult<Report>> {
         return this.apiService.request<QueryReport, QueryResult<Report>>("POST", "api/report/query", body, options);
     }
