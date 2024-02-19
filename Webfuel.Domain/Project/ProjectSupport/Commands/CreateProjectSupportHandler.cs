@@ -37,6 +37,7 @@ namespace Webfuel.Domain
             projectSupport.Description = request.Description;
             projectSupport.WorkTimeInHours = request.WorkTimeInHours;
             projectSupport.SupportRequestedTeamId = request.SupportRequestedTeamId;
+            projectSupport.IsPrePostAwardId = request.IsPrePostAwardId;
 
             var cb = new RepositoryCommandBuffer();
             {

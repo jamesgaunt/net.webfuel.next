@@ -7,6 +7,7 @@ import { UserApi } from 'api/user.api';
 import { FormService } from 'core/form.service';
 import { DialogBase, DialogComponentBase } from 'shared/common/dialog-base';
 import { Validate } from '../../../../../shared/common/validate';
+import { IsPrePostAwardEnum } from '../../../../../api/api.enums';
 
 export interface UpdateProjectSupportDialogData {
   projectSupport: ProjectSupport;
@@ -46,6 +47,7 @@ export class UpdateProjectSupportDialogComponent extends DialogComponentBase<Pro
     description: new FormControl<string>('', { nonNullable: true }),
     workTimeInHours: new FormControl<number>(null!, { validators: [Validators.required, Validators.min(0), Validators.max(8)], nonNullable: true }),
     supportRequestedTeamId: new FormControl<string | null>(null),
+    isPrePostAwardId: new FormControl<string>(IsPrePostAwardEnum.PreAward, { nonNullable: true }),
   });
 
   save() {

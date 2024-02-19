@@ -22,5 +22,6 @@ namespace Webfuel.Domain
         public Decimal? WorkTimeInHours { get; set; }
 
         public Guid? SupportRequestedTeamId { get; set; }
+        public required Guid IsPrePostAwardId { get; set; }
     }
 }

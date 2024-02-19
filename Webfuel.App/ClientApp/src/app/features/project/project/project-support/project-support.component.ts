@@ -12,6 +12,7 @@ import { ProjectComponentBase } from '../shared/project-component-base';
 import { CreateProjectSupportDialog } from './create-project-support/create-project-support.dialog';
 import { SummariseProjectSupportDialog } from './summarise-project-support/summarise-project-support.dialog';
 import { CompleteProjectSupportDialog } from './complete-project-support/complete-project-support.dialog';
+import { IsPrePostAwardEnum } from '../../../../api/api.enums';
 
 @Component({
   selector: 'project-support',
@@ -47,6 +48,8 @@ export class ProjectSupportComponent extends ProjectComponentBase {
 
   form = new FormGroup({
   });
+
+  IsPrePostAwardEnum = IsPrePostAwardEnum;
 
   cancel() {
     this.reset(this.item);

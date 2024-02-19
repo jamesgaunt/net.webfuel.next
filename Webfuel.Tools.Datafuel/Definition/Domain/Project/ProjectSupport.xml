@@ -12,7 +12,8 @@
     <Property Name="TeamIds" Type="Json:List{Guid}" />
     <Property Name="AdviserIds" Type="Json:List{Guid}" />
     <Property Name="SupportProvidedIds" Type="Json:List{Guid}" />
-
+    <Property Name="IsPrePostAwardId" Type="IsPrePostAward" />
+    
     <!-- Support Requested : 1.2 Development -->
     <Property Name="SupportRequestedTeamId" Type="SupportTeam?" />
     <Property Name="SupportRequestedCompletedAt" Type="DateTime?" />

@@ -1,7 +1,7 @@
 import { Component, Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { QueryOp, SupportRequestStatusEnum } from 'api/api.enums';
+import { IsPrePostAwardEnum, QueryOp, SupportRequestStatusEnum } from 'api/api.enums';
 import { Project, Query, SupportRequest } from 'api/api.types';
 import { StaticDataCache } from 'api/static-data.cache';
 import { SupportRequestApi } from 'api/support-request.api';
@@ -53,9 +53,10 @@ export class TriageSupportRequestDialogComponent extends DialogComponentBase<Sup
     id: new FormControl<string>('', { validators: Validators.required, nonNullable: true }),
     statusId: new FormControl<string>(null!, { validators: Validators.required, nonNullable: true }),
     supportProvidedIds: new FormControl<string[]>([], { nonNullable: true }),
-    description: new FormControl<string>('', { nonNullable: true }),
+    description: new FormControl<string>('', { validators: Validators.required, nonNullable: true }),
     workTimeInHours: new FormControl<number>(null!, { nonNullable: true }),
     supportRequestedTeamId: new FormControl<string | null>(null),
+    isPrePostAwardId: new FormControl<string>(IsPrePostAwardEnum.PreAward, { nonNullable: true }),
     triageNote: new FormControl<string>('', { nonNullable: true }),
   });
 

@@ -32,6 +32,7 @@ namespace Webfuel.Domain
             updated.Description = request.Description;
             updated.WorkTimeInHours = request.WorkTimeInHours;
             updated.SupportRequestedTeamId = request.SupportRequestedTeamId;
+            updated.IsPrePostAwardId = request.IsPrePostAwardId;
 
             if(updated.SupportRequestedTeamId != projectSupport.SupportRequestedTeamId)
             {

@@ -9,9 +9,15 @@
         <dropdown-select placeholder="required" formControlName="statusId" [dataSource]="staticDataCache.supportRequestStatus" (filter)="filterStatus($event)"></dropdown-select>
       </div>
       <div class="grid" *ngIf="promoting">
-        <div class="field">
-          <label class="label">Time in hours (0 - 8)</label>
-          <input class="input" type="number" min="0" max="8" formControlName="workTimeInHours" placeholder="required" />
+        <div class="flex">
+          <div class="field">
+            <label class="label">Time in hours (0 - 8)</label>
+            <input class="input" type="number" min="0" max="8" formControlName="workTimeInHours" placeholder="required" />
+          </div>
+          <div class="field">
+            <label class="label">Pre/Post Award</label>
+            <dropdown-select [dataSource]="staticDataCache.isPrePostAward" placeholder="required" formControlName="isPrePostAwardId"></dropdown-select>
+          </div>
         </div>
         <div class="field">
           <label class="label">Support provided (include all types of support provided)</label>
@@ -19,7 +25,7 @@
         </div>
         <div class="field">
           <label class="label">Description of support provided/requested</label>
-          <textarea style="height: 150px" class="textarea" formControlName="description" placeholder="optional"></textarea>
+          <textarea style="height: 150px" class="textarea" formControlName="description" placeholder="required"></textarea>
         </div>
         <div class="field">
           <label class="label">Request additional support from another team</label>

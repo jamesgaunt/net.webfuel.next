@@ -48,6 +48,9 @@ namespace Webfuel.Domain
                     case nameof(ProjectSupport.ProjectId):
                         ProjectId = (Guid)value!;
                         break;
+                    case nameof(ProjectSupport.IsPrePostAwardId):
+                        IsPrePostAwardId = (Guid)value!;
+                        break;
                     case nameof(ProjectSupport.SupportRequestedTeamId):
                         SupportRequestedTeamId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
@@ -100,6 +103,7 @@ namespace Webfuel.Domain
         public DateTimeOffset? SupportRequestedCompletedAt  { get; set; } = null;
         public string SupportRequestedCompletedNotes  { get; set; } = String.Empty;
         public Guid ProjectId { get; set; }
+        public Guid IsPrePostAwardId { get; set; }
         public Guid? SupportRequestedTeamId { get; set; }
         public Guid? SupportRequestedCompletedByUserId { get; set; }
         public ProjectSupport Copy()
@@ -115,6 +119,7 @@ namespace Webfuel.Domain
             entity.SupportRequestedCompletedAt = SupportRequestedCompletedAt;
             entity.SupportRequestedCompletedNotes = SupportRequestedCompletedNotes;
             entity.ProjectId = ProjectId;
+            entity.IsPrePostAwardId = IsPrePostAwardId;
             entity.SupportRequestedTeamId = SupportRequestedTeamId;
             entity.SupportRequestedCompletedByUserId = SupportRequestedCompletedByUserId;
             return entity;

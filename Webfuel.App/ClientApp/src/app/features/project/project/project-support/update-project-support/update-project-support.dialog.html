@@ -13,7 +13,10 @@
           <label class="label">Time in hours per adviser (0 - 8)</label>
           <input class="input" type="number" min="0" max="8" formControlName="workTimeInHours" placeholder="required" />
         </div>
-
+        <div class="field is-6">
+          <label class="label">Pre/Post Award</label>
+          <dropdown-select [dataSource]="staticDataCache.isPrePostAward" placeholder="required" formControlName="isPrePostAwardId"></dropdown-select>
+        </div>
         <div class="field is-6">
           <label class="label">Teams (include all teams providing support)</label>
           <dropdown-multi-select [dataSource]="staticDataCache.supportTeam" placeholder="required" formControlName="teamIds">
@@ -36,8 +39,7 @@
             </ng-template>
           </dropdown-multi-select>
         </div>
-
-        <div class="field is-12">
+        <div class="field  is-6">
           <label class="label">Support provided (include all types of support provided)</label>
           <dropdown-multi-select [dataSource]="staticDataCache.supportProvided" placeholder="required" formControlName="supportProvidedIds"></dropdown-multi-select>
         </div>

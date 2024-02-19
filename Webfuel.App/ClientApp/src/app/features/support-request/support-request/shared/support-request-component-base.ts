@@ -3,7 +3,7 @@ import { ProjectApi } from "../../../../api/project.api";
 import { ActivatedRoute, Router } from "@angular/router";
 import { StaticDataCache } from "../../../../api/static-data.cache";
 import { SupportRequest, SupportRequestStatus } from "../../../../api/api.types";
-import { ProjectStatusEnum, SupportRequestStatusEnum } from "../../../../api/api.enums";
+import { IsPrePostAwardEnum, ProjectStatusEnum, SupportRequestStatusEnum } from "../../../../api/api.enums";
 import { ConfirmDialog } from "../../../../shared/dialogs/confirm/confirm.dialog";
 import { SupportRequestApi } from "../../../../api/support-request.api";
 
@@ -57,7 +57,16 @@ export abstract class SupportRequestComponentBase implements OnInit {
 
   unlock() {
     this.confirmDialog.open({ title: "Unlock Support Request", message: "Are you sure you want to return this support request to triage status?" }).subscribe(() => {
-      this.supportRequestApi.updateStatus({ id: this.item.id, statusId: SupportRequestStatusEnum.ToBeTriaged, supportProvidedIds: [], description: '', workTimeInHours: 0, triageNote: '', supportRequestedTeamId: null }, { successGrowl: "Support Request Unlocked" }).subscribe((result) => {
+      this.supportRequestApi.updateStatus({
+        id: this.item.id,
+        statusId: SupportRequestStatusEnum.ToBeTriaged,
+        supportProvidedIds: [],
+        description: '',
+        workTimeInHours: 0,
+        triageNote: '',
+        supportRequestedTeamId: null,
+        isPrePostAwardId: IsPrePostAwardEnum.PreAward,
+      }, { successGrowl: "Support Request Unlocked" }).subscribe((result) => {
         this.reset(result);
       })
     });

@@ -1101,6 +1101,7 @@ export interface ProjectSupport {
     supportRequestedCompletedAt: string | null | null;
     supportRequestedCompletedNotes: string;
     projectId: string;
+    isPrePostAwardId: string;
     supportRequestedTeamId: string | null | null;
     supportRequestedCompletedByUserId: string | null | null;
 }
@@ -1114,6 +1115,7 @@ export interface CreateProjectSupport {
     description: string;
     workTimeInHours: number;
     supportRequestedTeamId: string | null | null;
+    isPrePostAwardId: string;
 }
 
 export interface UpdateProjectSupport {
@@ -1125,6 +1127,7 @@ export interface UpdateProjectSupport {
     description: string;
     workTimeInHours: number;
     supportRequestedTeamId: string | null | null;
+    isPrePostAwardId: string;
 }
 
 export interface CompleteProjectSupport {
@@ -1472,6 +1475,7 @@ export interface UpdateSupportRequestStatus {
     description: string;
     workTimeInHours: number | null | null;
     supportRequestedTeamId: string | null | null;
+    isPrePostAwardId: string;
 }
 
 export interface QuerySupportRequest extends Query {
