@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.Identity.Client;
+using Webfuel.Domain.Dashboard;
 
 namespace Webfuel.Domain
 {
@@ -35,6 +36,7 @@ namespace Webfuel.Domain
             projectSupport.SupportProvidedIds = request.SupportProvidedIds;
             projectSupport.Description = request.Description;
             projectSupport.WorkTimeInHours = request.WorkTimeInHours;
+            projectSupport.SupportRequestedTeamId = request.SupportRequestedTeamId;
 
             var cb = new RepositoryCommandBuffer();
             {
@@ -42,6 +44,8 @@ namespace Webfuel.Domain
                 await SyncroniseUserActivity(projectSupport, cb);
             }
             await cb.Execute();
+
+            DashboardService.FlushSupportMetrics();
 
             return projectSupport;
         }

@@ -9,7 +9,7 @@ namespace Webfuel.Domain
 {
     public class DashboardModel
     {
-        public required List<DashboardMetric> SupportTeamMetrics { get; init; }
+        public required List<DashboardMetric> SupportMetrics { get; init; }
 
         public required List<DashboardMetric> ProjectMetrics { get; init; }
     }

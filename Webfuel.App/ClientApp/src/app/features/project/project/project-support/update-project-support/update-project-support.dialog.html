@@ -13,37 +13,49 @@
           <label class="label">Time in hours per adviser (0 - 8)</label>
           <input class="input" type="number" min="0" max="8" formControlName="workTimeInHours" placeholder="required" />
         </div>
-      </div>
-      <div class="field">
-        <label class="label">Teams (include all teams providing support)</label>
-        <dropdown-multi-select [dataSource]="staticDataCache.supportTeam" placeholder="required" formControlName="teamIds">
-          <ng-template #optionTemplate let-item>
-            {{ item.name }}
-          </ng-template>
-          <ng-template #pickedTemplate let-item>
-            {{ item.name }}
-          </ng-template>
-        </dropdown-multi-select>
-      </div>
-      <div class="field">
-        <label class="label">Advisers (include all advisers providing support)</label>
-        <dropdown-multi-select [dataSource]="userApi" placeholder="required" formControlName="adviserIds">
-          <ng-template #optionTemplate let-item>
-            {{ item.fullName }}
-          </ng-template>
-          <ng-template #pickedTemplate let-item>
-            {{ item.fullName }}
-          </ng-template>
-        </dropdown-multi-select>
-      </div>
 
-      <div class="field">
-        <label class="label">Support provided (include all types of support provided)</label>
-        <dropdown-multi-select [dataSource]="staticDataCache.supportProvided" placeholder="required" formControlName="supportProvidedIds"></dropdown-multi-select>
-      </div>
-      <div class="field">
-        <label class="label">Description of support</label>
-        <textarea style="height: 400px" class="textarea" formControlName="description" placeholder="required"></textarea>
+        <div class="field is-6">
+          <label class="label">Teams (include all teams providing support)</label>
+          <dropdown-multi-select [dataSource]="staticDataCache.supportTeam" placeholder="required" formControlName="teamIds">
+            <ng-template #optionTemplate let-item>
+              {{ item.name }}
+            </ng-template>
+            <ng-template #pickedTemplate let-item>
+              {{ item.name }}
+            </ng-template>
+          </dropdown-multi-select>
+        </div>
+        <div class="field is-6">
+          <label class="label">Advisers (include all advisers providing support)</label>
+          <dropdown-multi-select [dataSource]="userApi" placeholder="required" formControlName="adviserIds">
+            <ng-template #optionTemplate let-item>
+              {{ item.fullName }}
+            </ng-template>
+            <ng-template #pickedTemplate let-item>
+              {{ item.fullName }}
+            </ng-template>
+          </dropdown-multi-select>
+        </div>
+
+        <div class="field is-12">
+          <label class="label">Support provided (include all types of support provided)</label>
+          <dropdown-multi-select [dataSource]="staticDataCache.supportProvided" placeholder="required" formControlName="supportProvidedIds"></dropdown-multi-select>
+        </div>
+        <div class="field is-12">
+          <label class="label">Description of support</label>
+          <textarea style="height: 200px" class="textarea" formControlName="description" placeholder="required"></textarea>
+        </div>
+        <div class="field">
+          <label class="label">Request additional support from another team</label>
+          <dropdown-select [dataSource]="staticDataCache.supportTeam" [enableClear]="true" placeholder="required" formControlName="supportRequestedTeamId">
+            <ng-template #optionTemplate let-item>
+              {{ item.name }}
+            </ng-template>
+            <ng-template #pickedTemplate let-item>
+              {{ item.name }}
+            </ng-template>
+          </dropdown-select>
+        </div>
       </div>
     </div>
   </div>

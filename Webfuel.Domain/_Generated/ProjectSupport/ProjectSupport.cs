@@ -42,14 +42,17 @@ namespace Webfuel.Domain
                     case nameof(ProjectSupport.SupportRequestedCompletedAt):
                         SupportRequestedCompletedAt = value == DBNull.Value ? (DateTimeOffset?)null : (DateTimeOffset?)value;
                         break;
-                    case nameof(ProjectSupport.SupportRequestedNotes):
-                        SupportRequestedNotes = (string)value!;
+                    case nameof(ProjectSupport.SupportRequestedCompletedNotes):
+                        SupportRequestedCompletedNotes = (string)value!;
                         break;
                     case nameof(ProjectSupport.ProjectId):
                         ProjectId = (Guid)value!;
                         break;
                     case nameof(ProjectSupport.SupportRequestedTeamId):
                         SupportRequestedTeamId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(ProjectSupport.SupportRequestedCompletedByUserId):
+                        SupportRequestedCompletedByUserId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
                 }
             }
@@ -95,9 +98,10 @@ namespace Webfuel.Domain
         }
         string _SupportProvidedIdsJson = String.Empty;
         public DateTimeOffset? SupportRequestedCompletedAt  { get; set; } = null;
-        public string SupportRequestedNotes  { get; set; } = String.Empty;
+        public string SupportRequestedCompletedNotes  { get; set; } = String.Empty;
         public Guid ProjectId { get; set; }
         public Guid? SupportRequestedTeamId { get; set; }
+        public Guid? SupportRequestedCompletedByUserId { get; set; }
         public ProjectSupport Copy()
         {
             var entity = new ProjectSupport();
@@ -109,9 +113,10 @@ namespace Webfuel.Domain
             entity.AdviserIdsJson = AdviserIdsJson;
             entity.SupportProvidedIdsJson = SupportProvidedIdsJson;
             entity.SupportRequestedCompletedAt = SupportRequestedCompletedAt;
-            entity.SupportRequestedNotes = SupportRequestedNotes;
+            entity.SupportRequestedCompletedNotes = SupportRequestedCompletedNotes;
             entity.ProjectId = ProjectId;
             entity.SupportRequestedTeamId = SupportRequestedTeamId;
+            entity.SupportRequestedCompletedByUserId = SupportRequestedCompletedByUserId;
             return entity;
         }
     }

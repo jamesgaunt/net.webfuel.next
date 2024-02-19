@@ -10,69 +10,47 @@
     </div>
     <div class="column" *ngIf="!locked">
       <div class="header-buttons">
+        <button class="button is-primary" (click)="summariseProjectSupport()">View Summary</button>
         <button class="button is-primary" (click)="addProjectSupport()">Add Support</button>
       </div>
     </div>
   </div>
   <project-tabs></project-tabs>
-  <div class="flex">
-    <div class="is-5">
-      <div class="project-support-summary table">
-        <table>
-          <thead>
-            <tr>
-              <th colspan="2">Support Provided</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let category of categories">
-              <td>
-                {{ category.name }}
-              </td>
-              <td class="inactive" *ngIf="!containsCategory(category)">
-                <i class="far fa-fw fa-times"></i>
-              </td>
-              <td class="active" *ngIf="containsCategory(category)">
-                <i class="fas fa-fw fa-check"></i>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <div *ngIf="items === null">
+    <p>Loading...</p>
+  </div>
+  <div *ngIf="items !== null && items.length == 0">
+    <div class="message is-primary">
+      No support events have been recorded for this project.
     </div>
-    <div class="is-7">
-      <div *ngIf="items === null">
-        <p>Loading...</p>
+  </div>
+  <div *ngIf="items !== null && items.length > 0" class="project-support-list">
+    <div class="card" *ngFor="let projectSupport of items">
+      <div class="card-title">
+        <span>{{ projectSupport.date | date: 'dd-MMM-yy' }}</span>
+        <span *ngFor="let id of projectSupport.teamIds; index as i">&nbsp;|&nbsp;{{ (staticDataCache.supportTeam.get({ id: id }) | async)?.name }}</span>
       </div>
-      <div *ngIf="items !== null && items.length == 0">
-        <div class="message is-primary">
-          No support events have been recorded for this project.
-        </div>
+      <div class="card-title">
+        <span *ngFor="let id of projectSupport.adviserIds; index as i"><span *ngIf="i > 0">&nbsp;|&nbsp;</span>{{ userService.formatUser(id) | async }}</span>
+        <span *ngIf="projectSupport.workTimeInHours">| {{ projectSupport.workTimeInHours }} hour{{ projectSupport.workTimeInHours == 1 ? '' : 's' }}</span>
       </div>
-      <div *ngIf="items !== null && items.length > 0" class="project-support-list">
-        <div class="card" *ngFor="let projectSupport of items">
-          <div class="card-title">
-            <span>{{ projectSupport.date | date: 'dd-MMM-yy' }}</span>
-            <span *ngFor="let id of projectSupport.teamIds; index as i">&nbsp;|&nbsp;{{ (staticDataCache.supportTeam.get({ id: id }) | async)?.name }}</span>
-          </div>
-          <div class="card-title">
-            <span *ngFor="let id of projectSupport.adviserIds; index as i"><span *ngIf="i > 0">&nbsp;|&nbsp;</span>{{ userService.formatUser(id) | async }}</span>
-            <span *ngIf="projectSupport.workTimeInHours">| {{ projectSupport.workTimeInHours }} hour{{ projectSupport.workTimeInHours == 1 ? '' : 's' }}</span>
-          </div>
-          <div class="card-title">
-            <span class="tag" *ngFor="let id of projectSupport.supportProvidedIds">{{ (staticDataCache.supportProvided.get({ id: id }) | async)?.name }}</span>
-          </div>
-          <pre class="card-narrative">{{ projectSupport.description }}</pre>
-          <div class="card-buttons" *ngIf="!locked">
-            <button class="button is-small is-primary" (click)="editProjectSupport(projectSupport)">edit</button>
-            <button class="button is-small is-danger" (click)="deleteProjectSupport(projectSupport)">delete</button>
-          </div>
-        </div>
+      <div class="card-title">
+        <span class="tag" *ngFor="let id of projectSupport.supportProvidedIds">{{ (staticDataCache.supportProvided.get({ id: id }) | async)?.name }}</span>
+      </div>
+      <pre *ngIf="projectSupport.description" class="card-narrative">{{ projectSupport.description }}</pre>
+      <div class="card-title" *ngIf="projectSupport.supportRequestedTeamId !== null">
+        <div *ngIf="projectSupport.supportRequestedCompletedAt === null" class="tag is-warning is-small">open</div>
+        <div *ngIf="projectSupport.supportRequestedCompletedAt !== null" class="tag is-success is-small">complete</div>
+        <b>Support requested from team: {{ (staticDataCache.supportTeam.get({ id: projectSupport.supportRequestedTeamId }) | async)?.name }}</b>
+      </div>
+      <pre *ngIf="projectSupport.supportRequestedCompletedNotes" class="card-narrative">{{ projectSupport.supportRequestedCompletedNotes }}</pre>
+      <div class="card-buttons" *ngIf="!locked">
+        <button class="button is-small is-primary" *ngIf="projectSupport.supportRequestedTeamId !== null && projectSupport.supportRequestedCompletedAt === null" (click)="completeProjectSupport(projectSupport)">mark as complete</button>
+        <button class="button is-small is-primary" (click)="editProjectSupport(projectSupport)">edit</button>
+        <button class="button is-small is-danger" (click)="deleteProjectSupport(projectSupport)">delete</button>
       </div>
     </div>
   </div>
-
-
   <div class="floating-buttons">
     <button class="button" (click)="cancel()">Close</button>
   </div>

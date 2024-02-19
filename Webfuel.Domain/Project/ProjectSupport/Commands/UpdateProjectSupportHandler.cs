@@ -1,4 +1,5 @@
 using MediatR;
+using Webfuel.Domain.Dashboard;
 
 namespace Webfuel.Domain
 {
@@ -25,11 +26,19 @@ namespace Webfuel.Domain
 
             var updated = projectSupport.Copy();
             updated.Date = request.Date;
-            updated.Description = request.Description;
-            updated.WorkTimeInHours = request.WorkTimeInHours;
             updated.TeamIds = request.TeamIds;
             updated.AdviserIds = request.AdviserIds;
             updated.SupportProvidedIds = request.SupportProvidedIds;
+            updated.Description = request.Description;
+            updated.WorkTimeInHours = request.WorkTimeInHours;
+            updated.SupportRequestedTeamId = request.SupportRequestedTeamId;
+
+            if(updated.SupportRequestedTeamId != projectSupport.SupportRequestedTeamId)
+            {
+                updated.SupportRequestedCompletedAt = null;
+                updated.SupportRequestedCompletedByUserId = null;
+                updated.SupportRequestedCompletedNotes = String.Empty;
+            }
 
             var cb = new RepositoryCommandBuffer();
             {
@@ -37,6 +46,8 @@ namespace Webfuel.Domain
                 await SyncroniseUserActivity(projectSupport, cb);
             }
             await cb.Execute();
+
+            DashboardService.FlushSupportMetrics();
 
             return projectSupport;
         }

@@ -18,6 +18,9 @@ namespace Webfuel.App
             app.MapPut("api/project-support", Update)
                 .RequireIdentity();
 
+            app.MapPut("api/project-support/complete", Complete)
+                 .RequireIdentity();
+
             app.MapDelete("api/project-support/{id:guid}", Delete)
                 .RequireIdentity();
 
@@ -36,6 +39,11 @@ namespace Webfuel.App
         }
 
         public static Task<ProjectSupport> Update([FromBody] UpdateProjectSupport command, IMediator mediator)
+        {
+            return mediator.Send(command);
+        }
+
+        public static Task<ProjectSupport> Complete([FromBody] CompleteProjectSupport command, IMediator mediator)
         {
             return mediator.Send(command);
         }

@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
+
 <Schema>
   <Entity Name="ProjectTeamSupport" OrderBy="-CreatedAt">
     <Key Name="Id" Type="guid" />
@@ -14,7 +15,7 @@
     <Property Name="CompletedNotes" Type="meta:description" />
     <Property Name="CompletedAt" Type="DateTime?" />
     <Property Name="CompletedByUserId" Type="User?" />
-    
+
     <Index Unique="false">
       <Member Name="ProjectId" />
     </Index>

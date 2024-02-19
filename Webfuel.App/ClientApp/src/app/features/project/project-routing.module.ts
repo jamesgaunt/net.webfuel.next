@@ -12,7 +12,6 @@ import { ProjectSubmissionComponent } from './project/project-submission/project
 import { ProjectFilesComponent } from './project/project-files/project-files.component';
 import { ProjectHistoryComponent } from './project/project-history/project-history.component';
 import { ProjectResearcherComponent } from './project/project-researcher/project-researcher.component';
-import { ProjectTeamSupportComponent } from './project/project-team-support/project-team-support.component';
 
 const routes: Routes = [
   {
@@ -46,13 +45,6 @@ const routes: Routes = [
     component: ProjectSupportComponent,
     resolve: { project: ProjectApi.projectResolver('id') },
     canDeactivate: [DeactivateService.isPristine<ProjectSupportComponent>()],
-    data: { activeSideMenu: 'Projects' }
-  },
-  {
-    path: 'project-team-support/:id',
-    component: ProjectTeamSupportComponent,
-    resolve: { project: ProjectApi.projectResolver('id') },
-    canDeactivate: [DeactivateService.isPristine<ProjectTeamSupportComponent>()],
     data: { activeSideMenu: 'Projects' }
   },
   {

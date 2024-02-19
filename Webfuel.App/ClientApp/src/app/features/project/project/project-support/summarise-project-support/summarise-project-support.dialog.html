@@ -1,0 +1,33 @@
+<div class="dialog">
+  <div class="dialog-head">
+    Summarise Project Support
+  </div>
+  <div class="dialog-body">
+    <div class="project-support-summary table">
+      <table>
+        <thead>
+          <tr>
+            <th colspan="2">Support Provided</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let category of categories">
+            <td>
+              {{ category.name }}
+            </td>
+            <td class="inactive" *ngIf="!containsCategory(category)">
+              <i class="far fa-fw fa-times"></i>
+            </td>
+            <td class="active" *ngIf="containsCategory(category)">
+              <i class="fas fa-fw fa-check"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="dialog-buttons">
+    <button type="button" (click)="cancel()">Close</button>
+  </div>
+</div>
+

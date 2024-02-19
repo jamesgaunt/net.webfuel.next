@@ -44,14 +44,17 @@ namespace Webfuel.Domain
                     case nameof(ProjectSupport.SupportRequestedCompletedAt):
                         result.Add(new SqlParameter(nameof(ProjectSupport.SupportRequestedCompletedAt), entity.SupportRequestedCompletedAt ?? (object?)DBNull.Value));
                         break;
-                    case nameof(ProjectSupport.SupportRequestedNotes):
-                        result.Add(new SqlParameter(nameof(ProjectSupport.SupportRequestedNotes), entity.SupportRequestedNotes));
+                    case nameof(ProjectSupport.SupportRequestedCompletedNotes):
+                        result.Add(new SqlParameter(nameof(ProjectSupport.SupportRequestedCompletedNotes), entity.SupportRequestedCompletedNotes));
                         break;
                     case nameof(ProjectSupport.ProjectId):
                         result.Add(new SqlParameter(nameof(ProjectSupport.ProjectId), entity.ProjectId));
                         break;
                     case nameof(ProjectSupport.SupportRequestedTeamId):
                         result.Add(new SqlParameter(nameof(ProjectSupport.SupportRequestedTeamId), entity.SupportRequestedTeamId ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(ProjectSupport.SupportRequestedCompletedByUserId):
+                        result.Add(new SqlParameter(nameof(ProjectSupport.SupportRequestedCompletedByUserId), entity.SupportRequestedCompletedByUserId ?? (object?)DBNull.Value));
                         break;
                 }
             }
@@ -87,9 +90,10 @@ namespace Webfuel.Domain
                 yield return "AdviserIds";
                 yield return "SupportProvidedIds";
                 yield return "SupportRequestedCompletedAt";
-                yield return "SupportRequestedNotes";
+                yield return "SupportRequestedCompletedNotes";
                 yield return "ProjectId";
                 yield return "SupportRequestedTeamId";
+                yield return "SupportRequestedCompletedByUserId";
             }
         }
         
@@ -105,9 +109,10 @@ namespace Webfuel.Domain
                 yield return "AdviserIds";
                 yield return "SupportProvidedIds";
                 yield return "SupportRequestedCompletedAt";
-                yield return "SupportRequestedNotes";
+                yield return "SupportRequestedCompletedNotes";
                 yield return "ProjectId";
                 yield return "SupportRequestedTeamId";
+                yield return "SupportRequestedCompletedByUserId";
             }
         }
         
@@ -122,9 +127,10 @@ namespace Webfuel.Domain
                 yield return "AdviserIds";
                 yield return "SupportProvidedIds";
                 yield return "SupportRequestedCompletedAt";
-                yield return "SupportRequestedNotes";
+                yield return "SupportRequestedCompletedNotes";
                 yield return "ProjectId";
                 yield return "SupportRequestedTeamId";
+                yield return "SupportRequestedCompletedByUserId";
             }
         }
         
@@ -134,15 +140,15 @@ namespace Webfuel.Domain
         {
             entity.Description = entity.Description ?? String.Empty;
             entity.Description = entity.Description.Trim();
-            entity.SupportRequestedNotes = entity.SupportRequestedNotes ?? String.Empty;
-            entity.SupportRequestedNotes = entity.SupportRequestedNotes.Trim();
+            entity.SupportRequestedCompletedNotes = entity.SupportRequestedCompletedNotes ?? String.Empty;
+            entity.SupportRequestedCompletedNotes = entity.SupportRequestedCompletedNotes.Trim();
             Validator.ValidateAndThrow(entity);
         }
         
         public static ProjectSupportRepositoryValidator Validator { get; } = new ProjectSupportRepositoryValidator();
         
         public const int Description_MaxLength = 4000;
-        public const int SupportRequestedNotes_MaxLength = 1024;
+        public const int SupportRequestedCompletedNotes_MaxLength = 1024;
         
         public static void Description_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
@@ -151,11 +157,11 @@ namespace Webfuel.Domain
                 .MaximumLength(Description_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
-        public static void SupportRequestedNotes_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        public static void SupportRequestedCompletedNotes_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull()
-                .MaximumLength(SupportRequestedNotes_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+                .MaximumLength(SupportRequestedCompletedNotes_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
     }
     
@@ -164,7 +170,7 @@ namespace Webfuel.Domain
         public ProjectSupportRepositoryValidator()
         {
             RuleFor(x => x.Description).Use(ProjectSupportMetadata.Description_ValidationRules);
-            RuleFor(x => x.SupportRequestedNotes).Use(ProjectSupportMetadata.SupportRequestedNotes_ValidationRules);
+            RuleFor(x => x.SupportRequestedCompletedNotes).Use(ProjectSupportMetadata.SupportRequestedCompletedNotes_ValidationRules);
             Validation();
         }
         

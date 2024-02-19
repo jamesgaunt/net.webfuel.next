@@ -18,7 +18,7 @@ namespace Webfuel.Domain
             this.Contains(nameof(Project.SearchTeamContactFullName), TeamContactName);
 
             if(RequestedSupportTeamId.HasValue)
-                this.SQL($"EXISTS (SELECT Id FROM [ProjectTeamSupport] AS pts WHERE pts.[ProjectId] = e.Id AND pts.[SupportTeamId] = '{RequestedSupportTeamId.Value}' AND pts.[CompletedAt] IS NULL)");
+                this.SQL($"EXISTS (SELECT Id FROM [ProjectSupport] AS ps WHERE ps.[ProjectId] = e.Id AND ps.[SupportRequestedTeamId] = '{RequestedSupportTeamId.Value}' AND ps.[SupportRequestedCompletedAt] IS NULL)");
 
             if(SupportAdviserUserId.HasValue)
                 this.SQL($"EXISTS (SELECT Id FROM [ProjectAdviser] AS pa WHERE pa.[ProjectId] = e.Id AND pa.[UserId] = '{SupportAdviserUserId.Value}')");

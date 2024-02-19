@@ -764,6 +764,7 @@ export interface SubmissionStage extends IStaticData {
 export interface SupportProvided extends IStaticData {
     id: string;
     name: string;
+    alias: string;
     sortOrder: number;
     default: boolean;
     hidden: boolean;
@@ -797,6 +798,7 @@ export interface Title extends IStaticData {
 export interface UserDiscipline extends IStaticData {
     id: string;
     name: string;
+    alias: string;
     sortOrder: number;
     default: boolean;
     hidden: boolean;
@@ -1096,7 +1098,11 @@ export interface ProjectSupport {
     teamIds: Array<string>;
     adviserIds: Array<string>;
     supportProvidedIds: Array<string>;
+    supportRequestedCompletedAt: string | null | null;
+    supportRequestedCompletedNotes: string;
     projectId: string;
+    supportRequestedTeamId: string | null | null;
+    supportRequestedCompletedByUserId: string | null | null;
 }
 
 export interface CreateProjectSupport {
@@ -1107,6 +1113,7 @@ export interface CreateProjectSupport {
     supportProvidedIds: Array<string>;
     description: string;
     workTimeInHours: number;
+    supportRequestedTeamId: string | null | null;
 }
 
 export interface UpdateProjectSupport {
@@ -1117,6 +1124,12 @@ export interface UpdateProjectSupport {
     supportProvidedIds: Array<string>;
     description: string;
     workTimeInHours: number;
+    supportRequestedTeamId: string | null | null;
+}
+
+export interface CompleteProjectSupport {
+    id: string;
+    supportRequestedCompletedNotes: string;
 }
 
 export interface QueryProjectSupport extends Query {
@@ -2290,6 +2303,7 @@ export interface QuerySubmissionStage extends Query {
 
 export interface CreateSupportProvided {
     name: string;
+    alias: string;
     default: boolean;
     hidden: boolean;
     freeText: boolean;
@@ -2298,6 +2312,7 @@ export interface CreateSupportProvided {
 export interface UpdateSupportProvided {
     id: string;
     name: string;
+    alias: string;
     default: boolean;
     hidden: boolean;
     freeText: boolean;
@@ -2360,6 +2375,7 @@ export interface QueryTitle extends Query {
 
 export interface CreateUserDiscipline {
     name: string;
+    alias: string;
     default: boolean;
     hidden: boolean;
     freeText: boolean;
@@ -2368,6 +2384,7 @@ export interface CreateUserDiscipline {
 export interface UpdateUserDiscipline {
     id: string;
     name: string;
+    alias: string;
     default: boolean;
     hidden: boolean;
     freeText: boolean;

@@ -10,6 +10,8 @@ import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/c
 import { UpdateProjectSupportDialog } from '../project-support/update-project-support/update-project-support.dialog';
 import { ProjectComponentBase } from '../shared/project-component-base';
 import { CreateProjectSupportDialog } from './create-project-support/create-project-support.dialog';
+import { SummariseProjectSupportDialog } from './summarise-project-support/summarise-project-support.dialog';
+import { CompleteProjectSupportDialog } from './complete-project-support/complete-project-support.dialog';
 
 @Component({
   selector: 'project-support',
@@ -25,9 +27,12 @@ export class ProjectSupportComponent extends ProjectComponentBase {
     private confirmDeleteDialog: ConfirmDeleteDialog,
     private createProjectSupportDialog: CreateProjectSupportDialog,
     private updateProjectSupportDialog: UpdateProjectSupportDialog,
+    private summariseProjectSupportDialog: SummariseProjectSupportDialog,
+    private completeProjectSupportDialog: CompleteProjectSupportDialog,
     private projectSupportApi: ProjectSupportApi,
   ) {
     super();
+
   }
 
   ngOnInit() {
@@ -38,7 +43,6 @@ export class ProjectSupportComponent extends ProjectComponentBase {
       takeUntilDestroyed(this.destroyRef)
     )
    .subscribe(() => this.loadProjectSupport());
-    this.staticDataCache.supportProvided.query({ skip: 0, take: 100 }).subscribe((result) => this.categories = result.items);
   }
 
   form = new FormGroup({
@@ -76,11 +80,14 @@ export class ProjectSupportComponent extends ProjectComponentBase {
     });
   }
 
-  // Summary
-
-  categories: SupportProvided[] = [];
-
-  containsCategory(category: SupportProvided) {
-    return _.some(this.items || [], (p) => _.some(p.supportProvidedIds, (s) => s == category.id));
+  summariseProjectSupport() {
+    this.summariseProjectSupportDialog.open({ items: this.items! });
   }
+
+  completeProjectSupport(projectSupport: ProjectSupport) {
+    this.completeProjectSupportDialog.open({ projectSupport: projectSupport }).subscribe(() => {
+      this.projectSupportApi.changed.next(null);
+    })
+  }
+  
 }

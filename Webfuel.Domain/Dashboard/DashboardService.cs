@@ -33,7 +33,7 @@ namespace Webfuel.Domain.Dashboard
         {
             return new DashboardModel
             {
-                SupportTeamMetrics = await GenerateSupportTeamMetrics(),
+                SupportMetrics = await GenerateSupportMetrics(),
                 ProjectMetrics = await GenerateProjectMetrics(),
             };
         }
@@ -92,9 +92,9 @@ namespace Webfuel.Domain.Dashboard
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Support Team Metrics
 
-        async Task<List<DashboardMetric>> GenerateSupportTeamMetrics()
+        async Task<List<DashboardMetric>> GenerateSupportMetrics()
         {
-            var result = _supportTeamMetrics;
+            var result = _supportMetrics;
             if (result != null)
                 return result;
 
@@ -105,14 +105,14 @@ namespace Webfuel.Domain.Dashboard
                 result.Add(await GenerateSupportTeamMetric(supportTeam));
             }
 
-            return _supportTeamMetrics = result;
+            return _supportMetrics = result;
         }
 
         async Task<DashboardMetric> GenerateSupportTeamMetric(SupportTeam supportTeam)
         {
             var query = new Query();
             query.Equal(nameof(Project.StatusId), ProjectStatusEnum.Active);
-            query.SQL($"EXISTS (SELECT Id FROM [ProjectTeamSupport] AS pts WHERE pts.[ProjectId] = e.Id AND pts.[SupportTeamId] = '{supportTeam.Id}' AND pts.[CompletedAt] IS NULL)");
+            query.SQL($"EXISTS (SELECT Id FROM [ProjectSupport] AS ps WHERE ps.[ProjectId] = e.Id AND ps.[SupportRequestedTeamId] = '{supportTeam.Id}' AND ps.[SupportRequestedCompletedAt] IS NULL)");
             var queryResult = await _projectRepository.QueryProject(query, selectItems: false, countTotal: true);
 
             return new DashboardMetric
@@ -126,11 +126,11 @@ namespace Webfuel.Domain.Dashboard
             };
         }
 
-        public static void FlushSupportTeamMetrics()
+        public static void FlushSupportMetrics()
         {
-            _supportTeamMetrics = null;
+            _supportMetrics = null;
         }
 
-        static List<DashboardMetric>? _supportTeamMetrics = null;
+        static List<DashboardMetric>? _supportMetrics = null;
     }
 }

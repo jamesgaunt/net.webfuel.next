@@ -16,7 +16,8 @@
     <!-- Support Requested : 1.2 Development -->
     <Property Name="SupportRequestedTeamId" Type="SupportTeam?" />
     <Property Name="SupportRequestedCompletedAt" Type="DateTime?" />
-    <Property Name="SupportRequestedNotes" Type="meta:description" />
+    <Property Name="SupportRequestedCompletedByUserId" Type="User?" />
+    <Property Name="SupportRequestedCompletedNotes" Type="meta:description" />
     
     <Index Unique="false">
       <Member Name="ProjectId" />

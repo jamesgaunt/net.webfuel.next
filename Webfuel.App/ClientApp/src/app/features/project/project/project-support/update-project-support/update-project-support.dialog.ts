@@ -45,6 +45,7 @@ export class UpdateProjectSupportDialogComponent extends DialogComponentBase<Pro
     supportProvidedIds: new FormControl<string[]>([], { nonNullable: true }),
     description: new FormControl<string>('', { nonNullable: true }),
     workTimeInHours: new FormControl<number>(null!, { validators: [Validators.required, Validators.min(0), Validators.max(8)], nonNullable: true }),
+    supportRequestedTeamId: new FormControl<string | null>(null),
   });
 
   save() {

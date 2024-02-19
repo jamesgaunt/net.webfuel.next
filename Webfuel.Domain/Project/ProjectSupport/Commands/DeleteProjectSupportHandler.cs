@@ -1,4 +1,5 @@
 using MediatR;
+using Webfuel.Domain.Dashboard;
 
 namespace Webfuel.Domain
 {
@@ -21,6 +22,8 @@ namespace Webfuel.Domain
                 await _projectSupportRepository.DeleteProjectSupport(request.Id, cb);
             }
             await cb.Execute();
+
+            DashboardService.FlushSupportMetrics();
         }
 
         async Task SyncroniseUserActivity(Guid projectSupportId, RepositoryCommandBuffer cb)
