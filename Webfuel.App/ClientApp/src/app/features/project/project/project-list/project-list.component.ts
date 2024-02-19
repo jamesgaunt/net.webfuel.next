@@ -57,6 +57,7 @@ export class ProjectListComponent {
       statusId: null,
       proposedFundingStreamId: null,
       leadAdviserUserId: null,
+      supportAdviserUserId: null,
       title: '',
       teamContactName: '',
       requestedSupportTeamId: null,
