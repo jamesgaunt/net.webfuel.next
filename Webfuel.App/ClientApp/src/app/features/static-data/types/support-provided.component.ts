@@ -14,5 +14,6 @@ export class SupportProvidedComponent extends StaticDataComponent<SupportProvide
   ) {
     super(dataSource);
     this.typeName = "Support Provided";
+    this.enableAlias = true;
   }
 }

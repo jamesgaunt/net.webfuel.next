@@ -353,7 +353,7 @@ namespace Webfuel.Domain
         string CategoriesOfSupportProvided(Project project, List<ProjectSupport> support)
         {
             var categories = support.SelectMany(s => s.SupportProvidedIds).Distinct().Select(id => Format(StaticData.SupportProvided.Single(sc => sc.Id == id)));
-            return String.Join(", ", categories);
+            return String.Join(", ", categories.Where(p => p != "IGNORE").Distinct());
         }
 
         string SitesInvolvedInProvidingAdvice(Project project)
@@ -400,7 +400,7 @@ namespace Webfuel.Domain
             if (project.WillStudyUseCTUId == WillStudyUseCTUEnum.YesExternalToThisRSS)
                 return "External";
 
-            return "N/A";
+            return "Not applicable";
         }
 
         string AdviserDisciplines(Project project, List<ProjectSupport> support, List<ProjectAdviser> advisers)
@@ -440,7 +440,7 @@ namespace Webfuel.Domain
 
             disciplines.AddRange(disciplineIds.Select(id => Format(StaticData.UserDiscipline.Single(ud => ud.Id == id))));
 
-            return String.Join(", ", disciplines.Distinct());
+            return String.Join(", ", disciplines.Where(p => p != "IGNORE").Distinct());
         }
 
         string Format(SupportProvided supportProvided)
@@ -459,6 +459,7 @@ namespace Webfuel.Domain
 
         // Columns
 
+        // Section A
         const int AXXX = 1;
         const int A001 = 2;
         const int A002 = 3;
@@ -473,6 +474,7 @@ namespace Webfuel.Domain
         const int A011 = 12;
         const int A012 = 13;
 
+        // Section B
         const int BXXX = 14;
         const int B001 = 15;
         const int B002 = 16;
@@ -481,6 +483,7 @@ namespace Webfuel.Domain
         const int B005 = 19;
         const int B006 = 20;
 
+        // Section C
         const int CXXX = 21;
         const int C001 = 22;
         const int C002 = 23;

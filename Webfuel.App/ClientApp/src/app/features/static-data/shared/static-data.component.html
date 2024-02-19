@@ -10,6 +10,7 @@
   </div>
   <grid [dataSource]="dataSource" [search]="true">
     <grid-column name="name" />
+    <grid-column name="alias" *ngIf="enableAlias" />
     <grid-boolean-column name="default" />
     <grid-boolean-column name="hidden" *ngIf="enableHidden" />
     <grid-boolean-column name="freeText" *ngIf="enableFreeText" />

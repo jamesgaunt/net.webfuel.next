@@ -22,9 +22,9 @@ namespace Webfuel.Domain
 
             if (_identityAccessor.Claims.Developer)
             {
-                if(request.OwnReportsOnly == "NO")
+                if(request.OwnReportsOnly == "YES")
                 {
-                    query.Any(q =>
+                    query.All(q =>
                     {
                         q.Equal(nameof(Report.OwnerUserId), _identityAccessor.User.Id);
                     });

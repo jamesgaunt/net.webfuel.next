@@ -16,5 +16,6 @@ export class UserDisciplineComponent extends StaticDataComponent<UserDiscipline,
     this.typeName = "User Discipline";
     this.enableHidden = true;
     this.enableFreeText = true;
+    this.enableAlias = true;
   }
 }
