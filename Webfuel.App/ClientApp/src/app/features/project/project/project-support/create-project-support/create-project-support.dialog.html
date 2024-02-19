@@ -45,7 +45,7 @@
         </div>
         <div class="field">
           <label class="label">Request additional support from another team</label>
-          <dropdown-select [dataSource]="staticDataCache.supportTeam" [enableClear]="true" placeholder="required" formControlName="supportRequestedTeamId">
+          <dropdown-select [dataSource]="staticDataCache.supportTeam" [enableClear]="true" placeholder="optional" formControlName="supportRequestedTeamId">
             <ng-template #optionTemplate let-item>
               {{ item.name }}
             </ng-template>

@@ -314,7 +314,7 @@ export interface IReportAccessor {
 }
 
 export interface DashboardModel {
-    supportTeamMetrics: Array<DashboardMetric>;
+    supportMetrics: Array<DashboardMetric>;
     projectMetrics: Array<DashboardMetric>;
 }
 
@@ -1142,46 +1142,6 @@ export interface QueryProjectSupport extends Query {
     search?: string;
 }
 
-export interface ProjectTeamSupport {
-    id: string;
-    projectLabel: string;
-    createdNotes: string;
-    createdAt: string;
-    completedNotes: string;
-    completedAt: string | null | null;
-    projectId: string;
-    supportTeamId: string;
-    createdByUserId: string;
-    completedByUserId: string | null | null;
-}
-
-export interface CreateProjectTeamSupport {
-    projectId: string;
-    supportTeamId: string;
-    createdNotes: string;
-}
-
-export interface UpdateProjectTeamSupport {
-    id: string;
-    createdNotes: string;
-    completedNotes: string;
-}
-
-export interface CompleteProjectTeamSupport {
-    id: string;
-    completedNotes: string;
-}
-
-export interface QueryProjectTeamSupport extends Query {
-    projectId: string;
-    skip: number;
-    take: number;
-    projection?: Array<string>;
-    filters?: Array<QueryFilter>;
-    sort?: Array<QuerySort>;
-    search?: string;
-}
-
 export interface Report {
     id: string;
     name: string;
@@ -1511,6 +1471,7 @@ export interface UpdateSupportRequestStatus {
     supportProvidedIds: Array<string>;
     description: string;
     workTimeInHours: number | null | null;
+    supportRequestedTeamId: string | null | null;
 }
 
 export interface QuerySupportRequest extends Query {

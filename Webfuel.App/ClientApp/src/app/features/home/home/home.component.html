@@ -22,7 +22,7 @@
     </div>
     <h3>Team Support</h3>
     <div class="support-teams">
-      @for(metric of model.supportTeamMetrics; track $index) {
+      @for(metric of model.supportMetrics; track $index) {
       <a class="dashboard-metric" routerLink="{{ metric.routerLink }}" [queryParams]="routerParams(metric)">
         <div class="icon"><i class="{{ metric.icon }}"></i></div>
         <div class="count">{{ metric.count }}</div>

@@ -20,5 +20,7 @@ namespace Webfuel.Domain
         public string Description { get; set; } = String.Empty;
 
         public Decimal? WorkTimeInHours { get; set; }
+
+        public Guid? SupportRequestedTeamId { get; set; }
     }
 }

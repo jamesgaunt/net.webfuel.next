@@ -55,6 +55,7 @@ export class TriageSupportRequestDialogComponent extends DialogComponentBase<Sup
     supportProvidedIds: new FormControl<string[]>([], { nonNullable: true }),
     description: new FormControl<string>('', { nonNullable: true }),
     workTimeInHours: new FormControl<number>(null!, { nonNullable: true }),
+    supportRequestedTeamId: new FormControl<string | null>(null),
     triageNote: new FormControl<string>('', { nonNullable: true }),
   });
 

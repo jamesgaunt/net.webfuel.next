@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardApi } from '../../../api/dashboard.api';
-import { DashboardMetric, DashboardModel, ProjectTeamSupport } from '../../../api/api.types';
+import { DashboardMetric, DashboardModel } from '../../../api/api.types';
 import { StaticDataCache } from '../../../api/static-data.cache';
 import { UserService } from '../../../core/user.service';
 import { Router } from '@angular/router';
