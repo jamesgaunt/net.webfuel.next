@@ -44,7 +44,15 @@ namespace Webfuel.Tools.Datafuel
         {
             if (JsonIgnore)
                 sb.WriteLine("[JsonIgnore]");
-            sb.WriteLine($"{Access} {CLRTypeWithNullable} {Name} {{ get; {(InternalSet ? "internal " : "")}set; }}");
+            sb.Write($"{Access} {CLRTypeWithNullable} {Name} {{ get; {(InternalSet ? "internal " : "")}set; }}");
+
+            if(!String.IsNullOrEmpty(Default))
+            {
+                if (!Guid.TryParse(Default, out var @default))
+                    throw new InvalidOperationException($"Unable to parse reference default value '{Default}'");
+                sb.Write($" = Guid.Parse(\"{@default.ToString()}\");");
+            }
+            sb.WriteLine();
         }
 
         public override string GenerateSqlColumnDefinition()

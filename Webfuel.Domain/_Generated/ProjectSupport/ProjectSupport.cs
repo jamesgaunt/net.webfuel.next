@@ -103,7 +103,7 @@ namespace Webfuel.Domain
         public DateTimeOffset? SupportRequestedCompletedAt  { get; set; } = null;
         public string SupportRequestedCompletedNotes  { get; set; } = String.Empty;
         public Guid ProjectId { get; set; }
-        public Guid IsPrePostAwardId { get; set; }
+        public Guid IsPrePostAwardId { get; set; } = Guid.Parse("d8c2fe26-3a35-4a49-b61d-b5abc41611f6");
         public Guid? SupportRequestedTeamId { get; set; }
         public Guid? SupportRequestedCompletedByUserId { get; set; }
         public ProjectSupport Copy()
