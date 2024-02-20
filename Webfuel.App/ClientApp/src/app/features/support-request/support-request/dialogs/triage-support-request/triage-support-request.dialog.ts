@@ -53,7 +53,7 @@ export class TriageSupportRequestDialogComponent extends DialogComponentBase<Sup
     id: new FormControl<string>('', { validators: Validators.required, nonNullable: true }),
     statusId: new FormControl<string>(null!, { validators: Validators.required, nonNullable: true }),
     supportProvidedIds: new FormControl<string[]>([], { nonNullable: true }),
-    description: new FormControl<string>('', { validators: Validators.required, nonNullable: true }),
+    description: new FormControl<string>('', { nonNullable: true }),
     workTimeInHours: new FormControl<number>(null!, { nonNullable: true }),
     supportRequestedTeamId: new FormControl<string | null>(null),
     isPrePostAwardId: new FormControl<string>(IsPrePostAwardEnum.PreAward, { nonNullable: true }),
