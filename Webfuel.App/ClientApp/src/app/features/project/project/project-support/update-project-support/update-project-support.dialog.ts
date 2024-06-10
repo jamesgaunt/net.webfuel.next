@@ -11,6 +11,7 @@ import { IsPrePostAwardEnum } from '../../../../../api/api.enums';
 
 export interface UpdateProjectSupportDialogData {
   projectSupport: ProjectSupport;
+  requestTeamSupport?: boolean;
 }
 
 @Injectable()

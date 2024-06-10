@@ -42,8 +42,10 @@
   <grid [dataSource]="supportRequestApi" [filterForm]="filterForm" stateKey="SupportRequestList">
     <grid-date-column name="dateOfRequest" label="Date" />
     <grid-reference-column [dataSource]="staticDataCache.supportRequestStatus" name="statusId" />
+    <grid-column name="teamContactFullName" label="Contact Name" />
     <grid-column name="title" />
     <grid-date-column name="targetSubmissionDate" label="Target Submission Date" />
+    <grid-reference-column [dataSource]="staticDataCache.fundingStream" name="proposedFundingStreamId" label="Proposed Funding Stream" />
     <grid-action-column [canDelete]="false" (add)="add()" (edit)="edit($event)" />
   </grid>
 </div>

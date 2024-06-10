@@ -70,8 +70,6 @@ namespace Webfuel.Domain
                         a.Map<ProjectStatus>(Guid.Parse("0bfd322c-e155-410f-937a-52c547d1949f"), "Project Status", p => p.StatusId);
                         a.Map<User>(Guid.Parse("7820e23c-9b11-4539-8477-552814e351da"), "Project Lead Adviser", p => p.LeadAdviserUserId);
                     });
-
-
                     _schema = builder.Schema;
                 }
 

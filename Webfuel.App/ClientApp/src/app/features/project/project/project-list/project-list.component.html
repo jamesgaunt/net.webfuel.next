@@ -16,7 +16,6 @@
   </div>
   <div class="filter-form">
     <form class="form" [formGroup]="filterForm">
-
       <div class="flex">
         <div class="field is-3">
           <input class="input" type="text" formControlName="number" placeholder="Number" />
@@ -26,7 +25,6 @@
         </div>
       </div>
       <div class="flex">
-
         <div class="field is-3">
           <dropdown-select [dataSource]="userApi" placeholder="Lead Adviser" formControlName="leadAdviserUserId" [enableClear]="true" [enableSearch]="true">
             <ng-template #optionTemplate let-item>
@@ -84,7 +82,7 @@
         {{ userService.formatUser(item.leadAdviserUserId) | async }}
       </ng-template>
     </grid-column>
-    <grid-column name="openTeamRequests">
+    <grid-column [sortable]="false" name="openTeamRequests">
       <ng-template #itemTemplate let-item>
         <span *ngFor="let id of item.openSupportRequestTeamIds; index as i">
           <span *ngIf="i > 0">&nbsp;|&nbsp;</span>{{ (staticDataCache.supportTeam.get({ id: id }) | async)?.name }}
