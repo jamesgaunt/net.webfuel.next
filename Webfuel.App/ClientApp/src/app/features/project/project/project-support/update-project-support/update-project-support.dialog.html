@@ -41,7 +41,7 @@
         </div>
         <div class="field  is-6">
           <label class="label">Support provided (include all types of support provided)</label>
-          <dropdown-multi-select [dataSource]="staticDataCache.supportProvided" placeholder="required" formControlName="supportProvidedIds"></dropdown-multi-select>
+          <dropdown-multi-select [dataSource]="staticDataCache.supportProvided" [closeOnSelect]="false" placeholder="required" formControlName="supportProvidedIds"></dropdown-multi-select>
         </div>
         <div class="field is-12">
           <label class="label">Description of support provided/requested</label>

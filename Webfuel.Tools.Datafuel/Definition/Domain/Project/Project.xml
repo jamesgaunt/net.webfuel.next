@@ -109,9 +109,10 @@
     <Property Name="DiagnosticCount" Type="int" />
     <Property Name="DiagnosticList" Type="Json:List{ProjectDiagnostic}" />
 
-    <!-- Calculated -->
-    <Property Name="SearchTeamContactFullName" Type="meta:name" />
-    <Property Name="SupportTotalMinutes" Type="int" />    
+    <Property Name="TeamContactFullName" Type="meta:name" />
+    <Property Name="LeadApplicantFullName" Type="meta:name" />
+    <Property Name="SupportTotalMinutes" Type="int" />
+    <Property Name="OpenSupportRequestTeamIds" Type="Json:List{Guid}" />
 
     <!-- ========== /Calculated Properties ========== -->
     

@@ -62,7 +62,7 @@
 
   @each $p in $paletteAction {
     &.is-#{$p} {
-      background-color: color-mix(in hsl, var(--palette-#{$p}-background) 10%, #FFF);
+      background-color: color-mix(in hsl, var(--palette-#{$p}-background) 15%, #FFF);
       color: var(--palette-#{$p}-text);
       border-color: var(--palette-#{$p}-background);
     }

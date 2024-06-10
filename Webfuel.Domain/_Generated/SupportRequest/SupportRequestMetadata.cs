@@ -10,7 +10,7 @@ namespace Webfuel.Domain
         
         public static string DatabaseTable => "SupportRequest";
         
-        public static string DefaultOrderBy => "ORDER BY Number DESC";
+        public static string DefaultOrderBy => "ORDER BY Id DESC";
         
         public static SupportRequest DataReader(SqlDataReader dr) => new SupportRequest(dr);
         
@@ -137,6 +137,12 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.LeadApplicantORCID):
                         result.Add(new SqlParameter(nameof(SupportRequest.LeadApplicantORCID), entity.LeadApplicantORCID));
                         break;
+                    case nameof(SupportRequest.TeamContactFullName):
+                        result.Add(new SqlParameter(nameof(SupportRequest.TeamContactFullName), entity.TeamContactFullName));
+                        break;
+                    case nameof(SupportRequest.LeadApplicantFullName):
+                        result.Add(new SqlParameter(nameof(SupportRequest.LeadApplicantFullName), entity.LeadApplicantFullName));
+                        break;
                     case nameof(SupportRequest.ProjectId):
                         result.Add(new SqlParameter(nameof(SupportRequest.ProjectId), entity.ProjectId ?? (object?)DBNull.Value));
                         break;
@@ -256,6 +262,8 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantAddressCountry";
                 yield return "LeadApplicantAddressPostcode";
                 yield return "LeadApplicantORCID";
+                yield return "TeamContactFullName";
+                yield return "LeadApplicantFullName";
                 yield return "ProjectId";
                 yield return "CreatedAt";
                 yield return "FileStorageGroupId";
@@ -320,6 +328,8 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantAddressCountry";
                 yield return "LeadApplicantAddressPostcode";
                 yield return "LeadApplicantORCID";
+                yield return "TeamContactFullName";
+                yield return "LeadApplicantFullName";
                 yield return "ProjectId";
                 yield return "CreatedAt";
                 yield return "FileStorageGroupId";
@@ -383,6 +393,8 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantAddressCountry";
                 yield return "LeadApplicantAddressPostcode";
                 yield return "LeadApplicantORCID";
+                yield return "TeamContactFullName";
+                yield return "LeadApplicantFullName";
                 yield return "ProjectId";
                 yield return "CreatedAt";
                 yield return "FileStorageGroupId";
@@ -472,6 +484,10 @@ namespace Webfuel.Domain
             entity.LeadApplicantAddressPostcode = entity.LeadApplicantAddressPostcode.Trim();
             entity.LeadApplicantORCID = entity.LeadApplicantORCID ?? String.Empty;
             entity.LeadApplicantORCID = entity.LeadApplicantORCID.Trim();
+            entity.TeamContactFullName = entity.TeamContactFullName ?? String.Empty;
+            entity.TeamContactFullName = entity.TeamContactFullName.Trim();
+            entity.LeadApplicantFullName = entity.LeadApplicantFullName ?? String.Empty;
+            entity.LeadApplicantFullName = entity.LeadApplicantFullName.Trim();
             Validator.ValidateAndThrow(entity);
         }
         
@@ -509,6 +525,8 @@ namespace Webfuel.Domain
         public const int LeadApplicantAddressCountry_MaxLength = 128;
         public const int LeadApplicantAddressPostcode_MaxLength = 128;
         public const int LeadApplicantORCID_MaxLength = 128;
+        public const int TeamContactFullName_MaxLength = 128;
+        public const int LeadApplicantFullName_MaxLength = 128;
         
         public static void TriageNote_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
@@ -733,6 +751,20 @@ namespace Webfuel.Domain
                 .NotNull()
                 .MaximumLength(LeadApplicantORCID_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
+        
+        public static void TeamContactFullName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(TeamContactFullName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void LeadApplicantFullName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(LeadApplicantFullName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
     }
     
     public partial class SupportRequestRepositoryValidator: AbstractValidator<SupportRequest>
@@ -771,6 +803,8 @@ namespace Webfuel.Domain
             RuleFor(x => x.LeadApplicantAddressCountry).Use(SupportRequestMetadata.LeadApplicantAddressCountry_ValidationRules);
             RuleFor(x => x.LeadApplicantAddressPostcode).Use(SupportRequestMetadata.LeadApplicantAddressPostcode_ValidationRules);
             RuleFor(x => x.LeadApplicantORCID).Use(SupportRequestMetadata.LeadApplicantORCID_ValidationRules);
+            RuleFor(x => x.TeamContactFullName).Use(SupportRequestMetadata.TeamContactFullName_ValidationRules);
+            RuleFor(x => x.LeadApplicantFullName).Use(SupportRequestMetadata.LeadApplicantFullName_ValidationRules);
             Validation();
         }
         

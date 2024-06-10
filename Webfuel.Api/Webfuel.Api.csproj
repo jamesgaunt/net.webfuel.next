@@ -7,14 +7,15 @@
     <UserSecretsId>b61c8db6-ad36-4617-a0c7-eee4e6441a20</UserSecretsId>
   </PropertyGroup>
 
+
   <ItemGroup>
     <ProjectReference Include="..\Webfuel.Domain.StaticData\Webfuel.Domain.StaticData.csproj" />
     <ProjectReference Include="..\Webfuel.Domain\Webfuel.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\dist\" />
     <Folder Include="_Generated\" />
   </ItemGroup>
+
 
 </Project>

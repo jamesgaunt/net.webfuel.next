@@ -47,7 +47,7 @@ namespace Webfuel.Domain
 
             {
                 var updatedProject = project.Copy();
-                await _projectEnrichmentService.CalculateSupportTotalMinutesForProject(updatedProject);
+                await _projectEnrichmentService.CalculateSupportMetricsForProject(updatedProject);
                 await _projectRepository.UpdateProject(original: project, updated: updatedProject);
             }
 

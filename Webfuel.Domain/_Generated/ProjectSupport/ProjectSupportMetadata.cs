@@ -159,7 +159,7 @@ namespace Webfuel.Domain
         
         public static ProjectSupportRepositoryValidator Validator { get; } = new ProjectSupportRepositoryValidator();
         
-        public const int Description_MaxLength = 4000;
+        public const int Description_MaxLength = 5000;
         public const int SupportRequestedCompletedNotes_MaxLength = 1024;
         
         public static void Description_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)

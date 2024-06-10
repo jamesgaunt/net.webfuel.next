@@ -17,7 +17,8 @@ export interface UpdateProjectSupportDialogData {
 export class UpdateProjectSupportDialog extends DialogBase<ProjectSupport, UpdateProjectSupportDialogData> {
   open(data: UpdateProjectSupportDialogData) {
     return this._open(UpdateProjectSupportDialogComponent, data, {
-      width: "1000px"
+      width: "1000px",
+      disableClose: true
     });
   }
 }

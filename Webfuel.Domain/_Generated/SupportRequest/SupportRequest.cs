@@ -135,6 +135,12 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.LeadApplicantORCID):
                         LeadApplicantORCID = (string)value!;
                         break;
+                    case nameof(SupportRequest.TeamContactFullName):
+                        TeamContactFullName = (string)value!;
+                        break;
+                    case nameof(SupportRequest.LeadApplicantFullName):
+                        LeadApplicantFullName = (string)value!;
+                        break;
                     case nameof(SupportRequest.ProjectId):
                         ProjectId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
@@ -242,6 +248,8 @@ namespace Webfuel.Domain
         public string LeadApplicantAddressCountry  { get; set; } = String.Empty;
         public string LeadApplicantAddressPostcode  { get; set; } = String.Empty;
         public string LeadApplicantORCID  { get; set; } = String.Empty;
+        public string TeamContactFullName  { get; set; } = String.Empty;
+        public string LeadApplicantFullName  { get; set; } = String.Empty;
         public Guid? ProjectId  { get; set; } = null;
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid FileStorageGroupId { get; set; }
@@ -302,6 +310,8 @@ namespace Webfuel.Domain
             entity.LeadApplicantAddressCountry = LeadApplicantAddressCountry;
             entity.LeadApplicantAddressPostcode = LeadApplicantAddressPostcode;
             entity.LeadApplicantORCID = LeadApplicantORCID;
+            entity.TeamContactFullName = TeamContactFullName;
+            entity.LeadApplicantFullName = LeadApplicantFullName;
             entity.ProjectId = ProjectId;
             entity.CreatedAt = CreatedAt;
             entity.FileStorageGroupId = FileStorageGroupId;

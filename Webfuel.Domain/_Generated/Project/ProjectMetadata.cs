@@ -179,11 +179,17 @@ namespace Webfuel.Domain
                     case nameof(Project.DiagnosticList):
                         result.Add(new SqlParameter(nameof(Project.DiagnosticList), entity.DiagnosticListJson));
                         break;
-                    case nameof(Project.SearchTeamContactFullName):
-                        result.Add(new SqlParameter(nameof(Project.SearchTeamContactFullName), entity.SearchTeamContactFullName));
+                    case nameof(Project.TeamContactFullName):
+                        result.Add(new SqlParameter(nameof(Project.TeamContactFullName), entity.TeamContactFullName));
+                        break;
+                    case nameof(Project.LeadApplicantFullName):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantFullName), entity.LeadApplicantFullName));
                         break;
                     case nameof(Project.SupportTotalMinutes):
                         result.Add(new SqlParameter(nameof(Project.SupportTotalMinutes), entity.SupportTotalMinutes));
+                        break;
+                    case nameof(Project.OpenSupportRequestTeamIds):
+                        result.Add(new SqlParameter(nameof(Project.OpenSupportRequestTeamIds), entity.OpenSupportRequestTeamIdsJson));
                         break;
                     case nameof(Project.CreatedAt):
                         result.Add(new SqlParameter(nameof(Project.CreatedAt), entity.CreatedAt));
@@ -333,8 +339,10 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantORCID";
                 yield return "DiagnosticCount";
                 yield return "DiagnosticList";
-                yield return "SearchTeamContactFullName";
+                yield return "TeamContactFullName";
+                yield return "LeadApplicantFullName";
                 yield return "SupportTotalMinutes";
+                yield return "OpenSupportRequestTeamIds";
                 yield return "CreatedAt";
                 yield return "FileStorageGroupId";
                 yield return "LeadAdviserUserId";
@@ -418,8 +426,10 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantORCID";
                 yield return "DiagnosticCount";
                 yield return "DiagnosticList";
-                yield return "SearchTeamContactFullName";
+                yield return "TeamContactFullName";
+                yield return "LeadApplicantFullName";
                 yield return "SupportTotalMinutes";
+                yield return "OpenSupportRequestTeamIds";
                 yield return "CreatedAt";
                 yield return "FileStorageGroupId";
                 yield return "LeadAdviserUserId";
@@ -502,8 +512,10 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantORCID";
                 yield return "DiagnosticCount";
                 yield return "DiagnosticList";
-                yield return "SearchTeamContactFullName";
+                yield return "TeamContactFullName";
+                yield return "LeadApplicantFullName";
                 yield return "SupportTotalMinutes";
+                yield return "OpenSupportRequestTeamIds";
                 yield return "CreatedAt";
                 yield return "FileStorageGroupId";
                 yield return "LeadAdviserUserId";
@@ -602,8 +614,10 @@ namespace Webfuel.Domain
             entity.LeadApplicantAddressPostcode = entity.LeadApplicantAddressPostcode.Trim();
             entity.LeadApplicantORCID = entity.LeadApplicantORCID ?? String.Empty;
             entity.LeadApplicantORCID = entity.LeadApplicantORCID.Trim();
-            entity.SearchTeamContactFullName = entity.SearchTeamContactFullName ?? String.Empty;
-            entity.SearchTeamContactFullName = entity.SearchTeamContactFullName.Trim();
+            entity.TeamContactFullName = entity.TeamContactFullName ?? String.Empty;
+            entity.TeamContactFullName = entity.TeamContactFullName.Trim();
+            entity.LeadApplicantFullName = entity.LeadApplicantFullName ?? String.Empty;
+            entity.LeadApplicantFullName = entity.LeadApplicantFullName.Trim();
             Validator.ValidateAndThrow(entity);
         }
         
@@ -643,7 +657,8 @@ namespace Webfuel.Domain
         public const int LeadApplicantAddressCountry_MaxLength = 128;
         public const int LeadApplicantAddressPostcode_MaxLength = 128;
         public const int LeadApplicantORCID_MaxLength = 128;
-        public const int SearchTeamContactFullName_MaxLength = 128;
+        public const int TeamContactFullName_MaxLength = 128;
+        public const int LeadApplicantFullName_MaxLength = 128;
         
         public static void PrefixedNumber_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
@@ -883,11 +898,18 @@ namespace Webfuel.Domain
                 .MaximumLength(LeadApplicantORCID_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
-        public static void SearchTeamContactFullName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        public static void TeamContactFullName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull()
-                .MaximumLength(SearchTeamContactFullName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+                .MaximumLength(TeamContactFullName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void LeadApplicantFullName_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(LeadApplicantFullName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
     }
     
@@ -929,7 +951,8 @@ namespace Webfuel.Domain
             RuleFor(x => x.LeadApplicantAddressCountry).Use(ProjectMetadata.LeadApplicantAddressCountry_ValidationRules);
             RuleFor(x => x.LeadApplicantAddressPostcode).Use(ProjectMetadata.LeadApplicantAddressPostcode_ValidationRules);
             RuleFor(x => x.LeadApplicantORCID).Use(ProjectMetadata.LeadApplicantORCID_ValidationRules);
-            RuleFor(x => x.SearchTeamContactFullName).Use(ProjectMetadata.SearchTeamContactFullName_ValidationRules);
+            RuleFor(x => x.TeamContactFullName).Use(ProjectMetadata.TeamContactFullName_ValidationRules);
+            RuleFor(x => x.LeadApplicantFullName).Use(ProjectMetadata.LeadApplicantFullName_ValidationRules);
             Validation();
         }
         

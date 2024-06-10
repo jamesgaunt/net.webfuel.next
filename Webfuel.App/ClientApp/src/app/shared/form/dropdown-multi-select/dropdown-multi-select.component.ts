@@ -30,13 +30,23 @@ export class DropDownMultiSelectComponent<TItem> extends DropDownBase<TItem> imp
 
   // Client Events
 
+  pickItemEvent(item: TItem, $event: MouseEvent) {
+    this.pickItem(item);
+    if (this.closeOnSelect == false) { 
+      $event.preventDefault();
+      this.popupRef?.updatePosition();
+    }
+  }
+
   pickItem(item: TItem) {
     if (this._isDisabled)
       return;
 
     var id = this.getId(item);
     this.pickItems([id], false);
-    this.closePopup();
+    if(this.closeOnSelect)
+      this.closePopup();
+
     this.doChangeCallback();
     this.cd.detectChanges();
   }

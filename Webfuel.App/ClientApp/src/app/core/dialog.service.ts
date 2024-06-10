@@ -6,6 +6,7 @@ import { Subscriber, TeardownLogic, noop } from "rxjs";
 
 export interface DialogSettings {
   width?: string;
+  disableClose?: boolean;
 }
 
 export class DialogHandle<TResult> extends Observable<TResult> {
@@ -32,7 +33,8 @@ export class DialogService {
     settings = settings || {};
     const dialogRef = this.dialog.open<TResult, TData, unknown>(component, {
       data: data,
-      width: settings.width || 'auto'
+      width: settings.width || 'auto',
+      disableClose: settings.disableClose || false,
     });
 
     return new DialogHandle<TResult>(dialogRef, (subscriber) => {

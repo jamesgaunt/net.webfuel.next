@@ -177,11 +177,17 @@ namespace Webfuel.Domain
                     case nameof(Project.DiagnosticList):
                         DiagnosticListJson = (string)value!;
                         break;
-                    case nameof(Project.SearchTeamContactFullName):
-                        SearchTeamContactFullName = (string)value!;
+                    case nameof(Project.TeamContactFullName):
+                        TeamContactFullName = (string)value!;
+                        break;
+                    case nameof(Project.LeadApplicantFullName):
+                        LeadApplicantFullName = (string)value!;
                         break;
                     case nameof(Project.SupportTotalMinutes):
                         SupportTotalMinutes = (int)value!;
+                        break;
+                    case nameof(Project.OpenSupportRequestTeamIds):
+                        OpenSupportRequestTeamIdsJson = (string)value!;
                         break;
                     case nameof(Project.CreatedAt):
                         CreatedAt = (DateTimeOffset)value!;
@@ -341,8 +347,21 @@ namespace Webfuel.Domain
             set { _DiagnosticListJson = value; _DiagnosticList = null; }
         }
         string _DiagnosticListJson = String.Empty;
-        public string SearchTeamContactFullName  { get; set; } = String.Empty;
+        public string TeamContactFullName  { get; set; } = String.Empty;
+        public string LeadApplicantFullName  { get; set; } = String.Empty;
         public int SupportTotalMinutes  { get; set; } = 0;
+        public List<Guid> OpenSupportRequestTeamIds
+        {
+            get { return _OpenSupportRequestTeamIds ?? (_OpenSupportRequestTeamIds = SafeJsonSerializer.Deserialize<List<Guid>>(_OpenSupportRequestTeamIdsJson)); }
+            set { _OpenSupportRequestTeamIds = value; }
+        }
+        List<Guid>? _OpenSupportRequestTeamIds = null;
+        internal string OpenSupportRequestTeamIdsJson
+        {
+            get { var result = _OpenSupportRequestTeamIds == null ? _OpenSupportRequestTeamIdsJson : (_OpenSupportRequestTeamIdsJson = SafeJsonSerializer.Serialize(_OpenSupportRequestTeamIds)); _OpenSupportRequestTeamIds = null; return result; }
+            set { _OpenSupportRequestTeamIdsJson = value; _OpenSupportRequestTeamIds = null; }
+        }
+        string _OpenSupportRequestTeamIdsJson = String.Empty;
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid FileStorageGroupId { get; set; }
         public Guid? LeadAdviserUserId { get; set; }
@@ -422,8 +441,10 @@ namespace Webfuel.Domain
             entity.LeadApplicantORCID = LeadApplicantORCID;
             entity.DiagnosticCount = DiagnosticCount;
             entity.DiagnosticListJson = DiagnosticListJson;
-            entity.SearchTeamContactFullName = SearchTeamContactFullName;
+            entity.TeamContactFullName = TeamContactFullName;
+            entity.LeadApplicantFullName = LeadApplicantFullName;
             entity.SupportTotalMinutes = SupportTotalMinutes;
+            entity.OpenSupportRequestTeamIdsJson = OpenSupportRequestTeamIdsJson;
             entity.CreatedAt = CreatedAt;
             entity.FileStorageGroupId = FileStorageGroupId;
             entity.LeadAdviserUserId = LeadAdviserUserId;

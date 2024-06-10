@@ -881,8 +881,10 @@ export interface Project {
     leadApplicantORCID: string;
     diagnosticCount: number;
     diagnosticList: Array<ProjectDiagnostic>;
-    searchTeamContactFullName: string;
+    teamContactFullName: string;
+    leadApplicantFullName: string;
     supportTotalMinutes: number;
+    openSupportRequestTeamIds: Array<string>;
     createdAt: string;
     fileStorageGroupId: string;
     leadAdviserUserId: string | null | null;
@@ -1143,9 +1145,18 @@ export interface UpdateProjectSupport {
     isPrePostAwardId: string;
 }
 
+export interface UpdateProjectSupportCompletion {
+    id: string;
+    supportRequestedCompletedNotes: string;
+}
+
 export interface CompleteProjectSupport {
     id: string;
     supportRequestedCompletedNotes: string;
+}
+
+export interface UncompleteProjectSupport {
+    id: string;
 }
 
 export interface QueryProjectSupport extends Query {
@@ -1347,6 +1358,8 @@ export interface SupportRequest {
     leadApplicantAddressCountry: string;
     leadApplicantAddressPostcode: string;
     leadApplicantORCID: string;
+    teamContactFullName: string;
+    leadApplicantFullName: string;
     projectId: string | null | null;
     createdAt: string;
     fileStorageGroupId: string;

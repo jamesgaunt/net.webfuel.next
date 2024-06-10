@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Webfuel.Domai;
 using Webfuel.Domain.Dashboard;
 
 namespace Webfuel.Domain
@@ -15,15 +16,18 @@ namespace Webfuel.Domain
     {
         private readonly IProjectRepository _projectRepository;
         private readonly IProjectSupportRepository _projectSupportRepository;
+        private readonly IProjectEnrichmentService _projectEnrichmentService;
         private readonly IIdentityAccessor _identityAccessor;
 
         public CompleteProjectSupportHandler(
             IProjectRepository projectRepository,
             IProjectSupportRepository projectSupportRepository,
+            IProjectEnrichmentService projectEnrichmentService,
             IIdentityAccessor identityAccessor)
         {
             _projectRepository = projectRepository;
             _projectSupportRepository = projectSupportRepository;
+            _projectEnrichmentService = projectEnrichmentService;
             _identityAccessor = identityAccessor;
         }
 
@@ -49,7 +53,11 @@ namespace Webfuel.Domain
 
             updated = await _projectSupportRepository.UpdateProjectSupport(updated: updated, original: existing);
 
-            // TODO: Enrich project if it would be impacted by this change (not currently the case)
+            {
+                var updatedProject = project.Copy();
+                await _projectEnrichmentService.CalculateSupportMetricsForProject(updatedProject);
+                await _projectRepository.UpdateProject(original: project, updated: updatedProject);
+            }
 
             return updated;
         }

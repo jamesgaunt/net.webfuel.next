@@ -2,7 +2,7 @@
 <ng-template #headTemplate><a *ngIf="canAdd" (click)="onAdd()" class="link is-success">add</a></ng-template>
 
 <ng-template #itemTemplate let-item>
-  <a *ngIf="canEdit" (click)="onEdit(item)" class="link is-primary">edit</a>
+  <a *ngIf="canEdit" (click)="onEdit(item)" class="link is-primary">view/edit</a>
   <span *ngIf="canDelete">
     &nbsp;
     <a (click)="onDelete(item)" class="link is-danger">delete</a>

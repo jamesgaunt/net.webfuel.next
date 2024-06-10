@@ -74,10 +74,6 @@ namespace Webfuel.Tools.ConsoleApp
                     await serviceProvider.GetRequiredService<IProjectSupportFix>().FixProjectSupports();
                     break;
 
-                case "migrate project team supports":
-                    await serviceProvider.GetRequiredService<IProjectTeamSupportMigrate>().MigrateProjectTeamSupports();
-                    break;
-
                 default:
                     Console.WriteLine("Unrecognised command");
                     break;

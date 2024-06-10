@@ -23,6 +23,7 @@ namespace Webfuel.Domain
         Task<List<ProjectSupport>> SelectProjectSupportByDate(DateOnly date);
         Task<List<ProjectSupport>> SelectProjectSupportByProjectId(Guid projectId);
         Task<int?> SumMinutesByProjectId(Guid projectId);
+        Task<List<ProjectSupport>> SelectOpenSupportRequestTeamIdsByProjectId(Guid projectId);
     }
     [Service(typeof(IProjectSupportRepository))]
     internal partial class ProjectSupportRepository: IProjectSupportRepository
@@ -143,6 +144,15 @@ namespace Webfuel.Domain
             };
             var result = await _connection.ExecuteScalar(sql, parameters);
             return result == DBNull.Value ? null : (int)result;
+        }
+        public async Task<List<ProjectSupport>> SelectOpenSupportRequestTeamIdsByProjectId(Guid projectId)
+        {
+            var sql = @"SELECT DISTINCT SupportRequestedTeamId FROM ProjectSupport WHERE ProjectId = @ProjectId AND SupportRequestedCompletedAt IS NULL AND SupportRequestedTeamId IS NOT NULL";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("ProjectId", projectId),
+            };
+            return await _connection.ExecuteReader<ProjectSupport, ProjectSupportMetadata>(sql, parameters);
         }
     }
 }

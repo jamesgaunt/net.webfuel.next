@@ -78,10 +78,17 @@
     <grid-column name="prefixedNumber" label="Number" />
     <grid-date-column name="dateOfRequest" />
     <grid-reference-column [dataSource]="staticDataCache.projectStatus" name="statusId" />
-    <grid-column name="searchTeamContactFullName" label="Contact Name" />
+    <grid-column name="teamContactFullName" label="Contact Name" />
     <grid-column name="leadAdviserUserId" label="Lead Adviser">
       <ng-template #itemTemplate let-item>
         {{ userService.formatUser(item.leadAdviserUserId) | async }}
+      </ng-template>
+    </grid-column>
+    <grid-column name="openTeamRequests">
+      <ng-template #itemTemplate let-item>
+        <span *ngFor="let id of item.openSupportRequestTeamIds; index as i">
+          <span *ngIf="i > 0">&nbsp;|&nbsp;</span>{{ (staticDataCache.supportTeam.get({ id: id }) | async)?.name }}
+        </span>
       </ng-template>
     </grid-column>
     <grid-column name="title" />

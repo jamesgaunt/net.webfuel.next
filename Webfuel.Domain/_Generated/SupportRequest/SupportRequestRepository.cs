@@ -80,12 +80,12 @@ namespace Webfuel.Domain
         }
         public async Task<List<SupportRequest>> SelectSupportRequest()
         {
-            var sql = @"SELECT * FROM [SupportRequest] ORDER BY Number DESC";
+            var sql = @"SELECT * FROM [SupportRequest] ORDER BY Id DESC";
             return await _connection.ExecuteReader<SupportRequest, SupportRequestMetadata>(sql);
         }
         public async Task<List<SupportRequest>> SelectSupportRequestWithPage(int skip, int take)
         {
-            var sql = @"SELECT * FROM [SupportRequest] ORDER BY Number DESC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+            var sql = @"SELECT * FROM [SupportRequest] ORDER BY Id DESC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Skip", skip),

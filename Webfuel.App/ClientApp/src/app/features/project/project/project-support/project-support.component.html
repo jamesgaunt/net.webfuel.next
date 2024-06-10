@@ -25,7 +25,7 @@
     </div>
   </div>
   <div *ngIf="items !== null && items.length > 0" class="project-support-list">
-    <div class="card" *ngFor="let projectSupport of items">
+    <div class="card" *ngFor="let projectSupport of items"  [ngClass]="{ 'is-warning': isOpen(projectSupport) }">
       <div class="card-title" style="font-weight: bold;">
         <span>{{ projectSupport.date | date: 'dd-MMM-yy' }}</span>
         <span *ngFor="let id of projectSupport.teamIds; index as i">&nbsp;|&nbsp;{{ (staticDataCache.supportTeam.get({ id: id }) | async)?.name }}</span>

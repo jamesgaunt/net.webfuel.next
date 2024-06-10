@@ -56,6 +56,10 @@ export class ProjectSupportComponent extends ProjectComponentBase {
     this.router.navigate(['project/project-list']);
   }
 
+  isOpen(item: ProjectSupport) {
+    return item.supportRequestedTeamId !== null && item.supportRequestedCompletedAt === null;
+  }
+
   // Project Support
 
   items: ProjectSupport[] | null = null;

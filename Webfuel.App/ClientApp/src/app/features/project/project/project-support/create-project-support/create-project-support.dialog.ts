@@ -17,7 +17,8 @@ export interface CreateProjectSupportDialogData {
 export class CreateProjectSupportDialog extends DialogBase<ProjectSupport, CreateProjectSupportDialogData> {
   open(data: CreateProjectSupportDialogData) {
     return this._open(CreateProjectSupportDialogComponent, data, {
-      width: "1000px"
+      width: "1000px",
+      disableClose: true
     });
   }
 }

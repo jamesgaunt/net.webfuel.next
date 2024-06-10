@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Schema>
-  <Entity Name="SupportRequest" OrderBy="-Number" Tags="ChangeLog">
+  <Entity Name="SupportRequest" OrderBy="-Id" Tags="ChangeLog">
     <Key Name="Id" Type="guid" />
 
     <Property Name="FileStorageGroupId" Type="FileStorageGroup" Tags="ChangeLog:Ignore" />
@@ -78,6 +78,13 @@
     <Property Name="LeadApplicantEthnicityId" Type="Ethnicity?" />
 
     <!-- ========== /Replicated to Project (Keep All Field Names Identical) ========== -->
+
+    <!-- ========== Calculated Properties ========== -->
+
+    <Property Name="TeamContactFullName" Type="meta:name" />
+    <Property Name="LeadApplicantFullName" Type="meta:name" />
+
+    <!-- ========== /Calculated Properties ========== -->
 
     <!-- Replicated from Project -->
     

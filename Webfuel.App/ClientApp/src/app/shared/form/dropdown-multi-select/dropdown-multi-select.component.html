@@ -15,7 +15,7 @@
     <i class="fas fa-times"></i>
   </div>
   <!-- Open Icon -->
-  <div *ngIf="!_isDisabled" class="icon is-secondary" (click)="stop($event); togglePopup();">
+  <div *ngIf="!_isDisabled" class="icon is-secondary" (click)="stop($event); togglePopup();" (mousedown)="stop($event)">
     <i class="fas fa-chevron-down"></i>
   </div>
 </div>
@@ -37,7 +37,7 @@
 <ng-template #popupTemplate>
   <div class="dropdown-popup">
     <div class="items" (scroll)="onDropDownScroll($event)">
-      <div *ngFor="let item of optionItems; index as i" class="dropdown-item" (mousedown)="pickItem(item)" [class.active]="i == activeIndex" [class.picked]="picked(item)" (mouseover)="setActiveIndex(i)" (mouseenter)="setActiveIndex(i)">
+      <div *ngFor="let item of optionItems; index as i" class="dropdown-item" (mousedown)="pickItemEvent(item, $event)" [class.active]="i == activeIndex" [class.picked]="picked(item)" (mouseover)="setActiveIndex(i)" (mouseenter)="setActiveIndex(i)">
         <ng-container *ngTemplateOutlet="_optionTemplate;context: { $implicit: item }"></ng-container>
       </div>
       <div *ngIf="optionItemsCallback && optionItems.length == 0" class="dropdown-loading">

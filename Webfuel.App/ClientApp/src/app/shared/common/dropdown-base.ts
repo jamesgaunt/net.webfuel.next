@@ -52,6 +52,9 @@ export abstract class DropDownBase<TItem> {
   @Input()
   enableSearch: boolean = false;
 
+  @Input()
+  closeOnSelect: boolean = true;
+
   @Output()
   filter = new EventEmitter<Query>();
 

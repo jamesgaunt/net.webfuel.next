@@ -203,13 +203,21 @@ namespace Webfuel.Domain
             {
                 sb.Append("Diagnostic List: ").Append(original.DiagnosticList).Append(" -> ").Append(updated.DiagnosticList).Append(delimiter);
             }
-            if(original.SearchTeamContactFullName != updated.SearchTeamContactFullName)
+            if(original.TeamContactFullName != updated.TeamContactFullName)
             {
-                sb.Append("Search Team Contact Full Name: ").Append(original.SearchTeamContactFullName).Append(" -> ").Append(updated.SearchTeamContactFullName).Append(delimiter);
+                sb.Append("Team Contact Full Name: ").Append(original.TeamContactFullName).Append(" -> ").Append(updated.TeamContactFullName).Append(delimiter);
+            }
+            if(original.LeadApplicantFullName != updated.LeadApplicantFullName)
+            {
+                sb.Append("Lead Applicant Full Name: ").Append(original.LeadApplicantFullName).Append(" -> ").Append(updated.LeadApplicantFullName).Append(delimiter);
             }
             if(original.SupportTotalMinutes != updated.SupportTotalMinutes)
             {
                 sb.Append("Support Total Minutes: ").Append(original.SupportTotalMinutes).Append(" -> ").Append(updated.SupportTotalMinutes).Append(delimiter);
+            }
+            if(original.OpenSupportRequestTeamIdsJson != updated.OpenSupportRequestTeamIdsJson)
+            {
+                sb.Append("Open Support Request Team: ").Append(original.OpenSupportRequestTeamIds).Append(" -> ").Append(updated.OpenSupportRequestTeamIds).Append(delimiter);
             }
             if(original.LeadAdviserUserId != updated.LeadAdviserUserId)
             {

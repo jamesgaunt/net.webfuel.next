@@ -11,7 +11,7 @@ namespace Webfuel.Domai
 {
     public interface IProjectEnrichmentService
     {
-        Task CalculateSupportTotalMinutesForProject(Project project);
+        Task CalculateSupportMetricsForProject(Project project);
 
         Task EnrichProject(Project project);
     }
@@ -33,10 +33,17 @@ namespace Webfuel.Domai
             _staticDataService = staticDataService;
         }
 
-        public async Task CalculateSupportTotalMinutesForProject(Project project)
+        public async Task CalculateSupportMetricsForProject(Project project)
         {
-            var total = await _projectSupportRepository.SumMinutesByProjectId(project.Id);
-            project.SupportTotalMinutes = total ?? 0;
+            project.SupportTotalMinutes = (await _projectSupportRepository.SumMinutesByProjectId(project.Id)) ?? 0;
+
+            var openSupportRequestTeams = await _projectSupportRepository.SelectOpenSupportRequestTeamIdsByProjectId(project.Id);
+            project.OpenSupportRequestTeamIds.Clear();
+            foreach (var openTeam in openSupportRequestTeams.Where(p => p != null && p.SupportRequestedTeamId != null))
+            { 
+                project.OpenSupportRequestTeamIds.Add(openTeam.SupportRequestedTeamId!.Value);
+            }
+
             await EnrichProject(project);
         }
 
@@ -56,15 +63,8 @@ namespace Webfuel.Domai
             var status = staticData.ProjectStatus.First(p => p.Id == project.StatusId);
             project.Locked = status.Locked;
             project.Discarded = status.Discarded;
-
-            // SearchTeamContactFullName
-            {
-                var searchTeamContactFullName = $"{project.TeamContactTitle} {project.TeamContactFirstName} {project.TeamContactLastName}";
-                if (project.SearchTeamContactFullName != searchTeamContactFullName)
-                {
-                    project.SearchTeamContactFullName = searchTeamContactFullName;
-                }
-            }
+            project.TeamContactFullName = $"{project.TeamContactTitle} {project.TeamContactFirstName} {project.TeamContactLastName}";
+            project.LeadApplicantFullName = $"{project.LeadApplicantTitle} {project.LeadApplicantFirstName} {project.LeadApplicantLastName}";
         }
 
         void CalculateDiagnostics(Project project, IStaticDataModel staticData)
@@ -79,7 +79,6 @@ namespace Webfuel.Domai
             }
 
             var today = DateOnly.FromDateTime(DateTime.Now);
-
           
             project.DiagnosticList = result;
             project.DiagnosticCount = result.Count;

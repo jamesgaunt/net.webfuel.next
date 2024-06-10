@@ -62,6 +62,7 @@ namespace Webfuel.Domain
                     {
                         a.Add(Guid.Parse("b9dc13e6-c221-4886-8243-7618d5fdffbf"), "Project Number", p => p.Number);
                         a.Add(Guid.Parse("810b1424-5d44-40d4-b84f-438636a1c0e0"), "Project Title", p => p.Title);
+                        a.Add(Guid.Parse("3d18e615-0e65-4492-bdb3-6ff05ab6030a"), "Project Date of Request", p => p.DateOfRequest);
 
                         a.Map<ProjectStatus>(Guid.Parse("0bfd322c-e155-410f-937a-52c547d1949f"), "Project Status", p => p.StatusId);
                         a.Map<User>(Guid.Parse("7820e23c-9b11-4539-8477-552814e351da"), "Project Lead Adviser", p => p.LeadAdviserUserId);

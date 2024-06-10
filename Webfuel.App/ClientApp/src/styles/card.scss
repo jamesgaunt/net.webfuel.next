@@ -7,6 +7,13 @@
   background-color: var(--palette-body-background-alt);
   color: var(--palette-body-text);
 
+  @each $p in $paletteAction {
+    &.is-#{$p} {
+      background-color: color-mix(in hsl, var(--palette-#{$p}-background) 15%, #FFF) !important;
+      border-color: var(--palette-#{$p}-background) !important;
+    }
+  }
+
   &.header {
     background-color: transparent;
     color: var(--palette-body-text);

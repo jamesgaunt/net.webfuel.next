@@ -99,6 +99,9 @@ namespace Webfuel.Domain
             supportRequest.DateOfRequest = DateOnly.FromDateTime(DateTime.Now);
             supportRequest.CreatedAt = DateTimeOffset.UtcNow;
 
+            supportRequest.TeamContactFullName = $"{supportRequest.TeamContactTitle} {supportRequest.TeamContactFirstName} {supportRequest.TeamContactLastName}";
+            supportRequest.LeadApplicantFullName = $"{supportRequest.LeadApplicantTitle} {supportRequest.LeadApplicantFirstName} {supportRequest.LeadApplicantLastName}";
+
             // File Storage Setup
 
             if (request.FileStorageGroupId.HasValue)

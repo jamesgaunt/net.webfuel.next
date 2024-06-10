@@ -163,6 +163,14 @@ namespace Webfuel.Domain
             {
                 sb.Append("Lead Applicant O R C I D: ").Append(original.LeadApplicantORCID).Append(" -> ").Append(updated.LeadApplicantORCID).Append(delimiter);
             }
+            if(original.TeamContactFullName != updated.TeamContactFullName)
+            {
+                sb.Append("Team Contact Full Name: ").Append(original.TeamContactFullName).Append(" -> ").Append(updated.TeamContactFullName).Append(delimiter);
+            }
+            if(original.LeadApplicantFullName != updated.LeadApplicantFullName)
+            {
+                sb.Append("Lead Applicant Full Name: ").Append(original.LeadApplicantFullName).Append(" -> ").Append(updated.LeadApplicantFullName).Append(delimiter);
+            }
             if(original.StatusId != updated.StatusId)
             {
                 var o = (await _staticDataService.GetSupportRequestStatus(original.StatusId))?.Name ?? "UNKNOWN";

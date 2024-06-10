@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { CreateProjectSupport, ProjectSupport, UpdateProjectSupport, CompleteProjectSupport, QueryProjectSupport, QueryResult } from './api.types';
+import { CreateProjectSupport, ProjectSupport, UpdateProjectSupport, UpdateProjectSupportCompletion, CompleteProjectSupport, UncompleteProjectSupport, QueryProjectSupport, QueryResult } from './api.types';
 
 @Injectable()
 export class ProjectSupportApi implements IDataSource<ProjectSupport, QueryProjectSupport, CreateProjectSupport, UpdateProjectSupport> {
@@ -17,8 +17,16 @@ export class ProjectSupportApi implements IDataSource<ProjectSupport, QueryProje
         return this.apiService.request<UpdateProjectSupport, ProjectSupport>("PUT", "api/project-support", body, options).pipe(tap(_ => this.changed.emit()));
     }
     
+    public updateCompletion (body: UpdateProjectSupportCompletion, options?: ApiOptions): Observable<ProjectSupport> {
+        return this.apiService.request<UpdateProjectSupportCompletion, ProjectSupport>("PUT", "api/project-support/completion", body, options);
+    }
+    
     public complete (body: CompleteProjectSupport, options?: ApiOptions): Observable<ProjectSupport> {
         return this.apiService.request<CompleteProjectSupport, ProjectSupport>("PUT", "api/project-support/complete", body, options);
+    }
+    
+    public uncomplete (body: UncompleteProjectSupport, options?: ApiOptions): Observable<ProjectSupport> {
+        return this.apiService.request<UncompleteProjectSupport, ProjectSupport>("PUT", "api/project-support/uncomplete", body, options);
     }
     
     public delete (params: { id: string }, options?: ApiOptions): Observable<any> {
