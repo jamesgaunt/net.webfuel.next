@@ -68,7 +68,7 @@ export class TriageSupportRequestDialogComponent extends DialogComponentBase<Sup
     if (this.formService.hasErrors(this.form))
       return;
 
-    this.supportRequestApi.updateStatus(this.form.getRawValue()).subscribe((result) => {
+    this.supportRequestApi.triage(this.form.getRawValue()).subscribe((result) => {
       this._closeDialog(result);
       if (result.projectId != null)
         this.router.navigateByUrl(`/project/project-item/${result.projectId}`);

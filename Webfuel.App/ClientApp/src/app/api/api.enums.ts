@@ -241,4 +241,9 @@ export enum WillStudyUseCTUEnum {
     YesInternalToThisRSS = "fc4ddc3d-9b1c-4cb6-970c-94c122ef2fdc",
 }
 
+export enum ProjectDiagnosticSeverity {
+    Error = 10,
+    Warning = 20,
+}
+
 

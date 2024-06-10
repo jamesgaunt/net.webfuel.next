@@ -23,12 +23,6 @@ namespace Webfuel.Domain
                 {
                     case nameof(SupportRequest.Id):
                         break;
-                    case nameof(SupportRequest.Number):
-                        result.Add(new SqlParameter(nameof(SupportRequest.Number), entity.Number));
-                        break;
-                    case nameof(SupportRequest.PrefixedNumber):
-                        result.Add(new SqlParameter(nameof(SupportRequest.PrefixedNumber), entity.PrefixedNumber));
-                        break;
                     case nameof(SupportRequest.TriageNote):
                         result.Add(new SqlParameter(nameof(SupportRequest.TriageNote), entity.TriageNote));
                         break;
@@ -224,8 +218,6 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Id";
-                yield return "Number";
-                yield return "PrefixedNumber";
                 yield return "TriageNote";
                 yield return "IsThisRequestLinkedToAnExistingProject";
                 yield return "DateOfRequest";
@@ -290,8 +282,6 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Id";
-                yield return "Number";
-                yield return "PrefixedNumber";
                 yield return "TriageNote";
                 yield return "IsThisRequestLinkedToAnExistingProject";
                 yield return "DateOfRequest";
@@ -355,8 +345,6 @@ namespace Webfuel.Domain
         {
             get
             {
-                yield return "Number";
-                yield return "PrefixedNumber";
                 yield return "TriageNote";
                 yield return "IsThisRequestLinkedToAnExistingProject";
                 yield return "DateOfRequest";
@@ -420,8 +408,6 @@ namespace Webfuel.Domain
         
         public static void Validate(SupportRequest entity)
         {
-            entity.PrefixedNumber = entity.PrefixedNumber ?? String.Empty;
-            entity.PrefixedNumber = entity.PrefixedNumber.Trim();
             entity.TriageNote = entity.TriageNote ?? String.Empty;
             entity.TriageNote = entity.TriageNote.Trim();
             entity.Title = entity.Title ?? String.Empty;
@@ -491,7 +477,6 @@ namespace Webfuel.Domain
         
         public static SupportRequestRepositoryValidator Validator { get; } = new SupportRequestRepositoryValidator();
         
-        public const int PrefixedNumber_MaxLength = 128;
         public const int TriageNote_MaxLength = 1024;
         public const int Title_MaxLength = 1000;
         public const int ApplicationStageFreeText_MaxLength = 128;
@@ -524,13 +509,6 @@ namespace Webfuel.Domain
         public const int LeadApplicantAddressCountry_MaxLength = 128;
         public const int LeadApplicantAddressPostcode_MaxLength = 128;
         public const int LeadApplicantORCID_MaxLength = 128;
-        
-        public static void PrefixedNumber_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
-        {
-            ruleBuilder
-                .NotNull()
-                .MaximumLength(PrefixedNumber_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
-        }
         
         public static void TriageNote_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
@@ -761,7 +739,6 @@ namespace Webfuel.Domain
     {
         public SupportRequestRepositoryValidator()
         {
-            RuleFor(x => x.PrefixedNumber).Use(SupportRequestMetadata.PrefixedNumber_ValidationRules);
             RuleFor(x => x.TriageNote).Use(SupportRequestMetadata.TriageNote_ValidationRules);
             RuleFor(x => x.Title).Use(SupportRequestMetadata.Title_ValidationRules);
             RuleFor(x => x.ApplicationStageFreeText).Use(SupportRequestMetadata.ApplicationStageFreeText_ValidationRules);

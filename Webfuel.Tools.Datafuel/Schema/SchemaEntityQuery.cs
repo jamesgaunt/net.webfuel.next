@@ -14,6 +14,7 @@ namespace Webfuel.Tools.Datafuel
             Entity = entity;
 
             Name = element.StringProperty("Name") ?? throw new NotImplementedException();
+            ReturnType = element.StringProperty("ReturnType") ?? String.Empty;
 
             if (Name.StartsWith("Select") || Name.StartsWith("Pick"))
                 Shape = QueryShape.Select;
@@ -31,6 +32,8 @@ namespace Webfuel.Tools.Datafuel
         public SchemaEntity Entity { get; private set; }
 
         public string Name { get; private set; }
+
+        public string ReturnType { get; private set; }
 
         public QueryShape Shape { get; private set; } = QueryShape.Unknown;
 
@@ -61,8 +64,22 @@ namespace Webfuel.Tools.Datafuel
                 case QueryShape.Count:
                     return "int";
                 default:
-                    return "object";
+                    if (String.IsNullOrEmpty(ReturnType))
+                        return "object?";
+                    return ReturnType;
             }
+        }
+
+        public string MapReturnType()
+        {
+            if (String.IsNullOrEmpty(ReturnType))
+                return "result";
+
+            var primative = Primative.Build(Schema, ReturnType);
+
+            if (primative.Nullable)
+                return $"result == DBNull.Value ? null : ({primative.CLRType})result";
+            return $"({primative.CLRType})result";
         }
     }
 

@@ -19,18 +19,15 @@ namespace Webfuel.Tools.ConsoleApp
     [Service(typeof(IProjectFix))]
     internal class ProjectFix: IProjectFix
     {
-        private readonly IEnrichProjectService _enrichProjectService;
         private readonly IProjectRepository _projectRepository;
         private readonly IStaticDataService _staticDataService;
         private readonly IUserSortService _userSortService;
 
         public ProjectFix(
-            IEnrichProjectService enrichProjectService,
             IProjectRepository projectRepository, 
             IStaticDataService staticDataService,
             IUserSortService userSortService)
         {
-            _enrichProjectService = enrichProjectService;
             _projectRepository = projectRepository;
             _staticDataService = staticDataService;
             _userSortService = userSortService;
@@ -42,7 +39,7 @@ namespace Webfuel.Tools.ConsoleApp
 
             foreach(var project in projects)
             {
-                await _enrichProjectService.EnrichProject(project);
+               // await _enrichProjectService.EnrichProject(project);
             }
         }
     }

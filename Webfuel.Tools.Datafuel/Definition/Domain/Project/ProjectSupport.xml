@@ -19,6 +19,9 @@
     <Property Name="SupportRequestedCompletedAt" Type="DateTime?" />
     <Property Name="SupportRequestedCompletedByUserId" Type="User?" />
     <Property Name="SupportRequestedCompletedNotes" Type="meta:description" />
+
+    <!-- Calculated  -->
+    <Property Name="CalculatedMinutes" Type="int" />
     
     <Index Unique="false">
       <Member Name="ProjectId" />
@@ -32,5 +35,14 @@
     <Index Unique="false">
       <Member Name="SupportRequestedCompletedAt" />
     </Index>
+
+    <Query Name="SumMinutesByProjectId" ReturnType="int?">
+      <Parameter Name="ProjectId" Type="Guid" />
+      <Sql>
+        <![CDATA[
+        SELECT SUM(CalculatedMinutes) FROM ProjectSupport WHERE ProjectId = @ProjectId
+        ]]>
+      </Sql>
+    </Query>
   </Entity>
 </Schema>

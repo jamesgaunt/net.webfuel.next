@@ -22,6 +22,7 @@ namespace Webfuel.Domain
         Task<List<ProjectSupport>> SelectProjectSupportBySupportRequestedTeamId(Guid? supportRequestedTeamId);
         Task<List<ProjectSupport>> SelectProjectSupportByDate(DateOnly date);
         Task<List<ProjectSupport>> SelectProjectSupportByProjectId(Guid projectId);
+        Task<int?> SumMinutesByProjectId(Guid projectId);
     }
     [Service(typeof(IProjectSupportRepository))]
     internal partial class ProjectSupportRepository: IProjectSupportRepository
@@ -132,6 +133,16 @@ namespace Webfuel.Domain
                 new SqlParameter("@ProjectId", projectId),
             };
             return await _connection.ExecuteReader<ProjectSupport, ProjectSupportMetadata>(sql, parameters);
+        }
+        public async Task<int?> SumMinutesByProjectId(Guid projectId)
+        {
+            var sql = @"SELECT SUM(CalculatedMinutes) FROM ProjectSupport WHERE ProjectId = @ProjectId";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("ProjectId", projectId),
+            };
+            var result = await _connection.ExecuteScalar(sql, parameters);
+            return result == DBNull.Value ? null : (int)result;
         }
     }
 }

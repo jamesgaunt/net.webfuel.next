@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { SupportRequest, CreateSupportRequest, UpdateSupportRequest, UpdateSupportRequestResearcher, UpdateSupportRequestStatus, QuerySupportRequest, QueryResult, ReportStep } from './api.types';
+import { SupportRequest, CreateSupportRequest, UpdateSupportRequest, UpdateSupportRequestResearcher, TriageSupportRequest, UnlockSupportRequest, QuerySupportRequest, QueryResult, ReportStep } from './api.types';
 
 @Injectable()
 export class SupportRequestApi implements IDataSource<SupportRequest, QuerySupportRequest, any, UpdateSupportRequest> {
@@ -25,8 +25,12 @@ export class SupportRequestApi implements IDataSource<SupportRequest, QuerySuppo
         return this.apiService.request<UpdateSupportRequestResearcher, SupportRequest>("PUT", "api/support-request/researcher", body, options);
     }
     
-    public updateStatus (body: UpdateSupportRequestStatus, options?: ApiOptions): Observable<SupportRequest> {
-        return this.apiService.request<UpdateSupportRequestStatus, SupportRequest>("POST", "api/support-request/status", body, options);
+    public triage (body: TriageSupportRequest, options?: ApiOptions): Observable<SupportRequest> {
+        return this.apiService.request<TriageSupportRequest, SupportRequest>("PUT", "api/support-request/triage", body, options);
+    }
+    
+    public unlock (body: UnlockSupportRequest, options?: ApiOptions): Observable<SupportRequest> {
+        return this.apiService.request<UnlockSupportRequest, SupportRequest>("PUT", "api/support-request/unlock", body, options);
     }
     
     public delete (params: { id: string }, options?: ApiOptions): Observable<any> {

@@ -11,10 +11,6 @@ namespace Webfuel.Domain
             var staticData = await _staticDataService.GetStaticData();
             var sb = new StringBuilder();
             
-            if(original.PrefixedNumber != updated.PrefixedNumber)
-            {
-                sb.Append("Prefixed Number: ").Append(original.PrefixedNumber).Append(" -> ").Append(updated.PrefixedNumber).Append(delimiter);
-            }
             if(original.TriageNote != updated.TriageNote)
             {
                 sb.Append("Triage Note: ").Append(original.TriageNote).Append(" -> ").Append(updated.TriageNote).Append(delimiter);

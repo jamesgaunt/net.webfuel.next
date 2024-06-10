@@ -210,7 +210,8 @@ namespace Webfuel.Tools.Datafuel
                         sb.WriteLine($"return (int)((await _connection.ExecuteScalar(sql{(query.Parameters.Count > 0 ? ", parameters" : "")}))!);");
                         break;
                     case QueryShape.Unknown:
-                        sb.WriteLine($"return await _connection.ExecuteScalar(sql{(query.Parameters.Count > 0 ? ", parameters" : "")});");
+                        sb.WriteLine($"var result = await _connection.ExecuteScalar(sql{(query.Parameters.Count > 0 ? ", parameters" : "")});");
+                        sb.WriteLine($"return {query.MapReturnType()};");
                         break;
                 }
             }

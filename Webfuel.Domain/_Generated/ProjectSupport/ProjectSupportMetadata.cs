@@ -47,6 +47,9 @@ namespace Webfuel.Domain
                     case nameof(ProjectSupport.SupportRequestedCompletedNotes):
                         result.Add(new SqlParameter(nameof(ProjectSupport.SupportRequestedCompletedNotes), entity.SupportRequestedCompletedNotes));
                         break;
+                    case nameof(ProjectSupport.CalculatedMinutes):
+                        result.Add(new SqlParameter(nameof(ProjectSupport.CalculatedMinutes), entity.CalculatedMinutes));
+                        break;
                     case nameof(ProjectSupport.ProjectId):
                         result.Add(new SqlParameter(nameof(ProjectSupport.ProjectId), entity.ProjectId));
                         break;
@@ -94,6 +97,7 @@ namespace Webfuel.Domain
                 yield return "SupportProvidedIds";
                 yield return "SupportRequestedCompletedAt";
                 yield return "SupportRequestedCompletedNotes";
+                yield return "CalculatedMinutes";
                 yield return "ProjectId";
                 yield return "IsPrePostAwardId";
                 yield return "SupportRequestedTeamId";
@@ -114,6 +118,7 @@ namespace Webfuel.Domain
                 yield return "SupportProvidedIds";
                 yield return "SupportRequestedCompletedAt";
                 yield return "SupportRequestedCompletedNotes";
+                yield return "CalculatedMinutes";
                 yield return "ProjectId";
                 yield return "IsPrePostAwardId";
                 yield return "SupportRequestedTeamId";
@@ -133,6 +138,7 @@ namespace Webfuel.Domain
                 yield return "SupportProvidedIds";
                 yield return "SupportRequestedCompletedAt";
                 yield return "SupportRequestedCompletedNotes";
+                yield return "CalculatedMinutes";
                 yield return "ProjectId";
                 yield return "IsPrePostAwardId";
                 yield return "SupportRequestedTeamId";

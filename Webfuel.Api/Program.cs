@@ -50,10 +50,12 @@ namespace Webfuel.Api
                         {
                             policy.WithOrigins(
                                 "https://www.webfuel.com",
+
                                 "http://localhost:4200",
                                 "https://localhost:44426",
-                                "https://db.rssimperialpartners.org.uk",
-                                "https://webfuel-rss-icl.azurewebsites.net");
+                                "https://localhost:7076",
+
+                                "https://db.rssimperialpartners.org.uk");
 
                             policy.WithHeaders(
                                 "content-type",
@@ -65,7 +67,9 @@ namespace Webfuel.Api
 
                 var app = builder.Build();
 
+                app.UseMiddleware<AngularMiddleware>();
                 app.UseStaticFiles();
+
                 app.UseSerilogRequestLogging();
                 app.UseMiddleware<ExceptionMiddleware>();
                 app.UseMiddleware<IdentityMiddleware>();

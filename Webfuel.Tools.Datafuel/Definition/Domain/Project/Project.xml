@@ -9,6 +9,7 @@
     
     <Property Name="SupportRequestId" Type="Guid?" Tags="ChangeLog:Ignore" />
     <Property Name="ClosureDate" Type="Date?" />
+    <Property Name="ClosureAttempted" Type="boolean" />
 
     <!-- Ownership -->
     <Property Name="LeadAdviserUserId" Type="User?" />
@@ -104,8 +105,13 @@
 
     <!-- ========== Calculated Properties ========== -->
 
-    <!-- Denormalised Search Fields -->
+    <!-- Diagnostics -->
+    <Property Name="DiagnosticCount" Type="int" />
+    <Property Name="DiagnosticList" Type="Json:List{ProjectDiagnostic}" />
+
+    <!-- Calculated -->
     <Property Name="SearchTeamContactFullName" Type="meta:name" />
+    <Property Name="SupportTotalMinutes" Type="int" />    
 
     <!-- ========== /Calculated Properties ========== -->
     

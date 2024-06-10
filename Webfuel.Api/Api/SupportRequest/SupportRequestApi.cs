@@ -28,7 +28,10 @@ namespace Webfuel.App
             app.MapPut("api/support-request/researcher", UpdateResearcher)
                 .RequireClaim(c => c.CanTriageSupportRequests);
 
-            app.MapPost("api/support-request/status", UpdateStatus)
+            app.MapPut("api/support-request/triage", Triage)
+                .RequireClaim(c => c.CanTriageSupportRequests);
+
+            app.MapPut("api/support-request/unlock", Unlock)
                 .RequireClaim(c => c.CanTriageSupportRequests);
 
             app.MapDelete("api/support-request/{id:guid}", Delete)
@@ -93,7 +96,12 @@ namespace Webfuel.App
             return mediator.Send(command);
         }
 
-        public static Task<SupportRequest> UpdateStatus([FromBody] UpdateSupportRequestStatus command, IMediator mediator)
+        public static Task<SupportRequest> Triage([FromBody] TriageSupportRequest command, IMediator mediator)
+        {
+            return mediator.Send(command);
+        }
+
+        public static Task<SupportRequest> Unlock([FromBody] UnlockSupportRequest command, IMediator mediator)
         {
             return mediator.Send(command);
         }

@@ -35,6 +35,9 @@ namespace Webfuel.Domain
                     case nameof(Project.ClosureDate):
                         result.Add(new SqlParameter(nameof(Project.ClosureDate), entity.ClosureDate ?? (object?)DBNull.Value));
                         break;
+                    case nameof(Project.ClosureAttempted):
+                        result.Add(new SqlParameter(nameof(Project.ClosureAttempted), entity.ClosureAttempted));
+                        break;
                     case nameof(Project.SubmittedFundingStreamFreeText):
                         result.Add(new SqlParameter(nameof(Project.SubmittedFundingStreamFreeText), entity.SubmittedFundingStreamFreeText));
                         break;
@@ -170,8 +173,17 @@ namespace Webfuel.Domain
                     case nameof(Project.LeadApplicantORCID):
                         result.Add(new SqlParameter(nameof(Project.LeadApplicantORCID), entity.LeadApplicantORCID));
                         break;
+                    case nameof(Project.DiagnosticCount):
+                        result.Add(new SqlParameter(nameof(Project.DiagnosticCount), entity.DiagnosticCount));
+                        break;
+                    case nameof(Project.DiagnosticList):
+                        result.Add(new SqlParameter(nameof(Project.DiagnosticList), entity.DiagnosticListJson));
+                        break;
                     case nameof(Project.SearchTeamContactFullName):
                         result.Add(new SqlParameter(nameof(Project.SearchTeamContactFullName), entity.SearchTeamContactFullName));
+                        break;
+                    case nameof(Project.SupportTotalMinutes):
+                        result.Add(new SqlParameter(nameof(Project.SupportTotalMinutes), entity.SupportTotalMinutes));
                         break;
                     case nameof(Project.CreatedAt):
                         result.Add(new SqlParameter(nameof(Project.CreatedAt), entity.CreatedAt));
@@ -273,6 +285,7 @@ namespace Webfuel.Domain
                 yield return "PrefixedNumber";
                 yield return "SupportRequestId";
                 yield return "ClosureDate";
+                yield return "ClosureAttempted";
                 yield return "SubmittedFundingStreamFreeText";
                 yield return "SubmittedFundingStreamName";
                 yield return "Locked";
@@ -318,7 +331,10 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantAddressCountry";
                 yield return "LeadApplicantAddressPostcode";
                 yield return "LeadApplicantORCID";
+                yield return "DiagnosticCount";
+                yield return "DiagnosticList";
                 yield return "SearchTeamContactFullName";
+                yield return "SupportTotalMinutes";
                 yield return "CreatedAt";
                 yield return "FileStorageGroupId";
                 yield return "LeadAdviserUserId";
@@ -354,6 +370,7 @@ namespace Webfuel.Domain
                 yield return "PrefixedNumber";
                 yield return "SupportRequestId";
                 yield return "ClosureDate";
+                yield return "ClosureAttempted";
                 yield return "SubmittedFundingStreamFreeText";
                 yield return "SubmittedFundingStreamName";
                 yield return "Locked";
@@ -399,7 +416,10 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantAddressCountry";
                 yield return "LeadApplicantAddressPostcode";
                 yield return "LeadApplicantORCID";
+                yield return "DiagnosticCount";
+                yield return "DiagnosticList";
                 yield return "SearchTeamContactFullName";
+                yield return "SupportTotalMinutes";
                 yield return "CreatedAt";
                 yield return "FileStorageGroupId";
                 yield return "LeadAdviserUserId";
@@ -434,6 +454,7 @@ namespace Webfuel.Domain
                 yield return "PrefixedNumber";
                 yield return "SupportRequestId";
                 yield return "ClosureDate";
+                yield return "ClosureAttempted";
                 yield return "SubmittedFundingStreamFreeText";
                 yield return "SubmittedFundingStreamName";
                 yield return "Locked";
@@ -479,7 +500,10 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantAddressCountry";
                 yield return "LeadApplicantAddressPostcode";
                 yield return "LeadApplicantORCID";
+                yield return "DiagnosticCount";
+                yield return "DiagnosticList";
                 yield return "SearchTeamContactFullName";
+                yield return "SupportTotalMinutes";
                 yield return "CreatedAt";
                 yield return "FileStorageGroupId";
                 yield return "LeadAdviserUserId";

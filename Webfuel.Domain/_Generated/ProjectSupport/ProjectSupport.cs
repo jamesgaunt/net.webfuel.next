@@ -45,6 +45,9 @@ namespace Webfuel.Domain
                     case nameof(ProjectSupport.SupportRequestedCompletedNotes):
                         SupportRequestedCompletedNotes = (string)value!;
                         break;
+                    case nameof(ProjectSupport.CalculatedMinutes):
+                        CalculatedMinutes = (int)value!;
+                        break;
                     case nameof(ProjectSupport.ProjectId):
                         ProjectId = (Guid)value!;
                         break;
@@ -102,6 +105,7 @@ namespace Webfuel.Domain
         string _SupportProvidedIdsJson = String.Empty;
         public DateTimeOffset? SupportRequestedCompletedAt  { get; set; } = null;
         public string SupportRequestedCompletedNotes  { get; set; } = String.Empty;
+        public int CalculatedMinutes  { get; set; } = 0;
         public Guid ProjectId { get; set; }
         public Guid IsPrePostAwardId { get; set; } = Guid.Parse("d8c2fe26-3a35-4a49-b61d-b5abc41611f6");
         public Guid? SupportRequestedTeamId { get; set; }
@@ -118,6 +122,7 @@ namespace Webfuel.Domain
             entity.SupportProvidedIdsJson = SupportProvidedIdsJson;
             entity.SupportRequestedCompletedAt = SupportRequestedCompletedAt;
             entity.SupportRequestedCompletedNotes = SupportRequestedCompletedNotes;
+            entity.CalculatedMinutes = CalculatedMinutes;
             entity.ProjectId = ProjectId;
             entity.IsPrePostAwardId = IsPrePostAwardId;
             entity.SupportRequestedTeamId = SupportRequestedTeamId;

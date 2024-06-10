@@ -21,12 +21,6 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.Id):
                         Id = (Guid)value!;
                         break;
-                    case nameof(SupportRequest.Number):
-                        Number = (int)value!;
-                        break;
-                    case nameof(SupportRequest.PrefixedNumber):
-                        PrefixedNumber = (string)value!;
-                        break;
                     case nameof(SupportRequest.TriageNote):
                         TriageNote = (string)value!;
                         break;
@@ -199,8 +193,6 @@ namespace Webfuel.Domain
             }
         }
         public Guid Id  { get; set; } = Guid.Empty;
-        public int Number  { get; set; } = 0;
-        public string PrefixedNumber  { get; set; } = String.Empty;
         public string TriageNote  { get; set; } = String.Empty;
         public bool IsThisRequestLinkedToAnExistingProject  { get; set; } = false;
         public DateOnly DateOfRequest  { get; set; } = new DateOnly(1900, 1, 1);
@@ -272,8 +264,6 @@ namespace Webfuel.Domain
         {
             var entity = new SupportRequest();
             entity.Id = Id;
-            entity.Number = Number;
-            entity.PrefixedNumber = PrefixedNumber;
             entity.TriageNote = TriageNote;
             entity.IsThisRequestLinkedToAnExistingProject = IsThisRequestLinkedToAnExistingProject;
             entity.DateOfRequest = DateOfRequest;

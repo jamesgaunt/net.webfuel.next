@@ -19,6 +19,10 @@ namespace Webfuel.Domain
             {
                 sb.Append("Closure Date: ").Append(original.ClosureDate?.ToString() ?? "NULL").Append(" -> ").Append(updated.ClosureDate?.ToString() ?? "NULL").Append(delimiter);
             }
+            if(original.ClosureAttempted != updated.ClosureAttempted)
+            {
+                sb.Append("Closure Attempted: ").Append(original.ClosureAttempted).Append(" -> ").Append(updated.ClosureAttempted).Append(delimiter);
+            }
             if(original.SubmittedFundingStreamFreeText != updated.SubmittedFundingStreamFreeText)
             {
                 sb.Append("Submitted Funding Stream Free Text: ").Append(original.SubmittedFundingStreamFreeText).Append(" -> ").Append(updated.SubmittedFundingStreamFreeText).Append(delimiter);
@@ -191,9 +195,21 @@ namespace Webfuel.Domain
             {
                 sb.Append("Lead Applicant O R C I D: ").Append(original.LeadApplicantORCID).Append(" -> ").Append(updated.LeadApplicantORCID).Append(delimiter);
             }
+            if(original.DiagnosticCount != updated.DiagnosticCount)
+            {
+                sb.Append("Diagnostic Count: ").Append(original.DiagnosticCount).Append(" -> ").Append(updated.DiagnosticCount).Append(delimiter);
+            }
+            if(original.DiagnosticListJson != updated.DiagnosticListJson)
+            {
+                sb.Append("Diagnostic List: ").Append(original.DiagnosticList).Append(" -> ").Append(updated.DiagnosticList).Append(delimiter);
+            }
             if(original.SearchTeamContactFullName != updated.SearchTeamContactFullName)
             {
                 sb.Append("Search Team Contact Full Name: ").Append(original.SearchTeamContactFullName).Append(" -> ").Append(updated.SearchTeamContactFullName).Append(delimiter);
+            }
+            if(original.SupportTotalMinutes != updated.SupportTotalMinutes)
+            {
+                sb.Append("Support Total Minutes: ").Append(original.SupportTotalMinutes).Append(" -> ").Append(updated.SupportTotalMinutes).Append(delimiter);
             }
             if(original.LeadAdviserUserId != updated.LeadAdviserUserId)
             {

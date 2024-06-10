@@ -7,13 +7,35 @@ using System.Threading.Tasks;
 
 namespace Webfuel.Domain
 {
-    [Mapper]
-    internal partial class ProjectMapper
+    internal static class ProjectMapper
     {
-        [MapperIgnoreTarget(nameof(Project.Id))]
-        [MapperIgnoreTarget(nameof(Project.StatusId))]
-        public partial Project Map(CreateProject request);
+        public static Project Apply(UpdateProject request, Project existing)
+        {
+            var updated = existing.Copy();
+            Mapper.Apply(request, updated);
+            return updated;
+        }
 
+        public static Project Apply(UpdateProjectRequest request, Project existing)
+        {
+            var updated = existing.Copy();
+            Mapper.Apply(request, updated);
+            return updated;
+        }
+
+        public static Project Apply(UpdateProjectResearcher request, Project existing)
+        {
+            var updated = existing.Copy();
+            Mapper.Apply(request, updated);
+            return updated;
+        }
+
+        static ProjectMapperImpl Mapper => new ProjectMapperImpl();
+    }
+
+    [Mapper]
+    internal partial class ProjectMapperImpl
+    {
         [MapperIgnoreTarget(nameof(Project.Id))]
         [MapperIgnoreTarget(nameof(Project.StatusId))]
         public partial void Apply(UpdateProject request, Project existing);

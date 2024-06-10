@@ -92,6 +92,11 @@ export enum ReportFilterStringCondition {
     IsNotEmpty = 1001,
 }
 
+export enum ProjectDiagnosticSeverity {
+    Error = 10,
+    Warning = 20,
+}
+
 export interface ClientConfiguration {
     userId: string;
     email: string;
@@ -828,6 +833,7 @@ export interface Project {
     prefixedNumber: string;
     supportRequestId: string | null | null;
     closureDate: string | null | null;
+    closureAttempted: boolean;
     submittedFundingStreamFreeText: string;
     submittedFundingStreamName: string;
     locked: boolean;
@@ -873,7 +879,10 @@ export interface Project {
     leadApplicantAddressCountry: string;
     leadApplicantAddressPostcode: string;
     leadApplicantORCID: string;
+    diagnosticCount: number;
+    diagnosticList: Array<ProjectDiagnostic>;
     searchTeamContactFullName: string;
+    supportTotalMinutes: number;
     createdAt: string;
     fileStorageGroupId: string;
     leadAdviserUserId: string | null | null;
@@ -897,6 +906,11 @@ export interface Project {
     leadApplicantAgeRangeId: string | null | null;
     leadApplicantGenderId: string | null | null;
     leadApplicantEthnicityId: string | null | null;
+}
+
+export interface ProjectDiagnostic {
+    severity: ProjectDiagnosticSeverity;
+    message: string;
 }
 
 export interface UpdateProject {
@@ -976,10 +990,8 @@ export interface UpdateProjectResearcher {
     leadApplicantEthnicityId: string | null | null;
 }
 
-export interface UpdateProjectStatus {
+export interface UnlockProject {
     id: string;
-    statusId: string;
-    closureDate: string | null | null;
 }
 
 export interface QueryProject extends Query {
@@ -1100,6 +1112,7 @@ export interface ProjectSupport {
     supportProvidedIds: Array<string>;
     supportRequestedCompletedAt: string | null | null;
     supportRequestedCompletedNotes: string;
+    calculatedMinutes: number;
     projectId: string;
     isPrePostAwardId: string;
     supportRequestedTeamId: string | null | null;
@@ -1296,8 +1309,6 @@ export interface QueryReportGroup extends Query {
 
 export interface SupportRequest {
     id: string;
-    number: number;
-    prefixedNumber: string;
     triageNote: string;
     isThisRequestLinkedToAnExistingProject: boolean;
     dateOfRequest: string;
@@ -1467,7 +1478,7 @@ export interface UpdateSupportRequestResearcher {
     leadApplicantEthnicityId: string | null | null;
 }
 
-export interface UpdateSupportRequestStatus {
+export interface TriageSupportRequest {
     id: string;
     statusId: string;
     triageNote: string;
@@ -1478,8 +1489,11 @@ export interface UpdateSupportRequestStatus {
     isPrePostAwardId: string;
 }
 
+export interface UnlockSupportRequest {
+    id: string;
+}
+
 export interface QuerySupportRequest extends Query {
-    number: string;
     title: string;
     fromDate: string | null | null;
     toDate: string | null | null;

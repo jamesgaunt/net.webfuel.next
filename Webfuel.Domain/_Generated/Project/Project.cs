@@ -33,6 +33,9 @@ namespace Webfuel.Domain
                     case nameof(Project.ClosureDate):
                         ClosureDate = value == DBNull.Value ? (DateOnly?)null : DateOnly.FromDateTime((DateTime)value!);
                         break;
+                    case nameof(Project.ClosureAttempted):
+                        ClosureAttempted = (bool)value!;
+                        break;
                     case nameof(Project.SubmittedFundingStreamFreeText):
                         SubmittedFundingStreamFreeText = (string)value!;
                         break;
@@ -168,8 +171,17 @@ namespace Webfuel.Domain
                     case nameof(Project.LeadApplicantORCID):
                         LeadApplicantORCID = (string)value!;
                         break;
+                    case nameof(Project.DiagnosticCount):
+                        DiagnosticCount = (int)value!;
+                        break;
+                    case nameof(Project.DiagnosticList):
+                        DiagnosticListJson = (string)value!;
+                        break;
                     case nameof(Project.SearchTeamContactFullName):
                         SearchTeamContactFullName = (string)value!;
+                        break;
+                    case nameof(Project.SupportTotalMinutes):
+                        SupportTotalMinutes = (int)value!;
                         break;
                     case nameof(Project.CreatedAt):
                         CreatedAt = (DateTimeOffset)value!;
@@ -248,6 +260,7 @@ namespace Webfuel.Domain
         public string PrefixedNumber  { get; set; } = String.Empty;
         public Guid? SupportRequestId  { get; set; } = null;
         public DateOnly? ClosureDate  { get; set; } = null;
+        public bool ClosureAttempted  { get; set; } = false;
         public string SubmittedFundingStreamFreeText  { get; set; } = String.Empty;
         public string SubmittedFundingStreamName  { get; set; } = String.Empty;
         public bool Locked  { get; set; } = false;
@@ -315,7 +328,21 @@ namespace Webfuel.Domain
         public string LeadApplicantAddressCountry  { get; set; } = String.Empty;
         public string LeadApplicantAddressPostcode  { get; set; } = String.Empty;
         public string LeadApplicantORCID  { get; set; } = String.Empty;
+        public int DiagnosticCount  { get; set; } = 0;
+        public List<ProjectDiagnostic> DiagnosticList
+        {
+            get { return _DiagnosticList ?? (_DiagnosticList = SafeJsonSerializer.Deserialize<List<ProjectDiagnostic>>(_DiagnosticListJson)); }
+            set { _DiagnosticList = value; }
+        }
+        List<ProjectDiagnostic>? _DiagnosticList = null;
+        internal string DiagnosticListJson
+        {
+            get { var result = _DiagnosticList == null ? _DiagnosticListJson : (_DiagnosticListJson = SafeJsonSerializer.Serialize(_DiagnosticList)); _DiagnosticList = null; return result; }
+            set { _DiagnosticListJson = value; _DiagnosticList = null; }
+        }
+        string _DiagnosticListJson = String.Empty;
         public string SearchTeamContactFullName  { get; set; } = String.Empty;
+        public int SupportTotalMinutes  { get; set; } = 0;
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid FileStorageGroupId { get; set; }
         public Guid? LeadAdviserUserId { get; set; }
@@ -347,6 +374,7 @@ namespace Webfuel.Domain
             entity.PrefixedNumber = PrefixedNumber;
             entity.SupportRequestId = SupportRequestId;
             entity.ClosureDate = ClosureDate;
+            entity.ClosureAttempted = ClosureAttempted;
             entity.SubmittedFundingStreamFreeText = SubmittedFundingStreamFreeText;
             entity.SubmittedFundingStreamName = SubmittedFundingStreamName;
             entity.Locked = Locked;
@@ -392,7 +420,10 @@ namespace Webfuel.Domain
             entity.LeadApplicantAddressCountry = LeadApplicantAddressCountry;
             entity.LeadApplicantAddressPostcode = LeadApplicantAddressPostcode;
             entity.LeadApplicantORCID = LeadApplicantORCID;
+            entity.DiagnosticCount = DiagnosticCount;
+            entity.DiagnosticListJson = DiagnosticListJson;
             entity.SearchTeamContactFullName = SearchTeamContactFullName;
+            entity.SupportTotalMinutes = SupportTotalMinutes;
             entity.CreatedAt = CreatedAt;
             entity.FileStorageGroupId = FileStorageGroupId;
             entity.LeadAdviserUserId = LeadAdviserUserId;

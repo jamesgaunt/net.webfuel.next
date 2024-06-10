@@ -22,8 +22,8 @@ namespace Webfuel.App
             app.MapPut("api/project/researcher", UpdateResearcher)
                 .RequireIdentity();
 
-            app.MapPut("api/project/status", UpdateStatus)
-                .RequireClaim(c => c.CanUnlockProjects);
+            app.MapPut("api/project/unlock", Unlock)
+                 .RequireClaim(p => p.CanUnlockProjects);
 
             app.MapDelete("api/project/{id:guid}", Delete)
                 .RequireIdentity();
@@ -55,7 +55,7 @@ namespace Webfuel.App
             return mediator.Send(command);
         }
 
-        public static Task<Project> UpdateStatus([FromBody] UpdateProjectStatus command, IMediator mediator)
+        public static Task<Project> Unlock([FromBody] UnlockProject command, IMediator mediator)
         {
             return mediator.Send(command);
         }

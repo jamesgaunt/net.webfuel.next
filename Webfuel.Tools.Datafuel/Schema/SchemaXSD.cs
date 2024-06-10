@@ -96,6 +96,7 @@ namespace Webfuel.Tools.Datafuel
                             Attributes =
                             {
                                 new XSDAttribute { Name = "Name", Required = true },
+                                new XSDAttribute { Name = "ReturnType" }
                             },
                             Elements =
                             {
