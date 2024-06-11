@@ -231,11 +231,23 @@ namespace Webfuel.Domain
                 var u = updated.TeamContactRoleId.HasValue ? (await _staticDataService.GetResearcherRole(updated.TeamContactRoleId.Value))?.Name ?? "UNKNOWN" : "NULL";
                 sb.Append("Team Contact Role: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
             }
+            if(original.LeadApplicantCareerStageId != updated.LeadApplicantCareerStageId)
+            {
+                var o = original.LeadApplicantCareerStageId.HasValue ? (await _staticDataService.GetResearcherCareerStage(original.LeadApplicantCareerStageId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                var u = updated.LeadApplicantCareerStageId.HasValue ? (await _staticDataService.GetResearcherCareerStage(updated.LeadApplicantCareerStageId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                sb.Append("Lead Applicant Career Stage: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
+            }
             if(original.LeadApplicantOrganisationTypeId != updated.LeadApplicantOrganisationTypeId)
             {
                 var o = original.LeadApplicantOrganisationTypeId.HasValue ? (await _staticDataService.GetResearcherOrganisationType(original.LeadApplicantOrganisationTypeId.Value))?.Name ?? "UNKNOWN" : "NULL";
                 var u = updated.LeadApplicantOrganisationTypeId.HasValue ? (await _staticDataService.GetResearcherOrganisationType(updated.LeadApplicantOrganisationTypeId.Value))?.Name ?? "UNKNOWN" : "NULL";
                 sb.Append("Lead Applicant Organisation Type: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
+            }
+            if(original.LeadApplicantLocationId != updated.LeadApplicantLocationId)
+            {
+                var o = original.LeadApplicantLocationId.HasValue ? (await _staticDataService.GetResearcherLocation(original.LeadApplicantLocationId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                var u = updated.LeadApplicantLocationId.HasValue ? (await _staticDataService.GetResearcherLocation(updated.LeadApplicantLocationId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                sb.Append("Lead Applicant Location: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
             }
             if(original.IsLeadApplicantNHSId != updated.IsLeadApplicantNHSId)
             {

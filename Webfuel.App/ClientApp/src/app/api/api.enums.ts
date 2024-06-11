@@ -188,7 +188,7 @@ export enum ProjectStatusEnum {
 export enum ReportProviderEnum {
     Project = "b8b6dea3-d6de-4480-a944-e7b0c2827888",
     ProjectSupport = "2af96eb5-e52d-4163-9247-c34e7b170f62",
-    ProjectSubmission = "d47d2458-99b5-4c9a-b1e2-8694f86d28ca",
+    ProjectSubmission = "62705a56-e9f2-4473-a966-e745120f795f",
     SupportRequest = "bb41b6b6-ef1a-4982-95d0-9f41f80c91cb",
     User = "96124eea-4434-4669-b377-580bbf85a96d",
     UserActivity = "3fd56f37-05f8-4418-bc57-d79a393e0ee9",

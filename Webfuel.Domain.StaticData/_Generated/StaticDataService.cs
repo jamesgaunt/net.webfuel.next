@@ -76,6 +76,12 @@ namespace Webfuel.Domain.StaticData
         Task<IReadOnlyList<ReportProvider>> SelectReportProvider();
         Task<ReportProvider?> GetReportProvider(Guid id);
         Task<ReportProvider> RequireReportProvider(Guid id);
+        Task<IReadOnlyList<ResearcherCareerStage>> SelectResearcherCareerStage();
+        Task<ResearcherCareerStage?> GetResearcherCareerStage(Guid id);
+        Task<ResearcherCareerStage> RequireResearcherCareerStage(Guid id);
+        Task<IReadOnlyList<ResearcherLocation>> SelectResearcherLocation();
+        Task<ResearcherLocation?> GetResearcherLocation(Guid id);
+        Task<ResearcherLocation> RequireResearcherLocation(Guid id);
         Task<IReadOnlyList<ResearcherOrganisationType>> SelectResearcherOrganisationType();
         Task<ResearcherOrganisationType?> GetResearcherOrganisationType(Guid id);
         Task<ResearcherOrganisationType> RequireResearcherOrganisationType(Guid id);
@@ -479,6 +485,36 @@ namespace Webfuel.Domain.StaticData
         public async Task<ReportProvider> RequireReportProvider(Guid id)
         {
             return (await GetStaticData()).ReportProvider.First(p => p.Id == id);
+        }
+        
+        public async Task<IReadOnlyList<ResearcherCareerStage>> SelectResearcherCareerStage()
+        {
+            return (await GetStaticData()).ResearcherCareerStage;
+        }
+        
+        public async Task<ResearcherCareerStage?> GetResearcherCareerStage(Guid id)
+        {
+            return (await GetStaticData()).ResearcherCareerStage.FirstOrDefault(p => p.Id == id);
+        }
+        
+        public async Task<ResearcherCareerStage> RequireResearcherCareerStage(Guid id)
+        {
+            return (await GetStaticData()).ResearcherCareerStage.First(p => p.Id == id);
+        }
+        
+        public async Task<IReadOnlyList<ResearcherLocation>> SelectResearcherLocation()
+        {
+            return (await GetStaticData()).ResearcherLocation;
+        }
+        
+        public async Task<ResearcherLocation?> GetResearcherLocation(Guid id)
+        {
+            return (await GetStaticData()).ResearcherLocation.FirstOrDefault(p => p.Id == id);
+        }
+        
+        public async Task<ResearcherLocation> RequireResearcherLocation(Guid id)
+        {
+            return (await GetStaticData()).ResearcherLocation.First(p => p.Id == id);
         }
         
         public async Task<IReadOnlyList<ResearcherOrganisationType>> SelectResearcherOrganisationType()

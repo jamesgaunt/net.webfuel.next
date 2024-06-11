@@ -15,7 +15,9 @@ namespace Webfuel.Domain
     {
         Task<List<Guid>> SelectProjectAdviserUserIdsByProjectId(Guid projectId);
 
-        Task UpdateProjectAdvisers(Guid projectId, List<Guid> projectAdviserUserIds);
+        Task SyncProjectAdvisersAndSendEmails(Project original, Project updated, List<Guid> projectAdviserUserIds);
+
+        Task SendTeamSupportRequestedEmail(Project project, Guid supportTeamId);
     }
 
     [Service(typeof(IProjectAdviserService))]
@@ -25,17 +27,20 @@ namespace Webfuel.Domain
         private readonly IProjectRepository _projectRepository;
         private readonly IProjectAdviserRepository _projectAdviserRepository;
         private readonly IEmailTemplateService _emailTemplateService;
+        private readonly IStaticDataService _staticDataService;
 
         public ProjectAdviserService(
             IUserRepository userRepository,
             IProjectRepository projectRepository,
             IProjectAdviserRepository projectAdviserRepository,
-            IEmailTemplateService emailTemplateService)
+            IEmailTemplateService emailTemplateService,
+            IStaticDataService staticDataService)
         {
             _userRepository = userRepository;
             _projectRepository = projectRepository;
             _projectAdviserRepository = projectAdviserRepository;
             _emailTemplateService = emailTemplateService;
+            _staticDataService = staticDataService;
         }
 
         public async Task<List<Guid>> SelectProjectAdviserUserIdsByProjectId(Guid projectId)
@@ -45,39 +50,48 @@ namespace Webfuel.Domain
                 .ToList();
         }
 
-        public async Task UpdateProjectAdvisers(Guid projectId, List<Guid> projectAdviserUserIds)
+        public async Task SyncProjectAdvisersAndSendEmails(Project original, Project updated, List<Guid> projectAdviserUserIds)
         {
-            var project = await _projectRepository.GetProject(projectId);
-            if (project == null)
-                return;
-
-            var existing = await _projectAdviserRepository.SelectProjectAdviserByProjectId(projectId);
-
-            // Delete
-            foreach(var adviser in existing)
+            // Lead Adviser
+            if (updated.LeadAdviserUserId.HasValue && original.LeadAdviserUserId != updated.LeadAdviserUserId)
             {
-                if (!projectAdviserUserIds.Contains(adviser.UserId))
+                var user = await _userRepository.GetUser(updated.LeadAdviserUserId.Value);
+                if (user != null)
                 {
-                    await _projectAdviserRepository.DeleteProjectAdviser(adviser.Id);
+                    await SendLeadAdviserAssignedEmail(updated, user);
                 }
             }
 
-            // Insert
-            foreach(var userId in projectAdviserUserIds)
+            // Support Advisers
             {
-                if (!existing.Any(x => x.UserId == userId))
+                var existing = await _projectAdviserRepository.SelectProjectAdviserByProjectId(updated.Id);
+
+                // Delete
+                foreach (var adviser in existing)
                 {
-                    var user = await _userRepository.GetUser(userId);
-                    if (user == null)
-                        continue;
-
-                    await _projectAdviserRepository.InsertProjectAdviser(new ProjectAdviser
+                    if (!projectAdviserUserIds.Contains(adviser.UserId))
                     {
-                        ProjectId = projectId,
-                        UserId = userId
-                    });
+                        await _projectAdviserRepository.DeleteProjectAdviser(adviser.Id);
+                    }
+                }
 
-                    await SendSupportAdviserAssignedEmail(project, user);
+                // Insert
+                foreach (var userId in projectAdviserUserIds)
+                {
+                    if (!existing.Any(x => x.UserId == userId))
+                    {
+                        var user = await _userRepository.GetUser(userId);
+                        if (user == null)
+                            continue;
+
+                        await _projectAdviserRepository.InsertProjectAdviser(new ProjectAdviser
+                        {
+                            ProjectId = updated.Id,
+                            UserId = userId
+                        });
+
+                        await SendSupportAdviserAssignedEmail(updated, user);
+                    }
                 }
             }
         }
@@ -90,9 +104,45 @@ namespace Webfuel.Domain
                 { "PROJECT_REFERENCE", project.PrefixedNumber },
                 { "ADVISER_NAME", user.FullName },
                 { "ADVISER_EMAIL", user.Email }
-            };  
+            };
 
             await _emailTemplateService.SendEmail("Support Adviser Assigned", replacements);
+        }
+
+        public async Task SendLeadAdviserAssignedEmail(Project project, User user)
+        {
+            var replacements = new Dictionary<string, string>
+            {
+                { "PROJECT_TITLE", project.Title },
+                { "PROJECT_REFERENCE", project.PrefixedNumber },
+                { "ADVISER_NAME", user.FullName },
+                { "ADVISER_EMAIL", user.Email }
+            };
+
+            await _emailTemplateService.SendEmail("Lead Adviser Assigned", replacements);
+        }
+
+        public async Task SendTeamSupportRequestedEmail(Project project, Guid supportTeamId)
+        {
+            var staticData = await _staticDataService.GetStaticData();
+
+            var supportTeam = staticData.SupportTeam.FirstOrDefault(x => x.Id == supportTeamId);
+            if(supportTeam == null || supportTeam.TeamLeadUserId == null)
+                return;
+
+            var user = await _userRepository.GetUser(supportTeam.TeamLeadUserId.Value);
+            if(user == null)
+                return;
+
+            var replacements = new Dictionary<string, string>
+            {
+                { "PROJECT_TITLE", project.Title },
+                { "PROJECT_REFERENCE", project.PrefixedNumber },
+                { "ADVISER_NAME", user.FullName },
+                { "ADVISER_EMAIL", user.Email }
+            };
+
+            await _emailTemplateService.SendEmail("Team Support Requested", replacements);
         }
     }
 }

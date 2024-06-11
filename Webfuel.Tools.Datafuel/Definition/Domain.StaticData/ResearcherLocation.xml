@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="ResearcherLocation" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Property Name="Hidden" Type="boolean" />
+    <Property Name="FreeText" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="4e63cb8f-fca4-4410-8728-45fabb8248e2" Name="East Midlands" />
+      <Row Id="38043071-c374-465e-9d80-a4a73bd79691" Name="West Midlands" />
+      <Row Id="a976bf8b-704f-41b2-9a73-febb8ddbcbaa" Name="London" />
+      <Row Id="be7fd714-a898-46f4-b25b-1df33cd4d6ba" Name="North East" />
+      <Row Id="3f6d16f6-81b7-4123-b6ed-cf847e72f5d8" Name="North West" />
+      <Row Id="44f805c6-cc27-4b98-a436-1a4e3bdf537f" Name="South East" />
+      <Row Id="d5d11757-8bd0-4746-a85c-4d9852db0122" Name="South West" />
+      <Row Id="8891755a-826f-459b-91b7-144bc75fadc0" Name="Yorkshire and the Humber" />
+      <Row Id="878b21c5-5fbd-4851-b556-18cbedf426db" Name="East of England" />
+    </Data>
+  </Entity>
+</Schema>

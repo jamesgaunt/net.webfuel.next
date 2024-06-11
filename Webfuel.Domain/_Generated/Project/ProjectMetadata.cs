@@ -65,6 +65,12 @@ namespace Webfuel.Domain
                     case nameof(Project.NumberOfProjectSites):
                         result.Add(new SqlParameter(nameof(Project.NumberOfProjectSites), entity.NumberOfProjectSites ?? (object?)DBNull.Value));
                         break;
+                    case nameof(Project.SocialCare):
+                        result.Add(new SqlParameter(nameof(Project.SocialCare), entity.SocialCare));
+                        break;
+                    case nameof(Project.PublicHealth):
+                        result.Add(new SqlParameter(nameof(Project.PublicHealth), entity.PublicHealth));
+                        break;
                     case nameof(Project.DateOfRequest):
                         result.Add(new SqlParameter(nameof(Project.DateOfRequest), entity.DateOfRequest));
                         break;
@@ -245,8 +251,14 @@ namespace Webfuel.Domain
                     case nameof(Project.TeamContactRoleId):
                         result.Add(new SqlParameter(nameof(Project.TeamContactRoleId), entity.TeamContactRoleId ?? (object?)DBNull.Value));
                         break;
+                    case nameof(Project.LeadApplicantCareerStageId):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantCareerStageId), entity.LeadApplicantCareerStageId ?? (object?)DBNull.Value));
+                        break;
                     case nameof(Project.LeadApplicantOrganisationTypeId):
                         result.Add(new SqlParameter(nameof(Project.LeadApplicantOrganisationTypeId), entity.LeadApplicantOrganisationTypeId ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(Project.LeadApplicantLocationId):
+                        result.Add(new SqlParameter(nameof(Project.LeadApplicantLocationId), entity.LeadApplicantLocationId ?? (object?)DBNull.Value));
                         break;
                     case nameof(Project.IsLeadApplicantNHSId):
                         result.Add(new SqlParameter(nameof(Project.IsLeadApplicantNHSId), entity.IsLeadApplicantNHSId ?? (object?)DBNull.Value));
@@ -301,6 +313,8 @@ namespace Webfuel.Domain
                 yield return "ProjectStartDate";
                 yield return "RecruitmentTarget";
                 yield return "NumberOfProjectSites";
+                yield return "SocialCare";
+                yield return "PublicHealth";
                 yield return "DateOfRequest";
                 yield return "Title";
                 yield return "ApplicationStageFreeText";
@@ -361,7 +375,9 @@ namespace Webfuel.Domain
                 yield return "HowDidYouFindUsId";
                 yield return "IsCTUAlreadyInvolvedId";
                 yield return "TeamContactRoleId";
+                yield return "LeadApplicantCareerStageId";
                 yield return "LeadApplicantOrganisationTypeId";
+                yield return "LeadApplicantLocationId";
                 yield return "IsLeadApplicantNHSId";
                 yield return "LeadApplicantAgeRangeId";
                 yield return "LeadApplicantGenderId";
@@ -388,6 +404,8 @@ namespace Webfuel.Domain
                 yield return "ProjectStartDate";
                 yield return "RecruitmentTarget";
                 yield return "NumberOfProjectSites";
+                yield return "SocialCare";
+                yield return "PublicHealth";
                 yield return "DateOfRequest";
                 yield return "Title";
                 yield return "ApplicationStageFreeText";
@@ -448,7 +466,9 @@ namespace Webfuel.Domain
                 yield return "HowDidYouFindUsId";
                 yield return "IsCTUAlreadyInvolvedId";
                 yield return "TeamContactRoleId";
+                yield return "LeadApplicantCareerStageId";
                 yield return "LeadApplicantOrganisationTypeId";
+                yield return "LeadApplicantLocationId";
                 yield return "IsLeadApplicantNHSId";
                 yield return "LeadApplicantAgeRangeId";
                 yield return "LeadApplicantGenderId";
@@ -474,6 +494,8 @@ namespace Webfuel.Domain
                 yield return "ProjectStartDate";
                 yield return "RecruitmentTarget";
                 yield return "NumberOfProjectSites";
+                yield return "SocialCare";
+                yield return "PublicHealth";
                 yield return "DateOfRequest";
                 yield return "Title";
                 yield return "ApplicationStageFreeText";
@@ -534,7 +556,9 @@ namespace Webfuel.Domain
                 yield return "HowDidYouFindUsId";
                 yield return "IsCTUAlreadyInvolvedId";
                 yield return "TeamContactRoleId";
+                yield return "LeadApplicantCareerStageId";
                 yield return "LeadApplicantOrganisationTypeId";
+                yield return "LeadApplicantLocationId";
                 yield return "IsLeadApplicantNHSId";
                 yield return "LeadApplicantAgeRangeId";
                 yield return "LeadApplicantGenderId";

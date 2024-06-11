@@ -44,10 +44,6 @@
           <dropdown-multi-select [dataSource]="staticDataCache.supportProvided" [closeOnSelect]="false" placeholder="required" formControlName="supportProvidedIds"></dropdown-multi-select>
         </div>
         <div class="field is-12">
-          <label class="label">Description of support provided/requested</label>
-          <textarea style="height: 200px" class="textarea" formControlName="description" placeholder="required"></textarea>
-        </div>
-        <div class="field">
           <label class="label">Request additional support from another team</label>
           <dropdown-select [dataSource]="staticDataCache.supportTeam" [enableClear]="true" placeholder="optional" formControlName="supportRequestedTeamId">
             <ng-template #optionTemplate let-item>
@@ -57,6 +53,10 @@
               {{ item.name }}
             </ng-template>
           </dropdown-select>
+        </div>
+        <div class="field is-12">
+          <label class="label">Description of support provided/requested</label>
+          <textarea style="height: 200px" class="textarea" formControlName="description" placeholder="required"></textarea>
         </div>
       </div>
     </div>

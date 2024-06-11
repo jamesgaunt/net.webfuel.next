@@ -69,7 +69,7 @@
       </div>
       <div class="field is-4">
         <label class="label">Career Stage</label>
-        <input class="input" type="text" placeholder="required" formControlName="leadApplicantCareerStage" maxlength="64" />
+        <dropdown-select [dataSource]="staticDataCache.researcherCareerStage" placeholder="required" formControlName="leadApplicantCareerStageId"></dropdown-select>
       </div>
       <div class="field is-4">
         <label class="label">Organisation Type</label>
@@ -87,7 +87,11 @@
         <label class="label">ORCID</label>
         <input class="input" type="text" placeholder="optional" formControlName="leadApplicantORCID" />
       </div>
-      <div class="field is-12">
+      <div class="field is-4">
+        <label class="label">Where are they located?</label>
+        <dropdown-select [dataSource]="staticDataCache.researcherLocation" placeholder="required" formControlName="leadApplicantLocationId"></dropdown-select>
+      </div>
+      <div class="field is-8">
         <label class="label">
           Is the chief investigator an NHS employee seeking RSS support for the first time? 
         </label>

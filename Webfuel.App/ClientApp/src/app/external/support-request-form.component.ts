@@ -106,10 +106,12 @@ export class SupportRequestFormComponent {
     leadApplicantEmail: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
 
     leadApplicantJobRole: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
-    leadApplicantCareerStage: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    leadApplicantCareerStage: new FormControl<string>('', { nonNullable: true }),
+    leadApplicantCareerStageId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     leadApplicantOrganisationTypeId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     leadApplicantOrganisation: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     leadApplicantDepartment: new FormControl<string>('', { nonNullable: true }),
+    leadApplicantLocationId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
 
     leadApplicantAddressLine1: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     leadApplicantAddressLine2: new FormControl<string>('', { nonNullable: true }),
@@ -142,6 +144,7 @@ export class SupportRequestFormComponent {
     this.isTeamContactAlsoChiefInvestigator();
 
     if (this.formService.hasErrors(this.form)) {
+      this.formService.logErrors(this.form);
       this.errorMessage = "Please complete all required fields";
       return;
     }

@@ -68,10 +68,12 @@ export class ProjectResearcherComponent extends ProjectComponentBase {
     leadApplicantEmail: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
 
     leadApplicantJobRole: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
-    leadApplicantCareerStage: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    leadApplicantCareerStage: new FormControl<string>('', { nonNullable: true }),
+    leadApplicantCareerStageId: new FormControl<string | null>(null, { }),
     leadApplicantOrganisationTypeId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
     leadApplicantOrganisation: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     leadApplicantDepartment: new FormControl<string>('', { nonNullable: true }),
+    leadApplicantLocationId: new FormControl<string | null>(null, { }),
 
     leadApplicantAddressLine1: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     leadApplicantAddressLine2: new FormControl<string>('', { nonNullable: true }),

@@ -51,6 +51,14 @@ namespace Webfuel.Domain
             {
                 sb.Append("Number Of Project Sites: ").Append(original.NumberOfProjectSites?.ToString() ?? "NULL").Append(" -> ").Append(updated.NumberOfProjectSites?.ToString() ?? "NULL").Append(delimiter);
             }
+            if(original.SocialCare != updated.SocialCare)
+            {
+                sb.Append("Social Care: ").Append(original.SocialCare).Append(" -> ").Append(updated.SocialCare).Append(delimiter);
+            }
+            if(original.PublicHealth != updated.PublicHealth)
+            {
+                sb.Append("Public Health: ").Append(original.PublicHealth).Append(" -> ").Append(updated.PublicHealth).Append(delimiter);
+            }
             if(original.DateOfRequest != updated.DateOfRequest)
             {
                 sb.Append("Date Of Request: ").Append(original.DateOfRequest).Append(" -> ").Append(updated.DateOfRequest).Append(delimiter);
@@ -313,11 +321,23 @@ namespace Webfuel.Domain
                 var u = updated.TeamContactRoleId.HasValue ? (await _staticDataService.GetResearcherRole(updated.TeamContactRoleId.Value))?.Name ?? "UNKNOWN" : "NULL";
                 sb.Append("Team Contact Role: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
             }
+            if(original.LeadApplicantCareerStageId != updated.LeadApplicantCareerStageId)
+            {
+                var o = original.LeadApplicantCareerStageId.HasValue ? (await _staticDataService.GetResearcherCareerStage(original.LeadApplicantCareerStageId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                var u = updated.LeadApplicantCareerStageId.HasValue ? (await _staticDataService.GetResearcherCareerStage(updated.LeadApplicantCareerStageId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                sb.Append("Lead Applicant Career Stage: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
+            }
             if(original.LeadApplicantOrganisationTypeId != updated.LeadApplicantOrganisationTypeId)
             {
                 var o = original.LeadApplicantOrganisationTypeId.HasValue ? (await _staticDataService.GetResearcherOrganisationType(original.LeadApplicantOrganisationTypeId.Value))?.Name ?? "UNKNOWN" : "NULL";
                 var u = updated.LeadApplicantOrganisationTypeId.HasValue ? (await _staticDataService.GetResearcherOrganisationType(updated.LeadApplicantOrganisationTypeId.Value))?.Name ?? "UNKNOWN" : "NULL";
                 sb.Append("Lead Applicant Organisation Type: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
+            }
+            if(original.LeadApplicantLocationId != updated.LeadApplicantLocationId)
+            {
+                var o = original.LeadApplicantLocationId.HasValue ? (await _staticDataService.GetResearcherLocation(original.LeadApplicantLocationId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                var u = updated.LeadApplicantLocationId.HasValue ? (await _staticDataService.GetResearcherLocation(updated.LeadApplicantLocationId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                sb.Append("Lead Applicant Location: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
             }
             if(original.IsLeadApplicantNHSId != updated.IsLeadApplicantNHSId)
             {

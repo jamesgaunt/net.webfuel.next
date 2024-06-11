@@ -1,5 +1,6 @@
 <div class="control">
-  <div class="toggle-input" (click)="toggle()" [ngClass]="{ on: value }" >
+  <div class="toggle-input" (click)="toggle()" [ngClass]="{ on: value }">
+    <label class="toggle-label" *ngIf="label">{{ label }}&nbsp;</label>
     <div class="wrap">
       <div class="disc"></div>
     </div>

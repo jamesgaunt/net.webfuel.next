@@ -207,6 +207,12 @@
 .toggle-input {
   padding: 0.4em 0 0.4em 0;
 
+  .toggle-label {
+    font-weight: bold;
+    padding: 0 0.5rem 0 0.5rem;
+  }
+
+
   .wrap {
     width: 3em;
     height: 1.2em;

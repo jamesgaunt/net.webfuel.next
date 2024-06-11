@@ -63,6 +63,12 @@ namespace Webfuel.Domain
                     case nameof(Project.NumberOfProjectSites):
                         NumberOfProjectSites = value == DBNull.Value ? (int?)null : (int?)value;
                         break;
+                    case nameof(Project.SocialCare):
+                        SocialCare = (bool)value!;
+                        break;
+                    case nameof(Project.PublicHealth):
+                        PublicHealth = (bool)value!;
+                        break;
                     case nameof(Project.DateOfRequest):
                         DateOfRequest = DateOnly.FromDateTime((DateTime)value!);
                         break;
@@ -243,8 +249,14 @@ namespace Webfuel.Domain
                     case nameof(Project.TeamContactRoleId):
                         TeamContactRoleId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
+                    case nameof(Project.LeadApplicantCareerStageId):
+                        LeadApplicantCareerStageId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
                     case nameof(Project.LeadApplicantOrganisationTypeId):
                         LeadApplicantOrganisationTypeId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(Project.LeadApplicantLocationId):
+                        LeadApplicantLocationId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
                     case nameof(Project.IsLeadApplicantNHSId):
                         IsLeadApplicantNHSId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
@@ -287,6 +299,8 @@ namespace Webfuel.Domain
         public DateOnly? ProjectStartDate  { get; set; } = null;
         public int? RecruitmentTarget  { get; set; } = null;
         public int? NumberOfProjectSites  { get; set; } = null;
+        public bool SocialCare  { get; set; } = false;
+        public bool PublicHealth  { get; set; } = false;
         public DateOnly DateOfRequest  { get; set; } = new DateOnly(1900, 1, 1);
         public string Title  { get; set; } = String.Empty;
         public string ApplicationStageFreeText  { get; set; } = String.Empty;
@@ -380,7 +394,9 @@ namespace Webfuel.Domain
         public Guid? HowDidYouFindUsId { get; set; }
         public Guid? IsCTUAlreadyInvolvedId { get; set; }
         public Guid? TeamContactRoleId { get; set; }
+        public Guid? LeadApplicantCareerStageId { get; set; }
         public Guid? LeadApplicantOrganisationTypeId { get; set; }
+        public Guid? LeadApplicantLocationId { get; set; }
         public Guid? IsLeadApplicantNHSId { get; set; }
         public Guid? LeadApplicantAgeRangeId { get; set; }
         public Guid? LeadApplicantGenderId { get; set; }
@@ -403,6 +419,8 @@ namespace Webfuel.Domain
             entity.ProjectStartDate = ProjectStartDate;
             entity.RecruitmentTarget = RecruitmentTarget;
             entity.NumberOfProjectSites = NumberOfProjectSites;
+            entity.SocialCare = SocialCare;
+            entity.PublicHealth = PublicHealth;
             entity.DateOfRequest = DateOfRequest;
             entity.Title = Title;
             entity.ApplicationStageFreeText = ApplicationStageFreeText;
@@ -463,7 +481,9 @@ namespace Webfuel.Domain
             entity.HowDidYouFindUsId = HowDidYouFindUsId;
             entity.IsCTUAlreadyInvolvedId = IsCTUAlreadyInvolvedId;
             entity.TeamContactRoleId = TeamContactRoleId;
+            entity.LeadApplicantCareerStageId = LeadApplicantCareerStageId;
             entity.LeadApplicantOrganisationTypeId = LeadApplicantOrganisationTypeId;
+            entity.LeadApplicantLocationId = LeadApplicantLocationId;
             entity.IsLeadApplicantNHSId = IsLeadApplicantNHSId;
             entity.LeadApplicantAgeRangeId = LeadApplicantAgeRangeId;
             entity.LeadApplicantGenderId = LeadApplicantGenderId;

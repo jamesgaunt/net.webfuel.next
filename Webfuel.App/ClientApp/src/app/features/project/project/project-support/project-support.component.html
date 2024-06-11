@@ -19,9 +19,14 @@
   <div *ngIf="items === null">
     <p>Loading...</p>
   </div>
+  <form *ngIf="items !== null" [formGroup]="filterForm">
+    <div style="padding: 0.5rem 0 0.5rem 0; display: flex; justify-content: flex-end">
+      <toggle-input label="Show open team support requests only" formControlName="openTeamSupportOnly" />
+    </div>
+  </form>
   <div *ngIf="items !== null && items.length == 0">
     <div class="message is-primary">
-      No support events have been recorded for this project.
+      No items to display
     </div>
   </div>
   <div *ngIf="items !== null && items.length > 0" class="project-support-list">

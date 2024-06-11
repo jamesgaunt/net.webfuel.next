@@ -3,7 +3,6 @@ using Webfuel.Domai;
 
 namespace Webfuel.Domain
 {
-
     public class UpdateProjectResearcher : IRequest<Project>
     {
         public required Guid Id { get; set; }
@@ -27,10 +26,12 @@ namespace Webfuel.Domain
         public string LeadApplicantEmail { get; set; } = String.Empty;
 
         public string LeadApplicantJobRole { get; set; } = String.Empty;
-        public string LeadApplicantCareerStage { get; set; } = String.Empty;
+        public string LeadApplicantCareerStage { get; set; } = String.Empty; // DEPRICATED
+        public Guid? LeadApplicantCareerStageId { get; set; } // 1.3
         public Guid? LeadApplicantOrganisationTypeId { get; set; }
         public string LeadApplicantOrganisation { get; set; } = String.Empty;
         public string LeadApplicantDepartment { get; set; } = String.Empty;
+        public Guid? LeadApplicantLocationId { get; set; } // 1.3
 
         public string LeadApplicantAddressLine1 { get; set; } = String.Empty;
         public string LeadApplicantAddressLine2 { get; set; } = String.Empty;

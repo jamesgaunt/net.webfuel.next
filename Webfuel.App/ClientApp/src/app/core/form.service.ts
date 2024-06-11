@@ -21,6 +21,20 @@ export class FormService {
     return true;
   }
 
+  logErrors(form: FormGroup) {
+    console.log("Form errors:");
+    for (const field in form.controls) {
+      const control = form.get(field);
+      if (!control || control.valid)
+        continue;
+
+      console.log(field + " has errors:");
+      for (const error in control.errors) {
+        console.log("  " + error + ": " + control.errors[error]);
+      }
+    }
+  }
+
   growlErrors(form: FormGroup) {
     for (const field in form.controls) {
       const control = form.get(field);

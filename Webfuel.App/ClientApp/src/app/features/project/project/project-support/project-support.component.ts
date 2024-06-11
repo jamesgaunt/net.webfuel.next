@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ProjectSupport, SupportProvided } from 'api/api.types';
 import { ProjectSupportApi } from 'api/project-support.api';
 import { FormService } from 'core/form.service';
@@ -15,6 +15,7 @@ import { CompleteProjectSupportDialog } from './complete-project-support/complet
 import { IsPrePostAwardEnum } from '../../../../api/api.enums';
 import { ConfirmDialog } from '../../../../shared/dialogs/confirm/confirm.dialog';
 import { UpdateProjectSupportCompletionDialog } from './update-project-support-completion/update-project-support-completion.dialog';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'project-support',
@@ -43,13 +44,24 @@ export class ProjectSupportComponent extends ProjectComponentBase {
     super.ngOnInit();
 
     this.loadProjectSupport();
+
     this.projectSupportApi.changed.pipe(
+      debounceTime(200),
       takeUntilDestroyed(this.destroyRef)
     )
+    .subscribe(() => this.loadProjectSupport());
+
+
+    this.filterForm.valueChanges.pipe(
+        debounceTime(200),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe(() => this.loadProjectSupport());
+
   }
 
-  form = new FormGroup({
+  filterForm = new FormGroup({
+    openTeamSupportOnly: new FormControl(false, { nonNullable: true })
   });
 
   IsPrePostAwardEnum = IsPrePostAwardEnum;
@@ -68,7 +80,7 @@ export class ProjectSupportComponent extends ProjectComponentBase {
   items: ProjectSupport[] | null = null;
 
   loadProjectSupport() {
-    this.projectSupportApi.query({ projectId: this.item.id, skip: 0, take: 100 }).subscribe((result) => {
+    this.projectSupportApi.query({ projectId: this.item.id, openTeamSupportOnly: this.filterForm.value.openTeamSupportOnly ?? false, skip: 0, take: 100 }).subscribe((result) => {
       this.items = result.items;
     })
   }

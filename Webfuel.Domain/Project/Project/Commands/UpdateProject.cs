@@ -36,7 +36,13 @@ namespace Webfuel.Domain
         public int? NumberOfProjectSites { get; set; } = null;
         public Guid? IsInternationalMultiSiteStudyId { get; set; }
 
-        // Project Advisers
+        // Other Details
+
+        public bool SocialCare { get; set; }
+        public bool PublicHealth { get; set; }
+
+
+        // Project Advisers (not stored on the project)
 
         public List<Guid> ProjectAdviserUserIds { get; set; } = new List<Guid>();
     }
@@ -46,17 +52,20 @@ namespace Webfuel.Domain
         private readonly IProjectRepository _projectRepository;
         private readonly IStaticDataService _staticDataService;
         private readonly IProjectEnrichmentService _projectEnrichmentService;
+        private readonly IProjectAdviserService _projectAdviserService;
         private readonly IProjectChangeLogService _projectChangeLogService;
 
         public UpdateProjectHandler(
             IProjectRepository projectRepository,
             IStaticDataService staticDataService,
             IProjectEnrichmentService projectEnrichmentService,
+            IProjectAdviserService projectAdviserService,
             IProjectChangeLogService projectChangeLogService)
         {
             _projectRepository = projectRepository;
             _staticDataService = staticDataService;
             _projectEnrichmentService = projectEnrichmentService;
+            _projectAdviserService = projectAdviserService;
             _projectChangeLogService = projectChangeLogService;
         }
 
@@ -67,6 +76,11 @@ namespace Webfuel.Domain
                 throw new InvalidOperationException("Unable to edit a locked project");
 
             var updated = ProjectMapper.Apply(request, original);
+
+            await _projectAdviserService.SyncProjectAdvisersAndSendEmails(
+                updated: updated, 
+                original: original, 
+                projectAdviserUserIds: request.ProjectAdviserUserIds);
 
             if (updated.StatusId == request.StatusId)
             {

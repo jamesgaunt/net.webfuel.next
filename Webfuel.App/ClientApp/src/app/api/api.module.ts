@@ -46,6 +46,8 @@ import { IsTeamMembersConsultedApi } from './is-team-members-consulted.api';
 import { ProfessionalBackgroundApi } from './professional-background.api';
 import { ProjectStatusApi } from './project-status.api';
 import { ReportProviderApi } from './report-provider.api';
+import { ResearcherCareerStageApi } from './researcher-career-stage.api';
+import { ResearcherLocationApi } from './researcher-location.api';
 import { ResearcherOrganisationTypeApi } from './researcher-organisation-type.api';
 import { ResearcherRoleApi } from './researcher-role.api';
 import { ResearchMethodologyApi } from './research-methodology.api';
@@ -111,6 +113,8 @@ import { StaticDataCache } from './static-data.cache';
         ProfessionalBackgroundApi,
         ProjectStatusApi,
         ReportProviderApi,
+        ResearcherCareerStageApi,
+        ResearcherLocationApi,
         ResearcherOrganisationTypeApi,
         ResearcherRoleApi,
         ResearchMethodologyApi,

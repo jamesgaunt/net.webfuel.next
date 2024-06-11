@@ -28,6 +28,8 @@ namespace Webfuel.Domain.StaticData
         IReadOnlyList<ProfessionalBackground> ProfessionalBackground { get; }
         IReadOnlyList<ProjectStatus> ProjectStatus { get; }
         IReadOnlyList<ReportProvider> ReportProvider { get; }
+        IReadOnlyList<ResearcherCareerStage> ResearcherCareerStage { get; }
+        IReadOnlyList<ResearcherLocation> ResearcherLocation { get; }
         IReadOnlyList<ResearcherOrganisationType> ResearcherOrganisationType { get; }
         IReadOnlyList<ResearcherRole> ResearcherRole { get; }
         IReadOnlyList<ResearchMethodology> ResearchMethodology { get; }
@@ -70,6 +72,8 @@ namespace Webfuel.Domain.StaticData
         public required IReadOnlyList<ProfessionalBackground> ProfessionalBackground { get; init; }
         public required IReadOnlyList<ProjectStatus> ProjectStatus { get; init; }
         public required IReadOnlyList<ReportProvider> ReportProvider { get; init; }
+        public required IReadOnlyList<ResearcherCareerStage> ResearcherCareerStage { get; init; }
+        public required IReadOnlyList<ResearcherLocation> ResearcherLocation { get; init; }
         public required IReadOnlyList<ResearcherOrganisationType> ResearcherOrganisationType { get; init; }
         public required IReadOnlyList<ResearcherRole> ResearcherRole { get; init; }
         public required IReadOnlyList<ResearchMethodology> ResearchMethodology { get; init; }
@@ -114,6 +118,8 @@ namespace Webfuel.Domain.StaticData
                 ProfessionalBackground = await serviceProvider.GetRequiredService<IProfessionalBackgroundRepository>().SelectProfessionalBackground(),
                 ProjectStatus = await serviceProvider.GetRequiredService<IProjectStatusRepository>().SelectProjectStatus(),
                 ReportProvider = await serviceProvider.GetRequiredService<IReportProviderRepository>().SelectReportProvider(),
+                ResearcherCareerStage = await serviceProvider.GetRequiredService<IResearcherCareerStageRepository>().SelectResearcherCareerStage(),
+                ResearcherLocation = await serviceProvider.GetRequiredService<IResearcherLocationRepository>().SelectResearcherLocation(),
                 ResearcherOrganisationType = await serviceProvider.GetRequiredService<IResearcherOrganisationTypeRepository>().SelectResearcherOrganisationType(),
                 ResearcherRole = await serviceProvider.GetRequiredService<IResearcherRoleRepository>().SelectResearcherRole(),
                 ResearchMethodology = await serviceProvider.GetRequiredService<IResearchMethodologyRepository>().SelectResearchMethodology(),

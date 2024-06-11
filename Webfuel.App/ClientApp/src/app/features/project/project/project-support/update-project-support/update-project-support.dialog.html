@@ -42,26 +42,28 @@
         <label class="label">Support provided (include all types of support provided)</label>
         <dropdown-multi-select [dataSource]="staticDataCache.supportProvided" [closeOnSelect]="false" placeholder="required" formControlName="supportProvidedIds"></dropdown-multi-select>
       </div>
+    </div>
+    <div class="flex">
+      <div class="field is-12">
+        <label class="label">Request additional support from another team</label>
+        <dropdown-select [dataSource]="staticDataCache.supportTeam" [enableClear]="true" placeholder="optional" formControlName="supportRequestedTeamId">
+          <ng-template #optionTemplate let-item>
+            {{ item.name }}
+          </ng-template>
+          <ng-template #pickedTemplate let-item>
+            {{ item.name }}
+          </ng-template>
+        </dropdown-select>
+      </div>
       <div class="field is-12">
         <label class="label">Description of support provided/requested</label>
         <textarea style="height: 200px" class="textarea" formControlName="description" placeholder="required"></textarea>
       </div>
     </div>
-    <div class="field">
-      <label class="label">Request additional support from another team</label>
-      <dropdown-select [dataSource]="staticDataCache.supportTeam" [enableClear]="true" placeholder="optional" formControlName="supportRequestedTeamId">
-        <ng-template #optionTemplate let-item>
-          {{ item.name }}
-        </ng-template>
-        <ng-template #pickedTemplate let-item>
-          {{ item.name }}
-        </ng-template>
-      </dropdown-select>
+  </div>
+    <div class="dialog-buttons">
+      <button type="submit" class="is-success" (click)="save()">Save</button>
+      <button type="button" (click)="cancel()">Cancel</button>
     </div>
-  </div>
-  <div class="dialog-buttons">
-    <button type="submit" class="is-success" (click)="save()">Save</button>
-    <button type="button" (click)="cancel()">Cancel</button>
-  </div>
 </form>
 

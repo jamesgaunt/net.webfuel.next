@@ -180,8 +180,14 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.TeamContactRoleId):
                         TeamContactRoleId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
+                    case nameof(SupportRequest.LeadApplicantCareerStageId):
+                        LeadApplicantCareerStageId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
                     case nameof(SupportRequest.LeadApplicantOrganisationTypeId):
                         LeadApplicantOrganisationTypeId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(SupportRequest.LeadApplicantLocationId):
+                        LeadApplicantLocationId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
                     case nameof(SupportRequest.IsLeadApplicantNHSId):
                         IsLeadApplicantNHSId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
@@ -263,7 +269,9 @@ namespace Webfuel.Domain
         public Guid? HowDidYouFindUsId { get; set; }
         public Guid? IsCTUAlreadyInvolvedId { get; set; }
         public Guid? TeamContactRoleId { get; set; }
+        public Guid? LeadApplicantCareerStageId { get; set; }
         public Guid? LeadApplicantOrganisationTypeId { get; set; }
+        public Guid? LeadApplicantLocationId { get; set; }
         public Guid? IsLeadApplicantNHSId { get; set; }
         public Guid? LeadApplicantAgeRangeId { get; set; }
         public Guid? LeadApplicantGenderId { get; set; }
@@ -325,7 +333,9 @@ namespace Webfuel.Domain
             entity.HowDidYouFindUsId = HowDidYouFindUsId;
             entity.IsCTUAlreadyInvolvedId = IsCTUAlreadyInvolvedId;
             entity.TeamContactRoleId = TeamContactRoleId;
+            entity.LeadApplicantCareerStageId = LeadApplicantCareerStageId;
             entity.LeadApplicantOrganisationTypeId = LeadApplicantOrganisationTypeId;
+            entity.LeadApplicantLocationId = LeadApplicantLocationId;
             entity.IsLeadApplicantNHSId = IsLeadApplicantNHSId;
             entity.LeadApplicantAgeRangeId = LeadApplicantAgeRangeId;
             entity.LeadApplicantGenderId = LeadApplicantGenderId;

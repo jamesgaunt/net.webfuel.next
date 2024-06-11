@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="ResearcherCareerStage" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="cf0d96c5-e39e-4ad6-acb6-3f046582bef9" Name="Early" />
+      <Row Id="aa5271d7-8a4d-4778-b71f-1ac677b8c0ae" Name="Mid" />
+      <Row Id="aebf5c0a-e96a-4a11-96e5-f5b741bd1695" Name="Senior" />
+    </Data>
+  </Entity>
+</Schema>

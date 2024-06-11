@@ -493,6 +493,8 @@ export interface IStaticDataModel {
     professionalBackground: Array<ProfessionalBackground>;
     projectStatus: Array<ProjectStatus>;
     reportProvider: Array<ReportProvider>;
+    researcherCareerStage: Array<ResearcherCareerStage>;
+    researcherLocation: Array<ResearcherLocation>;
     researcherOrganisationType: Array<ResearcherOrganisationType>;
     researcherRole: Array<ResearcherRole>;
     researchMethodology: Array<ResearchMethodology>;
@@ -707,6 +709,22 @@ export interface ReportProvider extends IStaticData {
     hidden: boolean;
 }
 
+export interface ResearcherCareerStage extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+}
+
+export interface ResearcherLocation extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
 export interface ResearcherOrganisationType extends IStaticData {
     id: string;
     name: string;
@@ -791,6 +809,7 @@ export interface SupportTeam extends IStaticData {
     sortOrder: number;
     default: boolean;
     hidden: boolean;
+    teamLeadUserId: string | null | null;
 }
 
 export interface Title extends IStaticData {
@@ -843,6 +862,8 @@ export interface Project {
     projectStartDate: string | null | null;
     recruitmentTarget: number | null | null;
     numberOfProjectSites: number | null | null;
+    socialCare: boolean;
+    publicHealth: boolean;
     dateOfRequest: string;
     title: string;
     applicationStageFreeText: string;
@@ -903,7 +924,9 @@ export interface Project {
     howDidYouFindUsId: string | null | null;
     isCTUAlreadyInvolvedId: string | null | null;
     teamContactRoleId: string | null | null;
+    leadApplicantCareerStageId: string | null | null;
     leadApplicantOrganisationTypeId: string | null | null;
+    leadApplicantLocationId: string | null | null;
     isLeadApplicantNHSId: string | null | null;
     leadApplicantAgeRangeId: string | null | null;
     leadApplicantGenderId: string | null | null;
@@ -932,6 +955,8 @@ export interface UpdateProject {
     recruitmentTarget: number | null | null;
     numberOfProjectSites: number | null | null;
     isInternationalMultiSiteStudyId: string | null | null;
+    socialCare: boolean;
+    publicHealth: boolean;
     projectAdviserUserIds: Array<string>;
 }
 
@@ -976,9 +1001,11 @@ export interface UpdateProjectResearcher {
     leadApplicantEmail: string;
     leadApplicantJobRole: string;
     leadApplicantCareerStage: string;
+    leadApplicantCareerStageId: string | null | null;
     leadApplicantOrganisationTypeId: string | null | null;
     leadApplicantOrganisation: string;
     leadApplicantDepartment: string;
+    leadApplicantLocationId: string | null | null;
     leadApplicantAddressLine1: string;
     leadApplicantAddressLine2: string;
     leadApplicantAddressTown: string;
@@ -1161,6 +1188,7 @@ export interface UncompleteProjectSupport {
 
 export interface QueryProjectSupport extends Query {
     projectId: string;
+    openTeamSupportOnly: boolean;
     skip: number;
     take: number;
     projection?: Array<string>;
@@ -1373,7 +1401,9 @@ export interface SupportRequest {
     howDidYouFindUsId: string | null | null;
     isCTUAlreadyInvolvedId: string | null | null;
     teamContactRoleId: string | null | null;
+    leadApplicantCareerStageId: string | null | null;
     leadApplicantOrganisationTypeId: string | null | null;
+    leadApplicantLocationId: string | null | null;
     isLeadApplicantNHSId: string | null | null;
     leadApplicantAgeRangeId: string | null | null;
     leadApplicantGenderId: string | null | null;
@@ -1418,9 +1448,11 @@ export interface CreateSupportRequest {
     leadApplicantEmail: string;
     leadApplicantJobRole: string;
     leadApplicantCareerStage: string;
+    leadApplicantCareerStageId: string | null | null;
     leadApplicantOrganisationTypeId: string | null | null;
     leadApplicantOrganisation: string;
     leadApplicantDepartment: string;
+    leadApplicantLocationId: string | null | null;
     leadApplicantAddressLine1: string;
     leadApplicantAddressLine2: string;
     leadApplicantAddressTown: string;
@@ -1475,9 +1507,11 @@ export interface UpdateSupportRequestResearcher {
     leadApplicantEmail: string;
     leadApplicantJobRole: string;
     leadApplicantCareerStage: string;
+    leadApplicantCareerStageId: string | null | null;
     leadApplicantOrganisationTypeId: string | null | null;
     leadApplicantOrganisation: string;
     leadApplicantDepartment: string;
+    leadApplicantLocationId: string | null | null;
     leadApplicantAddressLine1: string;
     leadApplicantAddressLine2: string;
     leadApplicantAddressTown: string;
@@ -2154,6 +2188,58 @@ export interface QueryProjectStatus extends Query {
 }
 
 export interface QueryReportProvider extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface CreateResearcherCareerStage {
+    name: string;
+    default: boolean;
+}
+
+export interface UpdateResearcherCareerStage {
+    id: string;
+    name: string;
+    default: boolean;
+}
+
+export interface SortResearcherCareerStage {
+    ids: Array<string>;
+}
+
+export interface QueryResearcherCareerStage extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface CreateResearcherLocation {
+    name: string;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface UpdateResearcherLocation {
+    id: string;
+    name: string;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface SortResearcherLocation {
+    ids: Array<string>;
+}
+
+export interface QueryResearcherLocation extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;

@@ -1,4 +1,5 @@
 using MediatR;
+using System.Runtime.CompilerServices;
 using Webfuel.Domai;
 using Webfuel.Domain.Dashboard;
 
@@ -30,6 +31,7 @@ namespace Webfuel.Domain
         private readonly IProjectRepository _projectRepository;
         private readonly IProjectSupportRepository _projectSupportRepository;
         private readonly IProjectEnrichmentService _projectEnrichmentService;
+        private readonly IProjectAdviserService _projectAdviserService;
         private readonly IUserActivityRepository _userActivityRepository;
         private readonly IUserSortService _userSortService;
 
@@ -37,12 +39,14 @@ namespace Webfuel.Domain
             IProjectRepository projectRepository, 
             IProjectSupportRepository projectSupportRepository,
             IProjectEnrichmentService projectEnrichmentService,
+            IProjectAdviserService projectAdviserService,
             IUserActivityRepository userActivityRepository, 
             IUserSortService userSortService)
         {
             _projectRepository = projectRepository;
             _projectSupportRepository = projectSupportRepository;
             _projectEnrichmentService = projectEnrichmentService;
+            _projectAdviserService = projectAdviserService;
             _userActivityRepository = userActivityRepository;
             _userSortService = userSortService;
         }
@@ -89,6 +93,9 @@ namespace Webfuel.Domain
                 await _projectEnrichmentService.CalculateSupportMetricsForProject(updatedProject);
                 await _projectRepository.UpdateProject(original: project, updated: updatedProject);
             }
+
+            if (updated.SupportRequestedTeamId.HasValue && updated.SupportRequestedTeamId != projectSupport.SupportRequestedTeamId)
+                await _projectAdviserService.SendTeamSupportRequestedEmail(project: project, supportTeamId: updated.SupportRequestedTeamId.Value);
 
             DashboardService.FlushSupportMetrics();
 

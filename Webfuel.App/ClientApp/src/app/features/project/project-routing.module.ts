@@ -44,7 +44,6 @@ const routes: Routes = [
     path: 'project-support/:id',
     component: ProjectSupportComponent,
     resolve: { project: ProjectApi.projectResolver('id') },
-    canDeactivate: [DeactivateService.isPristine<ProjectSupportComponent>()],
     data: { activeSideMenu: 'Projects' }
   },
   {

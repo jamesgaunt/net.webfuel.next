@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Project } from 'api/api.types';
+import { Project, ProjectStatus } from 'api/api.types';
 import { FormService } from 'core/form.service';
 import { ConfigurationService } from '../../../../core/configuration.service';
 import { ProjectComponentBase } from '../shared/project-component-base';
@@ -36,6 +36,12 @@ export class ProjectItemComponent extends ProjectComponentBase {
 
   canUnlock() {
     return this.configurationService.hasClaim(p => p.claims.canUnlockProjects);
+  }
+
+  filterStatus = (status: ProjectStatus) => {
+    if (status.locked && !this.canUnlock())
+      return false;
+    return true;
   }
 
   reset(item: Project) {
@@ -74,6 +80,9 @@ export class ProjectItemComponent extends ProjectComponentBase {
     recruitmentTarget: new FormControl<number | null>(null),
     numberOfProjectSites: new FormControl<number | null>(null),
     isInternationalMultiSiteStudyId: new FormControl<string | null>(null),
+
+    socialCare: new FormControl<boolean>(false, { nonNullable: true }),
+    publicHealth: new FormControl<boolean>(false, { nonNullable: true }),
 
     projectAdviserUserIds: new FormControl<string[]>([], { nonNullable: true }),
   });

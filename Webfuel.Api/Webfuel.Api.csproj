@@ -7,6 +7,51 @@
     <UserSecretsId>b61c8db6-ad36-4617-a0c7-eee4e6441a20</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\dist\307.7083d92fbf0b92f2.js" />
+    <Content Remove="wwwroot\dist\347.259e6943e33528fe.js" />
+    <Content Remove="wwwroot\dist\3rdpartylicenses.txt" />
+    <Content Remove="wwwroot\dist\440.521c4c0373565a0c.js" />
+    <Content Remove="wwwroot\dist\550.955ec1d5d6aecf2f.js" />
+    <Content Remove="wwwroot\dist\567.9576ee9fee4d2145.js" />
+    <Content Remove="wwwroot\dist\621.161fcaea68a775ea.js" />
+    <Content Remove="wwwroot\dist\735.b67ac8a8c1a83f7b.js" />
+    <Content Remove="wwwroot\dist\93.3515cf308c6e9f42.js" />
+    <Content Remove="wwwroot\dist\992.582ee4ba698cbc2f.js" />
+    <Content Remove="wwwroot\dist\993.c1d54f9d2d1d2879.js" />
+    <Content Remove="wwwroot\dist\common.697d0dff65d5dd97.js" />
+    <Content Remove="wwwroot\dist\fa-brands-400.57d1aeac42968fc1.svg" />
+    <Content Remove="wwwroot\dist\fa-brands-400.9304401a5d3e044b.ttf" />
+    <Content Remove="wwwroot\dist\fa-brands-400.9dc90a514ce09f1b.woff2" />
+    <Content Remove="wwwroot\dist\fa-brands-400.e77640260b569cf5.eot" />
+    <Content Remove="wwwroot\dist\fa-brands-400.f44694f24c5d8504.woff" />
+    <Content Remove="wwwroot\dist\fa-duotone-900.010bfc5c4da586a7.eot" />
+    <Content Remove="wwwroot\dist\fa-duotone-900.1735239cf5d82ed8.woff" />
+    <Content Remove="wwwroot\dist\fa-duotone-900.77e5297e3683d104.svg" />
+    <Content Remove="wwwroot\dist\fa-duotone-900.add6f46b66182c7a.woff2" />
+    <Content Remove="wwwroot\dist\fa-duotone-900.c0a9db4e67173f0c.ttf" />
+    <Content Remove="wwwroot\dist\fa-light-300.0317c527c7181dcf.eot" />
+    <Content Remove="wwwroot\dist\fa-light-300.2bf775fdb2290d86.woff2" />
+    <Content Remove="wwwroot\dist\fa-light-300.675398aa5eefba6c.woff" />
+    <Content Remove="wwwroot\dist\fa-light-300.79d801aa6f45441d.svg" />
+    <Content Remove="wwwroot\dist\fa-light-300.9d7fc88bded14c53.ttf" />
+    <Content Remove="wwwroot\dist\fa-regular-400.774b31a5aeb74a0c.woff2" />
+    <Content Remove="wwwroot\dist\fa-regular-400.b168bc37752e572e.woff" />
+    <Content Remove="wwwroot\dist\fa-regular-400.d987cf4a3b52bb58.ttf" />
+    <Content Remove="wwwroot\dist\fa-regular-400.dcdefc841a70674c.svg" />
+    <Content Remove="wwwroot\dist\fa-regular-400.e31085dfd052aee8.eot" />
+    <Content Remove="wwwroot\dist\fa-solid-900.012013e7db23e43d.svg" />
+    <Content Remove="wwwroot\dist\fa-solid-900.2cfa55e442cb127f.eot" />
+    <Content Remove="wwwroot\dist\fa-solid-900.64d0e58e7f0f57ac.woff" />
+    <Content Remove="wwwroot\dist\fa-solid-900.7c3b1f93b9d36466.ttf" />
+    <Content Remove="wwwroot\dist\fa-solid-900.a90ebe3801c5282d.woff2" />
+    <Content Remove="wwwroot\dist\index.html" />
+    <Content Remove="wwwroot\dist\main.26b7fe52de810cc9.js" />
+    <Content Remove="wwwroot\dist\polyfills.5019262256673b3b.js" />
+    <Content Remove="wwwroot\dist\runtime.d6e895a40ae72ea4.js" />
+    <Content Remove="wwwroot\dist\styles.0b7d78e828893d6a.css" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <ProjectReference Include="..\Webfuel.Domain.StaticData\Webfuel.Domain.StaticData.csproj" />
@@ -15,6 +60,51 @@
 
   <ItemGroup>
     <Folder Include="_Generated\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\dist\307.7083d92fbf0b92f2.js" />
+    <None Include="wwwroot\dist\347.259e6943e33528fe.js" />
+    <None Include="wwwroot\dist\3rdpartylicenses.txt" />
+    <None Include="wwwroot\dist\440.521c4c0373565a0c.js" />
+    <None Include="wwwroot\dist\550.955ec1d5d6aecf2f.js" />
+    <None Include="wwwroot\dist\567.9576ee9fee4d2145.js" />
+    <None Include="wwwroot\dist\621.161fcaea68a775ea.js" />
+    <None Include="wwwroot\dist\735.b67ac8a8c1a83f7b.js" />
+    <None Include="wwwroot\dist\93.3515cf308c6e9f42.js" />
+    <None Include="wwwroot\dist\992.582ee4ba698cbc2f.js" />
+    <None Include="wwwroot\dist\993.c1d54f9d2d1d2879.js" />
+    <None Include="wwwroot\dist\common.697d0dff65d5dd97.js" />
+    <None Include="wwwroot\dist\fa-brands-400.57d1aeac42968fc1.svg" />
+    <None Include="wwwroot\dist\fa-brands-400.9304401a5d3e044b.ttf" />
+    <None Include="wwwroot\dist\fa-brands-400.9dc90a514ce09f1b.woff2" />
+    <None Include="wwwroot\dist\fa-brands-400.e77640260b569cf5.eot" />
+    <None Include="wwwroot\dist\fa-brands-400.f44694f24c5d8504.woff" />
+    <None Include="wwwroot\dist\fa-duotone-900.010bfc5c4da586a7.eot" />
+    <None Include="wwwroot\dist\fa-duotone-900.1735239cf5d82ed8.woff" />
+    <None Include="wwwroot\dist\fa-duotone-900.77e5297e3683d104.svg" />
+    <None Include="wwwroot\dist\fa-duotone-900.add6f46b66182c7a.woff2" />
+    <None Include="wwwroot\dist\fa-duotone-900.c0a9db4e67173f0c.ttf" />
+    <None Include="wwwroot\dist\fa-light-300.0317c527c7181dcf.eot" />
+    <None Include="wwwroot\dist\fa-light-300.2bf775fdb2290d86.woff2" />
+    <None Include="wwwroot\dist\fa-light-300.675398aa5eefba6c.woff" />
+    <None Include="wwwroot\dist\fa-light-300.79d801aa6f45441d.svg" />
+    <None Include="wwwroot\dist\fa-light-300.9d7fc88bded14c53.ttf" />
+    <None Include="wwwroot\dist\fa-regular-400.774b31a5aeb74a0c.woff2" />
+    <None Include="wwwroot\dist\fa-regular-400.b168bc37752e572e.woff" />
+    <None Include="wwwroot\dist\fa-regular-400.d987cf4a3b52bb58.ttf" />
+    <None Include="wwwroot\dist\fa-regular-400.dcdefc841a70674c.svg" />
+    <None Include="wwwroot\dist\fa-regular-400.e31085dfd052aee8.eot" />
+    <None Include="wwwroot\dist\fa-solid-900.012013e7db23e43d.svg" />
+    <None Include="wwwroot\dist\fa-solid-900.2cfa55e442cb127f.eot" />
+    <None Include="wwwroot\dist\fa-solid-900.64d0e58e7f0f57ac.woff" />
+    <None Include="wwwroot\dist\fa-solid-900.7c3b1f93b9d36466.ttf" />
+    <None Include="wwwroot\dist\fa-solid-900.a90ebe3801c5282d.woff2" />
+    <None Include="wwwroot\dist\index.html" />
+    <None Include="wwwroot\dist\main.26b7fe52de810cc9.js" />
+    <None Include="wwwroot\dist\polyfills.5019262256673b3b.js" />
+    <None Include="wwwroot\dist\runtime.d6e895a40ae72ea4.js" />
+    <None Include="wwwroot\dist\styles.0b7d78e828893d6a.css" />
   </ItemGroup>
 
 

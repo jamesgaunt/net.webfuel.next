@@ -6,9 +6,15 @@ namespace Webfuel.Domain
     {
         public required Guid ProjectId { get; set; }
 
+        public bool OpenTeamSupportOnly { get; set; }
+
         public Query ApplyCustomFilters()
         {
             this.Equal(nameof(ProjectSupport.ProjectId), ProjectId);
+
+            if(OpenTeamSupportOnly)
+                this.SQL($"e.[SupportRequestedTeamId] IS NOT NULL AND e.[SupportRequestedCompletedAt] IS NULL");
+
             return this;
         }
     }

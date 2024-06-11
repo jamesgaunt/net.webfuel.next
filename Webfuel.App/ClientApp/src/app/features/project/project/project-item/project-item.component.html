@@ -11,17 +11,15 @@
   </div>
   <project-tabs></project-tabs>
   <form class="form" [formGroup]="form">
-
     <div class="flex no-margin">
       <div class="is-9">
-
         <div class="flex">
           <div class="field is-4">
             <label class="label">
               Status
               <span class="text is-warning" *ngIf="projectStatus && projectStatus.id != form.value.statusId">(changing from {{ projectStatus.name }})</span>
             </label>
-            <dropdown-select [dataSource]="staticDataCache.projectStatus" placeholder="required" formControlName="statusId"></dropdown-select>
+            <dropdown-select [optionFilter]="filterStatus" [dataSource]="staticDataCache.projectStatus" placeholder="required" formControlName="statusId"></dropdown-select>
           </div>
           <div class="field is-4">
             <label class="label">Closure date</label>
@@ -39,7 +37,6 @@
             </dropdown-select>
           </div>
         </div>
-
         <div class="flex">
           <div class="field is-6">
             <label class="label">Will this study use a CTU?</label>
@@ -49,9 +46,7 @@
             <label class="label">Monetary value of funding application</label>
             <input class="input" type="number" placeholder="required" formControlName="monetaryValueOfFundingApplication" />
           </div>
-
         </div>
-
         <div class="flex">
           <div class="field is-6">
             <label class="label">Funding stream submitted to</label>
@@ -62,9 +57,7 @@
             <input class="input" type="text" placeholder="optional" formControlName="submittedFundingStreamName" />
           </div>
         </div>
-
         <div class="flex">
-
           <div class="field is-12">
             <label class="label">
               RSS hubs involved in providing advice (other than Imperial College London and Partners)
@@ -72,7 +65,6 @@
             <dropdown-multi-select [dataSource]="staticDataCache.rssHub" placeholder="optional" formControlName="rssHubProvidingAdviceIds"></dropdown-multi-select>
           </div>
         </div>
-
       </div>
       <div class="is-3">
         <div class="field">
@@ -88,11 +80,6 @@
         </div>
       </div>
     </div>
-
-
-
-
-
     <div class="flex">
       <div class="field is-6">
         <label class="label">Is a paid RSS staff member, who provided advice, the lead/co-lead for this application?</label>
@@ -103,11 +90,8 @@
         <dropdown-select [dataSource]="staticDataCache.isPaidRSSAdviserCoapplicant" placeholder="required" formControlName="isPaidRSSAdviserCoapplicantId"></dropdown-select>
       </div>
     </div>
-
-
     <hr />
     <h3>For Clinical Trial Submissions</h3>
-
     <div class="flex">
       <div class="field is-3 is-6-md">
         <label class="label">Project start date</label>
@@ -126,7 +110,18 @@
         <dropdown-select [dataSource]="staticDataCache.isInternationalMultiSiteStudy" placeholder="optional" formControlName="isInternationalMultiSiteStudyId"></dropdown-select>
       </div>
     </div>
-
+    <hr/>
+    <h2>Other Information</h2>
+    <div class="flex">
+      <div class="field is-3">
+        <label class="label">Social care</label>
+        <toggle-input formControlName="socialCare" />
+      </div>
+      <div class="field is-3">
+        <label class="label">Public health</label>
+        <toggle-input formControlName="publicHealth" />
+      </div>
+    </div>
     <div *ngIf="!locked" class="floating-buttons">
       <button class="button is-success" (click)="save(false)">Save</button>
       <button class="button is-success" (click)="save(true)">Save &amp; Close</button>
@@ -136,7 +131,6 @@
       <button *ngIf="canUnlock()" class="button is-warning" (click)="unlock()">Unlock</button>
       <button class="button" (click)="cancel()">Close</button>
     </div>
-
   </form>
   <p>
     <span>Created {{ item.createdAt | date: 'dd MMM yy'}}.</span>

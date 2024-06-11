@@ -182,8 +182,14 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.TeamContactRoleId):
                         result.Add(new SqlParameter(nameof(SupportRequest.TeamContactRoleId), entity.TeamContactRoleId ?? (object?)DBNull.Value));
                         break;
+                    case nameof(SupportRequest.LeadApplicantCareerStageId):
+                        result.Add(new SqlParameter(nameof(SupportRequest.LeadApplicantCareerStageId), entity.LeadApplicantCareerStageId ?? (object?)DBNull.Value));
+                        break;
                     case nameof(SupportRequest.LeadApplicantOrganisationTypeId):
                         result.Add(new SqlParameter(nameof(SupportRequest.LeadApplicantOrganisationTypeId), entity.LeadApplicantOrganisationTypeId ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(SupportRequest.LeadApplicantLocationId):
+                        result.Add(new SqlParameter(nameof(SupportRequest.LeadApplicantLocationId), entity.LeadApplicantLocationId ?? (object?)DBNull.Value));
                         break;
                     case nameof(SupportRequest.IsLeadApplicantNHSId):
                         result.Add(new SqlParameter(nameof(SupportRequest.IsLeadApplicantNHSId), entity.IsLeadApplicantNHSId ?? (object?)DBNull.Value));
@@ -277,7 +283,9 @@ namespace Webfuel.Domain
                 yield return "HowDidYouFindUsId";
                 yield return "IsCTUAlreadyInvolvedId";
                 yield return "TeamContactRoleId";
+                yield return "LeadApplicantCareerStageId";
                 yield return "LeadApplicantOrganisationTypeId";
+                yield return "LeadApplicantLocationId";
                 yield return "IsLeadApplicantNHSId";
                 yield return "LeadApplicantAgeRangeId";
                 yield return "LeadApplicantGenderId";
@@ -343,7 +351,9 @@ namespace Webfuel.Domain
                 yield return "HowDidYouFindUsId";
                 yield return "IsCTUAlreadyInvolvedId";
                 yield return "TeamContactRoleId";
+                yield return "LeadApplicantCareerStageId";
                 yield return "LeadApplicantOrganisationTypeId";
+                yield return "LeadApplicantLocationId";
                 yield return "IsLeadApplicantNHSId";
                 yield return "LeadApplicantAgeRangeId";
                 yield return "LeadApplicantGenderId";
@@ -408,7 +418,9 @@ namespace Webfuel.Domain
                 yield return "HowDidYouFindUsId";
                 yield return "IsCTUAlreadyInvolvedId";
                 yield return "TeamContactRoleId";
+                yield return "LeadApplicantCareerStageId";
                 yield return "LeadApplicantOrganisationTypeId";
+                yield return "LeadApplicantLocationId";
                 yield return "IsLeadApplicantNHSId";
                 yield return "LeadApplicantAgeRangeId";
                 yield return "LeadApplicantGenderId";

@@ -55,6 +55,9 @@ export abstract class DropDownBase<TItem> {
   @Input()
   closeOnSelect: boolean = true;
 
+  @Input()
+  optionFilter: (item: TItem) => boolean = () => true;
+
   @Output()
   filter = new EventEmitter<Query>();
 
@@ -132,7 +135,7 @@ export abstract class DropDownBase<TItem> {
         if (response.items.length == 0) {
           this.optionItemsComplete = true;
         } else {
-          this.optionItems = this.optionItems.concat(response.items);
+          this.optionItems = this.optionItems.concat(response.items.filter(p => this.optionFilter(p)));
         }
         this.cd.detectChanges();
       },

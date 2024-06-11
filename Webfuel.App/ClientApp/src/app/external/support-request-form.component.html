@@ -163,7 +163,7 @@
         </div>
         <div class="field is-4">
           <label class="label">Career Stage</label>
-          <input class="input" type="text" placeholder="required" formControlName="leadApplicantCareerStage" maxlength="64" />
+          <dropdown-select [dataSource]="staticDataCache.researcherCareerStage" placeholder="required" formControlName="leadApplicantCareerStageId"></dropdown-select>
         </div>
         <div class="field is-4">
           <label class="label">Organisation Type</label>
@@ -180,6 +180,10 @@
         <div class="field is-4">
           <label class="label">ORCID</label>
           <input class="input" type="text" placeholder="optional" formControlName="leadApplicantORCID" maxlength="64" />
+        </div>
+        <div class="field is-4">
+          <label class="label">Where are they located?</label>
+          <dropdown-select [dataSource]="staticDataCache.researcherLocation" placeholder="required" formControlName="leadApplicantLocationId"></dropdown-select>
         </div>
         <div class="field is-8">
           <label class="label">

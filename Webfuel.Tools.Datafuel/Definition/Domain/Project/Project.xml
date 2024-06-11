@@ -35,6 +35,11 @@
     <Property Name="RecruitmentTarget" Type="Int32?" />
     <Property Name="NumberOfProjectSites" Type="Int32?" />
     <Property Name="IsInternationalMultiSiteStudyId" Type="IsInternationalMultiSiteStudy?" />
+    
+    <!-- 1.3 Other Information / Annual Report Data -->
+
+    <Property Name="SocialCare" Type="boolean" />
+    <Property Name="PublicHealth" Type="boolean" />
 
     <!-- ========== Replicated from Support Request (Keep All Field Names Identical) ========== -->
 
@@ -83,10 +88,12 @@
 
     <Property Name="LeadApplicantJobRole" Type="meta:name" />
     <Property Name="LeadApplicantCareerStage" Type="meta:name" /><!-- 1.2 Development -->
+    <Property Name="LeadApplicantCareerStageId" Type="ResearcherCareerStage?" /><!-- 1.3 Development -->
     <Property Name="LeadApplicantOrganisationTypeId" Type="ResearcherOrganisationType?" />
     <Property Name="LeadApplicantOrganisation" Type="meta:name" />
     <Property Name="LeadApplicantDepartment" Type="meta:name" />
-
+    <Property Name="LeadApplicantLocationId" Type="ResearcherLocation?" /><!-- 1.3 Development -->
+    
     <Property Name="LeadApplicantAddressLine1" Type="meta:name" />
     <Property Name="LeadApplicantAddressLine2" Type="meta:name" />
     <Property Name="LeadApplicantAddressTown" Type="meta:name" />
