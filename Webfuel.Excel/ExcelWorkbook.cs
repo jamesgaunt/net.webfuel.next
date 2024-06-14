@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace Webfuel.Excel
 {
-    public class ExcelWorkbook: IDisposable
+    public class ExcelWorkbook : IDisposable
     {
         internal readonly XLWorkbook _workbook;
 
@@ -82,6 +82,16 @@ namespace Webfuel.Excel
             _worksheet = worksheet;
         }
 
+        public ExcelCell Merge(string topLeft, string bottomRight, bool border)
+        {
+            var range = _worksheet.Range(topLeft, bottomRight).Merge();
+
+            if (border)
+                range.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+
+            return Cell(topLeft);
+        }
+
         public ExcelCell Cell(string cellAddress)
         {
             var cell = _worksheet.Cell(cellAddress);
@@ -117,7 +127,7 @@ namespace Webfuel.Excel
 
             while (true)
             {
-                if(_worksheet.Cell(1, col).TryGetValue(out string value))
+                if (_worksheet.Cell(1, col).TryGetValue(out string value))
                 {
                     if (value.Trim() == header)
                         return col;
@@ -131,7 +141,7 @@ namespace Webfuel.Excel
 
         public bool IsRowEmpty(int row, int colsToCheck = 1)
         {
-            for(var col = 1; col <= colsToCheck; col++)
+            for (var col = 1; col <= colsToCheck; col++)
             {
                 var value = _worksheet.Cell(row, col).GetString().Trim();
                 if (!String.IsNullOrEmpty(value))
@@ -248,16 +258,16 @@ namespace Webfuel.Excel
 
         public ExcelCell SetValue(object? value)
         {
-            if(value == null)
+            if (value == null)
                 return Clear();
 
-            if(value is String s)
+            if (value is String s)
                 return SetValue(s);
 
-            if(value is bool b)
+            if (value is bool b)
                 return SetValue(b);
 
-            if(value is int i)
+            if (value is int i)
                 return SetValue(i);
 
             if (value is Decimal dc)
@@ -272,7 +282,7 @@ namespace Webfuel.Excel
             if (value is DateTimeOffset doffset)
                 return SetValue(doffset.LocalDateTime);
 
-            if(IsNumericType(value.GetType()))
+            if (IsNumericType(value.GetType()))
                 return SetValue((double)value);
 
             return SetValue(value.ToString());
@@ -310,6 +320,12 @@ namespace Webfuel.Excel
             return this;
         }
 
+        public ExcelCell SetNumberFormat(string format)
+        {
+            _cell.Style.NumberFormat.Format = format;
+            return this;
+        }
+
         public int TextRotation
         {
             get { return _cell.Style.Alignment.TextRotation; }
@@ -322,10 +338,15 @@ namespace Webfuel.Excel
             return this;
         }
 
-        public ExcelCell CentreAlign()
+        public ExcelCell HorizontalCentreAlign()
         {
-
             _cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            return this;
+        }
+
+        public ExcelCell VerticalCentreAlign()
+        {
+            _cell.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
             return this;
         }
 
@@ -335,9 +356,37 @@ namespace Webfuel.Excel
             return this;
         }
 
-        public ExcelCell SetWidth(double width)
+        public ExcelCell SetWidth(double? width)
         {
-            _cell.WorksheetColumn().Width = width;
+            if (width == null)
+                return this;
+            _cell.WorksheetColumn().Width = width.Value;
+            return this;
+        }
+
+        public ExcelCell SetHeight(double? height)
+        {
+            if (height == null)
+                return this;
+            _cell.WorksheetRow().Height = height.Value;
+            return this;
+        }
+
+        public ExcelCell SetTextWrap(bool value)
+        {
+            _cell.Style.Alignment.WrapText = value;
+            return this;
+        }
+
+        public ExcelCell SetOutsideBorderThin()
+        {
+            _cell.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+            return this;
+        }
+
+        public ExcelCell SetBottomBorderThick()
+        {
+            _cell.Style.Border.BottomBorder = XLBorderStyleValues.Thick;
             return this;
         }
 

@@ -12,6 +12,11 @@ namespace Webfuel.Domain
 {
     public class RunAnnualReport: IRequest<ReportStep>
     {
+        public required DateOnly? FromDate { get; set; }
+
+        public required DateOnly? ToDate { get; set; }
+
+        public required bool HighlightInvalidCells { get; set; }
     }
 
     internal class RunAnnualReportHandler: IRequestHandler<RunAnnualReport, ReportStep>
@@ -27,7 +32,11 @@ namespace Webfuel.Domain
 
         public Task<ReportStep> Handle(RunAnnualReport request, CancellationToken cancellationToken)
         {
-            var builder = new AnnualReportBuilder(_serviceProvider);
+            var builder = new AnnualReportBuilder(_serviceProvider, new AnnualReportSettings { 
+                FromDate = request.FromDate,
+                ToDate = request.ToDate,
+                HighlightInvalidCells = request.HighlightInvalidCells
+            });
             return Task.FromResult(_reportGeneratorService.RegisterReport(builder));
         }
     }

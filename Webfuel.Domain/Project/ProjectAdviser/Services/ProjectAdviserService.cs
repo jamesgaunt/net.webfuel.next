@@ -106,7 +106,7 @@ namespace Webfuel.Domain
                 { "ADVISER_EMAIL", user.Email }
             };
 
-            await _emailTemplateService.SendEmail("Support Adviser Assigned", replacements);
+            await _emailTemplateService.SendEmail("Support Advisor Assigned", replacements);
         }
 
         public async Task SendLeadAdviserAssignedEmail(Project project, User user)
@@ -119,7 +119,7 @@ namespace Webfuel.Domain
                 { "ADVISER_EMAIL", user.Email }
             };
 
-            await _emailTemplateService.SendEmail("Lead Adviser Assigned", replacements);
+            await _emailTemplateService.SendEmail("Lead Advisor Assigned", replacements);
         }
 
         public async Task SendTeamSupportRequestedEmail(Project project, Guid supportTeamId)

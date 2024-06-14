@@ -48,6 +48,9 @@ namespace Webfuel.Domain
             var updated = SupportRequestMapper.Apply(request, original);
             updated = await _supportRequestRepository.UpdateSupportRequest(original: original, updated: updated);
 
+            updated.TeamContactFullName = $"{updated.TeamContactTitle} {updated.TeamContactFirstName} {updated.TeamContactLastName}";
+            updated.LeadApplicantFullName = $"{updated.LeadApplicantTitle} {updated.LeadApplicantFirstName} {updated.LeadApplicantLastName}";
+
             await _supportRequestChangeLogService.InsertChangeLog(original: original, updated: updated);
             return updated;
         }

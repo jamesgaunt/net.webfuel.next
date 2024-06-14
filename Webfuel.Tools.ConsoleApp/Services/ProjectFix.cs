@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading.Tasks;
+using Webfuel.Domai;
 using Webfuel.Domain;
 using Webfuel.Domain.StaticData;
 using Webfuel.Excel;
@@ -17,31 +18,34 @@ namespace Webfuel.Tools.ConsoleApp
     }
 
     [Service(typeof(IProjectFix))]
-    internal class ProjectFix: IProjectFix
+    internal class ProjectFix : IProjectFix
     {
         private readonly IProjectRepository _projectRepository;
         private readonly IStaticDataService _staticDataService;
-        private readonly IUserSortService _userSortService;
+        private readonly IProjectEnrichmentService _projectEnrichmentService;
 
         public ProjectFix(
-            IProjectRepository projectRepository, 
+            IProjectRepository projectRepository,
             IStaticDataService staticDataService,
-            IUserSortService userSortService)
+            IProjectEnrichmentService projectEnrichmentService)
         {
             _projectRepository = projectRepository;
             _staticDataService = staticDataService;
-            _userSortService = userSortService;
+            _projectEnrichmentService = projectEnrichmentService;
         }
 
         public async Task FixProjects()
         {
             var projects = await _projectRepository.SelectProject();
 
-            foreach(var project in projects)
+            foreach (var original in projects)
             {
-               // await _enrichProjectService.EnrichProject(project);
+                var updated = original.Copy();
+
+                await _projectEnrichmentService.CalculateSupportMetricsForProject(updated);
+
+                await _projectRepository.UpdateProject(original: original, updated: updated);
             }
         }
     }
-
 }
