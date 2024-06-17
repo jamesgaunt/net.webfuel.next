@@ -217,6 +217,8 @@ export enum SubmissionStageEnum {
     Stage2 = "deecb94c-8284-45c8-b499-1c0c099215b0",
     OneStageApplication = "aa13a2ae-f1dd-4b8b-959e-15bdff000fee",
     AcceleratorAward = "3e658c3b-11fc-464b-9296-7bf369866bce",
+    NotApplicable = "af170296-2c64-4a39-8fb8-6ddd6f8d3137",
+    Unknown = "174a713b-aff7-432b-8e7a-eede783a6067",
 }
 
 export enum SupportRequestStatusEnum {
