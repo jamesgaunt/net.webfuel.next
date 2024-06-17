@@ -386,6 +386,7 @@ namespace Webfuel.Domain
             {
                 case "NIHR RfPB": return "RfPB";
                 case "NIHR PDG": return "PDG";
+                case "NIHR PRP": return "PRP";
                 case "NIHR PGfAR": return "PGfAR";
                 case "NIHR HTA": return "HTA";
                 case "NIHR PHR": return "PHR";
@@ -394,6 +395,14 @@ namespace Webfuel.Domain
                 case "NIHR i4i": return "i4i";
                 case "NIHR Joint Funded": return "NIHR joint funded";
                 case "Other Research Councils": return "Research Councils";
+
+                case "Not Known": return "Unknown";
+                case "NIHR Training Programmes": return "NIHR (other)";
+                case "NIHR Global Health": return "NIHR (other)";
+                case "DHSC": return "Other";
+                case "Wellcome": return "Other";
+                case "MRC": return "Other";
+                case "UKRI": return "Other";
             }
             return name;
         }

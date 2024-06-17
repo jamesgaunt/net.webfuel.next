@@ -16,6 +16,8 @@
       <Row Id="deecb94c-8284-45c8-b499-1c0c099215b0" Name="Stage 2" />
       <Row Id="aa13a2ae-f1dd-4b8b-959e-15bdff000fee" Name="One Stage Application" />
       <Row Id="3e658c3b-11fc-464b-9296-7bf369866bce" Name="Accelerator Award" />
+      <Row Id="af170296-2c64-4a39-8fb8-6ddd6f8d3137" Name="Not applicable" />
+      <Row Id="174a713b-aff7-432b-8e7a-eede783a6067" Name="Unknown" />
     </Data>
   </Entity>
 </Schema>

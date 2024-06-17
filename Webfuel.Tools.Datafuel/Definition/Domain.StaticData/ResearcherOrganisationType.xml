@@ -16,6 +16,10 @@
       <Row Id="27f004a9-924a-4fdc-91ca-d0ded74b6818" Name="University" />
       <Row Id="a74c26d7-1f29-465b-bcb5-04013450476e" Name="Local Authority" />
       <Row Id="1681c536-1111-4d58-b0f5-190b8a9bd205" Name="Company" />
+      <Row Id="83ae8618-de77-461c-ab3c-f1c607b17a2b" Name="Voluntary or third sector" />
+      <Row Id="df91de28-7df4-4197-9efb-8406c14c68f1" Name="SME" />
+
+      <!-- To Remove -->
       <Row Id="2cb81746-1162-4f0d-8ae9-f85ab9dbe3d8" Name="Combined NHS &amp; University" />
       <Row Id="14cab66e-a10a-4cc9-9b4a-a41d71cf49a4" Name="Other" FreeText="true" />
     </Data>
