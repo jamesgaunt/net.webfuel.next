@@ -703,7 +703,7 @@ namespace Webfuel.Domain
                         continue;
 
                     //if (!String.IsNullOrEmpty(user.AdvisorDisciplineFreeText) && !result.Contains(user.AdvisorDisciplineFreeText))
-                    //    result.Append(user.AdvisorDisciplineFreeText);
+                    //    result.Add(user.AdvisorDisciplineFreeText);
                 }
             }
             return String.Join(", ", result);
