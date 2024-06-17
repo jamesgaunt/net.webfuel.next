@@ -60,7 +60,7 @@ namespace Webfuel.Domain
 
             var oldStatus = await _staticDataService.RequireSupportRequestStatus(original.StatusId);
 
-            if (oldStatus.Id != SupportRequestStatusEnum.ToBeTriaged)
+            if (oldStatus.Id != SupportRequestStatusEnum.ToBeTriaged && oldStatus.Id != SupportRequestStatusEnum.OnHold)
                 throw new InvalidOperationException("The specified support request has already been triaged");
 
             var newStatus = await _staticDataService.RequireSupportRequestStatus(request.StatusId);
