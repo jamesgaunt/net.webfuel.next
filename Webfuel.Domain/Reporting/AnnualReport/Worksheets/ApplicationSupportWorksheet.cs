@@ -247,25 +247,28 @@ namespace Webfuel.Domain
             NextRow();
 
             var supportEvents = await serviceProvider.GetRequiredService<IProjectSupportRepository>().SelectProjectSupportByProjectId(project.Id);
+            var submissions = await serviceProvider.GetRequiredService<IProjectSubmissionRepository>().SelectProjectSubmissionByProjectId(project.Id);
 
-            if(context.Settings.ToDate.HasValue)
+            if(context.Settings.ToDate.HasValue) { 
                 supportEvents = supportEvents.Where(p => p.Date <= context.Settings.ToDate.Value).ToList(); // Filter out support events after the report end
+                submissions = submissions.Where(p => p.SubmissionDate <= context.Settings.ToDate.Value).ToList(); // Filter out submissions after the report end
+            }
 
             // Section A
 
             SetValue(ProjectID, project.PrefixedNumber);
             SetValue(DateOfFirstContact, project.DateOfRequest);
             SetValue(ClosureDate, project.ClosureDate);
-            SetValue(NIHRApplicationID, project.NIHRApplicationId);
+            SetValue(NIHRApplicationID, Render_NIHRApplicationID(context, project, submissions));
             SetValue(ApplicationDestination, Render_ApplicationDestination(context, project));
 
-            SetValue(ProjectSubmitted, Render_ProjectSubmitted(context, project), bypassFormatting: true);
-            SetValue(SubmissionStage, Render_SubmissionStage(context, project));
-            SetValue(Outcome, Render_Outcome(context, project));
+            SetValue(ProjectSubmitted, Render_ProjectSubmitted(context, project, submissions), bypassFormatting: true);
+            SetValue(SubmissionStage, Render_SubmissionStage(context, project, submissions));
+            SetValue(Outcome, Render_Outcome(context, project, submissions));
 
             SetValue(IsPaidRSSLead, project.IsPaidRSSAdviserLeadId == IsPaidRSSAdviserLeadEnum.Yes);
-            SetValue(IsPaidRSSCoApplicant, project.IsPaidRSSAdviserCoapplicantId = IsPaidRSSAdviserCoapplicantEnum.Yes);
-            SetValue(WasPrePostAdvice, Render_PrePostAward(context, project));
+            SetValue(IsPaidRSSCoApplicant, project.IsPaidRSSAdviserCoapplicantId == IsPaidRSSAdviserCoapplicantEnum.Yes);
+            SetValue(WasPrePostAdvice, Render_PrePostAward(context, project, supportEvents));
 
             // Section B
 
@@ -365,8 +368,8 @@ namespace Webfuel.Domain
                 SME,
                 NHSOther,
                 LivedExperience,
-                TeamCompositionOther,
                 TeamCompositionDontKnow);
+            SetValue(TeamCompositionOther, project.ProfessionalBackgroundFreeText);
 
             SetValue(HasRSSProvidedAPIFGrant, false);
             SetValue(PIFGrantAmount, String.Empty);
@@ -377,31 +380,102 @@ namespace Webfuel.Domain
         string Render_ApplicationDestination(AnnualReportContext context, Project project)
         {
             var fundingStream = context.StaticData.FundingStream.FirstOrDefault(x => x.Id == project.ProposedFundingStreamId);
-            return fundingStream?.Name ?? String.Empty;
+            var name = fundingStream?.Name ?? String.Empty;
+
+            switch (name)
+            {
+                case "NIHR RfPB": return "RfPB";
+                case "NIHR PDG": return "PDG";
+                case "NIHR PGfAR": return "PGfAR";
+                case "NIHR HTA": return "HTA";
+                case "NIHR PHR": return "PHR";
+                case "NIHR HSDR": return "HS&DR";
+                case "NIHR EME": return "EME";
+                case "NIHR i4i": return "i4i";
+                case "NIHR Joint Funded": return "NIHR joint funded";
+                case "Other Research Councils": return "Research Councils";
+            }
+            return name;
         }
 
-        string Render_ProjectSubmitted(AnnualReportContext context, Project project)
+        string Render_ProjectSubmitted(AnnualReportContext context, Project project, List<ProjectSubmission> submissions)
         {
-            return String.Empty;
+            if(submissions.Count() == 0)
+                return "N";
+            return "Y";
         }
 
         bool Render_NonNHSSetting(AnnualReportContext context, Project project)
         {
-            return false;
+            return Render_LeadApplicantEmployingOrganisationType(context, project).Contains("NHS");
         }
 
-        string Render_SubmissionStage(AnnualReportContext context, Project project)
+        string Render_SubmissionStage(AnnualReportContext context, Project project, List<ProjectSubmission> submissions)
         {
-            return String.Empty;
+            if (submissions.Count() == 0)
+                return "Not applicable";
+
+            var latest = submissions.OrderByDescending(p => p.SubmissionDate).First();
+            
+            var submissionStage = context.StaticData.SubmissionStage.FirstOrDefault(x => x.Id == latest.SubmissionStageId);
+            var name = submissionStage?.Name ?? String.Empty;
+
+            switch (name)
+            {
+                case "Outline Stage (Stage 1)": return "Outline";
+                case "Stage 2": return "Full";
+                case "One Stage Application": return "One-stage";
+            }
+            return name;
         }
 
-        string Render_Outcome(AnnualReportContext context, Project project)
+        string Render_NIHRApplicationID(AnnualReportContext context, Project project, List<ProjectSubmission> submissions)
         {
-            return String.Empty;
+            if (submissions.Count() == 0)
+                return "";
+
+            var latest = submissions.OrderByDescending(p => p.SubmissionDate).First();
+            return latest.NIHRReference;
         }
 
-        string Render_PrePostAward(AnnualReportContext context, Project project)
+        string Render_Outcome(AnnualReportContext context, Project project, List<ProjectSubmission> submissions)
         {
+            if (submissions.Count() == 0)
+                return "Not submitted";
+
+            var latest = submissions.OrderByDescending(p => p.SubmissionDate).First();
+            if(latest.SubmissionOutcomeId == null)
+                return "Unknown";
+
+            var outcome = context.StaticData.SubmissionOutcome.FirstOrDefault(x => x.Id == latest.SubmissionOutcomeId);
+            var name = outcome?.Name ?? String.Empty;
+
+            switch (name)
+            {
+                case "Funded (full stage only)": return "Successful";
+            }
+            return name;
+        }
+
+        string Render_PrePostAward(AnnualReportContext context, Project project, List<ProjectSupport> supportEvents)
+        {
+            var pre = false;
+            var post = false;
+
+            foreach(var supportEvent in supportEvents)
+            {
+                if (supportEvent.IsPrePostAwardId == IsPrePostAwardEnum.PreAward)
+                    pre = true;
+                if (supportEvent.IsPrePostAwardId == IsPrePostAwardEnum.PostAward)
+                    post = true;
+            }
+
+            if (pre && post)
+                return "Pre- and post-award";
+            if (pre) 
+                return "Pre-award";
+            if (post)
+                return "Post-award without pre-award support";
             return String.Empty;
         }
 
@@ -504,7 +578,16 @@ namespace Webfuel.Domain
             if (organisationType == null)
                 return String.Empty;
 
-            return organisationType.Name;
+            var name = organisationType.Name;
+
+            switch (name)
+            {
+                case "NHS": return "NHS Trust";
+                case "University": return "HEI";
+                case "Local Authority": return "Local authority";
+                case "Company": return "Commercial organisation";
+            }
+            return name;
         }
 
         string Render_LeadApplicantLocation(AnnualReportContext context, Project project)
@@ -529,11 +612,18 @@ namespace Webfuel.Domain
 
         string Render_ProfessionalBackgrounds(AnnualReportContext context, Project project, List<string> professionalBackgrounds, string title)
         {
-            var checkExists = context.StaticData.ProfessionalBackground.FirstOrDefault(p => p.Name == title);
+            var checkExists = context.StaticData.ProfessionalBackground.FirstOrDefault(p => AliasProfessionalBackground(p.Name) == title);
             if (checkExists == null)
                 return "MISSING STATIC";
 
             return professionalBackgrounds.Contains(title) ? "Y" : "N";
+        }
+
+        string AliasProfessionalBackground(string input)
+        {
+            if (input == "Patient/public contributor")
+                return "Lived experience/public/community contributor";
+            return input;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -639,7 +729,7 @@ namespace Webfuel.Domain
                     continue; // This static has been deleted
 
                 // Use the alias first and foremost
-                var text = rpb.Name;
+                var text = AliasProfessionalBackground(rpb.Name);
 
                 if (result.Contains(text))
                     continue;

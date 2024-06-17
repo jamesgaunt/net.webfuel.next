@@ -45,6 +45,7 @@ import { CreateUserActivityDialog, CreateUserActivityDialogComponent } from './d
 import { UpdateUserActivityDialog, UpdateUserActivityDialogComponent } from './dialogs/update-user-activity/update-user-activity.dialog';
 import { FileViewerDialog, FileViewerDialogComponent } from './dialogs/file-viewer/file-viewer.dialog';
 import { AlertDialog, AlertDialogComponent } from './dialogs/alert/alert.dialog';
+import { RunAnnualReportDialog, RunAnnualReportDialogComponent } from './dialogs/run-annual-report/run-annual-report.dialog';
 
 // Misc
 import { FileBrowserComponent } from './file-browser/file-browser.component';
@@ -99,6 +100,7 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
     UpdateUserActivityDialogComponent,
     FileViewerDialogComponent,
     AlertDialogComponent,
+    RunAnnualReportDialogComponent,
 
     // Misc
     FileBrowserComponent
@@ -150,6 +152,7 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
     UpdateUserActivityDialogComponent,
     FileViewerDialogComponent,
     AlertDialogComponent,
+    RunAnnualReportDialogComponent,
 
     // Misc
     FileBrowserComponent
@@ -164,6 +167,7 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
     UpdateUserActivityDialog,
     FileViewerDialog,
     AlertDialog,
+    RunAnnualReportDialog
   ]
 })
 export class SharedModule { }

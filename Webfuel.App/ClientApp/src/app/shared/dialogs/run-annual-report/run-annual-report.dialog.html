@@ -1,0 +1,31 @@
+<div class="dialog">
+  <div class="dialog-head is-warning">
+    Run Experimental Annual Report
+  </div>
+  <div class="dialog-body">
+    <div style="margin-top: 0" class="message is-warning">This report is under development and available for testing purposes only.</div>
+
+    <form class="form" [formGroup]="form">
+      <div class="flex">
+        <div class="field is-6">
+          <label class="label">Reporting period start</label>
+          <date-picker placeholder="optional" formControlName="fromDate" [enableClear]="true"></date-picker>
+        </div>
+        <div class="field is-6">
+          <label class="label">Reporting period end</label>
+          <date-picker placeholder="optional" formControlName="toDate" [enableClear]="true"></date-picker>
+        </div>
+        <div class="field is-12">
+          <label class="label">Highlight invalid cells</label>
+          <toggle-input formControlName="highlightInvalidCells" />
+        </div>
+      </div>
+    </form>
+
+  </div>
+  <div class="dialog-buttons">
+    <button type="submit" class="is-warning" (click)="confirm()">Confirm</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+  </div>
+</div>
+

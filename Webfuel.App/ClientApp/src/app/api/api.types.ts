@@ -1249,6 +1249,12 @@ export interface ReportArgument {
     dateValue: string | null | null;
 }
 
+export interface RunAnnualReport {
+    fromDate: string | null | null;
+    toDate: string | null | null;
+    highlightInvalidCells: boolean;
+}
+
 export interface QueryReport extends Query {
     name: string;
     reportGroupId: string | null | null;

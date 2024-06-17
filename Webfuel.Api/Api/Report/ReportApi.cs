@@ -73,10 +73,9 @@ namespace Webfuel.App
             return await mediator.Send(command);
         }
 
-        public static Task<ReportStep> RunAnnualReport(IMediator mediator)
+        public static async Task<ReportStep> RunAnnualReport([FromBody] RunAnnualReport command, IMediator mediator)
         {
-            throw new NotImplementedException();
-            // return await mediator.Send(new RunAnnualReport());
+            return await mediator.Send(command);
         }
 
         public static async Task<Report?> Get(Guid id, IMediator mediator)

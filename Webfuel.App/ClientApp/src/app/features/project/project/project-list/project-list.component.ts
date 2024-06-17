@@ -12,6 +12,7 @@ import { ProjectStatusEnum } from '../../../../api/api.enums';
 import _ from 'shared/common/underscore';
 import { ReportApi } from '../../../../api/report.api';
 import { ConfirmDialog } from '../../../../shared/dialogs/confirm/confirm.dialog';
+import { RunAnnualReportDialog } from '../../../../shared/dialogs/run-annual-report/run-annual-report.dialog';
 
 @Component({
   selector: 'project-list',
@@ -25,6 +26,7 @@ export class ProjectListComponent {
     public userApi: UserApi,
     public userService: UserService,
     private reportApi: ReportApi,
+    private runAnnualReportDialog: RunAnnualReportDialog,
     public staticDataCache: StaticDataCache,
     private configurationService: ConfigurationService,
     private reportService: ReportService,
@@ -75,10 +77,7 @@ export class ProjectListComponent {
   }
 
   annualReport() {
-    this.confirmDialog.open({ title: "Run Experimental Annual Report", message: "This report is under development and available for testing purposes only." }).subscribe((result) => {
-      this.reportApi.runAnnualReport().subscribe((result) => {
-        this.reportService.runReport(result);
-      });
+    this.runAnnualReportDialog.open({}).subscribe((result) => {
     });
   }
 
