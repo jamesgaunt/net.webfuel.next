@@ -15,7 +15,9 @@ export interface TriageSupportRequestDialogData {
 @Injectable()
 export class TriageSupportRequestDialog extends DialogBase<SupportRequest, TriageSupportRequestDialogData>  {
   open(data: TriageSupportRequestDialogData) {
-    return this._open(TriageSupportRequestDialogComponent, data);
+    return this._open(TriageSupportRequestDialogComponent, data, {
+      disableClose: true
+    });
   }
 }
 

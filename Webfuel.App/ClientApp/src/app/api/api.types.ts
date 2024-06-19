@@ -1097,7 +1097,7 @@ export interface ProjectSubmission {
     id: string;
     nihrReference: string;
     submissionDate: string;
-    fundingAmountOnSubmission: number;
+    fundingAmountOnSubmission: number | null | null;
     projectId: string;
     submissionStageId: string;
     submissionOutcomeId: string | null | null;
@@ -1109,7 +1109,7 @@ export interface CreateProjectSubmission {
     nihrReference: string;
     submissionStageId: string;
     submissionOutcomeId: string | null | null;
-    fundingAmountOnSubmission: number;
+    fundingAmountOnSubmission: number | null | null;
 }
 
 export interface UpdateProjectSubmission {
@@ -1118,7 +1118,7 @@ export interface UpdateProjectSubmission {
     nihrReference: string;
     submissionStageId: string;
     submissionOutcomeId: string | null | null;
-    fundingAmountOnSubmission: number;
+    fundingAmountOnSubmission: number | null | null;
 }
 
 export interface QueryProjectSubmission extends Query {

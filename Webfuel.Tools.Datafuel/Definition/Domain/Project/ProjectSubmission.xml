@@ -8,8 +8,7 @@
     <Property Name="SubmissionDate" Type="Date" />
     <Property Name="SubmissionStageId" Type="SubmissionStage" />
     <Property Name="SubmissionOutcomeId" Type="SubmissionOutcome?" />
-    <Property Name="FundingAmountOnSubmission" Type="Int32" />
-
+    <Property Name="FundingAmountOnSubmission" Type="Int32?" />
     <Index Unique="false">
       <Member Name="ProjectId" />
     </Index>

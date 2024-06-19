@@ -30,7 +30,7 @@ namespace Webfuel.Domain
                         result.Add(new SqlParameter(nameof(ProjectSubmission.SubmissionDate), entity.SubmissionDate));
                         break;
                     case nameof(ProjectSubmission.FundingAmountOnSubmission):
-                        result.Add(new SqlParameter(nameof(ProjectSubmission.FundingAmountOnSubmission), entity.FundingAmountOnSubmission));
+                        result.Add(new SqlParameter(nameof(ProjectSubmission.FundingAmountOnSubmission), entity.FundingAmountOnSubmission ?? (object?)DBNull.Value));
                         break;
                     case nameof(ProjectSubmission.ProjectId):
                         result.Add(new SqlParameter(nameof(ProjectSubmission.ProjectId), entity.ProjectId));

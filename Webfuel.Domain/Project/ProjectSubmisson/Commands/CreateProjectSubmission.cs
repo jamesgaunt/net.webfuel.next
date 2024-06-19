@@ -14,7 +14,7 @@ namespace Webfuel.Domain
 
         public Guid? SubmissionOutcomeId { get; set; }
 
-        public int FundingAmountOnSubmission { get; set; }
+        public int? FundingAmountOnSubmission { get; set; }
     }
 
     internal class CreateProjectSubmissionHandler : IRequestHandler<CreateProjectSubmission, ProjectSubmission>

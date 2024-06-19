@@ -28,7 +28,7 @@ namespace Webfuel.Domain
                         SubmissionDate = DateOnly.FromDateTime((DateTime)value!);
                         break;
                     case nameof(ProjectSubmission.FundingAmountOnSubmission):
-                        FundingAmountOnSubmission = (int)value!;
+                        FundingAmountOnSubmission = value == DBNull.Value ? (int?)null : (int?)value;
                         break;
                     case nameof(ProjectSubmission.ProjectId):
                         ProjectId = (Guid)value!;
@@ -45,7 +45,7 @@ namespace Webfuel.Domain
         public Guid Id  { get; set; } = Guid.Empty;
         public string NIHRReference  { get; set; } = String.Empty;
         public DateOnly SubmissionDate  { get; set; } = new DateOnly(1900, 1, 1);
-        public int FundingAmountOnSubmission  { get; set; } = 0;
+        public int? FundingAmountOnSubmission  { get; set; } = null;
         public Guid ProjectId { get; set; }
         public Guid SubmissionStageId { get; set; }
         public Guid? SubmissionOutcomeId { get; set; }
