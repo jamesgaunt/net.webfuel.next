@@ -314,8 +314,8 @@ namespace Webfuel.Domain
                 Randomisation,
                 TrialManagement,
                 AnalysisIncludingStatistical,
-                StudyClose,
-                SupportDontKnow);
+                StudyClose);
+            SetValue(SupportDontKnow, "N");
             SetValue(SupportOther, Render_SupportProvidedOther(context, project, supportEvents));
 
             // Section B: Advisor Disciplines
@@ -558,7 +558,11 @@ namespace Webfuel.Domain
 
         string Render_AdvisorDisciplines(AnnualReportContext context, Project project, List<string> advisorDisciplines, string title)
         {
-            return String.Empty;
+            var checkExists = context.StaticData.UserDiscipline.FirstOrDefault(p => p.Name == title);
+            if (checkExists == null)
+                return "MISSING STATIC";
+
+            return advisorDisciplines.Contains(title) ? "Y" : "N";
         }
 
         // Researcher
@@ -679,7 +683,7 @@ namespace Webfuel.Domain
                     var user = context.Users.FirstOrDefault(u => u.Id == userId);
                     if (user == null)
                         continue;
-                    // AppendAdvisorDisciplines(context, result, user.AdvisorDisciplineIds);
+                    AppendAdvisorDisciplines(context, result, user.DisciplineIds);
                 }
             }
             return result;
@@ -689,6 +693,13 @@ namespace Webfuel.Domain
         {
             var result = new List<string>();
             var seen = new List<Guid>();
+
+            // We've had to call this twice!
+            var adviserDisciplines = GenerateAdvisorDisciplines(context, project, supportEvents);
+            if (adviserDisciplines.Contains("Mixed methods"))
+                result.Add("Mixed methods");
+            if (adviserDisciplines.Contains("EDIT"))
+                result.Add("EDI");
 
             foreach (var supportEvent in supportEvents)
             {
@@ -702,8 +713,8 @@ namespace Webfuel.Domain
                     if (user == null)
                         continue;
 
-                    //if (!String.IsNullOrEmpty(user.AdvisorDisciplineFreeText) && !result.Contains(user.AdvisorDisciplineFreeText))
-                    //    result.Add(user.AdvisorDisciplineFreeText);
+                    if (!String.IsNullOrEmpty(user.DisciplineFreeText) && !result.Contains(user.DisciplineFreeText))
+                        result.Add(user.DisciplineFreeText);
                 }
             }
             return String.Join(", ", result);
@@ -711,21 +722,18 @@ namespace Webfuel.Domain
 
         void AppendAdvisorDisciplines(AnnualReportContext context, List<string> result, List<Guid> advisorDisciplineIds)
         {
-            /*
             foreach (var advisorDisciplineId in advisorDisciplineIds)
             {
-                var advisorDiscipline = context.StaticData.AdvisorDiscipline.FirstOrDefault(a => a.Id == advisorDisciplineId);
+                var advisorDiscipline = context.StaticData.UserDiscipline.FirstOrDefault(a => a.Id == advisorDisciplineId);
                 if (advisorDiscipline == null)
                     continue;
-
-                // TODO: Do we need an alias here?
+                
                 var text = advisorDiscipline.Name;
 
                 if (result.Contains(text))
                     continue;
                 result.Add(text);
             }
-            */
         }
 
         List<string> GenerateProfessionalBackgrounds(AnnualReportContext context, Project project)
