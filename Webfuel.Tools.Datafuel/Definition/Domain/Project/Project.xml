@@ -139,6 +139,9 @@
     <Index Unique="false">
       <Member Name="DateOfRequest" />
     </Index>
+    <Index Unique="false">
+      <Member Name="SupportRequestId" />
+    </Index>
 
   </Entity>
 </Schema>

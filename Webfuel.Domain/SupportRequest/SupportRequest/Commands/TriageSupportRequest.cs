@@ -99,6 +99,10 @@ namespace Webfuel.Domain
 
         async Task<Project> CreateNewProjectFromSupportRequest(SupportRequest supportRequest)
         {
+            var existing = await _projectRepository.SelectProjectBySupportRequestId(supportRequest.Id);
+            if (existing.Count > 0)
+                throw new InvalidOperationException("A project already exists for this support request");
+
             var project = SupportRequestMapper.Apply(supportRequest, new Project());
 
             project.Number = await _configurationService.AllocateNextProjectNumber();
