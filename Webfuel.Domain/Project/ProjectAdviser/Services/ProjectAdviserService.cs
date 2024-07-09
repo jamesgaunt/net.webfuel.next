@@ -28,19 +28,22 @@ namespace Webfuel.Domain
         private readonly IProjectAdviserRepository _projectAdviserRepository;
         private readonly IEmailTemplateService _emailTemplateService;
         private readonly IStaticDataService _staticDataService;
+        private readonly ISupportTeamUserRepository _supportTeamUserRepository;
 
         public ProjectAdviserService(
             IUserRepository userRepository,
             IProjectRepository projectRepository,
             IProjectAdviserRepository projectAdviserRepository,
             IEmailTemplateService emailTemplateService,
-            IStaticDataService staticDataService)
+            IStaticDataService staticDataService,
+            ISupportTeamUserRepository supportTeamUserRepository)
         {
             _userRepository = userRepository;
             _projectRepository = projectRepository;
             _projectAdviserRepository = projectAdviserRepository;
             _emailTemplateService = emailTemplateService;
             _staticDataService = staticDataService;
+            _supportTeamUserRepository = supportTeamUserRepository;
         }
 
         public async Task<List<Guid>> SelectProjectAdviserUserIdsByProjectId(Guid projectId)
@@ -124,25 +127,23 @@ namespace Webfuel.Domain
 
         public async Task SendTeamSupportRequestedEmail(Project project, Guid supportTeamId)
         {
-            var staticData = await _staticDataService.GetStaticData();
-
-            var supportTeam = staticData.SupportTeam.FirstOrDefault(x => x.Id == supportTeamId);
-            if(supportTeam == null || supportTeam.TeamLeadUserId == null)
-                return;
-
-            var user = await _userRepository.GetUser(supportTeam.TeamLeadUserId.Value);
-            if(user == null)
-                return;
-
-            var replacements = new Dictionary<string, string>
+            var supportTeamLeads = await _supportTeamUserRepository.SelectSupportTeamUserBySupportTeamIdAndIsTeamLead(supportTeamId, isTeamLead: true);
+            foreach(var supportTeamLead in supportTeamLeads)
             {
-                { "PROJECT_TITLE", project.Title },
-                { "PROJECT_REFERENCE", project.PrefixedNumber },
-                { "ADVISER_NAME", user.FullName },
-                { "ADVISER_EMAIL", user.Email }
-            };
+                var user = await _userRepository.GetUser(supportTeamLead.UserId);
+                if (user == null)
+                    continue;
 
-            await _emailTemplateService.SendEmail("Team Support Requested", replacements);
+                var replacements = new Dictionary<string, string>
+                {
+                    { "PROJECT_TITLE", project.Title },
+                    { "PROJECT_REFERENCE", project.PrefixedNumber },
+                    { "ADVISER_NAME", user.FullName },
+                    { "ADVISER_EMAIL", user.Email }
+                };
+
+                await _emailTemplateService.SendEmail("Team Support Requested", replacements);
+            }
         }
     }
 }

@@ -35,9 +35,6 @@ namespace Webfuel.Domain.StaticData
                     case nameof(SupportTeam.Hidden):
                         result.Add(new SqlParameter(nameof(SupportTeam.Hidden), entity.Hidden));
                         break;
-                    case nameof(SupportTeam.TeamLeadUserId):
-                        result.Add(new SqlParameter(nameof(SupportTeam.TeamLeadUserId), entity.TeamLeadUserId ?? (object?)DBNull.Value));
-                        break;
                 }
             }
             return result;
@@ -69,7 +66,6 @@ namespace Webfuel.Domain.StaticData
                 yield return "SortOrder";
                 yield return "Default";
                 yield return "Hidden";
-                yield return "TeamLeadUserId";
             }
         }
         
@@ -82,7 +78,6 @@ namespace Webfuel.Domain.StaticData
                 yield return "SortOrder";
                 yield return "Default";
                 yield return "Hidden";
-                yield return "TeamLeadUserId";
             }
         }
         
@@ -94,7 +89,6 @@ namespace Webfuel.Domain.StaticData
                 yield return "SortOrder";
                 yield return "Default";
                 yield return "Hidden";
-                yield return "TeamLeadUserId";
             }
         }
         

@@ -23,6 +23,9 @@ namespace Webfuel.Domain
                 {
                     case nameof(SupportTeamUser.Id):
                         break;
+                    case nameof(SupportTeamUser.IsTeamLead):
+                        result.Add(new SqlParameter(nameof(SupportTeamUser.IsTeamLead), entity.IsTeamLead));
+                        break;
                     case nameof(SupportTeamUser.UserId):
                         result.Add(new SqlParameter(nameof(SupportTeamUser.UserId), entity.UserId));
                         break;
@@ -56,6 +59,7 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Id";
+                yield return "IsTeamLead";
                 yield return "UserId";
                 yield return "SupportTeamId";
             }
@@ -66,6 +70,7 @@ namespace Webfuel.Domain
             get
             {
                 yield return "Id";
+                yield return "IsTeamLead";
                 yield return "UserId";
                 yield return "SupportTeamId";
             }
@@ -75,6 +80,7 @@ namespace Webfuel.Domain
         {
             get
             {
+                yield return "IsTeamLead";
                 yield return "UserId";
                 yield return "SupportTeamId";
             }

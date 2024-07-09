@@ -19,6 +19,7 @@ export interface UpdateReportFilterDialogData {
 export class UpdateReportFilterDialog extends DialogBase<ReportDesign, UpdateReportFilterDialogData> {
   open(data: UpdateReportFilterDialogData) {
     return this._open(UpdateReportFilterDialogComponent, data, {
+      width: "800px",
     });
   }
 }

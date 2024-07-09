@@ -5,6 +5,7 @@
     <Key Name="Id" Type="guid" />
     <Property Name="UserId" Type="User" />
     <Property Name="SupportTeamId" Type="SupportTeam" />
+    <Property Name="IsTeamLead" Type="boolean" />
     
     <Index Unique="true">
       <Member Name="UserId" />
@@ -15,6 +16,10 @@
     </Index>
     <Index Unique="false">
       <Member Name="SupportTeamId" />
+    </Index>
+    <Index Unique="false">
+      <Member Name="SupportTeamId" />
+      <Member Name="IsTeamLead" />
     </Index>
   </Entity>
 </Schema>

@@ -16,7 +16,7 @@
       <input type="text" class="input" formControlName="stringValue" placeholder="optional" />
     </div>
     <div class="column is-fullwidth" *ngIf="!unary && argument.filterType == ReportFilterType.Reference">
-      <dropdown-multi-select formControlName="guidsValue" [dataSource]="referenceDataSource" [enableSearch]="true" [enableClear]="true" placeholder="optional"></dropdown-multi-select>
+      <dropdown-multi-select formControlName="guidsValue" [closeOnSelect]="false" [dataSource]="referenceDataSource" [enableSearch]="true" [enableClear]="true" placeholder="optional"></dropdown-multi-select>
     </div>
   </div>
 </div>

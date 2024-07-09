@@ -7,8 +7,6 @@
     <Property Name="SortOrder" Type="Int32" />
     <Property Name="Default" Type="boolean" />
     <Property Name="Hidden" Type="boolean" />
-
-    <Property Name="TeamLeadUserId" Type="User?" />
     
     <Index Unique="true">
       <Member Name="Name" />

@@ -2,6 +2,13 @@
 
 namespace Webfuel.Domain
 {
+    public class InsertSupportTeamUser : IRequest
+    {
+        public Guid SupportTeamId { get; set; }
+
+        public Guid UserId { get; set; }
+    }
+
     internal class InsertSupportTeamUserHandler : IRequestHandler<InsertSupportTeamUser>
     {
         private readonly ISupportTeamUserRepository _supportTeamUserRepository;

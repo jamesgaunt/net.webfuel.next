@@ -2,6 +2,13 @@
 
 namespace Webfuel.Domain
 {
+    public class DeleteSupportTeamUser : IRequest
+    {
+        public Guid SupportTeamId { get; set; }
+
+        public Guid UserId { get; set; }
+    }
+
     internal class DeleteSupportTeamUserHandler : IRequestHandler<DeleteSupportTeamUser>
     {
         private readonly ISupportTeamUserRepository _supportTeamUserRepository;

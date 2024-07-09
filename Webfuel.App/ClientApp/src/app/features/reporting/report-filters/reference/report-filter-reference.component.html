@@ -22,10 +22,12 @@
         </select>
       </div>
     </div>
+  </div>
+  <div class="columns">
     <div class="column" *ngIf="!unary">
       <div class="field">
         <label class="label">Value</label>
-        <dropdown-multi-select formControlName="value" [dataSource]="referenceDataSource" [enableSearch]="true" [enableClear]="true" placeholder="optional"></dropdown-multi-select>
+        <dropdown-multi-select formControlName="value" [closeOnSelect]="false" [dataSource]="referenceDataSource" [enableSearch]="true" [enableClear]="true" placeholder="optional"></dropdown-multi-select>
       </div>
     </div>
   </div>

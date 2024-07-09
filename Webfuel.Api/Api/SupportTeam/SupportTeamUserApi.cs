@@ -12,6 +12,9 @@ namespace Webfuel.App
         {
             // Commands
 
+            app.MapPost("api/support-team-user/update", Insert)
+                .RequireIdentity();
+
             app.MapPost("api/support-team-user/insert", Insert)
                 .RequireIdentity();
 
@@ -25,6 +28,11 @@ namespace Webfuel.App
         }
 
         public static Task Insert([FromBody] InsertSupportTeamUser command, IMediator mediator)
+        {
+            return mediator.Send(command);
+        }
+
+        public static Task Update([FromBody] UpdateSupportTeamUser command, IMediator mediator)
         {
             return mediator.Send(command);
         }

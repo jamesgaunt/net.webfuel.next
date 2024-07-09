@@ -18,6 +18,7 @@ namespace Webfuel.Domain
         Task<int> CountSupportTeamUser();
         Task<List<SupportTeamUser>> SelectSupportTeamUser();
         Task<List<SupportTeamUser>> SelectSupportTeamUserWithPage(int skip, int take);
+        Task<List<SupportTeamUser>> SelectSupportTeamUserBySupportTeamIdAndIsTeamLead(Guid supportTeamId, bool isTeamLead);
         Task<List<SupportTeamUser>> SelectSupportTeamUserBySupportTeamId(Guid supportTeamId);
         Task<List<SupportTeamUser>> SelectSupportTeamUserByUserId(Guid userId);
         Task<SupportTeamUser?> GetSupportTeamUserByUserIdAndSupportTeamId(Guid userId, Guid supportTeamId);
@@ -94,6 +95,16 @@ namespace Webfuel.Domain
             {
                 new SqlParameter("@Skip", skip),
                 new SqlParameter("@Take", take),
+            };
+            return await _connection.ExecuteReader<SupportTeamUser, SupportTeamUserMetadata>(sql, parameters);
+        }
+        public async Task<List<SupportTeamUser>> SelectSupportTeamUserBySupportTeamIdAndIsTeamLead(Guid supportTeamId, bool isTeamLead)
+        {
+            var sql = @"SELECT * FROM [SupportTeamUser] WHERE SupportTeamId = @SupportTeamId AND IsTeamLead = @IsTeamLead ORDER BY Id ASC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@SupportTeamId", supportTeamId),
+                new SqlParameter("@IsTeamLead", isTeamLead),
             };
             return await _connection.ExecuteReader<SupportTeamUser, SupportTeamUserMetadata>(sql, parameters);
         }

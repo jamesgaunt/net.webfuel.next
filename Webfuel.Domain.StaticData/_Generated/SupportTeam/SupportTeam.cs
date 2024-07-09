@@ -33,9 +33,6 @@ namespace Webfuel.Domain.StaticData
                     case nameof(SupportTeam.Hidden):
                         Hidden = (bool)value!;
                         break;
-                    case nameof(SupportTeam.TeamLeadUserId):
-                        TeamLeadUserId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
-                        break;
                 }
             }
         }
@@ -44,7 +41,6 @@ namespace Webfuel.Domain.StaticData
         public int SortOrder  { get; internal set; } = 0;
         public bool Default  { get; internal set; } = false;
         public bool Hidden  { get; internal set; } = false;
-        public Guid? TeamLeadUserId { get; internal set; }
         public SupportTeam Copy()
         {
             var entity = new SupportTeam();
@@ -53,7 +49,6 @@ namespace Webfuel.Domain.StaticData
             entity.SortOrder = SortOrder;
             entity.Default = Default;
             entity.Hidden = Hidden;
-            entity.TeamLeadUserId = TeamLeadUserId;
             return entity;
         }
     }
