@@ -17,6 +17,7 @@ import { noop } from 'rxjs';
 export class ToggleInputComponent implements ControlValueAccessor {
 
   constructor(
+    private cd: ChangeDetectorRef
   ) {
   }
 
@@ -25,8 +26,14 @@ export class ToggleInputComponent implements ControlValueAccessor {
   @Input()
   label: string = "";
 
+  // Outputs
+
+  @Output()
+  valueChange = new EventEmitter<boolean>();
+
   // Value
 
+  @Input()
   get value() {
     return this._value;
   }
@@ -41,6 +48,7 @@ export class ToggleInputComponent implements ControlValueAccessor {
     this.value = !this.value;
     this.onChange(this.value);
     this.onTouched();
+    this.valueChange.emit(this.value);
   }
 
   // ControlValueAccessor

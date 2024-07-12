@@ -12,10 +12,10 @@ namespace Webfuel.App
         {
             // Commands
 
-            app.MapPost("api/support-team-user/update", Insert)
+            app.MapPost("api/support-team-user/insert", Insert)
                 .RequireIdentity();
 
-            app.MapPost("api/support-team-user/insert", Insert)
+            app.MapPost("api/support-team-user/update", Update)
                 .RequireIdentity();
 
             app.MapPost("api/support-team-user/delete", Delete)

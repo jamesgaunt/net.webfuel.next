@@ -78,4 +78,19 @@ export class UserSupportTeamComponent implements OnInit {
       });
     }
   }
+
+  isSupportTeamLead(supportTeam: SupportTeam) {
+    return _.some(this.supportTeamUsers, (p) => p.supportTeamId == supportTeam.id && p.isTeamLead);
+  }
+
+  toggleSupportTeamLead(supportTeam: SupportTeamEx, value: boolean) {
+    var supportTeamUser = _.find(this.supportTeamUsers, (p) => p.supportTeamId == supportTeam.id);
+    if (!supportTeamUser)
+      return;
+
+    supportTeamUser.isTeamLead = value;
+    this.supportTeamUserApi.update({ userId: this.item.id, supportTeamId: supportTeam.id, isTeamLead: value }, { successGrowl: "Support team lead updated" }).subscribe(() => {
+      this.load();
+    });
+  }
 }

@@ -809,7 +809,6 @@ export interface SupportTeam extends IStaticData {
     sortOrder: number;
     default: boolean;
     hidden: boolean;
-    teamLeadUserId: string | null | null;
 }
 
 export interface Title extends IStaticData {
@@ -1582,6 +1581,12 @@ export interface InsertSupportTeamUser {
     userId: string;
 }
 
+export interface UpdateSupportTeamUser {
+    supportTeamId: string;
+    userId: string;
+    isTeamLead: boolean;
+}
+
 export interface DeleteSupportTeamUser {
     supportTeamId: string;
     userId: string;
@@ -1589,6 +1594,7 @@ export interface DeleteSupportTeamUser {
 
 export interface SupportTeamUser {
     id: string;
+    isTeamLead: boolean;
     userId: string;
     supportTeamId: string;
 }

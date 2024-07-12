@@ -17,11 +17,21 @@
 
   <div class="toggle-list">
     <a *ngFor="let supportTeam of supportTeams" (click)="toggleSupportTeam(supportTeam)" [class.selected]="isSupportTeamSelected(supportTeam)">
-      <i *ngIf="!isSupportTeamSelected(supportTeam)" class="far fa-square"></i>
-      <i *ngIf="isSupportTeamSelected(supportTeam)" class="far fa-check-square"></i>
-      &nbsp;&nbsp;
-      {{ supportTeam.name }}
+      <div class="columns" style="align-items: center">
+        <div class="column">
+          <div style="padding: 0.6rem;">
+            <i *ngIf="!isSupportTeamSelected(supportTeam)" class="far fa-square"></i>
+            <i *ngIf="isSupportTeamSelected(supportTeam)" class="far fa-check-square"></i>
+            &nbsp;&nbsp;
+            {{ supportTeam.name }}
+          </div>
+        </div>
+        <div class="column is-narrow" *ngIf="isSupportTeamSelected(supportTeam)">
+          <div style="background-color: #FFF; padding: 2px 8px 2px 8px; color: #000; border-radius: 16px;">
+            <toggle-input label="Team Lead" [value]="isSupportTeamLead(supportTeam)" (valueChange)="toggleSupportTeamLead(supportTeam, $event)" />
+          </div>
+        </div>
+      </div>
     </a>
   </div>
-
 </div>

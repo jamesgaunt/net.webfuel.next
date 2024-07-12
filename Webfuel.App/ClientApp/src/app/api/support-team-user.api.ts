@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { InsertSupportTeamUser, DeleteSupportTeamUser, QuerySupportTeamUser, QueryResult, SupportTeamUser } from './api.types';
+import { InsertSupportTeamUser, UpdateSupportTeamUser, DeleteSupportTeamUser, QuerySupportTeamUser, QueryResult, SupportTeamUser } from './api.types';
 
 @Injectable()
 export class SupportTeamUserApi {
@@ -11,6 +11,10 @@ export class SupportTeamUserApi {
     
     public insert (body: InsertSupportTeamUser, options?: ApiOptions): Observable<any> {
         return this.apiService.request<InsertSupportTeamUser, any>("POST", "api/support-team-user/insert", body, options);
+    }
+    
+    public update (body: UpdateSupportTeamUser, options?: ApiOptions): Observable<any> {
+        return this.apiService.request<UpdateSupportTeamUser, any>("POST", "api/support-team-user/update", body, options);
     }
     
     public delete (body: DeleteSupportTeamUser, options?: ApiOptions): Observable<any> {
