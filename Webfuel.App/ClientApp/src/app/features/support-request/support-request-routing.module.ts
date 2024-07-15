@@ -8,6 +8,7 @@ import { SupportRequestListComponent } from './support-request/support-request-l
 import { SupportRequestItemComponent } from './support-request/support-request-item/support-request-item.component';
 import { SupportRequestFilesComponent } from './support-request/support-request-files/support-request-files.component';
 import { SupportRequestResearcherComponent } from './support-request/support-request-researcher/support-request-researcher.component';
+import { SupportRequestHistoryComponent } from './support-request/support-request-history/support-request-history.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,12 @@ const routes: Routes = [
     component: SupportRequestFilesComponent,
     resolve: { supportRequest: SupportRequestApi.supportRequestResolver('id') },
     canDeactivate: [DeactivateService.isPristine<SupportRequestFilesComponent>()],
+    data: { activeSideMenu: 'Triage' }
+  },
+  {
+    path: 'support-request-history/:id',
+    component: SupportRequestHistoryComponent,
+    resolve: { supportRequest: SupportRequestApi.supportRequestResolver('id') },
     data: { activeSideMenu: 'Triage' }
   },
 ];

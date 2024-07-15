@@ -73,7 +73,7 @@ namespace Webfuel.Domain
             // Block duplicate triage requests
             if (_idempotentCache.TryGetValue(request.Id, out _))
             {
-                await _supportRequestChangeLogService.InsertChangeLog(original: original, updated: original, action: "Duplicate Triage -> \" + newStatus.Name");
+                await _supportRequestChangeLogService.InsertChangeLog(original: original, updated: original, action: "Triage Idempotent Block: " + newStatus.Name);
                 throw new InvalidOperationException("Duplicate triage operation attempt blocked. Please refresh your browser and try again in a few seconds.");
             }
             _idempotentCache.Set(request.Id, true, TimeSpan.FromSeconds(1));
@@ -83,33 +83,42 @@ namespace Webfuel.Domain
             updated.TriageNote = request.TriageNote;
 
             // Log this to see what is causing the duplicates
-            await _supportRequestChangeLogService.InsertChangeLog(original: original, updated: updated, action: "Triage -> " + newStatus.Name);
+            await _supportRequestChangeLogService.InsertChangeLog(original: original, updated: updated, action: "Triage Attempted: " + newStatus.Name);
 
-            if (newStatus.Id == SupportRequestStatusEnum.ReferredToNIHRRSSExpertTeams)
-            {
-                // This support request is being referred to expert teams, so create a new project
-                var project = await CreateNewProjectFromSupportRequest(updated);
-                updated.ProjectId = project.Id;
-
-                // Record a triage support provided event on the project
-                if (request.SupportProvidedIds.Count > 0 && _identityAccessor.User != null)
+            try
+            { 
+                if (newStatus.Id == SupportRequestStatusEnum.ReferredToNIHRRSSExpertTeams)
                 {
-                    await _mediator.Send(new CreateProjectSupport
-                    {
-                        ProjectId = project.Id,
-                        AdviserIds = new List<Guid> { _identityAccessor.User.Id },
-                        TeamIds = new List<Guid> { SupportTeamEnum.TriageTeam },
-                        SupportProvidedIds = request.SupportProvidedIds,
-                        Description = request.Description,
-                        WorkTimeInHours = request.WorkTimeInHours ?? 0,
-                        SupportRequestedTeamId = request.SupportRequestedTeamId,
-                        IsPrePostAwardId = request.IsPrePostAwardId
-                    });
-                }
-            }
-            updated = await _supportRequestRepository.UpdateSupportRequest(updated: updated, original: original);
+                    // This support request is being referred to expert teams, so create a new project
+                    var project = await CreateNewProjectFromSupportRequest(updated);
+                    updated.ProjectId = project.Id;
 
-            await _supportRequestChangeLogService.InsertChangeLog(original: original, updated: updated);
+                    // Record a triage support provided event on the project
+                    if (request.SupportProvidedIds.Count > 0 && _identityAccessor.User != null)
+                    {
+                        await _mediator.Send(new CreateProjectSupport
+                        {
+                            ProjectId = project.Id,
+                            AdviserIds = new List<Guid> { _identityAccessor.User.Id },
+                            TeamIds = new List<Guid> { SupportTeamEnum.TriageTeam },
+                            SupportProvidedIds = request.SupportProvidedIds,
+                            Description = request.Description,
+                            WorkTimeInHours = request.WorkTimeInHours ?? 0,
+                            SupportRequestedTeamId = request.SupportRequestedTeamId,
+                            IsPrePostAwardId = request.IsPrePostAwardId
+                        });
+                    }
+                }
+
+                updated = await _supportRequestRepository.UpdateSupportRequest(updated: updated, original: original);
+                await _supportRequestChangeLogService.InsertChangeLog(original: original, updated: updated, action: "Triage Completed: " + newStatus.Name);
+            }
+            catch(Exception ex)
+            {
+                await _supportRequestChangeLogService.InsertChangeLog(original: original, updated: updated, action: "Triage Exception: " + ex.Message);
+                throw;
+            }
+
             return updated;
         }
 

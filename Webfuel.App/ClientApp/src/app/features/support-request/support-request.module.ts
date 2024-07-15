@@ -8,6 +8,7 @@ import { SupportRequestItemComponent } from './support-request/support-request-i
 import { SupportRequestTabsComponent } from './support-request/support-request-tabs/support-request-tabs.component';
 import { SupportRequestFilesComponent } from './support-request/support-request-files/support-request-files.component';
 import { SupportRequestResearcherComponent } from './support-request/support-request-researcher/support-request-researcher.component';
+import { SupportRequestHistoryComponent } from './support-request/support-request-history/support-request-history.component';
 
 import { TriageSupportRequestDialog, TriageSupportRequestDialogComponent } from './support-request/dialogs/triage-support-request/triage-support-request.dialog';
 
@@ -23,6 +24,7 @@ import { TriageSupportRequestDialog, TriageSupportRequestDialogComponent } from 
     SupportRequestTabsComponent,
     SupportRequestFilesComponent,
     SupportRequestResearcherComponent,
+    SupportRequestHistoryComponent,
 
     TriageSupportRequestDialogComponent,
   ],
