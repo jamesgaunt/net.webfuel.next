@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.Extensions.Caching.Memory;
 using Webfuel.Common;
 using Webfuel.Domain.Dashboard;
 using Webfuel.Domain.StaticData;
@@ -52,6 +53,11 @@ namespace Webfuel.Domain
             _mediator = mediator;
         }
 
+        MemoryCache _idempotentCache = new MemoryCache(new MemoryCacheOptions
+        {
+            ExpirationScanFrequency = TimeSpan.FromSeconds(0.5)
+        });
+
         public async Task<SupportRequest> Handle(TriageSupportRequest request, CancellationToken cancellationToken)
         {
             var original = await _supportRequestRepository.RequireSupportRequest(request.Id);
@@ -59,16 +65,26 @@ namespace Webfuel.Domain
                 return original; // No change to status
 
             var oldStatus = await _staticDataService.RequireSupportRequestStatus(original.StatusId);
-
             if (oldStatus.Id != SupportRequestStatusEnum.ToBeTriaged && oldStatus.Id != SupportRequestStatusEnum.OnHold)
                 throw new InvalidOperationException("The specified support request has already been triaged");
 
             var newStatus = await _staticDataService.RequireSupportRequestStatus(request.StatusId);
 
+            // Block duplicate triage requests
+            if (_idempotentCache.TryGetValue(request.Id, out _))
+            {
+                await _supportRequestChangeLogService.InsertChangeLog(original: original, updated: original, action: "Duplicate Triage -> \" + newStatus.Name");
+                throw new InvalidOperationException("Duplicate triage operation attempt blocked. Please refresh your browser and try again in a few seconds.");
+            }
+            _idempotentCache.Set(request.Id, true, TimeSpan.FromSeconds(1));
+
             var updated = original.Copy();
             updated.StatusId = newStatus.Id;
             updated.TriageNote = request.TriageNote;
-            
+
+            // Log this to see what is causing the duplicates
+            await _supportRequestChangeLogService.InsertChangeLog(original: original, updated: updated, action: "Triage -> " + newStatus.Name);
+
             if (newStatus.Id == SupportRequestStatusEnum.ReferredToNIHRRSSExpertTeams)
             {
                 // This support request is being referred to expert teams, so create a new project
@@ -100,8 +116,12 @@ namespace Webfuel.Domain
         async Task<Project> CreateNewProjectFromSupportRequest(SupportRequest supportRequest)
         {
             var existing = await _projectRepository.SelectProjectBySupportRequestId(supportRequest.Id);
-            if (existing.Count > 0)
-                throw new InvalidOperationException("A project already exists for this support request");
+            
+            if (existing.Count == 1)
+                return existing[0]; 
+            
+            if(existing.Count > 1)
+                throw new InvalidOperationException("Multiple projects already exists for this support request!");
 
             var project = SupportRequestMapper.Apply(supportRequest, new Project());
 

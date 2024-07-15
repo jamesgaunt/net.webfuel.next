@@ -4,6 +4,7 @@ import _ from 'shared/common/underscore';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ValidationError, ValidationProblemDetails } from '../api/api.types';
+import { environment } from '../../environments/environment';
 
 interface IError {
   type: string;
@@ -23,7 +24,7 @@ export class ErrorService {
   interceptError(err: HttpErrorResponse) {
 
     if (err.status == 0) {
-      this.growlService.growlDanger("Status 0. API is probably down!");
+      this.growlService.growlDanger("Status 0. API is probably down! API Host: " + environment.apiHost);
       return;
     }
 

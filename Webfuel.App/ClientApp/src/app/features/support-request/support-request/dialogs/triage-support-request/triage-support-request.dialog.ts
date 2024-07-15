@@ -66,22 +66,31 @@ export class TriageSupportRequestDialogComponent extends DialogComponentBase<Sup
     return this.form.value.statusId == SupportRequestStatusEnum.ReferredToNIHRRSSExpertTeams;
   }
 
-  submitting = false;
+  submitting = 0;
 
   save() {
-    if (this.submitting || this.formService.hasErrors(this.form))
+    if (this.formService.hasErrors(this.form)) {
+      this.submitting = 0;
       return;
+    }
 
-    this.submitting = true;
+    if(this.submitting > 0)
+      return;
+    this.submitting = 2; // 2 blocks, one on the API call, one on a timer
+
+    setTimeout(() => {
+      this.submitting--;
+    }, 1500);
+
     this.supportRequestApi.triage(this.form.getRawValue()).subscribe({
       next: (result) => {
-        this.submitting = false;
+        this.submitting--;
         this._closeDialog(result);
         if (result.projectId != null)
           this.router.navigateByUrl(`/project/project-item/${result.projectId}`);
       },
       error: () => {
-        this.submitting = false;
+        this.submitting--;
       }
     })
   }

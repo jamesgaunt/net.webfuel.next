@@ -9,7 +9,7 @@ namespace Webfuel.Domain
 {
     public interface ISupportRequestChangeLogService
     {
-        Task InsertChangeLog(SupportRequest original, SupportRequest updated);
+        Task InsertChangeLog(SupportRequest original, SupportRequest updated, string action = "");
     }
 
     [Service(typeof(ISupportRequestChangeLogService))]
@@ -32,11 +32,14 @@ namespace Webfuel.Domain
             _identityAccessor = identityAccessor;
         }
 
-        public async Task InsertChangeLog(SupportRequest original, SupportRequest updated)
+        public async Task InsertChangeLog(SupportRequest original, SupportRequest updated, string action = "")
         {
             var message = await GenerateChangeLog(original: original, updated: updated);
-            if (String.IsNullOrEmpty(message))
+            if (String.IsNullOrEmpty(message) && string.IsNullOrEmpty(action))
                 return;
+
+            if(!String.IsNullOrEmpty(action))
+                message = action + ":\n" + message;
 
             var changeLog = new SupportRequestChangeLog
             {
