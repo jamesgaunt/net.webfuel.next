@@ -52,21 +52,40 @@ namespace Webfuel.Reporting
 
         public override async Task<bool> Apply(object context, ReportBuilder builder)
         {
-            foreach(var filter in Filters)
+            if (Condition == (int)ReportFilterGroupCondition.Any)
             {
-                var result = await filter.Apply(context, builder);
-
-                if(result == true && Condition == (int)ReportFilterGroupCondition.Any)
-                    return true;
-
-                if(result == true && Condition == (int)ReportFilterGroupCondition.None)
-                    return false;
-
-                if (result == false && Condition == (int)ReportFilterGroupCondition.All)
-                    return false;
+                foreach (var filter in Filters)
+                {
+                    var result = await filter.Apply(context, builder);
+                    if (result == true)
+                        return true;
+                }
+                return false;
             }
 
-            return true;
+            if (Condition == (int)ReportFilterGroupCondition.All)
+            {
+                foreach (var filter in Filters)
+                {
+                    var result = await filter.Apply(context, builder);
+                    if (result == false)
+                        return false;
+                }
+                return true;
+            }
+
+            if (Condition == (int)ReportFilterGroupCondition.None)
+            {
+                foreach (var filter in Filters)
+                {
+                    var result = await filter.Apply(context, builder);
+                    if (result == true)
+                        return false;
+                }
+                return true;
+            }
+
+            throw new Exception($"Unrecognised group condition {Condition}");
         }
 
         public override void Update(ReportFilter filter, ReportSchema schema)
