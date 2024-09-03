@@ -34,6 +34,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.Reporting", "Webfue
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.Tests", "Webfuel.Tests\Webfuel.Tests.csproj", "{11EC0232-4D2D-401D-B939-20C6EDCF8C03}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.Platform.Client", "..\..\github\Webfuel.Platform\Webfuel.Platform.Client\Webfuel.Platform.Client.csproj", "{A0768C41-C9C6-4DF9-990A-1176DB794E1E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +94,10 @@ Global
 		{11EC0232-4D2D-401D-B939-20C6EDCF8C03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11EC0232-4D2D-401D-B939-20C6EDCF8C03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11EC0232-4D2D-401D-B939-20C6EDCF8C03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0768C41-C9C6-4DF9-990A-1176DB794E1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0768C41-C9C6-4DF9-990A-1176DB794E1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0768C41-C9C6-4DF9-990A-1176DB794E1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0768C41-C9C6-4DF9-990A-1176DB794E1E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

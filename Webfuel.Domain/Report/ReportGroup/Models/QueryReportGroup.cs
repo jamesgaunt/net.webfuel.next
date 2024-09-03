@@ -1,15 +1,12 @@
-using Azure.Core;
 using MediatR;
-using Serilog;
 
-namespace Webfuel.Domain
+namespace Webfuel.Domain;
+
+public class QueryReportGroup : Query, IRequest<QueryResult<ReportGroup>>
 {
-    public class QueryReportGroup : Query, IRequest<QueryResult<ReportGroup>>
+    public Query ApplyCustomFilters()
     {
-        public Query ApplyCustomFilters()
-        {
-            this.Contains(nameof(ReportGroup.Name), Search);
-            return this;
-        }
+        this.Contains(nameof(ReportGroup.Name), Search);
+        return this;
     }
 }

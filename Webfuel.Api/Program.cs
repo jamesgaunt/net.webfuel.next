@@ -1,94 +1,140 @@
-using Serilog;
+using OpenTelemetry.Exporter;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using Webfuel.Common;
 using Webfuel.Domain;
-using Serilog.Events;
 using Webfuel.Domain.StaticData;
-using Webfuel.Reporting;
 using Webfuel.Excel;
+using Webfuel.Reporting;
 
-namespace Webfuel.Api
+namespace Webfuel.Api;
+
+public class Program
 {
-    public class Program
+    const string ApiCorsOptions = "ApiCorsOptions";
+
+    public static void Main(string[] args)
     {
-        const string ApiCorsOptions = "ApiCorsOptions";
 
-        public static void Main(string[] args)
+        var builder = WebApplication.CreateBuilder(args);
+
+        builder.AddLogging();
+        builder.AddTracing();
+
+        builder.Services.RegisterCoreServices();
+        builder.Services.RegisterCommonServices();
+        builder.Services.RegisterDomainServices();
+        builder.Services.RegisterStaticDataServices();
+        builder.Services.RegisterExcelServices();
+        builder.Services.RegisterReportingServices();
+
+        builder.Services.AddMediatR(c =>
         {
-            Log.Logger = new LoggerConfiguration()
-               .WriteTo.Console()
-               .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
-               .CreateLogger();
+            c.RegisterServicesFromAssemblyContaining<CoreAssemblyMarker>();
+            c.RegisterServicesFromAssemblyContaining<DomainAssemblyMarker>();
+            c.RegisterServicesFromAssemblyContaining<CommonAssemblyMarker>();
+            c.RegisterServicesFromAssemblyContaining<StaticDataAssemblyMarker>();
+            c.RegisterServicesFromAssemblyContaining<ReportingAssemblyMarker>();
+        });
 
-            try
-            {
-                Log.Information("Starting web application");
-
-                var builder = WebApplication.CreateBuilder(args);
-
-                builder.Host.UseSerilog();
-
-                builder.Services.RegisterCoreServices();
-                builder.Services.RegisterCommonServices();
-                builder.Services.RegisterDomainServices();
-                builder.Services.RegisterStaticDataServices();
-                builder.Services.RegisterExcelServices();
-                builder.Services.RegisterReportingServices();
-
-                builder.Services.AddMediatR(c =>
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy(name: ApiCorsOptions,
+                policy =>
                 {
-                    c.RegisterServicesFromAssemblyContaining<CoreAssemblyMarker>();
-                    c.RegisterServicesFromAssemblyContaining<DomainAssemblyMarker>();
-                    c.RegisterServicesFromAssemblyContaining<CommonAssemblyMarker>();
-                    c.RegisterServicesFromAssemblyContaining<StaticDataAssemblyMarker>();
-                    c.RegisterServicesFromAssemblyContaining<ReportingAssemblyMarker>();
+                    policy.WithOrigins(
+                        "https://www.webfuel.com",
+
+                        "http://localhost:4200",
+                        "https://localhost:44426",
+                        "https://localhost:7076",
+
+                        "https://db.rssimperialpartners.org.uk");
+
+                    policy.WithHeaders(
+                        "content-type",
+                        "identity-token");
+
+                    policy.WithMethods("GET", "POST", "PUT", "DELETE");
                 });
+        });
 
-                builder.Services.AddCors(options =>
-                {
-                    options.AddPolicy(name: ApiCorsOptions,
-                        policy =>
-                        {
-                            policy.WithOrigins(
-                                "https://www.webfuel.com",
+        var app = builder.Build();
 
-                                "http://localhost:4200",
-                                "https://localhost:44426",
-                                "https://localhost:7076",
+        app.UseShortCircuits();
+        app.UseRequestTrace();
 
-                                "https://db.rssimperialpartners.org.uk");
+        app.UseMiddleware<IdentityMiddleware>();
+        app.UseMiddleware<AngularMiddleware>();
+        app.UseStaticFiles();
 
-                            policy.WithHeaders(
-                                "content-type",
-                                "identity-token");
+        app.UseMiddleware<ExceptionMiddleware>();
+        app.UseMiddleware<StaticDataMiddleware>();
 
-                            policy.WithMethods("GET", "POST", "PUT", "DELETE");
-                        });
-                });
+        app.UseCors(ApiCorsOptions);
 
-                var app = builder.Build();
+        app.UseApiServices<Program>();
 
-                app.UseMiddleware<AngularMiddleware>();
-                app.UseStaticFiles();
+        app.Run();
+    }
+}
 
-                app.UseSerilogRequestLogging();
-                app.UseMiddleware<ExceptionMiddleware>();
-                app.UseMiddleware<IdentityMiddleware>();
-                app.UseMiddleware<StaticDataMiddleware>();
+public static class ServiceDefaults
+{
+    public static IHostApplicationBuilder AddLogging(this IHostApplicationBuilder builder)
+    {
+        builder.Logging.ClearProviders();
+        builder.Logging.AddConsole();
+        builder.Logging.AddOpenTelemetry(x =>
+        {
+            x.IncludeScopes = true;
+            x.IncludeFormattedMessage = true;
+        });
 
-                app.UseCors(ApiCorsOptions);
+        builder.Services.Configure<OpenTelemetryLoggerOptions>(logging => logging.AddOtlpExporter(opt =>
+        {
+            opt.Endpoint = new Uri("http://seq.webfuel.net/ingest/otlp/v1/logs");
+            opt.Protocol = OtlpExportProtocol.HttpProtobuf;
+        }));
 
-                app.UseApiServices<Program>();
+        return builder;
+    }
 
-                app.Run();
-            }
-            catch (Exception ex)
+    public static IHostApplicationBuilder AddTracing(this IHostApplicationBuilder builder)
+    {
+        builder.Services
+            .AddOpenTelemetry()
+            .ConfigureResource(x =>
             {
-                Log.Fatal(ex, "Application terminated unexpectedly");
-            }
-            finally
+                x.Clear();
+                x.AddService(builder.Environment.IsProduction() ? "rss-icl" : "rss-icl-dev");
+            })
+            .WithTracing(x =>
             {
-                Log.CloseAndFlush();
-            }
-        }
+                x.SetSampler(new AlwaysOnSampler());
+                x.AddSource(RequestTraceActivitySource.Name);
+                //x.AddSqlClientInstrumentation();
+            });
+
+        builder.Services.ConfigureOpenTelemetryTracerProvider(tracing => tracing.AddOtlpExporter(opt =>
+        {
+            opt.Endpoint = new Uri("https://api.eu1.honeycomb.io/v1/traces");
+            opt.Headers = "x-honeycomb-team=fsZ4cF3kvdv0D02QDX7mbH";
+            opt.Protocol = OtlpExportProtocol.HttpProtobuf;
+        }));
+
+        return builder;
+    }
+
+    public static void UseShortCircuits(this WebApplication app)
+    {
+        app.MapGet("/favicon.ico", () => Task.CompletedTask).ShortCircuit(404);
+        app.MapGet("/robots.txt", () => """
+            User-agent: *
+            Disallow: /
+            """).ShortCircuit(200);
+
+        app.MapShortCircuit(404, ".well-known");
     }
 }

@@ -28,7 +28,7 @@ namespace Webfuel.Tools.Datafuel
 
         // Solution
 
-        public static string SolutionRoot { get { return @"C:\Repo\net.webfuel.rss_icl"; } }
+        public static string SolutionRoot { get { return @"C:\github\Webfuel.RssIcl"; } }
 
         // Calculated
 
