@@ -75,6 +75,10 @@ export class ProjectSupportComponent extends ProjectComponentBase {
     return item.supportRequestedTeamId !== null && item.supportRequestedCompletedAt === null;
   }
 
+  isComplete(item: ProjectSupport) {
+    return item.supportRequestedTeamId !== null && item.supportRequestedCompletedAt !== null;
+  }
+
   // Project Support
 
   items: ProjectSupport[] | null = null;

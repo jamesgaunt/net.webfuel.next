@@ -118,6 +118,7 @@
 
     <Property Name="TeamContactFullName" Type="meta:name" />
     <Property Name="LeadApplicantFullName" Type="meta:name" />
+    
     <Property Name="SupportTotalMinutes" Type="int" />
     <Property Name="OpenSupportRequestTeamIds" Type="Json:List{Guid}" />
 

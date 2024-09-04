@@ -65,6 +65,22 @@ namespace Webfuel.Domain.Dashboard
                 });
             }
 
+            {
+                var query = new Query();
+                query.Equal(nameof(Project.StatusId), ProjectStatusEnum.OnHold);
+                var queryResult = await _projectRepository.QueryProject(query, selectItems: false, countTotal: true);
+
+                result.Add(new DashboardMetric
+                {
+                    Name = "On Hold Projects",
+                    Count = queryResult.TotalCount,
+                    Icon = "fas fa-books",
+                    RouterLink = "/project/project-list",
+                    RouterParams = $"{{ \"show\": \"on-hold\" }}",
+                    BackgroundColor = "#d6bdcc"
+                });
+            }
+
             // All Projects
             {
                 result.Add(new DashboardMetric

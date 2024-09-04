@@ -18,13 +18,19 @@
   <div class="filter-form">
     <form class="form" [formGroup]="filterForm">
       <div class="flex">
-        <div class="field is-12">
+        <div class="field is-4">
           <input class="input" type="text" formControlName="title" placeholder="Title" />
+        </div>
+        <div class="field is-4">
+          <input class="input" type="text" formControlName="teamContactFullName" placeholder="Contact Name" />
+        </div>
+        <div class="field is-4">
+          <dropdown-select [dataSource]="staticDataCache.supportRequestStatus" placeholder="Status" formControlName="statusId" [enableClear]="true"></dropdown-select>
         </div>
       </div>
       <div class="flex">
         <div class="field is-4">
-          <dropdown-select [dataSource]="staticDataCache.supportRequestStatus" placeholder="Status" formControlName="statusId" [enableClear]="true"></dropdown-select>
+          <dropdown-select [dataSource]="staticDataCache.fundingStream" placeholder="Proposed Funding Stream" formControlName="proposedFundingStreamId" [enableClear]="true"></dropdown-select>
         </div>
         <div class="field is-4">
           <date-picker placeholder="From Date" formControlName="fromDate" [enableClear]="true" />

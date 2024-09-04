@@ -25,7 +25,9 @@ export class SupportRequestListComponent {
     fromDate: new FormControl<string | null>(null),
     toDate: new FormControl<string | null>(null),
     statusId: new FormControl<string | null>(null),
-    title: new FormControl<string>('', { nonNullable: true })
+    title: new FormControl<string>('', { nonNullable: true }),
+    teamContactFullName: new FormControl<string>('', { nonNullable: true }),
+    proposedFundingStreamId: new FormControl<string | null>(null),
   });
 
   resetFilterForm() {

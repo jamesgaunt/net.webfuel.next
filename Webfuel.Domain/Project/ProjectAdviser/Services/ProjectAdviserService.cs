@@ -127,6 +127,7 @@ namespace Webfuel.Domain
 
         public async Task SendTeamSupportRequestedEmail(Project project, Guid supportTeamId)
         {
+            var supportTeam = await _staticDataService.RequireSupportTeam(supportTeamId);
             var supportTeamLeads = await _supportTeamUserRepository.SelectSupportTeamUserBySupportTeamIdAndIsTeamLead(supportTeamId, isTeamLead: true);
             foreach(var supportTeamLead in supportTeamLeads)
             {
@@ -139,7 +140,8 @@ namespace Webfuel.Domain
                     { "PROJECT_TITLE", project.Title },
                     { "PROJECT_REFERENCE", project.PrefixedNumber },
                     { "ADVISER_NAME", user.FullName },
-                    { "ADVISER_EMAIL", user.Email }
+                    { "ADVISER_EMAIL", user.Email },
+                    { "SUPPORT_TEAM_NAME", supportTeam.Name }
                 };
 
                 await _emailTemplateService.SendEmail("Team Support Requested", replacements);

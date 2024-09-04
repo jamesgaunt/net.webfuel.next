@@ -1547,9 +1547,11 @@ export interface UnlockSupportRequest {
 
 export interface QuerySupportRequest extends Query {
     title: string;
+    teamContactFullName: string;
     fromDate: string | null | null;
     toDate: string | null | null;
     statusId: string | null | null;
+    proposedFundingStreamId: string | null | null;
     skip: number;
     take: number;
     projection?: Array<string>;

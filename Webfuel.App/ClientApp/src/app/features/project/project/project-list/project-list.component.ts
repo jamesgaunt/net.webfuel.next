@@ -92,6 +92,11 @@ export class ProjectListComponent {
         this.resetFilterForm();
         this.filterForm.patchValue({ statusId: ProjectStatusEnum.Active });
         return;
+
+      case 'on-hold':
+        this.resetFilterForm();
+        this.filterForm.patchValue({ statusId: ProjectStatusEnum.OnHold });
+        return;
     }
     
     const supportTeam = params['supportTeam'];

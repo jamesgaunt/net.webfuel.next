@@ -58,7 +58,19 @@ namespace Webfuel.Domain
 
         public async Task<QueryResult<Project>> Handle(QueryProject request, CancellationToken cancellationToken)
         {
-            return await _projectRepository.QueryProject(request.ApplyCustomFilters());
+            request.ApplyCustomFilters();
+
+            if(request.Sort.Count == 1 && String.Compare(request.Sort[0].Field, nameof(Project.TeamContactFullName), true) == 0)
+            {
+                request.Sort[0].Field = nameof(Project.TeamContactLastName);
+                request.Sort.Add(new QuerySort
+                {
+                    Field = nameof(Project.TeamContactFirstName),
+                    Direction = request.Sort[0].Direction
+                });
+            }
+
+            return await _projectRepository.QueryProject(request);
         }
     }
 }

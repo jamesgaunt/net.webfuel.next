@@ -9,8 +9,9 @@
 
   @each $p in $paletteAction {
     &.is-#{$p} {
-      background-color: color-mix(in hsl, var(--palette-#{$p}-background) 15%, #FFF) !important;
+      background-color: color-mix(in hsl, var(--palette-#{$p}-background) 60%, #FFF) !important;
       border-color: var(--palette-#{$p}-background) !important;
+      color: var(--palette-#{$p}-foreground) !important;
     }
   }
 
