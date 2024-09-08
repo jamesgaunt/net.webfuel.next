@@ -36,7 +36,9 @@ export class SupportRequestListComponent {
       fromDate: null,
       toDate: null,
       statusId: null,
-      title: ''
+      title: '',
+      teamContactFullName: '',
+      proposedFundingStreamId: null
     })
   }
 

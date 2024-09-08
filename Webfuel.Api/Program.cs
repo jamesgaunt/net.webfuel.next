@@ -6,6 +6,7 @@ using Webfuel.Common;
 using Webfuel.Domain;
 using Webfuel.Domain.StaticData;
 using Webfuel.Excel;
+using Webfuel.Logging;
 using Webfuel.Reporting;
 
 namespace Webfuel.Api;
@@ -16,7 +17,6 @@ public class Program
 
     public static void Main(string[] args)
     {
-
         var builder = WebApplication.CreateBuilder(args);
 
         builder.AddLogging();
@@ -28,6 +28,12 @@ public class Program
         builder.Services.RegisterStaticDataServices();
         builder.Services.RegisterExcelServices();
         builder.Services.RegisterReportingServices();
+
+        builder.AddPlatformClientServices(x =>
+        {
+            x.ClientId = Guid.Parse("2643cb0a-1ac2-b74b-4c69-08dccf4965da");
+            x.AccessToken = "ABCD";
+        });
 
         builder.Services.AddMediatR(c =>
         {
@@ -85,44 +91,61 @@ public static class ServiceDefaults
     public static IHostApplicationBuilder AddLogging(this IHostApplicationBuilder builder)
     {
         builder.Logging.ClearProviders();
-        builder.Logging.AddConsole();
-        builder.Logging.AddOpenTelemetry(x =>
-        {
-            x.IncludeScopes = true;
-            x.IncludeFormattedMessage = true;
-        });
 
-        builder.Services.Configure<OpenTelemetryLoggerOptions>(logging => logging.AddOtlpExporter(opt =>
+        if (builder.Environment.IsDevelopment())
         {
-            opt.Endpoint = new Uri("http://seq.webfuel.net/ingest/otlp/v1/logs");
-            opt.Protocol = OtlpExportProtocol.HttpProtobuf;
-        }));
+            builder.Logging.AddConsole();
+        }
+        else
+        {
+            builder.Logging.AddPlatformLogger();
+
+            builder.Logging.AddOpenTelemetry(x =>
+            {
+                x.IncludeScopes = true;
+                x.IncludeFormattedMessage = true;
+            });
+
+            builder.Services.Configure<OpenTelemetryLoggerOptions>(logging => logging.AddOtlpExporter(opt =>
+            {
+                opt.Endpoint = new Uri("https://api.eu1.honeycomb.io/v1/logs");
+                opt.Headers = "x-honeycomb-team=fsZ4cF3kvdv0D02QDX7mbH";
+                opt.Protocol = OtlpExportProtocol.HttpProtobuf;
+            }));
+        }
 
         return builder;
     }
 
     public static IHostApplicationBuilder AddTracing(this IHostApplicationBuilder builder)
     {
-        builder.Services
-            .AddOpenTelemetry()
-            .ConfigureResource(x =>
-            {
-                x.Clear();
-                x.AddService(builder.Environment.IsProduction() ? "rss-icl" : "rss-icl-dev");
-            })
-            .WithTracing(x =>
-            {
-                x.SetSampler(new AlwaysOnSampler());
-                x.AddSource(RequestTraceActivitySource.Name);
-                //x.AddSqlClientInstrumentation();
-            });
-
-        builder.Services.ConfigureOpenTelemetryTracerProvider(tracing => tracing.AddOtlpExporter(opt =>
+        if (builder.Environment.IsDevelopment())
         {
-            opt.Endpoint = new Uri("https://api.eu1.honeycomb.io/v1/traces");
-            opt.Headers = "x-honeycomb-team=fsZ4cF3kvdv0D02QDX7mbH";
-            opt.Protocol = OtlpExportProtocol.HttpProtobuf;
-        }));
+            // No tracing in development by default
+        }
+        else
+        {
+            builder.Services
+                .AddOpenTelemetry()
+                .ConfigureResource(x =>
+                {
+                    x.Clear();
+                    x.AddService(builder.Environment.IsProduction() ? "rss-icl" : "rss-icl-dev");
+                })
+                .WithTracing(x =>
+                {
+                    x.SetSampler(new AlwaysOnSampler());
+                    x.AddSource(RequestTraceActivitySource.Name);
+                });
+
+            builder.Services.ConfigureOpenTelemetryTracerProvider(tracing => tracing.AddOtlpExporter(opt =>
+            {
+                opt.Endpoint = new Uri("https://api.eu1.honeycomb.io/v1/traces");
+                opt.Headers = "x-honeycomb-team=fsZ4cF3kvdv0D02QDX7mbH";
+                opt.Protocol = OtlpExportProtocol.HttpProtobuf;
+            }));
+
+        }
 
         return builder;
     }
