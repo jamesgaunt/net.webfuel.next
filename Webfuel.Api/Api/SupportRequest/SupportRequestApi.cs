@@ -52,7 +52,7 @@ namespace Webfuel.App
         public static async Task<SupportRequest> SubmitFiles(
             HttpRequest request,
             IFileStorageService fileStorageService,
-            IErrorLogService errorLogService)
+            ILogger<SupportRequest> logger)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace Webfuel.App
             }
             catch (Exception ex)
             {
-                await errorLogService.LogException("Exception submitting support request files", ex: ex);
+                logger.LogCritical(ex, "Exception submitting support request");
                 throw;
             }
         }
@@ -73,7 +73,7 @@ namespace Webfuel.App
         public static async Task<SupportRequest> SubmitForm(
             [FromBody] CreateSupportRequest command,
             IMediator mediator,
-            IErrorLogService errorLogService)
+            ILogger<SupportRequest> logger)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace Webfuel.App
             }
             catch (Exception ex)
             {
-                await errorLogService.LogException("Exception submitting support request", ex: ex);
+                logger.LogCritical(ex, "Exception submitting support request");
                 throw;
             }
         }
