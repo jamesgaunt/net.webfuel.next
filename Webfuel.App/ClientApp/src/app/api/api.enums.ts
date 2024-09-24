@@ -178,9 +178,15 @@ export enum IsTeamMembersConsultedEnum {
     NoTeamMembersHaveNotBeenConsulted = "b5f5f413-e742-494d-a22a-4ecfa1d52ce8",
 }
 
+export enum IsYesNoEnum {
+    Yes = "3fd6c70b-b87a-45bc-84bc-c71802ef3276",
+    No = "9c2dbdff-9020-419a-aa3f-bb976b19de6a",
+}
+
 export enum ProjectStatusEnum {
     Active = "6c83e9e4-617b-4386-b087-16a11f6b24af",
     OnHold = "691ee44b-7b01-4af0-b8f3-13f96f00f0ce",
+    SubmittedOnHold = "e66a0fdb-8d2e-4f4a-b813-a0a487e8c25d",
     Closed = "ed4845b0-1f4c-4df3-b4ec-46e5ce94c275",
     Discarded = "164fdeee-8d6f-42fa-a23b-fbab0ef3ba93",
 }
@@ -204,21 +210,29 @@ export enum ResearcherRoleEnum {
 }
 
 export enum SubmissionOutcomeEnum {
-    Unknown = "32b584a9-c539-447b-a542-df3e5283ef3c",
     Shortlisted = "36969c16-31b1-4c1e-81eb-b4ccf626a98c",
     Rejected = "bdbf02dc-75a7-413c-b8f5-7c610a6695aa",
+    NotSubmitted = "4f8dcf2d-75bd-449d-9631-fcecbea1b935",
+    Funded = "38dc9caf-820d-4980-8f00-6bc260092a96",
+    Unknown = "32b584a9-c539-447b-a542-df3e5283ef3c",
     Withdrawn = "b60f7e48-d744-403e-8fc1-f23445cb40c5",
-    FundedFullStageOnly = "38dc9caf-820d-4980-8f00-6bc260092a96",
     NotApplicable = "b785f487-82fa-4149-8c7d-4a615ca90420",
+    SubmittedAwaitingOutcome = "0c64df76-2110-436a-96c2-0c2774e8a3b4",
 }
 
 export enum SubmissionStageEnum {
-    OutlineStageStage1 = "18174faf-8787-480e-b0b4-5698a5e59d93",
-    Stage2 = "deecb94c-8284-45c8-b499-1c0c099215b0",
-    OneStageApplication = "aa13a2ae-f1dd-4b8b-959e-15bdff000fee",
-    AcceleratorAward = "3e658c3b-11fc-464b-9296-7bf369866bce",
-    NotApplicable = "af170296-2c64-4a39-8fb8-6ddd6f8d3137",
+    Stage1OrOutline = "18174faf-8787-480e-b0b4-5698a5e59d93",
+    Stage2OrInterview = "deecb94c-8284-45c8-b499-1c0c099215b0",
+    OneStage = "aa13a2ae-f1dd-4b8b-959e-15bdff000fee",
+    NA = "af170296-2c64-4a39-8fb8-6ddd6f8d3137",
     Unknown = "174a713b-aff7-432b-8e7a-eede783a6067",
+}
+
+export enum SubmissionStatusEnum {
+    Yes = "82a179e1-9a82-4a68-a883-5800bc2000d4",
+    No = "6f8e9238-6b7e-4bd4-97ce-a0584d802ee4",
+    DonTKnow = "f01c0b96-7feb-490e-b919-331df4fc47a0",
+    NA = "f319f56f-8434-45af-96fb-003bd29774b2",
 }
 
 export enum SupportRequestStatusEnum {

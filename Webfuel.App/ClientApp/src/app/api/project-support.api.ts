@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { CreateProjectSupport, ProjectSupport, UpdateProjectSupport, UpdateProjectSupportCompletion, CompleteProjectSupport, UncompleteProjectSupport, QueryProjectSupport, QueryResult } from './api.types';
+import { CreateProjectSupport, ProjectSupport, UpdateProjectSupport, ResendProjectSupportNotification, UpdateProjectSupportCompletion, CompleteProjectSupport, UncompleteProjectSupport, QueryProjectSupport, QueryResult } from './api.types';
 
 @Injectable()
 export class ProjectSupportApi implements IDataSource<ProjectSupport, QueryProjectSupport, CreateProjectSupport, UpdateProjectSupport> {
@@ -15,6 +15,10 @@ export class ProjectSupportApi implements IDataSource<ProjectSupport, QueryProje
     
     public update (body: UpdateProjectSupport, options?: ApiOptions): Observable<ProjectSupport> {
         return this.apiService.request<UpdateProjectSupport, ProjectSupport>("PUT", "api/project-support", body, options).pipe(tap(_ => this.changed.emit()));
+    }
+    
+    public resendNotification (body: ResendProjectSupportNotification, options?: ApiOptions): Observable<ProjectSupport> {
+        return this.apiService.request<ResendProjectSupportNotification, ProjectSupport>("PUT", "api/project-support/resend-notification", body, options);
     }
     
     public updateCompletion (body: UpdateProjectSupportCompletion, options?: ApiOptions): Observable<ProjectSupport> {

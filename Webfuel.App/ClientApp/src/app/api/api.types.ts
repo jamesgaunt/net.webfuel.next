@@ -416,54 +416,6 @@ export interface QueryFileStorageEntry extends Query {
     search?: string;
 }
 
-export interface Heartbeat {
-    id: string;
-    name: string;
-    live: boolean;
-    sortOrder: number;
-    providerName: string;
-    providerParameter: string;
-    minTime: string;
-    maxTime: string;
-    schedule: string;
-    nextExecutionScheduledAt: string | null | null;
-    schedulerExceptionMessage: string;
-    logSuccessfulExecutions: boolean;
-    lastExecutionAt: string | null | null;
-    lastExecutionMessage: string;
-    lastExecutionSuccess: boolean;
-    lastExecutionMicroseconds: number;
-    lastExecutionMetadataJson: string;
-    recentExecutionSuccessCount: number;
-    recentExecutionFailureCount: number;
-    recentExecutionMicrosecondsAverage: number;
-}
-
-export interface CreateHeartbeat {
-    name: string;
-}
-
-export interface UpdateHeartbeat {
-    id: string;
-    name: string;
-    live: boolean;
-    logSuccessfulExecutions: boolean;
-    providerName: string;
-    providerParameter: string;
-    minTime: string;
-    maxTime: string;
-    schedule: string;
-}
-
-export interface QueryHeartbeat extends Query {
-    skip: number;
-    take: number;
-    projection?: Array<string>;
-    filters?: Array<QueryFilter>;
-    sort?: Array<QuerySort>;
-    search?: string;
-}
-
 export interface PingResponse {
     timestamp: string;
 }
@@ -490,6 +442,7 @@ export interface IStaticDataModel {
     isQuantativeTeamContribution: Array<IsQuantativeTeamContribution>;
     isResubmission: Array<IsResubmission>;
     isTeamMembersConsulted: Array<IsTeamMembersConsulted>;
+    isYesNo: Array<IsYesNo>;
     professionalBackground: Array<ProfessionalBackground>;
     projectStatus: Array<ProjectStatus>;
     reportProvider: Array<ReportProvider>;
@@ -502,6 +455,7 @@ export interface IStaticDataModel {
     site: Array<Site>;
     submissionOutcome: Array<SubmissionOutcome>;
     submissionStage: Array<SubmissionStage>;
+    submissionStatus: Array<SubmissionStatus>;
     supportProvided: Array<SupportProvided>;
     supportRequestStatus: Array<SupportRequestStatus>;
     supportTeam: Array<SupportTeam>;
@@ -682,6 +636,13 @@ export interface IsTeamMembersConsulted extends IStaticData {
     default: boolean;
 }
 
+export interface IsYesNo extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+}
+
 export interface ProfessionalBackground extends IStaticData {
     id: string;
     name: string;
@@ -697,6 +658,7 @@ export interface ProjectStatus extends IStaticData {
     sortOrder: number;
     default: boolean;
     hidden: boolean;
+    active: boolean;
     locked: boolean;
     discarded: boolean;
 }
@@ -782,6 +744,14 @@ export interface SubmissionStage extends IStaticData {
     default: boolean;
     hidden: boolean;
     freeText: boolean;
+}
+
+export interface SubmissionStatus extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
 }
 
 export interface SupportProvided extends IStaticData {
@@ -1097,7 +1067,9 @@ export interface ProjectSubmission {
     nihrReference: string;
     submissionDate: string;
     fundingAmountOnSubmission: number | null | null;
+    outcomeExpectedDate: string | null | null;
     projectId: string;
+    submissionStatusId: string | null | null;
     submissionStageId: string;
     submissionOutcomeId: string | null | null;
 }
@@ -1138,13 +1110,22 @@ export interface ProjectSupport {
     teamIds: Array<string>;
     adviserIds: Array<string>;
     supportProvidedIds: Array<string>;
+    supportRequestedAt: string | null | null;
     supportRequestedCompletedAt: string | null | null;
     supportRequestedCompletedNotes: string;
+    files: Array<ProjectSupportFile>;
     calculatedMinutes: number;
     projectId: string;
     isPrePostAwardId: string;
     supportRequestedTeamId: string | null | null;
     supportRequestedCompletedByUserId: string | null | null;
+}
+
+export interface ProjectSupportFile {
+    id: string;
+    fileName: string;
+    sizeBytes: number;
+    uploadedAt: string | null | null;
 }
 
 export interface CreateProjectSupport {
@@ -1169,6 +1150,10 @@ export interface UpdateProjectSupport {
     workTimeInHours: number;
     supportRequestedTeamId: string | null | null;
     isPrePostAwardId: string;
+}
+
+export interface ResendProjectSupportNotification {
+    id: string;
 }
 
 export interface UpdateProjectSupportCompletion {
@@ -1355,6 +1340,7 @@ export interface SupportRequest {
     id: string;
     triageNote: string;
     isThisRequestLinkedToAnExistingProject: boolean;
+    dateOfTriage: string | null | null;
     dateOfRequest: string;
     title: string;
     applicationStageFreeText: string;
@@ -1413,6 +1399,8 @@ export interface SupportRequest {
     leadApplicantAgeRangeId: string | null | null;
     leadApplicantGenderId: string | null | null;
     leadApplicantEthnicityId: string | null | null;
+    wouldYouLikeToReceiveAGrantsmanshipReviewId: string | null | null;
+    isYourSupportRequestOnlyForAGrantsmanshipReviewId: string | null | null;
 }
 
 export interface CreateSupportRequest {
@@ -2164,6 +2152,15 @@ export interface QueryIsTeamMembersConsulted extends Query {
     search?: string;
 }
 
+export interface QueryIsYesNo extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
 export interface CreateProfessionalBackground {
     name: string;
     default: boolean;
@@ -2385,6 +2382,15 @@ export interface QuerySubmissionOutcome extends Query {
 }
 
 export interface QuerySubmissionStage extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface QuerySubmissionStatus extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;

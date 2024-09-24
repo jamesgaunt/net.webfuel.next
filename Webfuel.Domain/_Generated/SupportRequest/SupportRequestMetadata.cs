@@ -29,6 +29,9 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.IsThisRequestLinkedToAnExistingProject):
                         result.Add(new SqlParameter(nameof(SupportRequest.IsThisRequestLinkedToAnExistingProject), entity.IsThisRequestLinkedToAnExistingProject));
                         break;
+                    case nameof(SupportRequest.DateOfTriage):
+                        result.Add(new SqlParameter(nameof(SupportRequest.DateOfTriage), entity.DateOfTriage ?? (object?)DBNull.Value));
+                        break;
                     case nameof(SupportRequest.DateOfRequest):
                         result.Add(new SqlParameter(nameof(SupportRequest.DateOfRequest), entity.DateOfRequest));
                         break;
@@ -203,6 +206,12 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.LeadApplicantEthnicityId):
                         result.Add(new SqlParameter(nameof(SupportRequest.LeadApplicantEthnicityId), entity.LeadApplicantEthnicityId ?? (object?)DBNull.Value));
                         break;
+                    case nameof(SupportRequest.WouldYouLikeToReceiveAGrantsmanshipReviewId):
+                        result.Add(new SqlParameter(nameof(SupportRequest.WouldYouLikeToReceiveAGrantsmanshipReviewId), entity.WouldYouLikeToReceiveAGrantsmanshipReviewId ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(SupportRequest.IsYourSupportRequestOnlyForAGrantsmanshipReviewId):
+                        result.Add(new SqlParameter(nameof(SupportRequest.IsYourSupportRequestOnlyForAGrantsmanshipReviewId), entity.IsYourSupportRequestOnlyForAGrantsmanshipReviewId ?? (object?)DBNull.Value));
+                        break;
                 }
             }
             return result;
@@ -232,6 +241,7 @@ namespace Webfuel.Domain
                 yield return "Id";
                 yield return "TriageNote";
                 yield return "IsThisRequestLinkedToAnExistingProject";
+                yield return "DateOfTriage";
                 yield return "DateOfRequest";
                 yield return "Title";
                 yield return "ApplicationStageFreeText";
@@ -290,6 +300,8 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantAgeRangeId";
                 yield return "LeadApplicantGenderId";
                 yield return "LeadApplicantEthnicityId";
+                yield return "WouldYouLikeToReceiveAGrantsmanshipReviewId";
+                yield return "IsYourSupportRequestOnlyForAGrantsmanshipReviewId";
             }
         }
         
@@ -300,6 +312,7 @@ namespace Webfuel.Domain
                 yield return "Id";
                 yield return "TriageNote";
                 yield return "IsThisRequestLinkedToAnExistingProject";
+                yield return "DateOfTriage";
                 yield return "DateOfRequest";
                 yield return "Title";
                 yield return "ApplicationStageFreeText";
@@ -358,6 +371,8 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantAgeRangeId";
                 yield return "LeadApplicantGenderId";
                 yield return "LeadApplicantEthnicityId";
+                yield return "WouldYouLikeToReceiveAGrantsmanshipReviewId";
+                yield return "IsYourSupportRequestOnlyForAGrantsmanshipReviewId";
             }
         }
         
@@ -367,6 +382,7 @@ namespace Webfuel.Domain
             {
                 yield return "TriageNote";
                 yield return "IsThisRequestLinkedToAnExistingProject";
+                yield return "DateOfTriage";
                 yield return "DateOfRequest";
                 yield return "Title";
                 yield return "ApplicationStageFreeText";
@@ -425,6 +441,8 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantAgeRangeId";
                 yield return "LeadApplicantGenderId";
                 yield return "LeadApplicantEthnicityId";
+                yield return "WouldYouLikeToReceiveAGrantsmanshipReviewId";
+                yield return "IsYourSupportRequestOnlyForAGrantsmanshipReviewId";
             }
         }
         

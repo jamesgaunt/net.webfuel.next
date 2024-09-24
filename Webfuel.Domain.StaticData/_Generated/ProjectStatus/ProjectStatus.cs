@@ -33,6 +33,9 @@ namespace Webfuel.Domain.StaticData
                     case nameof(ProjectStatus.Hidden):
                         Hidden = (bool)value!;
                         break;
+                    case nameof(ProjectStatus.Active):
+                        Active = (bool)value!;
+                        break;
                     case nameof(ProjectStatus.Locked):
                         Locked = (bool)value!;
                         break;
@@ -47,6 +50,7 @@ namespace Webfuel.Domain.StaticData
         public int SortOrder  { get; internal set; } = 0;
         public bool Default  { get; internal set; } = false;
         public bool Hidden  { get; internal set; } = false;
+        public bool Active  { get; internal set; } = false;
         public bool Locked  { get; internal set; } = false;
         public bool Discarded  { get; internal set; } = false;
         public ProjectStatus Copy()
@@ -57,6 +61,7 @@ namespace Webfuel.Domain.StaticData
             entity.SortOrder = SortOrder;
             entity.Default = Default;
             entity.Hidden = Hidden;
+            entity.Active = Active;
             entity.Locked = Locked;
             entity.Discarded = Discarded;
             return entity;

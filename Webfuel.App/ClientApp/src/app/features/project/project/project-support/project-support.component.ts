@@ -138,4 +138,14 @@ export class ProjectSupportComponent extends ProjectComponentBase {
       });
     });
   }
+
+  resendNotification(projectSupport: ProjectSupport) {
+    if (this.locked) return;
+    this.confirmDialog.open({ title: "Resend Notification", message: "Are you sure you want to resend the notification email to the referred team?" }).subscribe((result) => {
+      this.projectSupportApi.resendNotification({ id: projectSupport.id }, { successGrowl: "Notification email resent" }).subscribe(() => {
+        this.projectSupportApi.changed.next(null);
+      });
+    });
+
+  }
 }

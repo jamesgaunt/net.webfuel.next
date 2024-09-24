@@ -32,8 +32,14 @@ namespace Webfuel.Domain
                     case nameof(ProjectSubmission.FundingAmountOnSubmission):
                         result.Add(new SqlParameter(nameof(ProjectSubmission.FundingAmountOnSubmission), entity.FundingAmountOnSubmission ?? (object?)DBNull.Value));
                         break;
+                    case nameof(ProjectSubmission.OutcomeExpectedDate):
+                        result.Add(new SqlParameter(nameof(ProjectSubmission.OutcomeExpectedDate), entity.OutcomeExpectedDate ?? (object?)DBNull.Value));
+                        break;
                     case nameof(ProjectSubmission.ProjectId):
                         result.Add(new SqlParameter(nameof(ProjectSubmission.ProjectId), entity.ProjectId));
+                        break;
+                    case nameof(ProjectSubmission.SubmissionStatusId):
+                        result.Add(new SqlParameter(nameof(ProjectSubmission.SubmissionStatusId), entity.SubmissionStatusId ?? (object?)DBNull.Value));
                         break;
                     case nameof(ProjectSubmission.SubmissionStageId):
                         result.Add(new SqlParameter(nameof(ProjectSubmission.SubmissionStageId), entity.SubmissionStageId));
@@ -71,7 +77,9 @@ namespace Webfuel.Domain
                 yield return "NIHRReference";
                 yield return "SubmissionDate";
                 yield return "FundingAmountOnSubmission";
+                yield return "OutcomeExpectedDate";
                 yield return "ProjectId";
+                yield return "SubmissionStatusId";
                 yield return "SubmissionStageId";
                 yield return "SubmissionOutcomeId";
             }
@@ -85,7 +93,9 @@ namespace Webfuel.Domain
                 yield return "NIHRReference";
                 yield return "SubmissionDate";
                 yield return "FundingAmountOnSubmission";
+                yield return "OutcomeExpectedDate";
                 yield return "ProjectId";
+                yield return "SubmissionStatusId";
                 yield return "SubmissionStageId";
                 yield return "SubmissionOutcomeId";
             }
@@ -98,7 +108,9 @@ namespace Webfuel.Domain
                 yield return "NIHRReference";
                 yield return "SubmissionDate";
                 yield return "FundingAmountOnSubmission";
+                yield return "OutcomeExpectedDate";
                 yield return "ProjectId";
+                yield return "SubmissionStatusId";
                 yield return "SubmissionStageId";
                 yield return "SubmissionOutcomeId";
             }

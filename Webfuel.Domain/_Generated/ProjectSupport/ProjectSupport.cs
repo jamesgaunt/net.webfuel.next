@@ -39,11 +39,17 @@ namespace Webfuel.Domain
                     case nameof(ProjectSupport.SupportProvidedIds):
                         SupportProvidedIdsJson = (string)value!;
                         break;
+                    case nameof(ProjectSupport.SupportRequestedAt):
+                        SupportRequestedAt = value == DBNull.Value ? (DateOnly?)null : DateOnly.FromDateTime((DateTime)value!);
+                        break;
                     case nameof(ProjectSupport.SupportRequestedCompletedAt):
                         SupportRequestedCompletedAt = value == DBNull.Value ? (DateTimeOffset?)null : (DateTimeOffset?)value;
                         break;
                     case nameof(ProjectSupport.SupportRequestedCompletedNotes):
                         SupportRequestedCompletedNotes = (string)value!;
+                        break;
+                    case nameof(ProjectSupport.Files):
+                        FilesJson = (string)value!;
                         break;
                     case nameof(ProjectSupport.CalculatedMinutes):
                         CalculatedMinutes = (int)value!;
@@ -103,8 +109,21 @@ namespace Webfuel.Domain
             set { _SupportProvidedIdsJson = value; _SupportProvidedIds = null; }
         }
         string _SupportProvidedIdsJson = String.Empty;
+        public DateOnly? SupportRequestedAt  { get; set; } = null;
         public DateTimeOffset? SupportRequestedCompletedAt  { get; set; } = null;
         public string SupportRequestedCompletedNotes  { get; set; } = String.Empty;
+        public List<ProjectSupportFile> Files
+        {
+            get { return _Files ?? (_Files = SafeJsonSerializer.Deserialize<List<ProjectSupportFile>>(_FilesJson)); }
+            set { _Files = value; }
+        }
+        List<ProjectSupportFile>? _Files = null;
+        internal string FilesJson
+        {
+            get { var result = _Files == null ? _FilesJson : (_FilesJson = SafeJsonSerializer.Serialize(_Files)); _Files = null; return result; }
+            set { _FilesJson = value; _Files = null; }
+        }
+        string _FilesJson = String.Empty;
         public int CalculatedMinutes  { get; set; } = 0;
         public Guid ProjectId { get; set; }
         public Guid IsPrePostAwardId { get; set; } = Guid.Parse("d8c2fe26-3a35-4a49-b61d-b5abc41611f6");
@@ -120,8 +139,10 @@ namespace Webfuel.Domain
             entity.TeamIdsJson = TeamIdsJson;
             entity.AdviserIdsJson = AdviserIdsJson;
             entity.SupportProvidedIdsJson = SupportProvidedIdsJson;
+            entity.SupportRequestedAt = SupportRequestedAt;
             entity.SupportRequestedCompletedAt = SupportRequestedCompletedAt;
             entity.SupportRequestedCompletedNotes = SupportRequestedCompletedNotes;
+            entity.FilesJson = FilesJson;
             entity.CalculatedMinutes = CalculatedMinutes;
             entity.ProjectId = ProjectId;
             entity.IsPrePostAwardId = IsPrePostAwardId;

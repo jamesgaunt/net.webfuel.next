@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, DestroyRef, forwardRef, inject, Inp
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { debounceTime, noop, tap } from 'rxjs';
+import _ from 'shared/common/underscore';
 
 @Component({
   selector: 'number-input',
@@ -17,7 +18,7 @@ import { debounceTime, noop, tap } from 'rxjs';
 })
 export class NumberInputComponent implements ControlValueAccessor, OnInit {
 
-  formControl: FormControl = new FormControl<number | null>(null);
+  formControl = new FormControl<string | null>(null);
 
   destroyRef: DestroyRef = inject(DestroyRef);
 
@@ -26,33 +27,47 @@ export class NumberInputComponent implements ControlValueAccessor, OnInit {
   }
 
   ngOnInit(): void {
-    this.formControl.valueChanges
-      .pipe(
-        debounceTime(200),
-        tap(value => this.onChange(value)),
-        takeUntilDestroyed(this.destroyRef),
-      )
-      .subscribe();
   }
 
   @Input()
   placeholder = "";
 
-  public onBlur(): void {
+  onFocus() {
+    
+  }
+
+  onBlur(): void {
+    var num = this.toNum(this.formControl.getRawValue());
+    this.formControl.setValue(_.formatNumber(num, 0))
+    this.onChange(num);   
     this.onTouched();
+  }
+
+  // Helpers
+
+  toTxt(value: any) {
+    if (value == null)
+      return null;
+    return _.formatNumber(_.parseNumber(value, false), 0);
+  }
+
+  toNum(value: any) {
+    if (value == null)
+      return null;
+    return _.parseNumber(value, false);
   }
 
   // ControlValueAccessor API
 
-  onChange: (value: string) => void = noop;
+  onChange: (value: number | null) => void = noop;
 
   onTouched: () => void = noop;
 
-  public writeValue(value: string): void {
-    this.formControl.setValue(value, { emitEvent: false });
+  public writeValue(value: any): void {
+    this.formControl.setValue(this.toTxt(value), { emitEvent: false });
   }
 
-  public registerOnChange(fn: (value: string) => void): void {
+  public registerOnChange(fn: (value: number | null) => void): void {
     this.onChange = fn;
   }
 

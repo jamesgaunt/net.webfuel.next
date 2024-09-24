@@ -18,6 +18,9 @@ namespace Webfuel.App
             app.MapPut("api/project-support", Update)
                 .RequireIdentity();
 
+            app.MapPut("api/project-support/resend-notification", ResendNotification)
+                .RequireIdentity();
+
             app.MapPut("api/project-support/completion", UpdateCompletion)
                 .RequireIdentity();
 
@@ -45,6 +48,11 @@ namespace Webfuel.App
         }
 
         public static Task<ProjectSupport> Update([FromBody] UpdateProjectSupport command, IMediator mediator)
+        {
+            return mediator.Send(command);
+        }
+
+        public static Task<ProjectSupport> ResendNotification([FromBody] ResendProjectSupportNotification command, IMediator mediator)
         {
             return mediator.Send(command);
         }

@@ -539,8 +539,17 @@ namespace Webfuel.Domain
 
             foreach (var supportEvent in supportEvents)
             {
-                //if (!String.IsNullOrEmpty(supportEvent.SupportProvidedFreeText) && !result.Contains(supportEvent.SupportProvidedFreeText))
-                //    result.Add(supportEvent.SupportProvidedFreeText);
+                foreach (var supportProvidedId in supportEvent.SupportProvidedIds)
+                {
+                    var supportProvided = context.StaticData.SupportProvided.FirstOrDefault(p => p.Id == supportProvidedId);
+                    if (supportProvided == null)
+                        continue; // This static has been deleted
+
+                    if (supportProvided.Alias != "OTHER" || result.Contains(supportProvided.Name))
+                        continue;
+
+                    result.Add(supportProvided.Name);
+                }
             }
             return String.Join(", ", result);
         }
@@ -653,6 +662,9 @@ namespace Webfuel.Domain
                     var supportProvided = context.StaticData.SupportProvided.FirstOrDefault(p => p.Id == supportProvidedId);
                     if (supportProvided == null)
                         continue; // This static has been deleted
+
+                    if (supportProvided.Alias == "OTHER")
+                        continue; // This item is added to Other - Comment
 
                     // Use the alias first and foremost
                     var text = supportProvided.Alias;

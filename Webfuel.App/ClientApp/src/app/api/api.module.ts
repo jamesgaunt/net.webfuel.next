@@ -3,7 +3,6 @@ import { ConfigurationApi } from './configuration.api';
 import { DashboardApi } from './dashboard.api';
 import { EmailTemplateApi } from './email-template.api';
 import { FileStorageEntryApi } from './file-storage-entry.api';
-import { HeartbeatApi } from './heartbeat.api';
 import { PingApi } from './ping.api';
 import { StaticDataApi } from './static-data.api';
 import { ProjectAdviserApi } from './project-adviser.api';
@@ -43,6 +42,7 @@ import { IsPrePostAwardApi } from './is-pre-post-award.api';
 import { IsQuantativeTeamContributionApi } from './is-quantative-team-contribution.api';
 import { IsResubmissionApi } from './is-resubmission.api';
 import { IsTeamMembersConsultedApi } from './is-team-members-consulted.api';
+import { IsYesNoApi } from './is-yes-no.api';
 import { ProfessionalBackgroundApi } from './professional-background.api';
 import { ProjectStatusApi } from './project-status.api';
 import { ReportProviderApi } from './report-provider.api';
@@ -55,6 +55,7 @@ import { RSSHubApi } from './rsshub.api';
 import { SiteApi } from './site.api';
 import { SubmissionOutcomeApi } from './submission-outcome.api';
 import { SubmissionStageApi } from './submission-stage.api';
+import { SubmissionStatusApi } from './submission-status.api';
 import { SupportProvidedApi } from './support-provided.api';
 import { SupportRequestStatusApi } from './support-request-status.api';
 import { SupportTeamApi } from './support-team.api';
@@ -70,7 +71,6 @@ import { StaticDataCache } from './static-data.cache';
         DashboardApi,
         EmailTemplateApi,
         FileStorageEntryApi,
-        HeartbeatApi,
         PingApi,
         StaticDataApi,
         ProjectAdviserApi,
@@ -110,6 +110,7 @@ import { StaticDataCache } from './static-data.cache';
         IsQuantativeTeamContributionApi,
         IsResubmissionApi,
         IsTeamMembersConsultedApi,
+        IsYesNoApi,
         ProfessionalBackgroundApi,
         ProjectStatusApi,
         ReportProviderApi,
@@ -122,6 +123,7 @@ import { StaticDataCache } from './static-data.cache';
         SiteApi,
         SubmissionOutcomeApi,
         SubmissionStageApi,
+        SubmissionStatusApi,
         SupportProvidedApi,
         SupportRequestStatusApi,
         SupportTeamApi,

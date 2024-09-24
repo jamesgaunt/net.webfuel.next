@@ -13,12 +13,14 @@
     <Property Name="AdviserIds" Type="Json:List{Guid}" />
     <Property Name="SupportProvidedIds" Type="Json:List{Guid}" />
     <Property Name="IsPrePostAwardId" Type="IsPrePostAward" Default="d8c2fe26-3a35-4a49-b61d-b5abc41611f6" />
-    
-    <!-- Support Requested : 1.2 Development -->
+
+    <Property Name="SupportRequestedAt" Type="Date?" />
     <Property Name="SupportRequestedTeamId" Type="SupportTeam?" />
     <Property Name="SupportRequestedCompletedAt" Type="DateTime?" />
     <Property Name="SupportRequestedCompletedByUserId" Type="User?" />
     <Property Name="SupportRequestedCompletedNotes" Type="meta:description" />
+
+    <Property Name="Files" Type="Json:List{ProjectSupportFile}" Default="[]" />
 
     <!-- Calculated  -->
     <Property Name="CalculatedMinutes" Type="int" />

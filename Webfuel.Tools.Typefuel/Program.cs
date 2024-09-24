@@ -25,6 +25,9 @@ namespace Webfuel.Tools.Typefuel
                 .AnalyseAssembly(schema, typeof(Webfuel.Api.Program).GetTypeInfo().Assembly);
 
             AngularApiGenerator.GenerateApi(schema);
+
+            Console.WriteLine("All Done");
+            Console.ReadKey();
         }
     }
 }

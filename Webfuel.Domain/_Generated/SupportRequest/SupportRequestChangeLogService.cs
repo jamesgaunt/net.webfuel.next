@@ -19,6 +19,10 @@ namespace Webfuel.Domain
             {
                 sb.Append("Is This Request Linked To An Existing Project: ").Append(original.IsThisRequestLinkedToAnExistingProject).Append(" -> ").Append(updated.IsThisRequestLinkedToAnExistingProject).Append(delimiter);
             }
+            if(original.DateOfTriage != updated.DateOfTriage)
+            {
+                sb.Append("Date Of Triage: ").Append(original.DateOfTriage?.ToString() ?? "NULL").Append(" -> ").Append(updated.DateOfTriage?.ToString() ?? "NULL").Append(delimiter);
+            }
             if(original.DateOfRequest != updated.DateOfRequest)
             {
                 sb.Append("Date Of Request: ").Append(original.DateOfRequest).Append(" -> ").Append(updated.DateOfRequest).Append(delimiter);
@@ -272,6 +276,18 @@ namespace Webfuel.Domain
                 var o = original.LeadApplicantEthnicityId.HasValue ? (await _staticDataService.GetEthnicity(original.LeadApplicantEthnicityId.Value))?.Name ?? "UNKNOWN" : "NULL";
                 var u = updated.LeadApplicantEthnicityId.HasValue ? (await _staticDataService.GetEthnicity(updated.LeadApplicantEthnicityId.Value))?.Name ?? "UNKNOWN" : "NULL";
                 sb.Append("Lead Applicant Ethnicity: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
+            }
+            if(original.WouldYouLikeToReceiveAGrantsmanshipReviewId != updated.WouldYouLikeToReceiveAGrantsmanshipReviewId)
+            {
+                var o = original.WouldYouLikeToReceiveAGrantsmanshipReviewId.HasValue ? (await _staticDataService.GetIsYesNo(original.WouldYouLikeToReceiveAGrantsmanshipReviewId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                var u = updated.WouldYouLikeToReceiveAGrantsmanshipReviewId.HasValue ? (await _staticDataService.GetIsYesNo(updated.WouldYouLikeToReceiveAGrantsmanshipReviewId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                sb.Append("Would You Like To Receive A Grantsmanship Review: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
+            }
+            if(original.IsYourSupportRequestOnlyForAGrantsmanshipReviewId != updated.IsYourSupportRequestOnlyForAGrantsmanshipReviewId)
+            {
+                var o = original.IsYourSupportRequestOnlyForAGrantsmanshipReviewId.HasValue ? (await _staticDataService.GetIsYesNo(original.IsYourSupportRequestOnlyForAGrantsmanshipReviewId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                var u = updated.IsYourSupportRequestOnlyForAGrantsmanshipReviewId.HasValue ? (await _staticDataService.GetIsYesNo(updated.IsYourSupportRequestOnlyForAGrantsmanshipReviewId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                sb.Append("Is Your Support Request Only For A Grantsmanship Review: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
             }
             return sb.ToString();
         }

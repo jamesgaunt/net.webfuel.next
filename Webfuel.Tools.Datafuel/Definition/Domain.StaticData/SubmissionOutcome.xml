@@ -12,12 +12,14 @@
       <Member Name="Name" />
     </Index>
     <Data>
-      <Row Id="32b584a9-c539-447b-a542-df3e5283ef3c" Name="Unknown" />
       <Row Id="36969c16-31b1-4c1e-81eb-b4ccf626a98c" Name="Shortlisted" />
       <Row Id="bdbf02dc-75a7-413c-b8f5-7c610a6695aa" Name="Rejected" />
+      <Row Id="4f8dcf2d-75bd-449d-9631-fcecbea1b935" Name="Not Submitted" />
+      <Row Id="38dc9caf-820d-4980-8f00-6bc260092a96" Name="Funded" />
+      <Row Id="32b584a9-c539-447b-a542-df3e5283ef3c" Name="Unknown" />
       <Row Id="b60f7e48-d744-403e-8fc1-f23445cb40c5" Name="Withdrawn" />
-      <Row Id="38dc9caf-820d-4980-8f00-6bc260092a96" Name="Funded (full stage only)" />
       <Row Id="b785f487-82fa-4149-8c7d-4a615ca90420" Name="Not Applicable" />
+      <Row Id="0c64df76-2110-436a-96c2-0c2774e8a3b4" Name="Submitted - Awaiting outcome" />
     </Data>
   </Entity>
 </Schema>

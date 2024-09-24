@@ -123,9 +123,9 @@ export class DateCalendarComponent implements ControlValueAccessor, OnInit {
   }
 
   pickDay(day: IDay) {
-    this.value = day.value;
+    this.value = day.value.clone();
     this.populateDays();
-    var value = this.value ? this.value.format("YYYY-MM-dd") : null;
+    var value = this.value.clone() ? this.value.format("yyyy-MM-dd") : null;
     this.onChange(value);
   }
 

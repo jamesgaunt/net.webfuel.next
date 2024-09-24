@@ -43,7 +43,8 @@ export class Day {
   }
 
   toDate() {
-    return new Date(this.year, this.month - 1, this.dayOfMonth);
+    var d = new Date(this.year, this.month - 1, this.dayOfMonth);
+    return d;
   }
 
   clone() {

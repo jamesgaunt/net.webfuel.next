@@ -41,11 +41,17 @@ namespace Webfuel.Domain
                     case nameof(ProjectSupport.SupportProvidedIds):
                         result.Add(new SqlParameter(nameof(ProjectSupport.SupportProvidedIds), entity.SupportProvidedIdsJson));
                         break;
+                    case nameof(ProjectSupport.SupportRequestedAt):
+                        result.Add(new SqlParameter(nameof(ProjectSupport.SupportRequestedAt), entity.SupportRequestedAt ?? (object?)DBNull.Value));
+                        break;
                     case nameof(ProjectSupport.SupportRequestedCompletedAt):
                         result.Add(new SqlParameter(nameof(ProjectSupport.SupportRequestedCompletedAt), entity.SupportRequestedCompletedAt ?? (object?)DBNull.Value));
                         break;
                     case nameof(ProjectSupport.SupportRequestedCompletedNotes):
                         result.Add(new SqlParameter(nameof(ProjectSupport.SupportRequestedCompletedNotes), entity.SupportRequestedCompletedNotes));
+                        break;
+                    case nameof(ProjectSupport.Files):
+                        result.Add(new SqlParameter(nameof(ProjectSupport.Files), entity.FilesJson));
                         break;
                     case nameof(ProjectSupport.CalculatedMinutes):
                         result.Add(new SqlParameter(nameof(ProjectSupport.CalculatedMinutes), entity.CalculatedMinutes));
@@ -95,8 +101,10 @@ namespace Webfuel.Domain
                 yield return "TeamIds";
                 yield return "AdviserIds";
                 yield return "SupportProvidedIds";
+                yield return "SupportRequestedAt";
                 yield return "SupportRequestedCompletedAt";
                 yield return "SupportRequestedCompletedNotes";
+                yield return "Files";
                 yield return "CalculatedMinutes";
                 yield return "ProjectId";
                 yield return "IsPrePostAwardId";
@@ -116,8 +124,10 @@ namespace Webfuel.Domain
                 yield return "TeamIds";
                 yield return "AdviserIds";
                 yield return "SupportProvidedIds";
+                yield return "SupportRequestedAt";
                 yield return "SupportRequestedCompletedAt";
                 yield return "SupportRequestedCompletedNotes";
+                yield return "Files";
                 yield return "CalculatedMinutes";
                 yield return "ProjectId";
                 yield return "IsPrePostAwardId";
@@ -136,8 +146,10 @@ namespace Webfuel.Domain
                 yield return "TeamIds";
                 yield return "AdviserIds";
                 yield return "SupportProvidedIds";
+                yield return "SupportRequestedAt";
                 yield return "SupportRequestedCompletedAt";
                 yield return "SupportRequestedCompletedNotes";
+                yield return "Files";
                 yield return "CalculatedMinutes";
                 yield return "ProjectId";
                 yield return "IsPrePostAwardId";

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="IsYesNo" Tags="StaticData|Enum" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="3fd6c70b-b87a-45bc-84bc-c71802ef3276" Name="Yes" />
+      <Row Id="9c2dbdff-9020-419a-aa3f-bb976b19de6a" Name="No" />
+    </Data>
+  </Entity>
+</Schema>

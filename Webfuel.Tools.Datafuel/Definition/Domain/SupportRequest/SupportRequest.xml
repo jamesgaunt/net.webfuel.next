@@ -9,8 +9,9 @@
 
     <!-- Meta (not converted to project data) -->
 
-    <Property Name="TriageNote" Type="meta:description" /><!-- 1.2 Development -->
-    <Property Name="IsThisRequestLinkedToAnExistingProject" Type="boolean" /><!-- 1.2 Development -->
+    <Property Name="TriageNote" Type="meta:description" />
+    <Property Name="IsThisRequestLinkedToAnExistingProject" Type="boolean" />
+    <Property Name="DateOfTriage" Type="Date?" /><!-- 1.4 Development -->
 
     <!-- ========== Replicated to Project (Keep All Field Names Identical) ========== -->
 
@@ -36,8 +37,8 @@
     <Property Name="WhoElseIsOnTheStudyTeam" Type="string[2000]" /> 
     <Property Name="IsCTUAlreadyInvolvedId" Type="IsCTUAlreadyInvolved?" />
     <Property Name="IsCTUAlreadyInvolvedFreeText" Type="meta:name" />
-    <Property Name="ProfessionalBackgroundIds"  Type="Json:List{Guid}" Default="[]" /><!-- 1.2 Development -->
-    <Property Name="ProfessionalBackgroundFreeText" Type="meta:name" /><!-- 1.2 Development -->
+    <Property Name="ProfessionalBackgroundIds"  Type="Json:List{Guid}" Default="[]" />
+    <Property Name="ProfessionalBackgroundFreeText" Type="meta:name" />
     
     <!-- Team Contact Details -->
 
@@ -58,12 +59,12 @@
     <Property Name="LeadApplicantEmail" Type="meta:name" /> 
 
     <Property Name="LeadApplicantJobRole" Type="meta:name" />
-    <Property Name="LeadApplicantCareerStage" Type="meta:name" /><!-- 1.2 Development: DEPRICATED -->
-    <Property Name="LeadApplicantCareerStageId" Type="ResearcherCareerStage?" /><!-- 1.3 Development -->
+    <Property Name="LeadApplicantCareerStage" Type="meta:name" />
+    <Property Name="LeadApplicantCareerStageId" Type="ResearcherCareerStage?" />
     <Property Name="LeadApplicantOrganisationTypeId" Type="ResearcherOrganisationType?" />
     <Property Name="LeadApplicantOrganisation" Type="meta:name" />
     <Property Name="LeadApplicantDepartment" Type="meta:name" />
-    <Property Name="LeadApplicantLocationId" Type="ResearcherLocation?" /><!-- 1.3 Development -->
+    <Property Name="LeadApplicantLocationId" Type="ResearcherLocation?" />
 
     <Property Name="LeadApplicantAddressLine1" Type="meta:name" />
     <Property Name="LeadApplicantAddressLine2" Type="meta:name" />
@@ -81,6 +82,11 @@
 
     <!-- ========== /Replicated to Project (Keep All Field Names Identical) ========== -->
 
+    <!-- ========== Grantsmanship Questions (1.4) Not yet added to project -->
+    
+    <Property Name="WouldYouLikeToReceiveAGrantsmanshipReviewId" Type="IsYesNo?" />
+    <Property Name="IsYourSupportRequestOnlyForAGrantsmanshipReviewId" Type="IsYesNo?" />
+    
     <!-- ========== Calculated Properties ========== -->
 
     <Property Name="TeamContactFullName" Type="meta:name" />

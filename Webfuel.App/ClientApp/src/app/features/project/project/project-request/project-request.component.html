@@ -12,6 +12,9 @@
   <project-tabs></project-tabs>
   <form class="form" [formGroup]="form">
     <div class="flex">
+      <div class="is-12" *ngIf="item.supportRequestId">
+        <a class="link is-primary" href="/support-request/support-request-item/{{ item.supportRequestId }}"><i class="fas fa-link"></i> Click here to view the original support request for this project</a>
+      </div>
       <div class="field is-12">
         <label class="label">Working title of the project</label>
         <input class="input" type="text" placeholder="required" formControlName="title" />
@@ -42,7 +45,7 @@
       </div>
       <div class="field is-6">
         <label class="label">Target submission date (if known)</label>
-        <date-picker placeholder="optional" formControlName="targetSubmissionDate"></date-picker>
+        <date-picker placeholder="optional" [enableClear]="true" formControlName="targetSubmissionDate"></date-picker>
       </div>
       <div class="field is-6">
         <label class="label">Have your team members been consulted for support?</label>

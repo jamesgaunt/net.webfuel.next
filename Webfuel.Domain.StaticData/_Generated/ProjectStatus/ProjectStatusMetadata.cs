@@ -35,6 +35,9 @@ namespace Webfuel.Domain.StaticData
                     case nameof(ProjectStatus.Hidden):
                         result.Add(new SqlParameter(nameof(ProjectStatus.Hidden), entity.Hidden));
                         break;
+                    case nameof(ProjectStatus.Active):
+                        result.Add(new SqlParameter(nameof(ProjectStatus.Active), entity.Active));
+                        break;
                     case nameof(ProjectStatus.Locked):
                         result.Add(new SqlParameter(nameof(ProjectStatus.Locked), entity.Locked));
                         break;
@@ -72,6 +75,7 @@ namespace Webfuel.Domain.StaticData
                 yield return "SortOrder";
                 yield return "Default";
                 yield return "Hidden";
+                yield return "Active";
                 yield return "Locked";
                 yield return "Discarded";
             }
@@ -86,6 +90,7 @@ namespace Webfuel.Domain.StaticData
                 yield return "SortOrder";
                 yield return "Default";
                 yield return "Hidden";
+                yield return "Active";
                 yield return "Locked";
                 yield return "Discarded";
             }
@@ -99,6 +104,7 @@ namespace Webfuel.Domain.StaticData
                 yield return "SortOrder";
                 yield return "Default";
                 yield return "Hidden";
+                yield return "Active";
                 yield return "Locked";
                 yield return "Discarded";
             }

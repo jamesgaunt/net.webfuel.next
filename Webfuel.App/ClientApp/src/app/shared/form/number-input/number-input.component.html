@@ -1,4 +1,4 @@
 <div class="control">
-  <input class="input" type="number" [placeholder]="placeholder" [formControl]="formControl" />
+  <input style="text-align: right" class="input" type="text" [placeholder]="placeholder" [formControl]="formControl" (blur)="onBlur()" (focus)="onFocus()" />
 </div>
 

@@ -21,6 +21,10 @@
   </div>
   <form class="form" [formGroup]="form">
     <div class="flex">
+      <div class="is-12" *ngIf="item.projectId">
+        <a class="link is-primary" href="/project/project-request/{{ item.projectId }}"><i class="fas fa-link"></i> Click here to view the project associated with this support request</a>
+      </div>
+
       <div class="field is-12">
         <label class="label">Working title of the project</label>
         <input class="input" type="text" placeholder="required" formControlName="title" />

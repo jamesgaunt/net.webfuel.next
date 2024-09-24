@@ -5,8 +5,6 @@ import { DeveloperRoutingModule } from './developer-routing.module';
 
 import { TestComponent } from './test/test.component';
 import { UserLoginComponent } from './user-login/user-login.component';
-import { HeartbeatListComponent } from './heartbeat/heartbeat-list/heartbeat-list.component';
-import { HeartbeatItemComponent } from './heartbeat/heartbeat-item/heartbeat-item.component';
 
 @NgModule({
   imports: [
@@ -17,8 +15,6 @@ import { HeartbeatItemComponent } from './heartbeat/heartbeat-item/heartbeat-ite
   declarations: [
     TestComponent,
     UserLoginComponent,
-    HeartbeatListComponent,
-    HeartbeatItemComponent
   ]
 })
 export class DeveloperModule { }

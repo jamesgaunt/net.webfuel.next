@@ -16,6 +16,6 @@
     <PackageReference Include="Riok.Mapperly" Version="3.3.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\github\Webfuel.Platform\Webfuel.Platform.Client\Webfuel.Platform.Client.csproj" />
+    <ProjectReference Include="..\..\Webfuel.Platform\Webfuel.Client\Webfuel.Client.csproj" />
   </ItemGroup>
 </Project>

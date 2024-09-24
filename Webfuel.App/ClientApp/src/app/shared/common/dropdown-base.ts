@@ -50,7 +50,7 @@ export abstract class DropDownBase<TItem> {
   enableClear: boolean = false;
 
   @Input()
-  enableSearch: boolean = false;
+  enableSearch: boolean = true;
 
   @Input()
   closeOnSelect: boolean = true;
@@ -342,9 +342,7 @@ export abstract class DropDownBase<TItem> {
   focusControl = new FormControl<string>('');
 
   onFocusControlChange(value: string | null) {
-    console.log("CHANGE");
     if (this.enableSearch) {
-      console.log("FETCH");
       this.fetch(true);
     }
   }
@@ -363,8 +361,6 @@ export abstract class DropDownBase<TItem> {
   }
 
   focusKeyUp($event: KeyboardEvent) {
-
-    console.log($event.key);
 
     $event.preventDefault();
     $event.stopPropagation();

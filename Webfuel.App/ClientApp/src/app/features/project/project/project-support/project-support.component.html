@@ -47,21 +47,22 @@
       </div>
       <pre *ngIf="projectSupport.description" class="card-narrative">{{ projectSupport.description }}</pre>
       <div class="card-buttons" *ngIf="!locked">
-        <button class="button is-small is-primary" *ngIf="projectSupport.supportRequestedTeamId === null" (click)="requestTeamSupport(projectSupport)">request support from another team</button>
-        <button class="button is-small is-primary" (click)="editProjectSupport(projectSupport)">edit</button>
-        <button class="button is-small is-danger" (click)="deleteProjectSupport(projectSupport)">delete</button>
+        <button class="button is-primary" *ngIf="projectSupport.supportRequestedTeamId === null" (click)="requestTeamSupport(projectSupport)">request support from another team</button>
+        <button class="button is-primary" (click)="editProjectSupport(projectSupport)">edit</button>
+        <button class="button is-danger" (click)="deleteProjectSupport(projectSupport)">delete</button>
       </div>
       <div *ngIf="projectSupport.supportRequestedTeamId !== null">
-        <div class="card-title">
-          <div *ngIf="projectSupport.supportRequestedCompletedAt === null" class="tag is-warning is-small">open</div>
-          <div *ngIf="projectSupport.supportRequestedCompletedAt !== null" class="tag is-success is-small">complete</div>
+        <div class="card-title" style="display:flex; align-items: center; ">
+          <div *ngIf="projectSupport.supportRequestedCompletedAt === null" class="tag is-warning">open</div>
+          <div *ngIf="projectSupport.supportRequestedCompletedAt !== null" class="tag is-success">complete</div>
           <b>Support requested from team: {{ (staticDataCache.supportTeam.get({ id: projectSupport.supportRequestedTeamId }) | async)?.name }}</b>
         </div>
         <pre *ngIf="projectSupport.supportRequestedCompletedNotes" class="card-narrative">{{ projectSupport.supportRequestedCompletedNotes }}</pre>
         <div class="card-buttons" *ngIf="!locked">
-          <button class="button is-small is-primary" *ngIf="projectSupport.supportRequestedCompletedAt === null" (click)="completeProjectSupport(projectSupport)">mark as complete</button>
-          <button class="button is-small is-primary" *ngIf="projectSupport.supportRequestedCompletedAt !== null" (click)="editProjectSupportCompletion(projectSupport)">edit completion note</button>
-          <button class="button is-small is-danger" *ngIf="projectSupport.supportRequestedTeamId !== null && projectSupport.supportRequestedCompletedAt !== null" (click)="uncompleteProjectSupport(projectSupport)">delete completion note</button>
+          <button class="button is-warning" *ngIf="projectSupport.supportRequestedCompletedAt === null" (click)="resendNotification(projectSupport)">resend notification to referred team</button>
+          <button class="button is-primary" *ngIf="projectSupport.supportRequestedCompletedAt === null" (click)="completeProjectSupport(projectSupport)">mark as complete</button>
+          <button class="button is-primary" *ngIf="projectSupport.supportRequestedCompletedAt !== null" (click)="editProjectSupportCompletion(projectSupport)">edit completion note</button>
+          <button class="button is-danger" *ngIf="projectSupport.supportRequestedTeamId !== null && projectSupport.supportRequestedCompletedAt !== null" (click)="uncompleteProjectSupport(projectSupport)">delete completion note</button>
         </div>
       </div>
     </div>

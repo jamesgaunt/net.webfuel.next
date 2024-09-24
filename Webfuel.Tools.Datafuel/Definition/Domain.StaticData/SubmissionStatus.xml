@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="SubmissionStatus" Tags="StaticData|Enum" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Property Name="Hidden" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="82a179e1-9a82-4a68-a883-5800bc2000d4" Name="Yes" />
+      <Row Id="6f8e9238-6b7e-4bd4-97ce-a0584d802ee4" Name="No" />
+      <Row Id="f01c0b96-7feb-490e-b919-331df4fc47a0" Name="Don't know" />
+      <Row Id="f319f56f-8434-45af-96fb-003bd29774b2" Name="N/A" />
+    </Data>
+  </Entity>
+</Schema>

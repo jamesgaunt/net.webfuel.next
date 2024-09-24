@@ -50,7 +50,6 @@ namespace Webfuel.Common
 
                 if (_identityAccessor.Claims.Developer)
                 {
-                    clientConfiguration.SettingsMenu.AddChild(name: "Heartbeats", action: "/developer/heartbeat-list", icon: "fas fa-heartbeat");
                     clientConfiguration.SettingsMenu.AddChild(name: "User Logins", action: "/developer/user-login", icon: "fas fa-sign-in");
                     clientConfiguration.SettingsMenu.AddChild(name: "Email Templates", action: "/configuration/email-template-list", icon: "fas fa-envelope-open-text");
                 }

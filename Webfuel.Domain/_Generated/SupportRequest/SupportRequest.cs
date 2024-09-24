@@ -27,6 +27,9 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.IsThisRequestLinkedToAnExistingProject):
                         IsThisRequestLinkedToAnExistingProject = (bool)value!;
                         break;
+                    case nameof(SupportRequest.DateOfTriage):
+                        DateOfTriage = value == DBNull.Value ? (DateOnly?)null : DateOnly.FromDateTime((DateTime)value!);
+                        break;
                     case nameof(SupportRequest.DateOfRequest):
                         DateOfRequest = DateOnly.FromDateTime((DateTime)value!);
                         break;
@@ -201,12 +204,19 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.LeadApplicantEthnicityId):
                         LeadApplicantEthnicityId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
+                    case nameof(SupportRequest.WouldYouLikeToReceiveAGrantsmanshipReviewId):
+                        WouldYouLikeToReceiveAGrantsmanshipReviewId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(SupportRequest.IsYourSupportRequestOnlyForAGrantsmanshipReviewId):
+                        IsYourSupportRequestOnlyForAGrantsmanshipReviewId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
                 }
             }
         }
         public Guid Id  { get; set; } = Guid.Empty;
         public string TriageNote  { get; set; } = String.Empty;
         public bool IsThisRequestLinkedToAnExistingProject  { get; set; } = false;
+        public DateOnly? DateOfTriage  { get; set; } = null;
         public DateOnly DateOfRequest  { get; set; } = new DateOnly(1900, 1, 1);
         public string Title  { get; set; } = String.Empty;
         public string ApplicationStageFreeText  { get; set; } = String.Empty;
@@ -276,12 +286,15 @@ namespace Webfuel.Domain
         public Guid? LeadApplicantAgeRangeId { get; set; }
         public Guid? LeadApplicantGenderId { get; set; }
         public Guid? LeadApplicantEthnicityId { get; set; }
+        public Guid? WouldYouLikeToReceiveAGrantsmanshipReviewId { get; set; }
+        public Guid? IsYourSupportRequestOnlyForAGrantsmanshipReviewId { get; set; }
         public SupportRequest Copy()
         {
             var entity = new SupportRequest();
             entity.Id = Id;
             entity.TriageNote = TriageNote;
             entity.IsThisRequestLinkedToAnExistingProject = IsThisRequestLinkedToAnExistingProject;
+            entity.DateOfTriage = DateOfTriage;
             entity.DateOfRequest = DateOfRequest;
             entity.Title = Title;
             entity.ApplicationStageFreeText = ApplicationStageFreeText;
@@ -340,6 +353,8 @@ namespace Webfuel.Domain
             entity.LeadApplicantAgeRangeId = LeadApplicantAgeRangeId;
             entity.LeadApplicantGenderId = LeadApplicantGenderId;
             entity.LeadApplicantEthnicityId = LeadApplicantEthnicityId;
+            entity.WouldYouLikeToReceiveAGrantsmanshipReviewId = WouldYouLikeToReceiveAGrantsmanshipReviewId;
+            entity.IsYourSupportRequestOnlyForAGrantsmanshipReviewId = IsYourSupportRequestOnlyForAGrantsmanshipReviewId;
             return entity;
         }
     }

@@ -21,6 +21,11 @@ import { DropDownBase } from '../../common/dropdown-base';
 })
 export class DropDownTextInputComponent<TItem> extends DropDownBase<TItem> implements ControlValueAccessor {
 
+  constructor() {
+    super();
+    this.enableSearch = false;
+  }
+
   // Client Events
 
   pickItem(item: TItem) {

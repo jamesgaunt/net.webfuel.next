@@ -67,6 +67,9 @@ namespace Webfuel.Domain.StaticData
         Task<IReadOnlyList<IsTeamMembersConsulted>> SelectIsTeamMembersConsulted();
         Task<IsTeamMembersConsulted?> GetIsTeamMembersConsulted(Guid id);
         Task<IsTeamMembersConsulted> RequireIsTeamMembersConsulted(Guid id);
+        Task<IReadOnlyList<IsYesNo>> SelectIsYesNo();
+        Task<IsYesNo?> GetIsYesNo(Guid id);
+        Task<IsYesNo> RequireIsYesNo(Guid id);
         Task<IReadOnlyList<ProfessionalBackground>> SelectProfessionalBackground();
         Task<ProfessionalBackground?> GetProfessionalBackground(Guid id);
         Task<ProfessionalBackground> RequireProfessionalBackground(Guid id);
@@ -103,6 +106,9 @@ namespace Webfuel.Domain.StaticData
         Task<IReadOnlyList<SubmissionStage>> SelectSubmissionStage();
         Task<SubmissionStage?> GetSubmissionStage(Guid id);
         Task<SubmissionStage> RequireSubmissionStage(Guid id);
+        Task<IReadOnlyList<SubmissionStatus>> SelectSubmissionStatus();
+        Task<SubmissionStatus?> GetSubmissionStatus(Guid id);
+        Task<SubmissionStatus> RequireSubmissionStatus(Guid id);
         Task<IReadOnlyList<SupportProvided>> SelectSupportProvided();
         Task<SupportProvided?> GetSupportProvided(Guid id);
         Task<SupportProvided> RequireSupportProvided(Guid id);
@@ -442,6 +448,21 @@ namespace Webfuel.Domain.StaticData
             return (await GetStaticData()).IsTeamMembersConsulted.First(p => p.Id == id);
         }
         
+        public async Task<IReadOnlyList<IsYesNo>> SelectIsYesNo()
+        {
+            return (await GetStaticData()).IsYesNo;
+        }
+        
+        public async Task<IsYesNo?> GetIsYesNo(Guid id)
+        {
+            return (await GetStaticData()).IsYesNo.FirstOrDefault(p => p.Id == id);
+        }
+        
+        public async Task<IsYesNo> RequireIsYesNo(Guid id)
+        {
+            return (await GetStaticData()).IsYesNo.First(p => p.Id == id);
+        }
+        
         public async Task<IReadOnlyList<ProfessionalBackground>> SelectProfessionalBackground()
         {
             return (await GetStaticData()).ProfessionalBackground;
@@ -620,6 +641,21 @@ namespace Webfuel.Domain.StaticData
         public async Task<SubmissionStage> RequireSubmissionStage(Guid id)
         {
             return (await GetStaticData()).SubmissionStage.First(p => p.Id == id);
+        }
+        
+        public async Task<IReadOnlyList<SubmissionStatus>> SelectSubmissionStatus()
+        {
+            return (await GetStaticData()).SubmissionStatus;
+        }
+        
+        public async Task<SubmissionStatus?> GetSubmissionStatus(Guid id)
+        {
+            return (await GetStaticData()).SubmissionStatus.FirstOrDefault(p => p.Id == id);
+        }
+        
+        public async Task<SubmissionStatus> RequireSubmissionStatus(Guid id)
+        {
+            return (await GetStaticData()).SubmissionStatus.First(p => p.Id == id);
         }
         
         public async Task<IReadOnlyList<SupportProvided>> SelectSupportProvided()

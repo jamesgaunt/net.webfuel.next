@@ -25,6 +25,7 @@ namespace Webfuel.Domain.StaticData
         IReadOnlyList<IsQuantativeTeamContribution> IsQuantativeTeamContribution { get; }
         IReadOnlyList<IsResubmission> IsResubmission { get; }
         IReadOnlyList<IsTeamMembersConsulted> IsTeamMembersConsulted { get; }
+        IReadOnlyList<IsYesNo> IsYesNo { get; }
         IReadOnlyList<ProfessionalBackground> ProfessionalBackground { get; }
         IReadOnlyList<ProjectStatus> ProjectStatus { get; }
         IReadOnlyList<ReportProvider> ReportProvider { get; }
@@ -37,6 +38,7 @@ namespace Webfuel.Domain.StaticData
         IReadOnlyList<Site> Site { get; }
         IReadOnlyList<SubmissionOutcome> SubmissionOutcome { get; }
         IReadOnlyList<SubmissionStage> SubmissionStage { get; }
+        IReadOnlyList<SubmissionStatus> SubmissionStatus { get; }
         IReadOnlyList<SupportProvided> SupportProvided { get; }
         IReadOnlyList<SupportRequestStatus> SupportRequestStatus { get; }
         IReadOnlyList<SupportTeam> SupportTeam { get; }
@@ -69,6 +71,7 @@ namespace Webfuel.Domain.StaticData
         public required IReadOnlyList<IsQuantativeTeamContribution> IsQuantativeTeamContribution { get; init; }
         public required IReadOnlyList<IsResubmission> IsResubmission { get; init; }
         public required IReadOnlyList<IsTeamMembersConsulted> IsTeamMembersConsulted { get; init; }
+        public required IReadOnlyList<IsYesNo> IsYesNo { get; init; }
         public required IReadOnlyList<ProfessionalBackground> ProfessionalBackground { get; init; }
         public required IReadOnlyList<ProjectStatus> ProjectStatus { get; init; }
         public required IReadOnlyList<ReportProvider> ReportProvider { get; init; }
@@ -81,6 +84,7 @@ namespace Webfuel.Domain.StaticData
         public required IReadOnlyList<Site> Site { get; init; }
         public required IReadOnlyList<SubmissionOutcome> SubmissionOutcome { get; init; }
         public required IReadOnlyList<SubmissionStage> SubmissionStage { get; init; }
+        public required IReadOnlyList<SubmissionStatus> SubmissionStatus { get; init; }
         public required IReadOnlyList<SupportProvided> SupportProvided { get; init; }
         public required IReadOnlyList<SupportRequestStatus> SupportRequestStatus { get; init; }
         public required IReadOnlyList<SupportTeam> SupportTeam { get; init; }
@@ -115,6 +119,7 @@ namespace Webfuel.Domain.StaticData
                 IsQuantativeTeamContribution = await serviceProvider.GetRequiredService<IIsQuantativeTeamContributionRepository>().SelectIsQuantativeTeamContribution(),
                 IsResubmission = await serviceProvider.GetRequiredService<IIsResubmissionRepository>().SelectIsResubmission(),
                 IsTeamMembersConsulted = await serviceProvider.GetRequiredService<IIsTeamMembersConsultedRepository>().SelectIsTeamMembersConsulted(),
+                IsYesNo = await serviceProvider.GetRequiredService<IIsYesNoRepository>().SelectIsYesNo(),
                 ProfessionalBackground = await serviceProvider.GetRequiredService<IProfessionalBackgroundRepository>().SelectProfessionalBackground(),
                 ProjectStatus = await serviceProvider.GetRequiredService<IProjectStatusRepository>().SelectProjectStatus(),
                 ReportProvider = await serviceProvider.GetRequiredService<IReportProviderRepository>().SelectReportProvider(),
@@ -127,6 +132,7 @@ namespace Webfuel.Domain.StaticData
                 Site = await serviceProvider.GetRequiredService<ISiteRepository>().SelectSite(),
                 SubmissionOutcome = await serviceProvider.GetRequiredService<ISubmissionOutcomeRepository>().SelectSubmissionOutcome(),
                 SubmissionStage = await serviceProvider.GetRequiredService<ISubmissionStageRepository>().SelectSubmissionStage(),
+                SubmissionStatus = await serviceProvider.GetRequiredService<ISubmissionStatusRepository>().SelectSubmissionStatus(),
                 SupportProvided = await serviceProvider.GetRequiredService<ISupportProvidedRepository>().SelectSupportProvided(),
                 SupportRequestStatus = await serviceProvider.GetRequiredService<ISupportRequestStatusRepository>().SelectSupportRequestStatus(),
                 SupportTeam = await serviceProvider.GetRequiredService<ISupportTeamRepository>().SelectSupportTeam(),
