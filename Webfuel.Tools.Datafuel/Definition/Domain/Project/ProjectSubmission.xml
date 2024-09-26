@@ -4,13 +4,16 @@
   <Entity Name="ProjectSubmission" OrderBy="-SubmissionDate">
     <Key Name="Id" Type="guid" />
     <Property Name="ProjectId" Type="Project" CascadeDelete="true" />
+    <!--
+    <Property Name="FundingStreamId" Type="FundingStream?" />
+    -->
     <Property Name="NIHRReference" Type="meta:name" />
     <Property Name="SubmissionDate" Type="Date" />
     <Property Name="SubmissionStatusId" Type="SubmissionStatus?" />
     <Property Name="SubmissionStageId" Type="SubmissionStage" />
     <Property Name="SubmissionOutcomeId" Type="SubmissionOutcome?" />
     <Property Name="FundingAmountOnSubmission" Type="Int32?" />
-    <Property Name="OutcomeExpectedDate" Type="Date?" />
+    <Property Name="OutcomeExpectedDate" Type="Date?" />    
     <Index Unique="false">
       <Member Name="ProjectId" />
     </Index>

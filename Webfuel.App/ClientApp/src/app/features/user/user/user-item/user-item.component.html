@@ -58,7 +58,7 @@
       </div>
       <div class="field is-12">
         <label class="label">Adviser type / discipline</label>
-        <dropdown-multi-select [dataSource]="staticDataCache.userDiscipline" [enableSearch]="true" [enableClear]="true" [freeTextControl]="form.controls.disciplineFreeText" placeholder="required" formControlName="disciplineIds"></dropdown-multi-select>
+        <dropdown-multi-select [dataSource]="staticDataCache.userDiscipline" [enableSearch]="true" [enableClear]="true" [closeOnSelect]="false" [freeTextControl]="form.controls.disciplineFreeText" placeholder="required" formControlName="disciplineIds"></dropdown-multi-select>
       </div>
     </div>
 

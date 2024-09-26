@@ -38,11 +38,14 @@ export class UpdateProjectSubmissionDialogComponent extends DialogComponentBase<
 
   form = new FormGroup({
     id: new FormControl<string>('', { nonNullable: true }),
+    fundingStreamId: new FormControl<string | null>(null, { validators: [Validators.required] }),
     submissionDate: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     nihrReference: new FormControl<string>('', { nonNullable: true }),
+    submissionStatusId: new FormControl<string | null>(null, { validators: [Validators.required] }),
     submissionStageId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     submissionOutcomeId: new FormControl<string>(null!),
     fundingAmountOnSubmission: new FormControl<number | null>(null, { validators: [Validators.min(0), Validators.max(999999999)], nonNullable: true }),
+    outcomeExpectedDate: new FormControl<string | null>(null),
   });
 
   save() {

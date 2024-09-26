@@ -16,10 +16,13 @@
   </div>
   <project-tabs></project-tabs>
   <grid [dataSource]="projectSubmissionApi" (filter)="filter($event)">
+    <grid-reference-column name="fundingStreamId" [dataSource]="staticDataCache.fundingStream" />
     <grid-date-column name="submissionDate" />
     <grid-column name="nihrReference" label="NIHR Reference" />
+    <grid-reference-column name="submissionStatus" [dataSource]="staticDataCache.submissionStatus" label="Status" />
     <grid-reference-column name="submissionStageId" [dataSource]="staticDataCache.submissionStage" label="Stage" />
     <grid-number-column name="fundingAmountOnSubmission" label="Funding Amount" prefix="£" />
+    <grid-date-column name="outcomeExpectedDate" />
     <grid-reference-column name="submissionOutcomeId" [dataSource]="staticDataCache.submissionOutcome" label="Outcome" />
     <grid-action-column [canAdd]="false" [canEdit]="!locked" [canDelete]="!locked" (edit)="edit($event)" (delete)="delete($event)" />
   </grid>

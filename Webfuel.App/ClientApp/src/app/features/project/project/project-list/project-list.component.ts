@@ -48,7 +48,7 @@ export class ProjectListComponent {
     supportAdviserUserId: new FormControl<string | null>(null),
     title: new FormControl<string>('', { nonNullable: true }),
     teamContactName: new FormControl<string>('', { nonNullable: true }),
-    requestedSupportTeamId: new FormControl<string | null>(null),
+    openSupportTeamId: new FormControl<string | null>(null),
   });
 
   resetFilterForm() {
@@ -62,7 +62,7 @@ export class ProjectListComponent {
       supportAdviserUserId: null,
       title: '',
       teamContactName: '',
-      requestedSupportTeamId: null,
+      openSupportTeamId: null,
     });
   }
 
@@ -97,13 +97,18 @@ export class ProjectListComponent {
         this.resetFilterForm();
         this.filterForm.patchValue({ statusId: ProjectStatusEnum.OnHold });
         return;
+
+      case 'submitted-on-hold':
+        this.resetFilterForm();
+        this.filterForm.patchValue({ statusId: ProjectStatusEnum.SubmittedOnHold });
+        return;
     }
     
     const supportTeam = params['supportTeam'];
     if (supportTeam) {
       this.resetFilterForm();
       this.filterForm.patchValue({ statusId: ProjectStatusEnum.Active });
-      this.filterForm.patchValue({ requestedSupportTeamId: supportTeam });
+      this.filterForm.patchValue({ openSupportTeamId: supportTeam });
     }
   }
 

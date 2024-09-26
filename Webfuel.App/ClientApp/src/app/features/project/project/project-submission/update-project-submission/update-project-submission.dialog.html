@@ -3,7 +3,11 @@
     Update Project Submission
   </div>
   <div class="dialog-body">
-    <div class="grid">
+    <div class="grid has-columns-2">
+      <div class="field">
+        <label class="label">Funding stream</label>
+        <dropdown-select [dataSource]="staticDataCache.fundingStream" placeholder="required" formControlName="fundingStreamId"></dropdown-select>
+      </div>
       <div class="field">
         <label class="label">Submission date</label>
         <date-picker placeholder="required" formControlName="submissionDate"></date-picker>
@@ -13,8 +17,16 @@
         <input class="input" type="text" placeholder="optional" formControlName="nihrReference" />
       </div>
       <div class="field">
+        <label class="label">Submission status</label>
+        <dropdown-select [dataSource]="staticDataCache.submissionStatus" placeholder="required" formControlName="submissionStatusId"></dropdown-select>
+      </div>
+      <div class="field">
         <label class="label">Submission stage</label>
         <dropdown-select [dataSource]="staticDataCache.submissionStage" placeholder="required" formControlName="submissionStageId"></dropdown-select>
+      </div>
+      <div class="field">
+        <label class="label">Outcome expected date</label>
+        <date-picker placeholder="optional" formControlName="outcomeExpectedDate"></date-picker>
       </div>
       <div class="field">
         <label class="label">Submission outcome</label>

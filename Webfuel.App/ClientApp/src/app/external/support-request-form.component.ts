@@ -127,6 +127,11 @@ export class SupportRequestFormComponent {
     leadApplicantGenderId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
     leadApplicantEthnicityId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
 
+    // Grantsmanship Questions (1.4) Not yet added to project
+
+    wouldYouLikeToReceiveAGrantsmanshipReviewId: new FormControl<string | null>(null),
+    isYourSupportRequestOnlyForAGrantsmanshipReviewId: new FormControl<string | null>(null),
+
     // Files
 
     files: new FormControl(null),

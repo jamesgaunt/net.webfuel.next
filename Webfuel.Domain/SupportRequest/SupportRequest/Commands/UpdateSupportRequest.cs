@@ -26,6 +26,11 @@ namespace Webfuel.Domain
         public string IsCTUAlreadyInvolvedFreeText { get; set; } = String.Empty;
         public List<Guid> ProfessionalBackgroundIds { get; set; } = new List<Guid>(); // 1.2 Development
         public string ProfessionalBackgroundFreeText { get; set; } = String.Empty; // 1.2 Development   
+
+        // Grantsmanship Questions (1.4) Not yet added to project
+
+        public Guid? WouldYouLikeToReceiveAGrantsmanshipReviewId { get; set; }
+        public Guid? IsYourSupportRequestOnlyForAGrantsmanshipReviewId { get; set; }
     }
 
     internal class UpdateSupportRequestHandler : IRequestHandler<UpdateSupportRequest, SupportRequest>

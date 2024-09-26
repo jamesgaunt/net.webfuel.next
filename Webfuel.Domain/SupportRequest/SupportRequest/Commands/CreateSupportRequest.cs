@@ -1,3 +1,4 @@
+using DocumentFormat.OpenXml.Presentation;
 using MediatR;
 using Webfuel.Common;
 using Webfuel.Domain.StaticData;
@@ -75,6 +76,11 @@ namespace Webfuel.Domain
         public Guid? LeadApplicantAgeRangeId { get; set; }
         public Guid? LeadApplicantGenderId { get; set; }
         public Guid? LeadApplicantEthnicityId { get; set; }
+
+        // Grantsmanship Questions (1.4) Not yet added to project
+
+        public Guid? WouldYouLikeToReceiveAGrantsmanshipReviewId { get; set; }
+        public Guid? IsYourSupportRequestOnlyForAGrantsmanshipReviewId { get; set; }
     }
 
     internal class CreateSupportRequestHandler : IRequestHandler<CreateSupportRequest, SupportRequest>

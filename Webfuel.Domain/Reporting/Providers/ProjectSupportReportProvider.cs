@@ -76,7 +76,8 @@ namespace Webfuel.Domain
                     builder.Map<SupportTeam>(Guid.Parse("37fa0df6-9ef3-4b3b-9f66-7420b655833b"), "Support Teams", p => p.TeamIds);
                     builder.Map<SupportProvided>(Guid.Parse("2ccd3c99-9251-4051-8adc-a1970ac81511"), "Support Provided", p => p.SupportProvidedIds);
 
-                    builder.Map<SupportTeam>(Guid.Parse("fb508f1b-1813-4efe-bf79-b466e2007a0d"), "Request support from another team", p => p.SupportRequestedTeamId);
+                    builder.Map<SupportTeam>(Guid.Parse("fb508f1b-1813-4efe-bf79-b466e2007a0d"), "Request Support From Another Team", p => p.SupportRequestedTeamId);
+                    builder.Add(Guid.Parse("50ca734f-37e3-490c-b882-d6f1524d6a25"), "Support Requested At", p => p.SupportRequestedAt);
                     builder.Add(Guid.Parse("8831278d-b720-4336-9354-b5a9b5240588"), "Support Request Completed", p => p.SupportRequestedCompletedAt);
                     builder.Add(Guid.Parse("75c47039-14b6-4d4a-88e2-13f1b27419d5"), "Support Request Completed Notes", p => p.SupportRequestedCompletedNotes);
 

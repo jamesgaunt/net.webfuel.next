@@ -1,11 +1,10 @@
 import { Component, OnInit, inject } from "@angular/core";
-import { ProjectApi } from "../../../../api/project.api";
 import { ActivatedRoute, Router } from "@angular/router";
-import { StaticDataCache } from "../../../../api/static-data.cache";
+import { SupportRequestStatusEnum } from "../../../../api/api.enums";
 import { SupportRequest, SupportRequestStatus } from "../../../../api/api.types";
-import { IsPrePostAwardEnum, ProjectStatusEnum, SupportRequestStatusEnum } from "../../../../api/api.enums";
-import { ConfirmDialog } from "../../../../shared/dialogs/confirm/confirm.dialog";
+import { StaticDataCache } from "../../../../api/static-data.cache";
 import { SupportRequestApi } from "../../../../api/support-request.api";
+import { ConfirmDialog } from "../../../../shared/dialogs/confirm/confirm.dialog";
 
 @Component({
   template: ''

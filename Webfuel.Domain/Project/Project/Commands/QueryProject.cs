@@ -17,8 +17,8 @@ namespace Webfuel.Domain
             this.Equal(nameof(Project.ProposedFundingStreamId), ProposedFundingStreamId, ProposedFundingStreamId != null);
             this.Contains(nameof(Project.TeamContactFullName), TeamContactName);
 
-            if (RequestedSupportTeamId.HasValue)
-                this.SQL($"EXISTS (SELECT Id FROM [ProjectSupport] AS ps WHERE ps.[ProjectId] = e.Id AND ps.[SupportRequestedTeamId] = '{RequestedSupportTeamId.Value}' AND ps.[SupportRequestedCompletedAt] IS NULL)");
+            if (OpenSupportTeamId.HasValue)
+                this.SQL($"EXISTS (SELECT Id FROM [ProjectSupport] AS ps WHERE ps.[ProjectId] = e.Id AND ps.[SupportRequestedTeamId] = '{OpenSupportTeamId.Value}' AND ps.[SupportRequestedCompletedAt] IS NULL)");
 
             if (SupportAdviserUserId.HasValue)
                 this.SQL($"EXISTS (SELECT Id FROM [ProjectAdviser] AS pa WHERE pa.[ProjectId] = e.Id AND pa.[UserId] = '{SupportAdviserUserId.Value}')");
@@ -44,7 +44,7 @@ namespace Webfuel.Domain
 
         public string TeamContactName { get; set; } = String.Empty;
 
-        public Guid? RequestedSupportTeamId { get; set; }
+        public Guid? OpenSupportTeamId { get; set; }
     }
 
     internal class QueryProjectHandler : IRequestHandler<QueryProject, QueryResult<Project>>

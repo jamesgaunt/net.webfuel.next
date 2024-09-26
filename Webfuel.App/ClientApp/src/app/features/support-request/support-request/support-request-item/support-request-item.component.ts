@@ -68,6 +68,11 @@ export class SupportRequestItemComponent extends SupportRequestComponentBase {
     isCTUAlreadyInvolvedFreeText: new FormControl<string>('', { nonNullable: true }),
     professionalBackgroundIds: new FormControl<string[]>([], { validators: [Validate.minArrayLength(1)], nonNullable: true }), // 1.2 Development
     professionalBackgroundFreeText: new FormControl<string>('', { nonNullable: true }),  // 1.2 Development
+
+    // Grantsmanship Questions (1.4) Not yet added to project
+
+    wouldYouLikeToReceiveAGrantsmanshipReviewId: new FormControl<string | null>(null),
+    isYourSupportRequestOnlyForAGrantsmanshipReviewId: new FormControl<string | null>(null),
   });
 
   save(close: boolean) {

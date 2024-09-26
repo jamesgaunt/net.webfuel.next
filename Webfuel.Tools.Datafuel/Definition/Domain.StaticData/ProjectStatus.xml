@@ -19,9 +19,9 @@
     <Data>
       <Row Id="6c83e9e4-617b-4386-b087-16a11f6b24af" Name="Active" Active="true" Default="true" />
       <Row Id="691ee44b-7b01-4af0-b8f3-13f96f00f0ce" Name="On Hold" Active="true" />
-      <Row Id="e66a0fdb-8d2e-4f4a-b813-a0a487e8c25d" Name="Submitted - On Hold" Active="true" Hidden="true" />
+      <Row Id="e66a0fdb-8d2e-4f4a-b813-a0a487e8c25d" Name="Submitted - On Hold" Active="true" />
       <Row Id="ed4845b0-1f4c-4df3-b4ec-46e5ce94c275" Name="Closed" Locked="true"/>
-      <Row Id="164fdeee-8d6f-42fa-a23b-fbab0ef3ba93" Name="Discarded" Locked="true" Discarded="true" />
+      <Row Id="164fdeee-8d6f-42fa-a23b-fbab0ef3ba93" Name="Discarded" Locked="true" Discarded="true" Hidden="true" />
     </Data>
   </Entity>
 </Schema>

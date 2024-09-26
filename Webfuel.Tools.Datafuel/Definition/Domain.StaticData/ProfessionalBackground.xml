@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Schema>
-  <Entity Name="ProfessionalBackground" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
+  <Entity Name="ProfessionalBackground" Tags="StaticData|Enum" OrderBy="SortOrder" Interface="IStaticData">
     <Key Name="Id" Type="guid" />
     <Property Name="Name" Type="meta:name" />
     <Property Name="SortOrder" Type="Int32" />
@@ -12,17 +12,16 @@
       <Member Name="Name" />
     </Index>
     <Data>
-      <Row Id="75b769e7-9e9d-42df-b31d-c906d353d4d0" Name="Clinical academic" />
-      <Row Id="843db2be-bd3a-4f61-ac48-e1932e55f076" Name="Academic" />
-      <Row Id="c3dcef26-d476-41bf-9a9c-89b008addf58" Name="Non-academic clinician" />
-      <Row Id="d16a4d18-5309-4fb4-b6f7-7f9bcf56c6a6" Name="Nurse/Midwife/AHP/GP" />
-      <Row Id="e4a7b2a1-1f65-4201-9608-ed282955263c" Name="NHS manager" />
-      <Row Id="89ffaa61-4d5c-4095-bb5c-36d8eb8248e1" Name="Social care practitioner" />
-      <Row Id="5f329e4a-1881-41b1-886f-9706eea45e20" Name="Public health practitioner" />
-      <Row Id="f10651e2-aedb-41cd-9ee4-750b3d7af17c" Name="SME" />
-      <Row Id="3cfcf7e5-4230-4083-a83a-5723c49beb82" Name="NHS other" />
-      <Row Id="26dbb5f4-d544-48cc-9084-79a7027d13df" Name="Patient/public contributor" />
-      <Row Id="0943bb8e-42b8-4f14-870c-6a6a2bce1800" Name="Other - comment" FreeText="true" />
+      <Row Id="9cd4cbde-011e-4b8b-898f-4a23a80d8e1f" Name="Allied Healthcare Professional" />
+      <Row Id="e031dcc1-a8c7-4a26-9a89-f5246da76596" Name="Doctor" />
+      <Row Id="22dc26e7-8685-401e-b8bd-d1d957e27f0d" Name="Dentist" />
+      <Row Id="eeed9783-71e4-45b9-82da-0161838d5080" Name="Midwife" />
+      <Row Id="0ee15892-343e-4117-9362-0abd68761bce" Name="Psychologist" />
+      <Row Id="c2161d6e-c39c-4ee0-9d9d-45126f3ac03a" Name="Nurse" />
+      <Row Id="897dcab9-fda6-403e-aa8d-c3dde2043d57" Name="Public Health Specialist" />
+      <Row Id="91706bb9-c8ff-4f03-9eb6-b70d6510513c" Name="Social Care Specialist" />
+      <Row Id="3ae2a25d-8993-4bdc-acec-8e345ecec728" Name="Other Healthcare Professional" />
+      <Row Id="db90675f-5225-43bc-87c0-53ba9267c19e" Name="Not Healthcare Professional" />
     </Data>
   </Entity>
 </Schema>

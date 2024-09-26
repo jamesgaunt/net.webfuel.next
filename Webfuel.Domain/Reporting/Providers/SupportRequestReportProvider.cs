@@ -51,6 +51,7 @@ namespace Webfuel.Domain
 
                     builder.Add(Guid.Parse("cbeb9e2d-59a2-4896-a3c5-01c5c2aa42c7"), "Title", p => p.Title);
                     builder.Add(Guid.Parse("edde730a-8424-4415-b23c-29c4ae3e36b8"), "Date of Request", p => p.DateOfRequest);
+                    builder.Add(Guid.Parse("16aea7a9-4c8d-4743-9cd5-d63ccadeeef3"), "Date of Triage", p => p.DateOfTriage);
 
                     // Request 
 

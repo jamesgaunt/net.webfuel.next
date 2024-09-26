@@ -45,6 +45,20 @@ namespace Webfuel.Domain
             return items.Select(x => x.Id).ToList();
         }
 
+        public async Task<List<Guid>> MapOpenByProjectId(Guid projectId)
+        {
+            var items = await _repository.SelectProjectSupportByProjectId(projectId);
+            foreach (var item in items)
+            {
+                _getCache.Set(item.Id, item, new MemoryCacheEntryOptions
+                {
+                    Size = 1,
+                    AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(1)
+                });
+            }
+            return items.Where(x => x.SupportRequestedCompletedAt == null).Select(x => x.Id).ToList();
+        }
+
         public Task<QueryResult<ReportMapEntity>> Query(Query query)
         {
             throw new NotImplementedException();

@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="ProfessionalBackgroundDetail" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Property Name="Hidden" Type="boolean" />
+    <Property Name="FreeText" Type="boolean" />
+    <Property Name="ProfessionalBackgroundId" Type="ProfessionalBackground?" />
+
+    <!-- Note: No index on Name as we have duplicates below -->
+    
+    <Data>
+      <!-- Allied Health Professional -->
+      <Row Id="12e6a57d-f54c-4fa9-b4fd-2735c874fa89" Name="Art therapists (includes music, art and drama therapists)" ProfessionalBackgroundId="9cd4cbde-011e-4b8b-898f-4a23a80d8e1f" />
+      <Row Id="1f6d9052-f3a3-4ae6-86f6-251fe7232661" Name="Chiropodists and podiatrists" ProfessionalBackgroundId="9cd4cbde-011e-4b8b-898f-4a23a80d8e1f" />
+      <Row Id="02921d5b-0546-4ea1-be12-4431244e2db1" Name="Dietitians" ProfessionalBackgroundId="9cd4cbde-011e-4b8b-898f-4a23a80d8e1f" />
+      <Row Id="6b8976ea-41e2-480d-ab5d-24c705ce4a5a" Name="Occupational therapists" ProfessionalBackgroundId="9cd4cbde-011e-4b8b-898f-4a23a80d8e1f" />
+      <Row Id="cc39eb0d-c467-4c69-8de0-5095b90f756d" Name="Operating department practitioners" ProfessionalBackgroundId="9cd4cbde-011e-4b8b-898f-4a23a80d8e1f" />
+      <Row Id="a3dc0151-c415-4d0a-ae37-3c7356dd8235" Name="Orthoptists" ProfessionalBackgroundId="9cd4cbde-011e-4b8b-898f-4a23a80d8e1f" />
+      <Row Id="4b893bb2-1e4f-481b-a17d-4f37b5591587" Name="Physiotherapists" ProfessionalBackgroundId="9cd4cbde-011e-4b8b-898f-4a23a80d8e1f" />
+      <Row Id="f4f61f23-46ff-4328-88d0-7788b49f51dc" Name="Prosthetists and orthotists" ProfessionalBackgroundId="9cd4cbde-011e-4b8b-898f-4a23a80d8e1f" />
+      <Row Id="f314203b-c694-40e2-a5d8-98b85f08e876" Name="Psychologists" ProfessionalBackgroundId="9cd4cbde-011e-4b8b-898f-4a23a80d8e1f" />
+      <Row Id="c09552f9-15c0-4baf-8e48-71b382d4ca77" Name="Psychotherapists" ProfessionalBackgroundId="9cd4cbde-011e-4b8b-898f-4a23a80d8e1f" />
+      <Row Id="16e17873-d237-4927-bc23-72e6085419bc" Name="Radiographers" ProfessionalBackgroundId="9cd4cbde-011e-4b8b-898f-4a23a80d8e1f" />
+      <Row Id="bd7ae529-184b-49cd-aa4e-4f2fd1b996af" Name="Speech &amp; Language therapists" ProfessionalBackgroundId="9cd4cbde-011e-4b8b-898f-4a23a80d8e1f" />
+      <Row Id="1c90c244-4160-42ea-94bc-2f8eea24109d" Name="Paramedic" ProfessionalBackgroundId="9cd4cbde-011e-4b8b-898f-4a23a80d8e1f" />
+      <Row Id="e675dee8-9694-40bd-80d2-0fb909b57da4" Name="Other, please specify in comments" ProfessionalBackgroundId="9cd4cbde-011e-4b8b-898f-4a23a80d8e1f" FreeText="true" />
+
+
+      <!-- Other Health Professional -->
+      <Row Id="6ad74d03-2dc0-4971-8257-4718c115638e" Name="Clinical psychology" ProfessionalBackgroundId="3ae2a25d-8993-4bdc-acec-8e345ecec728" />
+      <Row Id="2861e2ac-c630-4960-b785-5bacf39d6164" Name="Complementary &amp; alternative medicine" ProfessionalBackgroundId="3ae2a25d-8993-4bdc-acec-8e345ecec728" />
+      <Row Id="adaaf166-df90-415f-98e9-005b525d8650" Name="Healthcare scientist (Life sciences and pathology)" ProfessionalBackgroundId="3ae2a25d-8993-4bdc-acec-8e345ecec728" />
+      <Row Id="4e2501d9-e45f-491e-9dbb-fac25a74340d" Name="Healthcare scientist (Physical sciences and clinical engineering)" ProfessionalBackgroundId="3ae2a25d-8993-4bdc-acec-8e345ecec728" />      
+      <Row Id="58fdb5e9-5a68-4bb7-90e5-0d03b33f2f82" Name="Healthcare scientist (Physiological sciences)" ProfessionalBackgroundId="3ae2a25d-8993-4bdc-acec-8e345ecec728" />
+      <Row Id="d045febb-2cc0-4273-b007-12f0cd46fbd0" Name="Pharmacy" ProfessionalBackgroundId="3ae2a25d-8993-4bdc-acec-8e345ecec728" />
+      <Row Id="58a7c7b9-efdb-4b4c-9039-b9090439ca69" Name="Other, please specify in comments" ProfessionalBackgroundId="3ae2a25d-8993-4bdc-acec-8e345ecec728" FreeText="true" />
+      
+      <!-- Not Healthcare Professional -->
+      <Row Id="c4dbaa51-28eb-467e-a3a6-6fd99f4f3ffb" Name="Epidemiology" ProfessionalBackgroundId="db90675f-5225-43bc-87c0-53ba9267c19e" />
+      <Row Id="dc48efa9-9598-4078-9575-07db502bc66f" Name="Food science" ProfessionalBackgroundId="db90675f-5225-43bc-87c0-53ba9267c19e" />
+      <Row Id="40e2809f-72a2-4e30-8007-c8254e1d6f76" Name="Health economics" ProfessionalBackgroundId="db90675f-5225-43bc-87c0-53ba9267c19e" />
+      <Row Id="bfe3bc58-d4d9-4de3-b331-d19f9e242098" Name="Health services research" ProfessionalBackgroundId="db90675f-5225-43bc-87c0-53ba9267c19e" />
+      <Row Id="abfdd6b8-d644-4580-9162-abdae5e6ed4f" Name="Nutrition" ProfessionalBackgroundId="db90675f-5225-43bc-87c0-53ba9267c19e" />
+      <Row Id="be736b7c-5325-4c07-94c5-6d6c37906651" Name="Social science" ProfessionalBackgroundId="db90675f-5225-43bc-87c0-53ba9267c19e" />
+      <Row Id="92befb01-5685-4c0f-96f2-bdf28fe3fd65" Name="Sports science" ProfessionalBackgroundId="db90675f-5225-43bc-87c0-53ba9267c19e" />
+      <Row Id="70876d6f-d9dc-4967-8b70-0c04e16ff1a9" Name="Statistics" ProfessionalBackgroundId="db90675f-5225-43bc-87c0-53ba9267c19e" />
+      <Row Id="1d6d7f9a-a7dd-4d3e-a34a-3d3b6993e82b" Name="Other, please specify in comments" ProfessionalBackgroundId="db90675f-5225-43bc-87c0-53ba9267c19e" FreeText="true" />
+      <Row Id="3a97bb86-9d98-4da6-8017-2a09141f5c47" Name="Operations" ProfessionalBackgroundId="db90675f-5225-43bc-87c0-53ba9267c19e" />
+      <Row Id="8f56d72a-240e-4377-a272-d9890bf69cde" Name="PPIE" ProfessionalBackgroundId="db90675f-5225-43bc-87c0-53ba9267c19e" />
+      <Row Id="9814eb77-aaa4-4aeb-bd73-4ca739ba37cf" Name="EDI" ProfessionalBackgroundId="db90675f-5225-43bc-87c0-53ba9267c19e" />
+      <Row Id="3e7d7721-a6d8-45a0-aff6-f1d89f3d45f6" Name="Data Science" ProfessionalBackgroundId="db90675f-5225-43bc-87c0-53ba9267c19e" />
+    </Data>
+  </Entity>
+</Schema>

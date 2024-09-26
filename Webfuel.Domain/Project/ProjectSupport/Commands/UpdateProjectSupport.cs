@@ -76,9 +76,15 @@ namespace Webfuel.Domain
 
             if (updated.SupportRequestedTeamId != projectSupport.SupportRequestedTeamId)
             {
+                updated.SupportRequestedAt = null;
                 updated.SupportRequestedCompletedAt = null;
                 updated.SupportRequestedCompletedByUserId = null;
                 updated.SupportRequestedCompletedNotes = String.Empty;
+            }
+
+            if(updated.SupportRequestedTeamId.HasValue == true && projectSupport.SupportRequestedTeamId.HasValue == false)
+            {
+                updated.SupportRequestedAt = DateOnly.FromDateTime(DateTime.Today);
             }
 
             var cb = new RepositoryCommandBuffer();

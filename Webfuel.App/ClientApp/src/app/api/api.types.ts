@@ -1002,7 +1002,7 @@ export interface QueryProject extends Query {
     supportAdviserUserId: string | null | null;
     proposedFundingStreamId: string | null | null;
     teamContactName: string;
-    requestedSupportTeamId: string | null | null;
+    openSupportTeamId: string | null | null;
     skip: number;
     take: number;
     projection?: Array<string>;
@@ -1072,24 +1072,31 @@ export interface ProjectSubmission {
     submissionStatusId: string | null | null;
     submissionStageId: string;
     submissionOutcomeId: string | null | null;
+    fundingStreamId: string | null | null;
 }
 
 export interface CreateProjectSubmission {
     projectId: string;
+    fundingStreamId: string | null | null;
     submissionDate: string;
     nihrReference: string;
+    submissionStatusId: string | null | null;
     submissionStageId: string;
     submissionOutcomeId: string | null | null;
     fundingAmountOnSubmission: number | null | null;
+    outcomeExpectedDate: string | null | null;
 }
 
 export interface UpdateProjectSubmission {
     id: string;
+    fundingStreamId: string | null | null;
     submissionDate: string;
     nihrReference: string;
+    submissionStatusId: string | null | null;
     submissionStageId: string;
     submissionOutcomeId: string | null | null;
     fundingAmountOnSubmission: number | null | null;
+    outcomeExpectedDate: string | null | null;
 }
 
 export interface QueryProjectSubmission extends Query {
@@ -1457,6 +1464,8 @@ export interface CreateSupportRequest {
     leadApplicantAgeRangeId: string | null | null;
     leadApplicantGenderId: string | null | null;
     leadApplicantEthnicityId: string | null | null;
+    wouldYouLikeToReceiveAGrantsmanshipReviewId: string | null | null;
+    isYourSupportRequestOnlyForAGrantsmanshipReviewId: string | null | null;
 }
 
 export interface UpdateSupportRequest {
@@ -1482,6 +1491,8 @@ export interface UpdateSupportRequest {
     isCTUAlreadyInvolvedFreeText: string;
     professionalBackgroundIds: Array<string>;
     professionalBackgroundFreeText: string;
+    wouldYouLikeToReceiveAGrantsmanshipReviewId: string | null | null;
+    isYourSupportRequestOnlyForAGrantsmanshipReviewId: string | null | null;
 }
 
 export interface UpdateSupportRequestResearcher {
