@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IDataSource, IDataSourceWithGet } from 'shared/common/data-source';
 import { StaticDataService } from '../core/static-data.service';
-import { AgeRange, ApplicationStage, Disability, Ethnicity, FundingBody, FundingCallType, FundingStream, Gender, HowDidYouFindUs, IsCTUAlreadyInvolved, IsCTUTeamContribution, IsFellowship, IsInternationalMultiSiteStudy, IsLeadApplicantNHS, IsPaidRSSAdviserCoapplicant, IsPaidRSSAdviserLead, IsPPIEAndEDIContribution, IsPrePostAward, IsQuantativeTeamContribution, IsResubmission, IsTeamMembersConsulted, IsYesNo, ProfessionalBackground, ProjectStatus, ReportProvider, ResearcherCareerStage, ResearcherLocation, ResearcherOrganisationType, ResearcherRole, ResearchMethodology, RSSHub, Site, SubmissionOutcome, SubmissionStage, SubmissionStatus, SupportProvided, SupportRequestStatus, SupportTeam, Title, UserDiscipline, WillStudyUseCTU, WorkActivity } from './api.types';
+import { AgeRange, ApplicationStage, Disability, Ethnicity, FundingBody, FundingCallType, FundingStream, Gender, HowDidYouFindUs, IsCTUAlreadyInvolved, IsCTUTeamContribution, IsFellowship, IsInternationalMultiSiteStudy, IsLeadApplicantNHS, IsPaidRSSAdviserCoapplicant, IsPaidRSSAdviserLead, IsPPIEAndEDIContribution, IsPrePostAward, IsQuantativeTeamContribution, IsResubmission, IsTeamMembersConsulted, IsYesNo, ProfessionalBackground, ProfessionalBackgroundDetail, ProjectStatus, ReportProvider, ResearcherCareerStage, ResearcherLocation, ResearcherOrganisationType, ResearcherRole, ResearchMethodology, RSSHub, Site, SubmissionOutcome, SubmissionStage, SubmissionStatus, SupportProvided, SupportRequestStatus, SupportTeam, Title, UserDiscipline, WillStudyUseCTU, WorkActivity } from './api.types';
 
 @Injectable()
 export class StaticDataCache {
@@ -122,6 +122,11 @@ export class StaticDataCache {
     professionalBackground: IDataSourceWithGet<ProfessionalBackground> = {
         query: (query) => this.staticDataService.queryFactory(query, s => s.professionalBackground),
         get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.professionalBackground),
+    };
+    
+    professionalBackgroundDetail: IDataSourceWithGet<ProfessionalBackgroundDetail> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.professionalBackgroundDetail),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.professionalBackgroundDetail),
     };
     
     projectStatus: IDataSourceWithGet<ProjectStatus> = {

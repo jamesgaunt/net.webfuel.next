@@ -183,6 +183,19 @@ export enum IsYesNoEnum {
     No = "9c2dbdff-9020-419a-aa3f-bb976b19de6a",
 }
 
+export enum ProfessionalBackgroundEnum {
+    AlliedHealthcareProfessional = "9cd4cbde-011e-4b8b-898f-4a23a80d8e1f",
+    Doctor = "e031dcc1-a8c7-4a26-9a89-f5246da76596",
+    Dentist = "22dc26e7-8685-401e-b8bd-d1d957e27f0d",
+    Midwife = "eeed9783-71e4-45b9-82da-0161838d5080",
+    Psychologist = "0ee15892-343e-4117-9362-0abd68761bce",
+    Nurse = "c2161d6e-c39c-4ee0-9d9d-45126f3ac03a",
+    PublicHealthSpecialist = "897dcab9-fda6-403e-aa8d-c3dde2043d57",
+    SocialCareSpecialist = "91706bb9-c8ff-4f03-9eb6-b70d6510513c",
+    OtherHealthcareProfessional = "3ae2a25d-8993-4bdc-acec-8e345ecec728",
+    NotHealthcareProfessional = "db90675f-5225-43bc-87c0-53ba9267c19e",
+}
+
 export enum ProjectStatusEnum {
     Active = "6c83e9e4-617b-4386-b087-16a11f6b24af",
     OnHold = "691ee44b-7b01-4af0-b8f3-13f96f00f0ce",

@@ -44,6 +44,7 @@ import { IsResubmissionApi } from './is-resubmission.api';
 import { IsTeamMembersConsultedApi } from './is-team-members-consulted.api';
 import { IsYesNoApi } from './is-yes-no.api';
 import { ProfessionalBackgroundApi } from './professional-background.api';
+import { ProfessionalBackgroundDetailApi } from './professional-background-detail.api';
 import { ProjectStatusApi } from './project-status.api';
 import { ReportProviderApi } from './report-provider.api';
 import { ResearcherCareerStageApi } from './researcher-career-stage.api';
@@ -112,6 +113,7 @@ import { StaticDataCache } from './static-data.cache';
         IsTeamMembersConsultedApi,
         IsYesNoApi,
         ProfessionalBackgroundApi,
+        ProfessionalBackgroundDetailApi,
         ProjectStatusApi,
         ReportProviderApi,
         ResearcherCareerStageApi,

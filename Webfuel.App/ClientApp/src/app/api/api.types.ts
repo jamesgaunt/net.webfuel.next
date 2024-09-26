@@ -444,6 +444,7 @@ export interface IStaticDataModel {
     isTeamMembersConsulted: Array<IsTeamMembersConsulted>;
     isYesNo: Array<IsYesNo>;
     professionalBackground: Array<ProfessionalBackground>;
+    professionalBackgroundDetail: Array<ProfessionalBackgroundDetail>;
     projectStatus: Array<ProjectStatus>;
     reportProvider: Array<ReportProvider>;
     researcherCareerStage: Array<ResearcherCareerStage>;
@@ -650,6 +651,16 @@ export interface ProfessionalBackground extends IStaticData {
     default: boolean;
     hidden: boolean;
     freeText: boolean;
+}
+
+export interface ProfessionalBackgroundDetail extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+    professionalBackgroundId: string | null | null;
 }
 
 export interface ProjectStatus extends IStaticData {
@@ -1069,10 +1080,10 @@ export interface ProjectSubmission {
     fundingAmountOnSubmission: number | null | null;
     outcomeExpectedDate: string | null | null;
     projectId: string;
+    fundingStreamId: string | null | null;
     submissionStatusId: string | null | null;
     submissionStageId: string;
     submissionOutcomeId: string | null | null;
-    fundingStreamId: string | null | null;
 }
 
 export interface CreateProjectSubmission {
@@ -1663,7 +1674,8 @@ export interface User {
     fullName: string;
     rssJobTitle: string;
     universityJobTitle: string;
-    professionalBackground: string;
+    professionalBackgroundFreeText: string;
+    professionalBackgroundDetailFreeText: string;
     specialisation: string;
     disciplineIds: Array<string>;
     disciplineFreeText: string;
@@ -1673,8 +1685,11 @@ export interface User {
     hidden: boolean;
     disabled: boolean;
     lastLoginAt: string | null | null;
+    professionalBackground: string;
     createdAt: string;
     siteId: string | null | null;
+    professionalBackgroundId: string | null | null;
+    professionalBackgroundDetailId: string | null | null;
     userGroupId: string;
 }
 
@@ -2172,14 +2187,23 @@ export interface QueryIsYesNo extends Query {
     search?: string;
 }
 
-export interface CreateProfessionalBackground {
+export interface QueryProfessionalBackground extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface CreateProfessionalBackgroundDetail {
     name: string;
     default: boolean;
     hidden: boolean;
     freeText: boolean;
 }
 
-export interface UpdateProfessionalBackground {
+export interface UpdateProfessionalBackgroundDetail {
     id: string;
     name: string;
     default: boolean;
@@ -2187,11 +2211,11 @@ export interface UpdateProfessionalBackground {
     freeText: boolean;
 }
 
-export interface SortProfessionalBackground {
+export interface SortProfessionalBackgroundDetail {
     ids: Array<string>;
 }
 
-export interface QueryProfessionalBackground extends Query {
+export interface QueryProfessionalBackgroundDetail extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;
