@@ -51,6 +51,7 @@ namespace Webfuel.Tools.ConsoleApp
             Console.WriteLine("-- fix users");
             Console.WriteLine("-- fix projects");
             Console.WriteLine("-- fix project supports");
+            Console.WriteLine("-- fix project submissions");
             Console.WriteLine("-- fix support requests");
             Console.WriteLine("-- exit");
 
@@ -69,6 +70,11 @@ namespace Webfuel.Tools.ConsoleApp
                 case "fix projects":
                     await serviceProvider.GetRequiredService<IProjectFix>().FixProjects();
                     break;
+
+                case "fix project submissions":
+                    await serviceProvider.GetRequiredService<IProjectSubmissionFix>().FixProjectSubmissions();
+                    break;
+
 
                 case "fix project supports":
                     await serviceProvider.GetRequiredService<IProjectSupportFix>().FixProjectSupports();

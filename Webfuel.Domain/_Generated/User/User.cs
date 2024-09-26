@@ -45,8 +45,11 @@ namespace Webfuel.Domain
                     case nameof(User.UniversityJobTitle):
                         UniversityJobTitle = (string)value!;
                         break;
-                    case nameof(User.ProfessionalBackground):
-                        ProfessionalBackground = (string)value!;
+                    case nameof(User.ProfessionalBackgroundFreeText):
+                        ProfessionalBackgroundFreeText = (string)value!;
+                        break;
+                    case nameof(User.ProfessionalBackgroundDetailFreeText):
+                        ProfessionalBackgroundDetailFreeText = (string)value!;
                         break;
                     case nameof(User.Specialisation):
                         Specialisation = (string)value!;
@@ -90,11 +93,20 @@ namespace Webfuel.Domain
                     case nameof(User.PasswordResetValidUntil):
                         PasswordResetValidUntil = (DateTimeOffset)value!;
                         break;
+                    case nameof(User.ProfessionalBackground):
+                        ProfessionalBackground = (string)value!;
+                        break;
                     case nameof(User.CreatedAt):
                         CreatedAt = (DateTimeOffset)value!;
                         break;
                     case nameof(User.SiteId):
                         SiteId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(User.ProfessionalBackgroundId):
+                        ProfessionalBackgroundId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(User.ProfessionalBackgroundDetailId):
+                        ProfessionalBackgroundDetailId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
                     case nameof(User.UserGroupId):
                         UserGroupId = (Guid)value!;
@@ -111,7 +123,8 @@ namespace Webfuel.Domain
         public string FullName  { get; set; } = String.Empty;
         public string RSSJobTitle  { get; set; } = String.Empty;
         public string UniversityJobTitle  { get; set; } = String.Empty;
-        public string ProfessionalBackground  { get; set; } = String.Empty;
+        public string ProfessionalBackgroundFreeText  { get; set; } = String.Empty;
+        public string ProfessionalBackgroundDetailFreeText  { get; set; } = String.Empty;
         public string Specialisation  { get; set; } = String.Empty;
         public List<Guid> DisciplineIds
         {
@@ -142,8 +155,11 @@ namespace Webfuel.Domain
         public Guid PasswordResetToken  { get; set; } = Guid.Empty;
         [JsonIgnore]
         public DateTimeOffset PasswordResetValidUntil  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
+        public string ProfessionalBackground  { get; set; } = String.Empty;
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid? SiteId { get; set; }
+        public Guid? ProfessionalBackgroundId { get; set; }
+        public Guid? ProfessionalBackgroundDetailId { get; set; }
         public Guid UserGroupId { get; set; }
         public User Copy()
         {
@@ -157,7 +173,8 @@ namespace Webfuel.Domain
             entity.FullName = FullName;
             entity.RSSJobTitle = RSSJobTitle;
             entity.UniversityJobTitle = UniversityJobTitle;
-            entity.ProfessionalBackground = ProfessionalBackground;
+            entity.ProfessionalBackgroundFreeText = ProfessionalBackgroundFreeText;
+            entity.ProfessionalBackgroundDetailFreeText = ProfessionalBackgroundDetailFreeText;
             entity.Specialisation = Specialisation;
             entity.DisciplineIdsJson = DisciplineIdsJson;
             entity.DisciplineFreeText = DisciplineFreeText;
@@ -172,8 +189,11 @@ namespace Webfuel.Domain
             entity.PasswordResetAt = PasswordResetAt;
             entity.PasswordResetToken = PasswordResetToken;
             entity.PasswordResetValidUntil = PasswordResetValidUntil;
+            entity.ProfessionalBackground = ProfessionalBackground;
             entity.CreatedAt = CreatedAt;
             entity.SiteId = SiteId;
+            entity.ProfessionalBackgroundId = ProfessionalBackgroundId;
+            entity.ProfessionalBackgroundDetailId = ProfessionalBackgroundDetailId;
             entity.UserGroupId = UserGroupId;
             return entity;
         }

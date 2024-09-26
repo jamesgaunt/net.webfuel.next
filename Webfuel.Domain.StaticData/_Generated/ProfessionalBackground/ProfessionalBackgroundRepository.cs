@@ -8,10 +8,6 @@ namespace Webfuel.Domain.StaticData
 {
     internal partial interface IProfessionalBackgroundRepository
     {
-        Task<ProfessionalBackground> InsertProfessionalBackground(ProfessionalBackground entity, RepositoryCommandBuffer? commandBuffer = null);
-        Task<ProfessionalBackground> UpdateProfessionalBackground(ProfessionalBackground entity, RepositoryCommandBuffer? commandBuffer = null);
-        Task<ProfessionalBackground> UpdateProfessionalBackground(ProfessionalBackground updated, ProfessionalBackground original, RepositoryCommandBuffer? commandBuffer = null);
-        Task DeleteProfessionalBackground(Guid key, RepositoryCommandBuffer? commandBuffer = null);
         Task<QueryResult<ProfessionalBackground>> QueryProfessionalBackground(Query query, bool selectItems = true, bool countTotal = true);
         Task<ProfessionalBackground?> GetProfessionalBackground(Guid id);
         Task<ProfessionalBackground> RequireProfessionalBackground(Guid id);
@@ -29,34 +25,6 @@ namespace Webfuel.Domain.StaticData
         public ProfessionalBackgroundRepository(IRepositoryConnection connection)
         {
             _connection = connection;
-        }
-        public async Task<ProfessionalBackground> InsertProfessionalBackground(ProfessionalBackground entity, RepositoryCommandBuffer? commandBuffer = null)
-        {
-            if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
-            ProfessionalBackgroundMetadata.Validate(entity);
-            var sql = ProfessionalBackgroundMetadata.InsertSQL();
-            var parameters = ProfessionalBackgroundMetadata.ExtractParameters(entity, ProfessionalBackgroundMetadata.InsertProperties);
-            await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
-            return entity;
-        }
-        public async Task<ProfessionalBackground> UpdateProfessionalBackground(ProfessionalBackground entity, RepositoryCommandBuffer? commandBuffer = null)
-        {
-            ProfessionalBackgroundMetadata.Validate(entity);
-            var sql = ProfessionalBackgroundMetadata.UpdateSQL();
-            var parameters = ProfessionalBackgroundMetadata.ExtractParameters(entity, ProfessionalBackgroundMetadata.UpdateProperties);
-            await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
-            return entity;
-        }
-        public async Task<ProfessionalBackground> UpdateProfessionalBackground(ProfessionalBackground updated, ProfessionalBackground original, RepositoryCommandBuffer? commandBuffer = null)
-        {
-            await UpdateProfessionalBackground(updated, commandBuffer);
-            return updated;
-        }
-        public async Task DeleteProfessionalBackground(Guid id, RepositoryCommandBuffer? commandBuffer = null)
-        {
-            var sql = ProfessionalBackgroundMetadata.DeleteSQL();
-            var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
-            await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
         public async Task<QueryResult<ProfessionalBackground>> QueryProfessionalBackground(Query query, bool selectItems = true, bool countTotal = true)
         {

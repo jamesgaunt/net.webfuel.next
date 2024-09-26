@@ -4,9 +4,7 @@
   <Entity Name="ProjectSubmission" OrderBy="-SubmissionDate">
     <Key Name="Id" Type="guid" />
     <Property Name="ProjectId" Type="Project" CascadeDelete="true" />
-    <!--
     <Property Name="FundingStreamId" Type="FundingStream?" />
-    -->
     <Property Name="NIHRReference" Type="meta:name" />
     <Property Name="SubmissionDate" Type="Date" />
     <Property Name="SubmissionStatusId" Type="SubmissionStatus?" />

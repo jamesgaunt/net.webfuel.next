@@ -11,45 +11,46 @@ using Webfuel.Excel;
 
 namespace Webfuel.Tools.ConsoleApp
 {
-    public interface IProjectSupportFix
+    public interface IProjectSubmissionFix
     {
-        Task FixProjectSupports();
+        Task FixProjectSubmissions();
     }
 
-    [Service(typeof(IProjectSupportFix))]
-    internal class ProjectSupportFix: IProjectSupportFix
+    [Service(typeof(IProjectSubmissionFix))]
+    internal class ProjectSubmissionFix: IProjectSubmissionFix
     {
-        private readonly IProjectSupportRepository _projectSupportRepository;
+        private readonly IProjectSubmissionRepository _projectSubmissionRepository;
         private readonly IProjectRepository _projectRepository;
         private readonly IStaticDataService _staticDataService;
         private readonly IUserSortService _userSortService;
 
-        public ProjectSupportFix(
-            IProjectSupportRepository projectSupportRepository,
+        public ProjectSubmissionFix(
+            IProjectSubmissionRepository projectSubmissionRepository,
             IProjectRepository projectRepository,
             IStaticDataService staticDataService,
             IUserSortService userSortService)
         {
-            _projectSupportRepository = projectSupportRepository;
+            _projectSubmissionRepository = projectSubmissionRepository;
             _projectRepository = projectRepository;
             _staticDataService = staticDataService;
             _userSortService = userSortService;
         }
 
-        public async Task FixProjectSupports()
+        public async Task FixProjectSubmissions()
         {
             var projects = await _projectRepository.SelectProject();
-            var projectSupports = await _projectSupportRepository.SelectProjectSupport();
+            var projectSubmissions = await _projectSubmissionRepository.SelectProjectSubmission();
 
-            foreach(var projectSupport in projectSupports)
+            foreach(var original in projectSubmissions)
             {
-                var original = projectSupport.Copy();
+                var updated = original.Copy();
 
                 var project = projects.First(p => p.Id == original.ProjectId);
-                
 
+                updated.FundingStreamId = project.SubmittedFundingStreamId;
+                updated.SubmissionStatusId = SubmissionStatusEnum.DonTKnow;
 
-                await _projectSupportRepository.UpdateProjectSupport(original: original, updated: projectSupport);
+                await _projectSubmissionRepository.UpdateProjectSubmission(original: original, updated: updated);
             }
         }
     }

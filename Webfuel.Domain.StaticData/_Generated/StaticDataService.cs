@@ -73,6 +73,9 @@ namespace Webfuel.Domain.StaticData
         Task<IReadOnlyList<ProfessionalBackground>> SelectProfessionalBackground();
         Task<ProfessionalBackground?> GetProfessionalBackground(Guid id);
         Task<ProfessionalBackground> RequireProfessionalBackground(Guid id);
+        Task<IReadOnlyList<ProfessionalBackgroundDetail>> SelectProfessionalBackgroundDetail();
+        Task<ProfessionalBackgroundDetail?> GetProfessionalBackgroundDetail(Guid id);
+        Task<ProfessionalBackgroundDetail> RequireProfessionalBackgroundDetail(Guid id);
         Task<IReadOnlyList<ProjectStatus>> SelectProjectStatus();
         Task<ProjectStatus?> GetProjectStatus(Guid id);
         Task<ProjectStatus> RequireProjectStatus(Guid id);
@@ -476,6 +479,21 @@ namespace Webfuel.Domain.StaticData
         public async Task<ProfessionalBackground> RequireProfessionalBackground(Guid id)
         {
             return (await GetStaticData()).ProfessionalBackground.First(p => p.Id == id);
+        }
+        
+        public async Task<IReadOnlyList<ProfessionalBackgroundDetail>> SelectProfessionalBackgroundDetail()
+        {
+            return (await GetStaticData()).ProfessionalBackgroundDetail;
+        }
+        
+        public async Task<ProfessionalBackgroundDetail?> GetProfessionalBackgroundDetail(Guid id)
+        {
+            return (await GetStaticData()).ProfessionalBackgroundDetail.FirstOrDefault(p => p.Id == id);
+        }
+        
+        public async Task<ProfessionalBackgroundDetail> RequireProfessionalBackgroundDetail(Guid id)
+        {
+            return (await GetStaticData()).ProfessionalBackgroundDetail.First(p => p.Id == id);
         }
         
         public async Task<IReadOnlyList<ProjectStatus>> SelectProjectStatus()

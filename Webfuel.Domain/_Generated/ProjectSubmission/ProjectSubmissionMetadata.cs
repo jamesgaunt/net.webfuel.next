@@ -38,6 +38,9 @@ namespace Webfuel.Domain
                     case nameof(ProjectSubmission.ProjectId):
                         result.Add(new SqlParameter(nameof(ProjectSubmission.ProjectId), entity.ProjectId));
                         break;
+                    case nameof(ProjectSubmission.FundingStreamId):
+                        result.Add(new SqlParameter(nameof(ProjectSubmission.FundingStreamId), entity.FundingStreamId ?? (object?)DBNull.Value));
+                        break;
                     case nameof(ProjectSubmission.SubmissionStatusId):
                         result.Add(new SqlParameter(nameof(ProjectSubmission.SubmissionStatusId), entity.SubmissionStatusId ?? (object?)DBNull.Value));
                         break;
@@ -79,6 +82,7 @@ namespace Webfuel.Domain
                 yield return "FundingAmountOnSubmission";
                 yield return "OutcomeExpectedDate";
                 yield return "ProjectId";
+                yield return "FundingStreamId";
                 yield return "SubmissionStatusId";
                 yield return "SubmissionStageId";
                 yield return "SubmissionOutcomeId";
@@ -95,6 +99,7 @@ namespace Webfuel.Domain
                 yield return "FundingAmountOnSubmission";
                 yield return "OutcomeExpectedDate";
                 yield return "ProjectId";
+                yield return "FundingStreamId";
                 yield return "SubmissionStatusId";
                 yield return "SubmissionStageId";
                 yield return "SubmissionOutcomeId";
@@ -110,6 +115,7 @@ namespace Webfuel.Domain
                 yield return "FundingAmountOnSubmission";
                 yield return "OutcomeExpectedDate";
                 yield return "ProjectId";
+                yield return "FundingStreamId";
                 yield return "SubmissionStatusId";
                 yield return "SubmissionStageId";
                 yield return "SubmissionOutcomeId";

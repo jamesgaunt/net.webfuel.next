@@ -36,6 +36,9 @@ namespace Webfuel.Domain
                     case nameof(ProjectSubmission.ProjectId):
                         ProjectId = (Guid)value!;
                         break;
+                    case nameof(ProjectSubmission.FundingStreamId):
+                        FundingStreamId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
                     case nameof(ProjectSubmission.SubmissionStatusId):
                         SubmissionStatusId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
@@ -54,6 +57,7 @@ namespace Webfuel.Domain
         public int? FundingAmountOnSubmission  { get; set; } = null;
         public DateOnly? OutcomeExpectedDate  { get; set; } = null;
         public Guid ProjectId { get; set; }
+        public Guid? FundingStreamId { get; set; }
         public Guid? SubmissionStatusId { get; set; }
         public Guid SubmissionStageId { get; set; }
         public Guid? SubmissionOutcomeId { get; set; }
@@ -66,6 +70,7 @@ namespace Webfuel.Domain
             entity.FundingAmountOnSubmission = FundingAmountOnSubmission;
             entity.OutcomeExpectedDate = OutcomeExpectedDate;
             entity.ProjectId = ProjectId;
+            entity.FundingStreamId = FundingStreamId;
             entity.SubmissionStatusId = SubmissionStatusId;
             entity.SubmissionStageId = SubmissionStageId;
             entity.SubmissionOutcomeId = SubmissionOutcomeId;

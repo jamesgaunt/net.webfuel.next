@@ -27,6 +27,7 @@ namespace Webfuel.Domain.StaticData
         IReadOnlyList<IsTeamMembersConsulted> IsTeamMembersConsulted { get; }
         IReadOnlyList<IsYesNo> IsYesNo { get; }
         IReadOnlyList<ProfessionalBackground> ProfessionalBackground { get; }
+        IReadOnlyList<ProfessionalBackgroundDetail> ProfessionalBackgroundDetail { get; }
         IReadOnlyList<ProjectStatus> ProjectStatus { get; }
         IReadOnlyList<ReportProvider> ReportProvider { get; }
         IReadOnlyList<ResearcherCareerStage> ResearcherCareerStage { get; }
@@ -73,6 +74,7 @@ namespace Webfuel.Domain.StaticData
         public required IReadOnlyList<IsTeamMembersConsulted> IsTeamMembersConsulted { get; init; }
         public required IReadOnlyList<IsYesNo> IsYesNo { get; init; }
         public required IReadOnlyList<ProfessionalBackground> ProfessionalBackground { get; init; }
+        public required IReadOnlyList<ProfessionalBackgroundDetail> ProfessionalBackgroundDetail { get; init; }
         public required IReadOnlyList<ProjectStatus> ProjectStatus { get; init; }
         public required IReadOnlyList<ReportProvider> ReportProvider { get; init; }
         public required IReadOnlyList<ResearcherCareerStage> ResearcherCareerStage { get; init; }
@@ -121,6 +123,7 @@ namespace Webfuel.Domain.StaticData
                 IsTeamMembersConsulted = await serviceProvider.GetRequiredService<IIsTeamMembersConsultedRepository>().SelectIsTeamMembersConsulted(),
                 IsYesNo = await serviceProvider.GetRequiredService<IIsYesNoRepository>().SelectIsYesNo(),
                 ProfessionalBackground = await serviceProvider.GetRequiredService<IProfessionalBackgroundRepository>().SelectProfessionalBackground(),
+                ProfessionalBackgroundDetail = await serviceProvider.GetRequiredService<IProfessionalBackgroundDetailRepository>().SelectProfessionalBackgroundDetail(),
                 ProjectStatus = await serviceProvider.GetRequiredService<IProjectStatusRepository>().SelectProjectStatus(),
                 ReportProvider = await serviceProvider.GetRequiredService<IReportProviderRepository>().SelectReportProvider(),
                 ResearcherCareerStage = await serviceProvider.GetRequiredService<IResearcherCareerStageRepository>().SelectResearcherCareerStage(),
