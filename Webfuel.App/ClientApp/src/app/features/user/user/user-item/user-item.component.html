@@ -41,8 +41,8 @@
 
     <div class="flex">
       <div class="field is-6">
-        <label class="label">RSS job title</label>
-        <input class="input" type="text" placeholder="required" formControlName="rssJobTitle" />
+        <label class="label">Staff Role</label>
+        <input class="input" type="text" placeholder="required" formControlName="staffRole" />
       </div>
       <div class="field is-6">
         <label class="label">University job title</label>
@@ -50,13 +50,13 @@
       </div>
       <div class="field is-6">
         <label class="label">Professional background</label>
-        <input class="input" type="text" placeholder="required" formControlName="professionalBackground" />
+        <dropdown-select [dataSource]="staticDataCache.professionalBackground" placeholder="required" formControlName="professionalBackgroundId"></dropdown-select>
+        <div *ngIf="professionalBackgroundDetail.length > 0" style="margin-top: 4px;">
+          <dropdown-select [items]="professionalBackgroundDetail" placeholder="additional detail required" formControlName="professionalBackgroundDetailId"></dropdown-select>
+        </div>
+        <input style="margin-top: 4px;" class="input" type="text" placeholder="Other / Comment" formControlName="professionalBackgroundFreeText" />
       </div>
       <div class="field is-6">
-        <label class="label">Specialisation</label>
-        <input class="input" type="text" placeholder="required" formControlName="specialisation" />
-      </div>
-      <div class="field is-12">
         <label class="label">Adviser type / discipline</label>
         <dropdown-multi-select [dataSource]="staticDataCache.userDiscipline" [enableSearch]="true" [enableClear]="true" [closeOnSelect]="false" [freeTextControl]="form.controls.disciplineFreeText" placeholder="required" formControlName="disciplineIds"></dropdown-multi-select>
       </div>

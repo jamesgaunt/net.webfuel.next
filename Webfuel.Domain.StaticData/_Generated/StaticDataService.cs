@@ -103,6 +103,9 @@ namespace Webfuel.Domain.StaticData
         Task<IReadOnlyList<Site>> SelectSite();
         Task<Site?> GetSite(Guid id);
         Task<Site> RequireSite(Guid id);
+        Task<IReadOnlyList<StaffRole>> SelectStaffRole();
+        Task<StaffRole?> GetStaffRole(Guid id);
+        Task<StaffRole> RequireStaffRole(Guid id);
         Task<IReadOnlyList<SubmissionOutcome>> SelectSubmissionOutcome();
         Task<SubmissionOutcome?> GetSubmissionOutcome(Guid id);
         Task<SubmissionOutcome> RequireSubmissionOutcome(Guid id);
@@ -629,6 +632,21 @@ namespace Webfuel.Domain.StaticData
         public async Task<Site> RequireSite(Guid id)
         {
             return (await GetStaticData()).Site.First(p => p.Id == id);
+        }
+        
+        public async Task<IReadOnlyList<StaffRole>> SelectStaffRole()
+        {
+            return (await GetStaticData()).StaffRole;
+        }
+        
+        public async Task<StaffRole?> GetStaffRole(Guid id)
+        {
+            return (await GetStaticData()).StaffRole.FirstOrDefault(p => p.Id == id);
+        }
+        
+        public async Task<StaffRole> RequireStaffRole(Guid id)
+        {
+            return (await GetStaticData()).StaffRole.First(p => p.Id == id);
         }
         
         public async Task<IReadOnlyList<SubmissionOutcome>> SelectSubmissionOutcome()

@@ -37,6 +37,7 @@ namespace Webfuel.Domain.StaticData
         IReadOnlyList<ResearchMethodology> ResearchMethodology { get; }
         IReadOnlyList<RSSHub> RSSHub { get; }
         IReadOnlyList<Site> Site { get; }
+        IReadOnlyList<StaffRole> StaffRole { get; }
         IReadOnlyList<SubmissionOutcome> SubmissionOutcome { get; }
         IReadOnlyList<SubmissionStage> SubmissionStage { get; }
         IReadOnlyList<SubmissionStatus> SubmissionStatus { get; }
@@ -84,6 +85,7 @@ namespace Webfuel.Domain.StaticData
         public required IReadOnlyList<ResearchMethodology> ResearchMethodology { get; init; }
         public required IReadOnlyList<RSSHub> RSSHub { get; init; }
         public required IReadOnlyList<Site> Site { get; init; }
+        public required IReadOnlyList<StaffRole> StaffRole { get; init; }
         public required IReadOnlyList<SubmissionOutcome> SubmissionOutcome { get; init; }
         public required IReadOnlyList<SubmissionStage> SubmissionStage { get; init; }
         public required IReadOnlyList<SubmissionStatus> SubmissionStatus { get; init; }
@@ -133,6 +135,7 @@ namespace Webfuel.Domain.StaticData
                 ResearchMethodology = await serviceProvider.GetRequiredService<IResearchMethodologyRepository>().SelectResearchMethodology(),
                 RSSHub = await serviceProvider.GetRequiredService<IRSSHubRepository>().SelectRSSHub(),
                 Site = await serviceProvider.GetRequiredService<ISiteRepository>().SelectSite(),
+                StaffRole = await serviceProvider.GetRequiredService<IStaffRoleRepository>().SelectStaffRole(),
                 SubmissionOutcome = await serviceProvider.GetRequiredService<ISubmissionOutcomeRepository>().SelectSubmissionOutcome(),
                 SubmissionStage = await serviceProvider.GetRequiredService<ISubmissionStageRepository>().SelectSubmissionStage(),
                 SubmissionStatus = await serviceProvider.GetRequiredService<ISubmissionStatusRepository>().SelectSubmissionStatus(),

@@ -12,8 +12,11 @@
     <Property Name="FirstName" Type="meta:name" />
     <Property Name="LastName" Type="meta:name" />
     <Property Name="FullName" Type="meta:name" />
+
+    <!-- Rename to RSS Staff Role: Free Text Drop Down 1.4 -->
+    <Property Name="StaffRole" Type="meta:name" />
+    <Property Name="StaffRoleFreeText" Type="meta:name" />
     
-    <Property Name="RSSJobTitle" Type="meta:name" />
     <Property Name="UniversityJobTitle" Type="meta:name" />
 
     <Property Name="ProfessionalBackgroundId" Type="ProfessionalBackground?" />
@@ -21,8 +24,6 @@
 
     <Property Name="ProfessionalBackgroundDetailId" Type="ProfessionalBackgroundDetail?" />
     <Property Name="ProfessionalBackgroundDetailFreeText" Type="meta:description" />
-
-    <Property Name="Specialisation" Type="meta:description" />
 
     <Property Name="DisciplineIds" Type="Json:List{Guid}" Default="[]" />
     <Property Name="DisciplineFreeText" Type="meta:description" />
@@ -40,9 +41,6 @@
     <Property Name="PasswordResetAt" Type="DateTime" Tags="JsonIgnore" />
     <Property Name="PasswordResetToken" Type="guid" Tags="JsonIgnore" />
     <Property Name="PasswordResetValidUntil" Type="DateTime" Tags="JsonIgnore" />
-
-    <!-- Depricated 1.4 -->
-    <Property Name="ProfessionalBackground" Type="meta:description" />
 
     <!-- Audit -->
     <Property Name="CreatedAt" Type="DateTime" />

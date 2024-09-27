@@ -84,10 +84,7 @@ namespace Webfuel.Tools.ConsoleApp
             existing.Title = TEXT(ws, row, "TITLE");
             existing.FirstName = TEXT(ws, row, "FIRST NAME");
             existing.LastName = TEXT(ws, row, "SURNAME");
-            existing.RSSJobTitle = TEXT(ws, row, "RSS JOB ROLE");
             existing.UniversityJobTitle = TEXT(ws, row, "UNIVERSITY JOB TITLE");
-            existing.ProfessionalBackground = TEXT(ws, row, "PROFESSIONAL BACKGROUND");
-            existing.Specialisation = TEXT(ws, row, "SPECIALISATION");
 
             if (Decimal.TryParse(TEXT(ws, row, "FTE"), out var fte))
                 existing.FullTimeEquivalentForRSS = fte;

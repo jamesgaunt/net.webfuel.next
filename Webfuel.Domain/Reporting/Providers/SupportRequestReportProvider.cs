@@ -103,6 +103,11 @@ namespace Webfuel.Domain
                     builder.Map<Gender>(Guid.Parse("39345a45-4d8c-45d7-9c72-3419ac153ba9"), "Gender", p => p.LeadApplicantGenderId);
                     builder.Map<Ethnicity>(Guid.Parse("6081b152-2353-4d0a-a534-c8413dbb9ea2"), "Ethnicity", p => p.LeadApplicantEthnicityId);
 
+                    // Grantsmanship Review
+
+                    builder.Map<IsYesNo>(Guid.Parse("68845c91-c8fc-41d4-b51e-051205a64e4b"), "Would Like A Grantsmanship Review", p => p.WouldYouLikeToReceiveAGrantsmanshipReviewId);
+                    builder.Map<IsYesNo>(Guid.Parse("039ac77a-62e5-4099-aac1-2ece325dac60"), "Request Only For Grantsmanship Review", p => p.IsYourSupportRequestOnlyForAGrantsmanshipReviewId);
+
                     _schema = builder.Schema;
                 }
 

@@ -54,6 +54,7 @@ import { ResearcherRoleApi } from './researcher-role.api';
 import { ResearchMethodologyApi } from './research-methodology.api';
 import { RSSHubApi } from './rsshub.api';
 import { SiteApi } from './site.api';
+import { StaffRoleApi } from './staff-role.api';
 import { SubmissionOutcomeApi } from './submission-outcome.api';
 import { SubmissionStageApi } from './submission-stage.api';
 import { SubmissionStatusApi } from './submission-status.api';
@@ -123,6 +124,7 @@ import { StaticDataCache } from './static-data.cache';
         ResearchMethodologyApi,
         RSSHubApi,
         SiteApi,
+        StaffRoleApi,
         SubmissionOutcomeApi,
         SubmissionStageApi,
         SubmissionStatusApi,

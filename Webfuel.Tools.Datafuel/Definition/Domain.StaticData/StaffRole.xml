@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="StaffRole" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="Alias" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Property Name="Hidden" Type="boolean" />
+    <Property Name="FreeText" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="cbc96685-0dfc-42c5-bc97-4e5718df6403" Name="Director" />
+      <Row Id="2f160c13-d0e2-49cd-87f2-a48b5083246f" Name="Co-Director/Deputy or Associate Director" />
+      <Row Id="324ca140-084a-4268-b86b-e55edb29f0c4" Name="Advisor- non specialist" />
+      <Row Id="85d30dd8-cbad-4f58-8771-7de77ca618f2" Name="Advisor- specialist" />
+      <Row Id="af66fc90-1733-4c06-b037-ac0254df4504" Name="Business Support - manager or administrator" />
+      <Row Id="1318a8c4-26b8-4ef5-a99f-ec14cf6633ab" Name="Advisory - member of executive/advisory committee" />
+      <Row Id="4516b156-b77c-4ba4-85b2-d0eba51a91dd" Name="Health Economist" />
+      <Row Id="fdc3be92-02ee-4e27-ba5f-626e773034a3" Name="Statistician" />
+      <Row Id="91625176-c241-4b59-ae70-f876409c370f" Name="Social worker" />
+      <Row Id="709b7c98-b82a-4f94-b739-5118da06c0cf" Name="PPIE lead/advisor" />
+      <Row Id="114d9665-728b-4c45-a383-6c6d8c9a8004" Name="Other - please specify" FreeText="true" />
+    </Data>
+  </Entity>
+</Schema>

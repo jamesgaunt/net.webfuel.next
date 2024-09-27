@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IDataSource, IDataSourceWithGet } from 'shared/common/data-source';
 import { StaticDataService } from '../core/static-data.service';
-import { AgeRange, ApplicationStage, Disability, Ethnicity, FundingBody, FundingCallType, FundingStream, Gender, HowDidYouFindUs, IsCTUAlreadyInvolved, IsCTUTeamContribution, IsFellowship, IsInternationalMultiSiteStudy, IsLeadApplicantNHS, IsPaidRSSAdviserCoapplicant, IsPaidRSSAdviserLead, IsPPIEAndEDIContribution, IsPrePostAward, IsQuantativeTeamContribution, IsResubmission, IsTeamMembersConsulted, IsYesNo, ProfessionalBackground, ProfessionalBackgroundDetail, ProjectStatus, ReportProvider, ResearcherCareerStage, ResearcherLocation, ResearcherOrganisationType, ResearcherRole, ResearchMethodology, RSSHub, Site, SubmissionOutcome, SubmissionStage, SubmissionStatus, SupportProvided, SupportRequestStatus, SupportTeam, Title, UserDiscipline, WillStudyUseCTU, WorkActivity } from './api.types';
+import { AgeRange, ApplicationStage, Disability, Ethnicity, FundingBody, FundingCallType, FundingStream, Gender, HowDidYouFindUs, IsCTUAlreadyInvolved, IsCTUTeamContribution, IsFellowship, IsInternationalMultiSiteStudy, IsLeadApplicantNHS, IsPaidRSSAdviserCoapplicant, IsPaidRSSAdviserLead, IsPPIEAndEDIContribution, IsPrePostAward, IsQuantativeTeamContribution, IsResubmission, IsTeamMembersConsulted, IsYesNo, ProfessionalBackground, ProfessionalBackgroundDetail, ProjectStatus, ReportProvider, ResearcherCareerStage, ResearcherLocation, ResearcherOrganisationType, ResearcherRole, ResearchMethodology, RSSHub, Site, StaffRole, SubmissionOutcome, SubmissionStage, SubmissionStatus, SupportProvided, SupportRequestStatus, SupportTeam, Title, UserDiscipline, WillStudyUseCTU, WorkActivity } from './api.types';
 
 @Injectable()
 export class StaticDataCache {
@@ -172,6 +172,11 @@ export class StaticDataCache {
     site: IDataSourceWithGet<Site> = {
         query: (query) => this.staticDataService.queryFactory(query, s => s.site),
         get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.site),
+    };
+    
+    staffRole: IDataSourceWithGet<StaffRole> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.staffRole),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.staffRole),
     };
     
     submissionOutcome: IDataSourceWithGet<SubmissionOutcome> = {

@@ -60,14 +60,20 @@ namespace Webfuel.Domain
 
                     bldr.Map<UserGroup>(Guid.Parse("fafbe3e6-14f2-42c3-b702-88d0178e720b"), "User Group", p => p.UserGroupId);
 
-                    bldr.Add(Guid.Parse("caebc906-c010-4b77-b139-cac2d68e7a3e"), "RSS Job Title", p => p.RSSJobTitle);
+                    bldr.Add(Guid.Parse("caebc906-c010-4b77-b139-cac2d68e7a3e"), "Staff Role", p => p.StaffRole);
+                    bldr.Add(Guid.Parse("966aaa13-8732-4e82-b847-c8a7b97c215a"), "Staff Role Free Text", p => p.StaffRoleFreeText);
+
                     bldr.Add(Guid.Parse("fe6019ca-9a97-4b3d-b1a4-7b361f1a64ed"), "University Job Title", p => p.UniversityJobTitle);
-                    bldr.Add(Guid.Parse("3660f9d3-9775-4804-9234-3bb64146d006"), "Professional Background", p => p.ProfessionalBackground);
-                    bldr.Add(Guid.Parse("9103d85e-a73b-481f-85bb-306c201788c0"), "Specialisation", p => p.Specialisation);
 
                     bldr.Add(Guid.Parse("3beb8a42-a18d-4c6e-a750-5c955a831948"), "RSS Start Date", p => p.StartDateForRSS);
                     bldr.Add(Guid.Parse("15a4be71-6860-48b7-b21a-25f4d666fd1c"), "RSS End Date", p => p.EndDateForRSS);
                     bldr.Add(Guid.Parse("a1733340-097c-49ab-b0ba-f45a1f428cfc"), "RSS FTE", p => p.FullTimeEquivalentForRSS);
+
+                    bldr.Map<ProfessionalBackground>(Guid.Parse("bbbc3681-d384-41e8-99b2-8fbec1407e46"), "Professional Background", p => p.ProfessionalBackgroundId);
+                    bldr.Add(Guid.Parse("18730e21-4453-4006-8096-440efff43bd4"), "Professional Background Free Text", p => p.ProfessionalBackgroundFreeText);
+
+                    bldr.Map<ProfessionalBackgroundDetail>(Guid.Parse("d2a72506-baf9-48c2-a4c1-5e5ea5c35fa9"), "Professional Background Detail", p => p.ProfessionalBackgroundDetailId);
+                    bldr.Add(Guid.Parse("e7c2b69c-747c-4e66-bafd-e2e19ad4dbb1"), "Professional Background Detail Free Text", p => p.ProfessionalBackgroundDetailFreeText);
 
                     bldr.Map<UserDiscipline>(Guid.Parse("32a8c15f-b8a6-4569-86c4-0b23735e38c9"), "Disciplines", p => p.DisciplineIds);
 

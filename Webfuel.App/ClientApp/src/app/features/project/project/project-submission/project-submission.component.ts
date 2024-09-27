@@ -40,7 +40,7 @@ export class ProjectSubmissionComponent extends ProjectComponentBase {
 
   add() {
     if (this.locked) return;
-    this.createProjectSubmissionDialog.open({ projectId: this.item.id });
+    this.createProjectSubmissionDialog.open({ projectId: this.item.id, fundingStreamId: this.item.proposedFundingStreamId });
   }
 
 

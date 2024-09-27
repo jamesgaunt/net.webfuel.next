@@ -70,13 +70,13 @@ namespace Webfuel.Domain
             SetValue(Title, user.Title);
             SetValue(Surname, user.LastName);
             SetValue(FirstName, user.FirstName);
-            SetValue(JobTitle, user.RSSJobTitle);
+            SetValue(JobTitle, user.StaffRole);
             SetValue(RSSFundedFTE, user.FullTimeEquivalentForRSS);
             SetValue(Email, user.Email);
 
             SetValue(ProfessionalBackground, Render_ProfessionalBackground(context, user));
             SetValue(ProfessionalBackgroundDetail, Render_ProfessionalBackgroundDetail(context, user));
-            SetValue(ProfessionalBackgroundFreeText, user.ProfessionalBackground);
+            SetValue(ProfessionalBackgroundFreeText, user.ProfessionalBackgroundFreeText);
             SetValue(RSSStaffRole, Render_RSSStaffRole(context, user));
             SetValue(OtherRSSStaffRole, String.Empty);
             SetValue(NumberOfYearsEmployed, Render_NumberOfYearsEmployed(context, user));

@@ -8,7 +8,8 @@ import { FormService } from 'core/form.service';
 import { DialogBase, DialogComponentBase } from 'shared/common/dialog-base';
 
 export interface CreateProjectSubmissionDialogData {
-  projectId: string
+  projectId: string;
+  fundingStreamId: string | null;
 }
 
 @Injectable()
@@ -33,7 +34,7 @@ export class CreateProjectSubmissionDialogComponent extends DialogComponentBase<
     public staticDataCache: StaticDataCache,
   ) {
     super();
-    this.form.patchValue({ projectId: this.data.projectId });
+    this.form.patchValue({ projectId: this.data.projectId, fundingStreamId: this.data.fundingStreamId });
   }
 
   form = new FormGroup({

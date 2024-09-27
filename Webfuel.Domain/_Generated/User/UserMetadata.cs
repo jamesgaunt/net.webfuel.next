@@ -41,8 +41,11 @@ namespace Webfuel.Domain
                     case nameof(User.FullName):
                         result.Add(new SqlParameter(nameof(User.FullName), entity.FullName));
                         break;
-                    case nameof(User.RSSJobTitle):
-                        result.Add(new SqlParameter(nameof(User.RSSJobTitle), entity.RSSJobTitle));
+                    case nameof(User.StaffRole):
+                        result.Add(new SqlParameter(nameof(User.StaffRole), entity.StaffRole));
+                        break;
+                    case nameof(User.StaffRoleFreeText):
+                        result.Add(new SqlParameter(nameof(User.StaffRoleFreeText), entity.StaffRoleFreeText));
                         break;
                     case nameof(User.UniversityJobTitle):
                         result.Add(new SqlParameter(nameof(User.UniversityJobTitle), entity.UniversityJobTitle));
@@ -52,9 +55,6 @@ namespace Webfuel.Domain
                         break;
                     case nameof(User.ProfessionalBackgroundDetailFreeText):
                         result.Add(new SqlParameter(nameof(User.ProfessionalBackgroundDetailFreeText), entity.ProfessionalBackgroundDetailFreeText));
-                        break;
-                    case nameof(User.Specialisation):
-                        result.Add(new SqlParameter(nameof(User.Specialisation), entity.Specialisation));
                         break;
                     case nameof(User.DisciplineIds):
                         result.Add(new SqlParameter(nameof(User.DisciplineIds), entity.DisciplineIdsJson));
@@ -94,9 +94,6 @@ namespace Webfuel.Domain
                         break;
                     case nameof(User.PasswordResetValidUntil):
                         result.Add(new SqlParameter(nameof(User.PasswordResetValidUntil), entity.PasswordResetValidUntil));
-                        break;
-                    case nameof(User.ProfessionalBackground):
-                        result.Add(new SqlParameter(nameof(User.ProfessionalBackground), entity.ProfessionalBackground));
                         break;
                     case nameof(User.CreatedAt):
                         result.Add(new SqlParameter(nameof(User.CreatedAt), entity.CreatedAt));
@@ -146,11 +143,11 @@ namespace Webfuel.Domain
                 yield return "FirstName";
                 yield return "LastName";
                 yield return "FullName";
-                yield return "RSSJobTitle";
+                yield return "StaffRole";
+                yield return "StaffRoleFreeText";
                 yield return "UniversityJobTitle";
                 yield return "ProfessionalBackgroundFreeText";
                 yield return "ProfessionalBackgroundDetailFreeText";
-                yield return "Specialisation";
                 yield return "DisciplineIds";
                 yield return "DisciplineFreeText";
                 yield return "StartDateForRSS";
@@ -164,7 +161,6 @@ namespace Webfuel.Domain
                 yield return "PasswordResetAt";
                 yield return "PasswordResetToken";
                 yield return "PasswordResetValidUntil";
-                yield return "ProfessionalBackground";
                 yield return "CreatedAt";
                 yield return "SiteId";
                 yield return "ProfessionalBackgroundId";
@@ -184,11 +180,11 @@ namespace Webfuel.Domain
                 yield return "FirstName";
                 yield return "LastName";
                 yield return "FullName";
-                yield return "RSSJobTitle";
+                yield return "StaffRole";
+                yield return "StaffRoleFreeText";
                 yield return "UniversityJobTitle";
                 yield return "ProfessionalBackgroundFreeText";
                 yield return "ProfessionalBackgroundDetailFreeText";
-                yield return "Specialisation";
                 yield return "DisciplineIds";
                 yield return "DisciplineFreeText";
                 yield return "StartDateForRSS";
@@ -202,7 +198,6 @@ namespace Webfuel.Domain
                 yield return "PasswordResetAt";
                 yield return "PasswordResetToken";
                 yield return "PasswordResetValidUntil";
-                yield return "ProfessionalBackground";
                 yield return "CreatedAt";
                 yield return "SiteId";
                 yield return "ProfessionalBackgroundId";
@@ -221,11 +216,11 @@ namespace Webfuel.Domain
                 yield return "FirstName";
                 yield return "LastName";
                 yield return "FullName";
-                yield return "RSSJobTitle";
+                yield return "StaffRole";
+                yield return "StaffRoleFreeText";
                 yield return "UniversityJobTitle";
                 yield return "ProfessionalBackgroundFreeText";
                 yield return "ProfessionalBackgroundDetailFreeText";
-                yield return "Specialisation";
                 yield return "DisciplineIds";
                 yield return "DisciplineFreeText";
                 yield return "StartDateForRSS";
@@ -239,7 +234,6 @@ namespace Webfuel.Domain
                 yield return "PasswordResetAt";
                 yield return "PasswordResetToken";
                 yield return "PasswordResetValidUntil";
-                yield return "ProfessionalBackground";
                 yield return "CreatedAt";
                 yield return "SiteId";
                 yield return "ProfessionalBackgroundId";
@@ -262,24 +256,22 @@ namespace Webfuel.Domain
             entity.LastName = entity.LastName.Trim();
             entity.FullName = entity.FullName ?? String.Empty;
             entity.FullName = entity.FullName.Trim();
-            entity.RSSJobTitle = entity.RSSJobTitle ?? String.Empty;
-            entity.RSSJobTitle = entity.RSSJobTitle.Trim();
+            entity.StaffRole = entity.StaffRole ?? String.Empty;
+            entity.StaffRole = entity.StaffRole.Trim();
+            entity.StaffRoleFreeText = entity.StaffRoleFreeText ?? String.Empty;
+            entity.StaffRoleFreeText = entity.StaffRoleFreeText.Trim();
             entity.UniversityJobTitle = entity.UniversityJobTitle ?? String.Empty;
             entity.UniversityJobTitle = entity.UniversityJobTitle.Trim();
             entity.ProfessionalBackgroundFreeText = entity.ProfessionalBackgroundFreeText ?? String.Empty;
             entity.ProfessionalBackgroundFreeText = entity.ProfessionalBackgroundFreeText.Trim();
             entity.ProfessionalBackgroundDetailFreeText = entity.ProfessionalBackgroundDetailFreeText ?? String.Empty;
             entity.ProfessionalBackgroundDetailFreeText = entity.ProfessionalBackgroundDetailFreeText.Trim();
-            entity.Specialisation = entity.Specialisation ?? String.Empty;
-            entity.Specialisation = entity.Specialisation.Trim();
             entity.DisciplineFreeText = entity.DisciplineFreeText ?? String.Empty;
             entity.DisciplineFreeText = entity.DisciplineFreeText.Trim();
             entity.PasswordHash = entity.PasswordHash ?? String.Empty;
             entity.PasswordHash = entity.PasswordHash.Trim();
             entity.PasswordSalt = entity.PasswordSalt ?? String.Empty;
             entity.PasswordSalt = entity.PasswordSalt.Trim();
-            entity.ProfessionalBackground = entity.ProfessionalBackground ?? String.Empty;
-            entity.ProfessionalBackground = entity.ProfessionalBackground.Trim();
             Validator.ValidateAndThrow(entity);
         }
         
@@ -290,15 +282,14 @@ namespace Webfuel.Domain
         public const int FirstName_MaxLength = 128;
         public const int LastName_MaxLength = 128;
         public const int FullName_MaxLength = 128;
-        public const int RSSJobTitle_MaxLength = 128;
+        public const int StaffRole_MaxLength = 128;
+        public const int StaffRoleFreeText_MaxLength = 128;
         public const int UniversityJobTitle_MaxLength = 128;
         public const int ProfessionalBackgroundFreeText_MaxLength = 1024;
         public const int ProfessionalBackgroundDetailFreeText_MaxLength = 1024;
-        public const int Specialisation_MaxLength = 1024;
         public const int DisciplineFreeText_MaxLength = 1024;
         public const int PasswordHash_MaxLength = 256;
         public const int PasswordSalt_MaxLength = 256;
-        public const int ProfessionalBackground_MaxLength = 1024;
         
         public static void Email_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
@@ -335,11 +326,18 @@ namespace Webfuel.Domain
                 .MaximumLength(FullName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
-        public static void RSSJobTitle_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        public static void StaffRole_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull()
-                .MaximumLength(RSSJobTitle_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+                .MaximumLength(StaffRole_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void StaffRoleFreeText_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(StaffRoleFreeText_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
         public static void UniversityJobTitle_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
@@ -363,13 +361,6 @@ namespace Webfuel.Domain
                 .MaximumLength(ProfessionalBackgroundDetailFreeText_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
-        public static void Specialisation_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
-        {
-            ruleBuilder
-                .NotNull()
-                .MaximumLength(Specialisation_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
-        }
-        
         public static void DisciplineFreeText_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
@@ -390,13 +381,6 @@ namespace Webfuel.Domain
                 .NotNull()
                 .MaximumLength(PasswordSalt_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
-        
-        public static void ProfessionalBackground_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
-        {
-            ruleBuilder
-                .NotNull()
-                .MaximumLength(ProfessionalBackground_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
-        }
     }
     
     public partial class UserRepositoryValidator: AbstractValidator<User>
@@ -408,15 +392,14 @@ namespace Webfuel.Domain
             RuleFor(x => x.FirstName).Use(UserMetadata.FirstName_ValidationRules);
             RuleFor(x => x.LastName).Use(UserMetadata.LastName_ValidationRules);
             RuleFor(x => x.FullName).Use(UserMetadata.FullName_ValidationRules);
-            RuleFor(x => x.RSSJobTitle).Use(UserMetadata.RSSJobTitle_ValidationRules);
+            RuleFor(x => x.StaffRole).Use(UserMetadata.StaffRole_ValidationRules);
+            RuleFor(x => x.StaffRoleFreeText).Use(UserMetadata.StaffRoleFreeText_ValidationRules);
             RuleFor(x => x.UniversityJobTitle).Use(UserMetadata.UniversityJobTitle_ValidationRules);
             RuleFor(x => x.ProfessionalBackgroundFreeText).Use(UserMetadata.ProfessionalBackgroundFreeText_ValidationRules);
             RuleFor(x => x.ProfessionalBackgroundDetailFreeText).Use(UserMetadata.ProfessionalBackgroundDetailFreeText_ValidationRules);
-            RuleFor(x => x.Specialisation).Use(UserMetadata.Specialisation_ValidationRules);
             RuleFor(x => x.DisciplineFreeText).Use(UserMetadata.DisciplineFreeText_ValidationRules);
             RuleFor(x => x.PasswordHash).Use(UserMetadata.PasswordHash_ValidationRules);
             RuleFor(x => x.PasswordSalt).Use(UserMetadata.PasswordSalt_ValidationRules);
-            RuleFor(x => x.ProfessionalBackground).Use(UserMetadata.ProfessionalBackground_ValidationRules);
             Validation();
         }
         

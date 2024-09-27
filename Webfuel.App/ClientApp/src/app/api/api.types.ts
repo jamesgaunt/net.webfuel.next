@@ -454,6 +454,7 @@ export interface IStaticDataModel {
     researchMethodology: Array<ResearchMethodology>;
     rssHub: Array<RSSHub>;
     site: Array<Site>;
+    staffRole: Array<StaffRole>;
     submissionOutcome: Array<SubmissionOutcome>;
     submissionStage: Array<SubmissionStage>;
     submissionStatus: Array<SubmissionStatus>;
@@ -737,6 +738,16 @@ export interface Site extends IStaticData {
     name: string;
     sortOrder: number;
     default: boolean;
+}
+
+export interface StaffRole extends IStaticData {
+    id: string;
+    name: string;
+    alias: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
 }
 
 export interface SubmissionOutcome extends IStaticData {
@@ -1672,11 +1683,11 @@ export interface User {
     firstName: string;
     lastName: string;
     fullName: string;
-    rssJobTitle: string;
+    staffRole: string;
+    staffRoleFreeText: string;
     universityJobTitle: string;
     professionalBackgroundFreeText: string;
     professionalBackgroundDetailFreeText: string;
-    specialisation: string;
     disciplineIds: Array<string>;
     disciplineFreeText: string;
     startDateForRSS: string | null | null;
@@ -1685,7 +1696,6 @@ export interface User {
     hidden: boolean;
     disabled: boolean;
     lastLoginAt: string | null | null;
-    professionalBackground: string;
     createdAt: string;
     siteId: string | null | null;
     professionalBackgroundId: string | null | null;
@@ -1708,16 +1718,19 @@ export interface UpdateUser {
     firstName: string;
     lastName: string;
     userGroupId: string;
-    rssJobTitle: string;
+    staffRole: string;
+    staffRoleFreeText: string;
     universityJobTitle: string;
-    professionalBackground: string;
-    specialisation: string;
     disciplineIds: Array<string>;
     disciplineFreeText: string;
+    siteId: string | null | null;
+    professionalBackgroundId: string | null | null;
+    professionalBackgroundFreeText: string;
+    professionalBackgroundDetailId: string | null | null;
+    professionalBackgroundDetailFreeText: string;
     startDateForRSS: string | null | null;
     endDateForRSS: string | null | null;
     fullTimeEquivalentForRSS: number | null | null;
-    siteId: string | null | null;
     disabled: boolean;
     hidden: boolean;
 }
@@ -2399,6 +2412,36 @@ export interface SortSite {
 }
 
 export interface QuerySite extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface CreateStaffRole {
+    name: string;
+    alias: string;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface UpdateStaffRole {
+    id: string;
+    name: string;
+    alias: string;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface SortStaffRole {
+    ids: Array<string>;
+}
+
+export interface QueryStaffRole extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;

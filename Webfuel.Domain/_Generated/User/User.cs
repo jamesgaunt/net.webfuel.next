@@ -39,8 +39,11 @@ namespace Webfuel.Domain
                     case nameof(User.FullName):
                         FullName = (string)value!;
                         break;
-                    case nameof(User.RSSJobTitle):
-                        RSSJobTitle = (string)value!;
+                    case nameof(User.StaffRole):
+                        StaffRole = (string)value!;
+                        break;
+                    case nameof(User.StaffRoleFreeText):
+                        StaffRoleFreeText = (string)value!;
                         break;
                     case nameof(User.UniversityJobTitle):
                         UniversityJobTitle = (string)value!;
@@ -50,9 +53,6 @@ namespace Webfuel.Domain
                         break;
                     case nameof(User.ProfessionalBackgroundDetailFreeText):
                         ProfessionalBackgroundDetailFreeText = (string)value!;
-                        break;
-                    case nameof(User.Specialisation):
-                        Specialisation = (string)value!;
                         break;
                     case nameof(User.DisciplineIds):
                         DisciplineIdsJson = (string)value!;
@@ -93,9 +93,6 @@ namespace Webfuel.Domain
                     case nameof(User.PasswordResetValidUntil):
                         PasswordResetValidUntil = (DateTimeOffset)value!;
                         break;
-                    case nameof(User.ProfessionalBackground):
-                        ProfessionalBackground = (string)value!;
-                        break;
                     case nameof(User.CreatedAt):
                         CreatedAt = (DateTimeOffset)value!;
                         break;
@@ -121,11 +118,11 @@ namespace Webfuel.Domain
         public string FirstName  { get; set; } = String.Empty;
         public string LastName  { get; set; } = String.Empty;
         public string FullName  { get; set; } = String.Empty;
-        public string RSSJobTitle  { get; set; } = String.Empty;
+        public string StaffRole  { get; set; } = String.Empty;
+        public string StaffRoleFreeText  { get; set; } = String.Empty;
         public string UniversityJobTitle  { get; set; } = String.Empty;
         public string ProfessionalBackgroundFreeText  { get; set; } = String.Empty;
         public string ProfessionalBackgroundDetailFreeText  { get; set; } = String.Empty;
-        public string Specialisation  { get; set; } = String.Empty;
         public List<Guid> DisciplineIds
         {
             get { return _DisciplineIds ?? (_DisciplineIds = SafeJsonSerializer.Deserialize<List<Guid>>(_DisciplineIdsJson)); }
@@ -155,7 +152,6 @@ namespace Webfuel.Domain
         public Guid PasswordResetToken  { get; set; } = Guid.Empty;
         [JsonIgnore]
         public DateTimeOffset PasswordResetValidUntil  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
-        public string ProfessionalBackground  { get; set; } = String.Empty;
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid? SiteId { get; set; }
         public Guid? ProfessionalBackgroundId { get; set; }
@@ -171,11 +167,11 @@ namespace Webfuel.Domain
             entity.FirstName = FirstName;
             entity.LastName = LastName;
             entity.FullName = FullName;
-            entity.RSSJobTitle = RSSJobTitle;
+            entity.StaffRole = StaffRole;
+            entity.StaffRoleFreeText = StaffRoleFreeText;
             entity.UniversityJobTitle = UniversityJobTitle;
             entity.ProfessionalBackgroundFreeText = ProfessionalBackgroundFreeText;
             entity.ProfessionalBackgroundDetailFreeText = ProfessionalBackgroundDetailFreeText;
-            entity.Specialisation = Specialisation;
             entity.DisciplineIdsJson = DisciplineIdsJson;
             entity.DisciplineFreeText = DisciplineFreeText;
             entity.StartDateForRSS = StartDateForRSS;
@@ -189,7 +185,6 @@ namespace Webfuel.Domain
             entity.PasswordResetAt = PasswordResetAt;
             entity.PasswordResetToken = PasswordResetToken;
             entity.PasswordResetValidUntil = PasswordResetValidUntil;
-            entity.ProfessionalBackground = ProfessionalBackground;
             entity.CreatedAt = CreatedAt;
             entity.SiteId = SiteId;
             entity.ProfessionalBackgroundId = ProfessionalBackgroundId;
