@@ -19,10 +19,10 @@ import { EmailTemplateItemComponent } from './email-template/email-template-item
     EmailTemplateListComponent,
     EmailTemplateItemComponent,
 
-    CreateEmailTemplateDialogComponent
+    CreateEmailTemplateDialogComponent,
   ],
   providers: [
-    CreateEmailTemplateDialog
+    CreateEmailTemplateDialog,
   ]
 })
 export class ConfigurationModule { }

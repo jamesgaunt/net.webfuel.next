@@ -15,6 +15,11 @@ export enum QueryOp {
     Or = "or",
 }
 
+export enum WidgetTypeEnum {
+    ProjectSummary = "4f5bed07-af06-40c5-a7ed-ad283e57e503",
+    TeamSupportSummary = "54d1db4b-2b37-4d20-9e55-ffe2529446ac",
+}
+
 export enum ReportFieldType {
     Unspecified = 0,
     String = 10,

@@ -21,4 +21,7 @@
     <ProjectReference Include="..\Webfuel.Domain.StaticData\Webfuel.Domain.StaticData.csproj" />
     <ProjectReference Include="..\Webfuel.Domain\Webfuel.Domain.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ClientApp\src\app\features\home\widget\rendering\" />
+  </ItemGroup>
 </Project>

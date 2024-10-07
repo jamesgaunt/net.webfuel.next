@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Widget\WidgetType\**" />
+    <Compile Remove="Widget\WidgetUser\**" />
+    <EmbeddedResource Remove="Widget\WidgetType\**" />
+    <EmbeddedResource Remove="Widget\WidgetUser\**" />
+    <None Remove="Widget\WidgetType\**" />
+    <None Remove="Widget\WidgetUser\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Webfuel.Common\Webfuel.Common.csproj" />
     <ProjectReference Include="..\Webfuel.Domain.StaticData\Webfuel.Domain.StaticData.csproj" />
     <ProjectReference Include="..\Webfuel.Reporting\Webfuel.Reporting.csproj" />
@@ -14,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="Researcher\Researcher\Services\" />
+    <Folder Include="Widget\Providers\" />
   </ItemGroup>
 
   <ItemGroup>

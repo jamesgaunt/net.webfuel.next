@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="Widget" OrderBy="SortOrder">
+    <Key Name="Id" Type="guid" />
+    <Property Name="UserId" Type="User" CascadeDelete="true" />
+    <Property Name="WidgetTypeId" Type="WidgetType" CascadeDelete="true" />
+    <Property Name="SortOrder" Type="int" />
+
+    <Index Unique="false">
+      <Member Name="UserId" />
+    </Index>
+  </Entity>
+</Schema>

@@ -23,6 +23,7 @@ import { ReportService } from './report.service';
 import { ReportRunnerDialog, ReportRunnerDialogComponent } from './dialogs/report/report-runner.dialog';
 import { ReportLauncherDialog, ReportLauncherDialogComponent } from './dialogs/report/report-launcher.dialog';
 import { ReportArgumentComponent } from './dialogs/report/report-argument.component';
+import { WidgetService } from './widget.service';
 
 @NgModule({
   imports: [
@@ -52,6 +53,7 @@ import { ReportArgumentComponent } from './dialogs/report/report-argument.compon
     QueryService,
     UserService,
     ReportService,
+    WidgetService,
     DeactivateService,
     ReportRunnerDialog,
     ReportLauncherDialog,

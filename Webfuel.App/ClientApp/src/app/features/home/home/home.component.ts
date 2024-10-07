@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { DashboardApi } from '../../../api/dashboard.api';
-import { DashboardMetric, DashboardModel } from '../../../api/api.types';
 import { StaticDataCache } from '../../../api/static-data.cache';
 import { UserService } from '../../../core/user.service';
 import { Router } from '@angular/router';
+import { ManageWidgetDialog } from '../widget/management/manage-widget-dialog/manage-widget.dialog';
+import { WidgetApi } from 'api/widget.api';
+import { Widget, DashboardMetric } from 'api/api.types';
+import { ConfigurationService } from 'core/configuration.service';
+import { WidgetService } from 'core/widget.service';
 
 @Component({
   selector: 'app-home',
@@ -12,24 +15,32 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   constructor(
     private router: Router,
-    private dashboardApi: DashboardApi,
+    private widgetApi: WidgetApi,
+    private manageWidgetDialog: ManageWidgetDialog,
     public userService: UserService,
     public staticDataCache: StaticDataCache,
+    public configurationService: ConfigurationService,
+    public widgetService: WidgetService
   ) {
   }
 
   ngOnInit(): void {
-    this.dashboardApi.getDashboardModel().subscribe((result) => this.model = result);
+    this.configurationService.configuration.subscribe(config => {
+      if (config == null) {
+        this.widgets = [];
+        return;
+      }
+      this.widgetApi.select({ userId: config.userId }).subscribe((widgets) => {
+        this.widgets = widgets;
+      })
+    });
   }
 
-  model: DashboardModel | null = null;
+  widgets: Widget[] | null = null;
 
-  routerParams(metric: DashboardMetric) {
+  manageWidgets() {
+    this.manageWidgetDialog.open().subscribe(() => {
 
-    console.log(metric);
-
-    if (!metric.routerParams)
-      return {};
-    return JSON.parse(metric.routerParams);
+    });
   }
 }

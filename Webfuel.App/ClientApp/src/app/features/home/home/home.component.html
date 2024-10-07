@@ -2,35 +2,24 @@
   <li><a routerLink="/home">Home</a></li>
 </ul>
 <div class="container">
-  <h1 class="title">Dashboard</h1>
-  @if(model === null) {
+  <div class="columns">
+    <div class="column">
+      <h1 class="title">Dashboard</h1>
+    </div>
+    <div class="column">
+      <div *ngIf="widgets !== null" class="header-buttons">
+        <button class="button is-primary" (click)="manageWidgets()">Manage Widgets</button>
+      </div>
+    </div>
+  </div>
+
+  @if(widgets === null) {
   <div>
     Loading...
   </div>
   } @else {
-  <div class="dashboard-metrics">
-    <h3>Projects</h3>
-    <div class="support-teams">
-      @for(metric of model.projectMetrics; track $index) {
-      <a class="dashboard-metric" routerLink="{{ metric.routerLink }}" [queryParams]="routerParams(metric)">
-        <div class="icon"><i class="{{ metric.icon }}"></i></div>
-        <div class="count">{{ metric.count }}</div>
-        <div class="name">{{ metric.name }}</div>
-        <div class="cta">View Details <i class="fas fa-arrow-right"></i></div>
-      </a>
-      }
-    </div>
-    <h3>Team Support</h3>
-    <div class="support-teams">
-      @for(metric of model.supportMetrics; track $index) {
-      <a class="dashboard-metric" routerLink="{{ metric.routerLink }}" [queryParams]="routerParams(metric)">
-        <div class="icon"><i class="{{ metric.icon }}"></i></div>
-        <div class="count">{{ metric.count }}</div>
-        <div class="name">{{ metric.name }}</div>
-        <div class="cta">View Details <i class="fas fa-arrow-right"></i></div>
-      </a>
-      }
-    </div>
-  </div>
+  @for(widget of widgets; track $index) {
+  <h3>{{ widgetService.widgetName(widget.widgetTypeId) }}</h3>
+  }
   }
 </div>

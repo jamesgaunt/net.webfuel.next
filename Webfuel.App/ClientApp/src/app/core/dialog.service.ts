@@ -44,5 +44,11 @@ export class DialogService {
       });
     });
   }
+
+  openTemplate(
+    template: TemplateRef<any>
+  ) {
+    return this.dialog.open(template);
+  }
 }
 

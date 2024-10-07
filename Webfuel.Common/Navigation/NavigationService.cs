@@ -52,7 +52,7 @@ namespace Webfuel.Common
                 {
                     clientConfiguration.SettingsMenu.AddChild(name: "User Logins", action: "/developer/user-login", icon: "fas fa-sign-in");
                     clientConfiguration.SettingsMenu.AddChild(name: "Email Templates", action: "/configuration/email-template-list", icon: "fas fa-envelope-open-text");
-                }
+             }
 
                 if (_identityAccessor.Claims.CanEditStaticData)
                 {

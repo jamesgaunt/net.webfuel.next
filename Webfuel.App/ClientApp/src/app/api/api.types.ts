@@ -1837,6 +1837,31 @@ export interface QueryUserLogin extends Query {
     search?: string;
 }
 
+export interface Widget {
+    id: string;
+    sortOrder: number;
+    userId: string;
+    widgetTypeId: string;
+}
+
+export interface CreateWidget {
+    userId: string;
+    widgetTypeId: string;
+}
+
+export interface UpdateWidget {
+    id: string;
+}
+
+export interface SortWidget {
+    userId: string;
+    ids: Array<string>;
+}
+
+export interface SelectWidget {
+    userId: string;
+}
+
 export interface CreateAgeRange {
     name: string;
     default: boolean;

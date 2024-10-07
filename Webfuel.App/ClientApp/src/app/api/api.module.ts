@@ -21,6 +21,7 @@ import { UserActivityApi } from './user-activity.api';
 import { UserApi } from './user.api';
 import { UserGroupApi } from './user-group.api';
 import { UserLoginApi } from './user-login.api';
+import { WidgetApi } from './widget.api';
 import { AgeRangeApi } from './age-range.api';
 import { ApplicationStageApi } from './application-stage.api';
 import { DisabilityApi } from './disability.api';
@@ -91,6 +92,7 @@ import { StaticDataCache } from './static-data.cache';
         UserApi,
         UserGroupApi,
         UserLoginApi,
+        WidgetApi,
         AgeRangeApi,
         ApplicationStageApi,
         DisabilityApi,

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="WidgetType" Tags="Enum">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Data>
+      <Row Id="4f5bed07-af06-40c5-a7ed-ad283e57e503" Name="Project Summary" />
+      <Row Id="54d1db4b-2b37-4d20-9e55-ffe2529446ac" Name="Team Support Summary" />
+    </Data>
+  </Entity>
+</Schema>
