@@ -1,7 +1,6 @@
 using MediatR;
 using Microsoft.Extensions.Caching.Memory;
 using Webfuel.Common;
-using Webfuel.Domain.Dashboard;
 using Webfuel.Domain.StaticData;
 
 namespace Webfuel.Domain
@@ -143,7 +142,8 @@ namespace Webfuel.Domain
             project.FileStorageGroupId = supportRequest.FileStorageGroupId; // This will always exist
 
             await _projectRepository.InsertProject(project);
-            DashboardService.FlushProjectMetrics();
+
+            ProjectSummaryProvider.FlushProjectMetrics();
 
             return project;
         }

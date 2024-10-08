@@ -151,12 +151,9 @@
 }
 
 .dashboard-metrics {
-
-  .support-teams {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    gap: var(--gap);
-  }
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: var(--gap);
 }
 
 .dashboard-metric {
@@ -216,4 +213,24 @@
             grid-template-columns: 1fr 1fr;
         }
     }
+}
+
+// Report Designer
+
+.report-designer {
+}
+
+.report-slots {
+  .button {
+    margin-bottom: 0.3rem;
+  }
+}
+
+.report-slot {
+  display: block;
+  padding: 0.6rem;
+  color: var(--palette-control-text);
+  background-color: var(--palette-control-background);
+  border: 1px solid var(--palette-control-border);
+  margin-bottom: 0.3rem;
 }

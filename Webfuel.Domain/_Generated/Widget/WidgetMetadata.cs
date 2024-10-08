@@ -26,6 +26,15 @@ namespace Webfuel.Domain
                     case nameof(Widget.SortOrder):
                         result.Add(new SqlParameter(nameof(Widget.SortOrder), entity.SortOrder));
                         break;
+                    case nameof(Widget.CachedData):
+                        result.Add(new SqlParameter(nameof(Widget.CachedData), entity.CachedData));
+                        break;
+                    case nameof(Widget.CachedDataVersion):
+                        result.Add(new SqlParameter(nameof(Widget.CachedDataVersion), entity.CachedDataVersion));
+                        break;
+                    case nameof(Widget.CachedDataTimestamp):
+                        result.Add(new SqlParameter(nameof(Widget.CachedDataTimestamp), entity.CachedDataTimestamp));
+                        break;
                     case nameof(Widget.UserId):
                         result.Add(new SqlParameter(nameof(Widget.UserId), entity.UserId));
                         break;
@@ -60,6 +69,9 @@ namespace Webfuel.Domain
             {
                 yield return "Id";
                 yield return "SortOrder";
+                yield return "CachedData";
+                yield return "CachedDataVersion";
+                yield return "CachedDataTimestamp";
                 yield return "UserId";
                 yield return "WidgetTypeId";
             }
@@ -71,6 +83,9 @@ namespace Webfuel.Domain
             {
                 yield return "Id";
                 yield return "SortOrder";
+                yield return "CachedData";
+                yield return "CachedDataVersion";
+                yield return "CachedDataTimestamp";
                 yield return "UserId";
                 yield return "WidgetTypeId";
             }
@@ -81,6 +96,9 @@ namespace Webfuel.Domain
             get
             {
                 yield return "SortOrder";
+                yield return "CachedData";
+                yield return "CachedDataVersion";
+                yield return "CachedDataTimestamp";
                 yield return "UserId";
                 yield return "WidgetTypeId";
             }
@@ -90,17 +108,26 @@ namespace Webfuel.Domain
         
         public static void Validate(Widget entity)
         {
+            entity.CachedData = entity.CachedData ?? String.Empty;
+            entity.CachedData = entity.CachedData.Trim();
             Validator.ValidateAndThrow(entity);
         }
         
         public static WidgetRepositoryValidator Validator { get; } = new WidgetRepositoryValidator();
         
+        
+        public static void CachedData_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull();
+        }
     }
     
     public partial class WidgetRepositoryValidator: AbstractValidator<Widget>
     {
         public WidgetRepositoryValidator()
         {
+            RuleFor(x => x.CachedData).Use(WidgetMetadata.CachedData_ValidationRules);
             Validation();
         }
         

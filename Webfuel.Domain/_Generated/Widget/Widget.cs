@@ -24,6 +24,15 @@ namespace Webfuel.Domain
                     case nameof(Widget.SortOrder):
                         SortOrder = (int)value!;
                         break;
+                    case nameof(Widget.CachedData):
+                        CachedData = (string)value!;
+                        break;
+                    case nameof(Widget.CachedDataVersion):
+                        CachedDataVersion = (int)value!;
+                        break;
+                    case nameof(Widget.CachedDataTimestamp):
+                        CachedDataTimestamp = (DateTimeOffset)value!;
+                        break;
                     case nameof(Widget.UserId):
                         UserId = (Guid)value!;
                         break;
@@ -35,6 +44,9 @@ namespace Webfuel.Domain
         }
         public Guid Id  { get; set; } = Guid.Empty;
         public int SortOrder  { get; set; } = 0;
+        public string CachedData  { get; set; } = String.Empty;
+        public int CachedDataVersion  { get; set; } = 0;
+        public DateTimeOffset CachedDataTimestamp  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid UserId { get; set; }
         public Guid WidgetTypeId { get; set; }
         public Widget Copy()
@@ -42,6 +54,9 @@ namespace Webfuel.Domain
             var entity = new Widget();
             entity.Id = Id;
             entity.SortOrder = SortOrder;
+            entity.CachedData = CachedData;
+            entity.CachedDataVersion = CachedDataVersion;
+            entity.CachedDataTimestamp = CachedDataTimestamp;
             entity.UserId = UserId;
             entity.WidgetTypeId = WidgetTypeId;
             return entity;

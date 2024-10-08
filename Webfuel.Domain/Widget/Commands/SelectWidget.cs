@@ -39,7 +39,7 @@ namespace Webfuel.Domain
             result.Add(await _widgetRepository.InsertWidget(new Widget
             {
                 UserId = userId,
-                WidgetTypeId = WidgetTypeEnum.TeamSupportSummary
+                WidgetTypeId = WidgetTypeEnum.TeamSupport
             }));
 
             return result;

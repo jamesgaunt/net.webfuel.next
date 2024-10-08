@@ -1,12 +1,72 @@
 <div class="dialog">
+  @if(mode == "manage"){
   <div class="dialog-head">
-    Manage Widgets
+    Manage Widgets <span style="float:right"><a class="link" (click)="addWidget()">+ add widget</a></span>
   </div>
   <div class="dialog-body">
-
+    @if(widgets === null) {
+    <div>
+      Loading...
+    </div>
+    } @else {
+    <div class="report-designer">
+      <div class="report-slots" cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="dropWidget($event)" [cdkDropListDisabled]="false">
+        <div class="report-slot" *ngFor="let widget of widgets" cdkDrag>
+          <div class="columns">
+            <div class="column">
+              <span cdkDragHandle>
+                <i class="fas fa-fw fa-bars"></i>
+              </span>
+              &nbsp;
+              <span>{{ widgetService.widgetTitle(widget) }}</span>
+              &nbsp;
+            </div>
+            <div class="column is-right is-narrow">
+              <!--
+              <a class="link is-primary" (click)="editWidget(widget)">edit</a>
+              &nbsp;
+                -->
+              <a class="link is-danger" (click)="deleteWidget(widget)">delete</a>
+            </div>
+          </div>
+        </div>
+        <div class="report-slot" *ngIf="widgets.length == 0">
+          There are no widgets specified on this dashboard.
+        </div>
+      </div>
+    </div>
+    }
   </div>
   <div class="dialog-buttons">
     <button type="button" (click)="close()">Close</button>
   </div>
+  } @else if(mode == "add"){
+  <div class="dialog-head">
+    Add Widget
+  </div>
+  <div class="dialog-body">
+    <div class="report-designer">
+      <div class="report-slots">
+        <div class="report-slot" *ngFor="let widgetType of widgetTypes">
+          <div class="columns">
+            <div class="column">
+              <span>{{ widgetService.widgetTypeName(widgetType.id) }}</span>
+            </div>
+            <div class="column is-right is-narrow">
+              <a class="link is-success" (click)="addWidgetType(widgetType)">add</a>
+            </div>
+          </div>
+        </div>
+        <div class="report-slot" *ngIf="widgetTypes.length == 0">
+          No widget types available!
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dialog-buttons">
+    <button type="button" (click)="cancelAdd()">Cancel</button>
+  </div>
+  } @else if(mode == "edit"){
+  }
 </div>
 

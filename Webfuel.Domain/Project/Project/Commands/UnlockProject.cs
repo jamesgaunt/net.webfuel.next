@@ -1,5 +1,4 @@
 using MediatR;
-using Webfuel.Domai;
 using Webfuel.Domain.StaticData;
 
 namespace Webfuel.Domain

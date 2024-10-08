@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Webfuel.Domain;
 using Webfuel.Domain.StaticData;
 
-namespace Webfuel.Domai
+namespace Webfuel.Domain
 {
     public interface IProjectEnrichmentService
     {

@@ -1,7 +1,5 @@
 using MediatR;
 using Microsoft.Identity.Client;
-using Webfuel.Domai;
-using Webfuel.Domain.Dashboard;
 
 namespace Webfuel.Domain
 {
@@ -86,7 +84,7 @@ namespace Webfuel.Domain
                 await _projectRepository.UpdateProject(original: project, updated: updatedProject);
             }
 
-            DashboardService.FlushSupportMetrics();
+            TeamSupportProvider.FlushSupportMetrics();
 
             if (projectSupport.SupportRequestedTeamId.HasValue)
                 await _projectAdviserService.SendTeamSupportRequestedEmail(project: project, supportTeamId: projectSupport.SupportRequestedTeamId.Value);

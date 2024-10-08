@@ -7,6 +7,7 @@ import { WidgetApi } from 'api/widget.api';
 import { Widget, DashboardMetric } from 'api/api.types';
 import { ConfigurationService } from 'core/configuration.service';
 import { WidgetService } from 'core/widget.service';
+import { WidgetTypeEnum } from 'api/api.enums';
 
 @Component({
   selector: 'app-home',
@@ -26,21 +27,32 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.configurationService.configuration.subscribe(config => {
-      if (config == null) {
-        this.widgets = [];
-        return;
-      }
-      this.widgetApi.select({ userId: config.userId }).subscribe((widgets) => {
-        this.widgets = widgets;
-      })
+      this.loadWidgets();
     });
   }
 
   widgets: Widget[] | null = null;
 
-  manageWidgets() {
-    this.manageWidgetDialog.open().subscribe(() => {
+  WidgetTypeEnum = WidgetTypeEnum;
 
+  loadWidgets() {
+    if (this.configurationService.configuration.value == null) {
+      this.widgets = [];
+      return;
+    } else {
+      this.widgetApi.select({ userId: this.configurationService.configuration.value.userId }).subscribe((widgets) => {
+        this.widgets = widgets;
+      })
+    }
+  }
+
+  manageWidgets() {
+    if (this.widgets == null)
+      return;
+    this.manageWidgetDialog.open({
+      userId: this.configurationService.configuration.value!.userId
+    }).subscribe(() => {
+      this.loadWidgets();
     });
   }
 }

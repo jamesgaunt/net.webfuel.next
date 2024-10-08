@@ -1,7 +1,4 @@
 using MediatR;
-using Microsoft.AspNetCore.Http;
-using Webfuel.Domai;
-using Webfuel.Domain.Dashboard;
 
 namespace Webfuel.Domain
 {
@@ -49,7 +46,7 @@ namespace Webfuel.Domain
             if (_identityAccessor.User != null)
                 updated.SupportRequestedCompletedByUserId = _identityAccessor.User.Id;
 
-            DashboardService.FlushSupportMetrics();
+            TeamSupportProvider.FlushSupportMetrics();
 
             updated = await _projectSupportRepository.UpdateProjectSupport(updated: updated, original: existing);
 

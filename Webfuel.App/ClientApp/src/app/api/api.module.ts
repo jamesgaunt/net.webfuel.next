@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { ConfigurationApi } from './configuration.api';
-import { DashboardApi } from './dashboard.api';
 import { EmailTemplateApi } from './email-template.api';
 import { FileStorageEntryApi } from './file-storage-entry.api';
 import { PingApi } from './ping.api';
@@ -22,6 +21,7 @@ import { UserApi } from './user.api';
 import { UserGroupApi } from './user-group.api';
 import { UserLoginApi } from './user-login.api';
 import { WidgetApi } from './widget.api';
+import { WidgetProviderApi } from './widget-provider.api';
 import { AgeRangeApi } from './age-range.api';
 import { ApplicationStageApi } from './application-stage.api';
 import { DisabilityApi } from './disability.api';
@@ -71,7 +71,6 @@ import { StaticDataCache } from './static-data.cache';
 @NgModule({
     providers: [
         ConfigurationApi,
-        DashboardApi,
         EmailTemplateApi,
         FileStorageEntryApi,
         PingApi,
@@ -93,6 +92,7 @@ import { StaticDataCache } from './static-data.cache';
         UserGroupApi,
         UserLoginApi,
         WidgetApi,
+        WidgetProviderApi,
         AgeRangeApi,
         ApplicationStageApi,
         DisabilityApi,

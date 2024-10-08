@@ -1,5 +1,4 @@
 using MediatR;
-using Webfuel.Domain.Dashboard;
 
 namespace Webfuel.Domain
 {
@@ -21,7 +20,7 @@ namespace Webfuel.Domain
         {
             await _projectRepository.DeleteProject(request.Id);
 
-            DashboardService.FlushProjectMetrics();
+            ProjectSummaryProvider.FlushProjectMetrics();
         }
     }
 }

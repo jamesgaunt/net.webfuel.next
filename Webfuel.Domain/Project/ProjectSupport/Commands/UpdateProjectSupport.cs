@@ -1,7 +1,4 @@
 using MediatR;
-using System.Runtime.CompilerServices;
-using Webfuel.Domai;
-using Webfuel.Domain.Dashboard;
 
 namespace Webfuel.Domain
 {
@@ -103,7 +100,7 @@ namespace Webfuel.Domain
             if (updated.SupportRequestedTeamId.HasValue && updated.SupportRequestedTeamId != projectSupport.SupportRequestedTeamId)
                 await _projectAdviserService.SendTeamSupportRequestedEmail(project: project, supportTeamId: updated.SupportRequestedTeamId.Value);
 
-            DashboardService.FlushSupportMetrics();
+            TeamSupportProvider.FlushSupportMetrics();
 
             return projectSupport;
         }

@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="Researcher\Researcher\Services\" />
-    <Folder Include="Widget\Providers\" />
   </ItemGroup>
 
   <ItemGroup>

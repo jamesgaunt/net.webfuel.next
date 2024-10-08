@@ -29,6 +29,9 @@ namespace Webfuel.App
             app.MapPost("api/widget/select", Select)
                 .RequireIdentity();
 
+            app.MapPost("api/widget/select-type", SelectType)
+                .RequireIdentity();
+
             app.MapGet("api/widget/{id:guid}", Get)
                 .RequireIdentity();
         }
@@ -54,6 +57,11 @@ namespace Webfuel.App
         }
 
         public static Task<List<Widget>> Select([FromBody] SelectWidget command, IMediator mediator)
+        {
+            return mediator.Send(command);
+        }
+
+        public static Task<List<WidgetType>> SelectType([FromBody] SelectWidgetType command, IMediator mediator)
         {
             return mediator.Send(command);
         }

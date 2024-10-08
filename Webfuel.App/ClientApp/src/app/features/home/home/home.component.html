@@ -12,14 +12,16 @@
       </div>
     </div>
   </div>
-
   @if(widgets === null) {
   <div>
     Loading...
   </div>
   } @else {
   @for(widget of widgets; track $index) {
-  <h3>{{ widgetService.widgetName(widget.widgetTypeId) }}</h3>
+  @switch(widget.widgetTypeId){
+  @case(WidgetTypeEnum.ProjectSummary) { <project-summary-widget [widget]="widget" /> }
+  @case(WidgetTypeEnum.TeamSupport) { <team-support-widget [widget]="widget" />  }
+  }
   }
   }
 </div>

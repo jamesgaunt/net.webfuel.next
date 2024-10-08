@@ -1,6 +1,4 @@
 using MediatR;
-using Webfuel.Domai;
-using Webfuel.Domain.Dashboard;
 using Webfuel.Domain.StaticData;
 
 namespace Webfuel.Domain
@@ -118,7 +116,8 @@ namespace Webfuel.Domain
             }
 
             updated = await _projectRepository.UpdateProject(original: original, updated: updated);
-            DashboardService.FlushProjectMetrics();
+
+            ProjectSummaryProvider.FlushProjectMetrics();
 
             await _projectChangeLogService.InsertChangeLog(original: original, updated: updated);
             return updated;

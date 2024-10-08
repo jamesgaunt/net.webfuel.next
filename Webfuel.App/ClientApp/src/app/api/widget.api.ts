@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { CreateWidget, Widget, UpdateWidget, SortWidget, SelectWidget } from './api.types';
+import { CreateWidget, Widget, UpdateWidget, SortWidget, SelectWidget, SelectWidgetType, WidgetType } from './api.types';
 
 @Injectable()
 export class WidgetApi {
@@ -27,6 +27,10 @@ export class WidgetApi {
     
     public select (body: SelectWidget, options?: ApiOptions): Observable<Array<Widget>> {
         return this.apiService.request<SelectWidget, Array<Widget>>("POST", "api/widget/select", body, options);
+    }
+    
+    public selectType (body: SelectWidgetType, options?: ApiOptions): Observable<Array<WidgetType>> {
+        return this.apiService.request<SelectWidgetType, Array<WidgetType>>("POST", "api/widget/select-type", body, options);
     }
     
     public get (params: { id: string }, options?: ApiOptions): Observable<Widget> {

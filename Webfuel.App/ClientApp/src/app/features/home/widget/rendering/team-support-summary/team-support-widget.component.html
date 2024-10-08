@@ -1,0 +1,11 @@
+<div *ngIf="data != null">
+  <h4>Team Support</h4>
+  <div class="dashboard-metrics">
+    <a class="dashboard-metric" *ngFor="let metric of data.supportMetrics" routerLink="{{ metric.routerLink }}" [queryParams]="routerParams(metric)">
+      <div class="icon"><i class="{{ metric.icon }}"></i></div>
+      <div class="count">{{ metric.count }}</div>
+      <div class="name">{{ metric.name }}</div>
+      <div class="cta">View Details <i class="fas fa-arrow-right"></i></div>
+    </a>
+  </div>
+</div>

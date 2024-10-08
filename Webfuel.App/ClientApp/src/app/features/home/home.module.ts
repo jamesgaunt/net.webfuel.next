@@ -6,7 +6,9 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home/home.component';
 import { MyActivityComponent } from './my-activity/my-activity.component';
 import { ManageWidgetDialog, ManageWidgetDialogComponent } from './widget/management/manage-widget-dialog/manage-widget.dialog';
-import { AddWidgetDialog, AddWidgetDialogComponent } from './widget/management/add-widget-dialog/add-widget.dialog';
+
+import { ProjectSummaryWidgetComponent } from './widget/rendering/project-summary/project-summary-widget.component';
+import { TeamSupportWidgetComponent } from './widget/rendering/team-support-summary/team-support-widget.component';
 
 @NgModule({
   imports: [
@@ -17,18 +19,14 @@ import { AddWidgetDialog, AddWidgetDialogComponent } from './widget/management/a
   declarations: [
     HomeComponent,
     MyActivityComponent,
-
-    // Widget Management
-
     ManageWidgetDialogComponent,
-    AddWidgetDialogComponent,
+
+    // Widgets
+    ProjectSummaryWidgetComponent,
+    TeamSupportWidgetComponent
   ],
   providers: [
-
-    // Widget Management
-
     ManageWidgetDialog,
-    AddWidgetDialog,
   ]
 })
 export class HomeModule { }

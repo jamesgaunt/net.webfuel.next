@@ -318,21 +318,6 @@ export interface ReportField {
 export interface IReportAccessor {
 }
 
-export interface DashboardModel {
-    supportMetrics: Array<DashboardMetric>;
-    projectMetrics: Array<DashboardMetric>;
-}
-
-export interface DashboardMetric {
-    name: string;
-    count: number | null | null;
-    icon: string;
-    cta: string;
-    routerLink: string;
-    routerParams: string;
-    backgroundColor: string;
-}
-
 export interface EmailTemplate {
     id: string;
     name: string;
@@ -1840,6 +1825,9 @@ export interface QueryUserLogin extends Query {
 export interface Widget {
     id: string;
     sortOrder: number;
+    cachedData: string;
+    cachedDataVersion: number;
+    cachedDataTimestamp: string;
     userId: string;
     widgetTypeId: string;
 }
@@ -1860,6 +1848,35 @@ export interface SortWidget {
 
 export interface SelectWidget {
     userId: string;
+}
+
+export interface WidgetType {
+    id: string;
+    name: string;
+}
+
+export interface SelectWidgetType {
+    userId: string;
+}
+
+export interface ProjectSummaryData {
+    cached: boolean;
+    projectMetrics: Array<DashboardMetric>;
+}
+
+export interface DashboardMetric {
+    name: string;
+    count: number | null | null;
+    icon: string;
+    cta: string;
+    routerLink: string;
+    routerParams: string;
+    backgroundColor: string;
+}
+
+export interface TeamSupportData {
+    cached: boolean;
+    supportMetrics: Array<DashboardMetric>;
 }
 
 export interface CreateAgeRange {

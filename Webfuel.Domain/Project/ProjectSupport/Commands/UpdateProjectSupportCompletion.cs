@@ -1,6 +1,4 @@
 using MediatR;
-using Webfuel.Domai;
-using Webfuel.Domain.Dashboard;
 
 namespace Webfuel.Domain
 {
@@ -52,7 +50,7 @@ namespace Webfuel.Domain
                 await _projectRepository.UpdateProject(original: project, updated: updatedProject);
             }
 
-            DashboardService.FlushSupportMetrics();
+            TeamSupportProvider.FlushSupportMetrics();
 
             return projectSupport;
         }
