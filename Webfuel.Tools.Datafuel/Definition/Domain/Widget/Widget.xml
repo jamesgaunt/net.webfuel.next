@@ -7,6 +7,7 @@
     <Property Name="WidgetTypeId" Type="WidgetType" CascadeDelete="true" />
     <Property Name="SortOrder" Type="int" />
 
+    <Property Name="ConfigData" Type="string" />
     <Property Name="CachedData" Type="string" />
     <Property Name="CachedDataVersion" Type="int" />
     <Property Name="CachedDataTimestamp" Type="DateTime" />

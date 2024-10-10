@@ -26,6 +26,9 @@ namespace Webfuel.Domain
                     case nameof(Widget.SortOrder):
                         result.Add(new SqlParameter(nameof(Widget.SortOrder), entity.SortOrder));
                         break;
+                    case nameof(Widget.ConfigData):
+                        result.Add(new SqlParameter(nameof(Widget.ConfigData), entity.ConfigData));
+                        break;
                     case nameof(Widget.CachedData):
                         result.Add(new SqlParameter(nameof(Widget.CachedData), entity.CachedData));
                         break;
@@ -69,6 +72,7 @@ namespace Webfuel.Domain
             {
                 yield return "Id";
                 yield return "SortOrder";
+                yield return "ConfigData";
                 yield return "CachedData";
                 yield return "CachedDataVersion";
                 yield return "CachedDataTimestamp";
@@ -83,6 +87,7 @@ namespace Webfuel.Domain
             {
                 yield return "Id";
                 yield return "SortOrder";
+                yield return "ConfigData";
                 yield return "CachedData";
                 yield return "CachedDataVersion";
                 yield return "CachedDataTimestamp";
@@ -96,6 +101,7 @@ namespace Webfuel.Domain
             get
             {
                 yield return "SortOrder";
+                yield return "ConfigData";
                 yield return "CachedData";
                 yield return "CachedDataVersion";
                 yield return "CachedDataTimestamp";
@@ -108,6 +114,8 @@ namespace Webfuel.Domain
         
         public static void Validate(Widget entity)
         {
+            entity.ConfigData = entity.ConfigData ?? String.Empty;
+            entity.ConfigData = entity.ConfigData.Trim();
             entity.CachedData = entity.CachedData ?? String.Empty;
             entity.CachedData = entity.CachedData.Trim();
             Validator.ValidateAndThrow(entity);
@@ -115,6 +123,12 @@ namespace Webfuel.Domain
         
         public static WidgetRepositoryValidator Validator { get; } = new WidgetRepositoryValidator();
         
+        
+        public static void ConfigData_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull();
+        }
         
         public static void CachedData_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
@@ -127,6 +141,7 @@ namespace Webfuel.Domain
     {
         public WidgetRepositoryValidator()
         {
+            RuleFor(x => x.ConfigData).Use(WidgetMetadata.ConfigData_ValidationRules);
             RuleFor(x => x.CachedData).Use(WidgetMetadata.CachedData_ValidationRules);
             Validation();
         }
