@@ -1,7 +1,40 @@
 using MediatR;
+using System.Security.Principal;
 
 namespace Webfuel.Domain
 {
+    public class QueryReport : Query, IRequest<QueryResult<Report>>
+    {
+        public string Name { get; set; } = String.Empty;
+
+        public bool PublicReports { get; set; }
+
+        public bool AllReports { get; set; }
+
+        public Query ApplyCustomFilters(IIdentityAccessor identityAccessor)
+        {
+            if (identityAccessor.User == null)
+                throw new InvalidOperationException();
+
+            this.Contains(nameof(Report.Name), Name);
+
+            if (AllReports && identityAccessor.Claims.Developer)
+            {
+            }
+            else if (PublicReports)
+            {
+                this.Equal(nameof(Report.IsPublic), true, true);
+            }
+            else
+            {
+                this.Equal(nameof(Report.OwnerUserId), identityAccessor.User.Id);
+            }
+
+
+            return this;
+        }
+    }
+
     internal class QueryReportHandler : IRequestHandler<QueryReport, QueryResult<Report>>
     {
         private readonly IReportRepository _reportRepository;
@@ -18,27 +51,7 @@ namespace Webfuel.Domain
             if (_identityAccessor.User == null)
                 throw new UnauthorizedAccessException("User is not authenticated");
 
-            var query = request.ApplyCustomFilters();
-
-            if (_identityAccessor.Claims.Developer)
-            {
-                if(request.OwnReportsOnly == "YES")
-                {
-                    query.All(q =>
-                    {
-                        q.Equal(nameof(Report.OwnerUserId), _identityAccessor.User.Id);
-                    });
-                }
-            }
-            else
-            {
-                query.Any(q =>
-                {
-                    q.Equal(nameof(Report.OwnerUserId), _identityAccessor.User.Id);
-                    q.Equal(nameof(Report.IsPublic), true, request.OwnReportsOnly == "NO");
-                });
-            }
-
+            var query = request.ApplyCustomFilters(_identityAccessor);
             return await _reportRepository.QueryReport(query);
         }
     }

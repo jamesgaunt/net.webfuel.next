@@ -25,5 +25,6 @@ namespace Webfuel.Reporting
 
         public abstract Task GenerateReport();
         public abstract ReportResult RenderReport();
+        public virtual object ExtractReportData() { throw new NotImplementedException(); }
     }
 }

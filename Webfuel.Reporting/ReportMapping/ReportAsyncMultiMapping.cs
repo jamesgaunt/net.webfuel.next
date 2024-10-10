@@ -17,7 +17,7 @@ namespace Webfuel.Reporting
         public IReportMapping? ParentMapping { get; init; }
 
         [JsonIgnore]
-        public required Func<object, TMap, Task<List<Guid>>> Accessor { get; init; }
+        public required Func<object, IServiceProvider, TMap, Task<List<Guid>>> Accessor { get; init; }
 
         public async Task<List<object>> MapContextsToEntities(List<object> contexts, ReportBuilder builder)
         {
@@ -31,7 +31,7 @@ namespace Webfuel.Reporting
 
             foreach (var context in contexts)
             {
-                var ids = await Accessor(context, map);
+                var ids = await Accessor(context, builder.ServiceProvider, map);
                 if (ids.Count == 0)
                     continue;
 

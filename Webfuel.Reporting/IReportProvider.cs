@@ -10,6 +10,8 @@ namespace Webfuel.Reporting
     {
         Guid Id { get; }
 
+        string Name { get { return String.Empty; } }
+
         ReportSchema Schema { get; }
 
         ReportBuilderBase GetReportBuilder(ReportRequest request);
@@ -17,5 +19,10 @@ namespace Webfuel.Reporting
         Task<IEnumerable<object>> QueryItems(Query query);
 
         Task<int> GetTotalCount(Query query);
+
+        Task<List<ReportArgument>> GenerateArguments(ReportDesign design, IServiceProvider serviceProvider)
+        {
+            return design.GenerateArguments(serviceProvider);
+        }
     }
 }

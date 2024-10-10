@@ -30,6 +30,11 @@ namespace Webfuel.App
             return service.CancelReport(taskId);
         }
 
+        public static object ExtractReportData(Guid taskId, IReportGeneratorService service)
+        {
+            return service.ExtractReportData(taskId);
+        }
+
         [ApiIgnore]
         public static async Task<IResult> Download(Guid taskId, IReportGeneratorService service)
         {

@@ -70,8 +70,8 @@ namespace Webfuel.Reporting
                 return condition == (int)ReportFilterDateCondition.IsNotSet;
             if (condition == (int)ReportFilterDateCondition.IsSet)
                 return true;
-            if(condition == (int)ReportFilterDateCondition.IsNotSet)
-                return false;   
+            if (condition == (int)ReportFilterDateCondition.IsNotSet)
+                return false;
 
             if (untyped is not DateOnly typed)
                 return false;
@@ -143,6 +143,7 @@ namespace Webfuel.Reporting
             writer.WriteString("value", Value);
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////
         // Date Parser
 
         DateOnly? ParseDate(string value)
@@ -150,9 +151,30 @@ namespace Webfuel.Reporting
             if (String.IsNullOrEmpty(value))
                 return null;
 
-            var dsl = value.ToLower().Trim();
+            var startingPoint = value.ToLower().Trim();
+            var offset = String.Empty;
 
-            switch (dsl)
+            if (startingPoint.Contains('-') || startingPoint.Contains('+'))
+            {
+                var parts = startingPoint.Split('+', '-');
+
+                if (parts.Length == 2)
+                {
+                    startingPoint = parts[0].Trim();
+                    offset = (value.Contains('+') ? '+' : '-') + parts[1].Trim();
+                }
+            }
+
+            var date = ParseStartingPoint(startingPoint);
+            if (date == null)
+                return null;
+
+            return ApplyOffset(date.Value, offset);
+        }
+
+        DateOnly? ParseStartingPoint(string startingPoint)
+        {
+            switch (startingPoint)
             {
                 case "today":
                     return DateOnly.FromDateTime(DateTime.Today);
@@ -166,13 +188,51 @@ namespace Webfuel.Reporting
                     return DateOnly.FromDateTime(new DateTime(DateTime.Today.Year, 1, 1));
                 case "end of year":
                     return DateOnly.FromDateTime(new DateTime(DateTime.Today.Year, 12, 31));
+
+                case "start of annual report year":
+                    return start_of_annual_report_year();
+                case "end of annual report year":
+                    return start_of_annual_report_year().AddYears(1).AddDays(-1);
             }
 
-            if (DateTime.TryParse(value, out DateTime date))
+            if (DateTime.TryParse(startingPoint, out DateTime date))
                 return DateOnly.FromDateTime(date);
 
             throw new InvalidOperationException("Unable to parse date string '{value}' into a valid date.");
         }
 
+        DateOnly ApplyOffset(DateOnly date, string offset)
+        {
+            if(String.IsNullOrEmpty(offset) || offset.Length < 3)
+                return date;
+
+            var unit = offset.ToLower()[^1];
+            var direction = offset[0];
+            var amount = offset.Substring(1, offset.Length - 2);
+
+            if(!Int32.TryParse(amount, out int value))
+                return date;
+
+            if(direction == '-')
+                value = -value;
+
+            switch (unit)
+            {
+                case 'd': return date.AddDays(value);
+                case 'm': return date.AddMonths(value);
+                case 'w': return date.AddDays(value * 7);
+                case 'y': return date.AddYears(value);
+            }
+
+            return date;
+        }
+
+        DateOnly start_of_annual_report_year()
+        {
+            var today = DateTime.Today;
+            if(today.Month >= 4)
+                return DateOnly.FromDateTime(new DateTime(today.Year, 4, 1));
+            return DateOnly.FromDateTime(new DateTime(today.Year - 1, 4, 1));
+        }
     }
 }

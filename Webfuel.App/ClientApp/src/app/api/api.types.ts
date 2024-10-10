@@ -301,6 +301,9 @@ export interface ReportFilterString extends ReportFilterField {
 
 export interface ReportDesign {
     reportProviderId: string;
+    customReportProvider: string;
+    customReportLauncher: string;
+    customReportMetadata: string;
     columns: Array<ReportColumn>;
     latestColumnId: string;
     filters: Array<ReportFilter>;
@@ -1255,8 +1258,8 @@ export interface RunAnnualReport {
 
 export interface QueryReport extends Query {
     name: string;
-    reportGroupId: string | null | null;
-    ownReportsOnly: string;
+    publicReports: boolean;
+    allReports: boolean;
     skip: number;
     take: number;
     projection?: Array<string>;
@@ -1825,6 +1828,7 @@ export interface QueryUserLogin extends Query {
 export interface Widget {
     id: string;
     sortOrder: number;
+    configData: string;
     cachedData: string;
     cachedDataVersion: number;
     cachedDataTimestamp: string;

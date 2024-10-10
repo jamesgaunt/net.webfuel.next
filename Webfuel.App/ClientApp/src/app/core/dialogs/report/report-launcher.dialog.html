@@ -3,7 +3,7 @@
     {{ title }}
   </div>
   <div class="dialog-body">
-    <div class="grid" *ngFor="let argument of arguments" style="margin-bottom: 0">
+    <div class="flex" *ngFor="let argument of arguments" style="margin-bottom: 0">
       <report-argument [argument]="argument" />
     </div>
   </div>

@@ -47,6 +47,17 @@ namespace Webfuel.Excel
             return Worksheet(sheetName);
         }
 
+        public ExcelWorksheet GetWorksheet(string? sheetName = null)
+        {
+            if (string.IsNullOrEmpty(sheetName))
+                sheetName = "Sheet1";
+
+            if (!_workbook.TryGetWorksheet(sheetName, out var _worksheet))
+                throw new InvalidOperationException("Unable to get worksheet " + sheetName);
+
+            return Worksheet(sheetName);
+        }
+
         public MemoryStream ToMemoryStream()
         {
             var ms = new MemoryStream();

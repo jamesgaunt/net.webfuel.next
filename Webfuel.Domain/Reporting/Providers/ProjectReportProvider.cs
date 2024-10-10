@@ -122,7 +122,7 @@ namespace Webfuel.Domain
 
                     // Project Support
 
-                    builder.Map<ProjectSupport, ProjectSupportReportMap>((p, m) => m.MapByProjectId(p.Id), a =>
+                    builder.Map<ProjectSupport, ProjectSupportReportMap>((p, s, m) => m.MapByProjectId(p.Id), a =>
                     {
                         a.Map<User>(Guid.Parse("b25d8fae-f426-4890-a47e-21752a5d28f9"), "Support Advisers", p => p.AdviserIds);
                         a.Map<SupportTeam>(Guid.Parse("7186191c-2128-497a-83d7-25240285b756"), "Support Teams", p => p.TeamIds);
@@ -132,14 +132,14 @@ namespace Webfuel.Domain
 
                     // Open Support Request
 
-                    builder.Map<ProjectSupport, ProjectSupportReportMap>((p, m) => m.MapOpenByProjectId(p.Id), a =>
+                    builder.Map<ProjectSupport, ProjectSupportReportMap>((p, s, m) => m.MapOpenByProjectId(p.Id), a =>
                     {
                         a.Map<SupportTeam>(Guid.Parse("7186191c-2128-497a-83d7-25240285b756"), "Open Support Requests", p => p.TeamIds);
                     });
 
                     // Project Adviser
 
-                    builder.Map<ProjectAdviser, ProjectAdviserReportMap>((p, m) => m.MapByProjectId(p.Id), a =>
+                    builder.Map<ProjectAdviser, ProjectAdviserReportMap>((p, s, m) => m.MapByProjectId(p.Id), a =>
                     {
                         a.Map<User>(Guid.Parse("39b47f9a-cf66-44d6-90ca-ea553c0041e7"), "Support Adviser", p => p.UserId);
                     });

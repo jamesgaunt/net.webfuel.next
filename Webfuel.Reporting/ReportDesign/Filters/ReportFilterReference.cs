@@ -94,6 +94,9 @@ namespace Webfuel.Reporting
             if (field.FieldType != ReportFieldType.Reference)
                 throw new InvalidOperationException($"Field {field.Name} is not a reference field");
 
+            if(condition == (int)ReportFilterReferenceCondition.OneOf && value.Count == 0)
+                return true; // Special case, if we pick OneOf but provide no entities the test is not performed. So work like usual list filter.
+
             var entities = await field.MapContextToEntities(context, builder);
 
             if (condition == (int)ReportFilterReferenceCondition.IsSet)

@@ -52,7 +52,7 @@ namespace Webfuel.Reporting
 
         public override async Task<bool> Apply(object context, ReportBuilder builder)
         {
-            if (Condition == (int)ReportFilterGroupCondition.Any)
+            if(Condition == (int)ReportFilterGroupCondition.Any)
             {
                 foreach (var filter in Filters)
                 {

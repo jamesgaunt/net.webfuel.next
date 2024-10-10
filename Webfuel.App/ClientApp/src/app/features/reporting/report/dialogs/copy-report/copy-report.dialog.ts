@@ -4,9 +4,9 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { ReportApi } from 'api/report.api';
 import { FormService } from 'core/form.service';
 import { DialogBase, DialogComponentBase } from 'shared/common/dialog-base';
-import { Report } from '../../../../../api/api.types';
-import { ReportGroupApi } from '../../../../../api/report-group.api';
-import { StaticDataCache } from '../../../../../api/static-data.cache';
+import { Report } from 'api/api.types';
+import { ReportGroupApi } from 'api/report-group.api';
+import { StaticDataCache } from 'api/static-data.cache';
 
 @Injectable()
 export class CopyReportDialog extends DialogBase<Report, Report> {

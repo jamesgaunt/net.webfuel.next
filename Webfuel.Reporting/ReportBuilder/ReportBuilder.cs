@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Spreadsheet;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
 using Webfuel.Excel;
 
@@ -8,11 +9,11 @@ namespace Webfuel.Reporting
     public static class ReportStage
     {
         public const string Initialisation = "Initialisation";
-        
+
         public const string Generating = "Generating";
-        
+
         public const string Rendering = "Rendering";
-        
+
         public const string Complete = "Complete";
     }
 
@@ -21,9 +22,9 @@ namespace Webfuel.Reporting
     /// </summary>
     public class ReportBuilder : ReportBuilderBase
     {
-        const long MICROSECONDS_PER_LOAD = 1000 * 25;
+        protected const long MICROSECONDS_PER_LOAD = 1000 * 25;
 
-        const long MICROSECONDS_PER_STEP = 1000 * 100;
+        protected const long MICROSECONDS_PER_STEP = 1000 * 100;
 
         protected int ItemsPerLoad { get; set; } = 10; // Initial value, will auto-tune
 
@@ -37,9 +38,9 @@ namespace Webfuel.Reporting
         public ReportRequest Request { get; }
 
         public ReportData Data { get; } = new ReportData();
-        
+
         public ExcelWorkbook? Workbook { get; set; }
-        
+
         public ReportResult? Result { get; set; }
 
         public Query Query { get; set; }
@@ -48,7 +49,8 @@ namespace Webfuel.Reporting
         {
             get
             {
-                if(_schema == null) { 
+                if (_schema == null)
+                {
                     _schema = ServiceProvider.GetRequiredService<IReportDesignService>()
                         .GetReportSchema(Request.Design.ReportProviderId);
                 }
@@ -57,14 +59,14 @@ namespace Webfuel.Reporting
         }
         ReportSchema? _schema = null;
 
-        async Task<IEnumerable<object>> QueryItems(int skip, int take)
+        protected virtual async Task<IEnumerable<object>> QueryItems(int skip, int take)
         {
-            Query.Skip = StageCount;
-            Query.Take = ItemsPerLoad;
+            Query.Skip = skip;
+            Query.Take = take;
             return await ServiceProvider.GetRequiredService<IReportDesignService>().QueryItems(Request.Design.ReportProviderId, Query);
         }
 
-        async Task<int> GetTotalCount()
+        protected virtual async Task<int> GetTotalCount()
         {
             return await ServiceProvider.GetRequiredService<IReportDesignService>().GetTotalCount(Request.Design.ReportProviderId, Query);
         }
@@ -137,19 +139,19 @@ namespace Webfuel.Reporting
             Metrics.AddGeneration(MicrosecondTimer.Timestamp - stepTimestamp, stepItems);
         }
 
+        protected int RowIndex { get; set; } = 0;
+
         public virtual Task RenderStep()
         {
             if (Workbook == null)
             {
                 Workbook = new ExcelWorkbook();
                 var _worksheet = Workbook.GetOrCreateWorksheet();
-
-                // Render Headers
-                for (var i = 0; i < Request.Design.Columns.Count; i++)
-                    _worksheet.Cell(1, i + 1).SetValue(Request.Design.Columns[i].Title).SetBold(true);
+                var headerRows = RenderHeaders(_worksheet);
+                RowIndex = headerRows + 1;
             }
 
-            var worksheet = Workbook.GetOrCreateWorksheet();
+            var worksheet = Workbook.GetWorksheet();
 
             var stepTimestamp = MicrosecondTimer.Timestamp;
             var stepItems = 0;
@@ -166,9 +168,14 @@ namespace Webfuel.Reporting
                 var row = Data.Rows[StageCount];
                 for (var c = 0; c < row.Cells.Count; c++)
                 {
-                    worksheet.Cell(StageCount + 2, c + 1).SetValue(row.Cells[c].Value);
+                    var cell = row.Cells[c];
+                    worksheet.Cell(RowIndex, c + 1).SetValue(cell.Value);
+
+                    if(cell.BackgroundColor != null)
+                        worksheet.Cell(RowIndex, c + 1).SetBackgroundColor(cell.BackgroundColor.Value);
                 }
 
+                RowIndex++;
                 StageCount++;
                 stepItems++;
             }
@@ -176,6 +183,22 @@ namespace Webfuel.Reporting
 
             Metrics.AddRender(MicrosecondTimer.Timestamp - stepTimestamp, stepItems);
             return Task.CompletedTask;
+        }
+
+        public virtual int RenderHeaders(ExcelWorksheet worksheet)
+        {
+            var col = 0;
+            for (var i = 0; i < Request.Design.Columns.Count; i++)
+            {
+                col += RenderHeaders(worksheet, Request.Design.Columns[i], col);
+            }
+            return 1; // Number of rows used
+        }
+
+        public virtual int RenderHeaders(ExcelWorksheet worksheet, ReportColumn column, int col)
+        {
+            worksheet.Cell(1, col + 1).SetValue(column.Title).SetBold(true);
+            return 1; // Number of columns used
         }
 
         public virtual void GenerateResult()
@@ -199,11 +222,11 @@ namespace Webfuel.Reporting
                 var width = Request.Design.Columns[i].Width;
                 if (width == null)
                     worksheet.Column(i + 1).AdjustToContents();
-                else
+                else if(width > 0)
                     worksheet.Column(i + 1).SetWidth(width.Value);
 
                 if (Request.Design.Columns[i].Bold)
-                    worksheet.Column(i+ 1).SetBold(true);
+                    worksheet.Column(i + 1).SetBold(true);
             }
         }
 

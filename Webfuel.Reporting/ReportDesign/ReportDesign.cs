@@ -14,6 +14,12 @@ namespace Webfuel.Reporting
     {
         public Guid ReportProviderId { get; set; }
 
+        // Custom Report
+
+        public string CustomReportProvider { get; set; } = String.Empty;
+        public string CustomReportLauncher { get; set; } = String.Empty;
+        public string CustomReportMetadata { get; set; } = String.Empty;
+
         // Columns
 
         public List<ReportColumn> Columns { get; set; } = new List<ReportColumn>();

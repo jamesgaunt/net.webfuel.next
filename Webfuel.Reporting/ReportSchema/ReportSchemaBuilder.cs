@@ -35,7 +35,8 @@ namespace Webfuel.Reporting
         public void Add<TField>(
             Guid id,
             string name,
-            Func<TContext, TField> accessor)
+            Func<TContext, TField> accessor,
+            bool filterable = true)
         {
             Schema.AddField(new ReportField
             {
@@ -44,7 +45,7 @@ namespace Webfuel.Reporting
                 Accessor = new ReportPropertyAccessor { Accessor = o => accessor((TContext)o) },
                 Mapping = Mapping,
                 MultiValued = Mapping?.MultiValued ?? false,
-                Filterable = true,
+                Filterable = filterable,
                 FieldType = MapFieldType(typeof(TField)),
             });
         }
@@ -53,13 +54,13 @@ namespace Webfuel.Reporting
         public void Add<TField>(
             Guid id,
             string name,
-            Func<TContext, Task<TField>> accessor)
+            Func<TContext, IServiceProvider, Task<TField>> accessor)
         {
             Schema.AddField(new ReportField
             {
                 Id = id,
                 Name = name,
-                Accessor = new ReportAsyncAccessor { Accessor = async o => await accessor((TContext)o) },
+                Accessor = new ReportAsyncAccessor { Accessor = async (o, s) => await accessor((TContext)o, s) },
                 Mapping = Mapping,
                 MultiValued = Mapping?.MultiValued ?? false,
                 Filterable = true,
@@ -109,27 +110,42 @@ namespace Webfuel.Reporting
         }
 
         public void Map<TEntity>(
-            Func<TContext, IReportMap<TEntity>, Task<List<Guid>>> accessor,
+            Guid id,
+            string name,
+            Func<TContext, IServiceProvider, IReportMap<TEntity>, Task<List<Guid>>> accessor,
             Action<ReportSchemaBuilder<TEntity>>? action = null)
             where TEntity : class
         {
             var mapping = new ReportAsyncMultiMapping<TEntity, IReportMap<TEntity>>
             {
-                Accessor = (o, b) => accessor((TContext)o, b),
+                Accessor = (o, s, b) => accessor((TContext)o, s, b),
+                ParentMapping = Mapping,
+            };
+            MapImpl<TEntity, IReportMap<TEntity>>(id: id, name: name, mapping: mapping, action: action);
+        }
+
+        public void Map<TEntity>(
+            Func<TContext, IServiceProvider, IReportMap<TEntity>, Task<List<Guid>>> accessor,
+            Action<ReportSchemaBuilder<TEntity>>? action = null)
+            where TEntity : class
+        {
+            var mapping = new ReportAsyncMultiMapping<TEntity, IReportMap<TEntity>>
+            {
+                Accessor = (o, s, b) => accessor((TContext)o, s, b),
                 ParentMapping = Mapping,
             };
             MapImpl<TEntity, IReportMap<TEntity>>(id: Guid.Empty, name: String.Empty, mapping: mapping, action: action);
         }
 
         public void Map<TEntity, TMap>(
-            Func<TContext, TMap, Task<List<Guid>>> accessor,
+            Func<TContext, IServiceProvider, TMap, Task<List<Guid>>> accessor,
             Action<ReportSchemaBuilder<TEntity>>? action = null)
             where TEntity : class
             where TMap : class, IReportMap<TEntity>
         {
             var mapping = new ReportAsyncMultiMapping<TEntity, TMap>
             {
-                Accessor = (o, b) => accessor((TContext)o, b),
+                Accessor = (o, s, b) => accessor((TContext)o, s, b),
                 ParentMapping = Mapping,
             };
             MapImpl<TEntity, TMap>(id: Guid.Empty, name: String.Empty, mapping: mapping, action: action);

@@ -35,6 +35,8 @@ namespace Webfuel.Reporting
     public class ReportCell
     {
         public object? Value { get; set; }
+
+        public System.Drawing.Color? BackgroundColor { get; set; }
     }
 
 }

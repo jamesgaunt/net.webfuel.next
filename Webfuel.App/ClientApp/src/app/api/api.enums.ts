@@ -216,6 +216,7 @@ export enum ReportProviderEnum {
     SupportRequest = "bb41b6b6-ef1a-4982-95d0-9f41f80c91cb",
     User = "96124eea-4434-4669-b377-580bbf85a96d",
     UserActivity = "3fd56f37-05f8-4418-bc57-d79a393e0ee9",
+    CustomReport = "a2858ded-2b44-4fed-ab7d-8fb28850a340",
 }
 
 export enum ResearcherRoleEnum {
@@ -248,7 +249,7 @@ export enum SubmissionStageEnum {
 
 export enum SubmissionStatusEnum {
     Yes = "82a179e1-9a82-4a68-a883-5800bc2000d4",
-    No = "6f8e9238-6b7e-4bd4-97ce-a0584d802ee4",
+    ClientDidNotSubmit = "6f8e9238-6b7e-4bd4-97ce-a0584d802ee4",
     DonTKnow = "f01c0b96-7feb-490e-b919-331df4fc47a0",
     NA = "f319f56f-8434-45af-96fb-003bd29774b2",
 }

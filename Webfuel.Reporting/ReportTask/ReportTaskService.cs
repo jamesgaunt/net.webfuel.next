@@ -85,12 +85,11 @@ namespace Webfuel.Reporting
 
         Guid? CurrentUserTask()
         {
-            if (_identityAccessor.User == null)
-                return null;
+            var identity = _identityAccessor.User!;
 
             foreach (var task in _tasks)
             {
-                if (task.Value.IdentityId == _identityAccessor.User.Id)
+                if (task.Value.IdentityId == identity.Id)
                     return task.Key;
             }
             return null;

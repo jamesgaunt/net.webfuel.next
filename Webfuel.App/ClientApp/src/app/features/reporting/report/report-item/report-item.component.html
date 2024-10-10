@@ -6,7 +6,7 @@
 <div class="container">
   <div class="columns">
     <div class="column">
-      <h1 class="title">Report</h1>
+      <h1 class="title">{{ formatTitle() }}</h1>
     </div>
     <div class="column">
       <div class="buttons is-right">
@@ -39,9 +39,30 @@
           <input class="input" type="text" placeholder="optional" formControlName="description" />
         </div>
       </div>
+      @if(isCustomReport){
+      <div class="column is-6">
+        <div class="field">
+          <label class="label">Custom Report Provider</label>
+          <input class="input" type="text" placeholder="optional" formControlName="customReportProvider" />
+        </div>
+      </div>
+      <div class="column is-6">
+        <div class="field">
+          <label class="label">Custom Report Launcher</label>
+          <input class="input" type="text" placeholder="optional" formControlName="customReportLauncher" />
+        </div>
+      </div>
+      <div class="column is-12">
+        <div class="field">
+          <label class="label">Custom Report Metadata</label>
+          <textarea class="textarea" placeholder="optional" formControlName="customReportMetadata" style="height: 300px"></textarea>
+        </div>
+      </div>
+      } @else {
       <div class="column is-12">
         <report-designer [schema]="reportSchema" formControlName="design" />
       </div>
+      }
     </div>
     <div class="floating-buttons">
       <button class="button is-success" (click)="save(false)">Save</button>
@@ -53,5 +74,8 @@
       <button class="button is-primary" (click)="run()">Save &amp; Run</button>
     </div>
   </form>
+  <p>
+    Report Owner: {{ (userService.formatUser(item.ownerUserId) | async) }}
+  </p>
 </div>
 

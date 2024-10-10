@@ -14,81 +14,39 @@
     </div>
   </div>
 
-  <div class="filter-form">
-    <form class="form" [formGroup]="filterForm">
-      <div class="flex">
-        <div class="field is-6">
-          <input class="input" type="text" formControlName="name" placeholder="Name" />
-        </div>
-        <div class="field is-3">
-          <dropdown-select [dataSource]="reportGroupApi" placeholder="Report Group" formControlName="reportGroupId" [enableClear]="true" />
-        </div>
-        <div class="field is-3">
-          <dropdown-select [items]="ownReportsOnlyItems" placeholder="optional" formControlName="ownReportsOnly" />
-        </div>
-        <div class="is-12 is-right">
-          <button (click)="resetFilterForm()" class="button is-small">show all</button>
-        </div>
-      </div>
-    </form>
+  <div class="tabs">
+    <ul>
+      <li (click)="mode = 'my-reports'" [ngClass]="{ 'is-active': mode == 'my-reports' }"><a>My Reports</a></li>
+      <li (click)="mode = 'public-reports'" [ngClass]="{ 'is-active': mode == 'public-reports' }"><a>Public Reports</a></li>
+      <li *ngIf="isDeveloper()" (click)="mode = 'all-reports'" [ngClass]="{ 'is-active': mode == 'all-reports' }"><a>All Reports</a></li>
+    </ul>
   </div>
 
-  <div class="card header">
-    <div class="columns">
-      <div class="column is-3">
-        <h3 style="margin: 0">Report Name</h3>
-      </div>
-      <div class="column is-3">
-        <h3 style="margin: 0">Owner</h3>
-      </div>
-      <div class="column is-3">
-        <h3 style="margin: 0">Report Group</h3>
-      </div>
-      <div class="column is-3">
-        <h3 style="margin: 0">Data Type</h3>
+  @if(reportGroups == null){
+  <p>Loading...</p>
+  }
+  @else if(reportGroups.length == 0){
+  <p>No reports available.</p>
+  }
+  @else{
+  @for(reportGroup of reportGroups; track $index) {
+  <h2>{{ reportGroup.name }}</h2>
+  <div class="report-list">
+    @for(report of reportGroup.reports; track $index) {
+    <div class="report-item">
+      <i class="report-icon fas fa-file-excel"></i>
+      <label>{{ report.name }}</label>
+      <div class="overlay">
+        <a class="button is-warning" (click)="run(report)"><i class="fas fa-fw fa-cogs"></i>&nbsp;Run</a>
+        <a class="button is-success" (click)="copy(report)"><i class="fas fa-fw fa-copy"></i>&nbsp;Copy</a>
+        <a class="button is-primary" (click)="edit(report)" *ngIf="canEditReport(report)"><i class="fas fa-fw fa-pencil"></i>&nbsp;Edit</a>
       </div>
     </div>
+    }
   </div>
+  }
+  }
 
-
-  <div *ngIf="reports.length > 0">
-    <div class="card-set">
-      <div *ngFor="let report of reports" class="card">
-        <div class="columns">
-          <div class="column is-3">
-            <h3 style="margin: 0"><i class="fas fa-file-spreadsheet"></i> {{ report.name }}</h3>
-          </div>
-          <div class="column is-3">
-            <b style="margin: 0">{{ (userService.formatUser(report.ownerUserId) | async) == "James Gaunt" ? "System" : (userService.formatUser(report.ownerUserId) | async) }}</b>
-          </div>
-          <div class="column is-3">
-            <b style="margin: 0">{{ (reportGroupLookup.get({ id: report.reportGroupId }) | async)?.name }}</b>
-          </div>
-          <div class="column is-3">
-            <b style="margin: 0">{{ (reportProviderLookup.get({ id: report.reportProviderId }) | async)?.name }}</b>
-          </div>
-        </div>
-        <p style="margin: 8px 0 8px 0">{{ report.description }}&nbsp;</p>
-        <div class="columns">
-          <div class="column">
-            {{ report.createdAt | date: 'dd/MM/yyyy' }} &nbsp;|&nbsp;
-            <span *ngIf="report.isPublic" class="text is-success is-bold">Public</span>
-            <span *ngIf="!report.isPublic" class="text is-warning is-bold">Private</span>
-          </div>
-          <div class="column">
-            <div class="text is-right-aligned">
-              <span *ngIf="canEditReport(report)"><a class="link is-primary" (click)="edit(report)"><i class="fas fa-fw fa-pencil"></i>&nbsp;Edit</a>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-              <a class="link is-success" (click)="copy(report)"><i class="fas fa-fw fa-copy"></i>&nbsp;Copy</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-              <a class="link is-warning" (click)="run(report)"><i class="fas fa-fw fa-cogs"></i>&nbsp;Run</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div *ngIf="reports.length == 0">
-    <p>No reports found.</p>
-  </div>
 </div>
 
 

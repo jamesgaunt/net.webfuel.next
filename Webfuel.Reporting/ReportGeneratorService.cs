@@ -17,6 +17,8 @@ namespace Webfuel.Reporting
         Task<ReportResult> RenderReport(Guid taskId);
 
         Task CancelReport(Guid taskId);
+
+        object ExtractReportData(Guid taskId);
     }
 
     [Service(typeof(IReportGeneratorService))]
@@ -73,6 +75,17 @@ namespace Webfuel.Reporting
             _reportTaskService.DeleteTask(task.TaskId);
 
             return Task.CompletedTask;
+        }
+
+        public object ExtractReportData(Guid taskId)
+        {
+            var task = _reportTaskService.RetrieveTask(taskId);
+            if (task == null)
+                throw new InvalidOperationException("Task does not exist");
+            
+            var data = task.Builder.ExtractReportData();
+            _reportTaskService.DeleteTask(task.TaskId);
+            return data;
         }
     }
 }

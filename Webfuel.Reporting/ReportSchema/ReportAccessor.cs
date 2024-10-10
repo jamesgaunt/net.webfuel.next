@@ -27,11 +27,11 @@ namespace Webfuel.Reporting
     public class ReportAsyncAccessor: IReportAccessor
     {
         [JsonIgnore]
-        public required Func<object, Task<object?>> Accessor { get; init; }
+        public required Func<object, IServiceProvider, Task<object?>> Accessor { get; init; }
 
         public async ValueTask<object?> GetValue(object entity, ReportBuilder builder)
         {
-            return await Accessor(entity);
+            return await Accessor(entity, builder.ServiceProvider);
         }
     }
 
