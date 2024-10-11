@@ -31,6 +31,7 @@ namespace Webfuel.Domain
         private readonly IProjectAdviserService _projectAdviserService;
         private readonly IUserActivityRepository _userActivityRepository;
         private readonly IUserSortService _userSortService;
+        private readonly IHtmlSanitizerService _htmlSanitizerService;
 
         public UpdateProjectSupportHandler(
             IProjectRepository projectRepository, 
@@ -38,7 +39,8 @@ namespace Webfuel.Domain
             IProjectEnrichmentService projectEnrichmentService,
             IProjectAdviserService projectAdviserService,
             IUserActivityRepository userActivityRepository, 
-            IUserSortService userSortService)
+            IUserSortService userSortService,
+            IHtmlSanitizerService htmlSanitizerService)
         {
             _projectRepository = projectRepository;
             _projectSupportRepository = projectSupportRepository;
@@ -46,11 +48,14 @@ namespace Webfuel.Domain
             _projectAdviserService = projectAdviserService;
             _userActivityRepository = userActivityRepository;
             _userSortService = userSortService;
+            _htmlSanitizerService = htmlSanitizerService;
         }
 
         public async Task<ProjectSupport> Handle(UpdateProjectSupport request, CancellationToken cancellationToken)
         {
             await Sanitize(request);
+
+            request.Description = _htmlSanitizerService.SanitizeHtml(request.Description);
 
             var projectSupport = await _projectSupportRepository.RequireProjectSupport(request.Id);
 
@@ -84,6 +89,12 @@ namespace Webfuel.Domain
                 updated.SupportRequestedAt = DateOnly.FromDateTime(DateTime.Today);
             }
 
+            var sendTeamSupportRequestedEmail = false;
+            if (updated.SupportRequestedTeamId.HasValue && updated.SupportRequestedTeamId != projectSupport.SupportRequestedTeamId)
+            {
+                sendTeamSupportRequestedEmail = true;
+            }
+
             var cb = new RepositoryCommandBuffer();
             {
                 projectSupport = await _projectSupportRepository.UpdateProjectSupport(updated: updated, original: projectSupport, commandBuffer: cb);
@@ -97,7 +108,7 @@ namespace Webfuel.Domain
                 await _projectRepository.UpdateProject(original: project, updated: updatedProject);
             }
 
-            if (updated.SupportRequestedTeamId.HasValue && updated.SupportRequestedTeamId != projectSupport.SupportRequestedTeamId)
+            if(updated.SupportRequestedTeamId.HasValue && sendTeamSupportRequestedEmail)
                 await _projectAdviserService.SendTeamSupportRequestedEmail(project: project, supportTeamId: updated.SupportRequestedTeamId.Value);
 
             TeamSupportProvider.FlushSupportMetrics();

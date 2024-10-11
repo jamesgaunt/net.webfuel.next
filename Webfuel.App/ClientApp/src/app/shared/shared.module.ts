@@ -21,6 +21,7 @@ import { DatePickerComponent } from './form/date-picker/date-picker.component';
 import { DropDownTextInputComponent } from './form/dropdown-text-input/dropdown-text-input.component';
 import { ToggleInputComponent } from './form/toggle-input/toggle-input.component';
 import { FileInputComponent } from './form/file-input/file-input.component';
+import { HtmlEditorComponent } from './html-editor/html-editor.component';
 
 // Grid
 import { GridComponent } from './grid/grid.component';
@@ -76,6 +77,7 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
     DatePickerComponent,
     ToggleInputComponent,
     FileInputComponent,
+    HtmlEditorComponent,
 
     // Grid
     GridComponent,
@@ -128,6 +130,7 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
     DatePickerComponent,
     ToggleInputComponent,
     FileInputComponent,
+    HtmlEditorComponent,
 
     // Grid
     GridComponent,

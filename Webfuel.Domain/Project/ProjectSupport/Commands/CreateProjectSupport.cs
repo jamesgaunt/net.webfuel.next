@@ -32,6 +32,7 @@ namespace Webfuel.Domain
         private readonly IProjectAdviserService _projectAdviserService;
         private readonly IUserActivityRepository _userActivityRepository;
         private readonly IUserSortService _userSortService;
+        private readonly IHtmlSanitizerService _htmlSanitizerService;
 
         public CreateProjectSupportHandler(
             IProjectRepository projectRepository,
@@ -39,7 +40,8 @@ namespace Webfuel.Domain
             IProjectEnrichmentService projectEnrichmentService,
             IProjectAdviserService projectAdviserService,
             IUserActivityRepository userActivityRepository,
-            IUserSortService userSortService)
+            IUserSortService userSortService,
+            IHtmlSanitizerService htmlSanitizerService)
         {
             _projectRepository = projectRepository;
             _projectSupportRepository = projectSupportRepository;
@@ -47,11 +49,14 @@ namespace Webfuel.Domain
             _projectAdviserService = projectAdviserService;
             _userActivityRepository = userActivityRepository;
             _userSortService = userSortService;
+            _htmlSanitizerService = htmlSanitizerService;
         }
 
         public async Task<ProjectSupport> Handle(CreateProjectSupport request, CancellationToken cancellationToken)
         {
             await Sanitize(request);
+
+            request.Description = _htmlSanitizerService.SanitizeHtml(request.Description);
 
             var project = await _projectRepository.RequireProject(request.ProjectId);
             if (project.Locked)

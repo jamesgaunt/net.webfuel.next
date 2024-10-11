@@ -19,6 +19,7 @@ namespace Webfuel.Domain
     internal class CustomReportProvider : ICustomReportProvider
     {
         const string ActivityReport = "ActivityReport";
+        const string SupportHoursSpentReport = "SupportHoursSpentReport";
 
         public CustomReportProvider()
         {
@@ -32,6 +33,10 @@ namespace Webfuel.Domain
             {
                 case ActivityReport:
                     return new ActivityReportBuilder(request);
+
+                case SupportHoursSpentReport:
+                    return new SupportHoursSpentReportBuilder(request);
+
                 default:
                     throw new NotImplementedException();
             }
@@ -51,8 +56,11 @@ namespace Webfuel.Domain
         {
             if (design.CustomReportProvider == ActivityReport)
                 return ActivityReportBuilder.GenerateArguments(design, serviceProvider);
-            else
-                return Task.FromResult(new List<ReportArgument>());
+
+            if (design.CustomReportProvider == SupportHoursSpentReport)
+                return SupportHoursSpentReportBuilder.GenerateArguments(design, serviceProvider);
+           
+            return Task.FromResult(new List<ReportArgument>());
         }
 
         // Schema

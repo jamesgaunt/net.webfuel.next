@@ -76,7 +76,11 @@ namespace Webfuel.Domain
                     .Select(u => new ActivityReportData.UserData { User = u })
                 );
             }
+
+            CustomData.Users = CustomData.Users.OrderBy(p => p.User.LastName).ToList();
         }
+
+        int SkipOffset = 0;
 
         protected override async Task<IEnumerable<object>> QueryItems(int skip, int take)
         {
@@ -85,13 +89,14 @@ namespace Webfuel.Domain
                 var projectSupportQuery = new Query();
                 projectSupportQuery.GreaterThanOrEqual(nameof(ProjectSupport.Date), Arguments.StartDate, Arguments.StartDate != null);
                 projectSupportQuery.LessThanOrEqual(nameof(ProjectSupport.Date), Arguments.EndDate, Arguments.EndDate != null);
-                projectSupportQuery.Skip = skip;
+                projectSupportQuery.Skip = skip - SkipOffset;
                 projectSupportQuery.Take = take;
 
                 var projectSupport = await ServiceProvider.GetRequiredService<IProjectSupportRepository>().QueryProjectSupport(projectSupportQuery, selectItems: true, countTotal: false);
                 if (projectSupport.Items.Count > 0)
                     return projectSupport.Items;
 
+                SkipOffset = skip;
                 GenerationSubStage = "UserActivity";
             }
 
@@ -100,13 +105,14 @@ namespace Webfuel.Domain
                 var userActivityQuery = new Query();
                 userActivityQuery.GreaterThanOrEqual(nameof(UserActivity.Date), Arguments.StartDate, Arguments.StartDate != null);
                 userActivityQuery.LessThanOrEqual(nameof(UserActivity.Date), Arguments.EndDate, Arguments.EndDate != null);
-                userActivityQuery.Skip = skip;
+                userActivityQuery.Skip = skip - SkipOffset;
                 userActivityQuery.Take = take;
 
                 var userActivity = await ServiceProvider.GetRequiredService<IUserActivityRepository>().QueryUserActivity(userActivityQuery, selectItems: true, countTotal: false);
                 if (userActivity.Items.Count > 0)
                     return userActivity.Items;
 
+                SkipOffset = skip;
                 GenerationSubStage = "Complete";
             }
 
@@ -162,8 +168,8 @@ namespace Webfuel.Domain
                 var _worksheet = Workbook.GetOrCreateWorksheet();
 
                 _worksheet.Cell(1, 01).SetValue("Advisor").SetBold(true);
-                _worksheet.Cell(1, 02).SetValue("Project Support Hours");
-                _worksheet.Cell(1, 03).SetValue("User Activity Hours");
+                _worksheet.Cell(1, 02).SetValue("Project Support Hours").SetBold(true);
+                _worksheet.Cell(1, 03).SetValue("User Activity Hours").SetBold(true);
                 _worksheet.Cell(1, 04).SetValue("Total Hours").SetBold(true);
 
                 RowIndex = 2;
@@ -183,15 +189,13 @@ namespace Webfuel.Domain
                     break;
                 }
 
-                foreach(var userData in CustomData.Users.OrderBy(p => p.User.LastName))
-                {
-                    worksheet.Cell(RowIndex, 01).SetValue(userData.User.FullName);
-                    worksheet.Cell(RowIndex, 02).SetValue(userData.ProjectSupportHours);
-                    worksheet.Cell(RowIndex, 03).SetValue(userData.UserActivityHours);
-                    worksheet.Cell(RowIndex, 04).SetValue(userData.ProjectSupportHours + userData.UserActivityHours);
+                var userData = CustomData.Users[StageCount];
 
-                    RowIndex++;
-                }
+                worksheet.Cell(RowIndex, 01).SetValue(userData.User.FullName);
+                worksheet.Cell(RowIndex, 02).SetValue(userData.ProjectSupportHours);
+                worksheet.Cell(RowIndex, 03).SetValue(userData.UserActivityHours);
+                worksheet.Cell(RowIndex, 04).SetValue(userData.ProjectSupportHours + userData.UserActivityHours);
+                RowIndex++;
 
                 StageCount++;
                 stepItems++;
@@ -208,11 +212,6 @@ namespace Webfuel.Domain
             worksheet.Column(02).AdjustToContents();
             worksheet.Column(03).AdjustToContents();
             worksheet.Column(04).AdjustToContents();
-            worksheet.Column(05).AdjustToContents();
-            worksheet.Column(06).AdjustToContents();
-            worksheet.Column(07).AdjustToContents();
-            worksheet.Column(08).SetWidth(60);
-            worksheet.Column(09).AdjustToContents();
         }
 
         public static Task<List<ReportArgument>> GenerateArguments(ReportDesign design, IServiceProvider serviceProvider)

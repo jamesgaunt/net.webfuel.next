@@ -38,20 +38,18 @@ namespace Webfuel.Tools.ConsoleApp
 
         public async Task FixProjectSupports()
         {
-            var projects = await _projectRepository.SelectProject();
             var projectSupports = await _projectSupportRepository.SelectProjectSupport();
 
-            foreach(var projectSupport in projectSupports)
+            foreach(var original in projectSupports)
             {
-                var original = projectSupport.Copy();
+                var updated = original.Copy();
 
-                var project = projects.First(p => p.Id == original.ProjectId);
-                
+                // Convert plain text support description to HTML 
 
+                updated.Description = updated.Description.Replace("\n", "<br/>");
 
-                await _projectSupportRepository.UpdateProjectSupport(original: original, updated: projectSupport);
+                await _projectSupportRepository.UpdateProjectSupport(original: original, updated: updated);
             }
         }
     }
-
 }
