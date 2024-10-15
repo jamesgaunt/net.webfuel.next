@@ -60,8 +60,17 @@ namespace Webfuel.Domain
         public async Task<SupportRequest> Handle(TriageSupportRequest request, CancellationToken cancellationToken)
         {
             var original = await _supportRequestRepository.RequireSupportRequest(request.Id);
-            if (original.StatusId == request.StatusId)
+            if (original.StatusId == request.StatusId) { 
+
+                if(original.TriageNote != request.TriageNote)
+                {
+                    var _updatedTriageNote = original.Copy();
+                    _updatedTriageNote.TriageNote = request.TriageNote;
+                    original = await _supportRequestRepository.UpdateSupportRequest(original: original, updated: _updatedTriageNote);
+                }
+
                 return original; // No change to status
+            }
 
             var oldStatus = await _staticDataService.RequireSupportRequestStatus(original.StatusId);
             if (oldStatus.Id != SupportRequestStatusEnum.ToBeTriaged && oldStatus.Id != SupportRequestStatusEnum.OnHold)

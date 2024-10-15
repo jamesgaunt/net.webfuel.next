@@ -7,6 +7,7 @@
     <Data>
       <Row Id="4f5bed07-af06-40c5-a7ed-ad283e57e503" Name="Project Summary" />
       <Row Id="54d1db4b-2b37-4d20-9e55-ffe2529446ac" Name="Team Support" />
+      <Row Id="cf48d41d-934b-4fc8-b368-52ee87d5e76d" Name="Team Activity" />
     </Data>
   </Entity>
 </Schema>

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Azure.Core;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ using Webfuel.Reporting;
 
 namespace Webfuel.Domain
 {
-    internal class ActivityReportArguments
+    internal class TeamActivityReportArguments
     {
         public Guid? SupportTeamId { get; set; }
 
@@ -20,10 +21,10 @@ namespace Webfuel.Domain
 
         public DateOnly? EndDate { get; set; }
 
-        public bool JsonOnly { get; set; }
+        public bool DoNotRender { get; set; }
     }
 
-    internal class ActivityReportData
+    internal class TeamActivityReportData
     {
         public List<UserData> Users { get; set; } = new List<UserData>();
 
@@ -39,24 +40,41 @@ namespace Webfuel.Domain
         }
     }
 
-    internal class ActivityReportBuilder : ReportBuilder
+    internal class TeamActivityReportBuilder : ReportBuilder
     {
-        public ActivityReportBuilder(ReportRequest request) : base(request)
+        public TeamActivityReportBuilder(ReportRequest request) : base(request)
         {
-            Arguments.StartDate = request.Arguments.Single(p => p.Name == "Start Date").DateValue;
-            Arguments.EndDate = request.Arguments.Single(p => p.Name == "End Date").DateValue;
         }
 
-        ActivityReportArguments Arguments = new ActivityReportArguments();
+        TeamActivityReportArguments Arguments = new TeamActivityReportArguments();
 
-        ActivityReportData CustomData = new ActivityReportData();
+        TeamActivityReportData CustomData = new TeamActivityReportData();
 
         string GenerationSubStage = "ProjectSupport"; // ProjectSupport || UserActivity || Complete
 
-        public override async Task InitialisationStep()
+        async Task ExtractArguments()
         {
-            await base.InitialisationStep();
+            if (Request.TypedArguments is TeamActivityReportArguments typedArguments)
+            {
+                Arguments = typedArguments;
+            }
+            else
+            {
+                Arguments.StartDate = Request.Arguments.Single(p => p.Name == "Start Date").DateValue;
+                Arguments.EndDate = Request.Arguments.Single(p => p.Name == "End Date").DateValue;
 
+                var supportTeamArgument = Request.Arguments.Single(p => p.Name == "Support Team");
+                var supportTeamCondition = supportTeamArgument.Conditions.Single(p => p.Value == supportTeamArgument.Condition);
+
+                var staticData = await ServiceProvider.GetRequiredService<IStaticDataService>().GetStaticData();
+                var supportTeam = staticData.SupportTeam.Single(p => p.Name == supportTeamCondition.Description);
+
+                Arguments.SupportTeamId = supportTeam.Id;
+            }
+        }
+
+        async Task ExtractUsers()
+        {
             // Extract the population of users we are looking at here, into the Users list in BuilderData
 
             var users = await ServiceProvider.GetRequiredService<IUserRepository>().SelectUser();
@@ -64,7 +82,7 @@ namespace Webfuel.Domain
             if (Arguments.SupportTeamId == null)
             {
                 CustomData.Users.AddRange(users
-                    .Select(p => new ActivityReportData.UserData { User = p })
+                    .Select(p => new TeamActivityReportData.UserData { User = p })
                 );
             }
             else
@@ -73,11 +91,18 @@ namespace Webfuel.Domain
 
                 CustomData.Users.AddRange(users
                     .Where(u => supportTeamUsers.Any(s => s.UserId == u.Id && s.SupportTeamId == Arguments.SupportTeamId))
-                    .Select(u => new ActivityReportData.UserData { User = u })
+                    .Select(u => new TeamActivityReportData.UserData { User = u })
                 );
             }
 
             CustomData.Users = CustomData.Users.OrderBy(p => p.User.LastName).ToList();
+        }
+
+        public override async Task InitialisationStep()
+        {
+            await base.InitialisationStep();
+            await ExtractArguments();
+            await ExtractUsers();
         }
 
         int SkipOffset = 0;
@@ -140,7 +165,7 @@ namespace Webfuel.Domain
             var projectSupport = item as ProjectSupport;
             if (projectSupport != null)
             {
-                foreach(var userData in CustomData.Users)
+                foreach (var userData in CustomData.Users)
                 {
                     if (projectSupport.AdviserIds.Contains(userData.User.Id))
                         userData.ProjectSupportHours += projectSupport.WorkTimeInHours;
@@ -162,6 +187,13 @@ namespace Webfuel.Domain
 
         public override Task RenderStep()
         {
+            if (Arguments.DoNotRender)
+            {
+                Stage = ReportStage.Complete;
+                Complete = true;
+                return Task.CompletedTask; // We only intend to extract the raw data
+            }
+
             if (Workbook == null)
             {
                 Workbook = new ExcelWorkbook();
@@ -214,9 +246,36 @@ namespace Webfuel.Domain
             worksheet.Column(04).AdjustToContents();
         }
 
-        public static Task<List<ReportArgument>> GenerateArguments(ReportDesign design, IServiceProvider serviceProvider)
+        public static async Task<List<ReportArgument>> GenerateArguments(ReportDesign design, IServiceProvider serviceProvider)
         {
             var result = new List<ReportArgument>();
+
+            {
+                var staticData = await serviceProvider.GetRequiredService<IStaticDataService>().GetStaticData();
+                var supportTeams = staticData.SupportTeam;
+                var conditions = new List<ReportFilterCondition>();
+
+                foreach (var supportTeam in supportTeams)
+                {
+                    conditions.Add(new ReportFilterCondition
+                    {
+                        Value = conditions.Count(),
+                        Description = supportTeam.Name,
+                        Unary = true
+                    });
+                }
+
+                result.Add(new ReportArgument
+                {
+                    Name = "Support Team",
+                    FilterId = Guid.NewGuid(),
+                    FieldId = Guid.NewGuid(),
+                    Conditions = conditions,
+                    ReportProviderId = ReportProviderEnum.CustomReport,
+                    FieldType = ReportFieldType.String,
+                    FilterType = ReportFilterType.String
+                });
+            }
 
             result.Add(new ReportArgument
             {
@@ -238,7 +297,7 @@ namespace Webfuel.Domain
                 FilterType = ReportFilterType.Date,
             });
 
-            return Task.FromResult(result);
+            return result;
         }
 
         public override object ExtractReportData()

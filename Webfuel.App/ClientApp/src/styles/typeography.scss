@@ -2,10 +2,18 @@
 
 h1, h2, h3, h4, h5, h6 {
 
-    &.title {
-        margin: var(--gap) 0 var(--gap) 0;
-    }
+  &.title {
+    margin: var(--gap) 0 var(--gap) 0;
+  }
 
+  &.section {
+    background-color: var(--palette-body-background-alt);
+    padding: 0.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 3px solid var(--palette-body-border);
+  }
+
+  line-height: 1.4;
 }
 
 p {
@@ -13,7 +21,6 @@ p {
 }
 
 .text {
-
   line-height: 1.6;
 
   @each $p in $paletteAction {
@@ -23,10 +30,16 @@ p {
   }
 
   &.is-bold {
-      font-weight: bold;
+    font-weight: bold;
   }
 
   &.is-right-aligned {
-      text-align: right;
+    text-align: right;
+  }
+
+  &.is-shadow-white {
+    text-shadow: 0 0 2px #FFF;
   }
 }
+
+

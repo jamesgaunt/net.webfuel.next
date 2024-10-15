@@ -18,7 +18,7 @@ namespace Webfuel.Domain
     [Service(typeof(ICustomReportProvider), typeof(IReportProvider))]
     internal class CustomReportProvider : ICustomReportProvider
     {
-        const string ActivityReport = "ActivityReport";
+        const string TeamActivityReport = "TeamActivityReport";
         const string SupportHoursSpentReport = "SupportHoursSpentReport";
 
         public CustomReportProvider()
@@ -31,8 +31,8 @@ namespace Webfuel.Domain
         {
             switch(request.Design.CustomReportProvider)
             {
-                case ActivityReport:
-                    return new ActivityReportBuilder(request);
+                case TeamActivityReport:
+                    return new TeamActivityReportBuilder(request);
 
                 case SupportHoursSpentReport:
                     return new SupportHoursSpentReportBuilder(request);
@@ -54,8 +54,8 @@ namespace Webfuel.Domain
 
         public Task<List<ReportArgument>> GenerateArguments(ReportDesign design, IServiceProvider serviceProvider)
         {
-            if (design.CustomReportProvider == ActivityReport)
-                return ActivityReportBuilder.GenerateArguments(design, serviceProvider);
+            if (design.CustomReportProvider == TeamActivityReport)
+                return TeamActivityReportBuilder.GenerateArguments(design, serviceProvider);
 
             if (design.CustomReportProvider == SupportHoursSpentReport)
                 return SupportHoursSpentReportBuilder.GenerateArguments(design, serviceProvider);

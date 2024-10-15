@@ -6,6 +6,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { DialogModule } from '@angular/cdk/dialog';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TextFieldModule } from '@angular/cdk/text-field';
+import { NgxTinymceModule } from 'ngx-tinymce';
 
 // Chrome
 import { ChromeComponent } from './chrome/chrome.component';
@@ -59,7 +60,10 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
     OverlayModule,
     DialogModule,
     DragDropModule,
-    TextFieldModule
+    TextFieldModule,
+    NgxTinymceModule.forRoot({
+      baseURL: '//cdnjs.cloudflare.com/ajax/libs/tinymce/7.2.0/'
+    })
   ],
   declarations: [
 

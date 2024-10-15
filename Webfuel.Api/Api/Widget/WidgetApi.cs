@@ -29,10 +29,13 @@ namespace Webfuel.App
             app.MapPost("api/widget/select", Select)
                 .RequireIdentity();
 
-            app.MapPost("api/widget/select-type", SelectType)
+            app.MapGet("api/widget/select-available-type", SelectAvailableType)
                 .RequireIdentity();
 
             app.MapGet("api/widget/{id:guid}", Get)
+                .RequireIdentity();
+
+            app.MapPost("api/widget/generate/{widgetId:guid}", Generate)
                 .RequireIdentity();
         }
 
@@ -61,9 +64,14 @@ namespace Webfuel.App
             return mediator.Send(command);
         }
 
-        public static Task<List<WidgetType>> SelectType([FromBody] SelectWidgetType command, IMediator mediator)
+        public static Task<List<WidgetType>> SelectAvailableType(IMediator mediator)
         {
-            return mediator.Send(command);
+            return mediator.Send(new SelectAvailableWidgetType());
+        }
+
+        public static Task<WidgetDataResponse> Generate(Guid widgetId, IWidgetDataService service)
+        {
+            return service.GenerateData(widgetId);
         }
 
         public static async Task<Widget?> Get(Guid id, IMediator mediator)

@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { CreateWidget, Widget, UpdateWidget, SortWidget, SelectWidget, SelectWidgetType, WidgetType } from './api.types';
+import { CreateWidget, Widget, UpdateWidget, SortWidget, SelectWidget, WidgetType, WidgetDataResponse } from './api.types';
 
 @Injectable()
 export class WidgetApi {
@@ -29,12 +29,16 @@ export class WidgetApi {
         return this.apiService.request<SelectWidget, Array<Widget>>("POST", "api/widget/select", body, options);
     }
     
-    public selectType (body: SelectWidgetType, options?: ApiOptions): Observable<Array<WidgetType>> {
-        return this.apiService.request<SelectWidgetType, Array<WidgetType>>("POST", "api/widget/select-type", body, options);
+    public selectAvailableType (options?: ApiOptions): Observable<Array<WidgetType>> {
+        return this.apiService.request<undefined, Array<WidgetType>>("GET", "api/widget/select-available-type", undefined, options);
     }
     
     public get (params: { id: string }, options?: ApiOptions): Observable<Widget> {
         return this.apiService.request<undefined, Widget>("GET", "api/widget/" + params.id + "", undefined, options);
+    }
+    
+    public generate (params: { widgetId: string }, options?: ApiOptions): Observable<WidgetDataResponse> {
+        return this.apiService.request<undefined, WidgetDataResponse>("POST", "api/widget/generate/" + params.widgetId + "", undefined, options);
     }
     
     // Resolvers

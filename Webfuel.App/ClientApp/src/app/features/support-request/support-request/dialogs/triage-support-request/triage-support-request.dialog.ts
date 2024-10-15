@@ -9,7 +9,7 @@ import { FormService } from 'core/form.service';
 import { DialogBase, DialogComponentBase } from 'shared/common/dialog-base';
 import _ from 'shared/common/underscore';
 export interface TriageSupportRequestDialogData {
-  id: string;
+  supportRequest: SupportRequest;
 }
 
 @Injectable()
@@ -34,7 +34,11 @@ export class TriageSupportRequestDialogComponent extends DialogComponentBase<Sup
     public staticDataCache: StaticDataCache,
   ) {
     super();
-    this.form.patchValue({ id: this.data.id });
+    this.form.patchValue({
+      id: this.data.supportRequest.id,
+      statusId: this.data.supportRequest.statusId,
+      triageNote: this.data.supportRequest.triageNote
+    });
 
     this.staticDataCache.supportProvided.query({ skip: 0, take: 100 }).subscribe((result) => {
       this.form.patchValue({ supportProvidedIds: _.map(_.filter(result.items, (p) => p.default), q => q.id) });
@@ -99,8 +103,10 @@ export class TriageSupportRequestDialogComponent extends DialogComponentBase<Sup
     this._cancelDialog();
   }
 
+  /*
   filterStatus(query: Query) {
     query.filters = query.filters || [];
     query.filters.push({ field: 'default', op: QueryOp.Equal, value: false });
   }
+  */
 }

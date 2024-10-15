@@ -93,6 +93,18 @@ namespace Webfuel.Excel
             _worksheet = worksheet;
         }
 
+        public string Name 
+        {
+            get => _worksheet.Name;
+            set => _worksheet.Name = value;
+        }
+
+        public int Position
+        {
+            get => _worksheet.Position;
+            set => _worksheet.Position = value;
+        }
+
         public ExcelCell Merge(string topLeft, string bottomRight, bool border)
         {
             var range = _worksheet.Range(topLeft, bottomRight).Merge();

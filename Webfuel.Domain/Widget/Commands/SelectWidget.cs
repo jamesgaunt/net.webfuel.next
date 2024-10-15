@@ -20,6 +20,10 @@ namespace Webfuel.Domain
         public async Task<List<Widget>> Handle(SelectWidget request, CancellationToken cancellationToken)
         {
             var result = await _widgetRepository.SelectWidgetByUserId(request.UserId);
+
+            if (result.Count > 10)
+                return result.Take(10).ToList();
+
             if (result.Count > 0)
                 return result;
 

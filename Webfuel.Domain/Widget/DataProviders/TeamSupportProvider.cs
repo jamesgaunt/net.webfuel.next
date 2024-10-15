@@ -3,16 +3,14 @@ using Webfuel.Domain.StaticData;
 
 namespace Webfuel.Domain;
 
+[ApiType]
 public class TeamSupportData
 {
-    public bool Cached { get; set; }
-
     public List<DashboardMetric> SupportMetrics { get; set; } = new List<DashboardMetric>();
 }
 
-public interface ITeamSupportProvider
+public interface ITeamSupportProvider : IWidgetDataProvider
 {
-    Task<TeamSupportData> GetData(Guid widgetId);
 }
 
 [Service(typeof(ITeamSupportProvider))]
@@ -37,37 +35,21 @@ internal class TeamSupportProvider : ITeamSupportProvider
         _identityAccessor = identityAccessor;
     }
 
-    public async Task<TeamSupportData> GetData(Guid widgetId)
+    public async Task<WidgetDataResponse> GenerateData(WidgetDataTask task)
     {
-        var data = new TeamSupportData();
-
-        var widget = await _widgetRepository.GetWidget(widgetId);
-        if (widget == null)
-            return data;
-
+        var widget = task.Widget;
         if (widget.CachedDataVersion == VERSION && widget.CachedDataTimestamp > GlobalTimestamp)
-        {
-            try
-            {
-                data = JsonSerializer.Deserialize<TeamSupportData>(widget.CachedData);
-                if (data != null)
-                {
-                    data.Cached = true;
-                    return data;
-                }
-            }
-            catch { /* GULP */ }
-        }
+            return new WidgetDataResponse { Complete = true, Data = widget.CachedData };
 
-        data = await GenerateData();
+        var data = await GenerateData();
 
-        widget.CachedData = JsonSerializer.Serialize(data);
+        widget.CachedData = JsonSerializer.Serialize(data, new JsonSerializerOptions {  PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
         widget.CachedDataVersion = VERSION;
         widget.CachedDataTimestamp = DateTimeOffset.UtcNow;
 
         await _widgetRepository.UpdateWidget(widget);
 
-        return data;
+        return new WidgetDataResponse { Complete = true, Data = widget.CachedData };
     }
 
     // Generators (real time generation)

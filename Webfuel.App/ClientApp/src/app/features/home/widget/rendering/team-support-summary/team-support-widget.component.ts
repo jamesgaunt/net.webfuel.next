@@ -1,7 +1,8 @@
 import { Component, DestroyRef, Input, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DashboardMetric, TeamSupportData, Widget } from 'api/api.types';
-import { WidgetProviderApi } from 'api/widget-provider.api';
+import { WidgetService } from 'core/widget.service';
 import _ from 'shared/common/underscore';
 
 @Component({
@@ -13,7 +14,7 @@ export class TeamSupportWidgetComponent {
   destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
-    private widgetProviderApi: WidgetProviderApi
+    private widgetService: WidgetService
   ) {
   }
 
@@ -21,17 +22,18 @@ export class TeamSupportWidgetComponent {
   widget!: Widget;
 
   ngOnInit() {
-    this.loadData();
+    this.widgetService.getDataSource(this.widget)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((result) => {
+        if (result.complete) {
+          this.data = JSON.parse(result.data);
+        }
+      });
   }
 
   data: TeamSupportData | null = null;
-
-  loadData() {
-    this.widgetProviderApi.teamSupport({ id: this.widget.id }).subscribe(result => {
-      this.data = result;
-      console.log(result);
-    });
-  }
 
   routerParams(metric: DashboardMetric) {
     if (!metric.routerParams)

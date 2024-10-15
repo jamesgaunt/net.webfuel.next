@@ -45,7 +45,9 @@
       <div class="card-title">
         <span class="tag" *ngFor="let id of projectSupport.supportProvidedIds">{{ (staticDataCache.supportProvided.get({ id: id }) | async)?.name }}</span>
       </div>
-      <pre *ngIf="projectSupport.description" class="card-narrative">{{ projectSupport.description }}</pre>
+      <div *ngIf="projectSupport.description" class="card-narrative">
+        <div class="typeography-content" [innerHtml]="projectSupport.description"></div>
+      </div>
       <div class="card-buttons" *ngIf="!locked">
         <button class="button is-primary" *ngIf="projectSupport.supportRequestedTeamId === null" (click)="requestTeamSupport(projectSupport)">request support from another team</button>
         <button class="button is-primary" (click)="editProjectSupport(projectSupport)">edit</button>

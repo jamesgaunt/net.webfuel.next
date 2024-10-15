@@ -19,3 +19,10 @@ img {
     max-width: 100%;
 }
 
+hr {
+  margin: var(--gap) 0 var(--gap) 0;
+}
+
+.clickable {
+  cursor: pointer;
+}

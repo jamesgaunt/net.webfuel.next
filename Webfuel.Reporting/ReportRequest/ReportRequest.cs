@@ -14,6 +14,8 @@ namespace Webfuel.Reporting
 
         public List<ReportArgument> Arguments { get; init; } = new List<ReportArgument>();
 
+        public object? TypedArguments { get; init; }
+
         public Query Query { get; init; } = new Query();
     }
 }

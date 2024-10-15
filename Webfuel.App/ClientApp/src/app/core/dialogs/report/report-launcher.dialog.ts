@@ -55,7 +55,7 @@ export class ReportLauncherDialogComponent extends DialogComponentBase<true, Rep
     if (this.report == null)
       return;
 
-    this.reportApi.run({ reportId: this.report.id, arguments: this.arguments }).subscribe((reportStep) => {
+    this.reportApi.run({ reportId: this.report.id, arguments: this.arguments, typedArguments: null }).subscribe((reportStep) => {
       this._cancelDialog();
       this.reportService.runReport(reportStep);
     });

@@ -37,7 +37,7 @@ export class ManageWidgetDialogComponent extends DialogComponentBase<true, Manag
   ) {
     super();
     this.setMode("manage");
-    this.widgetApi.selectType({ userId: this.data.userId }).subscribe(result => this.widgetTypes = result);
+    this.widgetApi.selectAvailableType().subscribe(result => this.widgetTypes = result);
   }
 
   widgets: Widget[] | null = null;

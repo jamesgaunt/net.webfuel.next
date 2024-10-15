@@ -9,5 +9,7 @@ namespace Webfuel.Domain
         public required Guid ReportId { get; set; }
 
         public List<ReportArgument>? Arguments { get; set; }
+
+        public object? TypedArguments { get; set; } // Only used when reports are initialised by the server
     }
 }

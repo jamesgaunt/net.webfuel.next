@@ -6,7 +6,7 @@
     <div class="grid">
       <div class="field">
         <label class="label">Please select outcome of triage</label>
-        <dropdown-select placeholder="required" formControlName="statusId" [dataSource]="staticDataCache.supportRequestStatus" (filter)="filterStatus($event)"></dropdown-select>
+        <dropdown-select placeholder="required" formControlName="statusId" [dataSource]="staticDataCache.supportRequestStatus"></dropdown-select>
       </div>
       <div class="grid" *ngIf="promoting">
         <div class="flex">

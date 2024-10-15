@@ -18,6 +18,7 @@ export enum QueryOp {
 export enum WidgetTypeEnum {
     ProjectSummary = "4f5bed07-af06-40c5-a7ed-ad283e57e503",
     TeamSupport = "54d1db4b-2b37-4d20-9e55-ffe2529446ac",
+    TeamActivity = "cf48d41d-934b-4fc8-b368-52ee87d5e76d",
 }
 
 export enum ReportFieldType {

@@ -45,7 +45,11 @@
     border: 2px solid var(--palette-control-border);
     padding: var(--gap);
     line-height: 1.5;
-    white-space: pre-wrap;
+
+    a {
+      color: var(--palette-primary-text);
+      text-decoration: dashed;
+    }
   }
 }
 

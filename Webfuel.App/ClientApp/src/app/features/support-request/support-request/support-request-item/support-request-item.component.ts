@@ -98,7 +98,7 @@ export class SupportRequestItemComponent extends SupportRequestComponentBase {
       return;
     }
 
-    this.triageSupportRequestDialog.open({ id: this.item.id }).subscribe((result) => {
+    this.triageSupportRequestDialog.open({ supportRequest: this.item }).subscribe((result) => {
       this.reset(result);
     });
   }

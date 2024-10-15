@@ -22,6 +22,9 @@ namespace Webfuel.Domain
         {
             var existing = await _widgetRepository.SelectWidgetByUserId(request.UserId);
 
+            if (existing.Count() >= 10)
+                throw new InvalidOperationException("Maximum number of widgets exceeded");
+
             return await _widgetRepository.InsertWidget(new Widget
             {
                 UserId = request.UserId,

@@ -32,7 +32,8 @@ namespace Webfuel.Domain
             {
                 ReportName = report.Name,
                 Design = report.Design,
-                Arguments = request.Arguments ?? new List<ReportArgument>()
+                Arguments = request.Arguments ?? new List<ReportArgument>(),
+                TypedArguments = request.TypedArguments
             });
         }
     }

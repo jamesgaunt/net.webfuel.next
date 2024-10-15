@@ -148,6 +148,35 @@ export interface UploadFileStorageEntry {
     fileStorageGroupId: string;
 }
 
+export interface ProjectSummaryData {
+    projectMetrics: Array<DashboardMetric>;
+}
+
+export interface DashboardMetric {
+    name: string;
+    count: number | null | null;
+    icon: string;
+    cta: string;
+    routerLink: string;
+    routerParams: string;
+    backgroundColor: string;
+}
+
+export interface TeamActivityData {
+    teamMembers: Array<TeamMember>;
+}
+
+export interface TeamMember {
+    name: string;
+    projectSupportHours: number;
+    userActivityHours: number;
+    totalHours: number;
+}
+
+export interface TeamSupportData {
+    supportMetrics: Array<DashboardMetric>;
+}
+
 export interface ReportColumn {
     id: string;
     fieldId: string;
@@ -1233,6 +1262,7 @@ export interface UpdateReport {
 export interface RunReport {
     reportId: string;
     arguments: Array<ReportArgument> | null;
+    typedArguments: any;
 }
 
 export interface ReportArgument {
@@ -1859,28 +1889,9 @@ export interface WidgetType {
     name: string;
 }
 
-export interface SelectWidgetType {
-    userId: string;
-}
-
-export interface ProjectSummaryData {
-    cached: boolean;
-    projectMetrics: Array<DashboardMetric>;
-}
-
-export interface DashboardMetric {
-    name: string;
-    count: number | null | null;
-    icon: string;
-    cta: string;
-    routerLink: string;
-    routerParams: string;
-    backgroundColor: string;
-}
-
-export interface TeamSupportData {
-    cached: boolean;
-    supportMetrics: Array<DashboardMetric>;
+export interface WidgetDataResponse {
+    complete: boolean;
+    data: string;
 }
 
 export interface CreateAgeRange {

@@ -1,11 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.Xml;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 using Webfuel.Domain.StaticData;
 using Webfuel.Excel;
 using Webfuel.Reporting;
@@ -78,7 +71,7 @@ namespace Webfuel.Domain
             if (projectSupport == null)
                 return;
 
-            if (projectSupport.SupportProvidedIds.Count == 0)
+            if (projectSupport.SupportProvidedIds.Count == 0 || projectSupport.WorkTimeInHours == 0)
                 return; // No support provided so nothing to record
 
             var timeInHours = projectSupport.WorkTimeInHours * projectSupport.AdviserIds.Count() / projectSupport.SupportProvidedIds.Count();
@@ -87,7 +80,7 @@ namespace Webfuel.Domain
                 CustomData.ProjectCache[projectSupport.ProjectId] :
                 CustomData.ProjectCache[projectSupport.ProjectId] = await ServiceProvider.GetRequiredService<IProjectRepository>().RequireProject(projectSupport.ProjectId);
 
-            foreach(var supportProvidedId in projectSupport.SupportProvidedIds)
+            foreach (var supportProvidedId in projectSupport.SupportProvidedIds)
             {
                 var rawDataLine = new SupportHoursSpentReportData.RawDataLine
                 {
@@ -105,8 +98,8 @@ namespace Webfuel.Domain
             if (Workbook == null)
             {
                 Workbook = new ExcelWorkbook();
-                var _worksheet = Workbook.GetOrCreateWorksheet();
-                
+                var _worksheet = Workbook.GetOrCreateWorksheet("Raw Data");
+
                 _worksheet.Cell(1, 01).SetValue("Date of Support").SetBold(true);
                 _worksheet.Cell(1, 02).SetValue("Time in Hours").SetBold(true);
                 _worksheet.Cell(1, 03).SetValue("Project").SetBold(true);
@@ -115,7 +108,7 @@ namespace Webfuel.Domain
                 RowIndex = 2;
             }
 
-            var worksheet = Workbook.GetWorksheet();
+            var worksheet = Workbook.GetWorksheet("Raw Data");
 
             var stepTimestamp = MicrosecondTimer.Timestamp;
             var stepItems = 0;
@@ -125,24 +118,30 @@ namespace Webfuel.Domain
 
                 if (StageCount >= CustomData.RawDataLines.Count)
                 {
-                    GenerateResult();
+                    await FinaliseReport();
+
+                    Result = new ReportResult
+                    {
+                        MemoryStream = Workbook.ToMemoryStream(),
+                        Filename = "report.xlsx",
+                        ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    };
+
                     Stage = ReportStage.Complete;
                     Complete = true;
                     break;
                 }
 
-                foreach (var rawDataLine in CustomData.RawDataLines)
-                {
-                    var supportProvided = staticData.SupportProvided.FirstOrDefault(p => p.Id == rawDataLine.SupportProvidedId);
+                var rawDataLine = CustomData.RawDataLines[StageCount];
 
-                    worksheet.Cell(RowIndex, 01).SetValue(rawDataLine.DateOfSupport);
-                    worksheet.Cell(RowIndex, 02).SetValue(rawDataLine.TimeInHours);
-                    worksheet.Cell(RowIndex, 03).SetValue(rawDataLine.ProjectCode);
-                    worksheet.Cell(RowIndex, 04).SetValue(supportProvided?.Name ?? "Invalid Support Provided Type");
+                var supportProvided = staticData.SupportProvided.FirstOrDefault(p => p.Id == rawDataLine.SupportProvidedId);
 
-                    RowIndex++;
-                }
+                worksheet.Cell(RowIndex, 01).SetValue(rawDataLine.DateOfSupport);
+                worksheet.Cell(RowIndex, 02).SetValue(rawDataLine.TimeInHours).SetNumberFormat("#,##0.00");
+                worksheet.Cell(RowIndex, 03).SetValue(rawDataLine.ProjectCode);
+                worksheet.Cell(RowIndex, 04).SetValue(supportProvided?.Name ?? "Invalid Support Provided Type");
 
+                RowIndex++;
                 StageCount++;
                 stepItems++;
             }
@@ -151,12 +150,37 @@ namespace Webfuel.Domain
             Metrics.AddRender(MicrosecondTimer.Timestamp - stepTimestamp, stepItems);
         }
 
-        public override void FormatWorksheet(ExcelWorksheet worksheet)
+        async Task FinaliseReport()
         {
-            worksheet.Column(01).AdjustToContents();
-            worksheet.Column(02).AdjustToContents();
-            worksheet.Column(03).AdjustToContents();
-            worksheet.Column(04).AdjustToContents();
+            var staticData = await ServiceProvider.GetRequiredService<IStaticDataService>().GetStaticData();
+            var summaryRowCount = 0;
+
+            {
+                var summarySheet = Workbook!.GetOrCreateWorksheet("Summary");
+                summarySheet.Cell(1, 01).SetValue("Support Provided").SetBold(true);
+                summarySheet.Cell(1, 02).SetValue("Time in Hours").SetBold(true);
+                foreach (var supportProvided in staticData.SupportProvided)
+                {
+                    var total = CustomData.RawDataLines.Where(p => p.SupportProvidedId == supportProvided.Id).Sum(p => p.TimeInHours);
+                    if (total > 0)
+                    {
+                        summarySheet.Cell(summaryRowCount + 2, 01).SetValue(supportProvided.Name);
+                        summarySheet.Cell(summaryRowCount + 2, 02).SetValue(total).SetNumberFormat("#,##0.00");
+                        summaryRowCount++;
+                    }
+                }
+                summarySheet.Position = 1;
+                summarySheet.Column(01).AdjustToContents();
+                summarySheet.Column(02).AdjustToContents();
+            }
+
+            {
+                var rawDataSheet = Workbook.GetOrCreateWorksheet("Raw Data");
+                rawDataSheet.Column(01).AdjustToContents();
+                rawDataSheet.Column(02).AdjustToContents();
+                rawDataSheet.Column(03).AdjustToContents();
+                rawDataSheet.Column(04).AdjustToContents();
+            }
         }
 
         public static Task<List<ReportArgument>> GenerateArguments(ReportDesign design, IServiceProvider serviceProvider)

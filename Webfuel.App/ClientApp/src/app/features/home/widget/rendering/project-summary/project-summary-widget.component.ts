@@ -1,7 +1,10 @@
 import { Component, DestroyRef, Input, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DashboardMetric, ProjectSummaryData, Widget } from 'api/api.types';
-import { WidgetProviderApi } from 'api/widget-provider.api';
+import { debug } from 'console';
+import { WidgetDataSource, WidgetService } from 'core/widget.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 import _ from 'shared/common/underscore';
 
 @Component({
@@ -13,7 +16,7 @@ export class ProjectSummaryWidgetComponent {
   destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
-    private widgetProviderApi: WidgetProviderApi
+    private widgetService: WidgetService
   ) {
   }
 
@@ -21,17 +24,19 @@ export class ProjectSummaryWidgetComponent {
   widget!: Widget;
 
   ngOnInit() {
-    this.loadData();
+    this.widgetService.getDataSource(this.widget)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe((result) => {
+        if (result.complete) {
+          this.data = JSON.parse(result.data);
+          console.log(this.data);
+        }
+      });
   }
 
   data: ProjectSummaryData | null = null;
-
-  loadData() {
-    this.widgetProviderApi.projectSummary({ id: this.widget.id }).subscribe(result => {
-      this.data = result;
-      console.log(result);
-    });
-  }
 
   routerParams(metric: DashboardMetric) {
     if (!metric.routerParams)

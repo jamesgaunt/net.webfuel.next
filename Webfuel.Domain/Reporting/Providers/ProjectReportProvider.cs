@@ -134,7 +134,7 @@ namespace Webfuel.Domain
 
                     builder.Map<ProjectSupport, ProjectSupportReportMap>((p, s, m) => m.MapOpenByProjectId(p.Id), a =>
                     {
-                        a.Map<SupportTeam>(Guid.Parse("7186191c-2128-497a-83d7-25240285b756"), "Open Support Requests", p => p.TeamIds);
+                        a.Map<SupportTeam>(Guid.Parse("9eb6ee88-7dc5-4b91-adb9-1e3982d2271c"), "Open Support Requests", p => p.TeamIds);
                     });
 
                     // Project Adviser

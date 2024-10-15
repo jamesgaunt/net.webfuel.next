@@ -1,20 +1,19 @@
 ﻿using Azure.Core.Serialization;
+using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Webfuel.Domain.StaticData;
 
 namespace Webfuel.Domain;
 
+[ApiType]
 public class ProjectSummaryData
 {
-    public bool Cached { get; set; }
-
     public List<DashboardMetric> ProjectMetrics { get; set; } = new List<DashboardMetric>();
 }
 
-public interface IProjectSummaryProvider
+public interface IProjectSummaryProvider: IWidgetDataProvider
 {
-    Task<ProjectSummaryData> GetData(Guid widgetId);
 }
 
 [Service(typeof(IProjectSummaryProvider))]
@@ -26,43 +25,28 @@ internal class ProjectSummaryProvider : IProjectSummaryProvider
     private readonly IProjectRepository _projectRepository;
 
     public ProjectSummaryProvider(
-        IWidgetRepository widgetRepository, IProjectRepository projectRepository)
+        IWidgetRepository widgetRepository,
+        IProjectRepository projectRepository)
     {
         _widgetRepository = widgetRepository;
         _projectRepository = projectRepository;
     }
 
-    public async Task<ProjectSummaryData> GetData(Guid widgetId)
+    public async Task<WidgetDataResponse> GenerateData(WidgetDataTask task)
     {
-        var data = new ProjectSummaryData();
-
-        var widget = await _widgetRepository.GetWidget(widgetId);
-        if (widget == null)
-            return data;
-
+        var widget = task.Widget;
         if (widget.CachedDataVersion == VERSION && widget.CachedDataTimestamp > GlobalTimestamp)
-        {
-            try
-            {
-                data = JsonSerializer.Deserialize<ProjectSummaryData>(widget.CachedData);
-                if (data != null)
-                {
-                    data.Cached = true;
-                    return data;
-                }
-            }
-            catch { /* GULP */ }
-        }
+            return new WidgetDataResponse { Complete = true, Data = widget.CachedData };
 
-        data = await GenerateData();
+        var data = await GenerateData();
 
-        widget.CachedData = JsonSerializer.Serialize(data);
+        widget.CachedData = JsonSerializer.Serialize(data, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
         widget.CachedDataVersion = VERSION;
         widget.CachedDataTimestamp = DateTimeOffset.UtcNow;
 
         await _widgetRepository.UpdateWidget(widget);
 
-        return data;
+        return new WidgetDataResponse { Complete = true, Data = widget.CachedData };
     }
 
     // Generators (real time generation)
