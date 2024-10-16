@@ -26,17 +26,23 @@ namespace Webfuel.Domain
                     case nameof(Widget.SortOrder):
                         result.Add(new SqlParameter(nameof(Widget.SortOrder), entity.SortOrder));
                         break;
-                    case nameof(Widget.ConfigData):
-                        result.Add(new SqlParameter(nameof(Widget.ConfigData), entity.ConfigData));
+                    case nameof(Widget.ConfigJson):
+                        result.Add(new SqlParameter(nameof(Widget.ConfigJson), entity.ConfigJson));
                         break;
-                    case nameof(Widget.CachedData):
-                        result.Add(new SqlParameter(nameof(Widget.CachedData), entity.CachedData));
+                    case nameof(Widget.HeaderText):
+                        result.Add(new SqlParameter(nameof(Widget.HeaderText), entity.HeaderText));
                         break;
-                    case nameof(Widget.CachedDataVersion):
-                        result.Add(new SqlParameter(nameof(Widget.CachedDataVersion), entity.CachedDataVersion));
+                    case nameof(Widget.DataJson):
+                        result.Add(new SqlParameter(nameof(Widget.DataJson), entity.DataJson));
                         break;
-                    case nameof(Widget.CachedDataTimestamp):
-                        result.Add(new SqlParameter(nameof(Widget.CachedDataTimestamp), entity.CachedDataTimestamp));
+                    case nameof(Widget.DataVersion):
+                        result.Add(new SqlParameter(nameof(Widget.DataVersion), entity.DataVersion));
+                        break;
+                    case nameof(Widget.DataCurrent):
+                        result.Add(new SqlParameter(nameof(Widget.DataCurrent), entity.DataCurrent));
+                        break;
+                    case nameof(Widget.DataTimestamp):
+                        result.Add(new SqlParameter(nameof(Widget.DataTimestamp), entity.DataTimestamp));
                         break;
                     case nameof(Widget.UserId):
                         result.Add(new SqlParameter(nameof(Widget.UserId), entity.UserId));
@@ -72,10 +78,12 @@ namespace Webfuel.Domain
             {
                 yield return "Id";
                 yield return "SortOrder";
-                yield return "ConfigData";
-                yield return "CachedData";
-                yield return "CachedDataVersion";
-                yield return "CachedDataTimestamp";
+                yield return "ConfigJson";
+                yield return "HeaderText";
+                yield return "DataJson";
+                yield return "DataVersion";
+                yield return "DataCurrent";
+                yield return "DataTimestamp";
                 yield return "UserId";
                 yield return "WidgetTypeId";
             }
@@ -87,10 +95,12 @@ namespace Webfuel.Domain
             {
                 yield return "Id";
                 yield return "SortOrder";
-                yield return "ConfigData";
-                yield return "CachedData";
-                yield return "CachedDataVersion";
-                yield return "CachedDataTimestamp";
+                yield return "ConfigJson";
+                yield return "HeaderText";
+                yield return "DataJson";
+                yield return "DataVersion";
+                yield return "DataCurrent";
+                yield return "DataTimestamp";
                 yield return "UserId";
                 yield return "WidgetTypeId";
             }
@@ -101,10 +111,12 @@ namespace Webfuel.Domain
             get
             {
                 yield return "SortOrder";
-                yield return "ConfigData";
-                yield return "CachedData";
-                yield return "CachedDataVersion";
-                yield return "CachedDataTimestamp";
+                yield return "ConfigJson";
+                yield return "HeaderText";
+                yield return "DataJson";
+                yield return "DataVersion";
+                yield return "DataCurrent";
+                yield return "DataTimestamp";
                 yield return "UserId";
                 yield return "WidgetTypeId";
             }
@@ -114,23 +126,33 @@ namespace Webfuel.Domain
         
         public static void Validate(Widget entity)
         {
-            entity.ConfigData = entity.ConfigData ?? String.Empty;
-            entity.ConfigData = entity.ConfigData.Trim();
-            entity.CachedData = entity.CachedData ?? String.Empty;
-            entity.CachedData = entity.CachedData.Trim();
+            entity.ConfigJson = entity.ConfigJson ?? String.Empty;
+            entity.ConfigJson = entity.ConfigJson.Trim();
+            entity.HeaderText = entity.HeaderText ?? String.Empty;
+            entity.HeaderText = entity.HeaderText.Trim();
+            entity.DataJson = entity.DataJson ?? String.Empty;
+            entity.DataJson = entity.DataJson.Trim();
             Validator.ValidateAndThrow(entity);
         }
         
         public static WidgetRepositoryValidator Validator { get; } = new WidgetRepositoryValidator();
         
+        public const int HeaderText_MaxLength = 128;
         
-        public static void ConfigData_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        public static void ConfigJson_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull();
         }
         
-        public static void CachedData_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        public static void HeaderText_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(HeaderText_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void DataJson_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
                 .NotNull();
@@ -141,8 +163,9 @@ namespace Webfuel.Domain
     {
         public WidgetRepositoryValidator()
         {
-            RuleFor(x => x.ConfigData).Use(WidgetMetadata.ConfigData_ValidationRules);
-            RuleFor(x => x.CachedData).Use(WidgetMetadata.CachedData_ValidationRules);
+            RuleFor(x => x.ConfigJson).Use(WidgetMetadata.ConfigJson_ValidationRules);
+            RuleFor(x => x.HeaderText).Use(WidgetMetadata.HeaderText_ValidationRules);
+            RuleFor(x => x.DataJson).Use(WidgetMetadata.DataJson_ValidationRules);
             Validation();
         }
         

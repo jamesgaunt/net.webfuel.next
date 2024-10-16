@@ -7,21 +7,16 @@
       <h1 class="title">Dashboard</h1>
     </div>
     <div class="column">
-      <div *ngIf="widgets !== null" class="header-buttons">
+      <div class="header-buttons">
         <button class="button is-primary" (click)="manageWidgets()">Manage Widgets</button>
       </div>
     </div>
   </div>
-  @if(widgets === null) {
-  <div>
-    Loading...
-  </div>
-  } @else {
-  @for(widget of widgets; track $index) {
-  @switch(widget.widgetTypeId){
+  @for(widget of widgetService.widgets | async; track widget.value.id) {
+  @switch(widget.value.widgetTypeId){
   @case(WidgetTypeEnum.ProjectSummary) { <project-summary-widget [widget]="widget" /> }
   @case(WidgetTypeEnum.TeamSupport) { <team-support-widget [widget]="widget" />  }
-  }
+  @case(WidgetTypeEnum.TeamActivity) { <team-activity-widget [widget]="widget" /> }
   }
   }
 </div>

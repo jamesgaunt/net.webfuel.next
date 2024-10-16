@@ -1,5 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Presentation;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Identity.Client;
 using System.Text.Json;
@@ -23,6 +24,12 @@ public class TeamActivityData
 
         public required decimal TotalHours { get; set; }
     }
+}
+
+[ApiType]
+public class TeamActivityConfig
+{
+    public Guid? SupportTeamId { get; set; }
 }
 
 public interface ITeamActivityProvider : IWidgetDataProvider
@@ -51,28 +58,55 @@ internal class TeamActivityProvider : ITeamActivityProvider
         _serviceProvider = serviceProvider;
     }
 
-    public async Task<WidgetDataResponse> GenerateData(WidgetDataTask task)
+    // Public API
+
+    public async Task ValidateWidget(Widget widget)
     {
-        var widget = task.Widget;
-        if (widget.CachedDataVersion == VERSION && widget.CachedDataTimestamp > GlobalTimestamp)
-            return new WidgetDataResponse { Complete = true, Data = widget.CachedData };
+        var updated = widget.Copy();
 
-        var dataResponse = await RunReport(task);
-        if (dataResponse.Complete == false)
-            return dataResponse;
+        if (widget.DataVersion != VERSION || widget.DataTimestamp > GlobalTimestamp)
+        {
+            updated.DataCurrent = false;
+        }
 
-        widget.CachedData = dataResponse.Data;
-        widget.CachedDataVersion = VERSION;
-        widget.CachedDataTimestamp = DateTimeOffset.UtcNow;
-
-        await _widgetRepository.UpdateWidget(widget);
-
-        return new WidgetDataResponse { Complete = true, Data = widget.CachedData };
+        await _widgetRepository.UpdateWidget(original: widget, updated: updated);
     }
 
-    // Generators (real time generation)
+    public async Task RefreshWidget(WidgetRefreshTask task)
+    {
+        await RunReport(task);
+    }
 
-    async Task<WidgetDataResponse> RunReport(WidgetDataTask task)
+    // Config
+
+    Task<TeamActivityConfig> LoadConfig(Widget widget)
+    {
+        try
+        {
+            var config = JsonSerializer.Deserialize<TeamActivityConfig>(widget.ConfigJson, SerializerOptions);
+            if (config == null)
+                return DefaultConfig();
+
+            if (config.SupportTeamId == null)
+                config.SupportTeamId = SupportTeamEnum.TriageTeam;
+
+            return Task.FromResult(config);
+        }
+        catch { /* GULP */ }
+        return DefaultConfig();
+    }
+
+    Task<TeamActivityConfig> DefaultConfig()
+    {
+        return Task.FromResult(new TeamActivityConfig
+        {
+            SupportTeamId = SupportTeamEnum.TriageTeam
+        });
+    }
+
+    // Implementation
+
+    async Task RunReport(WidgetRefreshTask task)
     {
         if(task.GeneratorState is not ReportStep reportStep)
         {
@@ -80,19 +114,21 @@ internal class TeamActivityProvider : ITeamActivityProvider
 
             var report = await _serviceProvider.GetRequiredService<IReportService>().GetDefaultNamedReport("Team Activity Report", ReportProviderEnum.CustomReport);
 
-            // Time to initialise the report
+            var config = await LoadConfig(task.Widget);
+
             var runReport = new RunReport
             {
                 ReportId = report.Id,
                 TypedArguments = new TeamActivityReportArguments
                 {
-                    StartDate = DateOnly.FromDateTime(DateTime.Today).AddMonths(-1),
+                    SupportTeamId = config.SupportTeamId,
+                    StartDate = DateOnly.FromDateTime(DateTime.Today).AddDays(-14),
                     EndDate = DateOnly.FromDateTime(DateTime.Today)
                 }
             };
 
             task.GeneratorState = await _mediator.Send(runReport);
-            return new WidgetDataResponse { Complete = false };
+            return;
         }
 
         // Generate the Report Task
@@ -106,14 +142,11 @@ internal class TeamActivityProvider : ITeamActivityProvider
 
             // We have the final report data
 
-            return new WidgetDataResponse
-            {
-                Complete = true,
-                Data = JsonSerializer.Serialize(MapReportData(reportData), new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase })
-            };
+            task.Widget.DataJson = JsonSerializer.Serialize(MapReportData(reportData), SerializerOptions);
+            task.Widget.DataVersion = VERSION;
+            task.Widget.DataCurrent = true;
+            task.Widget.DataTimestamp = DateTimeOffset.UtcNow;
         }
-
-        return new WidgetDataResponse { Complete = false };
     }
 
     TeamActivityData MapReportData(TeamActivityReportData reportData)
@@ -133,6 +166,10 @@ internal class TeamActivityProvider : ITeamActivityProvider
         }
         return data;
     }
+
+    static JsonSerializerOptions SerializerOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+
+    // Cache
 
     public static void FlushTeamActivityMetrics()
     {

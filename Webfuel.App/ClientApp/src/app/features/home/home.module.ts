@@ -8,7 +8,8 @@ import { MyActivityComponent } from './my-activity/my-activity.component';
 import { ManageWidgetDialog, ManageWidgetDialogComponent } from './widget/management/manage-widget-dialog/manage-widget.dialog';
 
 import { ProjectSummaryWidgetComponent } from './widget/rendering/project-summary/project-summary-widget.component';
-import { TeamSupportWidgetComponent } from './widget/rendering/team-support-summary/team-support-widget.component';
+import { TeamSupportWidgetComponent } from './widget/rendering/team-support/team-support-widget.component';
+import { TeamActivityWidgetComponent } from './widget/rendering/team-activity/team-activity-widget.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { TeamSupportWidgetComponent } from './widget/rendering/team-support-summ
 
     // Widgets
     ProjectSummaryWidgetComponent,
-    TeamSupportWidgetComponent
+    TeamSupportWidgetComponent,
+    TeamActivityWidgetComponent,
   ],
   providers: [
     ManageWidgetDialog,

@@ -173,6 +173,10 @@ export interface TeamMember {
     totalHours: number;
 }
 
+export interface TeamActivityConfig {
+    supportTeamId: string | null | null;
+}
+
 export interface TeamSupportData {
     supportMetrics: Array<DashboardMetric>;
 }
@@ -1858,40 +1862,32 @@ export interface QueryUserLogin extends Query {
 export interface Widget {
     id: string;
     sortOrder: number;
-    configData: string;
-    cachedData: string;
-    cachedDataVersion: number;
-    cachedDataTimestamp: string;
+    configJson: string;
+    headerText: string;
+    dataJson: string;
+    dataVersion: number;
+    dataCurrent: boolean;
+    dataTimestamp: string;
     userId: string;
     widgetTypeId: string;
 }
 
 export interface CreateWidget {
-    userId: string;
     widgetTypeId: string;
 }
 
 export interface UpdateWidget {
     id: string;
+    configJson: string;
 }
 
 export interface SortWidget {
-    userId: string;
     ids: Array<string>;
-}
-
-export interface SelectWidget {
-    userId: string;
 }
 
 export interface WidgetType {
     id: string;
     name: string;
-}
-
-export interface WidgetDataResponse {
-    complete: boolean;
-    data: string;
 }
 
 export interface CreateAgeRange {

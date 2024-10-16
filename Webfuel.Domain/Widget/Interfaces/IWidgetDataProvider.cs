@@ -2,5 +2,7 @@
 
 public interface IWidgetDataProvider
 {
-    Task<WidgetDataResponse> GenerateData(WidgetDataTask task);
+    Task ValidateWidget(Widget widget);
+
+    Task RefreshWidget(WidgetRefreshTask task);
 }

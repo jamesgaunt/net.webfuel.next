@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Azure.Core;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace Webfuel.Domain
                     return new SupportHoursSpentReportBuilder(request);
 
                 default:
-                    throw new NotImplementedException();
+                    throw new NotImplementedException($"Custom report provider '{request.Design.CustomReportProvider}' does not have a registered report builder");
             }
         }
 
@@ -59,8 +60,8 @@ namespace Webfuel.Domain
 
             if (design.CustomReportProvider == SupportHoursSpentReport)
                 return SupportHoursSpentReportBuilder.GenerateArguments(design, serviceProvider);
-           
-            return Task.FromResult(new List<ReportArgument>());
+
+            throw new NotImplementedException($"Custom report provider '{design.CustomReportProvider}' does not have a registered argument generator");
         }
 
         // Schema

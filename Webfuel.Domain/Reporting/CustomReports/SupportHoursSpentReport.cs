@@ -209,10 +209,5 @@ namespace Webfuel.Domain
 
             return Task.FromResult(result);
         }
-
-        public override object ExtractReportData()
-        {
-            return CustomData;
-        }
     }
 }

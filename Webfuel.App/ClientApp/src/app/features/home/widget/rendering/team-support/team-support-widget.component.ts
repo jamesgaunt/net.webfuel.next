@@ -3,6 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DashboardMetric, TeamSupportData, Widget } from 'api/api.types';
 import { WidgetService } from 'core/widget.service';
+import { Observable } from 'rxjs';
 import _ from 'shared/common/underscore';
 
 @Component({
@@ -19,21 +20,21 @@ export class TeamSupportWidgetComponent {
   }
 
   @Input({ required: true })
-  widget!: Widget;
+  widget!: Observable<Widget>;
 
   ngOnInit() {
-    this.widgetService.getDataSource(this.widget)
+    this.widget
       .pipe(
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((result) => {
-        if (result.complete) {
-          this.data = JSON.parse(result.data);
-        }
+        this.data = JSON.parse(result.dataJson);
       });
   }
 
-  data: TeamSupportData | null = null;
+  data: TeamSupportData = {
+    supportMetrics: []
+  };
 
   routerParams(metric: DashboardMetric) {
     if (!metric.routerParams)

@@ -35,21 +35,28 @@ internal class TeamSupportProvider : ITeamSupportProvider
         _identityAccessor = identityAccessor;
     }
 
-    public async Task<WidgetDataResponse> GenerateData(WidgetDataTask task)
-    {
-        var widget = task.Widget;
-        if (widget.CachedDataVersion == VERSION && widget.CachedDataTimestamp > GlobalTimestamp)
-            return new WidgetDataResponse { Complete = true, Data = widget.CachedData };
+    // Public API
 
+    public async Task ValidateWidget(Widget widget)
+    {
+        var updated = widget.Copy();
+
+        if (widget.DataVersion != VERSION || widget.DataTimestamp > GlobalTimestamp)
+        {
+            updated.DataCurrent = false;
+        }
+
+        await _widgetRepository.UpdateWidget(original: widget, updated: updated);
+    }
+
+    public async Task RefreshWidget(WidgetRefreshTask task)
+    {
         var data = await GenerateData();
 
-        widget.CachedData = JsonSerializer.Serialize(data, new JsonSerializerOptions {  PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-        widget.CachedDataVersion = VERSION;
-        widget.CachedDataTimestamp = DateTimeOffset.UtcNow;
-
-        await _widgetRepository.UpdateWidget(widget);
-
-        return new WidgetDataResponse { Complete = true, Data = widget.CachedData };
+        task.Widget.DataJson = JsonSerializer.Serialize(data, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+        task.Widget.DataVersion = VERSION;
+        task.Widget.DataCurrent = true;
+        task.Widget.DataTimestamp = DateTimeOffset.UtcNow;
     }
 
     // Generators (real time generation)

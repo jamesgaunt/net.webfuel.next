@@ -4,13 +4,9 @@
     Manage Widgets <span style="float:right"><a class="link" (click)="addWidget()">+ add widget</a></span>
   </div>
   <div class="dialog-body">
-    @if(widgets === null) {
-    <div>
-      Loading...
-    </div>
-    } @else {
     <div class="report-designer">
       <div class="report-slots" cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="dropWidget($event)" [cdkDropListDisabled]="false">
+        @if(widgets != null) {
         <div class="report-slot" *ngFor="let widget of widgets" cdkDrag>
           <div class="columns">
             <div class="column">
@@ -18,14 +14,10 @@
                 <i class="fas fa-fw fa-bars"></i>
               </span>
               &nbsp;
-              <span>{{ widgetService.widgetTitle(widget) }}</span>
+              <span>{{ widget.headerText }}</span>
               &nbsp;
             </div>
             <div class="column is-right is-narrow">
-              <!--
-              <a class="link is-primary" (click)="editWidget(widget)">edit</a>
-              &nbsp;
-                -->
               <a class="link is-danger" (click)="deleteWidget(widget)">delete</a>
             </div>
           </div>
@@ -33,9 +25,9 @@
         <div class="report-slot" *ngIf="widgets.length == 0">
           There are no widgets specified on this dashboard.
         </div>
+        }
       </div>
     </div>
-    }
   </div>
   <div class="dialog-buttons">
     <button type="button" (click)="close()">Close</button>
@@ -50,7 +42,7 @@
         <div class="report-slot" *ngFor="let widgetType of widgetTypes">
           <div class="columns">
             <div class="column">
-              <span>{{ widgetService.widgetTypeName(widgetType.id) }}</span>
+              <span>{{ widgetType.name }}</span>
             </div>
             <div class="column is-right is-narrow">
               <a class="link is-success" (click)="addWidgetType(widgetType)">add</a>

@@ -1,16 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Schema>
+  
   <Entity Name="Widget" OrderBy="SortOrder">
     <Key Name="Id" Type="guid" />
+    
     <Property Name="UserId" Type="User" CascadeDelete="true" />
     <Property Name="WidgetTypeId" Type="WidgetType" CascadeDelete="true" />
     <Property Name="SortOrder" Type="int" />
 
-    <Property Name="ConfigData" Type="string" />
-    <Property Name="CachedData" Type="string" />
-    <Property Name="CachedDataVersion" Type="int" />
-    <Property Name="CachedDataTimestamp" Type="DateTime" />
+    <Property Name="ConfigJson" Type="string" />
+    <Property Name="HeaderText" Type="meta:name" />
+
+    <Property Name="DataJson" Type="string" />
+    <Property Name="DataVersion" Type="int" />
+    <Property Name="DataCurrent" Type="boolean" />
+    <Property Name="DataTimestamp" Type="DateTime" />
     
     <Index Unique="false">
       <Member Name="UserId" />

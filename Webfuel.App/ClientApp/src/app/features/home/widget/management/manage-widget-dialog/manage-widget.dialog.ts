@@ -13,7 +13,6 @@ import { DialogBase, DialogComponentBase } from 'shared/common/dialog-base';
 import _ from 'shared/common/underscore';
 
 export interface ManageWidgetDialogData {
-  userId: string;
 }
 
 @Injectable()
@@ -45,7 +44,7 @@ export class ManageWidgetDialogComponent extends DialogComponentBase<true, Manag
   widgetTypes: WidgetType[] = [];
 
   loadWidgets() {
-    this.widgetApi.select({ userId: this.data.userId }).subscribe(result => this.widgets = result);
+    this.widgetApi.selectActive().subscribe(result => this.widgets = result);
   }
 
   close() {
@@ -67,7 +66,7 @@ export class ManageWidgetDialogComponent extends DialogComponentBase<true, Manag
     this.widgets!.splice(currentIndex, 0, item[0]);
 
     // Server side
-    this.widgetApi.sort({ ids: _.map(this.widgets!, p => p.id), userId: this.data.userId }, { successGrowl: "Changes saved" }).subscribe(() => {
+    this.widgetApi.sort({ ids: _.map(this.widgets!, p => p.id) }, { successGrowl: "Changes saved" }).subscribe(() => {
       this.loadWidgets();
     });
   }
@@ -83,7 +82,7 @@ export class ManageWidgetDialogComponent extends DialogComponentBase<true, Manag
   }
 
   addWidgetType(widgetType: WidgetType) {
-    this.widgetApi.create({ userId: this.data.userId, widgetTypeId: widgetType.id }, { successGrowl: "Changes saved" }).subscribe(() => {
+    this.widgetApi.create({ widgetTypeId: widgetType.id }, { successGrowl: "Changes saved" }).subscribe(() => {
       this.setMode("manage");
     })
   }

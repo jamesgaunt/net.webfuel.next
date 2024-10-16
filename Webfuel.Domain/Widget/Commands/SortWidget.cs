@@ -4,22 +4,28 @@ namespace Webfuel.Domain
 {
     public class SortWidget: IRequest
     {
-        public required Guid UserId { get; set; }
-
         public required IEnumerable<Guid> Ids { get; set; }
     }
     internal class SortWidgetHandler : IRequestHandler<SortWidget>
     {
         private readonly IWidgetRepository _widgetuserRepository;
-        
-        public SortWidgetHandler(IWidgetRepository widgetuserRepository)
+        private readonly IIdentityAccessor _identityAccessor;
+
+        public SortWidgetHandler(
+            IWidgetRepository widgetuserRepository,
+            IIdentityAccessor identityAccessor)
         {
             _widgetuserRepository = widgetuserRepository;
+            _identityAccessor = identityAccessor;
         }
         
         public async Task Handle(SortWidget request, CancellationToken cancellationToken)
         {
-            var items = await _widgetuserRepository.SelectWidgetByUserId(request.UserId);
+            var identity = _identityAccessor.User;
+            if (identity == null)
+                throw new InvalidOperationException("Invalid identity context");
+
+            var items = await _widgetuserRepository.SelectWidgetByUserId(identity.Id);
             
             var index = 0;
             foreach (var id in request.Ids)

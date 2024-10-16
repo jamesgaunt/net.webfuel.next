@@ -16,7 +16,7 @@ namespace Webfuel.App
                 .RequireIdentity();
 
             app.MapPut("api/widget", Update)
-                .RequireIdentity();
+                  .RequireIdentity();
 
             app.MapPut("api/widget/sort", Sort)
                 .RequireIdentity();
@@ -24,18 +24,15 @@ namespace Webfuel.App
             app.MapDelete("api/widget/{id:guid}", Delete)
                 .RequireIdentity();
 
+            app.MapPost("api/widget/refresh/{id:guid}", Refresh)
+                  .RequireIdentity();
+
             // Querys
 
-            app.MapPost("api/widget/select", Select)
+            app.MapGet("api/widget/select-active", SelectActive)
                 .RequireIdentity();
 
             app.MapGet("api/widget/select-available-type", SelectAvailableType)
-                .RequireIdentity();
-
-            app.MapGet("api/widget/{id:guid}", Get)
-                .RequireIdentity();
-
-            app.MapPost("api/widget/generate/{widgetId:guid}", Generate)
                 .RequireIdentity();
         }
 
@@ -59,24 +56,19 @@ namespace Webfuel.App
             return mediator.Send(new DeleteWidget { Id = id });
         }
 
-        public static Task<List<Widget>> Select([FromBody] SelectWidget command, IMediator mediator)
+        public static Task<Widget> Refresh(Guid id, IMediator mediator)
         {
-            return mediator.Send(command);
+            return mediator.Send(new RefreshWidget { Id = id });
+        }
+
+        public static Task<List<Widget>> SelectActive(IMediator mediator)
+        {
+            return mediator.Send(new SelectActiveWidget());
         }
 
         public static Task<List<WidgetType>> SelectAvailableType(IMediator mediator)
         {
             return mediator.Send(new SelectAvailableWidgetType());
-        }
-
-        public static Task<WidgetDataResponse> Generate(Guid widgetId, IWidgetDataService service)
-        {
-            return service.GenerateData(widgetId);
-        }
-
-        public static async Task<Widget?> Get(Guid id, IMediator mediator)
-        {
-            return await mediator.Send(new GetWidget { Id = id }) ;
         }
     }
 }

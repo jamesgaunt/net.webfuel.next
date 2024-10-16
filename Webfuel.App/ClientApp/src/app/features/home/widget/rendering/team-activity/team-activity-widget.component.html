@@ -1,0 +1,43 @@
+<h4>
+  Team Activity
+  <a (click)="editConfig()"><i class="fas fa-fw fa-cog"></i></a>
+</h4>
+<div class="table">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Project Support</th>
+        <th>User Activity</th>
+        <th>Total Hours</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of data.teamMembers">
+        <td>{{ item.name }}</td>
+        <td>{{ item.projectSupportHours }}</td>
+        <td>{{ item.userActivityHours }}</td>
+        <td>{{ item.totalHours }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #configDialog>
+  <form class="form dialog" [formGroup]="configForm">
+    <div class="dialog-head is-primary">
+      Configure Widget
+    </div>
+    <div class="dialog-body">
+      <div class="field">
+        <label class="label">Support Team</label>
+        <dropdown-select [dataSource]="staticDataCache.supportTeam" placeholder="required" formControlName="supportTeamId"></dropdown-select>
+      </div>
+    </div>
+    <div class="dialog-buttons">
+      <button type="submit" class="is-primary" (click)="saveConfig()">Save</button>
+      <button type="button" (click)="cancelConfig()">Cancel</button>
+    </div>
+  </form>
+</ng-template>
+
