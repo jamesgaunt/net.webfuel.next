@@ -3,7 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DashboardMetric, TeamSupportData, Widget } from 'api/api.types';
 import { WidgetService } from 'core/widget.service';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import _ from 'shared/common/underscore';
 
 @Component({
@@ -20,7 +20,7 @@ export class TeamSupportWidgetComponent {
   }
 
   @Input({ required: true })
-  widget!: Observable<Widget>;
+  widget!: BehaviorSubject<Widget>;
 
   ngOnInit() {
     this.widget

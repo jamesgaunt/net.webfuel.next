@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.Office2016.Drawing.Command;
+using DocumentFormat.OpenXml.Presentation;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.Identity.Client;
 using System;
@@ -19,6 +20,7 @@ namespace Webfuel.Reporting
         public string CustomReportProvider { get; set; } = String.Empty;
         public string CustomReportLauncher { get; set; } = String.Empty;
         public string CustomReportMetadata { get; set; } = String.Empty;
+        public string CustomReportTemplate { get; set; } = String.Empty;
 
         // Columns
 

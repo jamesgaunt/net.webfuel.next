@@ -1,27 +1,32 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Concurrent;
-using Webfuel.Domain.StaticData;
-using Webfuel.Terminal;
 
 namespace Webfuel.Domain
 {
+    public class RefreshWidgetResult
+    {
+        public required Widget Widget { get; set; }
+        public required bool Complete { get; set; }
+    }
+
     public class WidgetRefreshTask
     {
         public required Widget Widget { get; set; }
-
-        public object? GeneratorState { get; set; } = null;
+        
+        public object? State { get; set; }
+        public bool Complete { get; set; }
 
         internal DateTimeOffset CreatedAt { get; } = DateTimeOffset.UtcNow;
-        internal DateTimeOffset LastRefreshedAt { get; set; } = DateTimeOffset.UtcNow;
+        internal DateTimeOffset LastRefreshedAt { get; set; } = DateTimeOffset.MinValue;
     }
 
-    public class RefreshWidget : IRequest<Widget>
+    public class RefreshWidget : IRequest<RefreshWidgetResult>
     {
         public required Guid Id { get; set; }
     }
 
-    internal class RefreshWidgetHandler : IRequestHandler<RefreshWidget, Widget>
+    internal class RefreshWidgetHandler : IRequestHandler<RefreshWidget, RefreshWidgetResult>
     {
         private readonly IWidgetRepository _widgetRepository;
         private readonly IWidgetTypeRepository _widgetTypeRepository;
@@ -37,26 +42,28 @@ namespace Webfuel.Domain
             _serviceProvider = serviceProvider;
         }
 
-        public async Task<Widget> Handle(RefreshWidget request, CancellationToken cancellationToken)
+        public async Task<RefreshWidgetResult> Handle(RefreshWidget request, CancellationToken cancellationToken)
         {
             var task = RetrieveTask(request.Id);
-
             if (task == null)
-            {
                 task = await RegisterTask(request.Id);
-                return task.Widget;
-            }
 
-            // If the widgets data is current just return it
-            if (task.Widget.DataCurrent)
-                return task.Widget;
+            // If we have a task and it is complete then just return it (prevents running a new task too soon)
+            if (task.Complete)
+                return new RefreshWidgetResult { Complete = task.Complete, Widget = task.Widget };
 
-            // If the task was refresh too recently, just return the previous response
+            // If the task was refreshed too recently, just return the current state response
             if (task.LastRefreshedAt > DateTime.UtcNow.AddSeconds(-0.5))
-                return task.Widget;
+                return new RefreshWidgetResult { Complete = task.Complete, Widget = task.Widget };
 
+            // Refresh the task processing
             await RefreshTask(task);
-            return task.Widget;
+
+            // If the task is now complete update the database 
+            if (task.Complete)
+                await _widgetRepository.UpdateWidget(task.Widget);
+
+            return new RefreshWidgetResult { Complete = task.Complete, Widget = task.Widget };
         }
 
         async Task<WidgetRefreshTask> RegisterTask(Guid widgetId)
@@ -70,15 +77,13 @@ namespace Webfuel.Domain
                 Widget = widget,
             };
 
-            await RefreshTask(task);
-            
             return task;
         }
 
         async Task RefreshTask(WidgetRefreshTask task)
         {
             var provider = _serviceProvider.GetRequiredKeyedService<IWidgetDataProvider>(task.Widget.WidgetTypeId);
-            await provider.RefreshWidget(task);
+            await provider.RefreshTask(task);
             task.LastRefreshedAt = DateTime.UtcNow;
         }
 
@@ -112,11 +117,11 @@ namespace Webfuel.Domain
         {
             List<Guid> toRemove = new List<Guid>();
 
-            // Remove any tasks that have not been generated in the last 15 seconds
+            // Remove any tasks that have not been generated in the last 30 seconds
 
             foreach (var task in _tasks)
             {
-                if (task.Value.LastRefreshedAt <= DateTimeOffset.UtcNow.AddSeconds(-15))
+                if (task.Value.LastRefreshedAt <= DateTimeOffset.UtcNow.AddSeconds(-30))
                     toRemove.Add(task.Key);
             }
 

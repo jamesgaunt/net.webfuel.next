@@ -48,6 +48,7 @@ export class ManageWidgetDialogComponent extends DialogComponentBase<true, Manag
   }
 
   close() {
+    this.widgetService.loadWidgets();
     this._closeDialog(true);
   }
 

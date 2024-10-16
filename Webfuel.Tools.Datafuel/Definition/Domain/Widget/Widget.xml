@@ -14,7 +14,6 @@
 
     <Property Name="DataJson" Type="string" />
     <Property Name="DataVersion" Type="int" />
-    <Property Name="DataCurrent" Type="boolean" />
     <Property Name="DataTimestamp" Type="DateTime" />
     
     <Index Unique="false">

@@ -16,7 +16,8 @@ namespace Webfuel
             string sentBy,
             string replyTo,
             string subject,
-            string htmlBody);
+            string htmlBody,
+            Guid? entityId);
     }
 
     [Service(typeof(IEmailService))]
@@ -38,7 +39,8 @@ namespace Webfuel
             string sentBy,
             string replyTo,
             string subject,
-            string htmlBody)
+            string htmlBody,
+            Guid? entityId)
         {
             await _emailRelayService.SendAsync(
                 accountName: "rss-ucl",
@@ -61,6 +63,7 @@ namespace Webfuel
                 Subject = subject,
                 HtmlBody = htmlBody,
                 SentAt = DateTimeOffset.UtcNow,
+                EntityId = entityId ?? Guid.Empty
             });
         }
     }

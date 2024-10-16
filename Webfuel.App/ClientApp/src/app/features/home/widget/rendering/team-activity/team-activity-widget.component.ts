@@ -8,7 +8,7 @@ import { WidgetApi } from 'api/widget.api';
 import { DialogService } from 'core/dialog.service';
 import { FormService } from 'core/form.service';
 import { WidgetService } from 'core/widget.service';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import _ from 'shared/common/underscore';
 
 @Component({
@@ -29,7 +29,7 @@ export class TeamActivityWidgetComponent {
   }
 
   @Input({ required: true })
-  widget!: Observable<Widget>;
+  widget!: BehaviorSubject<Widget>;
 
   ngOnInit() {
     this.widget
@@ -58,7 +58,7 @@ export class TeamActivityWidgetComponent {
   private configDialogRef: DialogRef | undefined;
 
   configForm = new FormGroup({
-    supportTeamId: new FormControl<string | null>(null, { validators: [Validators.required]}),
+    supportTeamId: new FormControl<string | null>(null, { validators: [Validators.required] }),
   })
 
   editConfig() {
@@ -69,11 +69,12 @@ export class TeamActivityWidgetComponent {
     if (this.formService.hasErrors(this.configForm))
       return;
 
-    var configData = JSON.stringify(this.configForm.getRawValue());
+    var configJson = JSON.stringify(this.configForm.getRawValue());
 
-    //this.widgetApi.update({ id: this.widget.value.id, configData: configData }, { successGrowl: "Configuration Updated " }).subscribe((widget) => {
-    //  this.cancelConfig();
-    //});
+    this.widgetApi.update({ id: this.widget.value.id, configJson: configJson }, { successGrowl: "Configuration Updated" }).subscribe((widget) => {
+      this.widget.next(widget);
+      this.cancelConfig();
+    });
   }
 
   cancelConfig() {

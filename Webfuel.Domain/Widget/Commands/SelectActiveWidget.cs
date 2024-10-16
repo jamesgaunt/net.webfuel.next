@@ -29,9 +29,9 @@ namespace Webfuel.Domain
         {
             var identity = _identityAccessor.User;
             if (identity == null)
-                throw new InvalidOperationException("Invalid identity context");
+                return new List<Widget>();
 
-            var widgets = await _widgetRepository.SelectWidgetByUserId(identity.Id);
+            var widgets = await SelectWidgets(identity.Id);
 
             foreach (var widget in widgets)
             {

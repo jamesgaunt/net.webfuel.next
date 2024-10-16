@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { CreateWidget, Widget, UpdateWidget, SortWidget, WidgetType } from './api.types';
+import { CreateWidget, Widget, UpdateWidget, SortWidget, RefreshWidgetResult, WidgetType } from './api.types';
 
 @Injectable()
 export class WidgetApi {
@@ -25,8 +25,8 @@ export class WidgetApi {
         return this.apiService.request<undefined, any>("DELETE", "api/widget/" + params.id + "", undefined, options);
     }
     
-    public refresh (params: { id: string }, options?: ApiOptions): Observable<Widget> {
-        return this.apiService.request<undefined, Widget>("POST", "api/widget/refresh/" + params.id + "", undefined, options);
+    public refresh (params: { id: string }, options?: ApiOptions): Observable<RefreshWidgetResult> {
+        return this.apiService.request<undefined, RefreshWidgetResult>("POST", "api/widget/refresh/" + params.id + "", undefined, options);
     }
     
     public selectActive (options?: ApiOptions): Observable<Array<Widget>> {

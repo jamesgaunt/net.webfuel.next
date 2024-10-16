@@ -62,6 +62,7 @@ export class ReportItemComponent implements OnInit {
       customReportProvider: item.design.customReportProvider,
       customReportLauncher: item.design.customReportLauncher,
       customReportMetadata: item.design.customReportMetadata,
+      customReportTemplate: item.design.customReportTemplate,
     });
 
     this.form.markAsPristine();
@@ -79,6 +80,7 @@ export class ReportItemComponent implements OnInit {
     customReportProvider: new FormControl<string>('', { nonNullable: true }),
     customReportLauncher: new FormControl<string>('', { nonNullable: true }),
     customReportMetadata: new FormControl<string>('', { nonNullable: true }),
+    customReportTemplate: new FormControl<string>('', { nonNullable: true })
   });
 
   save(close: boolean) {
@@ -90,6 +92,7 @@ export class ReportItemComponent implements OnInit {
     value.design.customReportProvider = value.customReportProvider;
     value.design.customReportLauncher = value.customReportLauncher;
     value.design.customReportMetadata = value.customReportMetadata;
+    value.design.customReportTemplate = value.customReportTemplate;
 
     this.reportApi.update(value, { successGrowl: "Report  Updated" }).subscribe((result) => {
       this.reset(result);
@@ -117,7 +120,7 @@ export class ReportItemComponent implements OnInit {
   reportSchema!: ReportSchema;
 
   run() {
-    this.reportApi.update(this.form.getRawValue(), { successGrowl: "Report  Updated" }).subscribe((result) => {
+    this.reportApi.update(this.form.getRawValue(), { successGrowl: "Report Updated" }).subscribe((result) => {
       this.reset(result);
       this.reportLauncherDialog.open({ reportId: this.item.id });
     });

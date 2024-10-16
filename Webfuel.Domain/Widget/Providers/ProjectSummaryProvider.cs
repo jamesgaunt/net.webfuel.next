@@ -12,6 +12,11 @@ public class ProjectSummaryData
     public List<DashboardMetric> ProjectMetrics { get; set; } = new List<DashboardMetric>();
 }
 
+[ApiType]
+public class ProjectSummaryConfig
+{
+}
+
 public interface IProjectSummaryProvider: IWidgetDataProvider
 {
 }
@@ -34,26 +39,30 @@ internal class ProjectSummaryProvider : IProjectSummaryProvider
 
     // Public API
 
-    public async Task ValidateWidget(Widget widget)
-    {
-        var updated = widget.Copy();
-
-        if (widget.DataVersion != VERSION || widget.DataTimestamp > GlobalTimestamp)
-        {
-            updated.DataCurrent = false;
-        }
-
-        await _widgetRepository.UpdateWidget(original: widget, updated: updated);
-    }
-
-    public async Task RefreshWidget(WidgetRefreshTask task)
+    public async Task RefreshTask(WidgetRefreshTask task)
     {
         var data = await GenerateData();
 
         task.Widget.DataJson = JsonSerializer.Serialize(data, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
         task.Widget.DataVersion = VERSION;
-        task.Widget.DataCurrent = true;
         task.Widget.DataTimestamp = DateTimeOffset.UtcNow;
+        task.Complete = true;
+    }
+
+    public async Task<Widget> ValidateWidget(Widget widget)
+    {
+        var original = widget.Copy();
+
+        widget.DataJson = SafeJsonSerializer.Cycle<ProjectSummaryData>(widget.DataJson);
+        widget.ConfigJson = SafeJsonSerializer.Cycle<ProjectSummaryConfig>(widget.ConfigJson);
+        widget.HeaderText = "Project Summary";
+
+        return await _widgetRepository.UpdateWidget(original: original, updated: widget);
+    }
+
+    public Task<Widget> UpdateConfig(Widget widget, string configJson)
+    {
+        return Task.FromResult(widget);
     }
 
     // Generators (real time generation)

@@ -37,7 +37,8 @@ namespace Webfuel.Common
                 sentBy: Replace(template.SentBy, replacements),
                 replyTo: Replace(template.ReplyTo, replacements),
                 subject: Replace(template.Subject, replacements),
-                htmlBody: Format(Replace(template.HtmlTemplate, replacements)));
+                htmlBody: Format(Replace(template.HtmlTemplate, replacements)),
+                entityId: null);
         }
 
         string Format(string template)

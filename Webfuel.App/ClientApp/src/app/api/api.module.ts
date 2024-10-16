@@ -4,6 +4,7 @@ import { EmailTemplateApi } from './email-template.api';
 import { FileStorageEntryApi } from './file-storage-entry.api';
 import { PingApi } from './ping.api';
 import { StaticDataApi } from './static-data.api';
+import { TriageTemplateApi } from './triage-template.api';
 import { ProjectAdviserApi } from './project-adviser.api';
 import { ProjectApi } from './project.api';
 import { ProjectChangeLogApi } from './project-change-log.api';
@@ -74,6 +75,7 @@ import { StaticDataCache } from './static-data.cache';
         FileStorageEntryApi,
         PingApi,
         StaticDataApi,
+        TriageTemplateApi,
         ProjectAdviserApi,
         ProjectApi,
         ProjectChangeLogApi,

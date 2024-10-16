@@ -38,9 +38,6 @@ namespace Webfuel.Domain
                     case nameof(Widget.DataVersion):
                         result.Add(new SqlParameter(nameof(Widget.DataVersion), entity.DataVersion));
                         break;
-                    case nameof(Widget.DataCurrent):
-                        result.Add(new SqlParameter(nameof(Widget.DataCurrent), entity.DataCurrent));
-                        break;
                     case nameof(Widget.DataTimestamp):
                         result.Add(new SqlParameter(nameof(Widget.DataTimestamp), entity.DataTimestamp));
                         break;
@@ -82,7 +79,6 @@ namespace Webfuel.Domain
                 yield return "HeaderText";
                 yield return "DataJson";
                 yield return "DataVersion";
-                yield return "DataCurrent";
                 yield return "DataTimestamp";
                 yield return "UserId";
                 yield return "WidgetTypeId";
@@ -99,7 +95,6 @@ namespace Webfuel.Domain
                 yield return "HeaderText";
                 yield return "DataJson";
                 yield return "DataVersion";
-                yield return "DataCurrent";
                 yield return "DataTimestamp";
                 yield return "UserId";
                 yield return "WidgetTypeId";
@@ -115,7 +110,6 @@ namespace Webfuel.Domain
                 yield return "HeaderText";
                 yield return "DataJson";
                 yield return "DataVersion";
-                yield return "DataCurrent";
                 yield return "DataTimestamp";
                 yield return "UserId";
                 yield return "WidgetTypeId";

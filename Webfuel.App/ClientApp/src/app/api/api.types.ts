@@ -162,6 +162,9 @@ export interface DashboardMetric {
     backgroundColor: string;
 }
 
+export interface ProjectSummaryConfig {
+}
+
 export interface TeamActivityData {
     teamMembers: Array<TeamMember>;
 }
@@ -179,6 +182,9 @@ export interface TeamActivityConfig {
 
 export interface TeamSupportData {
     supportMetrics: Array<DashboardMetric>;
+}
+
+export interface TeamSupportConfig {
 }
 
 export interface ReportColumn {
@@ -337,6 +343,7 @@ export interface ReportDesign {
     customReportProvider: string;
     customReportLauncher: string;
     customReportMetadata: string;
+    customReportTemplate: string;
     columns: Array<ReportColumn>;
     latestColumnId: string;
     filters: Array<ReportFilter>;
@@ -856,6 +863,38 @@ export interface WorkActivity extends IStaticData {
     default: boolean;
     hidden: boolean;
     freeText: boolean;
+}
+
+export interface TriageTemplate {
+    id: string;
+    name: string;
+    sortOrder: number;
+    subject: string;
+    htmlTemplate: string;
+}
+
+export interface CreateTriageTemplate {
+    name: string;
+}
+
+export interface UpdateTriageTemplate {
+    id: string;
+    name: string;
+    subject: string;
+    htmlTemplate: string;
+}
+
+export interface SortTriageTemplate {
+    ids: Array<string>;
+}
+
+export interface QueryTriageTemplate extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
 }
 
 export interface Project {
@@ -1866,7 +1905,6 @@ export interface Widget {
     headerText: string;
     dataJson: string;
     dataVersion: number;
-    dataCurrent: boolean;
     dataTimestamp: string;
     userId: string;
     widgetTypeId: string;
@@ -1883,6 +1921,11 @@ export interface UpdateWidget {
 
 export interface SortWidget {
     ids: Array<string>;
+}
+
+export interface RefreshWidgetResult {
+    widget: Widget;
+    complete: boolean;
 }
 
 export interface WidgetType {

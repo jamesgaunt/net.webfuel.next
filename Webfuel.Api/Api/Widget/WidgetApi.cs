@@ -56,7 +56,7 @@ namespace Webfuel.App
             return mediator.Send(new DeleteWidget { Id = id });
         }
 
-        public static Task<Widget> Refresh(Guid id, IMediator mediator)
+        public static Task<RefreshWidgetResult> Refresh(Guid id, IMediator mediator)
         {
             return mediator.Send(new RefreshWidget { Id = id });
         }

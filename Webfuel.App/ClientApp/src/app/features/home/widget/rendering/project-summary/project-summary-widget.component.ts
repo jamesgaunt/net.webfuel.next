@@ -21,7 +21,7 @@ export class ProjectSummaryWidgetComponent {
   }
 
   @Input({ required: true })
-  widget!: Observable<Widget>;
+  widget!: BehaviorSubject<Widget>;
 
   ngOnInit() {
     this.widget

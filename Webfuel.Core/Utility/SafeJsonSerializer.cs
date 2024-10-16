@@ -35,5 +35,10 @@ namespace Webfuel
                 return "{}";
             }
         }
+
+        public static string Cycle<T>(string json) where T : class, new()
+        {
+            return Serialize(Deserialize<T>(json));
+        }
     }
 }

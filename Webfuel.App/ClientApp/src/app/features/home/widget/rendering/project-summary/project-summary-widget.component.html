@@ -1,4 +1,4 @@
-<h4>Project Summary</h4>
+<h4>{{ (widget|async)?.headerText }}</h4>
 <div class="dashboard-metrics">
   <a class="dashboard-metric" *ngFor="let metric of data.projectMetrics" routerLink="{{ metric.routerLink }}" [queryParams]="routerParams(metric)">
     <div class="icon"><i class="{{ metric.icon }}"></i></div>

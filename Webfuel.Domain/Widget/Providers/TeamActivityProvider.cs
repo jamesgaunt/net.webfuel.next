@@ -60,61 +60,47 @@ internal class TeamActivityProvider : ITeamActivityProvider
 
     // Public API
 
-    public async Task ValidateWidget(Widget widget)
-    {
-        var updated = widget.Copy();
-
-        if (widget.DataVersion != VERSION || widget.DataTimestamp > GlobalTimestamp)
-        {
-            updated.DataCurrent = false;
-        }
-
-        await _widgetRepository.UpdateWidget(original: widget, updated: updated);
-    }
-
-    public async Task RefreshWidget(WidgetRefreshTask task)
+    public async Task RefreshTask(WidgetRefreshTask task)
     {
         await RunReport(task);
     }
 
-    // Config
-
-    Task<TeamActivityConfig> LoadConfig(Widget widget)
+    public async Task<Widget> ValidateWidget(Widget widget)
     {
-        try
-        {
-            var config = JsonSerializer.Deserialize<TeamActivityConfig>(widget.ConfigJson, SerializerOptions);
-            if (config == null)
-                return DefaultConfig();
+        var original = widget.Copy();
 
-            if (config.SupportTeamId == null)
-                config.SupportTeamId = SupportTeamEnum.TriageTeam;
+        widget.DataJson = SafeJsonSerializer.Cycle<TeamActivityData>(widget.DataJson);
+        widget.ConfigJson = SafeJsonSerializer.Cycle<TeamActivityConfig>(widget.ConfigJson);
+        widget.HeaderText = "Team Activity";
 
-            return Task.FromResult(config);
-        }
-        catch { /* GULP */ }
-        return DefaultConfig();
+        return  await _widgetRepository.UpdateWidget(original: original, updated: widget);
     }
 
-    Task<TeamActivityConfig> DefaultConfig()
+    public async Task<Widget> UpdateConfig(Widget widget, string configJson)
     {
-        return Task.FromResult(new TeamActivityConfig
+        var original = widget.Copy();
+
+        widget.ConfigJson = SafeJsonSerializer.Cycle<TeamActivityConfig>(configJson);
+        
+        if(widget.ConfigJson != original.ConfigJson)
         {
-            SupportTeamId = SupportTeamEnum.TriageTeam
-        });
+            await _widgetRepository.UpdateWidget(original: original, updated: widget);
+        }
+
+        return widget;
     }
 
     // Implementation
 
     async Task RunReport(WidgetRefreshTask task)
     {
-        if(task.GeneratorState is not ReportStep reportStep)
+        var config = SafeJsonSerializer.Deserialize<TeamActivityConfig>(task.Widget.ConfigJson);
+
+        if (task.State is not ReportStep reportStep)
         {
             // Initialise the Report Task
 
             var report = await _serviceProvider.GetRequiredService<IReportService>().GetDefaultNamedReport("Team Activity Report", ReportProviderEnum.CustomReport);
-
-            var config = await LoadConfig(task.Widget);
 
             var runReport = new RunReport
             {
@@ -127,13 +113,13 @@ internal class TeamActivityProvider : ITeamActivityProvider
                 }
             };
 
-            task.GeneratorState = await _mediator.Send(runReport);
+            task.State = await _mediator.Send(runReport);
             return;
         }
 
         // Generate the Report Task
 
-        task.GeneratorState = reportStep = await _reportGeneratorService.GenerateReport(reportStep.TaskId);
+        task.State = reportStep = await _reportGeneratorService.GenerateReport(reportStep.TaskId);
 
         if (reportStep.Complete)
         {
@@ -144,8 +130,8 @@ internal class TeamActivityProvider : ITeamActivityProvider
 
             task.Widget.DataJson = JsonSerializer.Serialize(MapReportData(reportData), SerializerOptions);
             task.Widget.DataVersion = VERSION;
-            task.Widget.DataCurrent = true;
             task.Widget.DataTimestamp = DateTimeOffset.UtcNow;
+            task.Complete = true;
         }
     }
 

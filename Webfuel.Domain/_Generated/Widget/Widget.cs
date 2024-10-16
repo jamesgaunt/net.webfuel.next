@@ -36,9 +36,6 @@ namespace Webfuel.Domain
                     case nameof(Widget.DataVersion):
                         DataVersion = (int)value!;
                         break;
-                    case nameof(Widget.DataCurrent):
-                        DataCurrent = (bool)value!;
-                        break;
                     case nameof(Widget.DataTimestamp):
                         DataTimestamp = (DateTimeOffset)value!;
                         break;
@@ -57,7 +54,6 @@ namespace Webfuel.Domain
         public string HeaderText  { get; set; } = String.Empty;
         public string DataJson  { get; set; } = String.Empty;
         public int DataVersion  { get; set; } = 0;
-        public bool DataCurrent  { get; set; } = false;
         public DateTimeOffset DataTimestamp  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid UserId { get; set; }
         public Guid WidgetTypeId { get; set; }
@@ -70,7 +66,6 @@ namespace Webfuel.Domain
             entity.HeaderText = HeaderText;
             entity.DataJson = DataJson;
             entity.DataVersion = DataVersion;
-            entity.DataCurrent = DataCurrent;
             entity.DataTimestamp = DataTimestamp;
             entity.UserId = UserId;
             entity.WidgetTypeId = WidgetTypeId;
