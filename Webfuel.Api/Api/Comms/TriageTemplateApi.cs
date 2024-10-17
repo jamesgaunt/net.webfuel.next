@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Webfuel.Common;
 using Webfuel.Domain;
 using Webfuel.Domain.StaticData;
 
@@ -24,9 +25,12 @@ namespace Webfuel.App
 
             app.MapDelete("api/triage-template/{id:guid}", Delete)
                 .RequireClaim(c => c.CanEditStaticData);
-            
+
+            app.MapPut("api/triage-template/generate-email", GenerateEmail)
+                .RequireIdentity();
+
             // Querys
-            
+
             app.MapPost("api/triage-template/query", Query)
                 .RequireIdentity();
 
@@ -44,7 +48,6 @@ namespace Webfuel.App
             return mediator.Send(command);
         }
 
-
         public static Task Sort([FromBody] SortTriageTemplate command, IMediator mediator)
         {
             return mediator.Send(command);
@@ -54,7 +57,12 @@ namespace Webfuel.App
         {
             return mediator.Send(new DeleteTriageTemplate { Id = id });
         }
-        
+
+        public static Task<SendEmailRequest> GenerateEmail([FromBody] GenerateTriageTemplateEmail command, IMediator mediator)
+        {
+            return mediator.Send(command);
+        }
+
         public static Task<QueryResult<TriageTemplate>> Query([FromBody] QueryTriageTemplate command, IMediator mediator)
         {
             return mediator.Send(command);

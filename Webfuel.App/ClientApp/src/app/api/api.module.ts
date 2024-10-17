@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { ConfigurationApi } from './configuration.api';
+import { EmailApi } from './email.api';
 import { EmailTemplateApi } from './email-template.api';
 import { FileStorageEntryApi } from './file-storage-entry.api';
 import { PingApi } from './ping.api';
@@ -71,6 +72,7 @@ import { StaticDataCache } from './static-data.cache';
 @NgModule({
     providers: [
         ConfigurationApi,
+        EmailApi,
         EmailTemplateApi,
         FileStorageEntryApi,
         PingApi,

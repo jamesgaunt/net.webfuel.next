@@ -8,8 +8,8 @@ namespace Webfuel.Common
         public required string Subject { get; set; }
         public required string HtmlBody { get; set; }
 
-        public List<string> SendTo { get; set; } = new List<string>();
-        public List<string> SendCc { get; set; } = new List<string>();
+        public required string SendTo { get; set; }
+        public string SendCc { get; set; } = String.Empty;
 
         public required string SentBy { get; set; }
         public required string ReplyTo { get; set; }

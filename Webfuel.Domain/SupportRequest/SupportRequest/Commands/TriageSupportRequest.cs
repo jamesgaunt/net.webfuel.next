@@ -66,7 +66,9 @@ namespace Webfuel.Domain
                 {
                     var _updatedTriageNote = original.Copy();
                     _updatedTriageNote.TriageNote = request.TriageNote;
+
                     original = await _supportRequestRepository.UpdateSupportRequest(original: original, updated: _updatedTriageNote);
+                    await _supportRequestChangeLogService.InsertChangeLog(original: original, updated: _updatedTriageNote);
                 }
 
                 return original; // No change to status

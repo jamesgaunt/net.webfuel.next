@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.Presentation;
+﻿using DocumentFormat.OpenXml.Office2010.Drawing;
+using DocumentFormat.OpenXml.Presentation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,6 +7,7 @@ using Microsoft.Identity.Client;
 using System.Text.Json;
 using Webfuel.Domain.StaticData;
 using Webfuel.Reporting;
+using Webfuel.Terminal;
 
 namespace Webfuel.Domain;
 
@@ -29,10 +31,10 @@ public class TeamActivityData
 [ApiType]
 public class TeamActivityConfig
 {
-    public Guid? SupportTeamId { get; set; }
+    public Guid SupportTeamId { get; set; } = SupportTeamEnum.TriageTeam;
 }
 
-public interface ITeamActivityProvider : IWidgetDataProvider
+public interface ITeamActivityProvider : IWidgetProvider
 {
 }
 
@@ -42,65 +44,47 @@ internal class TeamActivityProvider : ITeamActivityProvider
     const int VERSION = 1;
 
     private readonly IMediator _mediator;
+    private readonly IReportService _reportService;
     private readonly IWidgetRepository _widgetRepository;
     private readonly IReportGeneratorService _reportGeneratorService;
-    private readonly IServiceProvider _serviceProvider;
+    private readonly IStaticDataService _staticDataService;
 
     public TeamActivityProvider(
         IMediator mediator,
         IWidgetRepository widgetRepository,
+        IReportService reportService,
         IReportGeneratorService reportGeneratorService,
-        IServiceProvider serviceProvider)
+        IStaticDataService staticDataService)
     {
         _mediator = mediator;
+        _reportService = reportService;
         _widgetRepository = widgetRepository;
         _reportGeneratorService = reportGeneratorService;
-        _serviceProvider = serviceProvider;
+        _staticDataService = staticDataService;
     }
 
     // Public API
 
-    public async Task RefreshTask(WidgetRefreshTask task)
+    public Task<Widget> Initialise(Widget widget)
     {
-        await RunReport(task);
-    }
-
-    public async Task<Widget> ValidateWidget(Widget widget)
-    {
-        var original = widget.Copy();
-
-        widget.DataJson = SafeJsonSerializer.Cycle<TeamActivityData>(widget.DataJson);
-        widget.ConfigJson = SafeJsonSerializer.Cycle<TeamActivityConfig>(widget.ConfigJson);
         widget.HeaderText = "Team Activity";
-
-        return  await _widgetRepository.UpdateWidget(original: original, updated: widget);
+        widget.DataJson = SafeJsonSerializer.Serialize(new TeamActivityData());
+        return Task.FromResult(widget);
     }
 
-    public async Task<Widget> UpdateConfig(Widget widget, string configJson)
+    public async Task<WidgetTaskStatus> ProcessTask(WidgetTask task)
     {
-        var original = widget.Copy();
-
-        widget.ConfigJson = SafeJsonSerializer.Cycle<TeamActivityConfig>(configJson);
-        
-        if(widget.ConfigJson != original.ConfigJson)
-        {
-            await _widgetRepository.UpdateWidget(original: original, updated: widget);
-        }
-
-        return widget;
+        return await RunReport(task);
     }
 
     // Implementation
 
-    async Task RunReport(WidgetRefreshTask task)
+    async Task<WidgetTaskStatus> RunReport(WidgetTask task)
     {
-        var config = SafeJsonSerializer.Deserialize<TeamActivityConfig>(task.Widget.ConfigJson);
-
         if (task.State is not ReportStep reportStep)
         {
-            // Initialise the Report Task
-
-            var report = await _serviceProvider.GetRequiredService<IReportService>().GetDefaultNamedReport("Team Activity Report", ReportProviderEnum.CustomReport);
+            var config = SafeJsonSerializer.Deserialize<TeamActivityConfig>(task.Widget.ConfigJson);
+            var report = await _reportService.GetDefaultNamedReport("Team Activity Report", ReportProviderEnum.CustomReport);
 
             var runReport = new RunReport
             {
@@ -114,24 +98,32 @@ internal class TeamActivityProvider : ITeamActivityProvider
             };
 
             task.State = await _mediator.Send(runReport);
-            return;
+            return WidgetTaskStatus.Processing;
         }
 
         // Generate the Report Task
 
         task.State = reportStep = await _reportGeneratorService.GenerateReport(reportStep.TaskId);
+        if (!reportStep.Complete)
+            return WidgetTaskStatus.Processing;
 
-        if (reportStep.Complete)
+        if (_reportGeneratorService.ExtractReportData(reportStep.TaskId) is not TeamActivityReportData reportData)
+            throw new InvalidOperationException("Report did not return the expected data type");
+
+        // We have the final report data
         {
-            if (_reportGeneratorService.ExtractReportData(reportStep.TaskId) is not TeamActivityReportData reportData)
-                throw new InvalidOperationException("Report did not return the expected data type");
+            var config = SafeJsonSerializer.Deserialize<TeamActivityConfig>(task.Widget.ConfigJson);
 
-            // We have the final report data
-
-            task.Widget.DataJson = JsonSerializer.Serialize(MapReportData(reportData), SerializerOptions);
+            task.Widget.DataJson = SafeJsonSerializer.Serialize(MapReportData(reportData));
             task.Widget.DataVersion = VERSION;
             task.Widget.DataTimestamp = DateTimeOffset.UtcNow;
-            task.Complete = true;
+
+            var supportTeam = await _staticDataService.GetSupportTeam(config.SupportTeamId);
+            task.Widget.HeaderText = "Team Activity: " + (supportTeam?.Name ?? "Invalid Team Id");
+
+            task.Widget = await _widgetRepository.UpdateWidget(task.Widget);
+
+            return WidgetTaskStatus.Complete;
         }
     }
 
@@ -140,7 +132,7 @@ internal class TeamActivityProvider : ITeamActivityProvider
         // Map data from the report into data for the widget
 
         var data = new TeamActivityData();
-        foreach(var user in reportData.Users)
+        foreach (var user in reportData.Users)
         {
             data.TeamMembers.Add(new TeamActivityData.TeamMember
             {
@@ -152,8 +144,6 @@ internal class TeamActivityProvider : ITeamActivityProvider
         }
         return data;
     }
-
-    static JsonSerializerOptions SerializerOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
     // Cache
 

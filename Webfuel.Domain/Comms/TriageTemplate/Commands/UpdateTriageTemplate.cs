@@ -12,10 +12,14 @@ public class UpdateTriageTemplate : IRequest<TriageTemplate>
 internal class UpdateTriageTemplateHandler : IRequestHandler<UpdateTriageTemplate, TriageTemplate>
 {
     private readonly ITriageTemplateRepository _triageTemplateRepository;
+    private readonly IHtmlSanitizerService _htmlSanitizerService;
 
-    public UpdateTriageTemplateHandler(ITriageTemplateRepository triageTemplateRepository)
+    public UpdateTriageTemplateHandler(
+        ITriageTemplateRepository triageTemplateRepository,
+        IHtmlSanitizerService htmlSanitizerService)
     {
         _triageTemplateRepository = triageTemplateRepository;
+        _htmlSanitizerService = htmlSanitizerService;
     }
 
     public async Task<TriageTemplate> Handle(UpdateTriageTemplate request, CancellationToken cancellationToken)
@@ -25,7 +29,7 @@ internal class UpdateTriageTemplateHandler : IRequestHandler<UpdateTriageTemplat
         var updated = original.Copy();
         updated.Name = request.Name;
         updated.Subject = request.Subject;
-        updated.HtmlTemplate = request.HtmlTemplate;
+        updated.HtmlTemplate = _htmlSanitizerService.SanitizeHtml(request.HtmlTemplate);
 
         updated = await _triageTemplateRepository.UpdateTriageTemplate(original: original, updated: updated);
         return updated;

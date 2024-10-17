@@ -89,11 +89,8 @@ namespace Webfuel.Domain
                 updated.SupportRequestedAt = DateOnly.FromDateTime(DateTime.Today);
             }
 
-            var sendTeamSupportRequestedEmail = false;
-            if (updated.SupportRequestedTeamId.HasValue && updated.SupportRequestedTeamId != projectSupport.SupportRequestedTeamId)
-            {
-                sendTeamSupportRequestedEmail = true;
-            }
+            var sendTeamSupportRequestedEmail = 
+                updated.SupportRequestedTeamId.HasValue && updated.SupportRequestedTeamId != projectSupport.SupportRequestedTeamId;
 
             var cb = new RepositoryCommandBuffer();
             {
@@ -108,8 +105,8 @@ namespace Webfuel.Domain
                 await _projectRepository.UpdateProject(original: project, updated: updatedProject);
             }
 
-            if(updated.SupportRequestedTeamId.HasValue && sendTeamSupportRequestedEmail)
-                await _projectAdviserService.SendTeamSupportRequestedEmail(project: project, supportTeamId: updated.SupportRequestedTeamId.Value);
+            if (sendTeamSupportRequestedEmail)
+                await _projectAdviserService.SendTeamSupportRequestedEmail(project: project, supportTeamId: updated.SupportRequestedTeamId!.Value);
 
             TeamSupportProvider.FlushSupportMetrics();
 

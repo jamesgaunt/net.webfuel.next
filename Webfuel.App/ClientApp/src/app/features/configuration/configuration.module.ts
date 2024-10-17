@@ -7,6 +7,9 @@ import { ConfigurationMenuComponent } from './configuration-menu/configuration-m
 import { EmailTemplateListComponent } from './email-template/email-template-list/email-template-list.component';
 import { CreateEmailTemplateDialog, CreateEmailTemplateDialogComponent } from './email-template/create-email-template/create-email-template.dialog';
 import { EmailTemplateItemComponent } from './email-template/email-template-item/email-template-item.component';
+import { CreateTriageTemplateDialog, CreateTriageTemplateDialogComponent } from './triage-template/create-triage-template/create-triage-template.dialog';
+import { TriageTemplateItemComponent } from './triage-template/triage-template-item/triage-template-item.component';
+import { TriageTemplateListComponent } from './triage-template/triage-template-list/triage-template-list.component';
 
 @NgModule({
   imports: [
@@ -16,13 +19,18 @@ import { EmailTemplateItemComponent } from './email-template/email-template-item
   ],
   declarations: [
     ConfigurationMenuComponent,
+
     EmailTemplateListComponent,
     EmailTemplateItemComponent,
-
     CreateEmailTemplateDialogComponent,
+
+    TriageTemplateListComponent,
+    TriageTemplateItemComponent,
+    CreateTriageTemplateDialogComponent
   ],
   providers: [
     CreateEmailTemplateDialog,
+    CreateTriageTemplateDialog
   ]
 })
 export class ConfigurationModule { }

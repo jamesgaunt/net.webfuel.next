@@ -9,12 +9,7 @@ public class TeamSupportData
     public List<DashboardMetric> SupportMetrics { get; set; } = new List<DashboardMetric>();
 }
 
-[ApiType]
-public class TeamSupportConfig
-{
-}
-
-public interface ITeamSupportProvider : IWidgetDataProvider
+public interface ITeamSupportProvider : IWidgetProvider
 {
 }
 
@@ -42,30 +37,26 @@ internal class TeamSupportProvider : ITeamSupportProvider
 
     // Public API
 
-    public async Task RefreshTask(WidgetRefreshTask task)
+    public Task<Widget> Initialise(Widget widget)
     {
+        widget.HeaderText = "Team Summary";
+        widget.DataJson = SafeJsonSerializer.Serialize(new TeamSupportData());
+        return Task.FromResult(widget);
+    }
+
+    public async Task<WidgetTaskStatus> ProcessTask(WidgetTask task)
+    {
+        if (task.Widget.DataVersion == VERSION && task.Widget.DataTimestamp > GlobalTimestamp)
+            return WidgetTaskStatus.Complete;
+
         var data = await GenerateData();
 
         task.Widget.DataJson = JsonSerializer.Serialize(data, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
         task.Widget.DataVersion = VERSION;
         task.Widget.DataTimestamp = DateTimeOffset.UtcNow;
-        task.Complete = true;
-    }
+        task.Widget = await _widgetRepository.UpdateWidget(task.Widget);
 
-    public async Task<Widget> ValidateWidget(Widget widget)
-    {
-        var original = widget.Copy();
-
-        widget.DataJson = SafeJsonSerializer.Cycle<TeamSupportData>(widget.DataJson);
-        widget.ConfigJson = SafeJsonSerializer.Cycle<TeamSupportConfig>(widget.ConfigJson);
-        widget.HeaderText = "Team Support";
-
-        return await _widgetRepository.UpdateWidget(original: original, updated: widget);
-    }
-
-    public Task<Widget> UpdateConfig(Widget widget, string configJson)
-    {
-        return Task.FromResult(widget);
+        return WidgetTaskStatus.Complete;
     }
 
     // Generators (real time generation)

@@ -1,0 +1,34 @@
+<ul class="breadcrumbs">
+  <li><a routerLink="/home">Home</a></li>
+  <li><a routerLink="/configuration/configuration-menu">Configuration</a></li>
+  <li><a routerLink="/configuration/triage-template-list">Triage Template</a></li>
+</ul>
+<div class="container">
+  <div class="columns">
+    <div class="column">
+      <h1 class="title">Triage Template</h1>
+    </div>
+  </div>
+  <form class="form" [formGroup]="form">
+    <div class="flex">
+      <div class="field is-4">
+        <label class="label">Name</label>
+        <input type="text" class="input" formControlName="name" placeholder="required" />
+      </div>
+      <div class="field is-12">
+        <label class="label">Subject</label>
+        <input type="text" class="input" formControlName="subject" placeholder="optional" />
+      </div>
+      <div class="field is-12">
+        <label class="label">Template</label>
+        <html-editor formControlName="htmlTemplate" [height]="600" placeholder="required"></html-editor>
+      </div>
+    </div>
+  </form>
+  <div class="floating-buttons">
+    <button class="button is-success" (click)="save(false)">Save (and sanitize HTML)</button>
+    <button class="button" (click)="cancel()">Close</button>
+  </div>
+</div>
+
+

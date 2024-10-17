@@ -33,6 +33,10 @@ export class ProjectSummaryWidgetComponent {
       });
   }
 
+  isProcessing() {
+    return this.widgetService.isProcessing(this.widget.value.id);
+  }
+
   data: ProjectSummaryData = {
     projectMetrics: []
   };

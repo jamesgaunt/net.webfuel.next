@@ -12,16 +12,13 @@ namespace Webfuel.Domain
     internal class SelectActiveWidgetHandler : IRequestHandler<SelectActiveWidget, List<Widget>>
     {
         private readonly IWidgetRepository _widgetRepository;
-        private readonly IServiceProvider _serviceProvider;
         private readonly IIdentityAccessor _identityAccessor;
 
         public SelectActiveWidgetHandler(
             IWidgetRepository widgetRepository, 
-            IServiceProvider serviceProvider,
             IIdentityAccessor identityAccessor)
         {
             _widgetRepository = widgetRepository;
-            _serviceProvider = serviceProvider;
             _identityAccessor = identityAccessor;
         }
 
@@ -31,15 +28,7 @@ namespace Webfuel.Domain
             if (identity == null)
                 return new List<Widget>();
 
-            var widgets = await SelectWidgets(identity.Id);
-
-            foreach (var widget in widgets)
-            {
-                var provider = _serviceProvider.GetRequiredKeyedService<IWidgetDataProvider>(widget.WidgetTypeId);
-                await provider.ValidateWidget(widget);
-            }
-
-            return widgets;
+            return await SelectWidgets(identity.Id);
         }
 
         async Task<List<Widget>> SelectWidgets(Guid userId)
@@ -62,13 +51,17 @@ namespace Webfuel.Domain
             result.Add(await _widgetRepository.InsertWidget(new Widget
             {
                 UserId = userId,
-                WidgetTypeId = WidgetTypeEnum.ProjectSummary
+                WidgetTypeId = WidgetTypeEnum.ProjectSummary,
+                HeaderText = "Project Summary",
+                SortOrder = 1
             }));
 
             result.Add(await _widgetRepository.InsertWidget(new Widget
             {
                 UserId = userId,
-                WidgetTypeId = WidgetTypeEnum.TeamSupport
+                WidgetTypeId = WidgetTypeEnum.TeamSupport,
+                HeaderText = "Team Support",
+                SortOrder = 2
             }));
 
             return result;

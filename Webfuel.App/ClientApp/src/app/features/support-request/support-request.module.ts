@@ -11,6 +11,7 @@ import { SupportRequestResearcherComponent } from './support-request/support-req
 import { SupportRequestHistoryComponent } from './support-request/support-request-history/support-request-history.component';
 
 import { TriageSupportRequestDialog, TriageSupportRequestDialogComponent } from './support-request/dialogs/triage-support-request/triage-support-request.dialog';
+import { SendTriageTemplateDialogComponent, SendTriageTemplateDialog } from './support-request/dialogs/send-triage-template/send-triage-template.dialog';
 
 @NgModule({
   imports: [
@@ -27,9 +28,11 @@ import { TriageSupportRequestDialog, TriageSupportRequestDialogComponent } from 
     SupportRequestHistoryComponent,
 
     TriageSupportRequestDialogComponent,
+    SendTriageTemplateDialogComponent,
   ],
   providers: [
-    TriageSupportRequestDialog
+    TriageSupportRequestDialog,
+    SendTriageTemplateDialog,
   ]
 })
 export class SupportRequestModule { }

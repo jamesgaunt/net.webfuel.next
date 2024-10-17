@@ -15,9 +15,9 @@ namespace Webfuel.Domain
             services.RegisterValidatorsFromAssembly(typeof(DomainRegistration).Assembly);
 
             // Register Keyed Widget Data Providers 
-            services.AddKeyedTransient<IWidgetDataProvider, ProjectSummaryProvider>(WidgetTypeEnum.ProjectSummary);
-            services.AddKeyedTransient<IWidgetDataProvider, TeamSupportProvider>(WidgetTypeEnum.TeamSupport);
-            services.AddKeyedTransient<IWidgetDataProvider, TeamActivityProvider>(WidgetTypeEnum.TeamActivity);
+            services.AddKeyedTransient<IWidgetProvider, ProjectSummaryProvider>(WidgetTypeEnum.ProjectSummary);
+            services.AddKeyedTransient<IWidgetProvider, TeamSupportProvider>(WidgetTypeEnum.TeamSupport);
+            services.AddKeyedTransient<IWidgetProvider, TeamActivityProvider>(WidgetTypeEnum.TeamActivity);
         }
     }
 }

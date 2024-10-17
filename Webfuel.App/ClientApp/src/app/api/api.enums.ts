@@ -15,6 +15,13 @@ export enum QueryOp {
     Or = "or",
 }
 
+export enum WidgetTaskStatus {
+    Deferred = 0,
+    Processing = 10,
+    Complete = 20,
+    Cancelled = 999,
+}
+
 export enum WidgetTypeEnum {
     ProjectSummary = "4f5bed07-af06-40c5-a7ed-ad283e57e503",
     TeamSupport = "54d1db4b-2b37-4d20-9e55-ffe2529446ac",

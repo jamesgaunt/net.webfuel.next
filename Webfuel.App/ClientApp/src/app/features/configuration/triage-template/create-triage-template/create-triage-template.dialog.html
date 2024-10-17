@@ -1,0 +1,18 @@
+<form class="form dialog" [formGroup]="form">
+  <div class="dialog-head">
+    Create Triage Template
+  </div>
+  <div class="dialog-body">
+    <div class="grid has-columns-3">
+      <div class="field column-span-3">
+        <label class="label">Name</label>
+        <input class="input" type="text" placeholder="required" formControlName="name" />
+      </div>
+    </div>
+  </div>
+  <div class="dialog-buttons">
+    <button type="submit" class="is-success" (click)="save()">Add</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+  </div>
+</form>
+

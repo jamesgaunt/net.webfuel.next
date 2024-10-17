@@ -7,5 +7,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Webfuel.Api\Webfuel.Api.csproj" />
     <ProjectReference Include="..\Webfuel.Domain\Webfuel.Domain.csproj" />
+    <ProjectReference Include="..\Webfuel.Tools.Datafuel\Webfuel.Tools.Datafuel.csproj" />
   </ItemGroup>
 </Project>

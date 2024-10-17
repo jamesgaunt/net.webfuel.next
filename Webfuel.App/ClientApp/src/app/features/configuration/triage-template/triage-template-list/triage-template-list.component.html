@@ -1,0 +1,19 @@
+<ul class="breadcrumbs">
+  <li><a routerLink="/home">Home</a></li>
+  <li><a routerLink="/configuration/configuration-menu">Configuration</a></li>
+  <li><a routerLink="/configuration/triage-template-list">Triage Templates</a></li>
+</ul>
+<div class="container">
+  <div class="columns">
+    <div class="column">
+      <h1 class="title">Triage Templates</h1>
+    </div>
+  </div>
+  <grid [dataSource]="triageTemplateApi" stateKey="TriageTemplateList">
+    <grid-column name="name" />
+    <grid-column name="subject" />
+    <grid-action-column (add)="add()" (edit)="edit($event)" [canDelete]="false" />
+  </grid>
+</div>
+
+

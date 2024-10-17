@@ -61,6 +61,7 @@ export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, T
         this.fetch();
         return;
       }
+
       this.saveState();
       this.sorting = false;
       this.items = response.items;

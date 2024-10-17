@@ -1,0 +1,22 @@
+<form class="form dialog is-warning" [formGroup]="form">
+  <div class="dialog-head">
+    Send Triage Email
+  </div>
+  <div class="dialog-body">
+    <div class="message is-warning">
+      This feature is currently in test. The generated email template will be setup to send to your email address only.
+      <br/><br/>
+      You can edit the template to add additional emails. Please ensure you check the content of the email carefully and
+      add any additional information required before sending.
+    </div>
+    <div class="field">
+      <label class="label">Template</label>
+      <dropdown-select [dataSource]="triageTemplateApi" placeholder="required" formControlName="triageTemplateId"></dropdown-select>
+    </div>
+  </div>
+  <div class="dialog-buttons">
+    <button type="submit" class="is-success" (click)="save()">Select Template</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+  </div>
+</form>
+

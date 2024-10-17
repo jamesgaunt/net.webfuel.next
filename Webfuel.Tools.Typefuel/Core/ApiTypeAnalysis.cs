@@ -58,7 +58,7 @@ namespace Webfuel.Tools.Typefuel
 
             while (true)
             {
-                if (IsNullableType(type))
+                if (IsNullableWrapperType(type))
                     wrappers.Add(ApiTypeWrapper.Nullable);
                 else if (IsEnumerableType(type))
                     wrappers.Add(ApiTypeWrapper.Enumerable);
@@ -130,7 +130,7 @@ namespace Webfuel.Tools.Typefuel
                 type.GetGenericTypeDefinition() == typeof(IReadOnlyList<>);
         }
 
-        public static bool IsNullableType(Type type)
+        public static bool IsNullableWrapperType(Type type)
         {
             if (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
                 return true;

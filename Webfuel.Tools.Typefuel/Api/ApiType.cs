@@ -103,6 +103,20 @@ namespace Webfuel.Tools.Typefuel
                 apiTypeProperty.JsonIgnore = property.GetCustomAttribute<JsonIgnoreAttribute>() != null;
                 apiTypeProperty.Optional = property.GetCustomAttribute<ApiOptionalAttribute>() != null;
 
+                var nullabilityInfoContext = new NullabilityInfoContext();
+                apiTypeProperty.Nullable = false;
+                if (ApiTypeAnalysis.IsNullableWrapperType(property.PropertyType))
+                {
+                    apiTypeProperty.Nullable = true;
+                }
+                else
+                {
+                    var nullabilityInfo = nullabilityInfoContext.Create(property);
+                    if (nullabilityInfo.WriteState is NullabilityState.Nullable)
+                        apiTypeProperty.Nullable = true;
+                }
+
+                /*
                 var nullableAttribute = property.GetCustomAttributes().FirstOrDefault(p => p.GetType().Name == "NullableAttribute");
                 if (ApiTypeAnalysis.IsNullableType(property.PropertyType))
                 {
@@ -117,6 +131,7 @@ namespace Webfuel.Tools.Typefuel
                 {
                     apiTypeProperty.Nullable = false;
                 }
+                */
 
                 complexType.Properties.Add(apiTypeProperty);
             }
@@ -176,9 +191,9 @@ namespace Webfuel.Tools.Typefuel
 
         public bool JsonIgnore { get; set; }
 
-        public bool Nullable { get; set; }
-
         public bool Optional { get; set; }
+
+        public bool Nullable { get; set; }
 
         public ApiTypeDescriptor TypeDescriptor { get; set; }
     }

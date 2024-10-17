@@ -1,4 +1,5 @@
 ﻿using Azure.Core.Serialization;
+using DocumentFormat.OpenXml.Drawing;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -12,12 +13,7 @@ public class ProjectSummaryData
     public List<DashboardMetric> ProjectMetrics { get; set; } = new List<DashboardMetric>();
 }
 
-[ApiType]
-public class ProjectSummaryConfig
-{
-}
-
-public interface IProjectSummaryProvider: IWidgetDataProvider
+public interface IProjectSummaryProvider: IWidgetProvider
 {
 }
 
@@ -39,30 +35,26 @@ internal class ProjectSummaryProvider : IProjectSummaryProvider
 
     // Public API
 
-    public async Task RefreshTask(WidgetRefreshTask task)
+    public Task<Widget> Initialise(Widget widget)
     {
+        widget.HeaderText = "Project Summary";
+        widget.DataJson = SafeJsonSerializer.Serialize(new ProjectSummaryData());
+        return Task.FromResult(widget);
+    }
+
+    public async Task<WidgetTaskStatus> ProcessTask(WidgetTask task)
+    {
+        if (task.Widget.DataVersion == VERSION && task.Widget.DataTimestamp > GlobalTimestamp)
+            return WidgetTaskStatus.Complete;
+
         var data = await GenerateData();
 
-        task.Widget.DataJson = JsonSerializer.Serialize(data, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+        task.Widget.DataJson = SafeJsonSerializer.Serialize(data);
         task.Widget.DataVersion = VERSION;
         task.Widget.DataTimestamp = DateTimeOffset.UtcNow;
-        task.Complete = true;
-    }
+        task.Widget = await _widgetRepository.UpdateWidget(task.Widget);
 
-    public async Task<Widget> ValidateWidget(Widget widget)
-    {
-        var original = widget.Copy();
-
-        widget.DataJson = SafeJsonSerializer.Cycle<ProjectSummaryData>(widget.DataJson);
-        widget.ConfigJson = SafeJsonSerializer.Cycle<ProjectSummaryConfig>(widget.ConfigJson);
-        widget.HeaderText = "Project Summary";
-
-        return await _widgetRepository.UpdateWidget(original: original, updated: widget);
-    }
-
-    public Task<Widget> UpdateConfig(Widget widget, string configJson)
-    {
-        return Task.FromResult(widget);
+        return WidgetTaskStatus.Complete;
     }
 
     // Generators (real time generation)

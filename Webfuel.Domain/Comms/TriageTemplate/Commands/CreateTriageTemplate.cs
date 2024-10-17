@@ -14,11 +14,15 @@ internal class CreateTriageTemplateHandler : IRequestHandler<CreateTriageTemplat
     {
         _triageTemplateRepository = triageTemplateRepository;
     }
+
     public async Task<TriageTemplate> Handle(CreateTriageTemplate request, CancellationToken cancellationToken)
     {
+        var existing = await _triageTemplateRepository.SelectTriageTemplate();
+
         var updated = await _triageTemplateRepository.InsertTriageTemplate(new TriageTemplate
         {
             Name = request.Name,
+            SortOrder = existing.Count() + 1
         });
 
         return updated;

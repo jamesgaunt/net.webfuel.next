@@ -24,15 +24,20 @@ namespace Webfuel.App
             app.MapDelete("api/widget/{id:guid}", Delete)
                 .RequireIdentity();
 
-            app.MapPost("api/widget/refresh/{id:guid}", Refresh)
-                  .RequireIdentity();
-
             // Querys
 
             app.MapGet("api/widget/select-active", SelectActive)
                 .RequireIdentity();
 
             app.MapGet("api/widget/select-available-type", SelectAvailableType)
+                .RequireIdentity();
+
+            // Processing
+
+            app.MapGet("api/widget/begin-processing/{id:guid}", BeginProcessing)
+                .RequireIdentity();
+
+            app.MapGet("api/widget/continue-processing/{id:guid}", ContineProcessing)
                 .RequireIdentity();
         }
 
@@ -56,11 +61,6 @@ namespace Webfuel.App
             return mediator.Send(new DeleteWidget { Id = id });
         }
 
-        public static Task<RefreshWidgetResult> Refresh(Guid id, IMediator mediator)
-        {
-            return mediator.Send(new RefreshWidget { Id = id });
-        }
-
         public static Task<List<Widget>> SelectActive(IMediator mediator)
         {
             return mediator.Send(new SelectActiveWidget());
@@ -69,6 +69,16 @@ namespace Webfuel.App
         public static Task<List<WidgetType>> SelectAvailableType(IMediator mediator)
         {
             return mediator.Send(new SelectAvailableWidgetType());
+        }
+
+        public static Task<WidgetTaskResult> BeginProcessing(Guid id, IWidgetTaskService service)
+        {
+            return service.BeginProcessing(id);
+        }
+
+        public static Task<WidgetTaskResult> ContineProcessing(Guid id, IWidgetTaskService service)
+        {
+            return service.ContinueProcessing(id);
         }
     }
 }

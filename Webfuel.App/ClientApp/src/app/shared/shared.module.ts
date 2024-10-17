@@ -37,6 +37,9 @@ import { GridReferenceColumnComponent } from './grid/columns/grid-reference-colu
 // Directives
 import { AutocompleteCodeDirective } from './directives/autocomplete-code.directive';
 
+// Misc
+import { FileBrowserComponent } from './file-browser/file-browser.component';
+
 // Dialogs
 import { ChangePasswordDialog, ChangePasswordDialogComponent } from './dialogs/change-password/change-password.dialog';
 import { ConfirmDialog, ConfirmDialogComponent } from './dialogs/confirm/confirm.dialog';
@@ -48,9 +51,8 @@ import { UpdateUserActivityDialog, UpdateUserActivityDialogComponent } from './d
 import { FileViewerDialog, FileViewerDialogComponent } from './dialogs/file-viewer/file-viewer.dialog';
 import { AlertDialog, AlertDialogComponent } from './dialogs/alert/alert.dialog';
 import { RunAnnualReportDialog, RunAnnualReportDialogComponent } from './dialogs/run-annual-report/run-annual-report.dialog';
+import { SendEmailDialogComponent, SendEmailDialog } from './dialogs/send-email/send-email.dialog';
 
-// Misc
-import { FileBrowserComponent } from './file-browser/file-browser.component';
 
 @NgModule({
   imports: [
@@ -96,6 +98,9 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
     // Directives
     AutocompleteCodeDirective,
 
+    // Misc
+    FileBrowserComponent,
+
     // Dialogs
     ChangePasswordDialogComponent,
     ConfirmDialogComponent,
@@ -107,9 +112,7 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
     FileViewerDialogComponent,
     AlertDialogComponent,
     RunAnnualReportDialogComponent,
-
-    // Misc
-    FileBrowserComponent
+    SendEmailDialogComponent,
   ],
   exports: [
     CommonModule,
@@ -149,6 +152,9 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
     // Directives
     AutocompleteCodeDirective,
 
+    // Misc
+    FileBrowserComponent,
+
     // Dialogs
     ChangePasswordDialogComponent,
     ConfirmDialogComponent,
@@ -160,9 +166,6 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
     FileViewerDialogComponent,
     AlertDialogComponent,
     RunAnnualReportDialogComponent,
-
-    // Misc
-    FileBrowserComponent
   ],
   providers: [
     ChangePasswordDialog,
@@ -174,7 +177,8 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
     UpdateUserActivityDialog,
     FileViewerDialog,
     AlertDialog,
-    RunAnnualReportDialog
+    RunAnnualReportDialog,
+    SendEmailDialog,
   ]
 })
 export class SharedModule { }

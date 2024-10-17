@@ -1,3 +1,10 @@
+export enum WidgetTaskStatus {
+    Deferred = 0,
+    Processing = 10,
+    Complete = 20,
+    Cancelled = 999,
+}
+
 export enum ReportFieldType {
     Unspecified = 0,
     String = 10,
@@ -162,9 +169,6 @@ export interface DashboardMetric {
     backgroundColor: string;
 }
 
-export interface ProjectSummaryConfig {
-}
-
 export interface TeamActivityData {
     teamMembers: Array<TeamMember>;
 }
@@ -177,14 +181,11 @@ export interface TeamMember {
 }
 
 export interface TeamActivityConfig {
-    supportTeamId: string | null | null;
+    supportTeamId: string;
 }
 
 export interface TeamSupportData {
     supportMetrics: Array<DashboardMetric>;
-}
-
-export interface TeamSupportConfig {
 }
 
 export interface ReportColumn {
@@ -359,6 +360,16 @@ export interface ReportField {
 }
 
 export interface IReportAccessor {
+}
+
+export interface SendEmailRequest {
+    subject: string;
+    htmlBody: string;
+    sendTo: string;
+    sendCc: string;
+    sentBy: string;
+    replyTo: string;
+    entityId: string | null | null;
 }
 
 export interface EmailTemplate {
@@ -888,6 +899,11 @@ export interface SortTriageTemplate {
     ids: Array<string>;
 }
 
+export interface GenerateTriageTemplateEmail {
+    triageTemplateId: string;
+    supportRequestId: string;
+}
+
 export interface QueryTriageTemplate extends Query {
     skip: number;
     take: number;
@@ -1305,7 +1321,7 @@ export interface UpdateReport {
 export interface RunReport {
     reportId: string;
     arguments: Array<ReportArgument> | null;
-    typedArguments: any;
+    typedArguments: any | null;
 }
 
 export interface ReportArgument {
@@ -1849,7 +1865,7 @@ export interface QueryUserGroup extends Query {
 }
 
 export interface StringResult {
-    value: string;
+    value: string | null;
 }
 
 export interface LoginUser {
@@ -1923,14 +1939,14 @@ export interface SortWidget {
     ids: Array<string>;
 }
 
-export interface RefreshWidgetResult {
-    widget: Widget;
-    complete: boolean;
-}
-
 export interface WidgetType {
     id: string;
     name: string;
+}
+
+export interface WidgetTaskResult {
+    widget: Widget | null;
+    status: WidgetTaskStatus;
 }
 
 export interface CreateAgeRange {

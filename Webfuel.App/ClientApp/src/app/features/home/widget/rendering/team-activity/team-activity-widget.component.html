@@ -1,27 +1,15 @@
 <h4>
   {{ (widget|async)?.headerText }}
-  <a (click)="editConfig()"><i class="fas fa-fw fa-cog"></i></a>
+  <a *ngIf="!isProcessing()" (click)="editConfig()"><i class="fas fa-fw fa-cog"></i></a>
+  <i style="opacity: 0.3" *ngIf="isProcessing()" class="fas fa-fw fa-spin fa-sync-alt"></i>
 </h4>
-<div class="table">
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Project Support</th>
-        <th>User Activity</th>
-        <th>Total Hours</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of data.teamMembers">
-        <td>{{ item.name }}</td>
-        <td>{{ item.projectSupportHours }}</td>
-        <td>{{ item.userActivityHours }}</td>
-        <td>{{ item.totalHours }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+
+<grid [dataSource]="dataSource" stateKey="TeamActivityWidget:{(widget|async)?.id">
+  <grid-column name="name" />
+  <grid-number-column name="projectSupportHours" format="0.1-1" />
+  <grid-number-column name="userActivityHours" format="0.1-1" />
+  <grid-number-column name="totalHours" format="0.1-1" />
+</grid>
 
 <ng-template #configDialog>
   <form class="form dialog" [formGroup]="configForm">

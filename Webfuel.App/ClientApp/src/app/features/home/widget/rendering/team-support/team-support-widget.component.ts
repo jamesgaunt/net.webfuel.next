@@ -32,6 +32,10 @@ export class TeamSupportWidgetComponent {
       });
   }
 
+  isProcessing() {
+    return this.widgetService.isProcessing(this.widget.value.id);
+  }
+
   data: TeamSupportData = {
     supportMetrics: []
   };

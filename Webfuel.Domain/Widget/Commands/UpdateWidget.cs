@@ -14,26 +14,17 @@ namespace Webfuel.Domain
     internal class UpdateWidgetHandler : IRequestHandler<UpdateWidget, Widget>
     {
         private readonly IWidgetRepository _widgetRepository;
-        private readonly IServiceProvider _serviceProvider;
-        private readonly IWidgetTypeRepository _widgetTypeRepository;
 
-        public UpdateWidgetHandler(
-            IWidgetRepository widgetRepository,
-            IServiceProvider serviceProvider,
-            IWidgetTypeRepository widgetTypeRepository)
+        public UpdateWidgetHandler(IWidgetRepository widgetRepository)
         {
             _widgetRepository = widgetRepository;
-            _serviceProvider = serviceProvider;
-            _widgetTypeRepository = widgetTypeRepository;
         }
 
         public async Task<Widget> Handle(UpdateWidget request, CancellationToken cancellationToken)
         {
             var widget = await _widgetRepository.RequireWidget(request.Id);
-
-            var provider = _serviceProvider.GetRequiredKeyedService<IWidgetDataProvider>(widget.WidgetTypeId);
-
-            return await provider.UpdateConfig(widget, request.ConfigJson);
+            widget.ConfigJson = request.ConfigJson;
+            return await _widgetRepository.UpdateWidget(widget);
         }
     }
 }

@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { CreateWidget, Widget, UpdateWidget, SortWidget, RefreshWidgetResult, WidgetType } from './api.types';
+import { CreateWidget, Widget, UpdateWidget, SortWidget, WidgetType, WidgetTaskResult } from './api.types';
 
 @Injectable()
 export class WidgetApi {
@@ -25,16 +25,20 @@ export class WidgetApi {
         return this.apiService.request<undefined, any>("DELETE", "api/widget/" + params.id + "", undefined, options);
     }
     
-    public refresh (params: { id: string }, options?: ApiOptions): Observable<RefreshWidgetResult> {
-        return this.apiService.request<undefined, RefreshWidgetResult>("POST", "api/widget/refresh/" + params.id + "", undefined, options);
-    }
-    
     public selectActive (options?: ApiOptions): Observable<Array<Widget>> {
         return this.apiService.request<undefined, Array<Widget>>("GET", "api/widget/select-active", undefined, options);
     }
     
     public selectAvailableType (options?: ApiOptions): Observable<Array<WidgetType>> {
         return this.apiService.request<undefined, Array<WidgetType>>("GET", "api/widget/select-available-type", undefined, options);
+    }
+    
+    public beginProcessing (params: { id: string }, options?: ApiOptions): Observable<WidgetTaskResult> {
+        return this.apiService.request<undefined, WidgetTaskResult>("GET", "api/widget/begin-processing/" + params.id + "", undefined, options);
+    }
+    
+    public contineProcessing (params: { id: string }, options?: ApiOptions): Observable<WidgetTaskResult> {
+        return this.apiService.request<undefined, WidgetTaskResult>("GET", "api/widget/continue-processing/" + params.id + "", undefined, options);
     }
 }
 

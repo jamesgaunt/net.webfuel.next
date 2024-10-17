@@ -1,0 +1,28 @@
+<form class="form dialog" [formGroup]="form">
+  <div class="dialog-head">
+    Send Email
+  </div>
+  <div class="dialog-body">
+    <div class="flex">
+      <div class="field is-6">
+        <label class="label">To</label>
+        <input type="text" class="input" placeholder="required" formControlName="sendTo" />
+      </div>
+      <div class="field is-6">
+        <label class="label">Cc</label>
+        <input type="text" class="input" placeholder="optional" formControlName="sendCc" />
+      </div>
+      <div class="field is-12">
+        <input type="text" class="input" placeholder="Subject" formControlName="subject" />
+      </div>
+      <div class="field is-12">
+        <html-editor formControlName="htmlBody" placeholder="required"></html-editor>
+      </div>
+    </div>
+  </div>
+  <div class="dialog-buttons">
+    <button type="button" (click)="send()">Send</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+  </div>
+</form>
+

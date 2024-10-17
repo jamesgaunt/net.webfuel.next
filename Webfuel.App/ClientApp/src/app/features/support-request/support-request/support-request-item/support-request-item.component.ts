@@ -9,6 +9,7 @@ import { TriageSupportRequestDialog } from '../dialogs/triage-support-request/tr
 import { SupportRequestComponentBase } from '../shared/support-request-component-base';
 import { AlertDialog } from '../../../../shared/dialogs/alert/alert.dialog';
 import { Validate } from '../../../../shared/common/validate';
+import { SendTriageTemplateDialog } from '../dialogs/send-triage-template/send-triage-template.dialog';
 
 @Component({
   selector: 'support-request-item',
@@ -20,6 +21,7 @@ export class SupportRequestItemComponent extends SupportRequestComponentBase {
     private formService: FormService,
     private alertDialog: AlertDialog,
     private triageSupportRequestDialog: TriageSupportRequestDialog,
+    private sendTriageTemplateDialog: SendTriageTemplateDialog,
   ) {
     super();
   }
@@ -100,6 +102,13 @@ export class SupportRequestItemComponent extends SupportRequestComponentBase {
 
     this.triageSupportRequestDialog.open({ supportRequest: this.item }).subscribe((result) => {
       this.reset(result);
+    });
+  }
+
+  // Triage Template
+
+  sendTriageTemplate() {
+    this.sendTriageTemplateDialog.open({ supportRequest: this.item }).subscribe(() => {
     });
   }
 }

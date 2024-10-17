@@ -109,7 +109,9 @@ namespace Webfuel.Tools.Typefuel
                     if (property.Optional)
                         sb.Write("?");
                     sb.Write(": ");
+
                     TypeDescriptor(sb, property.TypeDescriptor);
+                    
                     if (property.Nullable)
                         sb.Write(" | null");
 
