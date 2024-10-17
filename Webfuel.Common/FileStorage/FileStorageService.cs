@@ -19,6 +19,8 @@ namespace Webfuel.Common
         Task DeleteFile(Guid fileStorageEntryId);
 
         Task<string> GenerateFileSasUri(Guid fileStorageEntryId);
+
+        Task<MemoryStream?> LoadDirect(string path);
     }
 
     [Service(typeof(IFileStorageService))]
@@ -93,13 +95,25 @@ namespace Webfuel.Common
             await BlobStorage.DeleteBlobAsync(Path(entry));
         }
 
+        public async Task<MemoryStream?> LoadDirect(string path)
+        {
+            var blob = await BlobStorage.GetBlobAsync(path);
+            if (blob == null)
+                return null;
+
+            var stream = new MemoryStream();
+            await blob.DownloadAsync(stream);
+            stream.Position = 0;
+
+            return stream;
+        }
+
         // Implementation
 
         string Path(FileStorageEntry entry)
         {
             return $"/{entry.FileStorageGroupId}/{entry.Id}/{entry.FileName}";
         }
-
 
         BlobStorage BlobStorage
         {

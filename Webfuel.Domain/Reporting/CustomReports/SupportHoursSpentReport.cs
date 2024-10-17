@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Webfuel.Common;
 using Webfuel.Domain.StaticData;
 using Webfuel.Excel;
 using Webfuel.Reporting;
@@ -97,7 +98,12 @@ namespace Webfuel.Domain
         {
             if (Workbook == null)
             {
-                Workbook = new ExcelWorkbook();
+                var fileStorageService = ServiceProvider.GetRequiredService<IFileStorageService>();
+                var memoryStream = await fileStorageService.LoadDirect("/_internal/report-templates/support_hours_spent.xlsx");
+
+                Workbook = memoryStream == null ? new ExcelWorkbook() : new ExcelWorkbook(memoryStream);
+                // Leave the stream open!
+
                 var _worksheet = Workbook.GetOrCreateWorksheet("Raw Data");
 
                 _worksheet.Cell(1, 01).SetValue("Date of Support").SetBold(true);
@@ -156,6 +162,12 @@ namespace Webfuel.Domain
             var summaryRowCount = 0;
 
             {
+                var chartSheet = Workbook!.GetOrCreateWorksheet("Chart");
+                chartSheet.Cell("E1").SetValue(Arguments.StartDate);
+                chartSheet.Cell("H1").SetValue(Arguments.EndDate);
+            }
+
+            {
                 var summarySheet = Workbook!.GetOrCreateWorksheet("Summary");
                 summarySheet.Cell(1, 01).SetValue("Support Provided").SetBold(true);
                 summarySheet.Cell(1, 02).SetValue("Time in Hours").SetBold(true);
@@ -169,7 +181,6 @@ namespace Webfuel.Domain
                         summaryRowCount++;
                     }
                 }
-                summarySheet.Position = 1;
                 summarySheet.Column(01).AdjustToContents();
                 summarySheet.Column(02).AdjustToContents();
             }

@@ -12,11 +12,17 @@
     flex-basis: 0;
     padding: 0 calc(var(--gap)/2) 0 calc(var(--gap)/2);
     margin-bottom: var(--gap);
-    min-width: 20%;
+    min-width: 15%;
   }
 
   &.no-margin > * {
     margin-bottom: 0;
+  }
+
+
+  & > .is-2 {
+    flex: none;
+    width: 16.66%;
   }
 
   & > .is-3 {
@@ -26,7 +32,7 @@
 
   & > .is-4 {
     flex: none;
-    width: 33.33%;
+    width: 33%;
   }
 
   & > .is-5 {
@@ -61,6 +67,12 @@
 
 @media (max-width: $breakpoint-md - 1) {
   .flex {
+
+    & > .is-2-md {
+      flex: none;
+      width: 16.666%;
+    }
+
     & > .is-3-md {
       flex: none;
       width: 25%;
@@ -90,6 +102,11 @@
     & > * {
       flex: none;
       width: 100%;
+    }
+
+    & > .is-2 {
+      flex: none;
+      width: 16.666%;
     }
 
     & > .is-3 {

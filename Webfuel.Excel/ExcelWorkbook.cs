@@ -13,6 +13,11 @@ namespace Webfuel.Excel
             _workbook = new XLWorkbook();
         }
 
+        public ExcelWorkbook(MemoryStream stream)
+        {
+            _workbook = new XLWorkbook(stream);
+        }
+
         internal ExcelWorkbook(XLWorkbook workbook)
         {
             _workbook = workbook;
