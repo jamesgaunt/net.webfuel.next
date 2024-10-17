@@ -1,5 +1,7 @@
 using DocumentFormat.OpenXml.Office2010.Drawing;
 using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using Webfuel.Terminal;
 
 namespace Webfuel.Domain
 {
@@ -11,30 +13,32 @@ namespace Webfuel.Domain
     {
         private readonly IWidgetRepository _widgetRepository;
         private readonly IWidgetTypeRepository _widgetTypeRepository;
-        private readonly IIdentityAccessor _identityAccessor;
+        private readonly IServiceProvider _serviceProvider;
 
         public SelectWidgetTypeHandler(
             IWidgetRepository widgetRepository, 
             IWidgetTypeRepository widgetTypeRepository,
-            IIdentityAccessor identityAccessor)
+            IServiceProvider serviceProvider)
         {
             _widgetRepository = widgetRepository;
             _widgetTypeRepository = widgetTypeRepository;
-            _identityAccessor = identityAccessor;
+            _serviceProvider = serviceProvider;
         }
 
         public async Task<List<WidgetType>> Handle(SelectAvailableWidgetType request, CancellationToken cancellationToken)
         {
-            var identity = _identityAccessor.User;
-            if (identity == null)
-                return new List<WidgetType>();
-
+            var result = new List<WidgetType>();
             var widgetTypes = await _widgetTypeRepository.SelectWidgetType();
 
-            if (_identityAccessor.Claims.Developer)
-                return widgetTypes;
+            foreach(var widgetType in widgetTypes)
+            {
+                var provider = _serviceProvider.GetRequiredKeyedService<IWidgetProvider>(widgetType.Id);
 
-            return widgetTypes.Where(p => p.Id != WidgetTypeEnum.TeamActivity).ToList();
+                if (await provider.AuthoriseAccess())
+                    result.Add(widgetType);
+            }
+
+            return result;
         }
     }
 }

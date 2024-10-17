@@ -57,6 +57,11 @@ internal class ProjectSummaryProvider : IProjectSummaryProvider
         return WidgetTaskStatus.Complete;
     }
 
+    public Task<bool> AuthoriseAccess()
+    {
+        return Task.FromResult(true);
+    }
+
     // Generators (real time generation)
 
     async Task<ProjectSummaryData> GenerateData()

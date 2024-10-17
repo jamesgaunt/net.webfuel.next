@@ -13,6 +13,8 @@ namespace Webfuel.Domain
 
         public async Task Handle(DeleteUserActivity request, CancellationToken cancellationToken)
         {
+            TeamActivityProvider.FlushTeamActivityMetrics();
+
             await _userActivityRepository.DeleteUserActivity(request.Id);
         }
     }

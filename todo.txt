@@ -1,46 +1,10 @@
-TODO:
 
-/////////////////////
-// Non-Reporting
 
-> Heartbeats
+> Triage Summary Widget
 
-> Project_XXX fields (or whatever demormalised is appropriate) either realtime or via dirty tracking
+> Finish up Widget Type Descriptions / Widget Type Sort Order
 
-> Dirty projects (needs heartbeats to update data) + need filterable update statements to avoid stamping on data
+> Other Report
 
-> Code Editor (+ Terminal Editor) => Terminal 2.0
+> Files on Support Request Items
 
-> Team Support Request Dashboard filters/grid?
-
-> User title optional
-
-> Project Summary Service (cached project summaries for user interface enrichment)
-
-> Tab selection of controls (think it's kinda important now) - mainly dates to do
-
-> Project Metrics Calculation (Lazy - or just rely on reporting engine now)
-
-> Change Log Utility : Format Primative (NULL -> (NONE) + on empty strings)
-
-> Google Recaptcha 3 on the support request form (https://dev.to/rodrigokamada/adding-the-google-recaptcha-v3-to-an-angular-application-kge)
-
-> Project / Support Request Change Status => Unlock (to mirror can unlock permission) [API should mirror claims]
-
-> More mobile goodness
-
------ Future ------
-
-Activity/History Log
-
-Email Template / Test Email Distribution
-
-====== Thoughts ======
-
-> Can we wrap/encapsulate any more controller behaviours? 
-
-> Repository entity pristene tracking?
-
-====== TODO ======
-
-Transition to standalone components

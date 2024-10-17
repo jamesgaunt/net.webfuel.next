@@ -50,6 +50,7 @@ namespace Webfuel.Domain
             }
 
             TeamSupportProvider.FlushSupportMetrics();
+            TeamActivityProvider.FlushTeamActivityMetrics();
         }
 
         async Task SyncroniseUserActivity(Guid projectSupportId, RepositoryCommandBuffer cb)

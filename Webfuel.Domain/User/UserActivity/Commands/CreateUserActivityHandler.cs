@@ -28,6 +28,8 @@ namespace Webfuel.Domain
             userActivity.WorkTimeInHours = request.WorkTimeInHours;
             userActivity.Description = request.Description;
 
+            TeamActivityProvider.FlushTeamActivityMetrics();
+
             return await _userActivityRepository.InsertUserActivity(userActivity);
         }
 

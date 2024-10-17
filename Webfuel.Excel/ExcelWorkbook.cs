@@ -71,6 +71,21 @@ namespace Webfuel.Excel
             return ms;
         }
 
+        public void SetNamedRange(string rangeName, string rangeAddress)
+        {
+            var range = _workbook.RangeFromFullAddress(rangeAddress, out var _);
+
+            var namedRange = _workbook.NamedRanges.FirstOrDefault(p => p.Name == rangeName);
+            if (namedRange == null)
+            {
+                _workbook.NamedRanges.Add(rangeName, range);
+            }
+            else
+            {
+                namedRange.SetRefersTo(range);
+            }
+        }
+
         public static ExcelWorkbook Load(string filename)
         {
             var workbook = new XLWorkbook(filename);
@@ -98,7 +113,7 @@ namespace Webfuel.Excel
             _worksheet = worksheet;
         }
 
-        public string Name 
+        public string Name
         {
             get => _worksheet.Name;
             set => _worksheet.Name = value;
@@ -177,6 +192,8 @@ namespace Webfuel.Excel
             }
             return true;
         }
+
+
     }
 
     public class ExcelRow

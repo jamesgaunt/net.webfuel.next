@@ -14,7 +14,9 @@ namespace Webfuel.Domain
         private readonly IUserRepository _userRepository;
         private readonly IUserGroupRepository _userGroupRepository;
 
-        public UserGroupClaimsProvider(IUserRepository userRepository, IUserGroupRepository userGroupRepository)
+        public UserGroupClaimsProvider(
+            IUserRepository userRepository, 
+            IUserGroupRepository userGroupRepository)
         {
             _userRepository = userRepository;
             _userGroupRepository = userGroupRepository;

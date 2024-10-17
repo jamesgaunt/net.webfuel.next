@@ -23,7 +23,10 @@ namespace Webfuel.Domain
         public async Task<Widget> Handle(UpdateWidget request, CancellationToken cancellationToken)
         {
             var widget = await _widgetRepository.RequireWidget(request.Id);
+            
             widget.ConfigJson = request.ConfigJson;
+            widget.DataTimestamp = DateTimeOffset.MinValue;
+            
             return await _widgetRepository.UpdateWidget(widget);
         }
     }

@@ -90,6 +90,7 @@ namespace Webfuel.Domain
             }
 
             TeamSupportProvider.FlushSupportMetrics();
+            TeamActivityProvider.FlushTeamActivityMetrics();
 
             if (projectSupport.SupportRequestedTeamId.HasValue)
                 await _projectAdviserService.SendTeamSupportRequestedEmail(project: project, supportTeamId: projectSupport.SupportRequestedTeamId.Value);

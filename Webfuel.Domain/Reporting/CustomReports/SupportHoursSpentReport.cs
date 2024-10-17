@@ -15,11 +15,13 @@ namespace Webfuel.Domain
 
     internal class SupportHoursSpentReportData
     {
-        public List<RawDataLine> RawDataLines { get; set; } = new List<RawDataLine>();
+        public List<DataLine> RawDataLines { get; set; } = new List<DataLine>();
+
+        public List<DataLine> SummaryLines { get; set; } = new List<DataLine>();
 
         public Dictionary<Guid, Project> ProjectCache { get; set; } = new Dictionary<Guid, Project>();
 
-        public class RawDataLine
+        public class DataLine
         {
             public required DateOnly DateOfSupport { get; set; }
 
@@ -83,7 +85,7 @@ namespace Webfuel.Domain
 
             foreach (var supportProvidedId in projectSupport.SupportProvidedIds)
             {
-                var rawDataLine = new SupportHoursSpentReportData.RawDataLine
+                var rawDataLine = new SupportHoursSpentReportData.DataLine
                 {
                     DateOfSupport = projectSupport.Date,
                     ProjectCode = project.PrefixedNumber,
@@ -91,6 +93,20 @@ namespace Webfuel.Domain
                     TimeInHours = timeInHours
                 };
                 CustomData.RawDataLines.Add(rawDataLine);
+
+                var summaryLine = CustomData.SummaryLines.FirstOrDefault(p => p.SupportProvidedId == supportProvidedId);
+                if (summaryLine == null)
+                {
+                    summaryLine = new SupportHoursSpentReportData.DataLine
+                    {
+                        DateOfSupport = projectSupport.Date,
+                        ProjectCode = String.Empty,
+                        SupportProvidedId = supportProvidedId,
+                        TimeInHours = 0
+                    };
+                    CustomData.SummaryLines.Add(summaryLine);
+                }
+                summaryLine.TimeInHours += timeInHours;
             }
         }
 
@@ -163,26 +179,31 @@ namespace Webfuel.Domain
 
             {
                 var chartSheet = Workbook!.GetOrCreateWorksheet("Chart");
-                chartSheet.Cell("E1").SetValue(Arguments.StartDate);
-                chartSheet.Cell("H1").SetValue(Arguments.EndDate);
+                chartSheet.Cell("B3").SetValue(Arguments.StartDate);
+                chartSheet.Cell("E3").SetValue(Arguments.EndDate);
             }
 
             {
                 var summarySheet = Workbook!.GetOrCreateWorksheet("Summary");
                 summarySheet.Cell(1, 01).SetValue("Support Provided").SetBold(true);
                 summarySheet.Cell(1, 02).SetValue("Time in Hours").SetBold(true);
-                foreach (var supportProvided in staticData.SupportProvided)
+
+                var summaryLines = CustomData.SummaryLines.OrderBy(p => p.TimeInHours);
+
+                foreach (var summaryLine in summaryLines)
                 {
-                    var total = CustomData.RawDataLines.Where(p => p.SupportProvidedId == supportProvided.Id).Sum(p => p.TimeInHours);
-                    if (total > 0)
-                    {
-                        summarySheet.Cell(summaryRowCount + 2, 01).SetValue(supportProvided.Name);
-                        summarySheet.Cell(summaryRowCount + 2, 02).SetValue(total).SetNumberFormat("#,##0.00");
-                        summaryRowCount++;
-                    }
+                    var supportProvided = staticData.SupportProvided.FirstOrDefault(p => p.Id == summaryLine.SupportProvidedId);
+
+                    summarySheet.Cell(summaryRowCount + 2, 01).SetValue(supportProvided?.Name ?? "Invalid Support Provided Type");
+                    summarySheet.Cell(summaryRowCount + 2, 02).SetValue(summaryLine.TimeInHours).SetNumberFormat("#,##0.00");
+                    summaryRowCount++;
                 }
                 summarySheet.Column(01).AdjustToContents();
                 summarySheet.Column(02).AdjustToContents();
+
+                // Set data range for the chart
+                Workbook!.SetNamedRange("CHART_NAMES", "Summary!$A$2:$A$" + (summaryLines.Count() + 1));
+                Workbook!.SetNamedRange("CHART_VALUES", "Summary!$B$2:$B$" + (summaryLines.Count() + 1));
             }
 
             {

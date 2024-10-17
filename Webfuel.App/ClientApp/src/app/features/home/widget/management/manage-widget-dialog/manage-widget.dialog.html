@@ -37,22 +37,11 @@
     Add Widget
   </div>
   <div class="dialog-body">
-    <div class="report-designer">
-      <div class="report-slots">
-        <div class="report-slot" *ngFor="let widgetType of widgetTypes">
-          <div class="columns">
-            <div class="column">
-              <span>{{ widgetType.name }}</span>
-            </div>
-            <div class="column is-right is-narrow">
-              <a class="link is-success" (click)="addWidgetType(widgetType)">add</a>
-            </div>
-          </div>
-        </div>
-        <div class="report-slot" *ngIf="widgetTypes.length == 0">
-          No widget types available!
-        </div>
-      </div>
+    <div class="widget-types">
+      <a *ngFor="let widgetType of widgetTypes" (click)="addWidgetType(widgetType)">
+        <div class="name">{{ widgetType.name }}</div>
+        <div class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non est ut mi auctor efficitur et sed massa. Phasellus eget feugiat ante. Etiam eget quam nibh.  </div>
+      </a>
     </div>
   </div>
   <div class="dialog-buttons">

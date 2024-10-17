@@ -74,7 +74,18 @@ export class TeamActivityWidgetComponent {
     supportTeamId: new FormControl<string | null>(null, { validators: [Validators.required] }),
   })
 
+  patchConfig() {
+    try {
+      var config = <TeamActivityConfig>JSON.parse(this.widget.value.configJson);
+      this.configForm.patchValue({
+        supportTeamId: config.supportTeamId
+      });
+    }
+    catch { }
+  }
+
   editConfig() {
+    this.patchConfig();
     this.configDialogRef = this.dialogService.openTemplate(this.configDialog);
   }
 

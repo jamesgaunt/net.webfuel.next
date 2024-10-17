@@ -178,6 +178,7 @@ export interface TeamMember {
     projectSupportHours: number;
     userActivityHours: number;
     totalHours: number;
+    fullTimeEquivalent: number | null | null;
 }
 
 export interface TeamActivityConfig {

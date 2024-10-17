@@ -234,3 +234,34 @@
   border: 1px solid var(--palette-control-border);
   margin-bottom: 0.3rem;
 }
+
+
+// Widget Types
+
+.widget-types {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  a {
+    margin: 0.5rem;
+    width: 20rem;
+    display: block;
+    padding: 1rem;
+    background-color: var(--palette-control-background);
+    border: 1px solid var(--palette-control-border);
+    transition: box-shadow 0.25s ease;
+
+    &:hover {
+      box-shadow: 0 0 20px RGBA(0, 0, 0, 0.3);
+    }
+
+    .name {
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .description {
+      font-size: 0.9em;
+    }
+  }
+}

@@ -1,6 +1,6 @@
 <h4>
   {{ (widget|async)?.headerText }}
-  <a *ngIf="!isProcessing()" (click)="editConfig()"><i class="fas fa-fw fa-cog"></i></a>
+  <a style="opacity: 0.3" *ngIf="!isProcessing()" (click)="editConfig()"><i class="fas fa-fw fa-cog"></i></a>
   <i style="opacity: 0.3" *ngIf="isProcessing()" class="fas fa-fw fa-spin fa-sync-alt"></i>
 </h4>
 
@@ -9,6 +9,7 @@
   <grid-number-column name="projectSupportHours" format="0.1-1" />
   <grid-number-column name="userActivityHours" format="0.1-1" />
   <grid-number-column name="totalHours" format="0.1-1" />
+  <grid-number-column name="fullTimeEquivalent" format="0.2-2" />
 </grid>
 
 <ng-template #configDialog>
@@ -28,4 +29,5 @@
     </div>
   </form>
 </ng-template>
+
 

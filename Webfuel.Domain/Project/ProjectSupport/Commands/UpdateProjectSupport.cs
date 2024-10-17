@@ -109,6 +109,7 @@ namespace Webfuel.Domain
                 await _projectAdviserService.SendTeamSupportRequestedEmail(project: project, supportTeamId: updated.SupportRequestedTeamId!.Value);
 
             TeamSupportProvider.FlushSupportMetrics();
+            TeamActivityProvider.FlushTeamActivityMetrics();
 
             return projectSupport;
         }

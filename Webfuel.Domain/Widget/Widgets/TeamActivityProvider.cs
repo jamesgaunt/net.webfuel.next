@@ -18,13 +18,15 @@ public class TeamActivityData
 
     public class TeamMember
     {
-        public required string Name { get; set; }
+        public string Name { get; set; } = String.Empty;
 
-        public required decimal ProjectSupportHours { get; set; }
+        public decimal ProjectSupportHours { get; set; }
 
-        public required decimal UserActivityHours { get; set; }
+        public decimal UserActivityHours { get; set; }
 
-        public required decimal TotalHours { get; set; }
+        public decimal TotalHours { get; set; }
+
+        public decimal? FullTimeEquivalent { get; set; }
     }
 }
 
@@ -48,19 +50,22 @@ internal class TeamActivityProvider : ITeamActivityProvider
     private readonly IWidgetRepository _widgetRepository;
     private readonly IReportGeneratorService _reportGeneratorService;
     private readonly IStaticDataService _staticDataService;
+    private readonly IServiceProvider _serviceProvider;
 
     public TeamActivityProvider(
         IMediator mediator,
         IWidgetRepository widgetRepository,
         IReportService reportService,
         IReportGeneratorService reportGeneratorService,
-        IStaticDataService staticDataService)
+        IStaticDataService staticDataService,
+        IServiceProvider serviceProvider)
     {
         _mediator = mediator;
         _reportService = reportService;
         _widgetRepository = widgetRepository;
         _reportGeneratorService = reportGeneratorService;
         _staticDataService = staticDataService;
+        _serviceProvider = serviceProvider;
     }
 
     // Public API
@@ -69,18 +74,41 @@ internal class TeamActivityProvider : ITeamActivityProvider
     {
         widget.HeaderText = "Team Activity";
         widget.DataJson = SafeJsonSerializer.Serialize(new TeamActivityData());
+        widget.ConfigJson = SafeJsonSerializer.Serialize(new TeamActivityConfig());
         return Task.FromResult(widget);
     }
 
     public async Task<WidgetTaskStatus> ProcessTask(WidgetTask task)
     {
+        if (task.Widget.DataVersion == VERSION && task.Widget.DataTimestamp > GlobalTimestamp)
+            return WidgetTaskStatus.Complete;
+
         return await RunReport(task);
+    }
+
+    public async Task<bool> AuthoriseAccess()
+    {
+        var identityAccessor = _serviceProvider.GetRequiredService<IIdentityAccessor>();
+        if (identityAccessor.User == null)
+            return false;
+
+        if (identityAccessor.Claims.Developer)
+            return true;
+
+        var supportTeams = await _serviceProvider.GetRequiredService<ISupportTeamUserRepository>().SelectSupportTeamUserByUserId(identityAccessor.User.Id);
+        if (!supportTeams.Any(p => p.IsTeamLead))
+            return false;
+
+        return true;
     }
 
     // Implementation
 
     async Task<WidgetTaskStatus> RunReport(WidgetTask task)
     {
+        var sDate = DateOnly.FromDateTime(DateTime.Today).AddDays(-14);
+        var eDate = DateOnly.FromDateTime(DateTime.Today);
+
         if (task.State is not ReportStep reportStep)
         {
             var config = SafeJsonSerializer.Deserialize<TeamActivityConfig>(task.Widget.ConfigJson);
@@ -92,8 +120,8 @@ internal class TeamActivityProvider : ITeamActivityProvider
                 TypedArguments = new TeamActivityReportArguments
                 {
                     SupportTeamId = config.SupportTeamId,
-                    StartDate = DateOnly.FromDateTime(DateTime.Today).AddDays(-14),
-                    EndDate = DateOnly.FromDateTime(DateTime.Today)
+                    StartDate = sDate,
+                    EndDate = eDate
                 }
             };
 
@@ -119,7 +147,9 @@ internal class TeamActivityProvider : ITeamActivityProvider
             task.Widget.DataTimestamp = DateTimeOffset.UtcNow;
 
             var supportTeam = await _staticDataService.GetSupportTeam(config.SupportTeamId);
-            task.Widget.HeaderText = "Team Activity: " + (supportTeam?.Name ?? "Invalid Team Id");
+
+            task.Widget.HeaderText = (supportTeam?.Name ?? "Invalid Team Id");
+            task.Widget.HeaderText += $" {sDate.ToString("dd/MM/yy")} - {eDate.ToString("dd/MM/yy")}";
 
             task.Widget = await _widgetRepository.UpdateWidget(task.Widget);
 
@@ -139,7 +169,8 @@ internal class TeamActivityProvider : ITeamActivityProvider
                 Name = user.User.FullName,
                 ProjectSupportHours = user.ProjectSupportHours,
                 UserActivityHours = user.UserActivityHours,
-                TotalHours = user.ProjectSupportHours + user.UserActivityHours
+                TotalHours = user.ProjectSupportHours + user.UserActivityHours,
+                FullTimeEquivalent = user.User.FullTimeEquivalentForRSS,
             });
         }
         return data;

@@ -43,6 +43,9 @@ namespace Webfuel.Domain
 
             var provider = _serviceProvider.GetRequiredKeyedService<IWidgetProvider>(widget.WidgetTypeId);
 
+            if (!await provider.AuthoriseAccess())
+                throw new NotAuthorizedException();
+
             widget = await provider.Initialise(widget);
 
             return await _widgetRepository.InsertWidget(widget);

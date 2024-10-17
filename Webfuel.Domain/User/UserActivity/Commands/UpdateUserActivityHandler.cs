@@ -30,6 +30,8 @@ namespace Webfuel.Domain
             updated.ProjectPrefixedNumber = String.Empty;
             updated.ProjectSupportProvidedIds.Clear();
 
+            TeamActivityProvider.FlushTeamActivityMetrics();
+
             return await _userActivityRepository.UpdateUserActivity(updated: updated, original: userActivity);
         }
 
