@@ -4,7 +4,7 @@
   <i style="opacity: 0.3" *ngIf="isProcessing()" class="fas fa-fw fa-spin fa-sync-alt"></i>
 </h4>
 
-<grid [dataSource]="dataSource" stateKey="TeamActivityWidget:{(widget|async)?.id">
+<grid [dataSource]="dataSource" [stateKey]="widget.value.id" [take]="100">
   <grid-column name="name" />
   <grid-number-column name="projectSupportHours" format="0.1-1" />
   <grid-number-column name="userActivityHours" format="0.1-1" />

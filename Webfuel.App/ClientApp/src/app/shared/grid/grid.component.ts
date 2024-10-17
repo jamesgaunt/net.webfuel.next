@@ -38,6 +38,9 @@ export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, T
   @Input()
   stateKey = '';
 
+  @Input()
+  take: number | null = null;
+
   // Query
 
   searchForm = new FormGroup({
@@ -124,6 +127,9 @@ export class GridComponent<TItem, TQuery extends Query = Query, TCreate = any, T
   }
 
   loadState() {
+    if (this.take != null)
+      this.query.take = this.take;
+
     if (!this.stateKey)
       return;
 

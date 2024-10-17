@@ -63,6 +63,10 @@ internal class WidgetTaskService : IWidgetTaskService
         if (widget == null || widget.UserId != _identityAccessor.User?.Id)
             throw new InvalidOperationException("The specified widget does not exist");
 
+        // We only allow a widget to update at most every 2 minutes
+        if (widget.DataTimestamp > DateTimeOffset.UtcNow.AddMinutes(-2))
+            return new WidgetTaskResult { Status = WidgetTaskStatus.Complete, Widget = widget };
+
         CleanupTasks();
 
         // If user already has a task running then defer this one

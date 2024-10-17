@@ -96,10 +96,10 @@ internal class TeamActivityProvider : ITeamActivityProvider
             return true;
 
         var supportTeams = await _serviceProvider.GetRequiredService<ISupportTeamUserRepository>().SelectSupportTeamUserByUserId(identityAccessor.User.Id);
-        if (!supportTeams.Any(p => p.IsTeamLead))
-            return false;
+        if (supportTeams.Any(p => p.IsTeamLead))
+            return true;
 
-        return true;
+        return false;
     }
 
     // Implementation
