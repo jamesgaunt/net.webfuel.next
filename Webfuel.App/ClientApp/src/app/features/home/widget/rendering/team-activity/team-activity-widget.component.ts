@@ -71,14 +71,16 @@ export class TeamActivityWidgetComponent {
   private configDialogRef: DialogRef | undefined;
 
   configForm = new FormGroup({
-    supportTeamId: new FormControl<string | null>(null, { validators: [Validators.required] }),
+    supportTeamId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
+    weeks: new FormControl<number>(2, { validators: [Validators.required], nonNullable: true })
   })
 
   patchConfig() {
     try {
       var config = <TeamActivityConfig>JSON.parse(this.widget.value.configJson);
       this.configForm.patchValue({
-        supportTeamId: config.supportTeamId
+        supportTeamId: config.supportTeamId,
+        weeks: config.weeks
       });
     }
     catch { }

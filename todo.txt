@@ -1,11 +1,18 @@
 
-
-> Triage Summary Widget
+> Triage Summary Widget (put live / test / link up redirects)
 
 > Finish up Widget Type Descriptions / Widget Type Sort Order
 
-> Other Report
+> Other Report (also implied personal projects widget)
 
 > Files on Support Request Items
 
-> Basic Diagnostics
+> Basic diagnostics
+
+> Review original 1.4 specification document
+
+> Date range on Team Activity
+
+> ReportBuilder better support for customised stages
+
+> Sort out permissions (need Adminstrator claim)

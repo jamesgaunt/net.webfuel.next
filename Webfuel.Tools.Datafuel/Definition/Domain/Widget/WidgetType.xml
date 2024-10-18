@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Schema>
-  <Entity Name="WidgetType" Tags="Enum">
+  <Entity Name="WidgetType" Tags="Enum" OrderBy="SortOrder">
     <Key Name="Id" Type="guid" />
     <Property Name="Name" Type="meta:name" />
-    <!--
+    <Property Name="SortOrder" Type="int" />
     <Property Name="Description" Type="meta:description" />
-    -->
     <Data>
-      <Row Id="4f5bed07-af06-40c5-a7ed-ad283e57e503" Name="Project Summary" />
-      <Row Id="54d1db4b-2b37-4d20-9e55-ffe2529446ac" Name="Team Support" />
-      <Row Id="cf48d41d-934b-4fc8-b368-52ee87d5e76d" Name="Team Activity" />
+      <Row Id="4f5bed07-af06-40c5-a7ed-ad283e57e503" Name="Project Summary" Description="Number of projects by status" />
+      <Row Id="3f9d5f90-87bd-4257-828e-95fa04e55d7a" Name="Triage Summary" Description="Number of triage requests by status" />
+      <Row Id="54d1db4b-2b37-4d20-9e55-ffe2529446ac" Name="Team Support" Description="Number of projects with open support requests for each support team" />
+      <Row Id="cf48d41d-934b-4fc8-b368-52ee87d5e76d" Name="Team Activity" Description="Support and user activity hours across each member in a support team" />
     </Data>
   </Entity>
 </Schema>

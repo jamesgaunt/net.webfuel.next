@@ -35,14 +35,14 @@ internal class ProjectSummaryProvider : IProjectSummaryProvider
 
     // Public API
 
-    public Task<Widget> Initialise(Widget widget)
+    public Task<Widget> InitialiseWidget(Widget widget)
     {
         widget.HeaderText = "Project Summary";
         widget.DataJson = SafeJsonSerializer.Serialize(new ProjectSummaryData());
         return Task.FromResult(widget);
     }
 
-    public async Task<WidgetTaskStatus> ProcessTask(WidgetTask task)
+    public async Task<WidgetTaskStatus> BeginProcessing(WidgetTask task)
     {
         if (task.Widget.DataVersion == VERSION && task.Widget.DataTimestamp > GlobalTimestamp)
             return WidgetTaskStatus.Complete;
@@ -57,9 +57,19 @@ internal class ProjectSummaryProvider : IProjectSummaryProvider
         return WidgetTaskStatus.Complete;
     }
 
+    public Task<WidgetTaskStatus> ContinueProcessing(WidgetTask task)
+    {
+        return Task.FromResult(WidgetTaskStatus.Complete);
+    }
+
     public Task<bool> AuthoriseAccess()
     {
         return Task.FromResult(true);
+    }
+
+    public Task<string> ValidateConfig(string configJson)
+    {
+        return Task.FromResult(configJson);
     }
 
     // Generators (real time generation)

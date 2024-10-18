@@ -9,18 +9,25 @@
   <grid-number-column name="projectSupportHours" format="0.1-1" />
   <grid-number-column name="userActivityHours" format="0.1-1" />
   <grid-number-column name="totalHours" format="0.1-1" />
-  <grid-number-column name="fullTimeEquivalent" format="0.2-2" />
+  <grid-number-column name="fte" label="FTE" format="0.2-2" />
+  <grid-number-column name="fteTotalHours" label="FTE Adjusted Hours" format="0.2-2" />
 </grid>
 
 <ng-template #configDialog>
   <form class="form dialog" [formGroup]="configForm">
     <div class="dialog-head is-primary">
-      Configure Widget
+      Team Activity Configuration
     </div>
     <div class="dialog-body">
-      <div class="field">
-        <label class="label">Support Team</label>
-        <dropdown-select [dataSource]="staticDataCache.supportTeam" placeholder="required" formControlName="supportTeamId"></dropdown-select>
+      <div class="flex">
+        <div class="field is-12">
+          <label class="label">Support Team</label>
+          <dropdown-select [dataSource]="staticDataCache.supportTeam" placeholder="required" formControlName="supportTeamId"></dropdown-select>
+        </div>
+        <div class="field is-12">
+          <label class="label">Number of weeks (1-8)</label>
+          <input class="input" type="number" step="1" min="1" max="8" placeholder="required" formControlName="weeks" />
+        </div>
       </div>
     </div>
     <div class="dialog-buttons">

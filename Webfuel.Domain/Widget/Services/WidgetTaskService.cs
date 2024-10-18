@@ -83,7 +83,32 @@ internal class WidgetTaskService : IWidgetTaskService
             Widget = widget,
         };
 
-        return await ContinueProcessing(widgetId);
+        try
+        {
+            task.Processing = true;
+            var provider = _serviceProvider.GetRequiredKeyedService<IWidgetProvider>(task.Widget.WidgetTypeId);
+
+            task.ProcessedAt = DateTimeOffset.UtcNow;
+            var status = await provider.BeginProcessing(task);
+
+            if (status != WidgetTaskStatus.Processing)
+                DeleteTask(widgetId);
+
+            return new WidgetTaskResult
+            {
+                Status = status,
+                Widget = status == WidgetTaskStatus.Complete ? task.Widget : null
+            };
+        }
+        catch
+        {
+            DeleteTask(widgetId);
+            throw;
+        }
+        finally
+        {
+            task.Processing = false;
+        }
     }
 
     public async Task<WidgetTaskResult> ContinueProcessing(Guid widgetId)
@@ -106,7 +131,7 @@ internal class WidgetTaskService : IWidgetTaskService
             var provider = _serviceProvider.GetRequiredKeyedService<IWidgetProvider>(task.Widget.WidgetTypeId);
 
             task.ProcessedAt = DateTimeOffset.UtcNow;
-            var status = await provider.ProcessTask(task);
+            var status = await provider.ContinueProcessing(task);
 
             if (status != WidgetTaskStatus.Processing)
                 DeleteTask(widgetId);

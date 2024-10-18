@@ -46,7 +46,7 @@ namespace Webfuel.Domain
             if (!await provider.AuthoriseAccess())
                 throw new NotAuthorizedException();
 
-            widget = await provider.Initialise(widget);
+            widget = await provider.InitialiseWidget(widget);
 
             return await _widgetRepository.InsertWidget(widget);
         }

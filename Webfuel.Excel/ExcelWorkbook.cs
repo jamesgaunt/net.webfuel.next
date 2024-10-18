@@ -395,6 +395,12 @@ namespace Webfuel.Excel
             return this;
         }
 
+        public ExcelCell VerticalTopAlign()
+        {
+            _cell.Style.Alignment.Vertical = XLAlignmentVerticalValues.Top;
+            return this;
+        }
+
         public ExcelCell SetBackgroundColor(System.Drawing.Color color)
         {
             _cell.Style.Fill.BackgroundColor = XLColor.FromColor(color);

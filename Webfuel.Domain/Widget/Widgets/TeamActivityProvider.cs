@@ -26,13 +26,17 @@ public class TeamActivityData
 
         public decimal TotalHours { get; set; }
 
-        public decimal? FullTimeEquivalent { get; set; }
+        public decimal? FTE { get; set; }
+
+        public decimal? FTETotalHours { get; set; }
     }
 }
 
 [ApiType]
 public class TeamActivityConfig
 {
+    public int Weeks { get; set; } = 2;
+
     public Guid SupportTeamId { get; set; } = SupportTeamEnum.TriageTeam;
 }
 
@@ -70,7 +74,7 @@ internal class TeamActivityProvider : ITeamActivityProvider
 
     // Public API
 
-    public Task<Widget> Initialise(Widget widget)
+    public Task<Widget> InitialiseWidget(Widget widget)
     {
         widget.HeaderText = "Team Activity";
         widget.DataJson = SafeJsonSerializer.Serialize(new TeamActivityData());
@@ -78,12 +82,63 @@ internal class TeamActivityProvider : ITeamActivityProvider
         return Task.FromResult(widget);
     }
 
-    public async Task<WidgetTaskStatus> ProcessTask(WidgetTask task)
+    public async Task<WidgetTaskStatus> BeginProcessing(WidgetTask task)
     {
         if (task.Widget.DataVersion == VERSION && task.Widget.DataTimestamp > GlobalTimestamp)
             return WidgetTaskStatus.Complete;
 
-        return await RunReport(task);
+        task.Widget.ConfigJson = await ValidateConfig(task.Widget.ConfigJson);
+        var config = SafeJsonSerializer.Deserialize<TeamActivityConfig>(task.Widget.ConfigJson);
+
+        var sDate = DateOnly.FromDateTime(DateTime.Today).AddDays(-7 * config.Weeks);
+        var eDate = DateOnly.FromDateTime(DateTime.Today);
+
+        var report = await _reportService.GetDefaultNamedReport("Team Activity Report", ReportProviderEnum.CustomReport);
+
+        var runReport = new RunReport
+        {
+            ReportId = report.Id,
+            TypedArguments = new TeamActivityReportArguments
+            {
+                SupportTeamId = config.SupportTeamId,
+                StartDate = sDate,
+                EndDate = eDate
+            }
+        };
+
+        task.State = await _mediator.Send(runReport);
+        return WidgetTaskStatus.Processing;
+    }
+
+    public async Task<WidgetTaskStatus> ContinueProcessing(WidgetTask task)
+    {
+        if (task.State is not ReportStep reportStep)
+            throw new InvalidOperationException("Widget task does not contain valid state");
+
+        // Generate the Report Task
+
+        task.State = reportStep = await _reportGeneratorService.GenerateReport(reportStep.TaskId);
+        if (!reportStep.Complete)
+            return WidgetTaskStatus.Processing;
+
+        if (_reportGeneratorService.ExtractReportData(reportStep.TaskId) is not TeamActivityReportData reportData)
+            throw new InvalidOperationException("Report did not return the expected data type");
+
+        // We have the final report data
+        var config = SafeJsonSerializer.Deserialize<TeamActivityConfig>(task.Widget.ConfigJson);
+
+        task.Widget.DataJson = SafeJsonSerializer.Serialize(MapReportData(reportData));
+        task.Widget.DataVersion = VERSION;
+        task.Widget.DataTimestamp = DateTimeOffset.UtcNow;
+
+        var supportTeam = await _staticDataService.GetSupportTeam(config.SupportTeamId);
+
+        task.Widget.HeaderText = (supportTeam?.Name ?? "ERROR: Invalid Team");
+        task.Widget.HeaderText += $" ({config.Weeks} week{(config.Weeks == 1 ? "" : "s")})";
+
+        task.Widget = await _widgetRepository.UpdateWidget(task.Widget);
+
+        return WidgetTaskStatus.Complete;
     }
 
     public async Task<bool> AuthoriseAccess()
@@ -102,60 +157,19 @@ internal class TeamActivityProvider : ITeamActivityProvider
         return false;
     }
 
-    // Implementation
-
-    async Task<WidgetTaskStatus> RunReport(WidgetTask task)
+    public Task<string> ValidateConfig(string configJson)
     {
-        var sDate = DateOnly.FromDateTime(DateTime.Today).AddDays(-14);
-        var eDate = DateOnly.FromDateTime(DateTime.Today);
+        var config = SafeJsonSerializer.Deserialize<TeamActivityConfig>(configJson);
 
-        if (task.State is not ReportStep reportStep)
-        {
-            var config = SafeJsonSerializer.Deserialize<TeamActivityConfig>(task.Widget.ConfigJson);
-            var report = await _reportService.GetDefaultNamedReport("Team Activity Report", ReportProviderEnum.CustomReport);
+        if (config.Weeks < 1)
+            config.Weeks = 1;
+        if (config.Weeks > 8)
+            config.Weeks = 8;
 
-            var runReport = new RunReport
-            {
-                ReportId = report.Id,
-                TypedArguments = new TeamActivityReportArguments
-                {
-                    SupportTeamId = config.SupportTeamId,
-                    StartDate = sDate,
-                    EndDate = eDate
-                }
-            };
-
-            task.State = await _mediator.Send(runReport);
-            return WidgetTaskStatus.Processing;
-        }
-
-        // Generate the Report Task
-
-        task.State = reportStep = await _reportGeneratorService.GenerateReport(reportStep.TaskId);
-        if (!reportStep.Complete)
-            return WidgetTaskStatus.Processing;
-
-        if (_reportGeneratorService.ExtractReportData(reportStep.TaskId) is not TeamActivityReportData reportData)
-            throw new InvalidOperationException("Report did not return the expected data type");
-
-        // We have the final report data
-        {
-            var config = SafeJsonSerializer.Deserialize<TeamActivityConfig>(task.Widget.ConfigJson);
-
-            task.Widget.DataJson = SafeJsonSerializer.Serialize(MapReportData(reportData));
-            task.Widget.DataVersion = VERSION;
-            task.Widget.DataTimestamp = DateTimeOffset.UtcNow;
-
-            var supportTeam = await _staticDataService.GetSupportTeam(config.SupportTeamId);
-
-            task.Widget.HeaderText = (supportTeam?.Name ?? "Invalid Team Id");
-            task.Widget.HeaderText += $" {sDate.ToString("dd/MM/yy")} - {eDate.ToString("dd/MM/yy")}";
-
-            task.Widget = await _widgetRepository.UpdateWidget(task.Widget);
-
-            return WidgetTaskStatus.Complete;
-        }
+        return Task.FromResult(SafeJsonSerializer.Serialize(config));
     }
+
+    // Implementation
 
     TeamActivityData MapReportData(TeamActivityReportData reportData)
     {
@@ -164,13 +178,17 @@ internal class TeamActivityProvider : ITeamActivityProvider
         var data = new TeamActivityData();
         foreach (var user in reportData.Users)
         {
+            var totalHours = user.ProjectSupportHours + user.UserActivityHours;
+            var fte = user.User.FullTimeEquivalentForRSS;
+
             data.TeamMembers.Add(new TeamActivityData.TeamMember
             {
                 Name = user.User.FullName,
                 ProjectSupportHours = user.ProjectSupportHours,
                 UserActivityHours = user.UserActivityHours,
-                TotalHours = user.ProjectSupportHours + user.UserActivityHours,
-                FullTimeEquivalent = user.User.FullTimeEquivalentForRSS,
+                TotalHours = totalHours,
+                FTE = fte,
+                FTETotalHours = fte > 0 ? totalHours / fte : null
             });
         }
         return data;

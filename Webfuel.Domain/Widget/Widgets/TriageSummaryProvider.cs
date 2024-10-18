@@ -39,14 +39,14 @@ internal class TriageSummaryProvider : ITriageSummaryProvider
 
     // Public API
 
-    public Task<Widget> Initialise(Widget widget)
+    public Task<Widget> InitialiseWidget(Widget widget)
     {
         widget.HeaderText = "Triage Summary";
         widget.DataJson = SafeJsonSerializer.Serialize(new TriageSummaryData());
         return Task.FromResult(widget);
     }
 
-    public async Task<WidgetTaskStatus> ProcessTask(WidgetTask task)
+    public async Task<WidgetTaskStatus> BeginProcessing(WidgetTask task)
     {
         if (task.Widget.DataVersion == VERSION && task.Widget.DataTimestamp > GlobalTimestamp)
             return WidgetTaskStatus.Complete;
@@ -61,6 +61,11 @@ internal class TriageSummaryProvider : ITriageSummaryProvider
         return WidgetTaskStatus.Complete;
     }
 
+    public Task<WidgetTaskStatus> ContinueProcessing(WidgetTask task)
+    {
+        return Task.FromResult(WidgetTaskStatus.Complete);
+    }
+
     public Task<bool> AuthoriseAccess()
     {
         var identityAccessor = _serviceProvider.GetRequiredService<IIdentityAccessor>();
@@ -71,6 +76,11 @@ internal class TriageSummaryProvider : ITriageSummaryProvider
             return Task.FromResult(true);
 
         return Task.FromResult(false);
+    }
+
+    public Task<string> ValidateConfig(string configJson)
+    {
+        return Task.FromResult(configJson);
     }
 
     // Generators (real time generation)

@@ -21,6 +21,7 @@ namespace Webfuel.Domain
     {
         const string TeamActivityReport = "TeamActivityReport";
         const string SupportHoursSpentReport = "SupportHoursSpentReport";
+        const string AssignedProjectsReport = "AssignedProjectsReport";
 
         public CustomReportProvider()
         {
@@ -37,6 +38,9 @@ namespace Webfuel.Domain
 
                 case SupportHoursSpentReport:
                     return new SupportHoursSpentReportBuilder(request);
+
+                case AssignedProjectsReport:
+                    return new AssignedProjectsReportBuilder(request);
 
                 default:
                     throw new NotImplementedException($"Custom report provider '{request.Design.CustomReportProvider}' does not have a registered report builder");
@@ -60,6 +64,9 @@ namespace Webfuel.Domain
 
             if (design.CustomReportProvider == SupportHoursSpentReport)
                 return SupportHoursSpentReportBuilder.GenerateArguments(design, serviceProvider);
+
+            if (design.CustomReportProvider == AssignedProjectsReport)
+                return AssignedProjectsReportBuilder.GenerateArguments(design, serviceProvider);
 
             throw new NotImplementedException($"Custom report provider '{design.CustomReportProvider}' does not have a registered argument generator");
         }

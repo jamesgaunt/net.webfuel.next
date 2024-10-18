@@ -178,15 +178,21 @@ export interface TeamMember {
     projectSupportHours: number;
     userActivityHours: number;
     totalHours: number;
-    fullTimeEquivalent: number | null | null;
+    fte: number | null | null;
+    fteTotalHours: number | null | null;
 }
 
 export interface TeamActivityConfig {
+    weeks: number;
     supportTeamId: string;
 }
 
 export interface TeamSupportData {
     supportMetrics: Array<DashboardMetric>;
+}
+
+export interface TriageSummaryData {
+    supportRequestMetrics: Array<DashboardMetric>;
 }
 
 export interface ReportColumn {
