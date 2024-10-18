@@ -1,0 +1,35 @@
+<form class="form dialog" [formGroup]="form">
+  <div class="dialog-head">
+    Attach Existing Files
+  </div>
+  <div class="dialog-body">
+    <div class="table" *ngIf="data.databaseFiles.length > 0">
+      <table class="selectable">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Filename</th>
+            <th>Size</th>
+            <th>Uploaded At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let file of data.databaseFiles" (click)="toggleExistingFile(file)" [ngClass]="{ 'is-success' : isExistingFile(file) }">
+            <td class="table-checkbox" style="text-align: center"><i class="{{ iconClass(file) }}"></i></td>
+            <td>{{ file.fileName }}</td>
+            <td>{{ formatSize(file) }}</td>
+            <td>{{ file.uploadedAt | date: 'dd MMM yyyy HH:mm' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="data.databaseFiles.length == 0" class="message">
+      No existing files found
+    </div>
+  </div>
+  <div class="dialog-buttons">
+    <button type="submit" class="is-success" (click)="save()">Attach</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+  </div>
+</form>
+

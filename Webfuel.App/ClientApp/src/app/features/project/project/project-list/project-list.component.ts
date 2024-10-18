@@ -106,13 +106,17 @@ export class ProjectListComponent {
     
     const supportTeam = params['supportTeam'];
     if (supportTeam) {
-      this.resetFilterForm();
-      this.filterForm.patchValue({ statusId: ProjectStatusEnum.Active });
       this.filterForm.patchValue({ openSupportTeamId: supportTeam });
     }
+
+    const leadAdviser = params['leadAdviser'];
+    if (leadAdviser) {
+      this.filterForm.patchValue({ leadAdviserUserId: leadAdviser });
+    }
+
+    const supportAdviser = params['supportAdviser'];
+    if (supportAdviser) {
+      this.filterForm.patchValue({ supportAdviserUserId: supportAdviser });
+    }
   }
-
-  // Open Team Request Cache
-
-
 }

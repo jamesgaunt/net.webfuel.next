@@ -106,7 +106,15 @@ internal class TeamActivityProvider : ITeamActivityProvider
             }
         };
 
-        task.State = await _mediator.Send(runReport);
+        try
+        {
+            task.State = await _mediator.Send(runReport);
+        }
+        catch
+        {
+            return WidgetTaskStatus.Cancelled;
+        }
+
         return WidgetTaskStatus.Processing;
     }
 
@@ -117,14 +125,22 @@ internal class TeamActivityProvider : ITeamActivityProvider
 
         // Generate the Report Task
 
-        task.State = reportStep = await _reportGeneratorService.GenerateReport(reportStep.TaskId);
-        if (!reportStep.Complete)
-            return WidgetTaskStatus.Processing;
+        try
+        {
+            task.State = reportStep = await _reportGeneratorService.GenerateReport(reportStep.TaskId);
+            if (!reportStep.Complete)
+                return WidgetTaskStatus.Processing;
+        }
+        catch
+        {
+            return WidgetTaskStatus.Cancelled;
+        }
 
         if (_reportGeneratorService.ExtractReportData(reportStep.TaskId) is not TeamActivityReportData reportData)
             throw new InvalidOperationException("Report did not return the expected data type");
 
         // We have the final report data
+
         var config = SafeJsonSerializer.Deserialize<TeamActivityConfig>(task.Widget.ConfigJson);
 
         task.Widget.DataJson = SafeJsonSerializer.Serialize(MapReportData(reportData));
@@ -147,7 +163,7 @@ internal class TeamActivityProvider : ITeamActivityProvider
         if (identityAccessor.User == null)
             return false;
 
-        if (identityAccessor.Claims.Developer)
+        if (identityAccessor.Claims.Developer || identityAccessor.Claims.Administrator)
             return true;
 
         var supportTeams = await _serviceProvider.GetRequiredService<ISupportTeamUserRepository>().SelectSupportTeamUserByUserId(identityAccessor.User.Id);

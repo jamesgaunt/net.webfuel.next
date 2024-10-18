@@ -67,6 +67,11 @@
           <button class="button is-danger" *ngIf="projectSupport.supportRequestedTeamId !== null && projectSupport.supportRequestedCompletedAt !== null" (click)="uncompleteProjectSupport(projectSupport)">delete completion note</button>
         </div>
       </div>
+      <div *ngIf="projectSupport.files.length > 0" class="file-links">
+        <a *ngFor="let file of projectSupport.files" class="link is-primary" target="_blank" href="{{ sasRedirect(file) }}">
+          <i class="fas fa-link"></i>&nbsp;{{ file?.fileName || "NULL" }}
+        </a>
+      </div>
     </div>
   </div>
   <div class="floating-buttons">

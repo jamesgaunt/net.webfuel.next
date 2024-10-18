@@ -7,6 +7,8 @@ namespace Webfuel.Domain
     {
         public Guid Id { get; set; }
 
+        public bool Administrator { get; set; }
+
         public bool CanEditUsers { get; set; }
         public bool CanEditUserGroups { get; set; }
         public bool CanEditStaticData { get; set; }

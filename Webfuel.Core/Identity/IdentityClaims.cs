@@ -9,6 +9,9 @@ namespace Webfuel
         public bool Developer { get; set; }
 
         // User Group Claims
+        
+        public bool Administrator { get; set; }
+
         public bool CanEditUsers { get; set; }
         public bool CanEditUserGroups { get; set; }
         public bool CanEditStaticData { get; set; }
@@ -21,7 +24,7 @@ namespace Webfuel
 
         public void Sanitize()
         {
-            if (Developer)
+            if (Developer | Administrator)
             {
                 CanEditUsers = true;
                 CanEditUserGroups = true;

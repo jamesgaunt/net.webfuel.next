@@ -29,11 +29,13 @@ export class UserGroupClaimsComponent implements OnInit {
     this.item = item;
     this.form.patchValue({ id: item.id });
     this.form.patchValue(item.claims);
+    this.sanitizeClaims();
     this.form.markAsPristine();
   }
 
   form = new FormGroup({
     id: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
+    administrator: new FormControl<boolean>(false, { nonNullable: true }),
     canEditUsers: new FormControl<boolean>(false, { nonNullable: true }),
     canEditUserGroups: new FormControl<boolean>(false, { nonNullable: true }),
     canEditStaticData: new FormControl<boolean>(false, { nonNullable: true }),
@@ -41,6 +43,19 @@ export class UserGroupClaimsComponent implements OnInit {
     canUnlockProjects: new FormControl<boolean>(false, { nonNullable: true }),
     canTriageSupportRequests: new FormControl<boolean>(false, { nonNullable: true }),
   });
+
+  sanitizeClaims() {
+    if (this.form.getRawValue().administrator === true) {
+      this.form.patchValue({
+        canEditUsers: true,
+        canEditUserGroups: true,
+        canEditStaticData: true,
+        canEditReports: true,
+        canUnlockProjects: true,
+        canTriageSupportRequests: true,
+      })
+    }
+  }
 
   save(close: boolean) {
     if (this.formService.hasErrors(this.form))

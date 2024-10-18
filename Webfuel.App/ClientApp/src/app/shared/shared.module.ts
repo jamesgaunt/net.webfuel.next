@@ -52,6 +52,8 @@ import { FileViewerDialog, FileViewerDialogComponent } from './dialogs/file-view
 import { AlertDialog, AlertDialogComponent } from './dialogs/alert/alert.dialog';
 import { RunAnnualReportDialog, RunAnnualReportDialogComponent } from './dialogs/run-annual-report/run-annual-report.dialog';
 import { SendEmailDialogComponent, SendEmailDialog } from './dialogs/send-email/send-email.dialog';
+import { AttachProjectSupportFilesDialog, AttachProjectSupportFilesDialogComponent } from './dialogs/attach-project-support-files/attach-project-support-files.dialog';
+import { UploadProjectSupportFilesDialog, UploadProjectSupportFilesDialogComponent } from './dialogs/upload-project-support-files/upload-project-support-files.dialog';
 
 
 @NgModule({
@@ -113,6 +115,8 @@ import { SendEmailDialogComponent, SendEmailDialog } from './dialogs/send-email/
     AlertDialogComponent,
     RunAnnualReportDialogComponent,
     SendEmailDialogComponent,
+    AttachProjectSupportFilesDialogComponent,
+    UploadProjectSupportFilesDialogComponent,
   ],
   exports: [
     CommonModule,
@@ -166,6 +170,8 @@ import { SendEmailDialogComponent, SendEmailDialog } from './dialogs/send-email/
     FileViewerDialogComponent,
     AlertDialogComponent,
     RunAnnualReportDialogComponent,
+    AttachProjectSupportFilesDialogComponent,
+    UploadProjectSupportFilesDialogComponent,
   ],
   providers: [
     ChangePasswordDialog,
@@ -179,6 +185,8 @@ import { SendEmailDialogComponent, SendEmailDialog } from './dialogs/send-email/
     AlertDialog,
     RunAnnualReportDialog,
     SendEmailDialog,
+    AttachProjectSupportFilesDialog,
+    UploadProjectSupportFilesDialog,
   ]
 })
 export class SharedModule { }

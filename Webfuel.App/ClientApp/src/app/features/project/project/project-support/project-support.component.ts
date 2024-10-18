@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ProjectSupport, SupportProvided } from 'api/api.types';
+import { ProjectSupport, ProjectSupportFile, SupportProvided } from 'api/api.types';
 import { ProjectSupportApi } from 'api/project-support.api';
 import { FormService } from 'core/form.service';
 import _ from 'shared/common/underscore';
@@ -16,6 +16,7 @@ import { IsPrePostAwardEnum } from '../../../../api/api.enums';
 import { ConfirmDialog } from '../../../../shared/dialogs/confirm/confirm.dialog';
 import { UpdateProjectSupportCompletionDialog } from './update-project-support-completion/update-project-support-completion.dialog';
 import { debounceTime } from 'rxjs';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'project-support',
@@ -34,10 +35,9 @@ export class ProjectSupportComponent extends ProjectComponentBase {
     private updateProjectSupportCompletionDialog: UpdateProjectSupportCompletionDialog,
     private summariseProjectSupportDialog: SummariseProjectSupportDialog,
     private completeProjectSupportDialog: CompleteProjectSupportDialog,
-    private projectSupportApi: ProjectSupportApi,
+    private projectSupportApi: ProjectSupportApi
   ) {
     super();
-
   }
 
   ngOnInit() {
@@ -96,7 +96,7 @@ export class ProjectSupportComponent extends ProjectComponentBase {
 
   editProjectSupport(projectSupport: ProjectSupport) {
     if (this.locked) return;
-    this.updateProjectSupportDialog.open({ projectSupport: projectSupport });
+    this.updateProjectSupportDialog.open({ projectId: projectSupport.projectId, projectSupport: projectSupport });
   }
 
   editProjectSupportCompletion(projectSupport: ProjectSupport) {
@@ -125,7 +125,7 @@ export class ProjectSupportComponent extends ProjectComponentBase {
 
   requestTeamSupport(projectSupport: ProjectSupport) {
     if (this.locked) return;
-    this.updateProjectSupportDialog.open({ projectSupport: projectSupport, requestTeamSupport: true }).subscribe(() => {
+    this.updateProjectSupportDialog.open({ projectId: projectSupport.projectId, projectSupport: projectSupport, requestTeamSupport: true }).subscribe(() => {
       this.projectSupportApi.changed.next(null);
     });
   }
@@ -147,5 +147,13 @@ export class ProjectSupportComponent extends ProjectComponentBase {
       });
     });
 
+  }
+
+  // Files
+
+  sasRedirect(file: ProjectSupportFile) {
+    if (!file)
+      return "";
+    return environment.apiHost + "api/file-storage-entry/sas-redirect/" + file.id;
   }
 }

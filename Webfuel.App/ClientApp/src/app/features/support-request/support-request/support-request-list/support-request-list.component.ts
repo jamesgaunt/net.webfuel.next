@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { SupportRequest } from 'api/api.types';
 import { StaticDataCache } from 'api/static-data.cache';
 import { SupportRequestApi } from 'api/support-request.api';
 import _ from 'shared/common/underscore';
 import { ReportService } from '../../../../core/report.service';
+import { SupportRequestStatusEnum } from 'api/api.enums';
 
 @Component({
   selector: 'support-request-list',
@@ -14,10 +15,15 @@ import { ReportService } from '../../../../core/report.service';
 export class SupportRequestListComponent {
   constructor(
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     public supportRequestApi: SupportRequestApi,
     public staticDataCache: StaticDataCache,
     private reportService: ReportService
   ) {
+  }
+
+  ngAfterViewInit(): void {
+    this.activatedRoute.queryParams.subscribe(params => this.applyFilterParams(params));
   }
 
   filterForm = new FormGroup({
@@ -54,5 +60,29 @@ export class SupportRequestListComponent {
     this.supportRequestApi.export(_.merge(this.filterForm.getRawValue(), { skip: 0, take: 0 })).subscribe((result) => {
       this.reportService.runReport(result);
     });
+  }
+
+  applyFilterParams(params: Params) {
+    const show = params['show'];
+    switch (show) {
+      case 'all':
+        this.resetFilterForm();
+        return;
+
+      case 'to-be-triaged':
+        this.resetFilterForm();
+        this.filterForm.patchValue({ statusId: SupportRequestStatusEnum.ToBeTriaged });
+        return;
+
+      case 'on-hold':
+        this.resetFilterForm();
+        this.filterForm.patchValue({ statusId: SupportRequestStatusEnum.OnHold });
+        return;
+
+      case 'referred-to-rss-team':
+        this.resetFilterForm();
+        this.filterForm.patchValue({ statusId: SupportRequestStatusEnum.ReferredToNIHRRSSExpertTeams });
+        return;
+    }
   }
 }

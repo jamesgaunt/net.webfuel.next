@@ -1,9 +1,15 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using Webfuel.Domain;
 
 namespace Webfuel.App
 {
+    public class UploadProjectSupportFileDTO
+    {
+        public required Guid ProjectId { get; set; }
+    }
+
     [ApiService]
     [ApiDataSource]
     public static class ProjectSupportApi
@@ -39,6 +45,14 @@ namespace Webfuel.App
                 .RequireIdentity();
 
             app.MapGet("api/project-support/{id:guid}", Get)
+                .RequireIdentity();
+
+            // Files
+
+            app.MapPost("api/project-support/select-file", SelectFile)
+                 .RequireIdentity();
+
+            app.MapPost("api/project-support/upload-file", UploadFile)
                 .RequireIdentity();
         }
 
@@ -85,6 +99,28 @@ namespace Webfuel.App
         public static async Task<ProjectSupport?> Get(Guid id, IMediator mediator)
         {
             return await mediator.Send(new GetProjectSupport { Id = id });
+        }
+
+        public static async Task<List<ProjectSupportFile>> SelectFile([FromBody] SelectProjectSupportFile command, IMediator mediator)
+        {
+            return await mediator.Send(command);
+        }
+
+        public static async Task<List<ProjectSupportFile>> UploadFile(HttpRequest request, IMediator mediator)
+        {
+            var data = request.Form["data"].ToString();
+            if (String.IsNullOrEmpty(data))
+                throw new InvalidOperationException("No data part found on upload project support file request");
+
+            var command = JsonSerializer.Deserialize<UploadProjectSupportFileDTO>(data, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            if (command == null)
+                throw new InvalidOperationException("Unable to deserialize upload project support file command");
+
+            var result = new List<ProjectSupportFile>();
+            foreach (var file in request.Form.Files)
+                result.Add(await mediator.Send(new UploadProjectSupportFile { ProjectId = command.ProjectId, FormFile = file }));
+
+            return result;
         }
     }
 }

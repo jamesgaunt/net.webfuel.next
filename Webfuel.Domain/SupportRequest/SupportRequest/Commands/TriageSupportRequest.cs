@@ -115,7 +115,8 @@ namespace Webfuel.Domain
                             Description = request.Description,
                             WorkTimeInHours = request.WorkTimeInHours ?? 0,
                             SupportRequestedTeamId = request.SupportRequestedTeamId,
-                            IsPrePostAwardId = request.IsPrePostAwardId
+                            IsPrePostAwardId = request.IsPrePostAwardId,
+                            Files = new List<ProjectSupportFile>()
                         });
                     }
                 }

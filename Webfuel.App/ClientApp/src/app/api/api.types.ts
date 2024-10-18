@@ -122,6 +122,7 @@ export interface ClientConfigurationMenu {
 
 export interface IdentityClaims {
     developer: boolean;
+    administrator: boolean;
     canEditUsers: boolean;
     canEditUserGroups: boolean;
     canEditStaticData: boolean;
@@ -1250,6 +1251,7 @@ export interface CreateProjectSupport {
     workTimeInHours: number;
     supportRequestedTeamId: string | null | null;
     isPrePostAwardId: string;
+    files: Array<ProjectSupportFile>;
 }
 
 export interface UpdateProjectSupport {
@@ -1262,6 +1264,7 @@ export interface UpdateProjectSupport {
     workTimeInHours: number;
     supportRequestedTeamId: string | null | null;
     isPrePostAwardId: string;
+    files: Array<ProjectSupportFile>;
 }
 
 export interface ResendProjectSupportNotification {
@@ -1291,6 +1294,10 @@ export interface QueryProjectSupport extends Query {
     filters?: Array<QueryFilter>;
     sort?: Array<QuerySort>;
     search?: string;
+}
+
+export interface SelectProjectSupportFile {
+    projectId: string;
 }
 
 export interface Report {
@@ -1835,6 +1842,7 @@ export interface UserGroup {
 }
 
 export interface UserGroupClaims {
+    administrator: boolean;
     canEditUsers: boolean;
     canEditUserGroups: boolean;
     canEditStaticData: boolean;
@@ -1854,6 +1862,7 @@ export interface UpdateUserGroup {
 
 export interface UpdateUserGroupClaims {
     id: string;
+    administrator: boolean;
     canEditUsers: boolean;
     canEditUserGroups: boolean;
     canEditStaticData: boolean;

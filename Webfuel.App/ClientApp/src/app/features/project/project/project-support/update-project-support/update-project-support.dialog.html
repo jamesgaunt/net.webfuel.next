@@ -1,6 +1,11 @@
 <form class="form dialog" [formGroup]="form">
   <div class="dialog-head">
     Update Project Support
+    <span style="float:right">
+      <a (click)="addUploadedFiles()"><i class="fas fa-upload"></i> Upload Files</a>
+      &nbsp;&nbsp;&nbsp;
+      <a (click)="addAttachedFiles()"><i class="fas fa-file-plus"></i> Attach Existing Files</a>
+    </span>
   </div>
   <div class="dialog-body">
     <div class="flex" *ngIf="data.requestTeamSupport !== true">
@@ -60,10 +65,20 @@
         <html-editor formControlName="description" [height]="300" placeholder="required"></html-editor>
       </div>
     </div>
-  </div>
-    <div class="dialog-buttons">
-      <button type="submit" class="is-success" (click)="save()">Save</button>
-      <button type="button" (click)="cancel()">Cancel</button>
+    <div class="file-attachments">
+      <div class="tags">
+        <div *ngFor="let existingFile of existingFiles" class="tag is-primary">
+          {{ existingFile.fileName }}&nbsp;&nbsp;&nbsp;<a style="font-size: 1.2em" class="link" (click)="removeExistingFile(existingFile, $event)"><i class="fas fa-times"></i></a>
+        </div>
+        <div *ngFor="let uploadedFile of uploadedFiles" class="tag is-success">
+          {{ uploadedFile.name }}&nbsp;&nbsp;&nbsp;<a style="font-size: 1.2em" class="link" (click)="removeUploadedFile(uploadedFile, $event)"><i class="fas fa-times"></i></a>
+        </div>
+      </div>
     </div>
+  </div>
+  <div class="dialog-buttons">
+    <button type="submit" class="is-success" (click)="save()">Save</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+  </div>
 </form>
 

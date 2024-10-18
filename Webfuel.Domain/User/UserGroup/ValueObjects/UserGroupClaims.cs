@@ -8,6 +8,8 @@ namespace Webfuel.Domain
 {
     public class UserGroupClaims
     {
+        public bool Administrator { get; set; }
+
         public bool CanEditUsers { get; set; }
         public bool CanEditUserGroups { get; set; }
         public bool CanEditStaticData { get; set; }

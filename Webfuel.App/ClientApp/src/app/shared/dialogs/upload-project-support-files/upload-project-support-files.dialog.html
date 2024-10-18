@@ -1,0 +1,13 @@
+<form class="form dialog" [formGroup]="form">
+  <div class="dialog-head">
+    Upload Files
+  </div>
+  <div class="dialog-body">
+    <file-input formControlName="files"></file-input>
+  </div>
+  <div class="dialog-buttons">
+    <button type="submit" class="is-success" (click)="save()">Upload</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+  </div>
+</form>
+

@@ -265,3 +265,13 @@
     }
   }
 }
+
+// File Links
+
+.file-links {
+  & > a {
+    display: inline-block;
+    align-items: center;
+    margin: 0.5rem;
+  }
+}

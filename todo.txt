@@ -11,8 +11,8 @@
 
 > Review original 1.4 specification document
 
-> Date range on Team Activity
-
 > ReportBuilder better support for customised stages
 
 > Sort out permissions (need Adminstrator claim)
+
+> Swallow widget exceptions about support tasks no longer existing (catch within the widget?)

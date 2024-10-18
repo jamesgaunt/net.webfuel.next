@@ -111,7 +111,7 @@ internal class TeamSupportProvider : ITeamSupportProvider
             Count = queryResult.TotalCount,
             Icon = "fas fa-user-headset",
             RouterLink = "/project/project-list",
-            RouterParams = $"{{ \"supportTeam\": \"{supportTeam.Id}\" }}",
+            RouterParams = $"{{ \"show\": \"all\", \"supportTeam\": \"{supportTeam.Id}\" }}",
             BackgroundColor = "#d6bdcc"
         };
     }

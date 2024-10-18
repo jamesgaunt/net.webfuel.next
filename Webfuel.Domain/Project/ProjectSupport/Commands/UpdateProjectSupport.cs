@@ -21,6 +21,8 @@ namespace Webfuel.Domain
         public Guid? SupportRequestedTeamId { get; set; }
 
         public required Guid IsPrePostAwardId { get; set; }
+
+        public required List<ProjectSupportFile> Files { get; set; }
     }
 
     internal class UpdateProjectSupportHandler : IRequestHandler<UpdateProjectSupport, ProjectSupport>
@@ -72,6 +74,7 @@ namespace Webfuel.Domain
             updated.WorkTimeInHours = request.WorkTimeInHours;
             updated.SupportRequestedTeamId = request.SupportRequestedTeamId;
             updated.IsPrePostAwardId = request.IsPrePostAwardId;
+            updated.Files = request.Files;
 
             // Calculated
             updated.CalculatedMinutes = (int)(updated.WorkTimeInHours * 60) * updated.AdviserIds.Count;
