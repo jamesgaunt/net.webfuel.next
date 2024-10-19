@@ -8,12 +8,6 @@ using Webfuel.Domain.StaticData;
 
 namespace Webfuel.Domain;
 
-[ApiType]
-public class TriageSummaryData
-{
-    public List<DashboardMetric> SupportRequestMetrics { get; set; } = new List<DashboardMetric>();
-}
-
 public interface ITriageSummaryProvider: IWidgetProvider
 {
 }
@@ -42,7 +36,7 @@ internal class TriageSummaryProvider : ITriageSummaryProvider
     public Task<Widget> InitialiseWidget(Widget widget)
     {
         widget.HeaderText = "Triage Summary";
-        widget.DataJson = SafeJsonSerializer.Serialize(new TriageSummaryData());
+        widget.DataJson = SafeJsonSerializer.Serialize(new DashboardMetrics());
         return Task.FromResult(widget);
     }
 
@@ -85,16 +79,16 @@ internal class TriageSummaryProvider : ITriageSummaryProvider
 
     // Generators (real time generation)
 
-    async Task<TriageSummaryData> GenerateData()
+    async Task<DashboardMetrics> GenerateData()
     {
-        var data = new TriageSummaryData
+        var data = new DashboardMetrics
         {
-            SupportRequestMetrics = await GenerateSupportRequestMetrics()
+            Metrics = await GenerateMetrics()
         };
         return data;
     }
 
-    async Task<List<DashboardMetric>> GenerateSupportRequestMetrics()
+    async Task<List<DashboardMetric>> GenerateMetrics()
     {
         var result = new List<DashboardMetric>();
 
@@ -137,7 +131,7 @@ internal class TriageSummaryProvider : ITriageSummaryProvider
 
             result.Add(new DashboardMetric
             {
-                Name = "Referred To RSS Team",
+                Name = "Referred To NIHR RSS Expert Teams",
                 Count = queryResult.TotalCount,
                 Icon = "fas fa-books",
                 RouterLink = "/support-request/support-request-list",

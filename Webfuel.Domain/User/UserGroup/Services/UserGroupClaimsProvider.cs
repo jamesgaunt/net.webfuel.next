@@ -27,6 +27,7 @@ namespace Webfuel.Domain
             var _user = await _userRepository.RequireUser(user.Id);
             var userGroup = await _userGroupRepository.RequireUserGroup(_user.UserGroupId);
 
+            claims.Administrator = userGroup.Claims.Administrator;
             claims.CanEditUsers |= userGroup.Claims.CanEditUsers;
             claims.CanEditUserGroups |= userGroup.Claims.CanEditUserGroups;
             claims.CanEditStaticData |= userGroup.Claims.CanEditStaticData;

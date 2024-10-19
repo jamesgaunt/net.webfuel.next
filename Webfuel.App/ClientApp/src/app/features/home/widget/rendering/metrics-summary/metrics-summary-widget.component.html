@@ -3,15 +3,15 @@
   <i style="opacity: 0.3" *ngIf="isProcessing()" class="fas fa-fw fa-spin fa-sync-alt"></i>
 </h4>
 
-<div *ngIf="(data?.projectMetrics?.length || 0) > 0" class="dashboard-metrics">
-  <a class="dashboard-metric" *ngFor="let metric of data.projectMetrics" routerLink="{{ metric.routerLink }}" [queryParams]="routerParams(metric)">
+<div *ngIf="(data?.metrics?.length || 0) > 0" class="dashboard-metrics">
+  <a class="dashboard-metric" *ngFor="let metric of data.metrics" routerLink="{{ metric.routerLink }}" [queryParams]="routerParams(metric)">
     <div class="icon"><i class="{{ metric.icon }}"></i></div>
     <div class="count">{{ metric.count }}</div>
     <div class="name">{{ metric.name }}</div>
     <div class="cta">View Details <i class="fas fa-arrow-right"></i></div>
   </a>
 </div>
-<div *ngIf="(data?.projectMetrics?.length || 0) == 0" class="dashboard-metrics">
+<div *ngIf="(data?.metrics?.length || 0) == 0" class="dashboard-metrics">
   <div class="dashboard-metric">
     <div class="icon"><i class="fas fa-fw fa-spin fa-sync-alt"></i></div>
     <div class="count"></div>

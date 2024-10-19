@@ -83,40 +83,34 @@ export class ProjectListComponent {
 
   applyFilterParams(params: Params) {
     const show = params['show'];
-    switch (show) {
-      case 'all':
-        this.resetFilterForm();
-        return;
+    const supportTeam = params['supportTeam'];
+    const leadAdviser = params['leadAdviser'];
+    const supportAdviser = params['supportAdviser'];
 
+    if (show || supportTeam || leadAdviser || supportAdviser)
+      this.resetFilterForm();
+
+    switch (show) {
       case 'active':
-        this.resetFilterForm();
         this.filterForm.patchValue({ statusId: ProjectStatusEnum.Active });
-        return;
+        break;
 
       case 'on-hold':
-        this.resetFilterForm();
         this.filterForm.patchValue({ statusId: ProjectStatusEnum.OnHold });
-        return;
+        break;
 
       case 'submitted-on-hold':
-        this.resetFilterForm();
         this.filterForm.patchValue({ statusId: ProjectStatusEnum.SubmittedOnHold });
-        return;
+        break;
     }
     
-    const supportTeam = params['supportTeam'];
-    if (supportTeam) {
+    if (supportTeam)
       this.filterForm.patchValue({ openSupportTeamId: supportTeam });
-    }
 
-    const leadAdviser = params['leadAdviser'];
-    if (leadAdviser) {
+    if (leadAdviser)
       this.filterForm.patchValue({ leadAdviserUserId: leadAdviser });
-    }
 
-    const supportAdviser = params['supportAdviser'];
-    if (supportAdviser) {
+    if (supportAdviser)
       this.filterForm.patchValue({ supportAdviserUserId: supportAdviser });
-    }
   }
 }

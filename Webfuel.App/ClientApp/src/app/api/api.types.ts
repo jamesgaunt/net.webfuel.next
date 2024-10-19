@@ -156,8 +156,8 @@ export interface UploadFileStorageEntry {
     fileStorageGroupId: string;
 }
 
-export interface ProjectSummaryData {
-    projectMetrics: Array<DashboardMetric>;
+export interface DashboardMetrics {
+    metrics: Array<DashboardMetric>;
 }
 
 export interface DashboardMetric {
@@ -186,14 +186,6 @@ export interface TeamMember {
 export interface TeamActivityConfig {
     weeks: number;
     supportTeamId: string;
-}
-
-export interface TeamSupportData {
-    supportMetrics: Array<DashboardMetric>;
-}
-
-export interface TriageSummaryData {
-    supportRequestMetrics: Array<DashboardMetric>;
 }
 
 export interface ReportColumn {
@@ -1958,6 +1950,8 @@ export interface SortWidget {
 export interface WidgetType {
     id: string;
     name: string;
+    sortOrder: number;
+    description: string;
 }
 
 export interface WidgetTaskResult {

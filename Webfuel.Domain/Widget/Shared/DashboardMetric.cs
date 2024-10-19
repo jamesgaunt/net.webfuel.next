@@ -7,6 +7,13 @@ using System.Threading.Tasks;
 
 namespace Webfuel.Domain
 {
+
+    [ApiType]
+    public class DashboardMetrics
+    {
+        public List<DashboardMetric> Metrics { get; set; } = new List<DashboardMetric>();
+    }
+
     public class DashboardMetric
     {
         public string Name { get; init; } = String.Empty;

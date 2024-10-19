@@ -18,7 +18,7 @@
               &nbsp;
             </div>
             <div class="column is-right is-narrow">
-              <a class="link is-danger" (click)="deleteWidget(widget)">delete</a>
+              <a class="link is-warning" (click)="deleteWidget(widget)">remove</a>
             </div>
           </div>
         </div>
@@ -40,7 +40,7 @@
     <div class="widget-types">
       <a *ngFor="let widgetType of widgetTypes" (click)="addWidgetType(widgetType)">
         <div class="name">{{ widgetType.name }}</div>
-        <div class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non est ut mi auctor efficitur et sed massa. Phasellus eget feugiat ante. Etiam eget quam nibh.  </div>
+        <div class="description">{{ widgetType.description }}</div>
       </a>
     </div>
   </div>

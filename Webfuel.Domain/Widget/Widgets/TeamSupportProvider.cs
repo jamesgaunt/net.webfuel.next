@@ -3,12 +3,6 @@ using Webfuel.Domain.StaticData;
 
 namespace Webfuel.Domain;
 
-[ApiType]
-public class TeamSupportData
-{
-    public List<DashboardMetric> SupportMetrics { get; set; } = new List<DashboardMetric>();
-}
-
 public interface ITeamSupportProvider : IWidgetProvider
 {
 }
@@ -40,7 +34,7 @@ internal class TeamSupportProvider : ITeamSupportProvider
     public Task<Widget> InitialiseWidget(Widget widget)
     {
         widget.HeaderText = "Team Summary";
-        widget.DataJson = SafeJsonSerializer.Serialize(new TeamSupportData());
+        widget.DataJson = SafeJsonSerializer.Serialize(new DashboardMetrics());
         return Task.FromResult(widget);
     }
 
@@ -76,16 +70,16 @@ internal class TeamSupportProvider : ITeamSupportProvider
 
     // Generators (real time generation)
 
-    async Task<TeamSupportData> GenerateData()
+    async Task<DashboardMetrics> GenerateData()
     {
-        var data = new TeamSupportData
+        var data = new DashboardMetrics
         {
-            SupportMetrics = await GenerateTeamSupportMetrics()
+            Metrics = await GenerateMetrics()
         };
         return data;
     }
 
-    async Task<List<DashboardMetric>> GenerateTeamSupportMetrics()
+    async Task<List<DashboardMetric>> GenerateMetrics()
     {
         var result = new List<DashboardMetric>();
         var staticData = await _staticDataService.GetStaticData();

@@ -24,7 +24,7 @@ namespace Webfuel
 
         public void Sanitize()
         {
-            if (Developer | Administrator)
+            if (Developer || Administrator)
             {
                 CanEditUsers = true;
                 CanEditUserGroups = true;

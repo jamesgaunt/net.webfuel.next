@@ -203,6 +203,8 @@ namespace Webfuel.Domain
                 _worksheet.Cell(1, 02).SetValue("Project Support Hours").SetBold(true);
                 _worksheet.Cell(1, 03).SetValue("User Activity Hours").SetBold(true);
                 _worksheet.Cell(1, 04).SetValue("Total Hours").SetBold(true);
+                _worksheet.Cell(1, 05).SetValue("FTE").SetBold(true);
+                _worksheet.Cell(1, 06).SetValue("FTE Adjusted Hours").SetBold(true);
 
                 RowIndex = 2;
             }
@@ -223,10 +225,15 @@ namespace Webfuel.Domain
 
                 var userData = CustomData.Users[StageCount];
 
+                var totalHours = userData.ProjectSupportHours + userData.UserActivityHours;
+                var fte = userData.User.FullTimeEquivalentForRSS;
+
                 worksheet.Cell(RowIndex, 01).SetValue(userData.User.FullName);
-                worksheet.Cell(RowIndex, 02).SetValue(userData.ProjectSupportHours);
-                worksheet.Cell(RowIndex, 03).SetValue(userData.UserActivityHours);
-                worksheet.Cell(RowIndex, 04).SetValue(userData.ProjectSupportHours + userData.UserActivityHours);
+                worksheet.Cell(RowIndex, 02).SetValue(userData.ProjectSupportHours).SetNumberFormat("#,##0.00");
+                worksheet.Cell(RowIndex, 03).SetValue(userData.UserActivityHours).SetNumberFormat("#,##0.00");
+                worksheet.Cell(RowIndex, 04).SetValue(totalHours).SetNumberFormat("#,##0.00");
+                worksheet.Cell(RowIndex, 05).SetValue(fte).SetNumberFormat("#,##0.00");
+                worksheet.Cell(RowIndex, 06).SetValue(fte > 0 ? totalHours / fte : null).SetNumberFormat("#,##0.00");
                 RowIndex++;
 
                 StageCount++;
@@ -244,6 +251,8 @@ namespace Webfuel.Domain
             worksheet.Column(02).AdjustToContents();
             worksheet.Column(03).AdjustToContents();
             worksheet.Column(04).AdjustToContents();
+            worksheet.Column(05).AdjustToContents();
+            worksheet.Column(06).AdjustToContents();
         }
 
         public static async Task<List<ReportArgument>> GenerateArguments(ReportDesign design, IServiceProvider serviceProvider)

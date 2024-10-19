@@ -48,12 +48,12 @@ namespace Webfuel.Domain
         }
         public async Task<List<WidgetType>> SelectWidgetType()
         {
-            var sql = @"SELECT * FROM [WidgetType] ORDER BY Id ASC";
+            var sql = @"SELECT * FROM [WidgetType] ORDER BY SortOrder ASC";
             return await _connection.ExecuteReader<WidgetType, WidgetTypeMetadata>(sql);
         }
         public async Task<List<WidgetType>> SelectWidgetTypeWithPage(int skip, int take)
         {
-            var sql = @"SELECT * FROM [WidgetType] ORDER BY Id ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
+            var sql = @"SELECT * FROM [WidgetType] ORDER BY SortOrder ASC OFFSET @Skip ROWS FETCH NEXT @Take ROWS ONLY";
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@Skip", skip),

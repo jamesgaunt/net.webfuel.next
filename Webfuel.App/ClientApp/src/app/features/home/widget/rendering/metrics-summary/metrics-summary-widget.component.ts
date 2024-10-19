@@ -1,16 +1,17 @@
 import { Component, DestroyRef, Input, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup } from '@angular/forms';
-import { DashboardMetric, TeamSupportData, Widget } from 'api/api.types';
+import { DashboardMetric, DashboardMetrics, Widget } from 'api/api.types';
+import { debug } from 'console';
 import { WidgetService } from 'core/widget.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import _ from 'shared/common/underscore';
 
 @Component({
-  selector: 'team-support-widget',
-  templateUrl: './team-support-widget.component.html'
+  selector: 'metrics-summary-widget',
+  templateUrl: './metrics-summary-widget.component.html'
 })
-export class TeamSupportWidgetComponent {
+export class MetricsSummaryWidgetComponent {
 
   destroyRef: DestroyRef = inject(DestroyRef);
 
@@ -36,8 +37,8 @@ export class TeamSupportWidgetComponent {
     return this.widgetService.isProcessing(this.widget.value.id);
   }
 
-  data: TeamSupportData = {
-    supportMetrics: []
+  data: DashboardMetrics = {
+    metrics: []
   };
 
   routerParams(metric: DashboardMetric) {

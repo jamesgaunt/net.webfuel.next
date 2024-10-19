@@ -25,7 +25,10 @@ export enum WidgetTaskStatus {
 export enum WidgetTypeEnum {
     ProjectSummary = "4f5bed07-af06-40c5-a7ed-ad283e57e503",
     TeamSupport = "54d1db4b-2b37-4d20-9e55-ffe2529446ac",
+    TriageSummary = "3f9d5f90-87bd-4257-828e-95fa04e55d7a",
     TeamActivity = "cf48d41d-934b-4fc8-b368-52ee87d5e76d",
+    LeadAdviserProjects = "866208a8-c266-4e56-ad3e-717491cf0089",
+    SupportAdviserProjects = "391677a2-119d-4c18-982b-27769abe42bd",
 }
 
 export enum ReportFieldType {

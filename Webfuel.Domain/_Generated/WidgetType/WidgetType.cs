@@ -24,16 +24,26 @@ namespace Webfuel.Domain
                     case nameof(WidgetType.Name):
                         Name = (string)value!;
                         break;
+                    case nameof(WidgetType.SortOrder):
+                        SortOrder = (int)value!;
+                        break;
+                    case nameof(WidgetType.Description):
+                        Description = (string)value!;
+                        break;
                 }
             }
         }
         public Guid Id  { get; set; } = Guid.Empty;
         public string Name  { get; set; } = String.Empty;
+        public int SortOrder  { get; set; } = 0;
+        public string Description  { get; set; } = String.Empty;
         public WidgetType Copy()
         {
             var entity = new WidgetType();
             entity.Id = Id;
             entity.Name = Name;
+            entity.SortOrder = SortOrder;
+            entity.Description = Description;
             return entity;
         }
     }

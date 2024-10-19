@@ -14,8 +14,11 @@
   </div>
   @for(widget of widgetService.widgets | async; track widget.value.id) {
   @switch(widget.value.widgetTypeId){
-  @case(WidgetTypeEnum.ProjectSummary) { <project-summary-widget [widget]="widget" /> }
-  @case(WidgetTypeEnum.TeamSupport) { <team-support-widget [widget]="widget" />  }
+  @case(WidgetTypeEnum.ProjectSummary) { <metrics-summary-widget [widget]="widget" /> }
+  @case(WidgetTypeEnum.TeamSupport) { <metrics-summary-widget [widget]="widget" />  }
+  @case(WidgetTypeEnum.TriageSummary) { <metrics-summary-widget [widget]="widget" />  }
+  @case(WidgetTypeEnum.LeadAdviserProjects) { <metrics-summary-widget [widget]="widget" />  }
+  @case(WidgetTypeEnum.SupportAdviserProjects) { <metrics-summary-widget [widget]="widget" />  }
   @case(WidgetTypeEnum.TeamActivity) { <team-activity-widget [widget]="widget" /> }
   }
   }

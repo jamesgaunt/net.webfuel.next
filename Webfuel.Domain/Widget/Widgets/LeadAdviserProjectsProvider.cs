@@ -7,12 +7,6 @@ using Webfuel.Domain.StaticData;
 
 namespace Webfuel.Domain;
 
-[ApiType]
-public class LeadAdviserProjectsData
-{
-    public List<DashboardMetric> ProjectMetrics { get; set; } = new List<DashboardMetric>();
-}
-
 public interface ILeadAdviserProjectsProvider: IWidgetProvider
 {
 }
@@ -38,7 +32,7 @@ internal class LeadAdviserProjectsProvider : ILeadAdviserProjectsProvider
     public Task<Widget> InitialiseWidget(Widget widget)
     {
         widget.HeaderText = "Lead Adviser Projects";
-        widget.DataJson = SafeJsonSerializer.Serialize(new LeadAdviserProjectsData());
+        widget.DataJson = SafeJsonSerializer.Serialize(new DashboardMetrics());
         return Task.FromResult(widget);
     }
 
@@ -74,16 +68,16 @@ internal class LeadAdviserProjectsProvider : ILeadAdviserProjectsProvider
 
     // Generators (real time generation)
 
-    async Task<LeadAdviserProjectsData> GenerateData(Guid userId)
+    async Task<DashboardMetrics> GenerateData(Guid userId)
     {
-        var data = new LeadAdviserProjectsData
+        var data = new DashboardMetrics
         {
-            ProjectMetrics = await GenerateProjectMetrics(userId)
+            Metrics = await GenerateMetrics(userId)
         };
         return data;
     }
 
-    async Task<List<DashboardMetric>> GenerateProjectMetrics(Guid userId)
+    async Task<List<DashboardMetric>> GenerateMetrics(Guid userId)
     {
         var result = new List<DashboardMetric>();
         {
