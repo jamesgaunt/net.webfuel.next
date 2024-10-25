@@ -1766,7 +1766,6 @@ export interface User {
     firstName: string;
     lastName: string;
     fullName: string;
-    staffRole: string;
     staffRoleFreeText: string;
     universityJobTitle: string;
     professionalBackgroundFreeText: string;
@@ -1781,6 +1780,7 @@ export interface User {
     lastLoginAt: string | null | null;
     createdAt: string;
     siteId: string | null | null;
+    staffRoleId: string | null | null;
     professionalBackgroundId: string | null | null;
     professionalBackgroundDetailId: string | null | null;
     userGroupId: string;
@@ -1801,7 +1801,7 @@ export interface UpdateUser {
     firstName: string;
     lastName: string;
     userGroupId: string;
-    staffRole: string;
+    staffRoleId: string | null | null;
     staffRoleFreeText: string;
     universityJobTitle: string;
     disciplineIds: Array<string>;

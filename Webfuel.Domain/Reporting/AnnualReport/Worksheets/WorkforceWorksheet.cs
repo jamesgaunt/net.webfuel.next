@@ -70,7 +70,7 @@ namespace Webfuel.Domain
             SetValue(Title, user.Title);
             SetValue(Surname, user.LastName);
             SetValue(FirstName, user.FirstName);
-            SetValue(JobTitle, user.StaffRole);
+            //SetValue(JobTitle, user.StaffRole);
             SetValue(RSSFundedFTE, user.FullTimeEquivalentForRSS);
             SetValue(Email, user.Email);
 

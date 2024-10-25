@@ -39,9 +39,6 @@ namespace Webfuel.Domain
                     case nameof(User.FullName):
                         FullName = (string)value!;
                         break;
-                    case nameof(User.StaffRole):
-                        StaffRole = (string)value!;
-                        break;
                     case nameof(User.StaffRoleFreeText):
                         StaffRoleFreeText = (string)value!;
                         break;
@@ -99,6 +96,9 @@ namespace Webfuel.Domain
                     case nameof(User.SiteId):
                         SiteId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
+                    case nameof(User.StaffRoleId):
+                        StaffRoleId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
                     case nameof(User.ProfessionalBackgroundId):
                         ProfessionalBackgroundId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
@@ -118,7 +118,6 @@ namespace Webfuel.Domain
         public string FirstName  { get; set; } = String.Empty;
         public string LastName  { get; set; } = String.Empty;
         public string FullName  { get; set; } = String.Empty;
-        public string StaffRole  { get; set; } = String.Empty;
         public string StaffRoleFreeText  { get; set; } = String.Empty;
         public string UniversityJobTitle  { get; set; } = String.Empty;
         public string ProfessionalBackgroundFreeText  { get; set; } = String.Empty;
@@ -154,6 +153,7 @@ namespace Webfuel.Domain
         public DateTimeOffset PasswordResetValidUntil  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid? SiteId { get; set; }
+        public Guid? StaffRoleId { get; set; }
         public Guid? ProfessionalBackgroundId { get; set; }
         public Guid? ProfessionalBackgroundDetailId { get; set; }
         public Guid UserGroupId { get; set; }
@@ -167,7 +167,6 @@ namespace Webfuel.Domain
             entity.FirstName = FirstName;
             entity.LastName = LastName;
             entity.FullName = FullName;
-            entity.StaffRole = StaffRole;
             entity.StaffRoleFreeText = StaffRoleFreeText;
             entity.UniversityJobTitle = UniversityJobTitle;
             entity.ProfessionalBackgroundFreeText = ProfessionalBackgroundFreeText;
@@ -187,6 +186,7 @@ namespace Webfuel.Domain
             entity.PasswordResetValidUntil = PasswordResetValidUntil;
             entity.CreatedAt = CreatedAt;
             entity.SiteId = SiteId;
+            entity.StaffRoleId = StaffRoleId;
             entity.ProfessionalBackgroundId = ProfessionalBackgroundId;
             entity.ProfessionalBackgroundDetailId = ProfessionalBackgroundDetailId;
             entity.UserGroupId = UserGroupId;

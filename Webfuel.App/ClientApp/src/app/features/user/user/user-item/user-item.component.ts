@@ -49,7 +49,7 @@ export class UserItemComponent implements OnInit {
     lastName: new FormControl('', { validators: [Validators.required], nonNullable: true }),
     userGroupId: new FormControl('', { validators: [Validators.required], nonNullable: true }),
 
-    staffRole: new FormControl('', { nonNullable: true }),
+    staffRoleId: new FormControl<string | null>(null),
     staffRoleFreeText: new FormControl('', { nonNullable: true }),
 
     universityJobTitle: new FormControl('', { nonNullable: true }),

@@ -13,8 +13,7 @@
     <Property Name="LastName" Type="meta:name" />
     <Property Name="FullName" Type="meta:name" />
 
-    <!-- Rename to RSS Staff Role: Free Text Drop Down 1.4 -->
-    <Property Name="StaffRole" Type="meta:name" />
+    <Property Name="StaffRoleId" Type="StaffRole?" />
     <Property Name="StaffRoleFreeText" Type="meta:name" />
     
     <Property Name="UniversityJobTitle" Type="meta:name" />

@@ -12,7 +12,7 @@ namespace Webfuel.Domain
         public required string LastName { get; set; }
         public required Guid UserGroupId { get; set; }
 
-        public required string StaffRole { get; set; }
+        public required Guid? StaffRoleId { get; set; }
         public required string StaffRoleFreeText { get; set; }
 
         public required string UniversityJobTitle { get; set; }
@@ -55,7 +55,7 @@ namespace Webfuel.Domain
             updated.FullName = request.FirstName + " " + request.LastName;
             updated.UserGroupId = request.UserGroupId;
 
-            updated.StaffRole = request.StaffRole;
+            updated.StaffRoleId = request.StaffRoleId;
             updated.StaffRoleFreeText = request.StaffRoleFreeText;
 
             updated.UniversityJobTitle = request.UniversityJobTitle;

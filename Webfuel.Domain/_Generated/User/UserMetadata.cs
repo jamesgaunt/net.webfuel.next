@@ -41,9 +41,6 @@ namespace Webfuel.Domain
                     case nameof(User.FullName):
                         result.Add(new SqlParameter(nameof(User.FullName), entity.FullName));
                         break;
-                    case nameof(User.StaffRole):
-                        result.Add(new SqlParameter(nameof(User.StaffRole), entity.StaffRole));
-                        break;
                     case nameof(User.StaffRoleFreeText):
                         result.Add(new SqlParameter(nameof(User.StaffRoleFreeText), entity.StaffRoleFreeText));
                         break;
@@ -101,6 +98,9 @@ namespace Webfuel.Domain
                     case nameof(User.SiteId):
                         result.Add(new SqlParameter(nameof(User.SiteId), entity.SiteId ?? (object?)DBNull.Value));
                         break;
+                    case nameof(User.StaffRoleId):
+                        result.Add(new SqlParameter(nameof(User.StaffRoleId), entity.StaffRoleId ?? (object?)DBNull.Value));
+                        break;
                     case nameof(User.ProfessionalBackgroundId):
                         result.Add(new SqlParameter(nameof(User.ProfessionalBackgroundId), entity.ProfessionalBackgroundId ?? (object?)DBNull.Value));
                         break;
@@ -143,7 +143,6 @@ namespace Webfuel.Domain
                 yield return "FirstName";
                 yield return "LastName";
                 yield return "FullName";
-                yield return "StaffRole";
                 yield return "StaffRoleFreeText";
                 yield return "UniversityJobTitle";
                 yield return "ProfessionalBackgroundFreeText";
@@ -163,6 +162,7 @@ namespace Webfuel.Domain
                 yield return "PasswordResetValidUntil";
                 yield return "CreatedAt";
                 yield return "SiteId";
+                yield return "StaffRoleId";
                 yield return "ProfessionalBackgroundId";
                 yield return "ProfessionalBackgroundDetailId";
                 yield return "UserGroupId";
@@ -180,7 +180,6 @@ namespace Webfuel.Domain
                 yield return "FirstName";
                 yield return "LastName";
                 yield return "FullName";
-                yield return "StaffRole";
                 yield return "StaffRoleFreeText";
                 yield return "UniversityJobTitle";
                 yield return "ProfessionalBackgroundFreeText";
@@ -200,6 +199,7 @@ namespace Webfuel.Domain
                 yield return "PasswordResetValidUntil";
                 yield return "CreatedAt";
                 yield return "SiteId";
+                yield return "StaffRoleId";
                 yield return "ProfessionalBackgroundId";
                 yield return "ProfessionalBackgroundDetailId";
                 yield return "UserGroupId";
@@ -216,7 +216,6 @@ namespace Webfuel.Domain
                 yield return "FirstName";
                 yield return "LastName";
                 yield return "FullName";
-                yield return "StaffRole";
                 yield return "StaffRoleFreeText";
                 yield return "UniversityJobTitle";
                 yield return "ProfessionalBackgroundFreeText";
@@ -236,6 +235,7 @@ namespace Webfuel.Domain
                 yield return "PasswordResetValidUntil";
                 yield return "CreatedAt";
                 yield return "SiteId";
+                yield return "StaffRoleId";
                 yield return "ProfessionalBackgroundId";
                 yield return "ProfessionalBackgroundDetailId";
                 yield return "UserGroupId";
@@ -256,8 +256,6 @@ namespace Webfuel.Domain
             entity.LastName = entity.LastName.Trim();
             entity.FullName = entity.FullName ?? String.Empty;
             entity.FullName = entity.FullName.Trim();
-            entity.StaffRole = entity.StaffRole ?? String.Empty;
-            entity.StaffRole = entity.StaffRole.Trim();
             entity.StaffRoleFreeText = entity.StaffRoleFreeText ?? String.Empty;
             entity.StaffRoleFreeText = entity.StaffRoleFreeText.Trim();
             entity.UniversityJobTitle = entity.UniversityJobTitle ?? String.Empty;
@@ -282,7 +280,6 @@ namespace Webfuel.Domain
         public const int FirstName_MaxLength = 128;
         public const int LastName_MaxLength = 128;
         public const int FullName_MaxLength = 128;
-        public const int StaffRole_MaxLength = 128;
         public const int StaffRoleFreeText_MaxLength = 128;
         public const int UniversityJobTitle_MaxLength = 128;
         public const int ProfessionalBackgroundFreeText_MaxLength = 1024;
@@ -324,13 +321,6 @@ namespace Webfuel.Domain
             ruleBuilder
                 .NotNull()
                 .MaximumLength(FullName_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
-        }
-        
-        public static void StaffRole_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
-        {
-            ruleBuilder
-                .NotNull()
-                .MaximumLength(StaffRole_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
         public static void StaffRoleFreeText_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
@@ -392,7 +382,6 @@ namespace Webfuel.Domain
             RuleFor(x => x.FirstName).Use(UserMetadata.FirstName_ValidationRules);
             RuleFor(x => x.LastName).Use(UserMetadata.LastName_ValidationRules);
             RuleFor(x => x.FullName).Use(UserMetadata.FullName_ValidationRules);
-            RuleFor(x => x.StaffRole).Use(UserMetadata.StaffRole_ValidationRules);
             RuleFor(x => x.StaffRoleFreeText).Use(UserMetadata.StaffRoleFreeText_ValidationRules);
             RuleFor(x => x.UniversityJobTitle).Use(UserMetadata.UniversityJobTitle_ValidationRules);
             RuleFor(x => x.ProfessionalBackgroundFreeText).Use(UserMetadata.ProfessionalBackgroundFreeText_ValidationRules);

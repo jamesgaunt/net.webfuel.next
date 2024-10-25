@@ -60,7 +60,7 @@ namespace Webfuel.Domain
 
                     bldr.Map<UserGroup>(Guid.Parse("fafbe3e6-14f2-42c3-b702-88d0178e720b"), "User Group", p => p.UserGroupId);
 
-                    bldr.Add(Guid.Parse("caebc906-c010-4b77-b139-cac2d68e7a3e"), "Staff Role", p => p.StaffRole);
+                    bldr.Map<StaffRole>(Guid.Parse("ab7d412b-5c44-44f2-860c-d19c4c3b2514"), "Staff Role", p => p.StaffRoleId);
                     bldr.Add(Guid.Parse("966aaa13-8732-4e82-b847-c8a7b97c215a"), "Staff Role Free Text", p => p.StaffRoleFreeText);
 
                     bldr.Add(Guid.Parse("fe6019ca-9a97-4b3d-b1a4-7b361f1a64ed"), "University Job Title", p => p.UniversityJobTitle);
