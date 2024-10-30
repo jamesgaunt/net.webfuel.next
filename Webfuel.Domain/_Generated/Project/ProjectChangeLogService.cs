@@ -203,6 +203,10 @@ namespace Webfuel.Domain
             {
                 sb.Append("Lead Applicant O R C I D: ").Append(original.LeadApplicantORCID).Append(" -> ").Append(updated.LeadApplicantORCID).Append(delimiter);
             }
+            if(original.HeartbeatExecutedAt != updated.HeartbeatExecutedAt)
+            {
+                sb.Append("Heartbeat Executed At: ").Append(original.HeartbeatExecutedAt).Append(" -> ").Append(updated.HeartbeatExecutedAt).Append(delimiter);
+            }
             if(original.DiagnosticCount != updated.DiagnosticCount)
             {
                 sb.Append("Diagnostic Count: ").Append(original.DiagnosticCount).Append(" -> ").Append(updated.DiagnosticCount).Append(delimiter);
@@ -226,6 +230,10 @@ namespace Webfuel.Domain
             if(original.OpenSupportRequestTeamIdsJson != updated.OpenSupportRequestTeamIdsJson)
             {
                 sb.Append("Open Support Request Team: ").Append(original.OpenSupportRequestTeamIds).Append(" -> ").Append(updated.OpenSupportRequestTeamIds).Append(delimiter);
+            }
+            if(original.OverdueSupportRequestTeamIdsJson != updated.OverdueSupportRequestTeamIdsJson)
+            {
+                sb.Append("Overdue Support Request Team: ").Append(original.OverdueSupportRequestTeamIds).Append(" -> ").Append(updated.OverdueSupportRequestTeamIds).Append(delimiter);
             }
             if(original.LeadAdviserUserId != updated.LeadAdviserUserId)
             {

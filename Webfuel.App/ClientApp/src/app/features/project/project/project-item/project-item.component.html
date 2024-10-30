@@ -11,6 +11,11 @@
 
   </div>
   <project-tabs></project-tabs>
+  <div class="diagnostic-list message is-danger" *ngIf="item.diagnosticCount > 0">
+    <div *ngFor="let diagnostic of item.diagnosticList" class="diagnostic-item severity-{{ diagnostic.severity }}">
+      <i class="fas fa-exclamation-triangle"></i> {{ diagnostic.message}}
+    </div>
+  </div>
   <form class="form" [formGroup]="form">
     <div class="flex no-margin">
       <div class="is-9">
@@ -111,7 +116,7 @@
         <dropdown-select [dataSource]="staticDataCache.isInternationalMultiSiteStudy" placeholder="optional" formControlName="isInternationalMultiSiteStudyId"></dropdown-select>
       </div>
     </div>
-    <hr/>
+    <hr />
     <h2>Other Information</h2>
     <div class="flex">
       <div class="field is-3">
@@ -135,6 +140,8 @@
   </form>
   <p>
     <span>Created {{ item.createdAt | date: 'dd MMM yy'}}.</span>
+    &nbsp;&nbsp;
+    <span style="opacity: 0.5">Checked {{ item.heartbeatExecutedAt | date: 'dd MMM yy HH:mm' }}.</span>
   </p>
 </div>
 

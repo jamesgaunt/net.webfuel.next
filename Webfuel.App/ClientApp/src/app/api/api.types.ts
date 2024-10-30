@@ -99,6 +99,11 @@ export enum ReportFilterStringCondition {
     IsNotEmpty = 1001,
 }
 
+export enum ProjectDiagnosticType {
+    Enrichment = 10,
+    Deferred = 20,
+}
+
 export enum ProjectDiagnosticSeverity {
     Error = 10,
     Warning = 20,
@@ -967,12 +972,14 @@ export interface Project {
     leadApplicantAddressCountry: string;
     leadApplicantAddressPostcode: string;
     leadApplicantORCID: string;
+    heartbeatExecutedAt: string;
     diagnosticCount: number;
     diagnosticList: Array<ProjectDiagnostic>;
     teamContactFullName: string;
     leadApplicantFullName: string;
     supportTotalMinutes: number;
     openSupportRequestTeamIds: Array<string>;
+    overdueSupportRequestTeamIds: Array<string>;
     createdAt: string;
     fileStorageGroupId: string;
     leadAdviserUserId: string | null | null;
@@ -1001,6 +1008,7 @@ export interface Project {
 }
 
 export interface ProjectDiagnostic {
+    type: ProjectDiagnosticType;
     severity: ProjectDiagnosticSeverity;
     message: string;
 }

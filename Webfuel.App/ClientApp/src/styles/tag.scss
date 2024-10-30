@@ -275,3 +275,24 @@
     margin: 0.5rem;
   }
 }
+
+// Diagnostics
+
+.diagnostic-list {
+
+  .diagnostic-item {
+    display: block;
+    margin-bottom: 3px;
+    font-weight: bold;
+    color: var(--palette-control-text);
+
+    &.severity-10 i {
+      color: var(--palette-danger-text);
+    }
+
+    &.severity-20 i {
+      color: var(--palette-warning-text);
+    }
+  }
+}
+

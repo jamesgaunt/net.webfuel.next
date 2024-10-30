@@ -39,7 +39,6 @@ namespace Webfuel.Domain
         public bool SocialCare { get; set; }
         public bool PublicHealth { get; set; }
 
-
         // Project Advisers (not stored on the project)
 
         public List<Guid> ProjectAdviserUserIds { get; set; } = new List<Guid>();

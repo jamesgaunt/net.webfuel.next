@@ -34,6 +34,7 @@ public class Program
             x.ClientId = Guid.Parse("2643cb0a-1ac2-b74b-4c69-08dccf4965da");
             x.AccessToken = "ABCD";
         });
+        builder.AddHeartbeats();
 
         builder.Services.AddMediatR(c =>
         {
@@ -81,6 +82,8 @@ public class Program
         app.UseCors(ApiCorsOptions);
 
         app.UseApiServices<Program>();
+
+        app.UseHeartbeats();
 
         app.Run();
     }

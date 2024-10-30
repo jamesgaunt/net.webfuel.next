@@ -179,6 +179,9 @@ namespace Webfuel.Domain
                     case nameof(Project.LeadApplicantORCID):
                         result.Add(new SqlParameter(nameof(Project.LeadApplicantORCID), entity.LeadApplicantORCID));
                         break;
+                    case nameof(Project.HeartbeatExecutedAt):
+                        result.Add(new SqlParameter(nameof(Project.HeartbeatExecutedAt), entity.HeartbeatExecutedAt));
+                        break;
                     case nameof(Project.DiagnosticCount):
                         result.Add(new SqlParameter(nameof(Project.DiagnosticCount), entity.DiagnosticCount));
                         break;
@@ -196,6 +199,9 @@ namespace Webfuel.Domain
                         break;
                     case nameof(Project.OpenSupportRequestTeamIds):
                         result.Add(new SqlParameter(nameof(Project.OpenSupportRequestTeamIds), entity.OpenSupportRequestTeamIdsJson));
+                        break;
+                    case nameof(Project.OverdueSupportRequestTeamIds):
+                        result.Add(new SqlParameter(nameof(Project.OverdueSupportRequestTeamIds), entity.OverdueSupportRequestTeamIdsJson));
                         break;
                     case nameof(Project.CreatedAt):
                         result.Add(new SqlParameter(nameof(Project.CreatedAt), entity.CreatedAt));
@@ -351,12 +357,14 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantAddressCountry";
                 yield return "LeadApplicantAddressPostcode";
                 yield return "LeadApplicantORCID";
+                yield return "HeartbeatExecutedAt";
                 yield return "DiagnosticCount";
                 yield return "DiagnosticList";
                 yield return "TeamContactFullName";
                 yield return "LeadApplicantFullName";
                 yield return "SupportTotalMinutes";
                 yield return "OpenSupportRequestTeamIds";
+                yield return "OverdueSupportRequestTeamIds";
                 yield return "CreatedAt";
                 yield return "FileStorageGroupId";
                 yield return "LeadAdviserUserId";
@@ -442,12 +450,14 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantAddressCountry";
                 yield return "LeadApplicantAddressPostcode";
                 yield return "LeadApplicantORCID";
+                yield return "HeartbeatExecutedAt";
                 yield return "DiagnosticCount";
                 yield return "DiagnosticList";
                 yield return "TeamContactFullName";
                 yield return "LeadApplicantFullName";
                 yield return "SupportTotalMinutes";
                 yield return "OpenSupportRequestTeamIds";
+                yield return "OverdueSupportRequestTeamIds";
                 yield return "CreatedAt";
                 yield return "FileStorageGroupId";
                 yield return "LeadAdviserUserId";
@@ -532,12 +542,14 @@ namespace Webfuel.Domain
                 yield return "LeadApplicantAddressCountry";
                 yield return "LeadApplicantAddressPostcode";
                 yield return "LeadApplicantORCID";
+                yield return "HeartbeatExecutedAt";
                 yield return "DiagnosticCount";
                 yield return "DiagnosticList";
                 yield return "TeamContactFullName";
                 yield return "LeadApplicantFullName";
                 yield return "SupportTotalMinutes";
                 yield return "OpenSupportRequestTeamIds";
+                yield return "OverdueSupportRequestTeamIds";
                 yield return "CreatedAt";
                 yield return "FileStorageGroupId";
                 yield return "LeadAdviserUserId";

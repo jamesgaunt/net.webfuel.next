@@ -89,8 +89,20 @@
         </span>
       </ng-template>
     </grid-column>
-    <grid-column name="title" />
+    <grid-column name="title">
+      <ng-template #itemTemplate let-item>
+        {{ clipTitle(item.title) }}
+      </ng-template>
+    </grid-column>
     <grid-reference-column [dataSource]="staticDataCache.fundingStream" name="proposedFundingStreamId" label="Proposed Funding Stream" />
+    <grid-column name="diagnosticCount" justify="center" cssClass="hidden-xs">
+      <ng-template #headTemplate let-item>
+        <i class="text is-warning fas fa-exclamation-triangle"></i>
+      </ng-template>
+      <ng-template #itemTemplate let-item>
+        <span class="text is-warning is-bold">{{ item.diagnosticCount == 0 ? "" : item.diagnosticCount }}</span>
+      </ng-template>
+    </grid-column>
     <grid-action-column [canAdd]="false" [canDelete]="false" (edit)="edit($event)" />
   </grid>
 </div>

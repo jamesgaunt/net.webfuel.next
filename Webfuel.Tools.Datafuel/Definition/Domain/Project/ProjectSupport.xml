@@ -47,11 +47,11 @@
       </Sql>
     </Query>
 
-    <Query Name="SelectOpenSupportRequestTeamIdsByProjectId">
+    <Query Name="SelectOpenSupportRequestsByProjectId">
       <Parameter Name="ProjectId" Type="Guid" />
       <Sql>
         <![CDATA[
-        SELECT DISTINCT SupportRequestedTeamId FROM ProjectSupport WHERE ProjectId = @ProjectId AND SupportRequestedCompletedAt IS NULL AND SupportRequestedTeamId IS NOT NULL
+        SELECT SupportRequestedTeamId, SupportRequestedAt FROM ProjectSupport WHERE ProjectId = @ProjectId AND SupportRequestedCompletedAt IS NULL AND SupportRequestedTeamId IS NOT NULL
         ]]>
       </Sql>
     </Query>

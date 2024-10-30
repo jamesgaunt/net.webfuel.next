@@ -112,15 +112,21 @@
 
     <!-- ========== Calculated Properties ========== -->
 
+    <!-- Heartbeat -->
+    <Property Name="HeartbeatExecutedAt" Type="DateTime" />
+    
     <!-- Diagnostics -->
     <Property Name="DiagnosticCount" Type="int" />
     <Property Name="DiagnosticList" Type="Json:List{ProjectDiagnostic}" />
 
     <Property Name="TeamContactFullName" Type="meta:name" />
     <Property Name="LeadApplicantFullName" Type="meta:name" />
-    
+
+    <!-- Support Metrics -->
     <Property Name="SupportTotalMinutes" Type="int" />
     <Property Name="OpenSupportRequestTeamIds" Type="Json:List{Guid}" />
+
+    <Property Name="OverdueSupportRequestTeamIds" Type="Json:List{Guid}" />
 
     <!-- ========== /Calculated Properties ========== -->
     
@@ -136,6 +142,9 @@
     </Index>
     <Index Unique="false">
       <Member Name="StatusId" />
+    </Index>
+    <Index Unique="false">
+      <Member Name="Locked" />
     </Index>
     <Index Unique="false">
       <Member Name="DateOfRequest" />

@@ -113,4 +113,10 @@ export class ProjectListComponent {
     if (supportAdviser)
       this.filterForm.patchValue({ supportAdviserUserId: supportAdviser });
   }
+
+  clipTitle(title: string) {
+    if (title.length > 50)
+      return title.substring(0, 50) + '...';
+    return title;
+  }
 }

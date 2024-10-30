@@ -177,6 +177,9 @@ namespace Webfuel.Domain
                     case nameof(Project.LeadApplicantORCID):
                         LeadApplicantORCID = (string)value!;
                         break;
+                    case nameof(Project.HeartbeatExecutedAt):
+                        HeartbeatExecutedAt = (DateTimeOffset)value!;
+                        break;
                     case nameof(Project.DiagnosticCount):
                         DiagnosticCount = (int)value!;
                         break;
@@ -194,6 +197,9 @@ namespace Webfuel.Domain
                         break;
                     case nameof(Project.OpenSupportRequestTeamIds):
                         OpenSupportRequestTeamIdsJson = (string)value!;
+                        break;
+                    case nameof(Project.OverdueSupportRequestTeamIds):
+                        OverdueSupportRequestTeamIdsJson = (string)value!;
                         break;
                     case nameof(Project.CreatedAt):
                         CreatedAt = (DateTimeOffset)value!;
@@ -348,6 +354,7 @@ namespace Webfuel.Domain
         public string LeadApplicantAddressCountry  { get; set; } = String.Empty;
         public string LeadApplicantAddressPostcode  { get; set; } = String.Empty;
         public string LeadApplicantORCID  { get; set; } = String.Empty;
+        public DateTimeOffset HeartbeatExecutedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public int DiagnosticCount  { get; set; } = 0;
         public List<ProjectDiagnostic> DiagnosticList
         {
@@ -376,6 +383,18 @@ namespace Webfuel.Domain
             set { _OpenSupportRequestTeamIdsJson = value; _OpenSupportRequestTeamIds = null; }
         }
         string _OpenSupportRequestTeamIdsJson = String.Empty;
+        public List<Guid> OverdueSupportRequestTeamIds
+        {
+            get { return _OverdueSupportRequestTeamIds ?? (_OverdueSupportRequestTeamIds = SafeJsonSerializer.Deserialize<List<Guid>>(_OverdueSupportRequestTeamIdsJson)); }
+            set { _OverdueSupportRequestTeamIds = value; }
+        }
+        List<Guid>? _OverdueSupportRequestTeamIds = null;
+        internal string OverdueSupportRequestTeamIdsJson
+        {
+            get { var result = _OverdueSupportRequestTeamIds == null ? _OverdueSupportRequestTeamIdsJson : (_OverdueSupportRequestTeamIdsJson = SafeJsonSerializer.Serialize(_OverdueSupportRequestTeamIds)); _OverdueSupportRequestTeamIds = null; return result; }
+            set { _OverdueSupportRequestTeamIdsJson = value; _OverdueSupportRequestTeamIds = null; }
+        }
+        string _OverdueSupportRequestTeamIdsJson = String.Empty;
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid FileStorageGroupId { get; set; }
         public Guid? LeadAdviserUserId { get; set; }
@@ -457,12 +476,14 @@ namespace Webfuel.Domain
             entity.LeadApplicantAddressCountry = LeadApplicantAddressCountry;
             entity.LeadApplicantAddressPostcode = LeadApplicantAddressPostcode;
             entity.LeadApplicantORCID = LeadApplicantORCID;
+            entity.HeartbeatExecutedAt = HeartbeatExecutedAt;
             entity.DiagnosticCount = DiagnosticCount;
             entity.DiagnosticListJson = DiagnosticListJson;
             entity.TeamContactFullName = TeamContactFullName;
             entity.LeadApplicantFullName = LeadApplicantFullName;
             entity.SupportTotalMinutes = SupportTotalMinutes;
             entity.OpenSupportRequestTeamIdsJson = OpenSupportRequestTeamIdsJson;
+            entity.OverdueSupportRequestTeamIdsJson = OverdueSupportRequestTeamIdsJson;
             entity.CreatedAt = CreatedAt;
             entity.FileStorageGroupId = FileStorageGroupId;
             entity.LeadAdviserUserId = LeadAdviserUserId;

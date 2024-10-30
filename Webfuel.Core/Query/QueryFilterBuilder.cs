@@ -49,6 +49,12 @@ namespace Webfuel
             return builder;
         }
 
+        public static IQueryFilterBuilder Equal(this IQueryFilterBuilder builder, string field, bool value)
+        {
+            builder.Filters.Add(new QueryFilter { Field = field, Op = QueryOp.Equal, Value = value });
+            return builder;
+        }
+
         public static IQueryFilterBuilder NotEqual(this IQueryFilterBuilder builder, string field, object? value, bool condition)
         {
             if (!condition)
