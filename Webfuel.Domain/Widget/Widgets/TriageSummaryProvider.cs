@@ -154,6 +154,27 @@ internal class TriageSummaryProvider : ITriageSummaryProvider
             });
         }
 
+        {
+            var today = DateOnly.FromDateTime(DateTime.Today);
+            var query = new Query();
+            query.All(x =>
+            {
+                x.GreaterThanOrEqual(nameof(SupportRequest.DateOfRequest), today.AddDays(-6), true);
+                x.LessThanOrEqual(nameof(SupportRequest.DateOfRequest), today, true);
+            });
+            var queryResult = await _supportRequestRepository.QuerySupportRequest(query, selectItems: false, countTotal: true);
+
+            result.Add(new DashboardMetric
+            {
+                Name = "Last 7 days",
+                Count = queryResult.TotalCount,
+                Icon = "fas fa-books",
+                RouterLink = "/support-request/support-request-list",
+                RouterParams = $"{{ \"show\": \"all\" }}",
+                BackgroundColor = "#d6bdcc"
+            });
+        }
+
         return result;
     }
 

@@ -59,13 +59,13 @@ namespace Webfuel.Domain
 
             request.Description = _htmlSanitizerService.SanitizeHtml(request.Description);
 
-            var projectSupport = await _projectSupportRepository.RequireProjectSupport(request.Id);
+            var original = await _projectSupportRepository.RequireProjectSupport(request.Id);
 
-            var project = await _projectRepository.RequireProject(projectSupport.ProjectId);
+            var project = await _projectRepository.RequireProject(original.ProjectId);
             if (project.Locked)
                 throw new InvalidOperationException("Unable to edit a locked project");
 
-            var updated = projectSupport.Copy();
+            var updated = original.Copy();
             updated.Date = request.Date;
             updated.TeamIds = request.TeamIds;
             updated.AdviserIds = request.AdviserIds;
@@ -79,26 +79,24 @@ namespace Webfuel.Domain
             // Calculated
             updated.CalculatedMinutes = (int)(updated.WorkTimeInHours * 60) * updated.AdviserIds.Count;
 
-            if (updated.SupportRequestedTeamId != projectSupport.SupportRequestedTeamId)
+            if (updated.SupportRequestedTeamId != original.SupportRequestedTeamId)
             {
                 updated.SupportRequestedAt = null;
                 updated.SupportRequestedCompletedAt = null;
                 updated.SupportRequestedCompletedByUserId = null;
                 updated.SupportRequestedCompletedNotes = String.Empty;
-            }
 
-            if(updated.SupportRequestedTeamId.HasValue == true && projectSupport.SupportRequestedTeamId.HasValue == false)
-            {
-                updated.SupportRequestedAt = DateOnly.FromDateTime(DateTime.Today);
+                if (updated.SupportRequestedTeamId != null)
+                    updated.SupportRequestedAt = DateOnly.FromDateTime(DateTime.Today);
             }
 
             var sendTeamSupportRequestedEmail = 
-                updated.SupportRequestedTeamId.HasValue && updated.SupportRequestedTeamId != projectSupport.SupportRequestedTeamId;
+                updated.SupportRequestedTeamId.HasValue && updated.SupportRequestedTeamId != original.SupportRequestedTeamId;
 
             var cb = new RepositoryCommandBuffer();
             {
-                projectSupport = await _projectSupportRepository.UpdateProjectSupport(updated: updated, original: projectSupport, commandBuffer: cb);
-                await SyncroniseUserActivity(projectSupport, cb);
+                original = await _projectSupportRepository.UpdateProjectSupport(updated: updated, original: original, commandBuffer: cb);
+                await SyncroniseUserActivity(original, cb);
             }
             await cb.Execute();
 
@@ -114,7 +112,7 @@ namespace Webfuel.Domain
             TeamSupportProvider.FlushSupportMetrics();
             TeamActivityProvider.FlushTeamActivityMetrics();
 
-            return projectSupport;
+            return original;
         }
 
         async Task SyncroniseUserActivity(ProjectSupport projectSupport, RepositoryCommandBuffer cb)

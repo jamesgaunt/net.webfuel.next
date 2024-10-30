@@ -144,6 +144,28 @@ internal class ProjectSummaryProvider : IProjectSummaryProvider
             });
         }
 
+        // Last 7 days
+        {
+            var today = DateOnly.FromDateTime(DateTime.Today);
+            var query = new Query();
+            query.All(x =>
+            {
+                x.GreaterThanOrEqual(nameof(Project.DateOfRequest), today.AddDays(-6), true);
+                x.LessThanOrEqual(nameof(Project.DateOfRequest), today, true);
+            });
+            var queryResult = await _projectRepository.QueryProject(query, selectItems: false, countTotal: true);
+
+            result.Add(new DashboardMetric
+            {
+                Name = "Last 7 days",
+                Count = queryResult.TotalCount,
+                Icon = "fas fa-books",
+                RouterLink = "/project/project-list",
+                RouterParams = $"{{ \"show\": \"all\" }}",
+                BackgroundColor = "#d6bdcc"
+            });
+        }
+
         return result;
     }
 
