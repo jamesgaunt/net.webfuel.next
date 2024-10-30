@@ -1,9 +1,4 @@
-﻿using Azure.Core.Serialization;
-using DocumentFormat.OpenXml.Drawing;
-using Microsoft.Extensions.DependencyInjection;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Webfuel.Domain.StaticData;
+﻿using Webfuel.Domain.StaticData;
 
 namespace Webfuel.Domain;
 
