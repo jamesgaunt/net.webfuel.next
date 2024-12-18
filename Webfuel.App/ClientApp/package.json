@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "prestart": "node aspnetcore-https",
-    "serve": "ng serve %ANGULAR_PROJECT% --port 44426 --ssl --ssl-cert %APPDATA%\\ASP.NET\\https\\%npm_package_name%.pem --ssl-key %APPDATA%\\ASP.NET\\https\\%npm_package_name%.key",
+    "serve": "ng serve %ANGULAR_PROJECT% --port 44426 --ssl --ssl-cert C:\\Users\\james\\AppData\\Roaming\\ASP.NET\\https\\main.pem --ssl-key C:\\Users\\james\\AppData\\Roaming\\ASP.NET\\https\\main.key",
     "build": "ng version && ng build %ANGULAR_PROJECT%"
   },
   "private": true,

@@ -34,8 +34,8 @@ namespace Webfuel.Common
         public async Task Handle(SendEmailRequest request, CancellationToken cancellationToken)
         {
             await _emailService.SendAsync(
-                sendTo: String.Join(';', request.SendTo),
-                sendCc: String.Join(';', request.SendCc),
+                sendTo: request.SendTo,
+                sendCc: request.SendCc,
                 sendBcc: "james.gaunt@webfuel.com",
                 sentBy: request.SentBy,
                 replyTo: request.ReplyTo,

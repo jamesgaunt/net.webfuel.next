@@ -66,6 +66,7 @@ namespace Webfuel.Domain
                     builder.Map<IsCTUAlreadyInvolved>(Guid.Parse("7c665912-dc1e-413b-a95c-60bd624a6f21"), "Have you already got a CTU involved and if so which one?", p => p.IsCTUAlreadyInvolvedId);
                     builder.Add(Guid.Parse("1cb89101-85dc-44fa-bd98-41d7972f71c4"), "CTU Free Text", p => p.IsCTUAlreadyInvolvedFreeText);
                     builder.Map<HowDidYouFindUs>(Guid.Parse("4eddc509-b9a8-47f3-8e22-56a035674be9"), "How did you hear about our hub?", p => p.HowDidYouFindUsId);
+                    builder.Add(Guid.Parse("6a9db6df-501a-4bda-a056-16f777116f4d"), "How did you hear about our hub free text", p => p.HowDidYouFindUsFreeText);
 
                     // Team Contact
 

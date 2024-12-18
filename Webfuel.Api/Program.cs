@@ -72,14 +72,14 @@ public class Program
         app.UseShortCircuits();
         app.UseRequestTrace();
 
+        app.UseCors(ApiCorsOptions);
+
         app.UseMiddleware<IdentityMiddleware>();
         app.UseMiddleware<AngularMiddleware>();
         app.UseStaticFiles();
 
         app.UseMiddleware<ExceptionMiddleware>();
         app.UseMiddleware<StaticDataMiddleware>();
-
-        app.UseCors(ApiCorsOptions);
 
         app.UseApiServices<Program>();
 
