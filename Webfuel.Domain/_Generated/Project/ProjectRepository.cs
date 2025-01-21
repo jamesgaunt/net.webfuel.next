@@ -20,6 +20,7 @@ namespace Webfuel.Domain
         Task<List<Project>> SelectProjectWithPage(int skip, int take);
         Task<List<Project>> SelectProjectBySupportRequestId(Guid? supportRequestId);
         Task<List<Project>> SelectProjectByDateOfRequest(DateOnly dateOfRequest);
+        Task<List<Project>> SelectProjectByLocked(bool locked);
         Task<List<Project>> SelectProjectByStatusId(Guid statusId);
         Task<List<Project>> SelectProjectByLeadAdviserUserId(Guid? leadAdviserUserId);
         Task<List<Project>> SelectProjectByNumber(int number);
@@ -113,6 +114,15 @@ namespace Webfuel.Domain
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@DateOfRequest", dateOfRequest),
+            };
+            return await _connection.ExecuteReader<Project, ProjectMetadata>(sql, parameters);
+        }
+        public async Task<List<Project>> SelectProjectByLocked(bool locked)
+        {
+            var sql = @"SELECT * FROM [Project] WHERE Locked = @Locked ORDER BY Number DESC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@Locked", locked),
             };
             return await _connection.ExecuteReader<Project, ProjectMetadata>(sql, parameters);
         }

@@ -1,14 +1,17 @@
 import { Observable, debounceTime, noop, tap } from 'rxjs';
-import { Query, QueryFilter, QueryResult } from '../../api/api.types';
+import { Query, QueryFilter, QueryResult } from 'api/api.types';
 import { ChangeDetectorRef, Component, ContentChild, DestroyRef, ElementRef, EventEmitter, HostBinding, HostListener, Input, Output, TemplateRef, ViewChild, ViewContainerRef, inject } from '@angular/core';
-import { IDataSource } from './data-source';
 import _ from 'shared/common/underscore';
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
-import { QueryOp } from '../../api/api.enums';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { QueryService } from '../../core/query.service';
+import { QueryOp } from 'api/api.enums';
+import { QueryService } from 'core/query.service';
+
+export interface IDropDownDataSource<TItem, TQuery extends Query = Query> {
+  query: (query: TQuery) => Observable<QueryResult<TItem>>;
+}
 
 @Component({
   template: ''
@@ -25,10 +28,10 @@ export abstract class DropDownBase<TItem> {
   queryService: QueryService = inject(QueryService);
 
   ngOnInit(): void {
-    this.focusControl.valueChanges
+    this.searchControl.valueChanges
       .pipe(
         debounceTime(200),
-        tap(value => this.onFocusControlChange(value)),
+        tap(value => this.onSearchControlChange(value)),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
@@ -36,8 +39,14 @@ export abstract class DropDownBase<TItem> {
 
   id = "id";
 
+  name = "name";
+
   getId(item: TItem) {
     return (<any>item)[this.id]
+  }
+
+  formatItem(item: TItem) {
+    return (<any>item)[this.name]
   }
 
   @Input()
@@ -53,9 +62,6 @@ export abstract class DropDownBase<TItem> {
   enableSearch: boolean = true;
 
   @Input()
-  closeOnSelect: boolean = true;
-
-  @Input()
   optionFilter: (item: TItem) => boolean = () => true;
 
   @Output()
@@ -64,7 +70,7 @@ export abstract class DropDownBase<TItem> {
   // Data Source
 
   @Input()
-  dataSource: IDataSource<TItem> | undefined;
+  dataSource: IDropDownDataSource<TItem> | undefined;
 
   @Input()
   set items(value: TItem[]) {
@@ -119,8 +125,8 @@ export abstract class DropDownBase<TItem> {
       q.filters!.push({ field: 'hidden', op: QueryOp.NotEqual, value: true });
     }
 
-    if (this.enableSearch && this.focusControl.getRawValue())
-      q.search = this.focusControl.getRawValue() || "";
+    if (this.enableSearch && this.searchControl.getRawValue())
+      q.search = this.searchControl.getRawValue() || "";
 
     if (this.filter.observed)
       this.filter.emit(q);
@@ -230,7 +236,14 @@ export abstract class DropDownBase<TItem> {
   freeTextPlaceholder: string | null = null;
 
   get pickedFreeText() {
-    return _.some(this.pickedItems, (p: any) => p.freeText);
+    var picked = _.some(this.pickedItems, (p: any) => p.freeText);
+    if (this.freeTextControl) {
+      if (picked)
+        this.freeTextControl.setValidators([Validators.required]);
+      else
+        this.freeTextControl.setValidators([]);
+    }
+    return picked;
   }
 
   checkFreeText() {
@@ -286,7 +299,10 @@ export abstract class DropDownBase<TItem> {
     if (this._isDisabled)
       return;
 
-    this.focusInput.nativeElement.focus();
+    setTimeout(() => {
+      if (this.searchInput.nativeElement)
+        this.searchInput.nativeElement.focus();
+    }, 100);
 
     if (this.popupRef)
       return;
@@ -334,6 +350,18 @@ export abstract class DropDownBase<TItem> {
     this.popupRef!.updateSize({ width: refRect.width });
   }
 
+  @HostListener('document:click', ['$event'])
+  clickout($event: MouseEvent) {
+    if (!$event.target)
+      return;
+
+    if (!this.popupOpen || this.hostRef.nativeElement.contains($event.target))
+      return;
+    if (this.popupRef && this.popupRef.hostElement && this.popupRef.hostElement.contains(<any>$event.target))
+      return;
+    this.closePopup();
+  }
+
   // Focus Input
 
   @ViewChild('FocusInput', { static: false })
@@ -341,34 +369,38 @@ export abstract class DropDownBase<TItem> {
 
   focusControl = new FormControl<string>('');
 
-  onFocusControlChange(value: string | null) {
-    if (this.enableSearch) {
-      this.fetch(true);
+  focusKeyUp($event: KeyboardEvent) {
+    if ($event.key == 'Enter' || $event.key == 'ArrowDown') {
+      if (!this.popupOpen) {
+        this.openPopup();
+        return;
+      }
     }
   }
-  get focusInputClass() {
-    if (this.popupOpen && this.enableSearch)
-      return "search-input";
-    return "focus-input";
+
+  focusKeyPress($event: KeyboardEvent) {
+    if ($event.key == "Enter") {
+      $event.stopPropagation();
+      $event.preventDefault();
+    }
   }
 
-  focus() {
-   // this.openPopup();
+  // Search Input
+
+  @ViewChild('SearchInput', { static: false })
+  private searchInput!: ElementRef<any>;
+
+  searchControl = new FormControl<string>('');
+
+  onSearchControlChange(value: string | null) {
+    if (this.enableSearch)
+      this.fetch(true);
   }
 
-  blur() {
-    this.closePopup();
-  }
-
-  focusKeyUp($event: KeyboardEvent) {
+  searchKeyUp($event: KeyboardEvent) {
 
     $event.preventDefault();
     $event.stopPropagation();
-
-    if (!this.popupOpen) {
-      this.openPopup();
-      return;
-    }
 
     /*
     if (($event.key == "Backspace" || $event.key == "Delete") && this.enableClear) {
@@ -381,6 +413,7 @@ export abstract class DropDownBase<TItem> {
 
     if ($event.key == "Escape") {
       this.closePopup();
+      this.focusInput.nativeElement.focus();
       return;
     }
 
@@ -412,7 +445,14 @@ export abstract class DropDownBase<TItem> {
     }
   }
 
-  focusKeyPress($event: KeyboardEvent) {
+  searchKeyDown($event: KeyboardEvent) {
+    if ($event.key == "Tab") {
+      this.closePopup();
+      this.focusInput.nativeElement.focus();
+    }
+  }
+
+  searchKeyPress($event: KeyboardEvent) {
     if ($event.key == "Enter") {
       $event.stopPropagation();
       $event.preventDefault();
@@ -459,11 +499,6 @@ export abstract class DropDownBase<TItem> {
   }
 
   // Misc
-
-  stop($event: Event) {
-    $event.stopPropagation();
-    $event.preventDefault();
-  }
 
   abstract doChangeCallback(): void;
 

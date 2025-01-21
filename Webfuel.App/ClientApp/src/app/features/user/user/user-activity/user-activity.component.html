@@ -53,7 +53,7 @@
 
     <grid-column name="description">
       <ng-template #itemTemplate let-item>
-        <pre class="grid-pre" style="padding: 0">{{ item.description }}</pre>
+        <div class="typeography-content" [innerHtml]="item.description"></div>
       </ng-template>
     </grid-column>
 

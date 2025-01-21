@@ -1,0 +1,110 @@
+@import 'config.scss';
+
+.dropdown-focus-input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  font-size: 0;
+  position: absolute;
+  left: -1000px;
+}
+
+.dropdown-popup {
+  background-color: var(--palette-control-background);
+  color: var(--palette-control-text);
+  outline: none;
+  transition: border 0.25s;
+  box-shadow: 3px 3px 3px var(--palette-control-shadow);
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  scroll-behavior: auto;
+
+  .items {
+    max-height: 16em;
+    overflow: auto;
+    scroll-behavior: auto;
+  }
+
+  input {
+    padding: 10px 10px 10px 10px;
+    border: 0;
+    border-bottom: 1px solid var(--palette-control-border);
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 8px 10px 8px 10px;
+    cursor: pointer;
+
+    &.picked {
+      background-color: #EFE;
+    }
+
+    &.active {
+      background-color: #F3F3F3;
+    }
+
+    &.picked.active {
+      background-color: #DED;
+    }
+  }
+
+  .dropdown-loading {
+    display: block;
+    width: 100%;
+    padding: 8px 10px 8px 10px;
+    cursor: pointer;
+  }
+}
+
+.dropdown-tags-input {
+
+  &.showing-tags {
+    padding: 2px;
+  }
+
+  .dropdown-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    width: 100%;
+
+    .dropdown-tag {
+      display: flex;
+      background-color: var(--palette-secondary-background);
+      color: var(--palette-secondary-foreground);
+      align-items: center;
+      padding: 3px 8px 3px 8px;
+      font-size: 0.85em;
+
+      .closer {
+        display: inline-block;
+        margin-left: 0.5rem;
+        cursor: pointer;
+        opacity: 0.2;
+        font-size: 1.2em;
+
+        &:hover {
+          opacity: 1.0;
+          color: var(--palette-warning-text);
+        }
+      }
+    }
+  }
+}
+
+.dropdown-vertical-stack {
+  background-color: var(--palette-control-background);
+  border: 2px solid var(--palette-control-border);
+  border-top: 0;
+  padding-top: 3px;
+
+  .tag {
+    margin: 0 3px 3px 3px;
+    justify-content: space-between;
+  }
+}

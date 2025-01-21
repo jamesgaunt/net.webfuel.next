@@ -1,12 +1,10 @@
-import { Component, DestroyRef, Injectable, OnInit, inject } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserActivity } from 'api/api.types';
 import { StaticDataCache } from 'api/static-data.cache';
 import { UserActivityApi } from 'api/user-activity.api';
 import { FormService } from 'core/form.service';
 import { DialogBase, DialogComponentBase } from '../../common/dialog-base';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { debounceTime } from 'rxjs';
 
 export interface UpdateUserActivityDialogData {
   userActivity: UserActivity;

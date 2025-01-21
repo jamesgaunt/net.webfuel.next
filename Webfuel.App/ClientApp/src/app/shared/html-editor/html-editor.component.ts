@@ -69,13 +69,14 @@ export class HtmlEditorComponent implements ControlValueAccessor, OnInit {
     return {
       promotion: false,
       height: this.height,
-      plugins: 'lists fullscreen link code',
+      plugins: 'lists fullscreen link code wordcount',
       toolbar: toolbar,
       menubar: '',
-      statusbar: false,
+      statusbar: true,
       highlight_on_focus: false,
       license_key: 'gpl',
       placeholder: this.placeholder,
+      branding: false,
       formats: {
         underline: { inline: 'u', exact: true },
       },
@@ -102,6 +103,9 @@ export class HtmlEditorComponent implements ControlValueAccessor, OnInit {
   public writeValue(value: string): void {
     this._value = value;
     this.formControl.setValue(value, { emitEvent: false });
+    setTimeout(() => { 
+      this.formControl.setValue(value, { emitEvent: false })
+    }, 250)
   }
 
   public registerOnChange(fn: (value: string) => void): void {
