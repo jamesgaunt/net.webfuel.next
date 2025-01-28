@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, forwardRef, inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, forwardRef, inject, Input, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { TinymceOptions } from 'ngx-tinymce';
@@ -21,7 +21,6 @@ import { ConfigurationService } from '../../core/configuration.service';
 export class HtmlEditorComponent implements ControlValueAccessor, OnInit {
 
   formControl: FormControl = new FormControl<string>('');
-
   destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
@@ -43,7 +42,7 @@ export class HtmlEditorComponent implements ControlValueAccessor, OnInit {
       )
       .subscribe();
   }
- 
+
   _value: string = ""; // TinyMCE sends value change at load so need to avoid making the form dirty
 
   // Inputs
@@ -69,10 +68,10 @@ export class HtmlEditorComponent implements ControlValueAccessor, OnInit {
     return {
       promotion: false,
       height: this.height,
-      plugins: 'lists fullscreen link code wordcount',
+      plugins: 'lists fullscreen link code',
       toolbar: toolbar,
       menubar: '',
-      statusbar: true,
+      statusbar: false,
       highlight_on_focus: false,
       license_key: 'gpl',
       placeholder: this.placeholder,
@@ -103,9 +102,6 @@ export class HtmlEditorComponent implements ControlValueAccessor, OnInit {
   public writeValue(value: string): void {
     this._value = value;
     this.formControl.setValue(value, { emitEvent: false });
-    setTimeout(() => { 
-      this.formControl.setValue(value, { emitEvent: false })
-    }, 250)
   }
 
   public registerOnChange(fn: (value: string) => void): void {

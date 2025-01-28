@@ -74,6 +74,9 @@ export class UpdateProjectSupportDialogComponent extends ProjectSupportDialogCom
     this.projectSupportApi.update(this.form.getRawValue(), { successGrowl: "Project Support Updated" }).subscribe((result) => {
       this.submitting = false;
       this._closeDialog(result);
+    },
+    (error) => {
+      this.submitting = false;
     });
   }
 }

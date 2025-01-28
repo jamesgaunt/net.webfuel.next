@@ -87,6 +87,9 @@ export class CreateProjectSupportDialogComponent extends ProjectSupportDialogCom
     this.projectSupportApi.create(this.form.getRawValue(), { successGrowl: "Project Support Added" }).subscribe((result) => {
       this.submitting = false;
       this._closeDialog(result);
+    },
+    (error) => {
+      this.submitting = false;
     });
   }
 }

@@ -1,4 +1,4 @@
-<form class="form dialog" [formGroup]="form">
+﻿<form class="form dialog" [formGroup]="form">
   <div class="dialog-head">
     Update Project Support
     <span style="float:right">
@@ -43,7 +43,7 @@
           </ng-template>
         </dropdown-multi-select>
       </div>
-      <div class="field  is-6">
+      <div class="field is-6">
         <label class="label">Support provided (include all types of support provided)</label>
         <dropdown-multi-select [dataSource]="staticDataCache.supportProvided" [closeOnSelect]="false" placeholder="required" formControlName="supportProvidedIds"></dropdown-multi-select>
       </div>
@@ -63,6 +63,7 @@
       <div class="field is-12">
         <label class="label">Description of support provided/requested</label>
         <html-editor formControlName="description" [height]="300" placeholder="required"></html-editor>
+        <div style="font-size: 0.8em; text-align: right; margin-top: 4px;">{{ (form.getRawValue().description?.length || 0) | number: '1.0-0' }} / 20,000 characters of html</div>
       </div>
     </div>
     <div class="file-attachments">
