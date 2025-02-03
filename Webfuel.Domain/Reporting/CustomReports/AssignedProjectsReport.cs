@@ -131,12 +131,12 @@ namespace Webfuel.Domain
                     if(project.StatusId == ProjectStatusEnum.Active)
                     {
                         user.ActiveStatusData.LeadAdvisorCount++;
-                        user.ActiveStatusData.LeadAdvisorClients.Add(project.TeamContactFullName);
+                        user.ActiveStatusData.LeadAdvisorClients.Add(project.TeamContactFullName + $" ({project.PrefixedNumber})");
                     }
                     else if(project.StatusId == ProjectStatusEnum.OnHold || project.StatusId == ProjectStatusEnum.SubmittedOnHold)
                     {
                         user.OnHoldStatusData.LeadAdvisorCount++;
-                        user.OnHoldStatusData.LeadAdvisorClients.Add(project.TeamContactFullName);
+                        user.OnHoldStatusData.LeadAdvisorClients.Add(project.TeamContactFullName + $" ({project.PrefixedNumber})");
                     }
                 }
                 else if (projectAdvisers.Any(p => p.UserId == user.User.Id))
@@ -144,14 +144,13 @@ namespace Webfuel.Domain
                     if (project.StatusId == ProjectStatusEnum.Active)
                     {
                         user.ActiveStatusData.SupportAdvisorCount++;
-                        user.ActiveStatusData.SupportAdvisorClients.Add(project.TeamContactFullName);
+                        user.ActiveStatusData.SupportAdvisorClients.Add(project.TeamContactFullName + $" ({project.PrefixedNumber})");
                     }
                     else if (project.StatusId == ProjectStatusEnum.OnHold || project.StatusId == ProjectStatusEnum.SubmittedOnHold)
                     {
                         user.OnHoldStatusData.SupportAdvisorCount++;
-                        user.OnHoldStatusData.SupportAdvisorClients.Add(project.TeamContactFullName);
+                        user.OnHoldStatusData.SupportAdvisorClients.Add(project.TeamContactFullName + $" ({project.PrefixedNumber})");
                     }
-
                 }
             }
         }
