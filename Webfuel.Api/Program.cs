@@ -6,7 +6,7 @@ using Webfuel.Common;
 using Webfuel.Domain;
 using Webfuel.Domain.StaticData;
 using Webfuel.Excel;
-using Webfuel.Logging;
+using Webfuel.Jobs;
 using Webfuel.Reporting;
 
 namespace Webfuel.Api;
@@ -34,7 +34,11 @@ public class Program
             x.ClientId = Guid.Parse("2643cb0a-1ac2-b74b-4c69-08dccf4965da");
             x.AccessToken = "ABCD";
         });
-        builder.AddHeartbeats();
+
+        if (builder.Environment.IsProduction())
+        {
+            builder.Services.AddBackgroundJob<IProjectEnrichmentService>();
+        }
 
         builder.Services.AddMediatR(c =>
         {
@@ -82,8 +86,6 @@ public class Program
         app.UseMiddleware<StaticDataMiddleware>();
 
         app.UseApiServices<Program>();
-
-        app.UseHeartbeats();
 
         app.Run();
     }
