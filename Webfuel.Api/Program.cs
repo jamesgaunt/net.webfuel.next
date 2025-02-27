@@ -29,6 +29,7 @@ public class Program
         builder.Services.RegisterExcelServices();
         builder.Services.RegisterReportingServices();
 
+        builder.AddTerminal();
         builder.AddPlatformClientServices(x =>
         {
             x.ClientId = Guid.Parse("2643cb0a-1ac2-b74b-4c69-08dccf4965da");
@@ -78,6 +79,7 @@ public class Program
 
         app.UseCors(ApiCorsOptions);
 
+        app.UseTerminal();
         app.UseMiddleware<IdentityMiddleware>();
         app.UseMiddleware<AngularMiddleware>();
         app.UseStaticFiles();

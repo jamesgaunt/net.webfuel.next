@@ -6,7 +6,7 @@
     <Property Name="UserId" Type="User" />
 
     <Property Name="Date" Type="Date" />
-    <Property Name="Description" Type="String[20000]" />
+    <Property Name="Description" Type="String" />
     <Property Name="WorkTimeInHours" Type="decimal" />
 
     <!-- === Only one of these sections should be populated === -->

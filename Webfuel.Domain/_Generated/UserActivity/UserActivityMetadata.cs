@@ -135,14 +135,12 @@ namespace Webfuel.Domain
         
         public static UserActivityRepositoryValidator Validator { get; } = new UserActivityRepositoryValidator();
         
-        public const int Description_MaxLength = 20000;
         public const int ProjectPrefixedNumber_MaxLength = 128;
         
         public static void Description_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
         {
             ruleBuilder
-                .NotNull()
-                .MaximumLength(Description_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+                .NotNull();
         }
         
         public static void ProjectPrefixedNumber_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
