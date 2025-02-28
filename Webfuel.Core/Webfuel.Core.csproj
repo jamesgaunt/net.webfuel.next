@@ -1,22 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <RootNamespace>Webfuel</RootNamespace>
-  </PropertyGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="11.9.0" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.61" />
-    <PackageReference Include="MediatR" Version="12.2.0" />
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.5" />
-    <PackageReference Include="NCrontab" Version="3.3.3" />
-    <PackageReference Include="Riok.Mapperly" Version="3.3.0" />
+    <PackageReference Include="FluentValidation" />
+    <PackageReference Include="HtmlAgilityPack" />
+    <PackageReference Include="MediatR" />
+    <PackageReference Include="Microsoft.Data.SqlClient" />
+    <PackageReference Include="Riok.Mapperly" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Webfuel.Platform\Webfuel.Client\Webfuel.Client.csproj" />
+    <ProjectReference Include="..\..\Webfuel.Services\Webfuel.Services\Webfuel.Services.csproj" />
   </ItemGroup>
 </Project>

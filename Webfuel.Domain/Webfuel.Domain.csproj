@@ -1,34 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Widget\WidgetType\**" />
-    <Compile Remove="Widget\WidgetUser\**" />
-    <EmbeddedResource Remove="Widget\WidgetType\**" />
-    <EmbeddedResource Remove="Widget\WidgetUser\**" />
-    <None Remove="Widget\WidgetType\**" />
-    <None Remove="Widget\WidgetUser\**" />
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Webfuel.Common\Webfuel.Common.csproj" />
     <ProjectReference Include="..\Webfuel.Domain.StaticData\Webfuel.Domain.StaticData.csproj" />
     <ProjectReference Include="..\Webfuel.Reporting\Webfuel.Reporting.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Researcher\Researcher\Services\" />
-  </ItemGroup>
-
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
       <_Parameter1>Webfuel.Tools.ConsoleApp</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
-
 </Project>

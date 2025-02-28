@@ -12,7 +12,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.Tools.Typefuel", "W
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{39D09A22-C764-4FAF-BD91-352CE317A602}"
 	ProjectSection(SolutionItems) = preProject
-		todo.txt = todo.txt
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.Domain", "Webfuel.Domain\Webfuel.Domain.csproj", "{D3C4FA1E-65A8-4694-80CA-CD531C05F2A2}"
@@ -31,9 +32,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.Scribble", "Webfuel
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.Reporting", "Webfuel.Reporting\Webfuel.Reporting.csproj", "{0AB4CF15-579B-4502-B505-BE434744EF3B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.Tests", "Webfuel.Tests\Webfuel.Tests.csproj", "{11EC0232-4D2D-401D-B939-20C6EDCF8C03}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webfuel.Client", "..\Webfuel.Platform\Webfuel.Client\Webfuel.Client.csproj", "{6DA8A378-FB13-40CE-9F83-2C122DEB5F95}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webfuel.Services", "..\Webfuel.Services\Webfuel.Services\Webfuel.Services.csproj", "{C92D8310-9BE6-52CF-41B4-234454AD6A01}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,14 +88,10 @@ Global
 		{0AB4CF15-579B-4502-B505-BE434744EF3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0AB4CF15-579B-4502-B505-BE434744EF3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0AB4CF15-579B-4502-B505-BE434744EF3B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{11EC0232-4D2D-401D-B939-20C6EDCF8C03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{11EC0232-4D2D-401D-B939-20C6EDCF8C03}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{11EC0232-4D2D-401D-B939-20C6EDCF8C03}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{11EC0232-4D2D-401D-B939-20C6EDCF8C03}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6DA8A378-FB13-40CE-9F83-2C122DEB5F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6DA8A378-FB13-40CE-9F83-2C122DEB5F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6DA8A378-FB13-40CE-9F83-2C122DEB5F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6DA8A378-FB13-40CE-9F83-2C122DEB5F95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C92D8310-9BE6-52CF-41B4-234454AD6A01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C92D8310-9BE6-52CF-41B4-234454AD6A01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C92D8310-9BE6-52CF-41B4-234454AD6A01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C92D8310-9BE6-52CF-41B4-234454AD6A01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

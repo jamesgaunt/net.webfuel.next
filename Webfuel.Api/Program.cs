@@ -1,13 +1,9 @@
-using OpenTelemetry.Exporter;
-using OpenTelemetry.Logs;
-using OpenTelemetry.Resources;
-using OpenTelemetry.Trace;
 using Webfuel.Common;
 using Webfuel.Domain;
 using Webfuel.Domain.StaticData;
 using Webfuel.Excel;
-using Webfuel.Jobs;
 using Webfuel.Reporting;
+using Webfuel.ServiceDefaults;
 
 namespace Webfuel.Api;
 
@@ -19,8 +15,8 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.AddLogging();
-        builder.AddTracing();
+        builder.AddLoggingServices();
+        builder.AddTracingServices("rss-icl");
 
         builder.Services.RegisterCoreServices();
         builder.Services.RegisterCommonServices();
@@ -30,15 +26,15 @@ public class Program
         builder.Services.RegisterReportingServices();
 
         builder.AddTerminal();
-        builder.AddPlatformClientServices(x =>
+        builder.AddClientServices(x =>
         {
-            x.ClientId = Guid.Parse("2643cb0a-1ac2-b74b-4c69-08dccf4965da");
+            x.ClientId = Guid.Parse("b03435ab-2375-c840-7415-08dd57f0f2b7");
             x.AccessToken = "ABCD";
         });
 
         if (builder.Environment.IsProduction())
         {
-            builder.Services.AddBackgroundJob<IProjectEnrichmentService>();
+            builder.AddBackgroundJob<IProjectEnrichmentService>();
         }
 
         builder.Services.AddMediatR(c =>
@@ -74,7 +70,7 @@ public class Program
 
         var app = builder.Build();
 
-        app.UseShortCircuits();
+        app.UseStandardShortCircuits();
         app.UseRequestTrace();
 
         app.UseCors(ApiCorsOptions);
@@ -90,81 +86,5 @@ public class Program
         app.UseApiServices<Program>();
 
         app.Run();
-    }
-}
-
-public static class ServiceDefaults
-{
-    public static IHostApplicationBuilder AddLogging(this IHostApplicationBuilder builder)
-    {
-        builder.Logging.ClearProviders();
-
-        if (builder.Environment.IsDevelopment())
-        {
-            builder.Logging.AddConsole();
-        }
-        else
-        {
-            builder.Logging.AddPlatformLogger();
-
-            builder.Logging.AddOpenTelemetry(x =>
-            {
-                x.IncludeScopes = true;
-                x.IncludeFormattedMessage = true;
-            });
-
-            builder.Services.Configure<OpenTelemetryLoggerOptions>(logging => logging.AddOtlpExporter(opt =>
-            {
-                opt.Endpoint = new Uri("https://api.eu1.honeycomb.io/v1/logs");
-                opt.Headers = "x-honeycomb-team=fsZ4cF3kvdv0D02QDX7mbH";
-                opt.Protocol = OtlpExportProtocol.HttpProtobuf;
-            }));
-        }
-
-        return builder;
-    }
-
-    public static IHostApplicationBuilder AddTracing(this IHostApplicationBuilder builder)
-    {
-        if (builder.Environment.IsDevelopment())
-        {
-            // No tracing in development by default
-        }
-        else
-        {
-            builder.Services
-                .AddOpenTelemetry()
-                .ConfigureResource(x =>
-                {
-                    x.Clear();
-                    x.AddService(builder.Environment.IsProduction() ? "rss-icl" : "rss-icl-dev");
-                })
-                .WithTracing(x =>
-                {
-                    x.SetSampler(new AlwaysOnSampler());
-                    x.AddSource(RequestTraceActivitySource.Name);
-                });
-
-            builder.Services.ConfigureOpenTelemetryTracerProvider(tracing => tracing.AddOtlpExporter(opt =>
-            {
-                opt.Endpoint = new Uri("https://api.eu1.honeycomb.io/v1/traces");
-                opt.Headers = "x-honeycomb-team=fsZ4cF3kvdv0D02QDX7mbH";
-                opt.Protocol = OtlpExportProtocol.HttpProtobuf;
-            }));
-
-        }
-
-        return builder;
-    }
-
-    public static void UseShortCircuits(this WebApplication app)
-    {
-        app.MapGet("/favicon.ico", () => Task.CompletedTask).ShortCircuit(404);
-        app.MapGet("/robots.txt", () => """
-            User-agent: *
-            Disallow: /
-            """).ShortCircuit(200);
-
-        app.MapShortCircuit(404, ".well-known");
     }
 }
