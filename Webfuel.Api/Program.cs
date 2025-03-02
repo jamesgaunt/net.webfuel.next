@@ -15,9 +15,6 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.AddLoggingServices();
-        builder.AddTracingServices("rss-icl");
-
         builder.Services.RegisterCoreServices();
         builder.Services.RegisterCommonServices();
         builder.Services.RegisterDomainServices();
@@ -26,7 +23,7 @@ public class Program
         builder.Services.RegisterReportingServices();
 
         builder.AddTerminal();
-        builder.AddClientServices(x =>
+        builder.AddServices("rss-icl", x =>
         {
             x.ClientId = Guid.Parse("b03435ab-2375-c840-7415-08dd57f0f2b7");
             x.AccessToken = "ABCD";
@@ -76,6 +73,7 @@ public class Program
         app.UseCors(ApiCorsOptions);
 
         app.UseTerminal();
+
         app.UseMiddleware<IdentityMiddleware>();
         app.UseMiddleware<AngularMiddleware>();
         app.UseStaticFiles();
