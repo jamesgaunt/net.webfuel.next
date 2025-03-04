@@ -31,7 +31,7 @@ public class Program
 
         if (builder.Environment.IsProduction())
         {
-            builder.AddBackgroundJob<IProjectEnrichmentService>();
+            builder.AddBackgroundJob<ProjectEnrichmentJob>();
         }
 
         builder.Services.AddMediatR(c =>

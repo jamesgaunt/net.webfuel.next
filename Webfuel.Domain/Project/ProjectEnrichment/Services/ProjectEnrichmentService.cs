@@ -3,11 +3,13 @@ using Webfuel.Jobs;
 
 namespace Webfuel.Domain;
 
-public interface IProjectEnrichmentService : IJobRunner
+public interface IProjectEnrichmentService
 {
     Task CalculateSupportMetricsForProject(Project project);
 
     Task EnrichProject(Project project);
+
+    Task<BackgroundJobResult> ExecuteHeartbeat();
 }
 
 [Service(typeof(IProjectEnrichmentService))]
@@ -128,13 +130,13 @@ internal class ProjectEnrichmentService : IProjectEnrichmentService
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Heartbeat
 
-    public async Task<JobResult> RunJob()
+    public async Task<BackgroundJobResult> ExecuteHeartbeat()
     {
         var project = await GetNextHeartbeatProject();
 
         if (project == null)
         {
-            return new JobResult("No projects requiring heartbeat", TimeSpan.FromHours(1));
+            return new BackgroundJobResult(TimeSpan.FromHours(1));
         }
 
         var original = project.Copy();
@@ -143,7 +145,7 @@ internal class ProjectEnrichmentService : IProjectEnrichmentService
         try
         {
             await CalculateSupportMetricsForProject(project);
-            return new JobResult("Executed heartbeat for project " + project.PrefixedNumber, TimeSpan.FromMinutes(2));
+            return new BackgroundJobResult("Executed heartbeat for project " + project.PrefixedNumber, TimeSpan.FromMinutes(2));
         }
         finally
         {
