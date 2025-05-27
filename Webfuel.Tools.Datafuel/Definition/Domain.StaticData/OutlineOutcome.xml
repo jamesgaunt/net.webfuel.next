@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="OutlineOutcome" Tags="StaticData|Enum" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="e8f599eb-cc36-4e4c-9500-462f0a2213d0" Name="Shortlisted" />
+      <Row Id="917d8a55-1d9a-4539-ac25-fec36a2ff8a7" Name="Not Funded" />
+      <Row Id="962cb041-bcef-4b5f-8e2e-81da23b7b7be" Name="Withdrawn" />
+      <Row Id="caab14a7-801b-43e0-b9a9-1c08eb86e197" Name="Unknown" />
+      <Row Id="b4261645-69f3-4c61-a058-459a7746434a" Name="Not Submitted" />
+      <Row Id="7f73e3e4-c886-43a2-8933-cfaa7cdabd9e" Name="Not Applicable" />
+    </Data>
+  </Entity>
+</Schema>

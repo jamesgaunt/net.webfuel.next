@@ -74,6 +74,9 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.ProfessionalBackgroundFreeText):
                         result.Add(new SqlParameter(nameof(SupportRequest.ProfessionalBackgroundFreeText), entity.ProfessionalBackgroundFreeText));
                         break;
+                    case nameof(SupportRequest.IsRoundRobinEnquiry):
+                        result.Add(new SqlParameter(nameof(SupportRequest.IsRoundRobinEnquiry), entity.IsRoundRobinEnquiry));
+                        break;
                     case nameof(SupportRequest.TeamContactTitle):
                         result.Add(new SqlParameter(nameof(SupportRequest.TeamContactTitle), entity.TeamContactTitle));
                         break;
@@ -256,6 +259,7 @@ namespace Webfuel.Domain
                 yield return "IsCTUAlreadyInvolvedFreeText";
                 yield return "ProfessionalBackgroundIds";
                 yield return "ProfessionalBackgroundFreeText";
+                yield return "IsRoundRobinEnquiry";
                 yield return "TeamContactTitle";
                 yield return "TeamContactFirstName";
                 yield return "TeamContactLastName";
@@ -327,6 +331,7 @@ namespace Webfuel.Domain
                 yield return "IsCTUAlreadyInvolvedFreeText";
                 yield return "ProfessionalBackgroundIds";
                 yield return "ProfessionalBackgroundFreeText";
+                yield return "IsRoundRobinEnquiry";
                 yield return "TeamContactTitle";
                 yield return "TeamContactFirstName";
                 yield return "TeamContactLastName";
@@ -397,6 +402,7 @@ namespace Webfuel.Domain
                 yield return "IsCTUAlreadyInvolvedFreeText";
                 yield return "ProfessionalBackgroundIds";
                 yield return "ProfessionalBackgroundFreeText";
+                yield return "IsRoundRobinEnquiry";
                 yield return "TeamContactTitle";
                 yield return "TeamContactFirstName";
                 yield return "TeamContactLastName";

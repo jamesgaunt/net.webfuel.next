@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { UpdateProject, Project, UpdateProjectRequest, UpdateProjectResearcher, UnlockProject, QueryProject, QueryResult, ReportStep } from './api.types';
+import { UpdateProject, Project, UpdateProjectRequest, UpdateProjectResearcher, UpdateProjectSupportSettings, UnlockProject, CreateTestProject, QueryProject, QueryResult, ReportStep } from './api.types';
 
 @Injectable()
 export class ProjectApi implements IDataSource<Project, QueryProject, any, UpdateProject> {
@@ -21,12 +21,20 @@ export class ProjectApi implements IDataSource<Project, QueryProject, any, Updat
         return this.apiService.request<UpdateProjectResearcher, Project>("PUT", "api/project/researcher", body, options);
     }
     
+    public updateSupportSettings (body: UpdateProjectSupportSettings, options?: ApiOptions): Observable<Project> {
+        return this.apiService.request<UpdateProjectSupportSettings, Project>("PUT", "api/project/support-settings", body, options);
+    }
+    
     public unlock (body: UnlockProject, options?: ApiOptions): Observable<Project> {
         return this.apiService.request<UnlockProject, Project>("PUT", "api/project/unlock", body, options);
     }
     
     public delete (params: { id: string }, options?: ApiOptions): Observable<any> {
         return this.apiService.request<undefined, any>("DELETE", "api/project/" + params.id + "", undefined, options).pipe(tap(_ => this.changed.emit()));
+    }
+    
+    public createTest (body: CreateTestProject, options?: ApiOptions): Observable<Project> {
+        return this.apiService.request<CreateTestProject, Project>("POST", "api/project:create-test", body, options);
     }
     
     public query (body: QueryProject, options?: ApiOptions): Observable<QueryResult<Project>> {

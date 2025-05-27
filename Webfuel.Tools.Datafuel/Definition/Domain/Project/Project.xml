@@ -10,6 +10,7 @@
     <Property Name="SupportRequestId" Type="Guid?" Tags="ChangeLog:Ignore" />
     <Property Name="ClosureDate" Type="Date?" />
     <Property Name="ClosureAttempted" Type="boolean" />
+    <Property Name="AdministratorComments" Type="string[4000]" />
 
     <!-- Ownership -->
     <Property Name="LeadAdviserUserId" Type="User?" />
@@ -40,7 +41,24 @@
 
     <Property Name="SocialCare" Type="boolean" />
     <Property Name="PublicHealth" Type="boolean" />
+    
+    <!-- 1.5 Submission Details -->
 
+    <Property Name="OutlineSubmissionDeadline" Type="Date?" />
+    <Property Name="OutlineSubmissionStatusId" Type="OutlineSubmissionStatus?" />
+    <Property Name="OutlineOutcomeExpectedDate" Type="Date?" />
+    <Property Name="OutlineOutcomeId" Type="OutlineOutcome?" />
+
+    <Property Name="FullSubmissionDeadline" Type="Date?" />
+    <Property Name="FullSubmissionStatusId" Type="FullSubmissionStatus?" />
+    <Property Name="FullOutcomeExpectedDate" Type="Date?" />
+    <Property Name="FullOutcomeId" Type="FullOutcome?" />
+
+    <!-- 1.5 Other Support (Support Tab) -->
+
+    <Property Name="MockInterviews" Type="boolean" />
+    <Property Name="GrantsmanshipReview" Type="boolean" />
+    
     <!-- ========== Replicated from Support Request (Keep All Field Names Identical) ========== -->
 
     <!-- Project Details -->
@@ -67,6 +85,7 @@
     <Property Name="IsCTUAlreadyInvolvedFreeText" Type="meta:name" />
     <Property Name="ProfessionalBackgroundIds"  Type="Json:List{Guid}" Default="[]" /><!-- 1.2 Development -->
     <Property Name="ProfessionalBackgroundFreeText" Type="meta:name" /><!-- 1.2 Development -->
+    <Property Name="IsRoundRobinEnquiry" Type="bool" /> <!-- 1.5 Development -->
 
     <!-- Team Contact Details -->
 

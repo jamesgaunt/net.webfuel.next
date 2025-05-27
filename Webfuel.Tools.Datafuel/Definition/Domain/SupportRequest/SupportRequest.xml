@@ -39,7 +39,9 @@
     <Property Name="IsCTUAlreadyInvolvedFreeText" Type="meta:name" />
     <Property Name="ProfessionalBackgroundIds"  Type="Json:List{Guid}" Default="[]" />
     <Property Name="ProfessionalBackgroundFreeText" Type="meta:name" />
-    
+    <Property Name="IsRoundRobinEnquiry" Type="bool" /> <!-- 1.5 Development -->
+
+
     <!-- Team Contact Details -->
 
     <Property Name="TeamContactTitle" Type="meta:name" />

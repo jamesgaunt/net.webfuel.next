@@ -134,6 +134,22 @@ export enum ReportFilterTypeIdentifiers {
     Expression = "00000000-0000-0000-0000-000000000002",
 }
 
+export enum FullOutcomeEnum {
+    Successful = "c9dbd5ad-6c78-4773-a3a8-ce30412bb5dc",
+    NotFunded = "6a59516c-9472-4c63-9611-f651bdbfcff2",
+    Withdrawn = "cd81994e-1bc1-4404-a023-eea57e3fd114",
+    Unknown = "2b33d4c2-0340-4a57-9c75-203607fed107",
+    NotSubmitted = "f73be486-7d1d-4573-b76c-c0fda7cab4c5",
+    NotApplicable = "ba13b285-2429-4952-8b79-fc515eeaccbf",
+}
+
+export enum FullSubmissionStatusEnum {
+    Yes = "a40cad90-8975-4165-870c-52a4c71b9869",
+    No = "1f869a5b-0f34-4e88-8a2a-22d18e0c16f4",
+    DonTKnow = "081286d1-6817-4a77-9506-3308bd04eab1",
+    NA = "64407686-d81e-482f-8188-5bed6ac7b788",
+}
+
 export enum IsCTUAlreadyInvolvedEnum {
     YesWeHaveAlreadyGotACTUInvolved = "d51d2c40-578a-4797-b728-943b6dd9e87c",
     NoWeHaveNotGotACTUInvolved = "78ccf6a2-e166-4774-9c0c-aedcb57fd789",
@@ -199,6 +215,22 @@ export enum IsYesNoEnum {
     No = "9c2dbdff-9020-419a-aa3f-bb976b19de6a",
 }
 
+export enum OutlineOutcomeEnum {
+    Shortlisted = "e8f599eb-cc36-4e4c-9500-462f0a2213d0",
+    NotFunded = "917d8a55-1d9a-4539-ac25-fec36a2ff8a7",
+    Withdrawn = "962cb041-bcef-4b5f-8e2e-81da23b7b7be",
+    Unknown = "caab14a7-801b-43e0-b9a9-1c08eb86e197",
+    NotSubmitted = "b4261645-69f3-4c61-a058-459a7746434a",
+    NotApplicable = "7f73e3e4-c886-43a2-8933-cfaa7cdabd9e",
+}
+
+export enum OutlineSubmissionStatusEnum {
+    Yes = "1c76e5b1-c0d4-4a91-8144-afb582eb2165",
+    No = "dcd582e2-3ca3-4705-8eb8-d64953c1d1c1",
+    DonTKnow = "7a4b2966-eb01-4765-9615-d873915be554",
+    NA = "c9a32676-5e38-42e7-bb31-586cb9e5e1f5",
+}
+
 export enum ProfessionalBackgroundEnum {
     AlliedHealthcareProfessional = "9cd4cbde-011e-4b8b-898f-4a23a80d8e1f",
     Doctor = "e031dcc1-a8c7-4a26-9a89-f5246da76596",
@@ -217,6 +249,7 @@ export enum ProjectStatusEnum {
     OnHold = "691ee44b-7b01-4af0-b8f3-13f96f00f0ce",
     SubmittedOnHold = "e66a0fdb-8d2e-4f4a-b813-a0a487e8c25d",
     Closed = "ed4845b0-1f4c-4df3-b4ec-46e5ce94c275",
+    ClosedNotSubmitted = "c7b88dec-e286-46d6-857e-9b48751e85dc",
     Discarded = "164fdeee-8d6f-42fa-a23b-fbab0ef3ba93",
 }
 

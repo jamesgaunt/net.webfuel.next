@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ProjectSupport, ProjectSupportFile, SupportProvided } from 'api/api.types';
+import { ProjectSupport, ProjectSupportFile, Project, SupportProvided } from 'api/api.types';
 import { ProjectSupportApi } from 'api/project-support.api';
 import { FormService } from 'core/form.service';
 import _ from 'shared/common/underscore';
@@ -58,11 +58,36 @@ export class ProjectSupportComponent extends ProjectComponentBase {
       )
       .subscribe(() => this.loadProjectSupport());
 
+    this.form.valueChanges.pipe(debounceTime(200), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      this.projectApi.updateSupportSettings(this.form.getRawValue(), { successGrowl: "Project Updated" }).subscribe((result) => {
+        this.reset(result);
+      });
+    });
   }
 
   filterForm = new FormGroup({
     openTeamSupportOnly: new FormControl(false, { nonNullable: true })
   });
+
+  form = new FormGroup({
+    id: new FormControl<string>('', { nonNullable: true }),
+    mockInterviews: new FormControl(false, { nonNullable: true }),
+    grantsmanshipReview: new FormControl(false, { nonNullable: true }),
+  })
+
+  protected applyLock() {
+    this.form.disable({ emitEvent: false });
+  }
+
+  protected clearLock() {
+    this.form.enable({ emitEvent: false });
+  }
+
+  reset(item: Project) {
+    super.reset(item);
+    this.form.patchValue(item, { emitEvent: false });
+    this.form.markAsPristine();
+  }
 
   IsPrePostAwardEnum = IsPrePostAwardEnum;
 

@@ -40,6 +40,10 @@ export class SupportRequestItemComponent extends SupportRequestComponentBase {
     this.form.enable();
   }
 
+  isRoundRobinEnquiry() {
+    return this.form.getRawValue().isRoundRobinEnquiry;
+  }
+
   form = new FormGroup({
     id: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
 
@@ -75,6 +79,10 @@ export class SupportRequestItemComponent extends SupportRequestComponentBase {
 
     wouldYouLikeToReceiveAGrantsmanshipReviewId: new FormControl<string | null>(null),
     isYourSupportRequestOnlyForAGrantsmanshipReviewId: new FormControl<string | null>(null),
+
+    // Misc
+
+    isRoundRobinEnquiry: new FormControl<boolean>(false, { nonNullable: true }),
   });
 
   save(close: boolean) {

@@ -1,6 +1,6 @@
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StaticDataCache } from '../api/static-data.cache';
 import { PingApi } from '../api/ping.api';
 import { SupportRequestApi } from '../api/support-request.api';
@@ -17,12 +17,13 @@ import { ConfirmDialog } from '../shared/dialogs/confirm/confirm.dialog';
   selector: 'support-request-form',
   templateUrl: './support-request-form.component.html'
 })
-export class SupportRequestFormComponent {
+export class SupportRequestFormComponent implements OnInit{
 
   destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private formService: FormService,
     private supportRequestApi: SupportRequestApi,
     public staticDataCache: StaticDataCache,
@@ -37,6 +38,11 @@ export class SupportRequestFormComponent {
       if (this.form.valid)
         this.errorMessage = "";
     });
+  }
+
+  ngOnInit() {
+    if (this.activatedRoute.snapshot.queryParamMap.get("source") === "referral")
+      this.form.patchValue({ isRoundRobinEnquiry: true });
   }
 
   isTeamContactAlsoChiefInvestigator() {
@@ -136,6 +142,10 @@ export class SupportRequestFormComponent {
 
     files: new FormControl(null),
     fileStorageGroupId: new FormControl<string | null>(null),
+
+    // Misc
+
+    isRoundRobinEnquiry: new FormControl<boolean>(false, { nonNullable: true }),
   });
 
   submitting = false;

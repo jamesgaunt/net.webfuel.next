@@ -9,6 +9,7 @@ namespace Webfuel.Domain.StaticData
         public static readonly Guid OnHold = Guid.Parse("691ee44b-7b01-4af0-b8f3-13f96f00f0ce");
         public static readonly Guid SubmittedOnHold = Guid.Parse("e66a0fdb-8d2e-4f4a-b813-a0a487e8c25d");
         public static readonly Guid Closed = Guid.Parse("ed4845b0-1f4c-4df3-b4ec-46e5ce94c275");
+        public static readonly Guid ClosedNotSubmitted = Guid.Parse("c7b88dec-e286-46d6-857e-9b48751e85dc");
         public static readonly Guid Discarded = Guid.Parse("164fdeee-8d6f-42fa-a23b-fbab0ef3ba93");
         
         public static readonly ProjectStatus[] Values = new ProjectStatus[] {
@@ -16,6 +17,7 @@ namespace Webfuel.Domain.StaticData
             new ProjectStatus { Id = Guid.Parse("691ee44b-7b01-4af0-b8f3-13f96f00f0ce"), Name = "On Hold", Active = true },
             new ProjectStatus { Id = Guid.Parse("e66a0fdb-8d2e-4f4a-b813-a0a487e8c25d"), Name = "Submitted - On Hold", Active = true },
             new ProjectStatus { Id = Guid.Parse("ed4845b0-1f4c-4df3-b4ec-46e5ce94c275"), Name = "Closed", Locked = true },
+            new ProjectStatus { Id = Guid.Parse("c7b88dec-e286-46d6-857e-9b48751e85dc"), Name = "Closed - Not Submitted", Locked = true },
             new ProjectStatus { Id = Guid.Parse("164fdeee-8d6f-42fa-a23b-fbab0ef3ba93"), Name = "Discarded", Locked = true, Discarded = true, Hidden = true },
         };
         

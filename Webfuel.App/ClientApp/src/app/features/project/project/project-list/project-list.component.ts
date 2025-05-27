@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Project } from 'api/api.types';
@@ -34,6 +34,8 @@ export class ProjectListComponent {
   ) {
   }
 
+  get developer() { return this.configurationService.hasClaim(p => p.claims.developer); }
+
   ngAfterViewInit(): void {
     this.activatedRoute.queryParams.subscribe(params => this.applyFilterParams(params));
   }
@@ -63,6 +65,12 @@ export class ProjectListComponent {
       title: '',
       teamContactName: '',
       openSupportTeamId: null,
+    });
+  }
+
+  createTest() {
+    this.projectApi.createTest({}).subscribe(() => {
+      this.projectApi.changed.emit();
     });
   }
 

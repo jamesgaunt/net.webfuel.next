@@ -9,6 +9,9 @@
     </div>
     <div class="column">
       <div class="header-buttons">
+        @if(developer) {
+        <button class="button is-warning" (click)="createTest()">Create Test Project</button>
+        }
         <button class="button is-primary" (click)="annualReport()">Annual Report</button>
         <button class="button is-primary" (click)="export()">Export</button>
       </div>

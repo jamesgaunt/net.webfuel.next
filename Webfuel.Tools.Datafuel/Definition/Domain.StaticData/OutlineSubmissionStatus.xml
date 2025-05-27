@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="OutlineSubmissionStatus" Tags="StaticData|Enum" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="1c76e5b1-c0d4-4a91-8144-afb582eb2165" Name="Yes" />
+      <Row Id="dcd582e2-3ca3-4705-8eb8-d64953c1d1c1" Name="No" />
+      <Row Id="7a4b2966-eb01-4765-9615-d873915be554" Name="Don't know" />
+      <Row Id="c9a32676-5e38-42e7-bb31-586cb9e5e1f5" Name="N/A" />
+    </Data>
+  </Entity>
+</Schema>

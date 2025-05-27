@@ -27,6 +27,8 @@ import { AgeRangeApi } from './age-range.api';
 import { ApplicationStageApi } from './application-stage.api';
 import { DisabilityApi } from './disability.api';
 import { EthnicityApi } from './ethnicity.api';
+import { FullOutcomeApi } from './full-outcome.api';
+import { FullSubmissionStatusApi } from './full-submission-status.api';
 import { FundingBodyApi } from './funding-body.api';
 import { FundingCallTypeApi } from './funding-call-type.api';
 import { FundingStreamApi } from './funding-stream.api';
@@ -45,6 +47,8 @@ import { IsQuantativeTeamContributionApi } from './is-quantative-team-contributi
 import { IsResubmissionApi } from './is-resubmission.api';
 import { IsTeamMembersConsultedApi } from './is-team-members-consulted.api';
 import { IsYesNoApi } from './is-yes-no.api';
+import { OutlineOutcomeApi } from './outline-outcome.api';
+import { OutlineSubmissionStatusApi } from './outline-submission-status.api';
 import { ProfessionalBackgroundApi } from './professional-background.api';
 import { ProfessionalBackgroundDetailApi } from './professional-background-detail.api';
 import { ProjectStatusApi } from './project-status.api';
@@ -99,6 +103,8 @@ import { StaticDataCache } from './static-data.cache';
         ApplicationStageApi,
         DisabilityApi,
         EthnicityApi,
+        FullOutcomeApi,
+        FullSubmissionStatusApi,
         FundingBodyApi,
         FundingCallTypeApi,
         FundingStreamApi,
@@ -117,6 +123,8 @@ import { StaticDataCache } from './static-data.cache';
         IsResubmissionApi,
         IsTeamMembersConsultedApi,
         IsYesNoApi,
+        OutlineOutcomeApi,
+        OutlineSubmissionStatusApi,
         ProfessionalBackgroundApi,
         ProfessionalBackgroundDetailApi,
         ProjectStatusApi,

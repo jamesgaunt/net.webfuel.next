@@ -23,6 +23,10 @@ namespace Webfuel.Domain
             {
                 sb.Append("Closure Attempted: ").Append(original.ClosureAttempted).Append(" -> ").Append(updated.ClosureAttempted).Append(delimiter);
             }
+            if(original.AdministratorComments != updated.AdministratorComments)
+            {
+                sb.Append("Administrator Comments: ").Append(original.AdministratorComments).Append(" -> ").Append(updated.AdministratorComments).Append(delimiter);
+            }
             if(original.SubmittedFundingStreamFreeText != updated.SubmittedFundingStreamFreeText)
             {
                 sb.Append("Submitted Funding Stream Free Text: ").Append(original.SubmittedFundingStreamFreeText).Append(" -> ").Append(updated.SubmittedFundingStreamFreeText).Append(delimiter);
@@ -58,6 +62,30 @@ namespace Webfuel.Domain
             if(original.PublicHealth != updated.PublicHealth)
             {
                 sb.Append("Public Health: ").Append(original.PublicHealth).Append(" -> ").Append(updated.PublicHealth).Append(delimiter);
+            }
+            if(original.OutlineSubmissionDeadline != updated.OutlineSubmissionDeadline)
+            {
+                sb.Append("Outline Submission Deadline: ").Append(original.OutlineSubmissionDeadline?.ToString() ?? "NULL").Append(" -> ").Append(updated.OutlineSubmissionDeadline?.ToString() ?? "NULL").Append(delimiter);
+            }
+            if(original.OutlineOutcomeExpectedDate != updated.OutlineOutcomeExpectedDate)
+            {
+                sb.Append("Outline Outcome Expected Date: ").Append(original.OutlineOutcomeExpectedDate?.ToString() ?? "NULL").Append(" -> ").Append(updated.OutlineOutcomeExpectedDate?.ToString() ?? "NULL").Append(delimiter);
+            }
+            if(original.FullSubmissionDeadline != updated.FullSubmissionDeadline)
+            {
+                sb.Append("Full Submission Deadline: ").Append(original.FullSubmissionDeadline?.ToString() ?? "NULL").Append(" -> ").Append(updated.FullSubmissionDeadline?.ToString() ?? "NULL").Append(delimiter);
+            }
+            if(original.FullOutcomeExpectedDate != updated.FullOutcomeExpectedDate)
+            {
+                sb.Append("Full Outcome Expected Date: ").Append(original.FullOutcomeExpectedDate?.ToString() ?? "NULL").Append(" -> ").Append(updated.FullOutcomeExpectedDate?.ToString() ?? "NULL").Append(delimiter);
+            }
+            if(original.MockInterviews != updated.MockInterviews)
+            {
+                sb.Append("Mock Interviews: ").Append(original.MockInterviews).Append(" -> ").Append(updated.MockInterviews).Append(delimiter);
+            }
+            if(original.GrantsmanshipReview != updated.GrantsmanshipReview)
+            {
+                sb.Append("Grantsmanship Review: ").Append(original.GrantsmanshipReview).Append(" -> ").Append(updated.GrantsmanshipReview).Append(delimiter);
             }
             if(original.DateOfRequest != updated.DateOfRequest)
             {
@@ -114,6 +142,10 @@ namespace Webfuel.Domain
             if(original.ProfessionalBackgroundFreeText != updated.ProfessionalBackgroundFreeText)
             {
                 sb.Append("Professional Background Free Text: ").Append(original.ProfessionalBackgroundFreeText).Append(" -> ").Append(updated.ProfessionalBackgroundFreeText).Append(delimiter);
+            }
+            if(original.IsRoundRobinEnquiry != updated.IsRoundRobinEnquiry)
+            {
+                sb.Append("Is Round Robin Enquiry: ").Append(original.IsRoundRobinEnquiry).Append(" -> ").Append(updated.IsRoundRobinEnquiry).Append(delimiter);
             }
             if(original.TeamContactTitle != updated.TeamContactTitle)
             {
@@ -274,6 +306,30 @@ namespace Webfuel.Domain
                 var o = original.IsInternationalMultiSiteStudyId.HasValue ? (await _staticDataService.GetIsInternationalMultiSiteStudy(original.IsInternationalMultiSiteStudyId.Value))?.Name ?? "UNKNOWN" : "NULL";
                 var u = updated.IsInternationalMultiSiteStudyId.HasValue ? (await _staticDataService.GetIsInternationalMultiSiteStudy(updated.IsInternationalMultiSiteStudyId.Value))?.Name ?? "UNKNOWN" : "NULL";
                 sb.Append("Is International Multi Site Study: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
+            }
+            if(original.OutlineSubmissionStatusId != updated.OutlineSubmissionStatusId)
+            {
+                var o = original.OutlineSubmissionStatusId.HasValue ? (await _staticDataService.GetOutlineSubmissionStatus(original.OutlineSubmissionStatusId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                var u = updated.OutlineSubmissionStatusId.HasValue ? (await _staticDataService.GetOutlineSubmissionStatus(updated.OutlineSubmissionStatusId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                sb.Append("Outline Submission Status: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
+            }
+            if(original.OutlineOutcomeId != updated.OutlineOutcomeId)
+            {
+                var o = original.OutlineOutcomeId.HasValue ? (await _staticDataService.GetOutlineOutcome(original.OutlineOutcomeId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                var u = updated.OutlineOutcomeId.HasValue ? (await _staticDataService.GetOutlineOutcome(updated.OutlineOutcomeId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                sb.Append("Outline Outcome: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
+            }
+            if(original.FullSubmissionStatusId != updated.FullSubmissionStatusId)
+            {
+                var o = original.FullSubmissionStatusId.HasValue ? (await _staticDataService.GetFullSubmissionStatus(original.FullSubmissionStatusId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                var u = updated.FullSubmissionStatusId.HasValue ? (await _staticDataService.GetFullSubmissionStatus(updated.FullSubmissionStatusId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                sb.Append("Full Submission Status: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
+            }
+            if(original.FullOutcomeId != updated.FullOutcomeId)
+            {
+                var o = original.FullOutcomeId.HasValue ? (await _staticDataService.GetFullOutcome(original.FullOutcomeId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                var u = updated.FullOutcomeId.HasValue ? (await _staticDataService.GetFullOutcome(updated.FullOutcomeId.Value))?.Name ?? "UNKNOWN" : "NULL";
+                sb.Append("Full Outcome: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
             }
             if(original.IsFellowshipId != updated.IsFellowshipId)
             {

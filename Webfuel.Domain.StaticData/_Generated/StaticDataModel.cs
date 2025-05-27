@@ -8,6 +8,8 @@ namespace Webfuel.Domain.StaticData
         IReadOnlyList<ApplicationStage> ApplicationStage { get; }
         IReadOnlyList<Disability> Disability { get; }
         IReadOnlyList<Ethnicity> Ethnicity { get; }
+        IReadOnlyList<FullOutcome> FullOutcome { get; }
+        IReadOnlyList<FullSubmissionStatus> FullSubmissionStatus { get; }
         IReadOnlyList<FundingBody> FundingBody { get; }
         IReadOnlyList<FundingCallType> FundingCallType { get; }
         IReadOnlyList<FundingStream> FundingStream { get; }
@@ -26,6 +28,8 @@ namespace Webfuel.Domain.StaticData
         IReadOnlyList<IsResubmission> IsResubmission { get; }
         IReadOnlyList<IsTeamMembersConsulted> IsTeamMembersConsulted { get; }
         IReadOnlyList<IsYesNo> IsYesNo { get; }
+        IReadOnlyList<OutlineOutcome> OutlineOutcome { get; }
+        IReadOnlyList<OutlineSubmissionStatus> OutlineSubmissionStatus { get; }
         IReadOnlyList<ProfessionalBackground> ProfessionalBackground { get; }
         IReadOnlyList<ProfessionalBackgroundDetail> ProfessionalBackgroundDetail { get; }
         IReadOnlyList<ProjectStatus> ProjectStatus { get; }
@@ -56,6 +60,8 @@ namespace Webfuel.Domain.StaticData
         public required IReadOnlyList<ApplicationStage> ApplicationStage { get; init; }
         public required IReadOnlyList<Disability> Disability { get; init; }
         public required IReadOnlyList<Ethnicity> Ethnicity { get; init; }
+        public required IReadOnlyList<FullOutcome> FullOutcome { get; init; }
+        public required IReadOnlyList<FullSubmissionStatus> FullSubmissionStatus { get; init; }
         public required IReadOnlyList<FundingBody> FundingBody { get; init; }
         public required IReadOnlyList<FundingCallType> FundingCallType { get; init; }
         public required IReadOnlyList<FundingStream> FundingStream { get; init; }
@@ -74,6 +80,8 @@ namespace Webfuel.Domain.StaticData
         public required IReadOnlyList<IsResubmission> IsResubmission { get; init; }
         public required IReadOnlyList<IsTeamMembersConsulted> IsTeamMembersConsulted { get; init; }
         public required IReadOnlyList<IsYesNo> IsYesNo { get; init; }
+        public required IReadOnlyList<OutlineOutcome> OutlineOutcome { get; init; }
+        public required IReadOnlyList<OutlineSubmissionStatus> OutlineSubmissionStatus { get; init; }
         public required IReadOnlyList<ProfessionalBackground> ProfessionalBackground { get; init; }
         public required IReadOnlyList<ProfessionalBackgroundDetail> ProfessionalBackgroundDetail { get; init; }
         public required IReadOnlyList<ProjectStatus> ProjectStatus { get; init; }
@@ -106,6 +114,8 @@ namespace Webfuel.Domain.StaticData
                 ApplicationStage = await serviceProvider.GetRequiredService<IApplicationStageRepository>().SelectApplicationStage(),
                 Disability = await serviceProvider.GetRequiredService<IDisabilityRepository>().SelectDisability(),
                 Ethnicity = await serviceProvider.GetRequiredService<IEthnicityRepository>().SelectEthnicity(),
+                FullOutcome = await serviceProvider.GetRequiredService<IFullOutcomeRepository>().SelectFullOutcome(),
+                FullSubmissionStatus = await serviceProvider.GetRequiredService<IFullSubmissionStatusRepository>().SelectFullSubmissionStatus(),
                 FundingBody = await serviceProvider.GetRequiredService<IFundingBodyRepository>().SelectFundingBody(),
                 FundingCallType = await serviceProvider.GetRequiredService<IFundingCallTypeRepository>().SelectFundingCallType(),
                 FundingStream = await serviceProvider.GetRequiredService<IFundingStreamRepository>().SelectFundingStream(),
@@ -124,6 +134,8 @@ namespace Webfuel.Domain.StaticData
                 IsResubmission = await serviceProvider.GetRequiredService<IIsResubmissionRepository>().SelectIsResubmission(),
                 IsTeamMembersConsulted = await serviceProvider.GetRequiredService<IIsTeamMembersConsultedRepository>().SelectIsTeamMembersConsulted(),
                 IsYesNo = await serviceProvider.GetRequiredService<IIsYesNoRepository>().SelectIsYesNo(),
+                OutlineOutcome = await serviceProvider.GetRequiredService<IOutlineOutcomeRepository>().SelectOutlineOutcome(),
+                OutlineSubmissionStatus = await serviceProvider.GetRequiredService<IOutlineSubmissionStatusRepository>().SelectOutlineSubmissionStatus(),
                 ProfessionalBackground = await serviceProvider.GetRequiredService<IProfessionalBackgroundRepository>().SelectProfessionalBackground(),
                 ProfessionalBackgroundDetail = await serviceProvider.GetRequiredService<IProfessionalBackgroundDetailRepository>().SelectProfessionalBackgroundDetail(),
                 ProjectStatus = await serviceProvider.GetRequiredService<IProjectStatusRepository>().SelectProjectStatus(),

@@ -319,10 +319,6 @@ export default class Underscore {
     return forceZero ? 0 : null;
   }
 
-  static formatDate(pattern: string, date: Date) {
-    return "XXX";
-  }
-
   // Miscellaneous 
 
   static lastName(name: string) {

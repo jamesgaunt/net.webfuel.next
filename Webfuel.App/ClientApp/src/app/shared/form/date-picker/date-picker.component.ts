@@ -24,6 +24,8 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
 
   popupFormControl: FormControl = new FormControl<string | null>(null);
 
+  inputFormControl: FormControl = new FormControl<string>('');
+
   constructor(
     private overlay: Overlay,
     private viewContainerRef: ViewContainerRef,
@@ -33,6 +35,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
       .pipe(
         tap(value => {
           this.value = value;
+          this.formatValue();
           this.onChange(value);
           this.cd.detectChanges();
           this.closePopup();
@@ -57,16 +60,23 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
   format: string = "dd MMM yyyy";
 
   public onBlur(): void {
+    this.parseInput();
     this.onTouched();
   }
 
   value: string | null = null;
 
-  get formattedValue() {
+  parseInput() {
+    this.value = Day.parseUKDate(this.inputFormControl.getRawValue());
+    this.formatValue();
+    this.onChange(this.value);
+  }
+
+  formatValue() {
     var day = Day.parse(this.value);
     if (day == null)
-      return null;
-    return day.format(this.format);
+      return this.inputFormControl.setValue('');
+    return this.inputFormControl.setValue(day.format(this.format));
   }
 
   // Client Events
@@ -76,6 +86,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
       return;
 
     this.value = null;
+    this.formatValue();
     this.onChange(null);
     this.cd.detectChanges();
   }
@@ -143,6 +154,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
 
   public writeValue(value: string | null): void {
     this.value = value;
+    this.formatValue();
     this.cd.detectChanges();
   }
 

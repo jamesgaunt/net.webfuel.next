@@ -47,6 +47,9 @@ namespace Webfuel.Domain
                     case nameof(ProjectSupport.SupportRequestedCompletedAt):
                         result.Add(new SqlParameter(nameof(ProjectSupport.SupportRequestedCompletedAt), entity.SupportRequestedCompletedAt ?? (object?)DBNull.Value));
                         break;
+                    case nameof(ProjectSupport.SupportRequestedCompletedDate):
+                        result.Add(new SqlParameter(nameof(ProjectSupport.SupportRequestedCompletedDate), entity.SupportRequestedCompletedDate ?? (object?)DBNull.Value));
+                        break;
                     case nameof(ProjectSupport.SupportRequestedCompletedNotes):
                         result.Add(new SqlParameter(nameof(ProjectSupport.SupportRequestedCompletedNotes), entity.SupportRequestedCompletedNotes));
                         break;
@@ -103,6 +106,7 @@ namespace Webfuel.Domain
                 yield return "SupportProvidedIds";
                 yield return "SupportRequestedAt";
                 yield return "SupportRequestedCompletedAt";
+                yield return "SupportRequestedCompletedDate";
                 yield return "SupportRequestedCompletedNotes";
                 yield return "Files";
                 yield return "CalculatedMinutes";
@@ -126,6 +130,7 @@ namespace Webfuel.Domain
                 yield return "SupportProvidedIds";
                 yield return "SupportRequestedAt";
                 yield return "SupportRequestedCompletedAt";
+                yield return "SupportRequestedCompletedDate";
                 yield return "SupportRequestedCompletedNotes";
                 yield return "Files";
                 yield return "CalculatedMinutes";
@@ -148,6 +153,7 @@ namespace Webfuel.Domain
                 yield return "SupportProvidedIds";
                 yield return "SupportRequestedAt";
                 yield return "SupportRequestedCompletedAt";
+                yield return "SupportRequestedCompletedDate";
                 yield return "SupportRequestedCompletedNotes";
                 yield return "Files";
                 yield return "CalculatedMinutes";

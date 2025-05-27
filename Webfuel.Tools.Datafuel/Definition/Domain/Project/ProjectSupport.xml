@@ -16,7 +16,9 @@
 
     <Property Name="SupportRequestedAt" Type="Date?" />
     <Property Name="SupportRequestedTeamId" Type="SupportTeam?" />
+    
     <Property Name="SupportRequestedCompletedAt" Type="DateTime?" />
+    <Property Name="SupportRequestedCompletedDate" Type="Date?" />
     <Property Name="SupportRequestedCompletedByUserId" Type="User?" />
     <Property Name="SupportRequestedCompletedNotes" Type="meta:description" />
 

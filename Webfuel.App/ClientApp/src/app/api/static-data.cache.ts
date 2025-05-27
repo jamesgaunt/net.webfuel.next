@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IDataSource, IDataSourceWithGet } from 'shared/common/data-source';
 import { StaticDataService } from '../core/static-data.service';
-import { AgeRange, ApplicationStage, Disability, Ethnicity, FundingBody, FundingCallType, FundingStream, Gender, HowDidYouFindUs, IsCTUAlreadyInvolved, IsCTUTeamContribution, IsFellowship, IsInternationalMultiSiteStudy, IsLeadApplicantNHS, IsPaidRSSAdviserCoapplicant, IsPaidRSSAdviserLead, IsPPIEAndEDIContribution, IsPrePostAward, IsQuantativeTeamContribution, IsResubmission, IsTeamMembersConsulted, IsYesNo, ProfessionalBackground, ProfessionalBackgroundDetail, ProjectStatus, ReportProvider, ResearcherCareerStage, ResearcherLocation, ResearcherOrganisationType, ResearcherRole, ResearchMethodology, RSSHub, Site, StaffRole, SubmissionOutcome, SubmissionStage, SubmissionStatus, SupportProvided, SupportRequestStatus, SupportTeam, Title, UserDiscipline, WillStudyUseCTU, WorkActivity } from './api.types';
+import { AgeRange, ApplicationStage, Disability, Ethnicity, FullOutcome, FullSubmissionStatus, FundingBody, FundingCallType, FundingStream, Gender, HowDidYouFindUs, IsCTUAlreadyInvolved, IsCTUTeamContribution, IsFellowship, IsInternationalMultiSiteStudy, IsLeadApplicantNHS, IsPaidRSSAdviserCoapplicant, IsPaidRSSAdviserLead, IsPPIEAndEDIContribution, IsPrePostAward, IsQuantativeTeamContribution, IsResubmission, IsTeamMembersConsulted, IsYesNo, OutlineOutcome, OutlineSubmissionStatus, ProfessionalBackground, ProfessionalBackgroundDetail, ProjectStatus, ReportProvider, ResearcherCareerStage, ResearcherLocation, ResearcherOrganisationType, ResearcherRole, ResearchMethodology, RSSHub, Site, StaffRole, SubmissionOutcome, SubmissionStage, SubmissionStatus, SupportProvided, SupportRequestStatus, SupportTeam, Title, UserDiscipline, WillStudyUseCTU, WorkActivity } from './api.types';
 
 @Injectable()
 export class StaticDataCache {
@@ -27,6 +27,16 @@ export class StaticDataCache {
     ethnicity: IDataSourceWithGet<Ethnicity> = {
         query: (query) => this.staticDataService.queryFactory(query, s => s.ethnicity),
         get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.ethnicity),
+    };
+    
+    fullOutcome: IDataSourceWithGet<FullOutcome> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.fullOutcome),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.fullOutcome),
+    };
+    
+    fullSubmissionStatus: IDataSourceWithGet<FullSubmissionStatus> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.fullSubmissionStatus),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.fullSubmissionStatus),
     };
     
     fundingBody: IDataSourceWithGet<FundingBody> = {
@@ -117,6 +127,16 @@ export class StaticDataCache {
     isYesNo: IDataSourceWithGet<IsYesNo> = {
         query: (query) => this.staticDataService.queryFactory(query, s => s.isYesNo),
         get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.isYesNo),
+    };
+    
+    outlineOutcome: IDataSourceWithGet<OutlineOutcome> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.outlineOutcome),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.outlineOutcome),
+    };
+    
+    outlineSubmissionStatus: IDataSourceWithGet<OutlineSubmissionStatus> = {
+        query: (query) => this.staticDataService.queryFactory(query, s => s.outlineSubmissionStatus),
+        get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.outlineSubmissionStatus),
     };
     
     professionalBackground: IDataSourceWithGet<ProfessionalBackground> = {

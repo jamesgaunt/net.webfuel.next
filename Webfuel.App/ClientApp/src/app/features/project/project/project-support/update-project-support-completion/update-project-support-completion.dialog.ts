@@ -41,6 +41,7 @@ export class UpdateProjectSupportCompletionDialogComponent extends DialogCompone
 
   form = new FormGroup({
     id: new FormControl<string>('', { nonNullable: true }),
+    supportRequestedCompletedDate: new FormControl<string | null>(null),
     supportRequestedCompletedNotes: new FormControl<string>('', { nonNullable: true }),
   });
 

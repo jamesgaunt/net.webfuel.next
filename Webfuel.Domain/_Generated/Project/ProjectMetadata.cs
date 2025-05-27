@@ -38,6 +38,9 @@ namespace Webfuel.Domain
                     case nameof(Project.ClosureAttempted):
                         result.Add(new SqlParameter(nameof(Project.ClosureAttempted), entity.ClosureAttempted));
                         break;
+                    case nameof(Project.AdministratorComments):
+                        result.Add(new SqlParameter(nameof(Project.AdministratorComments), entity.AdministratorComments));
+                        break;
                     case nameof(Project.SubmittedFundingStreamFreeText):
                         result.Add(new SqlParameter(nameof(Project.SubmittedFundingStreamFreeText), entity.SubmittedFundingStreamFreeText));
                         break;
@@ -70,6 +73,24 @@ namespace Webfuel.Domain
                         break;
                     case nameof(Project.PublicHealth):
                         result.Add(new SqlParameter(nameof(Project.PublicHealth), entity.PublicHealth));
+                        break;
+                    case nameof(Project.OutlineSubmissionDeadline):
+                        result.Add(new SqlParameter(nameof(Project.OutlineSubmissionDeadline), entity.OutlineSubmissionDeadline ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(Project.OutlineOutcomeExpectedDate):
+                        result.Add(new SqlParameter(nameof(Project.OutlineOutcomeExpectedDate), entity.OutlineOutcomeExpectedDate ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(Project.FullSubmissionDeadline):
+                        result.Add(new SqlParameter(nameof(Project.FullSubmissionDeadline), entity.FullSubmissionDeadline ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(Project.FullOutcomeExpectedDate):
+                        result.Add(new SqlParameter(nameof(Project.FullOutcomeExpectedDate), entity.FullOutcomeExpectedDate ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(Project.MockInterviews):
+                        result.Add(new SqlParameter(nameof(Project.MockInterviews), entity.MockInterviews));
+                        break;
+                    case nameof(Project.GrantsmanshipReview):
+                        result.Add(new SqlParameter(nameof(Project.GrantsmanshipReview), entity.GrantsmanshipReview));
                         break;
                     case nameof(Project.DateOfRequest):
                         result.Add(new SqlParameter(nameof(Project.DateOfRequest), entity.DateOfRequest));
@@ -112,6 +133,9 @@ namespace Webfuel.Domain
                         break;
                     case nameof(Project.ProfessionalBackgroundFreeText):
                         result.Add(new SqlParameter(nameof(Project.ProfessionalBackgroundFreeText), entity.ProfessionalBackgroundFreeText));
+                        break;
+                    case nameof(Project.IsRoundRobinEnquiry):
+                        result.Add(new SqlParameter(nameof(Project.IsRoundRobinEnquiry), entity.IsRoundRobinEnquiry));
                         break;
                     case nameof(Project.TeamContactTitle):
                         result.Add(new SqlParameter(nameof(Project.TeamContactTitle), entity.TeamContactTitle));
@@ -230,6 +254,18 @@ namespace Webfuel.Domain
                     case nameof(Project.IsInternationalMultiSiteStudyId):
                         result.Add(new SqlParameter(nameof(Project.IsInternationalMultiSiteStudyId), entity.IsInternationalMultiSiteStudyId ?? (object?)DBNull.Value));
                         break;
+                    case nameof(Project.OutlineSubmissionStatusId):
+                        result.Add(new SqlParameter(nameof(Project.OutlineSubmissionStatusId), entity.OutlineSubmissionStatusId ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(Project.OutlineOutcomeId):
+                        result.Add(new SqlParameter(nameof(Project.OutlineOutcomeId), entity.OutlineOutcomeId ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(Project.FullSubmissionStatusId):
+                        result.Add(new SqlParameter(nameof(Project.FullSubmissionStatusId), entity.FullSubmissionStatusId ?? (object?)DBNull.Value));
+                        break;
+                    case nameof(Project.FullOutcomeId):
+                        result.Add(new SqlParameter(nameof(Project.FullOutcomeId), entity.FullOutcomeId ?? (object?)DBNull.Value));
+                        break;
                     case nameof(Project.IsFellowshipId):
                         result.Add(new SqlParameter(nameof(Project.IsFellowshipId), entity.IsFellowshipId ?? (object?)DBNull.Value));
                         break;
@@ -310,6 +346,7 @@ namespace Webfuel.Domain
                 yield return "SupportRequestId";
                 yield return "ClosureDate";
                 yield return "ClosureAttempted";
+                yield return "AdministratorComments";
                 yield return "SubmittedFundingStreamFreeText";
                 yield return "SubmittedFundingStreamName";
                 yield return "Locked";
@@ -321,6 +358,12 @@ namespace Webfuel.Domain
                 yield return "NumberOfProjectSites";
                 yield return "SocialCare";
                 yield return "PublicHealth";
+                yield return "OutlineSubmissionDeadline";
+                yield return "OutlineOutcomeExpectedDate";
+                yield return "FullSubmissionDeadline";
+                yield return "FullOutcomeExpectedDate";
+                yield return "MockInterviews";
+                yield return "GrantsmanshipReview";
                 yield return "DateOfRequest";
                 yield return "Title";
                 yield return "ApplicationStageFreeText";
@@ -335,6 +378,7 @@ namespace Webfuel.Domain
                 yield return "IsCTUAlreadyInvolvedFreeText";
                 yield return "ProfessionalBackgroundIds";
                 yield return "ProfessionalBackgroundFreeText";
+                yield return "IsRoundRobinEnquiry";
                 yield return "TeamContactTitle";
                 yield return "TeamContactFirstName";
                 yield return "TeamContactLastName";
@@ -374,6 +418,10 @@ namespace Webfuel.Domain
                 yield return "IsPaidRSSAdviserLeadId";
                 yield return "IsPaidRSSAdviserCoapplicantId";
                 yield return "IsInternationalMultiSiteStudyId";
+                yield return "OutlineSubmissionStatusId";
+                yield return "OutlineOutcomeId";
+                yield return "FullSubmissionStatusId";
+                yield return "FullOutcomeId";
                 yield return "IsFellowshipId";
                 yield return "ApplicationStageId";
                 yield return "ProposedFundingCallTypeId";
@@ -403,6 +451,7 @@ namespace Webfuel.Domain
                 yield return "SupportRequestId";
                 yield return "ClosureDate";
                 yield return "ClosureAttempted";
+                yield return "AdministratorComments";
                 yield return "SubmittedFundingStreamFreeText";
                 yield return "SubmittedFundingStreamName";
                 yield return "Locked";
@@ -414,6 +463,12 @@ namespace Webfuel.Domain
                 yield return "NumberOfProjectSites";
                 yield return "SocialCare";
                 yield return "PublicHealth";
+                yield return "OutlineSubmissionDeadline";
+                yield return "OutlineOutcomeExpectedDate";
+                yield return "FullSubmissionDeadline";
+                yield return "FullOutcomeExpectedDate";
+                yield return "MockInterviews";
+                yield return "GrantsmanshipReview";
                 yield return "DateOfRequest";
                 yield return "Title";
                 yield return "ApplicationStageFreeText";
@@ -428,6 +483,7 @@ namespace Webfuel.Domain
                 yield return "IsCTUAlreadyInvolvedFreeText";
                 yield return "ProfessionalBackgroundIds";
                 yield return "ProfessionalBackgroundFreeText";
+                yield return "IsRoundRobinEnquiry";
                 yield return "TeamContactTitle";
                 yield return "TeamContactFirstName";
                 yield return "TeamContactLastName";
@@ -467,6 +523,10 @@ namespace Webfuel.Domain
                 yield return "IsPaidRSSAdviserLeadId";
                 yield return "IsPaidRSSAdviserCoapplicantId";
                 yield return "IsInternationalMultiSiteStudyId";
+                yield return "OutlineSubmissionStatusId";
+                yield return "OutlineOutcomeId";
+                yield return "FullSubmissionStatusId";
+                yield return "FullOutcomeId";
                 yield return "IsFellowshipId";
                 yield return "ApplicationStageId";
                 yield return "ProposedFundingCallTypeId";
@@ -495,6 +555,7 @@ namespace Webfuel.Domain
                 yield return "SupportRequestId";
                 yield return "ClosureDate";
                 yield return "ClosureAttempted";
+                yield return "AdministratorComments";
                 yield return "SubmittedFundingStreamFreeText";
                 yield return "SubmittedFundingStreamName";
                 yield return "Locked";
@@ -506,6 +567,12 @@ namespace Webfuel.Domain
                 yield return "NumberOfProjectSites";
                 yield return "SocialCare";
                 yield return "PublicHealth";
+                yield return "OutlineSubmissionDeadline";
+                yield return "OutlineOutcomeExpectedDate";
+                yield return "FullSubmissionDeadline";
+                yield return "FullOutcomeExpectedDate";
+                yield return "MockInterviews";
+                yield return "GrantsmanshipReview";
                 yield return "DateOfRequest";
                 yield return "Title";
                 yield return "ApplicationStageFreeText";
@@ -520,6 +587,7 @@ namespace Webfuel.Domain
                 yield return "IsCTUAlreadyInvolvedFreeText";
                 yield return "ProfessionalBackgroundIds";
                 yield return "ProfessionalBackgroundFreeText";
+                yield return "IsRoundRobinEnquiry";
                 yield return "TeamContactTitle";
                 yield return "TeamContactFirstName";
                 yield return "TeamContactLastName";
@@ -559,6 +627,10 @@ namespace Webfuel.Domain
                 yield return "IsPaidRSSAdviserLeadId";
                 yield return "IsPaidRSSAdviserCoapplicantId";
                 yield return "IsInternationalMultiSiteStudyId";
+                yield return "OutlineSubmissionStatusId";
+                yield return "OutlineOutcomeId";
+                yield return "FullSubmissionStatusId";
+                yield return "FullOutcomeId";
                 yield return "IsFellowshipId";
                 yield return "ApplicationStageId";
                 yield return "ProposedFundingCallTypeId";
@@ -584,6 +656,8 @@ namespace Webfuel.Domain
         {
             entity.PrefixedNumber = entity.PrefixedNumber ?? String.Empty;
             entity.PrefixedNumber = entity.PrefixedNumber.Trim();
+            entity.AdministratorComments = entity.AdministratorComments ?? String.Empty;
+            entity.AdministratorComments = entity.AdministratorComments.Trim();
             entity.SubmittedFundingStreamFreeText = entity.SubmittedFundingStreamFreeText ?? String.Empty;
             entity.SubmittedFundingStreamFreeText = entity.SubmittedFundingStreamFreeText.Trim();
             entity.SubmittedFundingStreamName = entity.SubmittedFundingStreamName ?? String.Empty;
@@ -660,6 +734,7 @@ namespace Webfuel.Domain
         public static ProjectRepositoryValidator Validator { get; } = new ProjectRepositoryValidator();
         
         public const int PrefixedNumber_MaxLength = 128;
+        public const int AdministratorComments_MaxLength = 4000;
         public const int SubmittedFundingStreamFreeText_MaxLength = 128;
         public const int SubmittedFundingStreamName_MaxLength = 128;
         public const int Title_MaxLength = 1000;
@@ -701,6 +776,13 @@ namespace Webfuel.Domain
             ruleBuilder
                 .NotNull()
                 .MaximumLength(PrefixedNumber_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void AdministratorComments_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(AdministratorComments_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
         public static void SubmittedFundingStreamFreeText_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
@@ -954,6 +1036,7 @@ namespace Webfuel.Domain
         public ProjectRepositoryValidator()
         {
             RuleFor(x => x.PrefixedNumber).Use(ProjectMetadata.PrefixedNumber_ValidationRules);
+            RuleFor(x => x.AdministratorComments).Use(ProjectMetadata.AdministratorComments_ValidationRules);
             RuleFor(x => x.SubmittedFundingStreamFreeText).Use(ProjectMetadata.SubmittedFundingStreamFreeText_ValidationRules);
             RuleFor(x => x.SubmittedFundingStreamName).Use(ProjectMetadata.SubmittedFundingStreamName_ValidationRules);
             RuleFor(x => x.Title).Use(ProjectMetadata.Title_ValidationRules);

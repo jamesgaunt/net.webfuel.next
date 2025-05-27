@@ -79,6 +79,10 @@ namespace Webfuel.Domain
             {
                 sb.Append("Professional Background Free Text: ").Append(original.ProfessionalBackgroundFreeText).Append(" -> ").Append(updated.ProfessionalBackgroundFreeText).Append(delimiter);
             }
+            if(original.IsRoundRobinEnquiry != updated.IsRoundRobinEnquiry)
+            {
+                sb.Append("Is Round Robin Enquiry: ").Append(original.IsRoundRobinEnquiry).Append(" -> ").Append(updated.IsRoundRobinEnquiry).Append(delimiter);
+            }
             if(original.TeamContactTitle != updated.TeamContactTitle)
             {
                 sb.Append("Team Contact Title: ").Append(original.TeamContactTitle).Append(" -> ").Append(updated.TeamContactTitle).Append(delimiter);

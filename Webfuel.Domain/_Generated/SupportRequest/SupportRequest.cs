@@ -72,6 +72,9 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.ProfessionalBackgroundFreeText):
                         ProfessionalBackgroundFreeText = (string)value!;
                         break;
+                    case nameof(SupportRequest.IsRoundRobinEnquiry):
+                        IsRoundRobinEnquiry = (bool)value!;
+                        break;
                     case nameof(SupportRequest.TeamContactTitle):
                         TeamContactTitle = (string)value!;
                         break;
@@ -242,6 +245,7 @@ namespace Webfuel.Domain
         }
         string _ProfessionalBackgroundIdsJson = String.Empty;
         public string ProfessionalBackgroundFreeText  { get; set; } = String.Empty;
+        public bool IsRoundRobinEnquiry  { get; set; } = false;
         public string TeamContactTitle  { get; set; } = String.Empty;
         public string TeamContactFirstName  { get; set; } = String.Empty;
         public string TeamContactLastName  { get; set; } = String.Empty;
@@ -309,6 +313,7 @@ namespace Webfuel.Domain
             entity.IsCTUAlreadyInvolvedFreeText = IsCTUAlreadyInvolvedFreeText;
             entity.ProfessionalBackgroundIdsJson = ProfessionalBackgroundIdsJson;
             entity.ProfessionalBackgroundFreeText = ProfessionalBackgroundFreeText;
+            entity.IsRoundRobinEnquiry = IsRoundRobinEnquiry;
             entity.TeamContactTitle = TeamContactTitle;
             entity.TeamContactFirstName = TeamContactFirstName;
             entity.TeamContactLastName = TeamContactLastName;

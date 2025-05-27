@@ -45,6 +45,9 @@ namespace Webfuel.Domain
                     case nameof(ProjectSupport.SupportRequestedCompletedAt):
                         SupportRequestedCompletedAt = value == DBNull.Value ? (DateTimeOffset?)null : (DateTimeOffset?)value;
                         break;
+                    case nameof(ProjectSupport.SupportRequestedCompletedDate):
+                        SupportRequestedCompletedDate = value == DBNull.Value ? (DateOnly?)null : DateOnly.FromDateTime((DateTime)value!);
+                        break;
                     case nameof(ProjectSupport.SupportRequestedCompletedNotes):
                         SupportRequestedCompletedNotes = (string)value!;
                         break;
@@ -111,6 +114,7 @@ namespace Webfuel.Domain
         string _SupportProvidedIdsJson = String.Empty;
         public DateOnly? SupportRequestedAt  { get; set; } = null;
         public DateTimeOffset? SupportRequestedCompletedAt  { get; set; } = null;
+        public DateOnly? SupportRequestedCompletedDate  { get; set; } = null;
         public string SupportRequestedCompletedNotes  { get; set; } = String.Empty;
         public List<ProjectSupportFile> Files
         {
@@ -141,6 +145,7 @@ namespace Webfuel.Domain
             entity.SupportProvidedIdsJson = SupportProvidedIdsJson;
             entity.SupportRequestedAt = SupportRequestedAt;
             entity.SupportRequestedCompletedAt = SupportRequestedCompletedAt;
+            entity.SupportRequestedCompletedDate = SupportRequestedCompletedDate;
             entity.SupportRequestedCompletedNotes = SupportRequestedCompletedNotes;
             entity.FilesJson = FilesJson;
             entity.CalculatedMinutes = CalculatedMinutes;

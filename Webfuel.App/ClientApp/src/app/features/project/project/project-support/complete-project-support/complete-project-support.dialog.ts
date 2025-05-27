@@ -39,6 +39,7 @@ export class CompleteProjectSupportDialogComponent extends DialogComponentBase<P
 
   form = new FormGroup({
     id: new FormControl<string>('', { nonNullable: true }),
+    supportRequestedCompletedDate: new FormControl<string | null>(null),
     supportRequestedCompletedNotes: new FormControl<string>('', { nonNullable: true }),
   });
 

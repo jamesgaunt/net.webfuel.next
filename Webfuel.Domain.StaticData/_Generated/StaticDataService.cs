@@ -16,6 +16,12 @@ namespace Webfuel.Domain.StaticData
         Task<IReadOnlyList<Ethnicity>> SelectEthnicity();
         Task<Ethnicity?> GetEthnicity(Guid id);
         Task<Ethnicity> RequireEthnicity(Guid id);
+        Task<IReadOnlyList<FullOutcome>> SelectFullOutcome();
+        Task<FullOutcome?> GetFullOutcome(Guid id);
+        Task<FullOutcome> RequireFullOutcome(Guid id);
+        Task<IReadOnlyList<FullSubmissionStatus>> SelectFullSubmissionStatus();
+        Task<FullSubmissionStatus?> GetFullSubmissionStatus(Guid id);
+        Task<FullSubmissionStatus> RequireFullSubmissionStatus(Guid id);
         Task<IReadOnlyList<FundingBody>> SelectFundingBody();
         Task<FundingBody?> GetFundingBody(Guid id);
         Task<FundingBody> RequireFundingBody(Guid id);
@@ -70,6 +76,12 @@ namespace Webfuel.Domain.StaticData
         Task<IReadOnlyList<IsYesNo>> SelectIsYesNo();
         Task<IsYesNo?> GetIsYesNo(Guid id);
         Task<IsYesNo> RequireIsYesNo(Guid id);
+        Task<IReadOnlyList<OutlineOutcome>> SelectOutlineOutcome();
+        Task<OutlineOutcome?> GetOutlineOutcome(Guid id);
+        Task<OutlineOutcome> RequireOutlineOutcome(Guid id);
+        Task<IReadOnlyList<OutlineSubmissionStatus>> SelectOutlineSubmissionStatus();
+        Task<OutlineSubmissionStatus?> GetOutlineSubmissionStatus(Guid id);
+        Task<OutlineSubmissionStatus> RequireOutlineSubmissionStatus(Guid id);
         Task<IReadOnlyList<ProfessionalBackground>> SelectProfessionalBackground();
         Task<ProfessionalBackground?> GetProfessionalBackground(Guid id);
         Task<ProfessionalBackground> RequireProfessionalBackground(Guid id);
@@ -197,6 +209,36 @@ namespace Webfuel.Domain.StaticData
         public async Task<Ethnicity> RequireEthnicity(Guid id)
         {
             return (await GetStaticData()).Ethnicity.First(p => p.Id == id);
+        }
+        
+        public async Task<IReadOnlyList<FullOutcome>> SelectFullOutcome()
+        {
+            return (await GetStaticData()).FullOutcome;
+        }
+        
+        public async Task<FullOutcome?> GetFullOutcome(Guid id)
+        {
+            return (await GetStaticData()).FullOutcome.FirstOrDefault(p => p.Id == id);
+        }
+        
+        public async Task<FullOutcome> RequireFullOutcome(Guid id)
+        {
+            return (await GetStaticData()).FullOutcome.First(p => p.Id == id);
+        }
+        
+        public async Task<IReadOnlyList<FullSubmissionStatus>> SelectFullSubmissionStatus()
+        {
+            return (await GetStaticData()).FullSubmissionStatus;
+        }
+        
+        public async Task<FullSubmissionStatus?> GetFullSubmissionStatus(Guid id)
+        {
+            return (await GetStaticData()).FullSubmissionStatus.FirstOrDefault(p => p.Id == id);
+        }
+        
+        public async Task<FullSubmissionStatus> RequireFullSubmissionStatus(Guid id)
+        {
+            return (await GetStaticData()).FullSubmissionStatus.First(p => p.Id == id);
         }
         
         public async Task<IReadOnlyList<FundingBody>> SelectFundingBody()
@@ -467,6 +509,36 @@ namespace Webfuel.Domain.StaticData
         public async Task<IsYesNo> RequireIsYesNo(Guid id)
         {
             return (await GetStaticData()).IsYesNo.First(p => p.Id == id);
+        }
+        
+        public async Task<IReadOnlyList<OutlineOutcome>> SelectOutlineOutcome()
+        {
+            return (await GetStaticData()).OutlineOutcome;
+        }
+        
+        public async Task<OutlineOutcome?> GetOutlineOutcome(Guid id)
+        {
+            return (await GetStaticData()).OutlineOutcome.FirstOrDefault(p => p.Id == id);
+        }
+        
+        public async Task<OutlineOutcome> RequireOutlineOutcome(Guid id)
+        {
+            return (await GetStaticData()).OutlineOutcome.First(p => p.Id == id);
+        }
+        
+        public async Task<IReadOnlyList<OutlineSubmissionStatus>> SelectOutlineSubmissionStatus()
+        {
+            return (await GetStaticData()).OutlineSubmissionStatus;
+        }
+        
+        public async Task<OutlineSubmissionStatus?> GetOutlineSubmissionStatus(Guid id)
+        {
+            return (await GetStaticData()).OutlineSubmissionStatus.FirstOrDefault(p => p.Id == id);
+        }
+        
+        public async Task<OutlineSubmissionStatus> RequireOutlineSubmissionStatus(Guid id)
+        {
+            return (await GetStaticData()).OutlineSubmissionStatus.First(p => p.Id == id);
         }
         
         public async Task<IReadOnlyList<ProfessionalBackground>> SelectProfessionalBackground()

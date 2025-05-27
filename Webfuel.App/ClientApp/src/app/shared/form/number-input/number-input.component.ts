@@ -32,13 +32,16 @@ export class NumberInputComponent implements ControlValueAccessor, OnInit {
   @Input()
   placeholder = "";
 
+  @Input()
+  prefix = "";
+
   onFocus() {
     
   }
 
   onBlur(): void {
     var num = this.toNum(this.formControl.getRawValue());
-    this.formControl.setValue(_.formatNumber(num, 0))
+    this.formControl.setValue(this.toTxt(num))
     this.onChange(num);   
     this.onTouched();
   }
@@ -46,9 +49,14 @@ export class NumberInputComponent implements ControlValueAccessor, OnInit {
   // Helpers
 
   toTxt(value: any) {
-    if (value == null)
+    if (value === null)
       return null;
-    return _.formatNumber(_.parseNumber(value, false), 0);
+    var str = _.formatNumber(_.parseNumber(value, false), 0);
+
+    if (str && str.length > 0 && this.prefix)
+      str = this.prefix + str;
+
+    return str;
   }
 
   toNum(value: any) {

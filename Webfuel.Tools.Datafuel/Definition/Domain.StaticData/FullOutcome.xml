@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="FullOutcome" Tags="StaticData|Enum" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="c9dbd5ad-6c78-4773-a3a8-ce30412bb5dc" Name="Successful" />
+      <Row Id="6a59516c-9472-4c63-9611-f651bdbfcff2" Name="Not Funded" />
+      <Row Id="cd81994e-1bc1-4404-a023-eea57e3fd114" Name="Withdrawn" />
+      <Row Id="2b33d4c2-0340-4a57-9c75-203607fed107" Name="Unknown" />
+      <Row Id="f73be486-7d1d-4573-b76c-c0fda7cab4c5" Name="Not Submitted" />
+      <Row Id="ba13b285-2429-4952-8b79-fc515eeaccbf" Name="Not Applicable" />
+    </Data>
+  </Entity>
+</Schema>

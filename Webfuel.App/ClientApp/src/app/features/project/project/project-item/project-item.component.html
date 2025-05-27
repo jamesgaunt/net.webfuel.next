@@ -8,7 +8,6 @@
     <div class="column">
       <h1 class="title">Project {{ item.prefixedNumber }}</h1>
     </div>
-
   </div>
   <project-tabs></project-tabs>
   <div class="diagnostic-list message is-danger" *ngIf="item.diagnosticCount > 0">
@@ -17,6 +16,12 @@
     </div>
   </div>
   <form class="form" [formGroup]="form">
+    <div class="flex">
+      <div class="field is-12">
+        <label class="label">Working title of the project</label>
+        <input class="input" type="text" placeholder="required" formControlName="title" />
+      </div>
+    </div>
     <div class="flex no-margin">
       <div class="is-9">
         <div class="flex">
@@ -44,31 +49,9 @@
           </div>
         </div>
         <div class="flex">
-          <div class="field is-6">
-            <label class="label">Will this study use a CTU?</label>
-            <dropdown-select [dataSource]="staticDataCache.willStudyUseCTU" placeholder="required" formControlName="willStudyUseCTUId"></dropdown-select>
-          </div>
-          <div class="field is-6">
-            <label class="label">Monetary value of funding application</label>
-            <number-input placeholder="required" formControlName="monetaryValueOfFundingApplication" />
-          </div>
-        </div>
-        <div class="flex">
-          <div class="field is-6">
-            <label class="label">Funding stream submitted to</label>
-            <dropdown-select [dataSource]="staticDataCache.fundingStream" [freeTextControl]="form.controls.submittedFundingStreamFreeText" placeholder="required" formControlName="submittedFundingStreamId"></dropdown-select>
-          </div>
-          <div class="field is-6">
-            <label class="label">Funding stream name</label>
-            <input class="input" type="text" placeholder="optional" formControlName="submittedFundingStreamName" />
-          </div>
-        </div>
-        <div class="flex">
           <div class="field is-12">
-            <label class="label">
-              RSS hubs involved in providing advice (other than Imperial College London and Partners)
-            </label>
-            <dropdown-multi-select [dataSource]="staticDataCache.rssHub" placeholder="optional" formControlName="rssHubProvidingAdviceIds"></dropdown-multi-select>
+            <label class="label">Administrator Comments</label>
+            <text-area formControlName="administratorComments" placeholder="optional"></text-area>
           </div>
         </div>
       </div>
@@ -88,6 +71,34 @@
     </div>
     <div class="flex">
       <div class="field is-6">
+        <label class="label">Will this study use a CTU?</label>
+        <dropdown-select [dataSource]="staticDataCache.willStudyUseCTU" placeholder="required" formControlName="willStudyUseCTUId"></dropdown-select>
+      </div>
+      <div class="field is-6">
+        <label class="label">Monetary value of funding application</label>
+        <number-input placeholder="required" prefix="£" formControlName="monetaryValueOfFundingApplication" />
+      </div>
+    </div>
+    <div class="flex">
+      <div class="field is-6">
+        <label class="label">Funding stream submitted to</label>
+        <dropdown-select [dataSource]="staticDataCache.fundingStream" [freeTextControl]="form.controls.submittedFundingStreamFreeText" placeholder="required" formControlName="submittedFundingStreamId"></dropdown-select>
+      </div>
+      <div class="field is-6">
+        <label class="label">Funding stream name</label>
+        <input class="input" type="text" placeholder="optional" formControlName="submittedFundingStreamName" />
+      </div>
+    </div>
+    <div class="flex">
+      <div class="field is-12">
+        <label class="label">
+          RSS hubs involved in providing advice (other than Imperial College London and Partners)
+        </label>
+        <dropdown-multi-select [dataSource]="staticDataCache.rssHub" placeholder="optional" formControlName="rssHubProvidingAdviceIds"></dropdown-multi-select>
+      </div>
+    </div>
+    <div class="flex">
+      <div class="field is-6">
         <label class="label">Is a paid RSS staff member, who provided advice, the lead/co-lead for this application?</label>
         <dropdown-select [dataSource]="staticDataCache.isPaidRSSAdviserLead" placeholder="required" formControlName="isPaidRSSAdviserLeadId"></dropdown-select>
       </div>
@@ -96,6 +107,58 @@
         <dropdown-select [dataSource]="staticDataCache.isPaidRSSAdviserCoapplicant" placeholder="required" formControlName="isPaidRSSAdviserCoapplicantId"></dropdown-select>
       </div>
     </div>
+
+    <div class="flex">
+      <div class="is-6">
+        <div class="flex">
+          <div class="form-heading is-12">
+            <h2 style="margin-bottom: 0.5rem">Outline Application</h2>
+            <hr style="margin-top: 0" />
+          </div>
+          <div class="field is-inline is-12">
+            <label class="label">Outline submission deadline</label>
+            <date-picker placeholder="optional" formControlName="outlineSubmissionDeadline" [enableClear]="true"></date-picker>
+          </div>
+          <div class="field is-inline is-12">
+            <label class="label">Outline submission status</label>
+            <dropdown-select [dataSource]="staticDataCache.outlineSubmissionStatus" placeholder="optional" formControlName="outlineSubmissionStatusId"></dropdown-select>
+          </div>
+          <div class="field is-inline is-12">
+            <label class="label">Outline outcome expected</label>
+            <date-picker placeholder="optional" formControlName="outlineOutcomeExpectedDate" [enableClear]="true"></date-picker>
+          </div>
+          <div class="field is-inline is-12">
+            <label class="label">Outline outcome</label>
+            <dropdown-select [dataSource]="staticDataCache.outlineOutcome" placeholder="optional" formControlName="outlineOutcomeId"></dropdown-select>
+          </div>
+        </div>
+      </div>
+      <div class="is-6">
+        <div class="flex">
+          <div class="form-heading is-12">
+            <h2 style="margin-bottom: 0.5rem">Full Application</h2>
+            <hr style="margin-top: 0" />
+          </div>
+          <div class="field is-inline is-12">
+            <label class="label">Full submission deadline</label>
+            <date-picker placeholder="optional" formControlName="fullSubmissionDeadline" [enableClear]="true"></date-picker>
+          </div>
+          <div class="field is-inline is-12">
+            <label class="label">Full submission status</label>
+            <dropdown-select [dataSource]="staticDataCache.fullSubmissionStatus" placeholder="optional" formControlName="fullSubmissionStatusId"></dropdown-select>
+          </div>
+          <div class="field is-inline is-12">
+            <label class="label">Full outcome expected</label>
+            <date-picker placeholder="optional" formControlName="fullOutcomeExpectedDate" [enableClear]="true"></date-picker>
+          </div>
+          <div class="field is-inline is-12">
+            <label class="label">Full outcome</label>
+            <dropdown-select [dataSource]="staticDataCache.fullOutcome" placeholder="optional" formControlName="fullOutcomeId"></dropdown-select>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <hr />
     <h3>For Clinical Trial Submissions</h3>
     <div class="flex">
@@ -143,5 +206,6 @@
     &nbsp;&nbsp;
     <span style="opacity: 0.5">Checked {{ item.heartbeatExecutedAt | date: 'dd MMM yy HH:mm' }}.</span>
   </p>
+  <p *ngIf="isRoundRobinEnquiry()">Enquiry came via NIHR round robin link</p>
 </div>
 

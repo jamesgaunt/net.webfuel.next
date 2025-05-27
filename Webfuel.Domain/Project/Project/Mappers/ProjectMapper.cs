@@ -1,51 +1,56 @@
 ﻿using Riok.Mapperly.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Webfuel.Domain
+namespace Webfuel.Domain;
+
+internal static class ProjectMapper
 {
-    internal static class ProjectMapper
+    public static Project Apply(UpdateProject request, Project existing)
     {
-        public static Project Apply(UpdateProject request, Project existing)
-        {
-            var updated = existing.Copy();
-            Mapper.Apply(request, updated);
-            return updated;
-        }
-
-        public static Project Apply(UpdateProjectRequest request, Project existing)
-        {
-            var updated = existing.Copy();
-            Mapper.Apply(request, updated);
-            return updated;
-        }
-
-        public static Project Apply(UpdateProjectResearcher request, Project existing)
-        {
-            var updated = existing.Copy();
-            Mapper.Apply(request, updated);
-            return updated;
-        }
-
-        static ProjectMapperImpl Mapper => new ProjectMapperImpl();
+        var updated = existing.Copy();
+        Mapper.Apply(request, updated);
+        return updated;
     }
 
-    [Mapper]
-    internal partial class ProjectMapperImpl
+    public static Project Apply(UpdateProjectRequest request, Project existing)
     {
-        [MapperIgnoreTarget(nameof(Project.Id))]
-        [MapperIgnoreTarget(nameof(Project.StatusId))]
-        public partial void Apply(UpdateProject request, Project existing);
-
-        [MapperIgnoreTarget(nameof(Project.Id))]
-        [MapperIgnoreTarget(nameof(Project.StatusId))]
-        public partial void Apply(UpdateProjectRequest request, Project existing);
-
-        [MapperIgnoreTarget(nameof(Project.Id))]
-        [MapperIgnoreTarget(nameof(Project.StatusId))]
-        public partial void Apply(UpdateProjectResearcher request, Project existing);
+        var updated = existing.Copy();
+        Mapper.Apply(request, updated);
+        return updated;
     }
+
+    public static Project Apply(UpdateProjectResearcher request, Project existing)
+    {
+        var updated = existing.Copy();
+        Mapper.Apply(request, updated);
+        return updated;
+    }
+
+    public static Project Apply(UpdateProjectSupportSettings request, Project existing)
+    {
+        var updated = existing.Copy();
+        Mapper.Apply(request, updated);
+        return updated;
+    }
+
+    static ProjectMapperImpl Mapper => new ProjectMapperImpl();
+}
+
+[Mapper]
+internal partial class ProjectMapperImpl
+{
+    [MapperIgnoreTarget(nameof(Project.Id))]
+    [MapperIgnoreTarget(nameof(Project.StatusId))]
+    public partial void Apply(UpdateProject request, Project existing);
+
+    [MapperIgnoreTarget(nameof(Project.Id))]
+    [MapperIgnoreTarget(nameof(Project.StatusId))]
+    public partial void Apply(UpdateProjectRequest request, Project existing);
+
+    [MapperIgnoreTarget(nameof(Project.Id))]
+    [MapperIgnoreTarget(nameof(Project.StatusId))]
+    public partial void Apply(UpdateProjectResearcher request, Project existing);
+
+    [MapperIgnoreTarget(nameof(Project.Id))]
+    [MapperIgnoreTarget(nameof(Project.StatusId))]
+    public partial void Apply(UpdateProjectSupportSettings request, Project existing);
 }

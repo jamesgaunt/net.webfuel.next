@@ -4,6 +4,7 @@ import { DialogBase, DialogComponentBase } from '../../common/dialog-base';
 export interface ConfirmDialogData {
   title: string;
   message: string;
+  style?: string;
 }
 
 @Injectable()

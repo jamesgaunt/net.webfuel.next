@@ -36,6 +36,9 @@ namespace Webfuel.Domain
                     case nameof(Project.ClosureAttempted):
                         ClosureAttempted = (bool)value!;
                         break;
+                    case nameof(Project.AdministratorComments):
+                        AdministratorComments = (string)value!;
+                        break;
                     case nameof(Project.SubmittedFundingStreamFreeText):
                         SubmittedFundingStreamFreeText = (string)value!;
                         break;
@@ -68,6 +71,24 @@ namespace Webfuel.Domain
                         break;
                     case nameof(Project.PublicHealth):
                         PublicHealth = (bool)value!;
+                        break;
+                    case nameof(Project.OutlineSubmissionDeadline):
+                        OutlineSubmissionDeadline = value == DBNull.Value ? (DateOnly?)null : DateOnly.FromDateTime((DateTime)value!);
+                        break;
+                    case nameof(Project.OutlineOutcomeExpectedDate):
+                        OutlineOutcomeExpectedDate = value == DBNull.Value ? (DateOnly?)null : DateOnly.FromDateTime((DateTime)value!);
+                        break;
+                    case nameof(Project.FullSubmissionDeadline):
+                        FullSubmissionDeadline = value == DBNull.Value ? (DateOnly?)null : DateOnly.FromDateTime((DateTime)value!);
+                        break;
+                    case nameof(Project.FullOutcomeExpectedDate):
+                        FullOutcomeExpectedDate = value == DBNull.Value ? (DateOnly?)null : DateOnly.FromDateTime((DateTime)value!);
+                        break;
+                    case nameof(Project.MockInterviews):
+                        MockInterviews = (bool)value!;
+                        break;
+                    case nameof(Project.GrantsmanshipReview):
+                        GrantsmanshipReview = (bool)value!;
                         break;
                     case nameof(Project.DateOfRequest):
                         DateOfRequest = DateOnly.FromDateTime((DateTime)value!);
@@ -110,6 +131,9 @@ namespace Webfuel.Domain
                         break;
                     case nameof(Project.ProfessionalBackgroundFreeText):
                         ProfessionalBackgroundFreeText = (string)value!;
+                        break;
+                    case nameof(Project.IsRoundRobinEnquiry):
+                        IsRoundRobinEnquiry = (bool)value!;
                         break;
                     case nameof(Project.TeamContactTitle):
                         TeamContactTitle = (string)value!;
@@ -228,6 +252,18 @@ namespace Webfuel.Domain
                     case nameof(Project.IsInternationalMultiSiteStudyId):
                         IsInternationalMultiSiteStudyId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
+                    case nameof(Project.OutlineSubmissionStatusId):
+                        OutlineSubmissionStatusId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(Project.OutlineOutcomeId):
+                        OutlineOutcomeId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(Project.FullSubmissionStatusId):
+                        FullSubmissionStatusId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
+                    case nameof(Project.FullOutcomeId):
+                        FullOutcomeId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
                     case nameof(Project.IsFellowshipId):
                         IsFellowshipId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
@@ -285,6 +321,7 @@ namespace Webfuel.Domain
         public Guid? SupportRequestId  { get; set; } = null;
         public DateOnly? ClosureDate  { get; set; } = null;
         public bool ClosureAttempted  { get; set; } = false;
+        public string AdministratorComments  { get; set; } = String.Empty;
         public string SubmittedFundingStreamFreeText  { get; set; } = String.Empty;
         public string SubmittedFundingStreamName  { get; set; } = String.Empty;
         public bool Locked  { get; set; } = false;
@@ -307,6 +344,12 @@ namespace Webfuel.Domain
         public int? NumberOfProjectSites  { get; set; } = null;
         public bool SocialCare  { get; set; } = false;
         public bool PublicHealth  { get; set; } = false;
+        public DateOnly? OutlineSubmissionDeadline  { get; set; } = null;
+        public DateOnly? OutlineOutcomeExpectedDate  { get; set; } = null;
+        public DateOnly? FullSubmissionDeadline  { get; set; } = null;
+        public DateOnly? FullOutcomeExpectedDate  { get; set; } = null;
+        public bool MockInterviews  { get; set; } = false;
+        public bool GrantsmanshipReview  { get; set; } = false;
         public DateOnly DateOfRequest  { get; set; } = new DateOnly(1900, 1, 1);
         public string Title  { get; set; } = String.Empty;
         public string ApplicationStageFreeText  { get; set; } = String.Empty;
@@ -332,6 +375,7 @@ namespace Webfuel.Domain
         }
         string _ProfessionalBackgroundIdsJson = String.Empty;
         public string ProfessionalBackgroundFreeText  { get; set; } = String.Empty;
+        public bool IsRoundRobinEnquiry  { get; set; } = false;
         public string TeamContactTitle  { get; set; } = String.Empty;
         public string TeamContactFirstName  { get; set; } = String.Empty;
         public string TeamContactLastName  { get; set; } = String.Empty;
@@ -404,6 +448,10 @@ namespace Webfuel.Domain
         public Guid? IsPaidRSSAdviserLeadId { get; set; }
         public Guid? IsPaidRSSAdviserCoapplicantId { get; set; }
         public Guid? IsInternationalMultiSiteStudyId { get; set; }
+        public Guid? OutlineSubmissionStatusId { get; set; }
+        public Guid? OutlineOutcomeId { get; set; }
+        public Guid? FullSubmissionStatusId { get; set; }
+        public Guid? FullOutcomeId { get; set; }
         public Guid? IsFellowshipId { get; set; }
         public Guid? ApplicationStageId { get; set; }
         public Guid? ProposedFundingCallTypeId { get; set; }
@@ -429,6 +477,7 @@ namespace Webfuel.Domain
             entity.SupportRequestId = SupportRequestId;
             entity.ClosureDate = ClosureDate;
             entity.ClosureAttempted = ClosureAttempted;
+            entity.AdministratorComments = AdministratorComments;
             entity.SubmittedFundingStreamFreeText = SubmittedFundingStreamFreeText;
             entity.SubmittedFundingStreamName = SubmittedFundingStreamName;
             entity.Locked = Locked;
@@ -440,6 +489,12 @@ namespace Webfuel.Domain
             entity.NumberOfProjectSites = NumberOfProjectSites;
             entity.SocialCare = SocialCare;
             entity.PublicHealth = PublicHealth;
+            entity.OutlineSubmissionDeadline = OutlineSubmissionDeadline;
+            entity.OutlineOutcomeExpectedDate = OutlineOutcomeExpectedDate;
+            entity.FullSubmissionDeadline = FullSubmissionDeadline;
+            entity.FullOutcomeExpectedDate = FullOutcomeExpectedDate;
+            entity.MockInterviews = MockInterviews;
+            entity.GrantsmanshipReview = GrantsmanshipReview;
             entity.DateOfRequest = DateOfRequest;
             entity.Title = Title;
             entity.ApplicationStageFreeText = ApplicationStageFreeText;
@@ -454,6 +509,7 @@ namespace Webfuel.Domain
             entity.IsCTUAlreadyInvolvedFreeText = IsCTUAlreadyInvolvedFreeText;
             entity.ProfessionalBackgroundIdsJson = ProfessionalBackgroundIdsJson;
             entity.ProfessionalBackgroundFreeText = ProfessionalBackgroundFreeText;
+            entity.IsRoundRobinEnquiry = IsRoundRobinEnquiry;
             entity.TeamContactTitle = TeamContactTitle;
             entity.TeamContactFirstName = TeamContactFirstName;
             entity.TeamContactLastName = TeamContactLastName;
@@ -493,6 +549,10 @@ namespace Webfuel.Domain
             entity.IsPaidRSSAdviserLeadId = IsPaidRSSAdviserLeadId;
             entity.IsPaidRSSAdviserCoapplicantId = IsPaidRSSAdviserCoapplicantId;
             entity.IsInternationalMultiSiteStudyId = IsInternationalMultiSiteStudyId;
+            entity.OutlineSubmissionStatusId = OutlineSubmissionStatusId;
+            entity.OutlineOutcomeId = OutlineOutcomeId;
+            entity.FullSubmissionStatusId = FullSubmissionStatusId;
+            entity.FullOutcomeId = FullOutcomeId;
             entity.IsFellowshipId = IsFellowshipId;
             entity.ApplicationStageId = ApplicationStageId;
             entity.ProposedFundingCallTypeId = ProposedFundingCallTypeId;

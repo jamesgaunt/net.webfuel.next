@@ -127,4 +127,5 @@
     </div>
   </form>
   <p>Created {{ item.createdAt | date: 'dd MMM yy HH:mm'}}</p>
+  <p *ngIf="isRoundRobinEnquiry()">Enquiry came via NIHR round robin link</p>
 </div>

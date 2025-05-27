@@ -11,6 +11,7 @@ import { IsPrePostAwardEnum } from '../../../../../api/api.enums';
 import { CompleteProjectSupportDialog } from '../complete-project-support/complete-project-support.dialog';
 import { AttachProjectSupportFilesDialog } from 'shared/dialogs/attach-project-support-files/attach-project-support-files.dialog';
 import { ProjectSupportDialogComponentBase } from '../common/ProjectSupportDialogComponentBase';
+import { ConfigurationService } from 'core/configuration.service';
 
 export interface CreateProjectSupportDialogData {
   projectId: string
@@ -36,9 +37,17 @@ export class CreateProjectSupportDialogComponent extends ProjectSupportDialogCom
     private formService: FormService,
     public userApi: UserApi,
     public staticDataCache: StaticDataCache,
+    public configurationService: ConfigurationService
   ) {
     super();
     this.form.patchValue({ projectId: this.data.projectId });
+
+    this.configurationService.configuration.subscribe((config) => {
+      this.form.patchValue({
+        adviserIds: config?.userId == null ? [] : [config.userId],
+      });
+    });
+
   }
 
   form = new FormGroup({

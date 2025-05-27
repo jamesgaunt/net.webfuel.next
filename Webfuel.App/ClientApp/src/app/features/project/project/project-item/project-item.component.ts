@@ -1,6 +1,7 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Project, ProjectStatus } from 'api/api.types';
+import { ProjectStatusEnum } from 'api/api.enums';
 import { FormService } from 'core/form.service';
 import { ConfigurationService } from '../../../../core/configuration.service';
 import { ProjectComponentBase } from '../shared/project-component-base';
@@ -38,6 +39,10 @@ export class ProjectItemComponent extends ProjectComponentBase {
     return this.configurationService.hasClaim(p => p.claims.canUnlockProjects);
   }
 
+  isAdministrator() {
+    return this.configurationService.hasClaim(p => p.claims.administrator);
+  }
+
   filterStatus = (status: ProjectStatus) => {
     if (status.locked && !this.canUnlock())
       return false;
@@ -57,12 +62,21 @@ export class ProjectItemComponent extends ProjectComponentBase {
 
   protected clearLock() {
     this.form.enable();
+    if (!this.isAdministrator()) {
+      this.form.controls.administratorComments.disable();
+    }
+  }
+
+  isRoundRobinEnquiry() {
+    return this.form.getRawValue().isRoundRobinEnquiry;
   }
 
   form = new FormGroup({
     id: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     statusId: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     closureDate: new FormControl<string | null>(null),
+    administratorComments: new FormControl<string>('', { nonNullable: true }),
+    title: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
 
     willStudyUseCTUId: new FormControl<string | null>(null),
     isPaidRSSAdviserLeadId: new FormControl<string | null>(null),
@@ -76,6 +90,16 @@ export class ProjectItemComponent extends ProjectComponentBase {
 
     leadAdviserUserId: new FormControl<string | null>(null),
 
+    outlineSubmissionDeadline: new FormControl<string | null>(null),
+    outlineSubmissionStatusId: new FormControl<string | null>(null),
+    outlineOutcomeExpectedDate: new FormControl<string | null>(null),
+    outlineOutcomeId: new FormControl<string | null>(null),
+
+    fullSubmissionDeadline: new FormControl<string | null>(null),
+    fullSubmissionStatusId: new FormControl<string | null>(null),
+    fullOutcomeExpectedDate: new FormControl<string | null>(null),
+    fullOutcomeId: new FormControl<string | null>(null),
+
     projectStartDate: new FormControl<string | null>(null),
     recruitmentTarget: new FormControl<number | null>(null),
     numberOfProjectSites: new FormControl<number | null>(null),
@@ -85,6 +109,10 @@ export class ProjectItemComponent extends ProjectComponentBase {
     publicHealth: new FormControl<boolean>(false, { nonNullable: true }),
 
     projectAdviserUserIds: new FormControl<string[]>([], { nonNullable: true }),
+
+    // Misc
+
+    isRoundRobinEnquiry: new FormControl<boolean>(false, { nonNullable: true }),
   });
 
   save(close: boolean) {
@@ -92,9 +120,16 @@ export class ProjectItemComponent extends ProjectComponentBase {
       return;
 
     if (this.form.value.statusId != this.item.statusId) {
-      this.confirmDialog.open({ title: "Status Changing", message: "Are you sure you want to change the status of this project?" }).subscribe(() => {
-        this._save(close);
-      });
+
+      if ((this.form.value.statusId == ProjectStatusEnum.Closed || this.form.value.statusId == ProjectStatusEnum.ClosedNotSubmitted) && this.item.diagnosticCount > 0) {
+        this.confirmDialog.open({ title: "Closing project with open diagnostics", message: "Are you sure you want to close this project with open diagnostic issues?", style: "danger" }).subscribe(() => {
+          this._save(close);
+        });
+      } else {
+        this.confirmDialog.open({ title: "Status changing", message: "Are you sure you want to change the status of this project?" }).subscribe(() => {
+          this._save(close);
+        });
+      }
     }
     else { 
       this._save(close);

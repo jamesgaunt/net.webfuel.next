@@ -124,4 +124,86 @@ export class Day {
 
     return new Day(y, m, d);
   }
+
+static parseUKDate(input: string): string | null {
+  // Split by space, slash, or hyphen and filter out empty parts
+  const parts = input.trim().split(/[\s\/\-]+/).filter(part => part.length > 0);
+
+  if (parts.length !== 3) {
+    return null;
+  }
+
+  const [dayStr, monthStr, yearStr] = parts;
+
+  // Parse day
+  const day = parseInt(dayStr, 10);
+  if (isNaN(day) || day < 1 || day > 31) {
+    return null;
+  }
+
+  // Parse month
+  let month: number;
+  const monthLower = monthStr.toLowerCase();
+
+  // Check if it's a number
+  const monthNum = parseInt(monthStr, 10);
+  if (!isNaN(monthNum)) {
+    if (monthNum < 1 || monthNum > 12) {
+      return null;
+    }
+    month = monthNum;
+  } else {
+    // Month name mapping
+    const monthNames: { [key: string]: number } = {
+      'jan': 1, 'january': 1,
+      'feb': 2, 'february': 2,
+      'mar': 3, 'march': 3,
+      'apr': 4, 'april': 4,
+      'may': 5,
+      'jun': 6, 'june': 6,
+      'jul': 7, 'july': 7,
+      'aug': 8, 'august': 8,
+      'sep': 9, 'september': 9,
+      'oct': 10, 'october': 10,
+      'nov': 11, 'november': 11,
+      'dec': 12, 'december': 12
+    };
+
+    month = monthNames[monthLower];
+    if (!month) {
+      return null;
+    }
+  }
+
+  // Parse year
+  let year = parseInt(yearStr, 10);
+  if (isNaN(year)) {
+    return null;
+  }
+
+  // Handle 2-digit years (assume 21st century)
+  if (year >= 0 && year <= 99) {
+    year += 2000;
+  }
+
+  // Basic validation
+  if (year < 1000 || year > 9999) {
+    return null;
+  }
+
+  // Create date to validate day/month combination
+  const date = new Date(year, month - 1, day);
+  if (date.getFullYear() !== year ||
+    date.getMonth() !== month - 1 ||
+    date.getDate() !== day) {
+    return null;
+  }
+
+  // Format as yyyy-mm-dd
+  const formattedMonth = month.toString().padStart(2, '0');
+  const formattedDay = day.toString().padStart(2, '0');
+
+  return `${year}-${formattedMonth}-${formattedDay}`;
+}
+
 }

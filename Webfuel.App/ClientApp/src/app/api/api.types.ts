@@ -469,6 +469,8 @@ export interface IStaticDataModel {
     applicationStage: Array<ApplicationStage>;
     disability: Array<Disability>;
     ethnicity: Array<Ethnicity>;
+    fullOutcome: Array<FullOutcome>;
+    fullSubmissionStatus: Array<FullSubmissionStatus>;
     fundingBody: Array<FundingBody>;
     fundingCallType: Array<FundingCallType>;
     fundingStream: Array<FundingStream>;
@@ -487,6 +489,8 @@ export interface IStaticDataModel {
     isResubmission: Array<IsResubmission>;
     isTeamMembersConsulted: Array<IsTeamMembersConsulted>;
     isYesNo: Array<IsYesNo>;
+    outlineOutcome: Array<OutlineOutcome>;
+    outlineSubmissionStatus: Array<OutlineSubmissionStatus>;
     professionalBackground: Array<ProfessionalBackground>;
     professionalBackgroundDetail: Array<ProfessionalBackgroundDetail>;
     projectStatus: Array<ProjectStatus>;
@@ -551,6 +555,20 @@ export interface Ethnicity extends IStaticData {
     default: boolean;
     hidden: boolean;
     freeText: boolean;
+}
+
+export interface FullOutcome extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+}
+
+export interface FullSubmissionStatus extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
 }
 
 export interface FundingBody extends IStaticData {
@@ -683,6 +701,20 @@ export interface IsTeamMembersConsulted extends IStaticData {
 }
 
 export interface IsYesNo extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+}
+
+export interface OutlineOutcome extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+}
+
+export interface OutlineSubmissionStatus extends IStaticData {
     id: string;
     name: string;
     sortOrder: number;
@@ -925,6 +957,7 @@ export interface Project {
     supportRequestId: string | null | null;
     closureDate: string | null | null;
     closureAttempted: boolean;
+    administratorComments: string;
     submittedFundingStreamFreeText: string;
     submittedFundingStreamName: string;
     locked: boolean;
@@ -936,6 +969,12 @@ export interface Project {
     numberOfProjectSites: number | null | null;
     socialCare: boolean;
     publicHealth: boolean;
+    outlineSubmissionDeadline: string | null | null;
+    outlineOutcomeExpectedDate: string | null | null;
+    fullSubmissionDeadline: string | null | null;
+    fullOutcomeExpectedDate: string | null | null;
+    mockInterviews: boolean;
+    grantsmanshipReview: boolean;
     dateOfRequest: string;
     title: string;
     applicationStageFreeText: string;
@@ -950,6 +989,7 @@ export interface Project {
     isCTUAlreadyInvolvedFreeText: string;
     professionalBackgroundIds: Array<string>;
     professionalBackgroundFreeText: string;
+    isRoundRobinEnquiry: boolean;
     teamContactTitle: string;
     teamContactFirstName: string;
     teamContactLastName: string;
@@ -989,6 +1029,10 @@ export interface Project {
     isPaidRSSAdviserLeadId: string | null | null;
     isPaidRSSAdviserCoapplicantId: string | null | null;
     isInternationalMultiSiteStudyId: string | null | null;
+    outlineSubmissionStatusId: string | null | null;
+    outlineOutcomeId: string | null | null;
+    fullSubmissionStatusId: string | null | null;
+    fullOutcomeId: string | null | null;
     isFellowshipId: string | null | null;
     applicationStageId: string | null | null;
     proposedFundingCallTypeId: string | null | null;
@@ -1017,6 +1061,8 @@ export interface UpdateProject {
     id: string;
     statusId: string;
     closureDate: string | null | null;
+    administratorComments: string;
+    title: string;
     leadAdviserUserId: string | null | null;
     willStudyUseCTUId: string | null | null;
     isPaidRSSAdviserLeadId: string | null | null;
@@ -1026,6 +1072,14 @@ export interface UpdateProject {
     submittedFundingStreamId: string | null | null;
     submittedFundingStreamFreeText: string;
     submittedFundingStreamName: string;
+    outlineSubmissionDeadline: string | null | null;
+    outlineSubmissionStatusId: string | null | null;
+    outlineOutcomeExpectedDate: string | null | null;
+    outlineOutcomeId: string | null | null;
+    fullSubmissionDeadline: string | null | null;
+    fullSubmissionStatusId: string | null | null;
+    fullOutcomeExpectedDate: string | null | null;
+    fullOutcomeId: string | null | null;
     projectStartDate: string | null | null;
     recruitmentTarget: number | null | null;
     numberOfProjectSites: number | null | null;
@@ -1094,8 +1148,17 @@ export interface UpdateProjectResearcher {
     leadApplicantEthnicityId: string | null | null;
 }
 
+export interface UpdateProjectSupportSettings {
+    id: string;
+    mockInterviews: boolean;
+    grantsmanshipReview: boolean;
+}
+
 export interface UnlockProject {
     id: string;
+}
+
+export interface CreateTestProject {
 }
 
 export interface QueryProject extends Query {
@@ -1225,6 +1288,7 @@ export interface ProjectSupport {
     supportProvidedIds: Array<string>;
     supportRequestedAt: string | null | null;
     supportRequestedCompletedAt: string | null | null;
+    supportRequestedCompletedDate: string | null | null;
     supportRequestedCompletedNotes: string;
     files: Array<ProjectSupportFile>;
     calculatedMinutes: number;
@@ -1273,11 +1337,13 @@ export interface ResendProjectSupportNotification {
 
 export interface UpdateProjectSupportCompletion {
     id: string;
+    supportRequestedCompletedDate: string | null | null;
     supportRequestedCompletedNotes: string;
 }
 
 export interface CompleteProjectSupport {
     id: string;
+    supportRequestedCompletedDate: string | null | null;
     supportRequestedCompletedNotes: string;
 }
 
@@ -1475,6 +1541,7 @@ export interface SupportRequest {
     isCTUAlreadyInvolvedFreeText: string;
     professionalBackgroundIds: Array<string>;
     professionalBackgroundFreeText: string;
+    isRoundRobinEnquiry: boolean;
     teamContactTitle: string;
     teamContactFirstName: string;
     teamContactLastName: string;
@@ -1579,6 +1646,7 @@ export interface CreateSupportRequest {
     leadApplicantEthnicityId: string | null | null;
     wouldYouLikeToReceiveAGrantsmanshipReviewId: string | null | null;
     isYourSupportRequestOnlyForAGrantsmanshipReviewId: string | null | null;
+    isRoundRobinEnquiry: boolean;
 }
 
 export interface UpdateSupportRequest {
@@ -2075,6 +2143,24 @@ export interface QueryEthnicity extends Query {
     search?: string;
 }
 
+export interface QueryFullOutcome extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface QueryFullSubmissionStatus extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
 export interface CreateFundingBody {
     name: string;
     default: boolean;
@@ -2322,6 +2408,24 @@ export interface QueryIsTeamMembersConsulted extends Query {
 }
 
 export interface QueryIsYesNo extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface QueryOutlineOutcome extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
+export interface QueryOutlineSubmissionStatus extends Query {
     skip: number;
     take: number;
     projection?: Array<string>;

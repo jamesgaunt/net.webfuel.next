@@ -19,11 +19,17 @@
   <div *ngIf="items === null">
     <p>Loading...</p>
   </div>
-  <form *ngIf="items !== null" [formGroup]="filterForm">
-    <div style="padding: 0.5rem 0 0.5rem 0; display: flex; justify-content: flex-end">
-      <toggle-input label="Show open team support requests only" formControlName="openTeamSupportOnly" />
+  <div *ngIf="items !== null" >
+    <div style="padding: 0.5rem 0 0.5rem 0; display: flex;">
+      <span [formGroup]="form" style="display: flex">
+        <toggle-input label="Mock Interviews" formControlName="mockInterviews" />
+        <toggle-input label="Grantsmanship Review" formControlName="grantsmanshipReview" />
+      </span>
+      <span [formGroup]="filterForm" style="margin-left: auto;">
+        <toggle-input label="Show open team support requests only" formControlName="openTeamSupportOnly" />
+      </span>
     </div>
-  </form>
+  </div>
   <div *ngIf="items !== null && items.length == 0">
     <div class="message is-primary">
       No items to display
@@ -58,6 +64,9 @@
           <div *ngIf="projectSupport.supportRequestedCompletedAt === null" class="tag is-warning">open</div>
           <div *ngIf="projectSupport.supportRequestedCompletedAt !== null" class="tag is-success">complete</div>
           <b>Support requested from team: {{ (staticDataCache.supportTeam.get({ id: projectSupport.supportRequestedTeamId }) | async)?.name }}</b>
+          @if(projectSupport.supportRequestedCompletedDate){
+          <b style="margin-left: auto">Completed {{ projectSupport.supportRequestedCompletedDate | date: 'dd-MMM-yy' }}</b>
+          }
         </div>
         <pre *ngIf="projectSupport.supportRequestedCompletedNotes" class="card-narrative">{{ projectSupport.supportRequestedCompletedNotes }}</pre>
         <div class="card-buttons" *ngIf="!locked">
