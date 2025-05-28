@@ -30,6 +30,10 @@
         <input class="input" type="text" placeholder="required" formControlName="teamContactEmail" />
       </div>
       <div class="field is-4">
+        <label class="label">Alternative Email</label>
+        <input class="input" type="text" placeholder="optional" formControlName="teamContactAltEmail" maxlength="64" />
+      </div>
+      <div class="field is-4">
         <label class="label">Role in application</label>
         <dropdown-select [dataSource]="staticDataCache.researcherRole" [freeTextControl]="form.controls.teamContactRoleFreeText" placeholder="required" formControlName="teamContactRoleId"></dropdown-select>
       </div>
@@ -41,6 +45,11 @@
       <div class="field is-12">
         <div class="checkbox">
           <label><input type="checkbox" formControlName="teamContactPrivacyStatementRead" /> Please tick this checkbox to confirm you have read our privacy statement.</label>
+        </div>
+      </div>
+      <div class="field is-12">
+        <div class="checkbox">
+          <label><input type="checkbox" formControlName="teamContactServiceAgreementRead" /> Please tick this checkbox to confirm you have read our <a target="_blank" href="https://www.imperial.ac.uk/nihr-research-support-service/service-agreement/" class="link is-primary">service agreement <i class="fas fa-external-link"></i></a>.</label>
         </div>
       </div>
     </div>

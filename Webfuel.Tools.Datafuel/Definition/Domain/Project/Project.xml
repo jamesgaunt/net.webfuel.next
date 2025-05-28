@@ -93,10 +93,12 @@
     <Property Name="TeamContactFirstName" Type="meta:name" />
     <Property Name="TeamContactLastName" Type="meta:name" />
     <Property Name="TeamContactEmail" Type="meta:name" />
+    <Property Name="TeamContactAltEmail" Type="meta:name" />
     <Property Name="TeamContactRoleId" Type="ResearcherRole?" />
     <Property Name="TeamContactRoleFreeText" Type="meta:name" />
     <Property Name="TeamContactMailingPermission" Type="boolean" />
     <Property Name="TeamContactPrivacyStatementRead" Type="boolean" />
+    <Property Name="TeamContactServiceAgreementRead" Type="boolean" />
 
     <!-- Lead Applicant Details -->
 

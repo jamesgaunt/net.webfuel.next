@@ -1,79 +1,80 @@
 using MediatR;
 
-namespace Webfuel.Domain
+namespace Webfuel.Domain;
+
+public class UpdateSupportRequestResearcher : IRequest<SupportRequest>
 {
-    public class UpdateSupportRequestResearcher : IRequest<SupportRequest>
+    public required Guid Id { get; set; }
+
+    // Team Contact Details
+
+    public string TeamContactTitle { get; set; } = String.Empty;
+    public string TeamContactFirstName { get; set; } = String.Empty;
+    public string TeamContactLastName { get; set; } = String.Empty;
+    public string TeamContactEmail { get; set; } = String.Empty;
+    public string TeamContactAltEmail { get; set; } = String.Empty;
+    public Guid? TeamContactRoleId { get; set; }
+    public string TeamContactRoleFreeText { get; set; } = String.Empty;
+    public bool TeamContactMailingPermission { get; set; }
+    public bool TeamContactPrivacyStatementRead { get; set; }
+    public bool TeamContactServiceAgreementRead { get; set; }
+
+    // Lead Applicant Details
+
+    public string LeadApplicantTitle { get; set; } = String.Empty;
+    public string LeadApplicantFirstName { get; set; } = String.Empty;
+    public string LeadApplicantLastName { get; set; } = String.Empty;
+    public string LeadApplicantEmail { get; set; } = String.Empty;
+
+    public string LeadApplicantJobRole { get; set; } = String.Empty;
+    public string LeadApplicantCareerStage { get; set; } = String.Empty; // DEPRICATED
+    public Guid? LeadApplicantCareerStageId { get; set; } // 1.3
+    public Guid? LeadApplicantOrganisationTypeId { get; set; }
+    public string LeadApplicantOrganisation { get; set; } = String.Empty;
+    public string LeadApplicantDepartment { get; set; } = String.Empty;
+    public Guid? LeadApplicantLocationId { get; set; } // 1.3
+
+    public string LeadApplicantAddressLine1 { get; set; } = String.Empty;
+    public string LeadApplicantAddressLine2 { get; set; } = String.Empty;
+    public string LeadApplicantAddressTown { get; set; } = String.Empty;
+    public string LeadApplicantAddressCounty { get; set; } = String.Empty;
+    public string LeadApplicantAddressCountry { get; set; } = String.Empty;
+    public string LeadApplicantAddressPostcode { get; set; } = String.Empty;
+
+    public string LeadApplicantORCID { get; set; } = String.Empty;
+    public Guid? IsLeadApplicantNHSId { get; set; }
+
+    public Guid? LeadApplicantAgeRangeId { get; set; }
+    public Guid? LeadApplicantGenderId { get; set; }
+    public Guid? LeadApplicantEthnicityId { get; set; }
+
+}
+
+internal class UpdateSupportRequestResearcherHandler : IRequestHandler<UpdateSupportRequestResearcher, SupportRequest>
+{
+    private readonly ISupportRequestRepository _supportRequestRepository;
+    private readonly ISupportRequestChangeLogService _supportRequestChangeLogService;
+
+    public UpdateSupportRequestResearcherHandler(
+        ISupportRequestRepository supportRequestRepository,
+        ISupportRequestChangeLogService supportRequestChangeLogService)
     {
-        public required Guid Id { get; set; }
-
-        // Team Contact Details
-
-        public string TeamContactTitle { get; set; } = String.Empty;
-        public string TeamContactFirstName { get; set; } = String.Empty;
-        public string TeamContactLastName { get; set; } = String.Empty;
-        public string TeamContactEmail { get; set; } = String.Empty;
-        public Guid? TeamContactRoleId { get; set; }
-        public string TeamContactRoleFreeText { get; set; } = String.Empty;
-        public bool TeamContactMailingPermission { get; set; }
-        public bool TeamContactPrivacyStatementRead { get; set; }
-
-        // Lead Applicant Details
-
-        public string LeadApplicantTitle { get; set; } = String.Empty;
-        public string LeadApplicantFirstName { get; set; } = String.Empty;
-        public string LeadApplicantLastName { get; set; } = String.Empty;
-        public string LeadApplicantEmail { get; set; } = String.Empty;
-
-        public string LeadApplicantJobRole { get; set; } = String.Empty;
-        public string LeadApplicantCareerStage { get; set; } = String.Empty; // DEPRICATED
-        public Guid? LeadApplicantCareerStageId { get; set; } // 1.3
-        public Guid? LeadApplicantOrganisationTypeId { get; set; }
-        public string LeadApplicantOrganisation { get; set; } = String.Empty;
-        public string LeadApplicantDepartment { get; set; } = String.Empty;
-        public Guid? LeadApplicantLocationId { get; set; } // 1.3
-
-        public string LeadApplicantAddressLine1 { get; set; } = String.Empty;
-        public string LeadApplicantAddressLine2 { get; set; } = String.Empty;
-        public string LeadApplicantAddressTown { get; set; } = String.Empty;
-        public string LeadApplicantAddressCounty { get; set; } = String.Empty;
-        public string LeadApplicantAddressCountry { get; set; } = String.Empty;
-        public string LeadApplicantAddressPostcode { get; set; } = String.Empty;
-
-        public string LeadApplicantORCID { get; set; } = String.Empty;
-        public Guid? IsLeadApplicantNHSId { get; set; }
-
-        public Guid? LeadApplicantAgeRangeId { get; set; }
-        public Guid? LeadApplicantGenderId { get; set; }
-        public Guid? LeadApplicantEthnicityId { get; set; }
-
+        _supportRequestRepository = supportRequestRepository;
+        _supportRequestChangeLogService = supportRequestChangeLogService;
     }
 
-    internal class UpdateSupportRequestResearcherHandler : IRequestHandler<UpdateSupportRequestResearcher, SupportRequest>
+    public async Task<SupportRequest> Handle(UpdateSupportRequestResearcher request, CancellationToken cancellationToken)
     {
-        private readonly ISupportRequestRepository _supportRequestRepository;
-        private readonly ISupportRequestChangeLogService _supportRequestChangeLogService;
+        var original = await _supportRequestRepository.RequireSupportRequest(request.Id);
 
-        public UpdateSupportRequestResearcherHandler(
-            ISupportRequestRepository supportRequestRepository,
-            ISupportRequestChangeLogService supportRequestChangeLogService)
-        {
-            _supportRequestRepository = supportRequestRepository;
-            _supportRequestChangeLogService = supportRequestChangeLogService;
-        }
+        var updated = SupportRequestMapper.Apply(request, original);
 
-        public async Task<SupportRequest> Handle(UpdateSupportRequestResearcher request, CancellationToken cancellationToken)
-        {
-            var original = await _supportRequestRepository.RequireSupportRequest(request.Id);
+        updated.TeamContactFullName = $"{updated.TeamContactTitle} {updated.TeamContactFirstName} {updated.TeamContactLastName}";
+        updated.LeadApplicantFullName = $"{updated.LeadApplicantTitle} {updated.LeadApplicantFirstName} {updated.LeadApplicantLastName}";
 
-            var updated = SupportRequestMapper.Apply(request, original);
+        updated = await _supportRequestRepository.UpdateSupportRequest(original: original, updated: updated);
 
-            updated.TeamContactFullName = $"{updated.TeamContactTitle} {updated.TeamContactFirstName} {updated.TeamContactLastName}";
-            updated.LeadApplicantFullName = $"{updated.LeadApplicantTitle} {updated.LeadApplicantFirstName} {updated.LeadApplicantLastName}";
-
-            updated = await _supportRequestRepository.UpdateSupportRequest(original: original, updated: updated);
-
-            await _supportRequestChangeLogService.InsertChangeLog(original: original, updated: updated);
-            return updated;
-        }
+        await _supportRequestChangeLogService.InsertChangeLog(original: original, updated: updated);
+        return updated;
     }
 }

@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
-import { DeactivateService } from '../../core/deactivate.service';
 import { SupportRequestApi } from '../../api/support-request.api';
+import { DeactivateService } from '../../core/deactivate.service';
 
-import { SupportRequestListComponent } from './support-request/support-request-list/support-request-list.component';
-import { SupportRequestItemComponent } from './support-request/support-request-item/support-request-item.component';
 import { SupportRequestFilesComponent } from './support-request/support-request-files/support-request-files.component';
-import { SupportRequestResearcherComponent } from './support-request/support-request-researcher/support-request-researcher.component';
 import { SupportRequestHistoryComponent } from './support-request/support-request-history/support-request-history.component';
+import { SupportRequestItemComponent } from './support-request/support-request-item/support-request-item.component';
+import { SupportRequestListComponent } from './support-request/support-request-list/support-request-list.component';
+import { SupportRequestPrintoutComponent } from './support-request/support-request-printout/support-request-printout.component';
+import { SupportRequestResearcherComponent } from './support-request/support-request-researcher/support-request-researcher.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,12 @@ const routes: Routes = [
     canDeactivate: [DeactivateService.isPristine<SupportRequestItemComponent>()],
     data: { activeSideMenu: 'Triage' }
   },
+  {
+    path: 'support-request-printout/:id',
+    component: SupportRequestPrintoutComponent,
+    resolve: { supportRequest: SupportRequestApi.supportRequestResolver('id') },
+    data: { activeSideMenu: 'Triage' }
+  },  
   {
     path: 'support-request-researcher/:id',
     component: SupportRequestResearcherComponent,

@@ -42,10 +42,12 @@ public class CreateSupportRequest : IRequest<SupportRequest>
     public string TeamContactFirstName { get; set; } = String.Empty;
     public string TeamContactLastName { get; set; } = String.Empty;
     public string TeamContactEmail { get; set; } = String.Empty;
+    public string TeamContactAltEmail { get; set; } = String.Empty;
     public Guid? TeamContactRoleId { get; set; }
     public string TeamContactRoleFreeText { get; set; } = String.Empty;
     public bool TeamContactMailingPermission { get; set; }
     public bool TeamContactPrivacyStatementRead { get; set; }
+    public bool TeamContactServiceAgreementRead { get; set; }
 
     // Lead Applicant Details
 

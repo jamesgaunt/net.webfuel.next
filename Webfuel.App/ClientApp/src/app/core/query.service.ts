@@ -217,6 +217,9 @@ export class QueryService {
       case QueryOp.Equal:
         return field === value;
 
+      case QueryOp.NotEqual:
+        return field !== value;
+
       case QueryOp.GreaterThan:
         return field > value;
 

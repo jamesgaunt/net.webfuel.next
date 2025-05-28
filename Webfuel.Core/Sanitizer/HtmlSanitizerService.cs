@@ -1,55 +1,67 @@
 ﻿using HtmlAgilityPack;
 
-namespace Webfuel
+namespace Webfuel;
+
+public interface IHtmlSanitizerService
 {
-    public interface IHtmlSanitizerService
-    {
-        string SanitizeHtml(string html);
-    }
+    string SanitizeHtml(string html);
+}
 
-    [Service(typeof(IHtmlSanitizerService))]
-    internal class HtmlSanitizerService: IHtmlSanitizerService
+[Service(typeof(IHtmlSanitizerService))]
+internal class HtmlSanitizerService : IHtmlSanitizerService
+{
+    public string SanitizeHtml(string htmlText)
     {
-        public string SanitizeHtml(string htmlText)
+        var html = new HtmlDocument();
+        html.LoadHtml(htmlText);
+
+        var removeNodes = new List<HtmlNode>();
+
+        foreach (var node in html.DocumentNode.Descendants())
         {
-            var html = new HtmlDocument();
-            html.LoadHtml(htmlText);
-
-            var removeNodes = new List<HtmlNode>();
-
-            foreach(var node in html.DocumentNode.Descendants())
+            if (node.HasAttributes)
             {
-                if(node.HasAttributes)
-                {
-                    if(node.Attributes.Contains("style"))
-                        node.Attributes["style"].Remove();
-                    if (node.Attributes.Contains("class"))
-                        node.Attributes["class"].Remove();
-                }
+                if (node.Attributes.Contains("style"))
+                    node.Attributes["style"].Remove();
+                if (node.Attributes.Contains("class"))
+                    node.Attributes["class"].Remove();
+            }
 
-                if(node.Name == "script" || node.Name == "style" || node.Name == "img" || node.Name == "video")
+            if (node.Name == "script" || node.Name == "style" || node.Name == "img" || node.Name == "video")
+            {
+                removeNodes.Add(node);
+                continue;
+            }
+
+            if (node.Name == "p")
+            {
+                var innerText = node.InnerText.Trim();
+                if (string.IsNullOrWhiteSpace(innerText) || innerText == "&nbsp;")
                 {
                     removeNodes.Add(node);
-                    continue;
-                }
-                
-                if(node.Name == "p")
-                {
-                    var innerText = node.InnerText.Trim();
-                    if(string.IsNullOrWhiteSpace(innerText) || innerText == "&nbsp;")
-                    {
-                        removeNodes.Add(node);
-                    }
                 }
             }
 
-            foreach(var node in removeNodes)
+            if (node.Name == "a")
             {
-                node.Remove();
+                // Ensure links open in a new tab
+                if (node.Attributes.Contains("target"))
+                {
+                    node.Attributes["target"].Value = "_blank";
+                }
+                else
+                {
+                    node.Attributes.Add("target", "_blank");
+                }
             }
-
-            var result = html.DocumentNode.WriteTo().Trim();
-            return result;
         }
+
+        foreach (var node in removeNodes)
+        {
+            node.Remove();
+        }
+
+        var result = html.DocumentNode.WriteTo().Trim();
+        return result;
     }
 }

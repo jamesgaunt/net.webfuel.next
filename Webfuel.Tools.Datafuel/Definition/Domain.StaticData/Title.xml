@@ -14,7 +14,7 @@
       <Row Id="7a9b4dc0-57ff-48b8-973f-a45bae43c543" Name="Mrs" />
       <Row Id="1ccc5144-3c11-4471-9c4c-3ebed72ee21b" Name="Miss" />
       <Row Id="f2f0e4c8-88bb-4989-aff2-bea81f8923a5" Name="Ms"/>
-      <Row Id="25d07520-ad7d-41b1-97e8-bd5fb569bcc2" Name="Prof" />
+      <Row Id="25d07520-ad7d-41b1-97e8-bd5fb569bcc2" Name="Professor" />
       <Row Id="06c6d786-f1cf-4fbe-9d12-d2a37f365353" Name="Dr" />
     </Data>
   </Entity>

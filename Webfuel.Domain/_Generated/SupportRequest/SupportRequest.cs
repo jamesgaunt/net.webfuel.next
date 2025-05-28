@@ -87,6 +87,9 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.TeamContactEmail):
                         TeamContactEmail = (string)value!;
                         break;
+                    case nameof(SupportRequest.TeamContactAltEmail):
+                        TeamContactAltEmail = (string)value!;
+                        break;
                     case nameof(SupportRequest.TeamContactRoleFreeText):
                         TeamContactRoleFreeText = (string)value!;
                         break;
@@ -95,6 +98,9 @@ namespace Webfuel.Domain
                         break;
                     case nameof(SupportRequest.TeamContactPrivacyStatementRead):
                         TeamContactPrivacyStatementRead = (bool)value!;
+                        break;
+                    case nameof(SupportRequest.TeamContactServiceAgreementRead):
+                        TeamContactServiceAgreementRead = (bool)value!;
                         break;
                     case nameof(SupportRequest.LeadApplicantTitle):
                         LeadApplicantTitle = (string)value!;
@@ -250,9 +256,11 @@ namespace Webfuel.Domain
         public string TeamContactFirstName  { get; set; } = String.Empty;
         public string TeamContactLastName  { get; set; } = String.Empty;
         public string TeamContactEmail  { get; set; } = String.Empty;
+        public string TeamContactAltEmail  { get; set; } = String.Empty;
         public string TeamContactRoleFreeText  { get; set; } = String.Empty;
         public bool TeamContactMailingPermission  { get; set; } = false;
         public bool TeamContactPrivacyStatementRead  { get; set; } = false;
+        public bool TeamContactServiceAgreementRead  { get; set; } = false;
         public string LeadApplicantTitle  { get; set; } = String.Empty;
         public string LeadApplicantFirstName  { get; set; } = String.Empty;
         public string LeadApplicantLastName  { get; set; } = String.Empty;
@@ -318,9 +326,11 @@ namespace Webfuel.Domain
             entity.TeamContactFirstName = TeamContactFirstName;
             entity.TeamContactLastName = TeamContactLastName;
             entity.TeamContactEmail = TeamContactEmail;
+            entity.TeamContactAltEmail = TeamContactAltEmail;
             entity.TeamContactRoleFreeText = TeamContactRoleFreeText;
             entity.TeamContactMailingPermission = TeamContactMailingPermission;
             entity.TeamContactPrivacyStatementRead = TeamContactPrivacyStatementRead;
+            entity.TeamContactServiceAgreementRead = TeamContactServiceAgreementRead;
             entity.LeadApplicantTitle = LeadApplicantTitle;
             entity.LeadApplicantFirstName = LeadApplicantFirstName;
             entity.LeadApplicantLastName = LeadApplicantLastName;

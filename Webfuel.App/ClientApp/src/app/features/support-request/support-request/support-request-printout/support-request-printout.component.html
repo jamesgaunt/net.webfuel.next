@@ -1,0 +1,230 @@
+@if(item !== null && s !== null) {
+
+<div class="container">
+  <div class="columns noprint">
+    <div class="column">
+      <h1 class="title">Support Request Print View</h1>
+    </div>
+    <div class="column">
+      <div class="header-buttons">
+        <button class="button is-primary" (click)="print()">Print</button>
+        <button class="button is-primary" (click)="back()">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="printout">
+    <img src="https://www.webfuel.com/external/rss.png" alt="NIHR Research Support Service" style="width: 550px" />
+    <h1>Imperial College London and Partners Hub</h1>
+    <hr />
+    <h2>Research Support Service request form</h2>
+
+    <h2>Project Details</h2>
+    <p>Please tell us more about your project. Please complete all required fields, selecting 'Not Known' if necessary.</p>
+    <div class="field">
+      <label class="label">Working title of the project</label>
+      {{ item.title }}
+    </div>
+    <div class="field is-6">
+      <label class="label">Stage of application</label>
+      <div>{{ single(item.applicationStageId, s.applicationStage) }}</div>
+      <div>{{ item.applicationStageFreeText }}</div>
+    </div>
+    <div class="field is-6">
+      <label class="label">Is this application for a fellowship?</label>
+      <div>{{ single(item.isFellowshipId, s.isFellowship) }}</div>
+    </div>
+    <div class="field is-6">
+      <label class="label">Proposed funding stream</label>
+      <div>{{ single(item.proposedFundingStreamId, s.fundingStream) }}</div>
+    </div>
+    <div class="field is-6">
+      <label class="label">Funding stream name / specialist call if known</label>
+      <div>{{ item.proposedFundingStreamName }}</div>
+    </div>
+    <div class="field is-6">
+      <label class="label">Type of call</label>
+      <div>{{ single(item.proposedFundingCallTypeId, s.fundingCallType) }}</div>
+    </div>
+    <div class="field is-6">
+      <label class="label">NIHR application ID if known</label>
+      <div>{{ item.nihrApplicationId }}</div>
+    </div>
+    <div class="field is-6">
+      <label class="label">Target submission date (if known)</label>
+      <div>{{ item.targetSubmissionDate | date : "dd MMM yyy" }}</div>
+    </div>
+    <div class="field is-6">
+      <label class="label">Have your team members been consulted for support?</label>
+      <div>{{ single(item.isTeamMembersConsultedId, s.isTeamMembersConsulted) }}</div>
+    </div>
+    <div class="field is-6">
+      <label class="label">Has the application or similar been submitted to a funder before?</label>
+      <div>{{ single(item.isResubmissionId, s.isResubmission) }}</div>
+    </div>
+    <div class="field is-6">
+      <label class="label">Have you already got a CTU involved and if so which one?</label>
+      <div>{{ single(item.isCTUAlreadyInvolvedId, s.isCTUAlreadyInvolved) }}</div>
+      <div>{{ item.isCTUAlreadyInvolvedFreeText }}</div>
+    </div>
+    <div class="field is-6">
+      <label class="label">How did you hear about our hub?</label>
+      <div>{{ single(item.howDidYouFindUsId, s.howDidYouFindUs) }}</div>
+      <div>{{ item.howDidYouFindUsFreeText }}</div>
+    </div>
+    <div class="field">
+      <label class="label">What is your (or the CIs) experience of securing funding awards?</label>
+      <div>{{ item.experienceOfResearchAwards }}</div>
+    </div>
+    <div class="field">
+      <label class="label">
+        Please add a brief description of your proposed study. Where possible include an outline of research question, aims, need and methods (you can
+        also upload additional information below). [max 500 words]
+      </label>
+      <div>{{ item.briefDescription }}</div>
+    </div>
+    <div class="field">
+      <label class="label">
+        What support are you looking for from RSS? Eg funding advice, methods advice, PPIE and EDI advice, CTU support, training in methods for
+        grants, plain english summary review?
+        <br /><i>* If you are requesting a grantsmanship review as a standalone service, please state ‘grantsmanship review service’ below.</i>
+      </label>
+      <div>{{ item.supportRequested }}</div>
+    </div>
+    <div class="field">
+      <label class="label"> Who else is on your study team and what is their expertise? </label>
+      <div>{{ item.whoElseIsOnTheStudyTeam }}</div>
+    </div>
+    <div class="field">
+      <label class="label">What is the professional background of all team/applicants? (select all that apply)</label>
+      <div>{{ multiple(item.professionalBackgroundIds, s.professionalBackground) }}</div>
+      <div>{{ item.professionalBackgroundFreeText }}</div>
+    </div>
+    <div class="field is-6">
+      <label class="label">Would you like to receive a grantsmanship review?</label>
+      <div>{{ single(item.wouldYouLikeToReceiveAGrantsmanshipReviewId, s.isYesNo) }}</div>
+    </div>
+    <div class="field is-6">
+      <label class="label">Is your support request only for a grantsmanship review?</label>
+      <div>{{ single(item.isYourSupportRequestOnlyForAGrantsmanshipReviewId, s.isYesNo) }}</div>
+    </div>
+
+    <!-- Team Contact Details -->
+    <hr class="external-form-divider" />
+    <h2>Contact Details</h2>
+    <p>Please enter the details for the person we will contact regarding this project (this may or may not be the chief investigator).</p>
+    <div class="field">
+      <label class="label">Title</label>
+      <div>{{ item.teamContactTitle }}</div>
+    </div>
+    <div class="field">
+      <label class="label">First name</label>
+      <div>{{ item.teamContactFirstName }}</div>
+    </div>
+    <div class="field">
+      <label class="label">Last name</label>
+      <div>{{ item.teamContactLastName }}</div>
+    </div>
+    <div class="field">
+      <label class="label">Email</label>
+      <div>{{ item.teamContactEmail }}</div>
+    </div>
+    <div class="field">
+      <label class="label">Alternative Email</label>
+      <div>{{ item.teamContactAltEmail }}</div>
+    </div>
+    <div class="field">
+      <label class="label">Role in application</label>
+      <div>{{ single(item.teamContactRoleId, s.researcherRole) }}</div>
+      <div>{{ item.teamContactRoleFreeText }}</div>
+    </div>
+
+    <!-- Lead Applicant Details -->
+    <hr class="external-form-divider" />
+    <h2>Chief Investigator / Fellowship Applicant / Lead Applicant Details</h2>
+    <p>
+      Please enter the details for the chief investigator for this project. If you are not a CI (i.e, you are an applicant from a company), please add
+      the lead applicant’s name and details here.
+    </p>
+    <div class="field">
+      <label class="label">Title</label>
+      <div>{{ item.leadApplicantTitle }}</div>
+    </div>
+    <div class="field">
+      <label class="label">First name</label>
+      <div>{{ item.leadApplicantFirstName }}</div>
+    </div>
+    <div class="field">
+      <label class="label">Last name</label>
+      <div>{{ item.leadApplicantLastName }}</div>
+    </div>
+    <div class="field">
+      <label class="label">Email</label>
+      <div>{{ item.leadApplicantEmail }}</div>
+    </div>
+    <div class="field">
+      <label class="label">Job Role</label>
+      <div>{{ item.leadApplicantJobRole }}</div>
+    </div>
+    <div class="field">
+      <label class="label">Career Stage</label>
+      <div>{{ single(item.leadApplicantCareerStageId, s.researcherCareerStage) }}</div>
+    </div>
+    <div class="field">
+      <label class="label">Organisation Type</label>
+      <div>{{ single(item.leadApplicantOrganisationTypeId, s.researcherOrganisationType) }}</div>
+    </div>
+    <div class="field">
+      <label class="label">Organisation</label>
+      <div>{{ item.leadApplicantOrganisation }}</div>
+    </div>
+    <div class="field">
+      <label class="label">Department</label>
+      <div>{{ item.leadApplicantDepartment }}</div>
+    </div>
+    <div class="field">
+      <label class="label">ORCID</label>
+      <div>{{ item.leadApplicantORCID }}</div>
+    </div>
+    <div class="field">
+      <label class="label">Where are they located?</label>
+      <div>{{ single(item.leadApplicantLocationId, s.researcherLocation) }}</div>
+    </div>
+    <div class="field">
+      <label class="label">Is the chief investigator / fellowship applicant an NHS employee seeking RSS support for the first time? </label>
+      <div>{{ single(item.isLeadApplicantNHSId, s.isLeadApplicantNHS) }}</div>
+    </div>
+    <div class="is-6">
+      <h3>Work Address</h3>
+      <div class="field">
+        <label class="label">Line 1</label>
+        <div>{{ item.leadApplicantAddressLine1 }}</div>
+      </div>
+      <div class="field">
+        <label class="label">Line 2</label>
+        <div>{{ item.leadApplicantAddressLine2 }}</div>
+      </div>
+      <div class="field">
+        <label class="label">Town/City</label>
+        <div>{{ item.leadApplicantAddressTown }}</div>
+      </div>
+      <div class="field">
+        <label class="label">County</label>
+        <div>{{ item.leadApplicantAddressCounty }}</div>
+      </div>
+      <div class="field">
+        <label class="label">Country</label>
+        <div>{{ item.leadApplicantAddressCountry }}</div>
+      </div>
+      <div class="field">
+        <label class="label">Postcode</label>
+        <div>{{ item.leadApplicantAddressPostcode }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+} @else {
+<div class="container">
+  <p>Loading...</p>
+</div>
+}

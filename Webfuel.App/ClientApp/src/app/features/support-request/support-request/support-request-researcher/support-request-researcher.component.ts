@@ -45,10 +45,12 @@ export class SupportRequestResearcherComponent extends SupportRequestComponentBa
     teamContactFirstName: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     teamContactLastName: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     teamContactEmail: new FormControl<string>('', { validators: [Validators.required, Validators.email], nonNullable: true }),
+    teamContactAltEmail: new FormControl<string>('', { validators: [Validators.email], nonNullable: true }),
     teamContactRoleId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
     teamContactRoleFreeText: new FormControl<string>('', { nonNullable: true }),
     teamContactMailingPermission: new FormControl<boolean>(false, { validators: [Validators.requiredTrue], nonNullable: true }),
     teamContactPrivacyStatementRead: new FormControl<boolean>(false, { validators: [Validators.requiredTrue], nonNullable: true }),
+    teamContactServiceAgreementRead: new FormControl<boolean>(false, { validators: [Validators.requiredTrue], nonNullable: true }),
 
     // Lead Applicant Details
 

@@ -101,6 +101,10 @@ export class SupportRequestItemComponent extends SupportRequestComponentBase {
     this.router.navigate(['support-request/support-request-list']);
   }
 
+  printout() {
+    this.router.navigate(['support-request/support-request-printout', this.item.id]);
+  }
+
   triage() {
 
     if (!this.form.pristine) {

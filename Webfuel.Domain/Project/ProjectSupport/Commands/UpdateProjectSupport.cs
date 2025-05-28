@@ -108,7 +108,10 @@ internal class UpdateProjectSupportHandler : IRequestHandler<UpdateProjectSuppor
         }
 
         if (sendTeamSupportRequestedEmail)
-            await _projectAdviserService.SendTeamSupportRequestedEmail(project: project, supportTeamId: updated.SupportRequestedTeamId!.Value);
+            await _projectAdviserService.SendTeamSupportRequestedEmail(
+                project: project,
+                supportTeamId: updated.SupportRequestedTeamId!.Value,
+                requestingTeamId: updated.TeamIds.FirstOrDefault());
 
         TeamSupportProvider.FlushSupportMetrics();
         TeamActivityProvider.FlushTeamActivityMetrics();

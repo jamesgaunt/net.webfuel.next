@@ -50,10 +50,10 @@ internal class ProjectReportProvider : IProjectReportProvider
                 // Project
 
                 builder.Add(Guid.Parse("82b05021-9512-4217-9e71-bb0bc9bc8384"), "Number", p => p.Number);
-                builder.Add(Guid.Parse("c3b0b5a0-5b1a-4b7e-9b9a-0b6b8b8b6b8b"), "Prefixed Number", p => p.PrefixedNumber);
+                builder.Add(Guid.Parse("c3b0b5a0-5b1a-4b7e-9b9a-0b6b8b8b6b8b"), "Project Reference Number", p => p.PrefixedNumber);
                 builder.Map<ProjectStatus>(Guid.Parse("10a8218f-9de8-4835-930f-3c0f06bdbcfa"), "Status", p => p.StatusId);
 
-                builder.Add(Guid.Parse("cbeb9e2d-59a2-4896-a3c5-01c5c2aa42c7"), "Title", p => p.Title);
+                builder.Add(Guid.Parse("cbeb9e2d-59a2-4896-a3c5-01c5c2aa42c7"), "Project Title", p => p.Title);
                 builder.Add(Guid.Parse("edde730a-8424-4415-b23c-29c4ae3e36b8"), "Date of Request", p => p.DateOfRequest);
                 builder.Add(Guid.Parse("f64ac394-a697-4f22-92cc-274571bc65ae"), "Closure Date", p => p.ClosureDate);
                 builder.Map<User>(Guid.Parse("9228be1d-1a09-4be6-b90f-67bc7b54427c"), "Lead Adviser", p => p.LeadAdviserUserId);
@@ -67,7 +67,7 @@ internal class ProjectReportProvider : IProjectReportProvider
                 builder.Map<ApplicationStage>(Guid.Parse("c27f4e67-a50a-4790-87f8-997cf08ac433"), "Application Stage", p => p.ApplicationStageId);
                 builder.Map<IsFellowship>(Guid.Parse("67ee92ce-717f-4e0f-b48d-d3dba338c753"), "Is this application for a fellowship?", p => p.IsFellowshipId);
                 builder.Map<FundingStream>(Guid.Parse("24e35fc4-f213-4ec2-9074-1339e3299dc8"), "Proposed Funding Stream", p => p.ProposedFundingStreamId);
-                builder.Add(Guid.Parse("9878cca6-801c-45a5-9413-a2b27d624761"), "Propose Funding Stream Name", p => p.ProposedFundingStreamName);
+                builder.Add(Guid.Parse("9878cca6-801c-45a5-9413-a2b27d624761"), "Proposed Funding Stream Name", p => p.ProposedFundingStreamName);
                 builder.Map<FundingCallType>(Guid.Parse("0c3869d3-337b-4fee-a3f4-b2bbe9df2a08"), "Proposed Funding Call Type", p => p.ProposedFundingCallTypeId);
                 builder.Add(Guid.Parse("b117a9e0-9815-47d5-9332-0174c8563303"), "Target Submission Date", p => p.TargetSubmissionDate);
                 builder.Map<IsTeamMembersConsulted>(Guid.Parse("6517bfed-790f-4987-8b75-67a8fdfe30f0"), "Have your team members been consulted for support?", p => p.IsTeamMembersConsultedId);

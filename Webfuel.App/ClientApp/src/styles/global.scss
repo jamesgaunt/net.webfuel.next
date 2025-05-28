@@ -1,4 +1,4 @@
-@import 'config.scss';
+@import "config.scss";
 
 html {
   font-size: 100%;
@@ -22,6 +22,12 @@ html {
   }
 }
 
+@media print {
+  .noprint {
+    display: none !important;
+  }
+}
+
 body {
   color: var(--palette-text);
   font-family: var(--font-family);
@@ -32,21 +38,22 @@ body {
   min-height: 100vh;
 }
 
-a, button {
-    cursor: pointer;
+a,
+button {
+  cursor: pointer;
 }
 
 .nowrap {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 p {
-    margin: 0;
-    line-height: 1.6em;
+  margin: 0;
+  line-height: 1.6em;
 }
 
 p + p {
-    margin-top: var(--gap);
+  margin-top: var(--gap);
 }
 
 ::placeholder {
@@ -55,7 +62,7 @@ p + p {
 }
 
 .cdk-overlay-dark-backdrop {
-  background: rgba(0,0,0,0);
+  background: rgba(0, 0, 0, 0);
 }
 
 @media (max-width: $breakpoint-sm) {
@@ -63,4 +70,3 @@ p + p {
     display: none !important;
   }
 }
-

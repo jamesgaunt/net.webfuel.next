@@ -163,6 +163,10 @@ namespace Webfuel.Domain
             {
                 sb.Append("Team Contact Email: ").Append(original.TeamContactEmail).Append(" -> ").Append(updated.TeamContactEmail).Append(delimiter);
             }
+            if(original.TeamContactAltEmail != updated.TeamContactAltEmail)
+            {
+                sb.Append("Team Contact Alt Email: ").Append(original.TeamContactAltEmail).Append(" -> ").Append(updated.TeamContactAltEmail).Append(delimiter);
+            }
             if(original.TeamContactRoleFreeText != updated.TeamContactRoleFreeText)
             {
                 sb.Append("Team Contact Role Free Text: ").Append(original.TeamContactRoleFreeText).Append(" -> ").Append(updated.TeamContactRoleFreeText).Append(delimiter);
@@ -174,6 +178,10 @@ namespace Webfuel.Domain
             if(original.TeamContactPrivacyStatementRead != updated.TeamContactPrivacyStatementRead)
             {
                 sb.Append("Team Contact Privacy Statement Read: ").Append(original.TeamContactPrivacyStatementRead).Append(" -> ").Append(updated.TeamContactPrivacyStatementRead).Append(delimiter);
+            }
+            if(original.TeamContactServiceAgreementRead != updated.TeamContactServiceAgreementRead)
+            {
+                sb.Append("Team Contact Service Agreement Read: ").Append(original.TeamContactServiceAgreementRead).Append(" -> ").Append(updated.TeamContactServiceAgreementRead).Append(delimiter);
             }
             if(original.LeadApplicantTitle != updated.LeadApplicantTitle)
             {

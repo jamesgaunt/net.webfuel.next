@@ -8,10 +8,6 @@ namespace Webfuel.Domain.StaticData
 {
     internal partial interface IRSSHubRepository
     {
-        Task<RSSHub> InsertRSSHub(RSSHub entity, RepositoryCommandBuffer? commandBuffer = null);
-        Task<RSSHub> UpdateRSSHub(RSSHub entity, RepositoryCommandBuffer? commandBuffer = null);
-        Task<RSSHub> UpdateRSSHub(RSSHub updated, RSSHub original, RepositoryCommandBuffer? commandBuffer = null);
-        Task DeleteRSSHub(Guid key, RepositoryCommandBuffer? commandBuffer = null);
         Task<QueryResult<RSSHub>> QueryRSSHub(Query query, bool selectItems = true, bool countTotal = true);
         Task<RSSHub?> GetRSSHub(Guid id);
         Task<RSSHub> RequireRSSHub(Guid id);
@@ -29,34 +25,6 @@ namespace Webfuel.Domain.StaticData
         public RSSHubRepository(IRepositoryConnection connection)
         {
             _connection = connection;
-        }
-        public async Task<RSSHub> InsertRSSHub(RSSHub entity, RepositoryCommandBuffer? commandBuffer = null)
-        {
-            if (entity.Id == Guid.Empty) entity.Id = GuidGenerator.NewComb();
-            RSSHubMetadata.Validate(entity);
-            var sql = RSSHubMetadata.InsertSQL();
-            var parameters = RSSHubMetadata.ExtractParameters(entity, RSSHubMetadata.InsertProperties);
-            await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
-            return entity;
-        }
-        public async Task<RSSHub> UpdateRSSHub(RSSHub entity, RepositoryCommandBuffer? commandBuffer = null)
-        {
-            RSSHubMetadata.Validate(entity);
-            var sql = RSSHubMetadata.UpdateSQL();
-            var parameters = RSSHubMetadata.ExtractParameters(entity, RSSHubMetadata.UpdateProperties);
-            await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
-            return entity;
-        }
-        public async Task<RSSHub> UpdateRSSHub(RSSHub updated, RSSHub original, RepositoryCommandBuffer? commandBuffer = null)
-        {
-            await UpdateRSSHub(updated, commandBuffer);
-            return updated;
-        }
-        public async Task DeleteRSSHub(Guid id, RepositoryCommandBuffer? commandBuffer = null)
-        {
-            var sql = RSSHubMetadata.DeleteSQL();
-            var parameters = new List<SqlParameter> { new SqlParameter { ParameterName = "@Id", Value = id } };
-            await _connection.ExecuteNonQuery(sql, parameters, commandBuffer);
         }
         public async Task<QueryResult<RSSHub>> QueryRSSHub(Query query, bool selectItems = true, bool countTotal = true)
         {

@@ -20,8 +20,8 @@
       <Row Id="df91de28-7df4-4197-9efb-8406c14c68f1" Name="SME" />
 
       <!-- To Remove -->
-      <Row Id="2cb81746-1162-4f0d-8ae9-f85ab9dbe3d8" Name="Combined NHS &amp; University" />
-      <Row Id="14cab66e-a10a-4cc9-9b4a-a41d71cf49a4" Name="Other" FreeText="true" />
+      <Row Id="2cb81746-1162-4f0d-8ae9-f85ab9dbe3d8" Name="Combined NHS &amp; University" Hidden="true" />
+      <Row Id="14cab66e-a10a-4cc9-9b4a-a41d71cf49a4" Name="Other" FreeText="true" Hidden="true" />
     </Data>
   </Entity>
 </Schema>

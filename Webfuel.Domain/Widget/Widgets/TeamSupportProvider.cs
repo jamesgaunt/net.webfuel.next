@@ -33,7 +33,7 @@ internal class TeamSupportProvider : ITeamSupportProvider
 
     public Task<Widget> InitialiseWidget(Widget widget)
     {
-        widget.HeaderText = "Team Summary";
+        widget.HeaderText = "Team Support - Active Projects";
         widget.DataJson = SafeJsonSerializer.Serialize(new DashboardMetrics());
         return Task.FromResult(widget);
     }

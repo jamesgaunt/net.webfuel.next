@@ -89,6 +89,9 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.TeamContactEmail):
                         result.Add(new SqlParameter(nameof(SupportRequest.TeamContactEmail), entity.TeamContactEmail));
                         break;
+                    case nameof(SupportRequest.TeamContactAltEmail):
+                        result.Add(new SqlParameter(nameof(SupportRequest.TeamContactAltEmail), entity.TeamContactAltEmail));
+                        break;
                     case nameof(SupportRequest.TeamContactRoleFreeText):
                         result.Add(new SqlParameter(nameof(SupportRequest.TeamContactRoleFreeText), entity.TeamContactRoleFreeText));
                         break;
@@ -97,6 +100,9 @@ namespace Webfuel.Domain
                         break;
                     case nameof(SupportRequest.TeamContactPrivacyStatementRead):
                         result.Add(new SqlParameter(nameof(SupportRequest.TeamContactPrivacyStatementRead), entity.TeamContactPrivacyStatementRead));
+                        break;
+                    case nameof(SupportRequest.TeamContactServiceAgreementRead):
+                        result.Add(new SqlParameter(nameof(SupportRequest.TeamContactServiceAgreementRead), entity.TeamContactServiceAgreementRead));
                         break;
                     case nameof(SupportRequest.LeadApplicantTitle):
                         result.Add(new SqlParameter(nameof(SupportRequest.LeadApplicantTitle), entity.LeadApplicantTitle));
@@ -264,9 +270,11 @@ namespace Webfuel.Domain
                 yield return "TeamContactFirstName";
                 yield return "TeamContactLastName";
                 yield return "TeamContactEmail";
+                yield return "TeamContactAltEmail";
                 yield return "TeamContactRoleFreeText";
                 yield return "TeamContactMailingPermission";
                 yield return "TeamContactPrivacyStatementRead";
+                yield return "TeamContactServiceAgreementRead";
                 yield return "LeadApplicantTitle";
                 yield return "LeadApplicantFirstName";
                 yield return "LeadApplicantLastName";
@@ -336,9 +344,11 @@ namespace Webfuel.Domain
                 yield return "TeamContactFirstName";
                 yield return "TeamContactLastName";
                 yield return "TeamContactEmail";
+                yield return "TeamContactAltEmail";
                 yield return "TeamContactRoleFreeText";
                 yield return "TeamContactMailingPermission";
                 yield return "TeamContactPrivacyStatementRead";
+                yield return "TeamContactServiceAgreementRead";
                 yield return "LeadApplicantTitle";
                 yield return "LeadApplicantFirstName";
                 yield return "LeadApplicantLastName";
@@ -407,9 +417,11 @@ namespace Webfuel.Domain
                 yield return "TeamContactFirstName";
                 yield return "TeamContactLastName";
                 yield return "TeamContactEmail";
+                yield return "TeamContactAltEmail";
                 yield return "TeamContactRoleFreeText";
                 yield return "TeamContactMailingPermission";
                 yield return "TeamContactPrivacyStatementRead";
+                yield return "TeamContactServiceAgreementRead";
                 yield return "LeadApplicantTitle";
                 yield return "LeadApplicantFirstName";
                 yield return "LeadApplicantLastName";
@@ -488,6 +500,8 @@ namespace Webfuel.Domain
             entity.TeamContactLastName = entity.TeamContactLastName.Trim();
             entity.TeamContactEmail = entity.TeamContactEmail ?? String.Empty;
             entity.TeamContactEmail = entity.TeamContactEmail.Trim();
+            entity.TeamContactAltEmail = entity.TeamContactAltEmail ?? String.Empty;
+            entity.TeamContactAltEmail = entity.TeamContactAltEmail.Trim();
             entity.TeamContactRoleFreeText = entity.TeamContactRoleFreeText ?? String.Empty;
             entity.TeamContactRoleFreeText = entity.TeamContactRoleFreeText.Trim();
             entity.LeadApplicantTitle = entity.LeadApplicantTitle ?? String.Empty;
@@ -545,6 +559,7 @@ namespace Webfuel.Domain
         public const int TeamContactFirstName_MaxLength = 128;
         public const int TeamContactLastName_MaxLength = 128;
         public const int TeamContactEmail_MaxLength = 128;
+        public const int TeamContactAltEmail_MaxLength = 128;
         public const int TeamContactRoleFreeText_MaxLength = 128;
         public const int LeadApplicantTitle_MaxLength = 128;
         public const int LeadApplicantFirstName_MaxLength = 128;
@@ -674,6 +689,13 @@ namespace Webfuel.Domain
             ruleBuilder
                 .NotNull()
                 .MaximumLength(TeamContactEmail_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
+        }
+        
+        public static void TeamContactAltEmail_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
+        {
+            ruleBuilder
+                .NotNull()
+                .MaximumLength(TeamContactAltEmail_MaxLength).When(x => x != null, ApplyConditionTo.CurrentValidator);
         }
         
         public static void TeamContactRoleFreeText_ValidationRules<T>(IRuleBuilder<T, string> ruleBuilder)
@@ -823,6 +845,7 @@ namespace Webfuel.Domain
             RuleFor(x => x.TeamContactFirstName).Use(SupportRequestMetadata.TeamContactFirstName_ValidationRules);
             RuleFor(x => x.TeamContactLastName).Use(SupportRequestMetadata.TeamContactLastName_ValidationRules);
             RuleFor(x => x.TeamContactEmail).Use(SupportRequestMetadata.TeamContactEmail_ValidationRules);
+            RuleFor(x => x.TeamContactAltEmail).Use(SupportRequestMetadata.TeamContactAltEmail_ValidationRules);
             RuleFor(x => x.TeamContactRoleFreeText).Use(SupportRequestMetadata.TeamContactRoleFreeText_ValidationRules);
             RuleFor(x => x.LeadApplicantTitle).Use(SupportRequestMetadata.LeadApplicantTitle_ValidationRules);
             RuleFor(x => x.LeadApplicantFirstName).Use(SupportRequestMetadata.LeadApplicantFirstName_ValidationRules);

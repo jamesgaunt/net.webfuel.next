@@ -1,4 +1,4 @@
-@import 'config.scss';
+@import "config.scss";
 
 .chrome {
   height: 100vh;
@@ -68,5 +68,18 @@
     grid-template-columns: 3.5rem 1fr !important;
   }
 
-  .chrome .main-title { display: none; }
+  .chrome .main-title {
+    display: none;
+  }
+}
+
+@media print {
+  .chrome-head,
+  .chrome-side {
+    display: none !important;
+  }
+  .app-mode-active {
+    background-color: #fff !important;
+  }
+
 }
