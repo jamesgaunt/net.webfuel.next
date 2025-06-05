@@ -1,4 +1,5 @@
-﻿using Webfuel.Domain.StaticData;
+﻿using Webfuel.Common;
+using Webfuel.Domain.StaticData;
 using Webfuel.Reporting;
 
 namespace Webfuel.Domain;
@@ -52,6 +53,7 @@ internal class ProjectReportProvider : IProjectReportProvider
                 builder.Add(Guid.Parse("82b05021-9512-4217-9e71-bb0bc9bc8384"), "Number", p => p.Number);
                 builder.Add(Guid.Parse("c3b0b5a0-5b1a-4b7e-9b9a-0b6b8b8b6b8b"), "Project Reference Number", p => p.PrefixedNumber);
                 builder.Map<ProjectStatus>(Guid.Parse("10a8218f-9de8-4835-930f-3c0f06bdbcfa"), "Status", p => p.StatusId);
+                builder.Add(Guid.Parse("dbb8fbc8-7a00-4dbf-8610-1110e7d9a382"), "Triaged At", p => p.CreatedAt);
 
                 builder.Add(Guid.Parse("cbeb9e2d-59a2-4896-a3c5-01c5c2aa42c7"), "Project Title", p => p.Title);
                 builder.Add(Guid.Parse("edde730a-8424-4415-b23c-29c4ae3e36b8"), "Date of Request", p => p.DateOfRequest);
@@ -76,6 +78,14 @@ internal class ProjectReportProvider : IProjectReportProvider
                 builder.Add(Guid.Parse("1cb89101-85dc-44fa-bd98-41d7972f71c4"), "CTU Free Text", p => p.IsCTUAlreadyInvolvedFreeText);
                 builder.Map<HowDidYouFindUs>(Guid.Parse("4eddc509-b9a8-47f3-8e22-56a035674be9"), "How did you hear about our hub?", p => p.HowDidYouFindUsId);
                 builder.Add(Guid.Parse("db675f0d-b5fc-44b2-a1d4-6a1f77f76cba"), "How did you hear about our hub free text", p => p.HowDidYouFindUsFreeText);
+
+                // Request Longer Test
+
+                builder.Add(Guid.Parse("35f2c56e-ac6a-48b3-8b47-4eb89962b790"), "Experience of Research Awards", p => p.ExperienceOfResearchAwards);
+                builder.Add(Guid.Parse("7f3d681c-64fb-4007-9a25-cafa383ef261"), "Brief Description", p => p.BriefDescription);
+                builder.Add(Guid.Parse("cae9c619-e4ab-473c-93dd-5c76c8db8587"), "Support Requested", p => p.SupportRequested);
+                builder.Add(Guid.Parse("821ea211-6e46-42b7-a131-553c7de499af"), "Who Else Is On The Study Team", p => p.WhoElseIsOnTheStudyTeam);
+
 
                 // Team Contact
 
@@ -135,6 +145,16 @@ internal class ProjectReportProvider : IProjectReportProvider
                 builder.Map<ProjectAdviser, ProjectAdviserReportMap>((p, s, m) => m.MapByProjectId(p.Id), a =>
                 {
                     a.Map<User>(Guid.Parse("39b47f9a-cf66-44d6-90ca-ea553c0041e7"), "Support Adviser", p => p.UserId);
+                });
+
+                builder.Add(Guid.Parse("1347dba0-87e9-442b-84a0-79635f638ff8"), "Diagnostic Count", p => p.DiagnosticCount);
+                builder.Add(Guid.Parse("b20221f7-f13d-41ac-8ace-8165a93746dd"), "Diagnostic Warnings", p => String.Join(", ", p.DiagnosticList.Select(p => p.Message)));
+
+                // Files
+
+                builder.Map<FileStorageGroup>(p => p.FileStorageGroupId, a =>
+                {
+                    a.Map<FileTag>(Guid.Parse("7f45923a-43aa-477a-a22d-9e9074b02e45"), "File Tags", p => p.FileTagIds);
                 });
 
                 _schema = builder.Schema;

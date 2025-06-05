@@ -16,6 +16,9 @@ namespace Webfuel.Domain.StaticData
         Task<IReadOnlyList<Ethnicity>> SelectEthnicity();
         Task<Ethnicity?> GetEthnicity(Guid id);
         Task<Ethnicity> RequireEthnicity(Guid id);
+        Task<IReadOnlyList<FileTag>> SelectFileTag();
+        Task<FileTag?> GetFileTag(Guid id);
+        Task<FileTag> RequireFileTag(Guid id);
         Task<IReadOnlyList<FullOutcome>> SelectFullOutcome();
         Task<FullOutcome?> GetFullOutcome(Guid id);
         Task<FullOutcome> RequireFullOutcome(Guid id);
@@ -103,6 +106,9 @@ namespace Webfuel.Domain.StaticData
         Task<IReadOnlyList<ResearcherOrganisationType>> SelectResearcherOrganisationType();
         Task<ResearcherOrganisationType?> GetResearcherOrganisationType(Guid id);
         Task<ResearcherOrganisationType> RequireResearcherOrganisationType(Guid id);
+        Task<IReadOnlyList<ResearcherProfessionalBackground>> SelectResearcherProfessionalBackground();
+        Task<ResearcherProfessionalBackground?> GetResearcherProfessionalBackground(Guid id);
+        Task<ResearcherProfessionalBackground> RequireResearcherProfessionalBackground(Guid id);
         Task<IReadOnlyList<ResearcherRole>> SelectResearcherRole();
         Task<ResearcherRole?> GetResearcherRole(Guid id);
         Task<ResearcherRole> RequireResearcherRole(Guid id);
@@ -209,6 +215,21 @@ namespace Webfuel.Domain.StaticData
         public async Task<Ethnicity> RequireEthnicity(Guid id)
         {
             return (await GetStaticData()).Ethnicity.First(p => p.Id == id);
+        }
+        
+        public async Task<IReadOnlyList<FileTag>> SelectFileTag()
+        {
+            return (await GetStaticData()).FileTag;
+        }
+        
+        public async Task<FileTag?> GetFileTag(Guid id)
+        {
+            return (await GetStaticData()).FileTag.FirstOrDefault(p => p.Id == id);
+        }
+        
+        public async Task<FileTag> RequireFileTag(Guid id)
+        {
+            return (await GetStaticData()).FileTag.First(p => p.Id == id);
         }
         
         public async Task<IReadOnlyList<FullOutcome>> SelectFullOutcome()
@@ -644,6 +665,21 @@ namespace Webfuel.Domain.StaticData
         public async Task<ResearcherOrganisationType> RequireResearcherOrganisationType(Guid id)
         {
             return (await GetStaticData()).ResearcherOrganisationType.First(p => p.Id == id);
+        }
+        
+        public async Task<IReadOnlyList<ResearcherProfessionalBackground>> SelectResearcherProfessionalBackground()
+        {
+            return (await GetStaticData()).ResearcherProfessionalBackground;
+        }
+        
+        public async Task<ResearcherProfessionalBackground?> GetResearcherProfessionalBackground(Guid id)
+        {
+            return (await GetStaticData()).ResearcherProfessionalBackground.FirstOrDefault(p => p.Id == id);
+        }
+        
+        public async Task<ResearcherProfessionalBackground> RequireResearcherProfessionalBackground(Guid id)
+        {
+            return (await GetStaticData()).ResearcherProfessionalBackground.First(p => p.Id == id);
         }
         
         public async Task<IReadOnlyList<ResearcherRole>> SelectResearcherRole()

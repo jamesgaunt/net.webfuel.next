@@ -34,6 +34,9 @@ public static class ProjectApi
         app.MapPost("api/project:create-test", CreateTest)
             .RequireClaim(p => p.Developer);
 
+        app.MapPost("api/project:enrich", Enrich)
+            .RequireClaim(p => p.Developer);
+
         // Querys
 
         app.MapPost("api/project/query", Query)
@@ -77,6 +80,11 @@ public static class ProjectApi
     }
 
     public static Task<Project> CreateTest([FromBody] CreateTestProject command, IMediator mediator)
+    {
+        return mediator.Send(command);
+    }
+
+    public static Task Enrich([FromBody] EnrichProject command, IMediator mediator)
     {
         return mediator.Send(command);
     }

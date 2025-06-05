@@ -27,6 +27,7 @@ import { AgeRangeApi } from './age-range.api';
 import { ApplicationStageApi } from './application-stage.api';
 import { DisabilityApi } from './disability.api';
 import { EthnicityApi } from './ethnicity.api';
+import { FileTagApi } from './file-tag.api';
 import { FullOutcomeApi } from './full-outcome.api';
 import { FullSubmissionStatusApi } from './full-submission-status.api';
 import { FundingBodyApi } from './funding-body.api';
@@ -56,6 +57,7 @@ import { ReportProviderApi } from './report-provider.api';
 import { ResearcherCareerStageApi } from './researcher-career-stage.api';
 import { ResearcherLocationApi } from './researcher-location.api';
 import { ResearcherOrganisationTypeApi } from './researcher-organisation-type.api';
+import { ResearcherProfessionalBackgroundApi } from './researcher-professional-background.api';
 import { ResearcherRoleApi } from './researcher-role.api';
 import { ResearchMethodologyApi } from './research-methodology.api';
 import { RSSHubApi } from './rsshub.api';
@@ -103,6 +105,7 @@ import { StaticDataCache } from './static-data.cache';
         ApplicationStageApi,
         DisabilityApi,
         EthnicityApi,
+        FileTagApi,
         FullOutcomeApi,
         FullSubmissionStatusApi,
         FundingBodyApi,
@@ -132,6 +135,7 @@ import { StaticDataCache } from './static-data.cache';
         ResearcherCareerStageApi,
         ResearcherLocationApi,
         ResearcherOrganisationTypeApi,
+        ResearcherProfessionalBackgroundApi,
         ResearcherRoleApi,
         ResearchMethodologyApi,
         RSSHubApi,

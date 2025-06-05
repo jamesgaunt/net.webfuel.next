@@ -1,12 +1,43 @@
-
 <div class="file-list">
   <form [formGroup]="form" *ngIf="!locked">
     <file-input formControlName="files" [showFiles]="false" [progress]="progress"></file-input>
   </form>
-  <grid [dataSource]="fileStorageEntryApi" (filter)="filter($event)" [search]="true">
+
+  <div class="filter-form">
+    <form class="form" [formGroup]="filterForm">
+      <div class="flex">
+        <div class="field is-9">
+          <input class="input" type="text" formControlName="search" placeholder="Search" />
+        </div>
+        <div class="field is-3">
+          <dropdown-select
+            [dataSource]="staticDataCache.fileTag"
+            placeholder="Tag"
+            formControlName="fileTagId"
+            [enableClear]="true"
+            [enableSearch]="true"
+          ></dropdown-select>
+        </div>
+      </div>
+      <div class="flex">
+        <div class="is-12 is-right">
+          <button (click)="resetFilterForm()" class="button is-small">show all</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <grid [dataSource]="fileStorageEntryApi" (filter)="filter($event)" [filterForm]="filterForm" [take]="100">
     <grid-column name="filename">
       <ng-template #itemTemplate let-item>
         <a class="link is-primary" target="blank" href="{{ sasRedirect(item) }}"><i class="fas fa-link"></i>&nbsp;{{ item.fileName }}</a>
+        @if(item.fileTagIds && item.fileTagIds.length > 0) {
+        <div class="tags" style="margin-top: 0.5rem; max-width: 500px">
+          @for(fileTagId of item.fileTagIds; track fileTagId) {
+          <span class="tag is-small">{{ (staticDataCache.fileTag.get({ id: fileTagId }) | async)?.name }}</span>
+          }
+        </div>
+        }
       </ng-template>
     </grid-column>
     <grid-column name="size">
@@ -27,9 +58,12 @@
     </grid-column>
     <grid-column justify="right">
       <ng-template #itemTemplate let-item>
+        <a *ngIf="!locked" class="link is-primary" (click)="editFile(item)">edit tags</a>
+        &nbsp;|&nbsp;
+        <a *ngIf="!locked" class="link is-primary" (click)="searchSupport(item)">search support</a>
+        &nbsp;|&nbsp;
         <a *ngIf="!locked" class="link is-danger" (click)="deleteFile(item)">delete</a>
       </ng-template>
     </grid-column>
   </grid>
 </div>
-

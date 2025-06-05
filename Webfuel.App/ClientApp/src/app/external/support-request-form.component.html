@@ -113,15 +113,7 @@
         </div>
         <div class="field is-12">
           <label class="label">What is the professional background of all team/applicants? (select all that apply)</label>
-          <dropdown-multi-select [dataSource]="staticDataCache.professionalBackground" [enableClear]="true" [freeTextControl]="form.controls.professionalBackgroundFreeText" placeholder="required" formControlName="professionalBackgroundIds"></dropdown-multi-select>
-        </div>
-        <div class="field is-6">
-          <label class="label">Would you like to receive a grantsmanship review?</label>
-          <dropdown-select [dataSource]="staticDataCache.isYesNo" [enableClear]="true" placeholder="optional" formControlName="wouldYouLikeToReceiveAGrantsmanshipReviewId"></dropdown-select>
-        </div>
-        <div class="field is-6">
-          <label class="label">Is your support request only for a grantsmanship review?</label>
-          <dropdown-select [dataSource]="staticDataCache.isYesNo" [enableClear]="true" placeholder="optional" formControlName="isYourSupportRequestOnlyForAGrantsmanshipReviewId"></dropdown-select>
+          <dropdown-multi-select [dataSource]="staticDataCache.researcherProfessionalBackground" [enableClear]="true" [freeTextControl]="form.controls.professionalBackgroundFreeText" placeholder="required" formControlName="professionalBackgroundIds"></dropdown-multi-select>
         </div>
       </div>
 

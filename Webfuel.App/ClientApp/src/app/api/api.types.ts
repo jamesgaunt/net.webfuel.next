@@ -157,6 +157,11 @@ export interface ValidationError {
     message: string;
 }
 
+export interface UpdateFileStorageEntry {
+    id: string;
+    fileTagIds: Array<string>;
+}
+
 export interface UploadFileStorageEntry {
     fileStorageGroupId: string;
 }
@@ -446,12 +451,14 @@ export interface FileStorageEntry {
     sizeBytes: number;
     uploadedAt: string | null | null;
     description: string;
+    fileTagIds: Array<string>;
     fileStorageGroupId: string;
     uploadedByUserId: string | null | null;
 }
 
 export interface QueryFileStorageEntry extends Query {
     fileStorageGroupId: string;
+    fileTagId: string | null | null;
     skip: number;
     take: number;
     projection?: Array<string>;
@@ -469,6 +476,7 @@ export interface IStaticDataModel {
     applicationStage: Array<ApplicationStage>;
     disability: Array<Disability>;
     ethnicity: Array<Ethnicity>;
+    fileTag: Array<FileTag>;
     fullOutcome: Array<FullOutcome>;
     fullSubmissionStatus: Array<FullSubmissionStatus>;
     fundingBody: Array<FundingBody>;
@@ -498,6 +506,7 @@ export interface IStaticDataModel {
     researcherCareerStage: Array<ResearcherCareerStage>;
     researcherLocation: Array<ResearcherLocation>;
     researcherOrganisationType: Array<ResearcherOrganisationType>;
+    researcherProfessionalBackground: Array<ResearcherProfessionalBackground>;
     researcherRole: Array<ResearcherRole>;
     researchMethodology: Array<ResearchMethodology>;
     rssHub: Array<RSSHub>;
@@ -555,6 +564,13 @@ export interface Ethnicity extends IStaticData {
     default: boolean;
     hidden: boolean;
     freeText: boolean;
+}
+
+export interface FileTag extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
 }
 
 export interface FullOutcome extends IStaticData {
@@ -776,6 +792,15 @@ export interface ResearcherLocation extends IStaticData {
 }
 
 export interface ResearcherOrganisationType extends IStaticData {
+    id: string;
+    name: string;
+    sortOrder: number;
+    default: boolean;
+    hidden: boolean;
+    freeText: boolean;
+}
+
+export interface ResearcherProfessionalBackground extends IStaticData {
     id: string;
     name: string;
     sortOrder: number;
@@ -1163,6 +1188,10 @@ export interface UnlockProject {
 }
 
 export interface CreateTestProject {
+}
+
+export interface EnrichProject {
+    id: string;
 }
 
 export interface QueryProject extends Query {
@@ -2153,6 +2182,30 @@ export interface QueryEthnicity extends Query {
     search?: string;
 }
 
+export interface CreateFileTag {
+    name: string;
+    default: boolean;
+}
+
+export interface UpdateFileTag {
+    id: string;
+    name: string;
+    default: boolean;
+}
+
+export interface SortFileTag {
+    ids: Array<string>;
+}
+
+export interface QueryFileTag extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
 export interface QueryFullOutcome extends Query {
     skip: number;
     take: number;
@@ -2579,6 +2632,15 @@ export interface QueryResearcherOrganisationType extends Query {
     search?: string;
 }
 
+export interface QueryResearcherProfessionalBackground extends Query {
+    skip: number;
+    take: number;
+    projection?: Array<string>;
+    filters?: Array<QueryFilter>;
+    sort?: Array<QuerySort>;
+    search?: string;
+}
+
 export interface QueryResearcherRole extends Query {
     skip: number;
     take: number;
@@ -2614,21 +2676,6 @@ export interface QueryResearchMethodology extends Query {
     filters?: Array<QueryFilter>;
     sort?: Array<QuerySort>;
     search?: string;
-}
-
-export interface CreateRSSHub {
-    name: string;
-    default: boolean;
-}
-
-export interface UpdateRSSHub {
-    id: string;
-    name: string;
-    default: boolean;
-}
-
-export interface SortRSSHub {
-    ids: Array<string>;
 }
 
 export interface QueryRSSHub extends Query {

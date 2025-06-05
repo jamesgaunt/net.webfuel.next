@@ -16,64 +16,104 @@
     </div>
   </div>
   <project-tabs></project-tabs>
-  <div *ngIf="items === null">
+  <div *ngIf="clientItems === null">
     <p>Loading...</p>
   </div>
-  <div *ngIf="items !== null" >
-    <div style="padding: 0.5rem 0 0.5rem 0; display: flex;">
+  <div *ngIf="clientItems !== null">
+    <div style="padding: 0.5rem 0 0.5rem 0; display: flex">
       <span [formGroup]="form" style="display: flex">
         <toggle-input label="Mock Interviews" formControlName="mockInterviews" />
         <toggle-input label="Grantsmanship Review" formControlName="grantsmanshipReview" />
       </span>
-      <span [formGroup]="filterForm" style="margin-left: auto;">
+      <span [formGroup]="filterForm" style="margin-left: auto">
         <toggle-input label="Show open team support requests only" formControlName="openTeamSupportOnly" />
+      </span>
+      <span [formGroup]="clientFilterForm" style="margin-left: 1rem">
+        <div class="control">
+          <input style="width: 350px" class="input" type="text" placeholder="Search by file name" formControlName="filename" />
+          <div class="icon is-secondary" (click)="clearFilename()">
+            <i class="fas fa-times"></i>
+          </div>
+        </div>
       </span>
     </div>
   </div>
-  <div *ngIf="items !== null && items.length == 0">
-    <div class="message is-primary">
-      No items to display
-    </div>
+  <div *ngIf="clientItems !== null && clientItems.length == 0">
+    <div class="message is-primary">No items to display</div>
   </div>
-  <div *ngIf="items !== null && items.length > 0" class="project-support-list">
-    <div class="card" *ngFor="let projectSupport of items" [ngClass]="{ 'is-warning': isOpen(projectSupport), 'is-success': isComplete(projectSupport) }">
-      <div class="card-title" style="font-weight: bold;">
-        <span>{{ projectSupport.date | date: 'dd-MMM-yy' }}</span>
-        <span *ngFor="let id of projectSupport.teamIds; index as i">&nbsp;|&nbsp;{{ (staticDataCache.supportTeam.get({ id: id }) | async)?.name }}</span>
+  <div *ngIf="clientItems !== null && clientItems.length > 0" class="project-support-list">
+    @for(projectSupport of clientItems; track projectSupport.id) {
+    <div class="card" [ngClass]="{ 'is-warning': isOpen(projectSupport), 'is-success': isComplete(projectSupport) }">
+      <div class="card-title" style="font-weight: bold">
+        <span>{{ projectSupport.date | date : "dd-MMM-yy" }}</span>
+        <span *ngFor="let id of projectSupport.teamIds; index as i"
+          >&nbsp;|&nbsp;{{ (staticDataCache.supportTeam.get({ id: id }) | async)?.name }}</span
+        >
         <span style="flex-grow: 1; text-align: right">
-          <span *ngIf="projectSupport.workTimeInHours">{{ projectSupport.workTimeInHours }} hour{{ projectSupport.workTimeInHours == 1 ? '' : 's' }} |</span>
+          <span *ngIf="projectSupport.workTimeInHours"
+            >{{ projectSupport.workTimeInHours }} hour{{ projectSupport.workTimeInHours == 1 ? "" : "s" }} |</span
+          >
           {{ projectSupport.isPrePostAwardId == IsPrePostAwardEnum.PreAward ? "Pre-Award" : "Post-Award" }}
         </span>
       </div>
       <div class="card-title">
-        <span *ngFor="let id of projectSupport.adviserIds; index as i"><span *ngIf="i > 0">&nbsp;|&nbsp;</span>{{ userService.formatUser(id) | async }}</span>
+        <span *ngFor="let id of projectSupport.adviserIds; index as i"
+          ><span *ngIf="i > 0">&nbsp;|&nbsp;</span>{{ userService.formatUser(id) | async }}</span
+        >
       </div>
       <div class="card-title">
-        <span class="tag" *ngFor="let id of projectSupport.supportProvidedIds">{{ (staticDataCache.supportProvided.get({ id: id }) | async)?.name }}</span>
+        <span class="tag" *ngFor="let id of projectSupport.supportProvidedIds">{{
+          (staticDataCache.supportProvided.get({ id: id }) | async)?.name
+        }}</span>
       </div>
       <div *ngIf="projectSupport.description" class="card-narrative">
         <div class="typeography-content" [innerHtml]="projectSupport.description"></div>
       </div>
       <div class="card-buttons" *ngIf="!locked">
-        <button class="button is-primary" *ngIf="projectSupport.supportRequestedTeamId === null" (click)="requestTeamSupport(projectSupport)">request support from another team</button>
+        <button class="button is-primary" *ngIf="projectSupport.supportRequestedTeamId === null" (click)="requestTeamSupport(projectSupport)">
+          request support from another team
+        </button>
         <button class="button is-primary" (click)="editProjectSupport(projectSupport)">edit</button>
         <button class="button is-danger" (click)="deleteProjectSupport(projectSupport)">delete</button>
       </div>
       <div *ngIf="projectSupport.supportRequestedTeamId !== null">
-        <div class="card-title" style="display:flex; align-items: center; ">
+        <div class="card-title" style="display: flex; align-items: center">
           <div *ngIf="projectSupport.supportRequestedCompletedAt === null" class="tag is-warning">open</div>
           <div *ngIf="projectSupport.supportRequestedCompletedAt !== null" class="tag is-success">complete</div>
-          <b>Support requested from team: {{ (staticDataCache.supportTeam.get({ id: projectSupport.supportRequestedTeamId }) | async)?.name }}</b>
+          <b
+            >Support requested from {{ (staticDataCache.supportTeam.get({ id: projectSupport.supportRequestedTeamId }) | async)?.name }} at
+            {{ projectSupport?.supportRequestedAt | date : "dd-MMM-yy" }}.</b
+          >
           @if(projectSupport.supportRequestedCompletedDate){
-          <b style="margin-left: auto">Completed {{ projectSupport.supportRequestedCompletedDate | date: 'dd-MMM-yy' }}</b>
+          <b style="margin-left: auto">Completed {{ projectSupport.supportRequestedCompletedDate | date : "dd-MMM-yy" }}</b>
           }
         </div>
         <pre *ngIf="projectSupport.supportRequestedCompletedNotes" class="card-narrative">{{ projectSupport.supportRequestedCompletedNotes }}</pre>
         <div class="card-buttons" *ngIf="!locked">
-          <button class="button is-warning" *ngIf="projectSupport.supportRequestedCompletedAt === null" (click)="resendNotification(projectSupport)">resend notification to referred team</button>
-          <button class="button is-primary" *ngIf="projectSupport.supportRequestedCompletedAt === null" (click)="completeProjectSupport(projectSupport)">mark as complete</button>
-          <button class="button is-primary" *ngIf="projectSupport.supportRequestedCompletedAt !== null" (click)="editProjectSupportCompletion(projectSupport)">edit completion note</button>
-          <button class="button is-danger" *ngIf="projectSupport.supportRequestedTeamId !== null && projectSupport.supportRequestedCompletedAt !== null" (click)="uncompleteProjectSupport(projectSupport)">delete completion note</button>
+          <button class="button is-warning" *ngIf="projectSupport.supportRequestedCompletedAt === null" (click)="resendNotification(projectSupport)">
+            resend notification to referred team
+          </button>
+          <button
+            class="button is-primary"
+            *ngIf="projectSupport.supportRequestedCompletedAt === null"
+            (click)="completeProjectSupport(projectSupport)"
+          >
+            mark as complete
+          </button>
+          <button
+            class="button is-primary"
+            *ngIf="projectSupport.supportRequestedCompletedAt !== null"
+            (click)="editProjectSupportCompletion(projectSupport)"
+          >
+            edit completion note
+          </button>
+          <button
+            class="button is-danger"
+            *ngIf="projectSupport.supportRequestedTeamId !== null && projectSupport.supportRequestedCompletedAt !== null"
+            (click)="uncompleteProjectSupport(projectSupport)"
+          >
+            delete completion note
+          </button>
         </div>
       </div>
       <div *ngIf="projectSupport.files.length > 0" class="file-links">
@@ -82,6 +122,7 @@
         </a>
       </div>
     </div>
+    }
   </div>
   <div class="floating-buttons">
     <button class="button" (click)="cancel()">Close</button>

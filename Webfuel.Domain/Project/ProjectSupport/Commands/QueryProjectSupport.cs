@@ -1,36 +1,73 @@
 using MediatR;
+using Webfuel.Common;
 
-namespace Webfuel.Domain
+namespace Webfuel.Domain;
+
+public class QueryProjectSupport : Query, IRequest<QueryResult<ProjectSupport>>
 {
-    public class QueryProjectSupport : Query, IRequest<QueryResult<ProjectSupport>>
+    public required Guid ProjectId { get; set; }
+
+    public bool OpenTeamSupportOnly { get; set; }
+
+    public Query ApplyCustomFilters()
     {
-        public required Guid ProjectId { get; set; }
+        this.Equal(nameof(ProjectSupport.ProjectId), ProjectId);
 
-        public bool OpenTeamSupportOnly { get; set; }
+        if (OpenTeamSupportOnly)
+            this.SQL($"e.[SupportRequestedTeamId] IS NOT NULL AND e.[SupportRequestedCompletedAt] IS NULL");
 
-        public Query ApplyCustomFilters()
-        {
-            this.Equal(nameof(ProjectSupport.ProjectId), ProjectId);
+        return this;
+    }
+}
 
-            if(OpenTeamSupportOnly)
-                this.SQL($"e.[SupportRequestedTeamId] IS NOT NULL AND e.[SupportRequestedCompletedAt] IS NULL");
+internal class QueryProjectSupportHandler : IRequestHandler<QueryProjectSupport, QueryResult<ProjectSupport>>
+{
+    private readonly IProjectRepository _projectRepository;
+    private readonly IProjectSupportRepository _projectSupportRepository;
+    private readonly IFileStorageService _fileStorageService;
 
-            return this;
-        }
+    public QueryProjectSupportHandler(
+        IProjectRepository projectRepository,
+        IProjectSupportRepository projectSupportRepository,
+        IFileStorageService fileStorageService)
+    {
+        _projectRepository = projectRepository;
+        _projectSupportRepository = projectSupportRepository;
+        _fileStorageService = fileStorageService;
     }
 
-    internal class QueryProjectSupportHandler : IRequestHandler<QueryProjectSupport, QueryResult<ProjectSupport>>
+    public async Task<QueryResult<ProjectSupport>> Handle(QueryProjectSupport request, CancellationToken cancellationToken)
     {
-        private readonly IProjectSupportRepository _projectSupportRepository;
-
-        public QueryProjectSupportHandler(IProjectSupportRepository projectSupportRepository)
+        var project = await _projectRepository.RequireProject(request.ProjectId);
+        var files = await _fileStorageService.QueryFiles(new QueryFileStorageEntry
         {
-            _projectSupportRepository = projectSupportRepository;
-        }
+            FileStorageGroupId = project.FileStorageGroupId,
+            Take = 1000
+        });
 
-        public async Task<QueryResult<ProjectSupport>> Handle(QueryProjectSupport request, CancellationToken cancellationToken)
+        var result = await _projectSupportRepository.QueryProjectSupport(request.ApplyCustomFilters());
+
+        // Check all the files attached to these project support items still exist in the file storage group
+        // We just clear them from the UI, they don't get deleted from the database, maybe we will do this offline at a later time
+        foreach (var item in result.Items)
         {
-            return await _projectSupportRepository.QueryProjectSupport(request.ApplyCustomFilters());
+            if (item.Files.Count > 0)
+            {
+                var toRemove = new List<ProjectSupportFile>();
+                foreach (var file in item.Files)
+                {
+                    var fileEntry = files.Items.FirstOrDefault(f => f.Id == file.Id);
+                    if (fileEntry == null)
+                    {
+                        toRemove.Add(file);
+                    }
+                }
+                foreach (var file in toRemove)
+                {
+                    item.Files.Remove(file);
+                }
+            }
         }
+        return result;
     }
 }

@@ -263,6 +263,22 @@ export enum ReportProviderEnum {
     CustomReport = "a2858ded-2b44-4fed-ab7d-8fb28850a340",
 }
 
+export enum ResearcherProfessionalBackgroundEnum {
+    ClinicalAcademic = "75b769e7-9e9d-42df-b31d-c906d353d4d0",
+    Academic = "843db2be-bd3a-4f61-ac48-e1932e55f076",
+    NonAcademicClinician = "c3dcef26-d476-41bf-9a9c-89b008addf58",
+    NurseMidwifeAHP = "d16a4d18-5309-4fb4-b6f7-7f9bcf56c6a6",
+    NHSManager = "e4a7b2a1-1f65-4201-9608-ed282955263c",
+    SocialCarePractitioner = "89ffaa61-4d5c-4095-bb5c-36d8eb8248e1",
+    PublicHealthPractitioner = "5f329e4a-1881-41b1-886f-9706eea45e20",
+    SME = "f10651e2-aedb-41cd-9ee4-750b3d7af17c",
+    OtherNHS = "3cfcf7e5-4230-4083-a83a-5723c49beb82",
+    LivedExperiencePublicCommunityContributor = "26dbb5f4-d544-48cc-9084-79a7027d13df",
+    LocalAuthorityOfficerPolicymaker = "887e71fa-3ba7-49d4-adb1-827ffe0de611",
+    Other = "0943bb8e-42b8-4f14-870c-6a6a2bce1800",
+    DonTKnow = "d9d6683b-f3e6-439a-86e5-937cb21e3d99",
+}
+
 export enum ResearcherRoleEnum {
     ChiefInvestigator = "4c6fbfca-3601-4c24-81aa-d372e0d0320e",
     ResearchFellowAssociate = "1c4b0501-821c-4a62-a560-f50b42d55657",
@@ -270,6 +286,20 @@ export enum ResearcherRoleEnum {
     CoInvestigator = "93a1de9c-ccbe-4bc4-8896-e34e97d217af",
     Administator = "c26a348a-1581-4678-8d69-aa218d11bb36",
     Other = "45013058-6dc8-4a3c-90e4-49a4da46efc8",
+}
+
+export enum RSSHubEnum {
+    NewcastleUniversityAndPartners = "02f2c7d3-691f-426d-b444-eb802c562715",
+    UniversityOfBirminghamAndPartners = "17aa2cae-1616-4f26-94ff-b8a4617680f0",
+    UniversityOfLancasterAndPartners = "d44377e3-2b75-4769-9b08-f24977aed598",
+    UniversityOfYorkAndPartners = "003b6f75-efbe-443b-86d3-186f2a3cc584",
+    ImperialCollegeLondonAndPartners = "9e4f4c12-022d-4769-abdf-71b40f2936bd",
+    UniversityOfSouthamptonAndPartners = "d5678978-ea52-4923-bed9-e4c2fcada10d",
+    KingsCollegeLondonAndPartners = "7a2a0314-6d06-4b32-a1eb-3dd96ab0ba6f",
+    UniversityOfLeicesterAndPartners = "01cc53bc-088d-4ab6-a0fe-09fcbc164cd0",
+    SouthamptonAndPartnersPublicHealthSpecialistCentre = "24f9f0e6-3d95-4c94-899d-f078903a9daa",
+    NewcastleAndPartnersPublicHealthSpecialistCentre = "979dc9c7-e454-49ad-974f-f424d5470a80",
+    LancasterUniversityAndPartnersSocialCareSpecialistCentre = "282014e1-ba60-4d92-af70-971ab918c04a",
 }
 
 export enum SubmissionOutcomeEnum {
@@ -301,7 +331,6 @@ export enum SubmissionStatusEnum {
 export enum SupportRequestStatusEnum {
     ToBeTriaged = "206b6f9d-feee-4b28-9795-1e1a2b7b887f",
     OnHold = "667ccd51-00f4-4890-9d54-3c925332124d",
-    ClosedNotEligibleForNIHRRSS = "1fa7ae4c-8bb7-49da-9efc-f9aa96de4c1d",
     ClosedReferredToAnotherNIHRRSS = "3d344c3c-9964-4079-877e-bc3b6864f52d",
     ClosedOutOfRemit = "529aaebf-5e02-4003-825e-265a6271c816",
     ReferredToNIHRRSSExpertTeams = "c22df21d-30ed-49d5-bee0-0f304b74a365",

@@ -36,7 +36,6 @@ internal class ProjectEnrichmentService : IProjectEnrichmentService
         var openSupportRequests = await _projectSupportRepository.SelectOpenSupportRequestsByProjectId(project.Id);
 
         project.OpenSupportRequestTeamIds.Clear();
-
         project.OverdueSupportRequestTeamIds.Clear();
 
         var today = DateOnly.FromDateTime(DateTime.Today);
@@ -85,6 +84,7 @@ internal class ProjectEnrichmentService : IProjectEnrichmentService
 
         var today = DateOnly.FromDateTime(DateTime.Now);
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Incomplete Fields
 
         if (String.IsNullOrWhiteSpace(project.Title))
@@ -116,6 +116,43 @@ internal class ProjectEnrichmentService : IProjectEnrichmentService
             result.Add(ProjectDiagnostic.EnrichmentWarning("Please populate professional background of all team/applicants"));
         }
 
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // If submission deadline has passed and submission status N/A then red flag: has the project been submitted 
+
+        if (project.FullSubmissionDeadline < today && project.FullSubmissionStatusId == FullSubmissionStatusEnum.NA)
+        {
+            result.Add(ProjectDiagnostic.EnrichmentWarning("Submission deadline has passed, has the project been submitted?"));
+        }
+        else if (project.OutlineSubmissionDeadline < today && project.OutlineSubmissionStatusId == OutlineSubmissionStatusEnum.NA)
+        {
+            result.Add(ProjectDiagnostic.EnrichmentWarning("Submission deadline has passed, has the project been submitted?"));
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // If submission yes but no outcome expected date then red flag: what is the outcome expected date
+
+        if (project.FullSubmissionStatusId == FullSubmissionStatusEnum.Yes && project.FullOutcomeExpectedDate == null)
+        {
+            result.Add(ProjectDiagnostic.EnrichmentWarning("Project has been submitted, what is the outcome expected date?"));
+        }
+        else if (project.OutlineSubmissionStatusId == OutlineSubmissionStatusEnum.Yes && project.OutlineOutcomeExpectedDate == null)
+        {
+            result.Add(ProjectDiagnostic.EnrichmentWarning("Project has been submitted, What is the outcome expected date?"));
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // If expected deadline date has passed and outcome is Not Applicable then red flag: what was the project outcome
+
+        if (project.FullOutcomeExpectedDate < today && project.FullOutcomeId == FullOutcomeEnum.NotApplicable)
+        {
+            result.Add(ProjectDiagnostic.EnrichmentWarning("Outcome expected date has passed, what is the outcome?"));
+        }
+        else if (project.OutlineOutcomeExpectedDate < today && project.OutlineOutcomeId == OutlineOutcomeEnum.NotApplicable)
+        {
+            result.Add(ProjectDiagnostic.EnrichmentWarning("Outcome expected date has passed, what is the outcome?"));
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Overdue Support Requests
 
         if (project.OverdueSupportRequestTeamIds.Count > 0)

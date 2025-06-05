@@ -7,8 +7,8 @@
     <thead>
       <tr>
         <th class="is-narrow" *ngIf="sortable"></th>
-        <th *ngFor="let column of columns" [style.text-align]="column.justify">
-          <ng-container *ngTemplateOutlet="column.headTemplateRef;"></ng-container>
+        <th *ngFor="let column of columns" [style.text-align]="column.justify" [class.is-narrow]="column.narrow">
+          <ng-container *ngTemplateOutlet="column.headTemplateRef"></ng-container>
           <div *ngIf="!column.headTemplateRef">
             <a *ngIf="column.sortable" class="data-sorter" href="javascript:;" (click)="columnSort(column)">
               {{ column.label }}
@@ -40,9 +40,7 @@
     </tbody>
     <tbody *ngIf="totalCount < 0">
       <tr>
-        <td [attr.colspan]="columnCount">
-          Loading...
-        </td>
+        <td [attr.colspan]="columnCount">Loading...</td>
       </tr>
     </tbody>
   </table>
@@ -51,10 +49,11 @@
 <div class="table-pager" *ngIf="totalCount > items.length">
   <div class="columns is-mobile">
     <div class="column">
-      <div *ngIf="pageCount <= 1">
-      </div>
+      <div *ngIf="pageCount <= 1"></div>
       <div *ngIf="pageCount > 1 && pageCount <= 12">
-        <button class="button is-primary is-small" [disabled]="pageIndex == page" (click)="repage(page)" *ngFor="let page of range(pageCount)">{{ page + 1 }}</button>
+        <button class="button is-primary is-small" [disabled]="pageIndex == page" (click)="repage(page)" *ngFor="let page of range(pageCount)">
+          {{ page + 1 }}
+        </button>
       </div>
       <div *ngIf="pageCount > 12" class="buttons">
         <button class="button is-primary is-small" (click)="repage(0)" [disabled]="pageIndex <= 0">First</button>
@@ -65,7 +64,7 @@
       </div>
     </div>
     <div class="column is-right">
-      <select style="text-align: right; background-color: transparent; border: 0;" (change)="retake($event)">
+      <select style="text-align: right; background-color: transparent; border: 0" (change)="retake($event)">
         <option style="display: none"></option>
         <option [selected]="query.take == 5">5</option>
         <option [selected]="query.take == 10">10</option>

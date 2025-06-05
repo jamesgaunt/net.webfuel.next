@@ -87,7 +87,7 @@
       </div>
       <div class="field is-12">
         <label class="label">What is the professional background of all team/applicants? (select all that apply)</label>
-        <dropdown-multi-select [dataSource]="staticDataCache.professionalBackground" [enableClear]="true" [freeTextControl]="form.controls.professionalBackgroundFreeText" placeholder="required" formControlName="professionalBackgroundIds"></dropdown-multi-select>
+        <dropdown-multi-select [dataSource]="staticDataCache.researcherProfessionalBackground" [enableClear]="true" [freeTextControl]="form.controls.professionalBackgroundFreeText" placeholder="required" formControlName="professionalBackgroundIds"></dropdown-multi-select>
       </div>
     </div>
     <div *ngIf="!locked" class="floating-buttons">

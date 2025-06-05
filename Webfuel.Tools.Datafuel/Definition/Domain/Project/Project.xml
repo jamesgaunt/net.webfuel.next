@@ -148,7 +148,7 @@
     <Property Name="OpenSupportRequestTeamIds" Type="Json:List{Guid}" />
 
     <Property Name="OverdueSupportRequestTeamIds" Type="Json:List{Guid}" />
-
+    
     <!-- ========== /Calculated Properties ========== -->
     
     <!-- Audit -->

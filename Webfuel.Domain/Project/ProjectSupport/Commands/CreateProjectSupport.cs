@@ -75,6 +75,9 @@ internal class CreateProjectSupportHandler : IRequestHandler<CreateProjectSuppor
         projectSupport.IsPrePostAwardId = request.IsPrePostAwardId;
         projectSupport.Files = request.Files;
 
+        if (projectSupport.SupportRequestedTeamId.HasValue)
+            projectSupport.SupportRequestedAt = DateOnly.FromDateTime(DateTime.Now);
+
         // Calculated
         projectSupport.CalculatedMinutes = (int)(projectSupport.WorkTimeInHours * 60) * projectSupport.AdviserIds.Count;
 

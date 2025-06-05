@@ -8,6 +8,7 @@ namespace Webfuel.Domain.StaticData
         IReadOnlyList<ApplicationStage> ApplicationStage { get; }
         IReadOnlyList<Disability> Disability { get; }
         IReadOnlyList<Ethnicity> Ethnicity { get; }
+        IReadOnlyList<FileTag> FileTag { get; }
         IReadOnlyList<FullOutcome> FullOutcome { get; }
         IReadOnlyList<FullSubmissionStatus> FullSubmissionStatus { get; }
         IReadOnlyList<FundingBody> FundingBody { get; }
@@ -37,6 +38,7 @@ namespace Webfuel.Domain.StaticData
         IReadOnlyList<ResearcherCareerStage> ResearcherCareerStage { get; }
         IReadOnlyList<ResearcherLocation> ResearcherLocation { get; }
         IReadOnlyList<ResearcherOrganisationType> ResearcherOrganisationType { get; }
+        IReadOnlyList<ResearcherProfessionalBackground> ResearcherProfessionalBackground { get; }
         IReadOnlyList<ResearcherRole> ResearcherRole { get; }
         IReadOnlyList<ResearchMethodology> ResearchMethodology { get; }
         IReadOnlyList<RSSHub> RSSHub { get; }
@@ -60,6 +62,7 @@ namespace Webfuel.Domain.StaticData
         public required IReadOnlyList<ApplicationStage> ApplicationStage { get; init; }
         public required IReadOnlyList<Disability> Disability { get; init; }
         public required IReadOnlyList<Ethnicity> Ethnicity { get; init; }
+        public required IReadOnlyList<FileTag> FileTag { get; init; }
         public required IReadOnlyList<FullOutcome> FullOutcome { get; init; }
         public required IReadOnlyList<FullSubmissionStatus> FullSubmissionStatus { get; init; }
         public required IReadOnlyList<FundingBody> FundingBody { get; init; }
@@ -89,6 +92,7 @@ namespace Webfuel.Domain.StaticData
         public required IReadOnlyList<ResearcherCareerStage> ResearcherCareerStage { get; init; }
         public required IReadOnlyList<ResearcherLocation> ResearcherLocation { get; init; }
         public required IReadOnlyList<ResearcherOrganisationType> ResearcherOrganisationType { get; init; }
+        public required IReadOnlyList<ResearcherProfessionalBackground> ResearcherProfessionalBackground { get; init; }
         public required IReadOnlyList<ResearcherRole> ResearcherRole { get; init; }
         public required IReadOnlyList<ResearchMethodology> ResearchMethodology { get; init; }
         public required IReadOnlyList<RSSHub> RSSHub { get; init; }
@@ -114,6 +118,7 @@ namespace Webfuel.Domain.StaticData
                 ApplicationStage = await serviceProvider.GetRequiredService<IApplicationStageRepository>().SelectApplicationStage(),
                 Disability = await serviceProvider.GetRequiredService<IDisabilityRepository>().SelectDisability(),
                 Ethnicity = await serviceProvider.GetRequiredService<IEthnicityRepository>().SelectEthnicity(),
+                FileTag = await serviceProvider.GetRequiredService<IFileTagRepository>().SelectFileTag(),
                 FullOutcome = await serviceProvider.GetRequiredService<IFullOutcomeRepository>().SelectFullOutcome(),
                 FullSubmissionStatus = await serviceProvider.GetRequiredService<IFullSubmissionStatusRepository>().SelectFullSubmissionStatus(),
                 FundingBody = await serviceProvider.GetRequiredService<IFundingBodyRepository>().SelectFundingBody(),
@@ -143,6 +148,7 @@ namespace Webfuel.Domain.StaticData
                 ResearcherCareerStage = await serviceProvider.GetRequiredService<IResearcherCareerStageRepository>().SelectResearcherCareerStage(),
                 ResearcherLocation = await serviceProvider.GetRequiredService<IResearcherLocationRepository>().SelectResearcherLocation(),
                 ResearcherOrganisationType = await serviceProvider.GetRequiredService<IResearcherOrganisationTypeRepository>().SelectResearcherOrganisationType(),
+                ResearcherProfessionalBackground = await serviceProvider.GetRequiredService<IResearcherProfessionalBackgroundRepository>().SelectResearcherProfessionalBackground(),
                 ResearcherRole = await serviceProvider.GetRequiredService<IResearcherRoleRepository>().SelectResearcherRole(),
                 ResearchMethodology = await serviceProvider.GetRequiredService<IResearchMethodologyRepository>().SelectResearchMethodology(),
                 RSSHub = await serviceProvider.GetRequiredService<IRSSHubRepository>().SelectRSSHub(),

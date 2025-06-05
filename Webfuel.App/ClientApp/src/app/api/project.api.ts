@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { UpdateProject, Project, UpdateProjectRequest, UpdateProjectResearcher, UpdateProjectSupportSettings, UnlockProject, CreateTestProject, QueryProject, QueryResult, ReportStep } from './api.types';
+import { UpdateProject, Project, UpdateProjectRequest, UpdateProjectResearcher, UpdateProjectSupportSettings, UnlockProject, CreateTestProject, EnrichProject, QueryProject, QueryResult, ReportStep } from './api.types';
 
 @Injectable()
 export class ProjectApi implements IDataSource<Project, QueryProject, any, UpdateProject> {
@@ -35,6 +35,10 @@ export class ProjectApi implements IDataSource<Project, QueryProject, any, Updat
     
     public createTest (body: CreateTestProject, options?: ApiOptions): Observable<Project> {
         return this.apiService.request<CreateTestProject, Project>("POST", "api/project:create-test", body, options);
+    }
+    
+    public enrich (body: EnrichProject, options?: ApiOptions): Observable<any> {
+        return this.apiService.request<EnrichProject, any>("POST", "api/project:enrich", body, options);
     }
     
     public query (body: QueryProject, options?: ApiOptions): Observable<QueryResult<Project>> {

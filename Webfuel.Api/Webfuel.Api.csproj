@@ -15,4 +15,7 @@
   <ItemGroup>
     <Content Remove="wwwroot\**" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\dist\" />
+  </ItemGroup>
 </Project>

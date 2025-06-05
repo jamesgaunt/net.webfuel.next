@@ -15,7 +15,6 @@
     <Data>
       <Row Id="206b6f9d-feee-4b28-9795-1e1a2b7b887f" Name="To be triaged" Default="true" />
       <Row Id="667ccd51-00f4-4890-9d54-3c925332124d" Name="On hold" />
-      <Row Id="1fa7ae4c-8bb7-49da-9efc-f9aa96de4c1d" Name="Closed - Not eligible for NIHR RSS" />
       <Row Id="3d344c3c-9964-4079-877e-bc3b6864f52d" Name="Closed - Referred to another NIHR RSS" />
       <Row Id="529aaebf-5e02-4003-825e-265a6271c816" Name="Closed - Out of remit" />
       <Row Id="c22df21d-30ed-49d5-bee0-0f304b74a365" Name="Referred to NIHR RSS expert teams" />

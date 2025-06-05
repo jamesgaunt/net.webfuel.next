@@ -1,5 +1,5 @@
-import _ from '../../common/underscore'
-import { Component, Input, OnInit, ContentChildren, TemplateRef, QueryList, ContentChild, ViewChild, AfterContentInit, AfterViewInit } from '@angular/core';
+import { Component, ContentChild, Input, TemplateRef, ViewChild } from '@angular/core';
+import _ from '../../common/underscore';
 import { GridComponent } from '../grid.component';
 
 @Component({
@@ -7,16 +7,14 @@ import { GridComponent } from '../grid.component';
   templateUrl: './grid-column.component.html',
 })
 export class GridColumnComponent<TItem> {
-
   @Input()
-  name: string = "";
+  name: string = '';
 
   @Input()
   get label() {
     if (this._label == undefined) {
       this._label = _.splitCamelCase(this.name);
-      if (this._label.endsWith(" Id"))
-        this._label = this._label.substring(0, this._label.length - 3);
+      if (this._label.endsWith(' Id')) this._label = this._label.substring(0, this._label.length - 3);
     }
     return this._label;
   }
@@ -26,12 +24,14 @@ export class GridColumnComponent<TItem> {
   private _label: string | undefined;
 
   @Input()
-  justify: "left" | "right" | "center" = "left";
+  justify: 'left' | 'right' | 'center' = 'left';
+
+  @Input()
+  narrow = false;
 
   @Input()
   get sortable() {
-    if (!this.grid || this.grid.sortable)
-      return false; // We can't enable sorting on both the grid and individual columns
+    if (!this.grid || this.grid.sortable) return false; // We can't enable sorting on both the grid and individual columns
     return this._sortable;
   }
   set sortable(value) {
@@ -49,8 +49,7 @@ export class GridColumnComponent<TItem> {
   @ViewChild('headTemplate', { static: false }) textHeadTemplate!: TemplateRef<any>;
 
   get headTemplateRef() {
-    if (this.customHeadTemplate)
-      return this.customHeadTemplate;
+    if (this.customHeadTemplate) return this.customHeadTemplate;
     return this.textHeadTemplate;
   }
 
@@ -60,16 +59,14 @@ export class GridColumnComponent<TItem> {
   @ViewChild('itemTemplate', { static: true }) textItemTemplate!: TemplateRef<any>;
 
   get itemTemplateRef() {
-    if (this.customItemTemplate)
-      return this.customItemTemplate;
+    if (this.customItemTemplate) return this.customItemTemplate;
     return this.textItemTemplate;
   }
 
   // Column Sort
 
   get direction() {
-    if (!this.grid)
-      return 0;
+    if (!this.grid) return 0;
     return this.grid.columnDirection(this);
   }
 }

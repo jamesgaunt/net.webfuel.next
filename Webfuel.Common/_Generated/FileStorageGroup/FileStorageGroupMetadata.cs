@@ -26,6 +26,9 @@ namespace Webfuel.Common
                     case nameof(FileStorageGroup.CreatedAt):
                         result.Add(new SqlParameter(nameof(FileStorageGroup.CreatedAt), entity.CreatedAt));
                         break;
+                    case nameof(FileStorageGroup.FileTagIds):
+                        result.Add(new SqlParameter(nameof(FileStorageGroup.FileTagIds), entity.FileTagIdsJson));
+                        break;
                 }
             }
             return result;
@@ -54,6 +57,7 @@ namespace Webfuel.Common
             {
                 yield return "Id";
                 yield return "CreatedAt";
+                yield return "FileTagIds";
             }
         }
         
@@ -63,6 +67,7 @@ namespace Webfuel.Common
             {
                 yield return "Id";
                 yield return "CreatedAt";
+                yield return "FileTagIds";
             }
         }
         
@@ -71,6 +76,7 @@ namespace Webfuel.Common
             get
             {
                 yield return "CreatedAt";
+                yield return "FileTagIds";
             }
         }
         

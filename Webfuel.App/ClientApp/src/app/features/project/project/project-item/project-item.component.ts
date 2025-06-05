@@ -43,6 +43,10 @@ export class ProjectItemComponent extends ProjectComponentBase {
     return this.configurationService.hasClaim(p => p.claims.administrator);
   }
 
+  isDeveloper() {
+    return this.configurationService.hasClaim(p => p.claims.developer);
+  }
+
   filterStatus = (status: ProjectStatus) => {
     if (status.locked && !this.canUnlock())
       return false;
@@ -147,5 +151,11 @@ export class ProjectItemComponent extends ProjectComponentBase {
   cancel() {
     this.reset(this.item);
     this.router.navigate(['project/project-list']);
+  }
+
+  enrich() {
+    this.projectApi.enrich({ id: this.item.id }).subscribe((result) => {
+      this.reset(result);
+    })
   }
 }

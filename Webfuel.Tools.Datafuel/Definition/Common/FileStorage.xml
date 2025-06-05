@@ -4,6 +4,7 @@
   <Entity Name="FileStorageGroup">
     <Key Name="Id" Type="guid" />
     <Property Name="CreatedAt" Type="DateTime" />
+    <Property Name="FileTagIds" Type="Json:List{Guid}" Default="[]" />
   </Entity>
 
   <Entity Name="FileStorageEntry">
@@ -14,6 +15,8 @@
     <Property Name="UploadedAt" Type="DateTime?" />
     <Property Name="UploadedByUserId" Type="User?" />
     <Property Name="Description" Type="meta:name" />
+    <Property Name="FileTagIds" Type="Json:List{Guid}" Default="[]" />
+    
     <Index Unique="false">
       <Member Name="FileStorageGroupId" />
     </Index>

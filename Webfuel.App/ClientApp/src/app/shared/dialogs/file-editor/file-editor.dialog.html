@@ -1,0 +1,20 @@
+<div class="form dialog is-success">
+  <div class="dialog-head is-success">File Tag Editor</div>
+  <div class="dialog-body">
+    <div class="toggle-list">
+      @for(fileTag of fileTags; track fileTag.id) {
+      <a [class.selected]="isSelected(fileTag.id)" (click)="toggle(fileTag.id)">
+        @if(isSelected(fileTag.id)) {
+        <i class="far fa-check-square"></i>
+        } @else {
+        <i class="far fa-square"></i>
+        } {{ fileTag.name}}
+      </a>
+      }
+    </div>
+  </div>
+  <div class="dialog-buttons">
+    <button type="submit" class="is-success" (click)="save()">Save</button>
+    <button type="button" (click)="cancel()">Close</button>
+  </div>
+</div>

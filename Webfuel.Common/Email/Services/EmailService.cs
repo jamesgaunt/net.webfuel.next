@@ -39,6 +39,10 @@ internal class EmailService : IEmailService
         string htmlBody,
         Guid? entityId)
     {
+        await Task.Delay(1000);
+        return;
+
+        /*
         await _emailRelayService.SendAsync(
             accountName: "rss-ucl",
             sendTo: sendTo,
@@ -62,6 +66,7 @@ internal class EmailService : IEmailService
             SentAt = DateTimeOffset.UtcNow,
             EntityId = entityId ?? Guid.Empty
         });
+        */
     }
 
     public Task<List<EmailLog>> SelectEmailLogByEntityId(Guid entityId)

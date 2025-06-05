@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Schema>
+  <Entity Name="FileTag" Tags="StaticData" OrderBy="SortOrder" Interface="IStaticData">
+    <Key Name="Id" Type="guid" />
+    <Property Name="Name" Type="meta:name" />
+    <Property Name="SortOrder" Type="Int32" />
+    <Property Name="Default" Type="boolean" />
+    <Index Unique="true">
+      <Member Name="Name" />
+    </Index>
+    <Data>
+      <Row Id="add5ca73-0945-46f2-9ecd-ff4f2a0a027b" Name="Final submitted stage 1" />
+      <Row Id="decf36bb-8fab-4606-8483-9c51f2b3f8ca" Name="Final submitted stage 2" />
+      <Row Id="6b382245-62c1-40b2-88e1-e2b3d838a0fd" Name="Peer review feedback" />
+      <Row Id="37a99b19-412f-4730-a061-75ad745a9cf4" Name="Outcome letter stage 1" />
+      <Row Id="a194cf72-5226-4f70-9e01-453e8af76950" Name="Outcome letter stage 2" />
+      <Row Id="55e00940-9d9d-472a-8d08-87788ce67979" Name="Communication" />
+    </Data>
+  </Entity>
+</Schema>

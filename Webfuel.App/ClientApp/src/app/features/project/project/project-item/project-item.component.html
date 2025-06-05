@@ -195,6 +195,7 @@
       <button class="button is-success" (click)="save(false)">Save</button>
       <button class="button is-success" (click)="save(true)">Save &amp; Close</button>
       <button class="button" (click)="cancel()">Cancel</button>
+      @if(isDeveloper()) { | <button class="button is-primary" (click)="enrich()">Enrich</button> }
     </div>
     <div *ngIf="locked" class="floating-buttons">
       <button *ngIf="canUnlock()" class="button is-warning" (click)="unlock()">Unlock</button>

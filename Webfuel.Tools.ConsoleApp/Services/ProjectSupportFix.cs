@@ -1,55 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.ExceptionServices;
-using System.Text;
-using System.Threading.Tasks;
-using Webfuel.Domain;
+﻿using Webfuel.Domain;
 using Webfuel.Domain.StaticData;
-using Webfuel.Excel;
 
-namespace Webfuel.Tools.ConsoleApp
+namespace Webfuel.Tools.ConsoleApp;
+
+public interface IProjectSupportFix
 {
-    public interface IProjectSupportFix
+    Task FixProjectSupports();
+}
+
+[Service(typeof(IProjectSupportFix))]
+internal class ProjectSupportFix : IProjectSupportFix
+{
+    private readonly IProjectSupportRepository _projectSupportRepository;
+    private readonly IProjectRepository _projectRepository;
+    private readonly IStaticDataService _staticDataService;
+    private readonly IUserSortService _userSortService;
+
+    public ProjectSupportFix(
+        IProjectSupportRepository projectSupportRepository,
+        IProjectRepository projectRepository,
+        IStaticDataService staticDataService,
+        IUserSortService userSortService)
     {
-        Task FixProjectSupports();
+        _projectSupportRepository = projectSupportRepository;
+        _projectRepository = projectRepository;
+        _staticDataService = staticDataService;
+        _userSortService = userSortService;
     }
 
-    [Service(typeof(IProjectSupportFix))]
-    internal class ProjectSupportFix: IProjectSupportFix
+    public async Task FixProjectSupports()
     {
-        private readonly IProjectSupportRepository _projectSupportRepository;
-        private readonly IProjectRepository _projectRepository;
-        private readonly IStaticDataService _staticDataService;
-        private readonly IUserSortService _userSortService;
+        var projectSupports = await _projectSupportRepository.SelectProjectSupport();
 
-        public ProjectSupportFix(
-            IProjectSupportRepository projectSupportRepository,
-            IProjectRepository projectRepository,
-            IStaticDataService staticDataService,
-            IUserSortService userSortService)
+        foreach (var original in projectSupports)
         {
-            _projectSupportRepository = projectSupportRepository;
-            _projectRepository = projectRepository;
-            _staticDataService = staticDataService;
-            _userSortService = userSortService;
-        }
+            var updated = original.Copy();
 
-        public async Task FixProjectSupports()
-        {
-            var projectSupports = await _projectSupportRepository.SelectProjectSupport();
-
-            foreach(var original in projectSupports)
+            if (updated.SupportRequestedTeamId.HasValue && updated.SupportRequestedAt == null)
             {
-                var updated = original.Copy();
-
-                // Convert plain text support description to HTML 
-
-                updated.Description = updated.Description.Replace("\n", "<br/>");
-
-                await _projectSupportRepository.UpdateProjectSupport(original: original, updated: updated);
+                updated.SupportRequestedAt = updated.Date;
             }
+
+            if (updated.SupportRequestedTeamId.HasValue && updated.SupportRequestedCompletedAt.HasValue && updated.SupportRequestedCompletedDate == null)
+            {
+                updated.SupportRequestedCompletedDate = DateOnly.FromDateTime(updated.SupportRequestedCompletedAt.Value.DateTime);
+            }
+
+            await _projectSupportRepository.UpdateProjectSupport(original: original, updated: updated);
         }
     }
 }

@@ -35,6 +35,9 @@ namespace Webfuel.Common
                     case nameof(FileStorageEntry.Description):
                         result.Add(new SqlParameter(nameof(FileStorageEntry.Description), entity.Description));
                         break;
+                    case nameof(FileStorageEntry.FileTagIds):
+                        result.Add(new SqlParameter(nameof(FileStorageEntry.FileTagIds), entity.FileTagIdsJson));
+                        break;
                     case nameof(FileStorageEntry.FileStorageGroupId):
                         result.Add(new SqlParameter(nameof(FileStorageEntry.FileStorageGroupId), entity.FileStorageGroupId));
                         break;
@@ -72,6 +75,7 @@ namespace Webfuel.Common
                 yield return "SizeBytes";
                 yield return "UploadedAt";
                 yield return "Description";
+                yield return "FileTagIds";
                 yield return "FileStorageGroupId";
                 yield return "UploadedByUserId";
             }
@@ -86,6 +90,7 @@ namespace Webfuel.Common
                 yield return "SizeBytes";
                 yield return "UploadedAt";
                 yield return "Description";
+                yield return "FileTagIds";
                 yield return "FileStorageGroupId";
                 yield return "UploadedByUserId";
             }
@@ -99,6 +104,7 @@ namespace Webfuel.Common
                 yield return "SizeBytes";
                 yield return "UploadedAt";
                 yield return "Description";
+                yield return "FileTagIds";
                 yield return "FileStorageGroupId";
                 yield return "UploadedByUserId";
             }

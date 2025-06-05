@@ -33,6 +33,9 @@ namespace Webfuel.Common
                     case nameof(FileStorageEntry.Description):
                         Description = (string)value!;
                         break;
+                    case nameof(FileStorageEntry.FileTagIds):
+                        FileTagIdsJson = (string)value!;
+                        break;
                     case nameof(FileStorageEntry.FileStorageGroupId):
                         FileStorageGroupId = (Guid)value!;
                         break;
@@ -47,6 +50,18 @@ namespace Webfuel.Common
         public Int64 SizeBytes  { get; set; } = 0L;
         public DateTimeOffset? UploadedAt  { get; set; } = null;
         public string Description  { get; set; } = String.Empty;
+        public List<Guid> FileTagIds
+        {
+            get { return _FileTagIds ?? (_FileTagIds = SafeJsonSerializer.Deserialize<List<Guid>>(_FileTagIdsJson)); }
+            set { _FileTagIds = value; }
+        }
+        List<Guid>? _FileTagIds = null;
+        internal string FileTagIdsJson
+        {
+            get { var result = _FileTagIds == null ? _FileTagIdsJson : (_FileTagIdsJson = SafeJsonSerializer.Serialize(_FileTagIds)); _FileTagIds = null; return result; }
+            set { _FileTagIdsJson = value; _FileTagIds = null; }
+        }
+        string _FileTagIdsJson = String.Empty;
         public Guid FileStorageGroupId { get; set; }
         public Guid? UploadedByUserId { get; set; }
         public FileStorageEntry Copy()
@@ -57,6 +72,7 @@ namespace Webfuel.Common
             entity.SizeBytes = SizeBytes;
             entity.UploadedAt = UploadedAt;
             entity.Description = Description;
+            entity.FileTagIdsJson = FileTagIdsJson;
             entity.FileStorageGroupId = FileStorageGroupId;
             entity.UploadedByUserId = UploadedByUserId;
             return entity;

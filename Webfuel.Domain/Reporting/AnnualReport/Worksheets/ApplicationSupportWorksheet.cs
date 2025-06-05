@@ -206,7 +206,7 @@ internal class ApplicationSupportWorksheet : AnnualReportWorksheet
 
     public AnnualReportColumn NonAcademicClinician = new AnnualReportColumn { Index = 76, Title = "Non-academic clinician", IsBoolean = true };
 
-    public AnnualReportColumn NurseMidwife = new AnnualReportColumn { Index = 77, Title = "Nurse/Midwife/AHP/GP", IsBoolean = true };
+    public AnnualReportColumn NurseMidwife = new AnnualReportColumn { Index = 77, Title = "Nurse/Midwife/AHP", IsBoolean = true };
 
     public AnnualReportColumn NHSManager = new AnnualReportColumn { Index = 78, Title = "NHS manager", IsBoolean = true };
 
@@ -216,7 +216,7 @@ internal class ApplicationSupportWorksheet : AnnualReportWorksheet
 
     public AnnualReportColumn SME = new AnnualReportColumn { Index = 81, Title = "SME", IsBoolean = true };
 
-    public AnnualReportColumn NHSOther = new AnnualReportColumn { Index = 82, Title = "NHS other", IsBoolean = true };
+    public AnnualReportColumn NHSOther = new AnnualReportColumn { Index = 82, Title = "Other NHS", IsBoolean = true };
 
     public AnnualReportColumn LivedExperience = new AnnualReportColumn { Index = 83, Title = "Lived experience/public/community contributor", IsBoolean = true };
 
@@ -633,18 +633,11 @@ internal class ApplicationSupportWorksheet : AnnualReportWorksheet
 
     string Render_ProfessionalBackgrounds(AnnualReportContext context, Project project, List<string> professionalBackgrounds, string title)
     {
-        var checkExists = context.StaticData.ProfessionalBackground.FirstOrDefault(p => AliasProfessionalBackground(p.Name) == title);
+        var checkExists = context.StaticData.ResearcherProfessionalBackground.FirstOrDefault(p => p.Name == title);
         if (checkExists == null)
             return "MISSING STATIC";
 
         return professionalBackgrounds.Contains(title) ? "Y" : "N";
-    }
-
-    string AliasProfessionalBackground(string input)
-    {
-        if (input == "Patient/public contributor")
-            return "Lived experience/public/community contributor";
-        return input;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -752,12 +745,11 @@ internal class ApplicationSupportWorksheet : AnnualReportWorksheet
         var result = new List<string>();
         foreach (var professionalBackgroundId in project.ProfessionalBackgroundIds)
         {
-            var rpb = context.StaticData.ProfessionalBackground.FirstOrDefault(p => p.Id == professionalBackgroundId);
+            var rpb = context.StaticData.ResearcherProfessionalBackground.FirstOrDefault(p => p.Id == professionalBackgroundId);
             if (rpb == null)
                 continue; // This static has been deleted
 
-            // Use the alias first and foremost
-            var text = AliasProfessionalBackground(rpb.Name);
+            var text = rpb.Name;
 
             if (result.Contains(text))
                 continue;
