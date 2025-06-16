@@ -37,7 +37,9 @@ namespace Webfuel.Domain
             }
             if(original.RSSHubProvidingAdviceIdsJson != updated.RSSHubProvidingAdviceIdsJson)
             {
-                sb.Append("R S S Hub Providing Advice: ").Append(original.RSSHubProvidingAdviceIds).Append(" -> ").Append(updated.RSSHubProvidingAdviceIds).Append(delimiter);
+                var o = string.Join(", ", original.RSSHubProvidingAdviceIds.Select(async p => (await _staticDataService.GetRSSHub(p))?.Name ?? "UNKNOWN"));
+                var u = string.Join(", ", updated.RSSHubProvidingAdviceIds.Select(async p => (await _staticDataService.GetRSSHub(p))?.Name ?? "UNKNOWN"));
+                sb.Append("RSSHub Providing Advice: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
             }
             if(original.MonetaryValueOfFundingApplication != updated.MonetaryValueOfFundingApplication)
             {
@@ -105,7 +107,7 @@ namespace Webfuel.Domain
             }
             if(original.NIHRApplicationId != updated.NIHRApplicationId)
             {
-                sb.Append("N I H R Application: ").Append(original.NIHRApplicationId).Append(" -> ").Append(updated.NIHRApplicationId).Append(delimiter);
+                sb.Append("NIHRApplication: ").Append(original.NIHRApplicationId).Append(" -> ").Append(updated.NIHRApplicationId).Append(delimiter);
             }
             if(original.TargetSubmissionDate != updated.TargetSubmissionDate)
             {
@@ -133,11 +135,13 @@ namespace Webfuel.Domain
             }
             if(original.IsCTUAlreadyInvolvedFreeText != updated.IsCTUAlreadyInvolvedFreeText)
             {
-                sb.Append("Is C T U Already Involved Free Text: ").Append(original.IsCTUAlreadyInvolvedFreeText).Append(" -> ").Append(updated.IsCTUAlreadyInvolvedFreeText).Append(delimiter);
+                sb.Append("Is CTUAlready Involved Free Text: ").Append(original.IsCTUAlreadyInvolvedFreeText).Append(" -> ").Append(updated.IsCTUAlreadyInvolvedFreeText).Append(delimiter);
             }
             if(original.ProfessionalBackgroundIdsJson != updated.ProfessionalBackgroundIdsJson)
             {
-                sb.Append("Professional Background: ").Append(original.ProfessionalBackgroundIds).Append(" -> ").Append(updated.ProfessionalBackgroundIds).Append(delimiter);
+                var o = string.Join(", ", original.ProfessionalBackgroundIds.Select(async p => (await _staticDataService.GetResearcherProfessionalBackground(p))?.Name ?? "UNKNOWN"));
+                var u = string.Join(", ", updated.ProfessionalBackgroundIds.Select(async p => (await _staticDataService.GetResearcherProfessionalBackground(p))?.Name ?? "UNKNOWN"));
+                sb.Append("Professional Background: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
             }
             if(original.ProfessionalBackgroundFreeText != updated.ProfessionalBackgroundFreeText)
             {
@@ -241,43 +245,13 @@ namespace Webfuel.Domain
             }
             if(original.LeadApplicantORCID != updated.LeadApplicantORCID)
             {
-                sb.Append("Lead Applicant O R C I D: ").Append(original.LeadApplicantORCID).Append(" -> ").Append(updated.LeadApplicantORCID).Append(delimiter);
-            }
-            if(original.HeartbeatExecutedAt != updated.HeartbeatExecutedAt)
-            {
-                sb.Append("Heartbeat Executed At: ").Append(original.HeartbeatExecutedAt).Append(" -> ").Append(updated.HeartbeatExecutedAt).Append(delimiter);
-            }
-            if(original.DiagnosticCount != updated.DiagnosticCount)
-            {
-                sb.Append("Diagnostic Count: ").Append(original.DiagnosticCount).Append(" -> ").Append(updated.DiagnosticCount).Append(delimiter);
-            }
-            if(original.DiagnosticListJson != updated.DiagnosticListJson)
-            {
-                sb.Append("Diagnostic List: ").Append(original.DiagnosticList).Append(" -> ").Append(updated.DiagnosticList).Append(delimiter);
-            }
-            if(original.TeamContactFullName != updated.TeamContactFullName)
-            {
-                sb.Append("Team Contact Full Name: ").Append(original.TeamContactFullName).Append(" -> ").Append(updated.TeamContactFullName).Append(delimiter);
-            }
-            if(original.LeadApplicantFullName != updated.LeadApplicantFullName)
-            {
-                sb.Append("Lead Applicant Full Name: ").Append(original.LeadApplicantFullName).Append(" -> ").Append(updated.LeadApplicantFullName).Append(delimiter);
-            }
-            if(original.SupportTotalMinutes != updated.SupportTotalMinutes)
-            {
-                sb.Append("Support Total Minutes: ").Append(original.SupportTotalMinutes).Append(" -> ").Append(updated.SupportTotalMinutes).Append(delimiter);
-            }
-            if(original.OpenSupportRequestTeamIdsJson != updated.OpenSupportRequestTeamIdsJson)
-            {
-                sb.Append("Open Support Request Team: ").Append(original.OpenSupportRequestTeamIds).Append(" -> ").Append(updated.OpenSupportRequestTeamIds).Append(delimiter);
-            }
-            if(original.OverdueSupportRequestTeamIdsJson != updated.OverdueSupportRequestTeamIdsJson)
-            {
-                sb.Append("Overdue Support Request Team: ").Append(original.OverdueSupportRequestTeamIds).Append(" -> ").Append(updated.OverdueSupportRequestTeamIds).Append(delimiter);
+                sb.Append("Lead Applicant ORCID: ").Append(original.LeadApplicantORCID).Append(" -> ").Append(updated.LeadApplicantORCID).Append(delimiter);
             }
             if(original.LeadAdviserUserId != updated.LeadAdviserUserId)
             {
-                sb.Append("Lead Adviser User: ").Append(original.LeadAdviserUserId?.ToString() ?? "NULL").Append(" -> ").Append(updated.LeadAdviserUserId?.ToString() ?? "NULL").Append(delimiter);
+                var o = original.LeadAdviserUserId.HasValue ? (await _userRepository.GetUser(original.LeadAdviserUserId.Value))?.FullName ?? "UNKNOWN" : "NULL";
+                var u = updated.LeadAdviserUserId.HasValue ? (await _userRepository.GetUser(updated.LeadAdviserUserId.Value))?.FullName ?? "UNKNOWN" : "NULL";
+                sb.Append("Lead Adviser User: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
             }
             if(original.SubmittedFundingStreamId != updated.SubmittedFundingStreamId)
             {
@@ -295,19 +269,19 @@ namespace Webfuel.Domain
             {
                 var o = original.WillStudyUseCTUId.HasValue ? (await _staticDataService.GetWillStudyUseCTU(original.WillStudyUseCTUId.Value))?.Name ?? "UNKNOWN" : "NULL";
                 var u = updated.WillStudyUseCTUId.HasValue ? (await _staticDataService.GetWillStudyUseCTU(updated.WillStudyUseCTUId.Value))?.Name ?? "UNKNOWN" : "NULL";
-                sb.Append("Will Study Use C T U: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
+                sb.Append("Will Study Use CTUId: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
             }
             if(original.IsPaidRSSAdviserLeadId != updated.IsPaidRSSAdviserLeadId)
             {
                 var o = original.IsPaidRSSAdviserLeadId.HasValue ? (await _staticDataService.GetIsPaidRSSAdviserLead(original.IsPaidRSSAdviserLeadId.Value))?.Name ?? "UNKNOWN" : "NULL";
                 var u = updated.IsPaidRSSAdviserLeadId.HasValue ? (await _staticDataService.GetIsPaidRSSAdviserLead(updated.IsPaidRSSAdviserLeadId.Value))?.Name ?? "UNKNOWN" : "NULL";
-                sb.Append("Is Paid R S S Adviser Lead: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
+                sb.Append("Is Paid RSSAdviser Lead: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
             }
             if(original.IsPaidRSSAdviserCoapplicantId != updated.IsPaidRSSAdviserCoapplicantId)
             {
                 var o = original.IsPaidRSSAdviserCoapplicantId.HasValue ? (await _staticDataService.GetIsPaidRSSAdviserCoapplicant(original.IsPaidRSSAdviserCoapplicantId.Value))?.Name ?? "UNKNOWN" : "NULL";
                 var u = updated.IsPaidRSSAdviserCoapplicantId.HasValue ? (await _staticDataService.GetIsPaidRSSAdviserCoapplicant(updated.IsPaidRSSAdviserCoapplicantId.Value))?.Name ?? "UNKNOWN" : "NULL";
-                sb.Append("Is Paid R S S Adviser Coapplicant: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
+                sb.Append("Is Paid RSSAdviser Coapplicant: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
             }
             if(original.IsInternationalMultiSiteStudyId != updated.IsInternationalMultiSiteStudyId)
             {
@@ -385,7 +359,7 @@ namespace Webfuel.Domain
             {
                 var o = original.IsCTUAlreadyInvolvedId.HasValue ? (await _staticDataService.GetIsCTUAlreadyInvolved(original.IsCTUAlreadyInvolvedId.Value))?.Name ?? "UNKNOWN" : "NULL";
                 var u = updated.IsCTUAlreadyInvolvedId.HasValue ? (await _staticDataService.GetIsCTUAlreadyInvolved(updated.IsCTUAlreadyInvolvedId.Value))?.Name ?? "UNKNOWN" : "NULL";
-                sb.Append("Is C T U Already Involved: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
+                sb.Append("Is CTUAlready Involved: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
             }
             if(original.TeamContactRoleId != updated.TeamContactRoleId)
             {
@@ -415,7 +389,7 @@ namespace Webfuel.Domain
             {
                 var o = original.IsLeadApplicantNHSId.HasValue ? (await _staticDataService.GetIsLeadApplicantNHS(original.IsLeadApplicantNHSId.Value))?.Name ?? "UNKNOWN" : "NULL";
                 var u = updated.IsLeadApplicantNHSId.HasValue ? (await _staticDataService.GetIsLeadApplicantNHS(updated.IsLeadApplicantNHSId.Value))?.Name ?? "UNKNOWN" : "NULL";
-                sb.Append("Is Lead Applicant N H S: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
+                sb.Append("Is Lead Applicant NHSId: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
             }
             if(original.LeadApplicantAgeRangeId != updated.LeadApplicantAgeRangeId)
             {

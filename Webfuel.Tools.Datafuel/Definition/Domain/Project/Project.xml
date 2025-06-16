@@ -28,7 +28,7 @@
     <Property Name="WillStudyUseCTUId" Type="WillStudyUseCTU?" />
     <Property Name="IsPaidRSSAdviserLeadId" Type="IsPaidRSSAdviserLead?" /> 
     <Property Name="IsPaidRSSAdviserCoapplicantId" Type="IsPaidRSSAdviserCoapplicant?" />
-    <Property Name="RSSHubProvidingAdviceIds"  Type="Json:List{Guid}" Default="[]" />
+    <Property Name="RSSHubProvidingAdviceIds"  Type="Json:List{Guid}" Default="[]" Tags="ChangeLog:RSSHub[]" />
     <Property Name="MonetaryValueOfFundingApplication" Type="decimal?" />
     
     <!-- For clinical trial submissions -->
@@ -83,7 +83,7 @@
     <Property Name="WhoElseIsOnTheStudyTeam" Type="string[2000]" />
     <Property Name="IsCTUAlreadyInvolvedId" Type="IsCTUAlreadyInvolved?" />
     <Property Name="IsCTUAlreadyInvolvedFreeText" Type="meta:name" />
-    <Property Name="ProfessionalBackgroundIds"  Type="Json:List{Guid}" Default="[]" /><!-- 1.2 Development -->
+    <Property Name="ProfessionalBackgroundIds"  Type="Json:List{Guid}" Default="[]" Tags="ChangeLog:ResearcherProfessionalBackground[]" /><!-- 1.2 Development -->
     <Property Name="ProfessionalBackgroundFreeText" Type="meta:name" /><!-- 1.2 Development -->
     <Property Name="IsRoundRobinEnquiry" Type="bool" /> <!-- 1.5 Development -->
 
@@ -134,21 +134,24 @@
     <!-- ========== Calculated Properties ========== -->
 
     <!-- Heartbeat -->
-    <Property Name="HeartbeatExecutedAt" Type="DateTime" />
+    <Property Name="HeartbeatExecutedAt" Type="DateTime" Tags="ChangeLog:Ignore" />
     
     <!-- Diagnostics -->
-    <Property Name="DiagnosticCount" Type="int" />
-    <Property Name="DiagnosticList" Type="Json:List{ProjectDiagnostic}" />
+    <Property Name="DiagnosticCount" Type="int" Tags="ChangeLog:Ignore" />
+    <Property Name="DiagnosticList" Type="Json:List{ProjectDiagnostic}" Tags="ChangeLog:Ignore" />
 
-    <Property Name="TeamContactFullName" Type="meta:name" />
-    <Property Name="LeadApplicantFullName" Type="meta:name" />
+    <Property Name="TeamContactFullName" Type="meta:name" Tags="ChangeLog:Ignore" />
+    <Property Name="LeadApplicantFullName" Type="meta:name" Tags="ChangeLog:Ignore" />
 
     <!-- Support Metrics -->
-    <Property Name="SupportTotalMinutes" Type="int" />
-    <Property Name="OpenSupportRequestTeamIds" Type="Json:List{Guid}" />
+    <Property Name="SupportTotalMinutes" Type="int" Tags="ChangeLog:Ignore" />
+    <Property Name="OpenSupportRequestTeamIds" Type="Json:List{Guid}" Tags="ChangeLog:Ignore" />
 
-    <Property Name="OverdueSupportRequestTeamIds" Type="Json:List{Guid}" />
+    <Property Name="OverdueSupportRequestTeamIds" Type="Json:List{Guid}" Tags="ChangeLog:Ignore" />
     
+    <!-- Temp/Legacy -->
+    <Property Name="LegacyProfessionalBackgroundIds"  Type="Json:List{Guid}" Default="[]" Tags="ChangeLog:Ignore" />
+
     <!-- ========== /Calculated Properties ========== -->
     
     <!-- Audit -->

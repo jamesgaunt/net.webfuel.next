@@ -231,6 +231,9 @@ namespace Webfuel.Domain
                     case nameof(Project.OverdueSupportRequestTeamIds):
                         OverdueSupportRequestTeamIdsJson = (string)value!;
                         break;
+                    case nameof(Project.LegacyProfessionalBackgroundIds):
+                        LegacyProfessionalBackgroundIdsJson = (string)value!;
+                        break;
                     case nameof(Project.CreatedAt):
                         CreatedAt = (DateTimeOffset)value!;
                         break;
@@ -447,6 +450,18 @@ namespace Webfuel.Domain
             set { _OverdueSupportRequestTeamIdsJson = value; _OverdueSupportRequestTeamIds = null; }
         }
         string _OverdueSupportRequestTeamIdsJson = String.Empty;
+        public List<Guid> LegacyProfessionalBackgroundIds
+        {
+            get { return _LegacyProfessionalBackgroundIds ?? (_LegacyProfessionalBackgroundIds = SafeJsonSerializer.Deserialize<List<Guid>>(_LegacyProfessionalBackgroundIdsJson)); }
+            set { _LegacyProfessionalBackgroundIds = value; }
+        }
+        List<Guid>? _LegacyProfessionalBackgroundIds = null;
+        internal string LegacyProfessionalBackgroundIdsJson
+        {
+            get { var result = _LegacyProfessionalBackgroundIds == null ? _LegacyProfessionalBackgroundIdsJson : (_LegacyProfessionalBackgroundIdsJson = SafeJsonSerializer.Serialize(_LegacyProfessionalBackgroundIds)); _LegacyProfessionalBackgroundIds = null; return result; }
+            set { _LegacyProfessionalBackgroundIdsJson = value; _LegacyProfessionalBackgroundIds = null; }
+        }
+        string _LegacyProfessionalBackgroundIdsJson = String.Empty;
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid FileStorageGroupId { get; set; }
         public Guid? LeadAdviserUserId { get; set; }
@@ -550,6 +565,7 @@ namespace Webfuel.Domain
             entity.SupportTotalMinutes = SupportTotalMinutes;
             entity.OpenSupportRequestTeamIdsJson = OpenSupportRequestTeamIdsJson;
             entity.OverdueSupportRequestTeamIdsJson = OverdueSupportRequestTeamIdsJson;
+            entity.LegacyProfessionalBackgroundIdsJson = LegacyProfessionalBackgroundIdsJson;
             entity.CreatedAt = CreatedAt;
             entity.FileStorageGroupId = FileStorageGroupId;
             entity.LeadAdviserUserId = LeadAdviserUserId;

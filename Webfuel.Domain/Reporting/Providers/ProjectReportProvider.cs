@@ -86,7 +86,6 @@ internal class ProjectReportProvider : IProjectReportProvider
                 builder.Add(Guid.Parse("cae9c619-e4ab-473c-93dd-5c76c8db8587"), "Support Requested", p => p.SupportRequested);
                 builder.Add(Guid.Parse("821ea211-6e46-42b7-a131-553c7de499af"), "Who Else Is On The Study Team", p => p.WhoElseIsOnTheStudyTeam);
 
-
                 // Team Contact
 
                 builder.Add(Guid.Parse("42aeb1aa-0728-4dd2-bebf-e00ad1156a88"), "Team Contact Title", p => p.TeamContactTitle);
@@ -107,6 +106,9 @@ internal class ProjectReportProvider : IProjectReportProvider
                 builder.Add(Guid.Parse("fe308cbf-6fe5-402f-b883-726a26eb72bc"), "Chief Investigator Organisation", p => p.LeadApplicantOrganisation);
                 builder.Add(Guid.Parse("3b086edd-23ac-4630-875b-473372e2f2f9"), "Chief Investigator Department", p => p.LeadApplicantDepartment);
                 builder.Add(Guid.Parse("919dd385-2990-44d9-ad09-d04b5d84e071"), "Chief Investigator ORCID", p => p.LeadApplicantORCID);
+
+                builder.Map<ResearcherProfessionalBackground>(Guid.Parse("46861ea8-4379-4ae4-80e7-f0395a0bd593"), "Professional Background", p => p.ProfessionalBackgroundIds);
+                builder.Map<ProfessionalBackground>(Guid.Parse("75591964-ddd4-4a52-95dc-d2cc4b7d246d"), "Legacy Professional Background", p => p.LegacyProfessionalBackgroundIds);
 
                 // Work Address
 

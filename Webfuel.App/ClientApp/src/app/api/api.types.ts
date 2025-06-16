@@ -1047,6 +1047,7 @@ export interface Project {
     supportTotalMinutes: number;
     openSupportRequestTeamIds: Array<string>;
     overdueSupportRequestTeamIds: Array<string>;
+    legacyProfessionalBackgroundIds: Array<string>;
     createdAt: string;
     fileStorageGroupId: string;
     leadAdviserUserId: string | null | null;

@@ -233,6 +233,9 @@ namespace Webfuel.Domain
                     case nameof(Project.OverdueSupportRequestTeamIds):
                         result.Add(new SqlParameter(nameof(Project.OverdueSupportRequestTeamIds), entity.OverdueSupportRequestTeamIdsJson));
                         break;
+                    case nameof(Project.LegacyProfessionalBackgroundIds):
+                        result.Add(new SqlParameter(nameof(Project.LegacyProfessionalBackgroundIds), entity.LegacyProfessionalBackgroundIdsJson));
+                        break;
                     case nameof(Project.CreatedAt):
                         result.Add(new SqlParameter(nameof(Project.CreatedAt), entity.CreatedAt));
                         break;
@@ -417,6 +420,7 @@ namespace Webfuel.Domain
                 yield return "SupportTotalMinutes";
                 yield return "OpenSupportRequestTeamIds";
                 yield return "OverdueSupportRequestTeamIds";
+                yield return "LegacyProfessionalBackgroundIds";
                 yield return "CreatedAt";
                 yield return "FileStorageGroupId";
                 yield return "LeadAdviserUserId";
@@ -524,6 +528,7 @@ namespace Webfuel.Domain
                 yield return "SupportTotalMinutes";
                 yield return "OpenSupportRequestTeamIds";
                 yield return "OverdueSupportRequestTeamIds";
+                yield return "LegacyProfessionalBackgroundIds";
                 yield return "CreatedAt";
                 yield return "FileStorageGroupId";
                 yield return "LeadAdviserUserId";
@@ -630,6 +635,7 @@ namespace Webfuel.Domain
                 yield return "SupportTotalMinutes";
                 yield return "OpenSupportRequestTeamIds";
                 yield return "OverdueSupportRequestTeamIds";
+                yield return "LegacyProfessionalBackgroundIds";
                 yield return "CreatedAt";
                 yield return "FileStorageGroupId";
                 yield return "LeadAdviserUserId";

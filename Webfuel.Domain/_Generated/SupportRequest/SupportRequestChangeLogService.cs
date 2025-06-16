@@ -41,7 +41,7 @@ namespace Webfuel.Domain
             }
             if(original.NIHRApplicationId != updated.NIHRApplicationId)
             {
-                sb.Append("N I H R Application: ").Append(original.NIHRApplicationId).Append(" -> ").Append(updated.NIHRApplicationId).Append(delimiter);
+                sb.Append("NIHRApplication: ").Append(original.NIHRApplicationId).Append(" -> ").Append(updated.NIHRApplicationId).Append(delimiter);
             }
             if(original.TargetSubmissionDate != updated.TargetSubmissionDate)
             {
@@ -69,11 +69,13 @@ namespace Webfuel.Domain
             }
             if(original.IsCTUAlreadyInvolvedFreeText != updated.IsCTUAlreadyInvolvedFreeText)
             {
-                sb.Append("Is C T U Already Involved Free Text: ").Append(original.IsCTUAlreadyInvolvedFreeText).Append(" -> ").Append(updated.IsCTUAlreadyInvolvedFreeText).Append(delimiter);
+                sb.Append("Is CTUAlready Involved Free Text: ").Append(original.IsCTUAlreadyInvolvedFreeText).Append(" -> ").Append(updated.IsCTUAlreadyInvolvedFreeText).Append(delimiter);
             }
             if(original.ProfessionalBackgroundIdsJson != updated.ProfessionalBackgroundIdsJson)
             {
-                sb.Append("Professional Background: ").Append(original.ProfessionalBackgroundIds).Append(" -> ").Append(updated.ProfessionalBackgroundIds).Append(delimiter);
+                var o = string.Join(", ", original.ProfessionalBackgroundIds.Select(async p => (await _staticDataService.GetResearcherProfessionalBackground(p))?.Name ?? "UNKNOWN"));
+                var u = string.Join(", ", updated.ProfessionalBackgroundIds.Select(async p => (await _staticDataService.GetResearcherProfessionalBackground(p))?.Name ?? "UNKNOWN"));
+                sb.Append("Professional Background: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
             }
             if(original.ProfessionalBackgroundFreeText != updated.ProfessionalBackgroundFreeText)
             {
@@ -177,15 +179,7 @@ namespace Webfuel.Domain
             }
             if(original.LeadApplicantORCID != updated.LeadApplicantORCID)
             {
-                sb.Append("Lead Applicant O R C I D: ").Append(original.LeadApplicantORCID).Append(" -> ").Append(updated.LeadApplicantORCID).Append(delimiter);
-            }
-            if(original.TeamContactFullName != updated.TeamContactFullName)
-            {
-                sb.Append("Team Contact Full Name: ").Append(original.TeamContactFullName).Append(" -> ").Append(updated.TeamContactFullName).Append(delimiter);
-            }
-            if(original.LeadApplicantFullName != updated.LeadApplicantFullName)
-            {
-                sb.Append("Lead Applicant Full Name: ").Append(original.LeadApplicantFullName).Append(" -> ").Append(updated.LeadApplicantFullName).Append(delimiter);
+                sb.Append("Lead Applicant ORCID: ").Append(original.LeadApplicantORCID).Append(" -> ").Append(updated.LeadApplicantORCID).Append(delimiter);
             }
             if(original.StatusId != updated.StatusId)
             {
@@ -239,7 +233,7 @@ namespace Webfuel.Domain
             {
                 var o = original.IsCTUAlreadyInvolvedId.HasValue ? (await _staticDataService.GetIsCTUAlreadyInvolved(original.IsCTUAlreadyInvolvedId.Value))?.Name ?? "UNKNOWN" : "NULL";
                 var u = updated.IsCTUAlreadyInvolvedId.HasValue ? (await _staticDataService.GetIsCTUAlreadyInvolved(updated.IsCTUAlreadyInvolvedId.Value))?.Name ?? "UNKNOWN" : "NULL";
-                sb.Append("Is C T U Already Involved: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
+                sb.Append("Is CTUAlready Involved: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
             }
             if(original.TeamContactRoleId != updated.TeamContactRoleId)
             {
@@ -269,7 +263,7 @@ namespace Webfuel.Domain
             {
                 var o = original.IsLeadApplicantNHSId.HasValue ? (await _staticDataService.GetIsLeadApplicantNHS(original.IsLeadApplicantNHSId.Value))?.Name ?? "UNKNOWN" : "NULL";
                 var u = updated.IsLeadApplicantNHSId.HasValue ? (await _staticDataService.GetIsLeadApplicantNHS(updated.IsLeadApplicantNHSId.Value))?.Name ?? "UNKNOWN" : "NULL";
-                sb.Append("Is Lead Applicant N H S: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
+                sb.Append("Is Lead Applicant NHSId: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
             }
             if(original.LeadApplicantAgeRangeId != updated.LeadApplicantAgeRangeId)
             {
@@ -293,13 +287,13 @@ namespace Webfuel.Domain
             {
                 var o = original.WouldYouLikeToReceiveAGrantsmanshipReviewId.HasValue ? (await _staticDataService.GetIsYesNo(original.WouldYouLikeToReceiveAGrantsmanshipReviewId.Value))?.Name ?? "UNKNOWN" : "NULL";
                 var u = updated.WouldYouLikeToReceiveAGrantsmanshipReviewId.HasValue ? (await _staticDataService.GetIsYesNo(updated.WouldYouLikeToReceiveAGrantsmanshipReviewId.Value))?.Name ?? "UNKNOWN" : "NULL";
-                sb.Append("Would You Like To Receive A Grantsmanship Review: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
+                sb.Append("Would You Like To Receive AGrantsmanship Review: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
             }
             if(original.IsYourSupportRequestOnlyForAGrantsmanshipReviewId != updated.IsYourSupportRequestOnlyForAGrantsmanshipReviewId)
             {
                 var o = original.IsYourSupportRequestOnlyForAGrantsmanshipReviewId.HasValue ? (await _staticDataService.GetIsYesNo(original.IsYourSupportRequestOnlyForAGrantsmanshipReviewId.Value))?.Name ?? "UNKNOWN" : "NULL";
                 var u = updated.IsYourSupportRequestOnlyForAGrantsmanshipReviewId.HasValue ? (await _staticDataService.GetIsYesNo(updated.IsYourSupportRequestOnlyForAGrantsmanshipReviewId.Value))?.Name ?? "UNKNOWN" : "NULL";
-                sb.Append("Is Your Support Request Only For A Grantsmanship Review: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
+                sb.Append("Is Your Support Request Only For AGrantsmanship Review: ").Append(o).Append(" -> ").Append(u).Append(delimiter);
             }
             return sb.ToString();
         }
