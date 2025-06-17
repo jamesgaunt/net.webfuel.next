@@ -36,8 +36,8 @@ internal class CompleteProjectSupportHandler : IRequestHandler<CompleteProjectSu
         if (existing.SupportRequestedCompletedAt.HasValue)
             throw new InvalidOperationException("The specified support is already marked as completed");
 
-        var project = await _projectRepository.RequireProject(existing.ProjectId);
-        if (project.Locked)
+        var project = await _projectRepository.GetProjectByProjectSupportGroupId(existing.ProjectSupportGroupId);
+        if (project != null && project.Locked)
             throw new InvalidOperationException("Unable to edit a locked project");
 
         var updated = existing.Copy();
@@ -53,6 +53,7 @@ internal class CompleteProjectSupportHandler : IRequestHandler<CompleteProjectSu
 
         updated = await _projectSupportRepository.UpdateProjectSupport(updated: updated, original: existing);
 
+        if (project != null)
         {
             var updatedProject = project.Copy();
             await _projectEnrichmentService.CalculateSupportMetricsForProject(updatedProject);

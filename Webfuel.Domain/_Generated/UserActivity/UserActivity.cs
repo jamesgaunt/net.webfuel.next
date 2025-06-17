@@ -42,9 +42,6 @@ namespace Webfuel.Domain
                     case nameof(UserActivity.WorkActivityId):
                         WorkActivityId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
-                    case nameof(UserActivity.ProjectId):
-                        ProjectId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
-                        break;
                     case nameof(UserActivity.ProjectSupportId):
                         ProjectSupportId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
@@ -70,7 +67,6 @@ namespace Webfuel.Domain
         string _ProjectSupportProvidedIdsJson = String.Empty;
         public Guid UserId { get; set; }
         public Guid? WorkActivityId { get; set; }
-        public Guid? ProjectId { get; set; }
         public Guid? ProjectSupportId { get; set; }
         public UserActivity Copy()
         {
@@ -83,7 +79,6 @@ namespace Webfuel.Domain
             entity.ProjectSupportProvidedIdsJson = ProjectSupportProvidedIdsJson;
             entity.UserId = UserId;
             entity.WorkActivityId = WorkActivityId;
-            entity.ProjectId = ProjectId;
             entity.ProjectSupportId = ProjectSupportId;
             return entity;
         }

@@ -10,50 +10,57 @@ import { SupportRequestItemComponent } from './support-request/support-request-i
 import { SupportRequestListComponent } from './support-request/support-request-list/support-request-list.component';
 import { SupportRequestPrintoutComponent } from './support-request/support-request-printout/support-request-printout.component';
 import { SupportRequestResearcherComponent } from './support-request/support-request-researcher/support-request-researcher.component';
+import { SupportRequestSupportComponent } from './support-request/support-request-support/support-request-support.component';
 
 const routes: Routes = [
   {
     path: 'support-request-list',
     component: SupportRequestListComponent,
-    data: { activeSideMenu: 'Triage' }
+    data: { activeSideMenu: 'Triage' },
   },
   {
     path: 'support-request-item/:id',
     component: SupportRequestItemComponent,
     resolve: { supportRequest: SupportRequestApi.supportRequestResolver('id') },
     canDeactivate: [DeactivateService.isPristine<SupportRequestItemComponent>()],
-    data: { activeSideMenu: 'Triage' }
+    data: { activeSideMenu: 'Triage' },
   },
   {
     path: 'support-request-printout/:id',
     component: SupportRequestPrintoutComponent,
     resolve: { supportRequest: SupportRequestApi.supportRequestResolver('id') },
-    data: { activeSideMenu: 'Triage' }
-  },  
+    data: { activeSideMenu: 'Triage' },
+  },
   {
     path: 'support-request-researcher/:id',
     component: SupportRequestResearcherComponent,
     resolve: { supportRequest: SupportRequestApi.supportRequestResolver('id') },
     canDeactivate: [DeactivateService.isPristine<SupportRequestResearcherComponent>()],
-    data: { activeSideMenu: 'Triage' }
+    data: { activeSideMenu: 'Triage' },
+  },
+  {
+    path: 'support-request-support/:id',
+    component: SupportRequestSupportComponent,
+    resolve: { supportRequest: SupportRequestApi.supportRequestResolver('id') },
+    data: { activeSideMenu: 'Triage' },
   },
   {
     path: 'support-request-files/:id',
     component: SupportRequestFilesComponent,
     resolve: { supportRequest: SupportRequestApi.supportRequestResolver('id') },
     canDeactivate: [DeactivateService.isPristine<SupportRequestFilesComponent>()],
-    data: { activeSideMenu: 'Triage' }
+    data: { activeSideMenu: 'Triage' },
   },
   {
     path: 'support-request-history/:id',
     component: SupportRequestHistoryComponent,
     resolve: { supportRequest: SupportRequestApi.supportRequestResolver('id') },
-    data: { activeSideMenu: 'Triage' }
+    data: { activeSideMenu: 'Triage' },
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class SupportRequestRoutingModule { }
+export class SupportRequestRoutingModule {}

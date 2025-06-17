@@ -31,12 +31,15 @@ internal class ResendProjectSupportNotificationHandler : IRequestHandler<ResendP
         if (existing.SupportRequestedTeamId == null)
             return existing;
 
-        var project = await _projectRepository.RequireProject(existing.ProjectId);
+        var project = await _projectRepository.GetProjectByProjectSupportGroupId(existing.ProjectSupportGroupId);
 
-        await _projectAdviserService.SendTeamSupportRequestedEmail(
-            project: project,
-            supportTeamId: existing.SupportRequestedTeamId.Value,
-            requestingTeamId: existing.TeamIds.FirstOrDefault());
+        if (project != null)
+        {
+            await _projectAdviserService.SendTeamSupportRequestedEmail(
+                project: project,
+                supportTeamId: existing.SupportRequestedTeamId.Value,
+                requestingTeamId: existing.TeamIds.FirstOrDefault());
+        }
 
         return existing;
     }

@@ -18,6 +18,8 @@ namespace Webfuel.Domain
         Task<int> CountProject();
         Task<List<Project>> SelectProject();
         Task<List<Project>> SelectProjectWithPage(int skip, int take);
+        Task<Project?> GetProjectByProjectSupportGroupId(Guid projectSupportGroupId);
+        Task<Project> RequireProjectByProjectSupportGroupId(Guid projectSupportGroupId);
         Task<List<Project>> SelectProjectBySupportRequestId(Guid? supportRequestId);
         Task<List<Project>> SelectProjectByDateOfRequest(DateOnly dateOfRequest);
         Task<List<Project>> SelectProjectByLocked(bool locked);
@@ -98,6 +100,19 @@ namespace Webfuel.Domain
                 new SqlParameter("@Take", take),
             };
             return await _connection.ExecuteReader<Project, ProjectMetadata>(sql, parameters);
+        }
+        public async Task<Project?> GetProjectByProjectSupportGroupId(Guid projectSupportGroupId)
+        {
+            var sql = @"SELECT * FROM [Project] WHERE ProjectSupportGroupId = @ProjectSupportGroupId ORDER BY Number DESC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@ProjectSupportGroupId", projectSupportGroupId),
+            };
+            return (await _connection.ExecuteReader<Project, ProjectMetadata>(sql, parameters)).SingleOrDefault();
+        }
+        public async Task<Project> RequireProjectByProjectSupportGroupId(Guid projectSupportGroupId)
+        {
+            return await GetProjectByProjectSupportGroupId(projectSupportGroupId) ?? throw new InvalidOperationException("The specified Project does not exist");
         }
         public async Task<List<Project>> SelectProjectBySupportRequestId(Guid? supportRequestId)
         {

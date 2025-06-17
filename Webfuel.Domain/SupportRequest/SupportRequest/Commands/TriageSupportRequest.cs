@@ -112,7 +112,7 @@ internal class TriageSupportRequestHandler : IRequestHandler<TriageSupportReques
                 {
                     await _mediator.Send(new CreateProjectSupport
                     {
-                        ProjectId = project.Id,
+                        ProjectSupportGroupId = project.ProjectSupportGroupId,
                         AdviserIds = new List<Guid> { _identityAccessor.User.Id },
                         TeamIds = new List<Guid> { SupportTeamEnum.TriageTeam },
                         SupportProvidedIds = request.SupportProvidedIds,
@@ -156,6 +156,7 @@ internal class TriageSupportRequestHandler : IRequestHandler<TriageSupportReques
 
         project.SupportRequestId = supportRequest.Id;
         project.FileStorageGroupId = supportRequest.FileStorageGroupId; // This will always exist
+        project.ProjectSupportGroupId = supportRequest.ProjectSupportGroupId; // This will always exist
 
         await _projectRepository.InsertProject(project);
 
@@ -174,7 +175,7 @@ internal class TriageSupportRequestHandler : IRequestHandler<TriageSupportReques
         {
             var createProjectSupport = new CreateProjectSupport
             {
-                ProjectId = project.Id,
+                ProjectSupportGroupId = project.ProjectSupportGroupId,
                 Date = DateOnly.FromDateTime(log.SentAt.Date),
                 Description = log.HtmlBody,
                 TeamIds = new List<Guid> { SupportTeamEnum.TriageTeam },

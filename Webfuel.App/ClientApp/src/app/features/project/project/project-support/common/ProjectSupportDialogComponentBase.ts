@@ -1,25 +1,23 @@
-import { DialogComponentBase } from 'shared/common/dialog-base';
 import { HttpClient, HttpEventType } from '@angular/common/http';
-import { UploadProjectSupportFilesDialog } from 'shared/dialogs/upload-project-support-files/upload-project-support-files.dialog';
-import { AttachProjectSupportFilesDialog } from 'shared/dialogs/attach-project-support-files/attach-project-support-files.dialog';
-import { ProjectSupportFile } from 'api/api.types';
-import { environment } from '../../../../../../environments/environment';
-import { ProjectSupportApi } from 'api/project-support.api';
 import { inject } from '@angular/core';
+import { ProjectSupportFile } from 'api/api.types';
+import { ProjectSupportApi } from 'api/project-support.api';
+import { DialogComponentBase } from 'shared/common/dialog-base';
+import { AttachProjectSupportFilesDialog } from 'shared/dialogs/attach-project-support-files/attach-project-support-files.dialog';
+import { UploadProjectSupportFilesDialog } from 'shared/dialogs/upload-project-support-files/upload-project-support-files.dialog';
+import { environment } from '../../../../../../environments/environment';
 
 export interface ProjectSupportDialogData {
-  projectId: string;
+  projectSupportGroupId: string;
 }
 
 export abstract class ProjectSupportDialogComponentBase<TResult, TData extends ProjectSupportDialogData> extends DialogComponentBase<TResult, TData> {
-
   httpClient: HttpClient = inject(HttpClient);
   projectSupportApi: ProjectSupportApi = inject(ProjectSupportApi);
   uploadProjectSupportFilesDialog: UploadProjectSupportFilesDialog = inject(UploadProjectSupportFilesDialog);
   attachProjectSupportFilesDialog: AttachProjectSupportFilesDialog = inject(AttachProjectSupportFilesDialog);
 
-  constructor(
-  ) {
+  constructor() {
     super();
   }
 
@@ -32,9 +30,9 @@ export abstract class ProjectSupportDialogComponentBase<TResult, TData extends P
   abstract submitForm(): void;
 
   addUploadedFiles() {
-    this.uploadProjectSupportFilesDialog.open({ projectId: this.data.projectId }).subscribe((result) => {
+    this.uploadProjectSupportFilesDialog.open({ projectSupportGroupId: this.data.projectSupportGroupId }).subscribe((result) => {
       result.uploadedFiles.forEach((file) => {
-        var index = this.uploadedFiles.findIndex(p => p.name == file.name);
+        var index = this.uploadedFiles.findIndex((p) => p.name == file.name);
         if (index >= 0) {
           this.uploadedFiles[index] = file;
         } else {
@@ -45,13 +43,15 @@ export abstract class ProjectSupportDialogComponentBase<TResult, TData extends P
   }
 
   addAttachedFiles() {
-    this.projectSupportApi.selectFile({ projectId: this.data.projectId }).subscribe((result) => {
-      this.attachProjectSupportFilesDialog.open({
-        databaseFiles: result,
-        existingFiles: this.existingFiles
-      }).subscribe((result) => {
-        this.existingFiles = result.existingFiles;
-      });
+    this.projectSupportApi.selectFile({ projectSupportGroupId: this.data.projectSupportGroupId }).subscribe((result) => {
+      this.attachProjectSupportFilesDialog
+        .open({
+          databaseFiles: result,
+          existingFiles: this.existingFiles,
+        })
+        .subscribe((result) => {
+          this.existingFiles = result.existingFiles;
+        });
     });
   }
 
@@ -83,45 +83,45 @@ export abstract class ProjectSupportDialogComponentBase<TResult, TData extends P
       return;
     }
 
-    this.httpClient.post(environment.apiHost + "api/project-support/upload-file", formData, {
-      reportProgress: true,
-      observe: 'events'
-    }).subscribe({
-      next: (event) => {
-        if (event.type === HttpEventType.UploadProgress && event.total) {
-          this.progress = Math.round((100 * event.loaded) / event.total);
-        }
-        if (event.type === HttpEventType.Response) {
-          console.log(event);
-          var newFiles = <ProjectSupportFile[]>(<any>event.body);
-          this.uploadedFiles = [];
-          this.existingFiles = this.existingFiles.concat(newFiles);
-          this.submitForm();
-        }
-      },
-      error: (err) => {
-        this.fileSubmissionError(err);
-      }
-    });
+    this.httpClient
+      .post(environment.apiHost + 'api/project-support/upload-file', formData, {
+        reportProgress: true,
+        observe: 'events',
+      })
+      .subscribe({
+        next: (event) => {
+          if (event.type === HttpEventType.UploadProgress && event.total) {
+            this.progress = Math.round((100 * event.loaded) / event.total);
+          }
+          if (event.type === HttpEventType.Response) {
+            console.log(event);
+            var newFiles = <ProjectSupportFile[]>(<any>event.body);
+            this.uploadedFiles = [];
+            this.existingFiles = this.existingFiles.concat(newFiles);
+            this.submitForm();
+          }
+        },
+        error: (err) => {
+          this.fileSubmissionError(err);
+        },
+      });
   }
 
   toFormData(): FormData | null {
-    if (!this.uploadedFiles || !this.uploadedFiles.length)
-      return null;
+    if (!this.uploadedFiles || !this.uploadedFiles.length) return null;
 
     const formData = new FormData();
     for (var i = 0; i < this.uploadedFiles.length; i++) {
-      formData.append("file_" + i, this.uploadedFiles[i]);
+      formData.append('file_' + i, this.uploadedFiles[i]);
     }
-    formData.append("data", JSON.stringify({ projectId: this.data.projectId }));
+    formData.append('data', JSON.stringify({ projectSupportGroupId: this.data.projectSupportGroupId }));
     return formData;
   }
 
   fileSubmissionError(err: any) {
     this.submitting = false;
     this.progress = null;
-    console.log("File Submission Error: ", err);
-    alert("There was an error uploading your files.\n\nPlease ensure all files are saved on your computer, and not open in another application.");
+    console.log('File Submission Error: ', err);
+    alert('There was an error uploading your files.\n\nPlease ensure all files are saved on your computer, and not open in another application.');
   }
-
 }

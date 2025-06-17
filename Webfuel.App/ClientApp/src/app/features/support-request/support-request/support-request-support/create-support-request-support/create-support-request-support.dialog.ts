@@ -5,19 +5,19 @@ import { StaticDataCache } from 'api/static-data.cache';
 import { UserApi } from 'api/user.api';
 import { ConfigurationService } from 'core/configuration.service';
 import { FormService } from 'core/form.service';
+import { ProjectSupportDialogComponentBase } from 'features/project/project/project-support/common/ProjectSupportDialogComponentBase';
 import { DialogBase } from 'shared/common/dialog-base';
 import { IsPrePostAwardEnum } from '../../../../../api/api.enums';
 import { Validate } from '../../../../../shared/common/validate';
-import { ProjectSupportDialogComponentBase } from '../common/ProjectSupportDialogComponentBase';
 
-export interface CreateProjectSupportDialogData {
+export interface CreateSupportRequestSupportDialogData {
   projectSupportGroupId: string;
 }
 
 @Injectable()
-export class CreateProjectSupportDialog extends DialogBase<ProjectSupport, CreateProjectSupportDialogData> {
-  open(data: CreateProjectSupportDialogData) {
-    return this._open(CreateProjectSupportDialogComponent, data, {
+export class CreateSupportRequestSupportDialog extends DialogBase<ProjectSupport, CreateSupportRequestSupportDialogData> {
+  open(data: CreateSupportRequestSupportDialogData) {
+    return this._open(CreateSupportRequestSupportDialogComponent, data, {
       width: '1000px',
       disableClose: true,
     });
@@ -25,10 +25,13 @@ export class CreateProjectSupportDialog extends DialogBase<ProjectSupport, Creat
 }
 
 @Component({
-  selector: 'create-project-support-dialog',
-  templateUrl: './create-project-support.dialog.html',
+  selector: 'create-support-request-support-dialog',
+  templateUrl: './create-support-request-support.dialog.html',
 })
-export class CreateProjectSupportDialogComponent extends ProjectSupportDialogComponentBase<ProjectSupport, CreateProjectSupportDialogData> {
+export class CreateSupportRequestSupportDialogComponent extends ProjectSupportDialogComponentBase<
+  ProjectSupport,
+  CreateSupportRequestSupportDialogData
+> {
   constructor(
     private formService: FormService,
     public userApi: UserApi,
@@ -87,7 +90,7 @@ export class CreateProjectSupportDialogComponent extends ProjectSupportDialogCom
 
   submitForm() {
     this.form.patchValue({ files: this.existingFiles });
-    this.projectSupportApi.create(this.form.getRawValue(), { successGrowl: 'Project Support Added' }).subscribe(
+    this.projectSupportApi.create(this.form.getRawValue(), { successGrowl: 'Support Added' }).subscribe(
       (result) => {
         this.submitting = false;
         this._closeDialog(result);

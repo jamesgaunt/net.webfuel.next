@@ -44,9 +44,6 @@ namespace Webfuel.Domain
                     case nameof(UserActivity.WorkActivityId):
                         result.Add(new SqlParameter(nameof(UserActivity.WorkActivityId), entity.WorkActivityId ?? (object?)DBNull.Value));
                         break;
-                    case nameof(UserActivity.ProjectId):
-                        result.Add(new SqlParameter(nameof(UserActivity.ProjectId), entity.ProjectId ?? (object?)DBNull.Value));
-                        break;
                     case nameof(UserActivity.ProjectSupportId):
                         result.Add(new SqlParameter(nameof(UserActivity.ProjectSupportId), entity.ProjectSupportId ?? (object?)DBNull.Value));
                         break;
@@ -84,7 +81,6 @@ namespace Webfuel.Domain
                 yield return "ProjectSupportProvidedIds";
                 yield return "UserId";
                 yield return "WorkActivityId";
-                yield return "ProjectId";
                 yield return "ProjectSupportId";
             }
         }
@@ -101,7 +97,6 @@ namespace Webfuel.Domain
                 yield return "ProjectSupportProvidedIds";
                 yield return "UserId";
                 yield return "WorkActivityId";
-                yield return "ProjectId";
                 yield return "ProjectSupportId";
             }
         }
@@ -117,7 +112,6 @@ namespace Webfuel.Domain
                 yield return "ProjectSupportProvidedIds";
                 yield return "UserId";
                 yield return "WorkActivityId";
-                yield return "ProjectId";
                 yield return "ProjectSupportId";
             }
         }

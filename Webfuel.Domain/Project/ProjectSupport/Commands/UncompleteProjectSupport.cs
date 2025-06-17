@@ -32,8 +32,8 @@ internal class UncompleteProjectSupportHandler : IRequestHandler<UncompleteProje
         if (existing.SupportRequestedCompletedAt == null)
             throw new InvalidOperationException("The specified support is not marked as completed");
 
-        var project = await _projectRepository.RequireProject(existing.ProjectId);
-        if (project.Locked)
+        var project = await _projectRepository.GetProjectByProjectSupportGroupId(existing.ProjectSupportGroupId);
+        if (project != null && project.Locked)
             throw new InvalidOperationException("Unable to edit a locked project");
 
         var updated = existing.Copy();
@@ -47,6 +47,7 @@ internal class UncompleteProjectSupportHandler : IRequestHandler<UncompleteProje
 
         updated = await _projectSupportRepository.UpdateProjectSupport(updated: updated, original: existing);
 
+        if (project != null)
         {
             var updatedProject = project.Copy();
             await _projectEnrichmentService.CalculateSupportMetricsForProject(updatedProject);

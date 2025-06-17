@@ -20,6 +20,16 @@ import {
 } from './support-request/dialogs/triage-support-request/triage-support-request.dialog';
 import { SupportRequestPrintoutComponent } from './support-request/support-request-printout/support-request-printout.component';
 
+import {
+  CreateSupportRequestSupportDialog,
+  CreateSupportRequestSupportDialogComponent,
+} from './support-request/support-request-support/create-support-request-support/create-support-request-support.dialog';
+import {
+  UpdateSupportRequestSupportDialog,
+  UpdateSupportRequestSupportDialogComponent,
+} from './support-request/support-request-support/update-support-request-support/update-support-request-support.dialog';
+import { SupportRequestSupportComponent } from './support-request/support-request-support/support-request-support.component';
+
 @NgModule({
   imports: [CommonModule, SharedModule, SupportRequestRoutingModule],
   declarations: [
@@ -30,10 +40,13 @@ import { SupportRequestPrintoutComponent } from './support-request/support-reque
     SupportRequestResearcherComponent,
     SupportRequestHistoryComponent,
     SupportRequestPrintoutComponent,
+    SupportRequestSupportComponent,
 
+    CreateSupportRequestSupportDialogComponent,
+    UpdateSupportRequestSupportDialogComponent,
     TriageSupportRequestDialogComponent,
     SendTriageTemplateDialogComponent,
   ],
-  providers: [TriageSupportRequestDialog, SendTriageTemplateDialog],
+  providers: [TriageSupportRequestDialog, SendTriageTemplateDialog, CreateSupportRequestSupportDialog, UpdateSupportRequestSupportDialog],
 })
 export class SupportRequestModule {}

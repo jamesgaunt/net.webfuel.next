@@ -16,7 +16,6 @@
     <!-- /Work Activity -->
 
     <!-- Project Activity -->
-    <Property Name="ProjectId" Type="Project?" />
     <Property Name="ProjectSupportId" Type="ProjectSupport?" />
     <Property Name="ProjectPrefixedNumber" Type="meta:name" />
     <Property Name="ProjectSupportProvidedIds" Type="Json:List{Guid}" />
@@ -26,9 +25,6 @@
 
     <Index Unique="false">
       <Member Name="UserId" />
-    </Index>
-    <Index Unique="false">
-      <Member Name="ProjectId" />
     </Index>
     <Index Unique="false">
       <Member Name="ProjectSupportId" />

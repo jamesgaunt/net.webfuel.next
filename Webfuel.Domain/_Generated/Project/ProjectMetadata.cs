@@ -242,6 +242,9 @@ namespace Webfuel.Domain
                     case nameof(Project.FileStorageGroupId):
                         result.Add(new SqlParameter(nameof(Project.FileStorageGroupId), entity.FileStorageGroupId));
                         break;
+                    case nameof(Project.ProjectSupportGroupId):
+                        result.Add(new SqlParameter(nameof(Project.ProjectSupportGroupId), entity.ProjectSupportGroupId));
+                        break;
                     case nameof(Project.LeadAdviserUserId):
                         result.Add(new SqlParameter(nameof(Project.LeadAdviserUserId), entity.LeadAdviserUserId ?? (object?)DBNull.Value));
                         break;
@@ -423,6 +426,7 @@ namespace Webfuel.Domain
                 yield return "LegacyProfessionalBackgroundIds";
                 yield return "CreatedAt";
                 yield return "FileStorageGroupId";
+                yield return "ProjectSupportGroupId";
                 yield return "LeadAdviserUserId";
                 yield return "SubmittedFundingStreamId";
                 yield return "StatusId";
@@ -531,6 +535,7 @@ namespace Webfuel.Domain
                 yield return "LegacyProfessionalBackgroundIds";
                 yield return "CreatedAt";
                 yield return "FileStorageGroupId";
+                yield return "ProjectSupportGroupId";
                 yield return "LeadAdviserUserId";
                 yield return "SubmittedFundingStreamId";
                 yield return "StatusId";
@@ -638,6 +643,7 @@ namespace Webfuel.Domain
                 yield return "LegacyProfessionalBackgroundIds";
                 yield return "CreatedAt";
                 yield return "FileStorageGroupId";
+                yield return "ProjectSupportGroupId";
                 yield return "LeadAdviserUserId";
                 yield return "SubmittedFundingStreamId";
                 yield return "StatusId";

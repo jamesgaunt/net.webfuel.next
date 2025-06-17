@@ -94,6 +94,22 @@ public class ReportSchemaBuilder<TContext> where TContext : class
     }
 
     public void Map<TEntity>(
+        Guid id,
+        string name,
+        Func<TContext, IServiceProvider, IReportMap<TEntity>, Task<Guid?>> accessor,
+        Action<ReportSchemaBuilder<TEntity>>? action = null)
+        where TEntity : class
+    {
+        var mapping = new ReportAsyncMapping<TEntity, IReportMap<TEntity>>
+        {
+            Accessor = (o, s, b) => accessor((TContext)o, s, b),
+            ParentMapping = Mapping,
+        };
+
+        MapImpl<TEntity, IReportMap<TEntity>>(id: id, name: name, mapping: mapping, action: action);
+    }
+
+    public void Map<TEntity>(
         Func<TContext, Guid?> accessor,
         Action<ReportSchemaBuilder<TEntity>>? action = null)
         where TEntity : class

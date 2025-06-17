@@ -92,15 +92,18 @@ internal class CreateSupportRequestHandler : IRequestHandler<CreateSupportReques
 {
     private readonly ISupportRequestRepository _supportRequestRepository;
     private readonly IFileStorageService _fileStorageService;
+    private readonly IProjectSupportGroupRepository _projectSupportGroupRepository;
     private readonly IMediator _mediator;
 
     public CreateSupportRequestHandler(
         ISupportRequestRepository supportRequestRepository,
         IFileStorageService fileStorageService,
+        IProjectSupportGroupRepository projectSupportGroupRepository,
         IMediator mediator)
     {
         _supportRequestRepository = supportRequestRepository;
         _fileStorageService = fileStorageService;
+        _projectSupportGroupRepository = projectSupportGroupRepository;
         _mediator = mediator;
     }
 
@@ -115,12 +118,21 @@ internal class CreateSupportRequestHandler : IRequestHandler<CreateSupportReques
         supportRequest.TeamContactFullName = $"{supportRequest.TeamContactTitle} {supportRequest.TeamContactFirstName} {supportRequest.TeamContactLastName}";
         supportRequest.LeadApplicantFullName = $"{supportRequest.LeadApplicantTitle} {supportRequest.LeadApplicantFirstName} {supportRequest.LeadApplicantLastName}";
 
-        // File Storage Setup
+        // File Storage Group Setup
 
         if (request.FileStorageGroupId.HasValue)
             supportRequest.FileStorageGroupId = request.FileStorageGroupId.Value;
         else
             supportRequest.FileStorageGroupId = (await _fileStorageService.CreateGroup()).Id;
+
+        // Project Support Group Setup
+
+        var projectSupportGroup = await _projectSupportGroupRepository.InsertProjectSupportGroup(new ProjectSupportGroup
+        {
+            CreatedAt = DateTimeOffset.UtcNow,
+            FileStorageGroupId = supportRequest.FileStorageGroupId
+        });
+        supportRequest.ProjectSupportGroupId = projectSupportGroup.Id;
 
         return await _supportRequestRepository.InsertSupportRequest(supportRequest);
     }

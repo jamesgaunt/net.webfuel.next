@@ -121,7 +121,12 @@ export class ProjectSupportComponent extends ProjectComponentBase {
 
   loadProjectSupport() {
     this.projectSupportApi
-      .query({ projectId: this.item.id, openTeamSupportOnly: this.filterForm.value.openTeamSupportOnly ?? false, skip: 0, take: 100 })
+      .query({
+        projectSupportGroupId: this.item.projectSupportGroupId,
+        openTeamSupportOnly: this.filterForm.value.openTeamSupportOnly ?? false,
+        skip: 0,
+        take: 100,
+      })
       .subscribe((result) => {
         this.serverItems = result.items;
         this.filterClientItems();
@@ -135,12 +140,12 @@ export class ProjectSupportComponent extends ProjectComponentBase {
 
   addProjectSupport() {
     if (this.locked) return;
-    this.createProjectSupportDialog.open({ projectId: this.item.id });
+    this.createProjectSupportDialog.open({ projectSupportGroupId: this.item.projectSupportGroupId });
   }
 
   editProjectSupport(projectSupport: ProjectSupport) {
     if (this.locked) return;
-    this.updateProjectSupportDialog.open({ projectId: projectSupport.projectId, projectSupport: projectSupport });
+    this.updateProjectSupportDialog.open({ projectSupportGroupId: projectSupport.projectSupportGroupId, projectSupport: projectSupport });
   }
 
   editProjectSupportCompletion(projectSupport: ProjectSupport) {
@@ -170,7 +175,7 @@ export class ProjectSupportComponent extends ProjectComponentBase {
   requestTeamSupport(projectSupport: ProjectSupport) {
     if (this.locked) return;
     this.updateProjectSupportDialog
-      .open({ projectId: projectSupport.projectId, projectSupport: projectSupport, requestTeamSupport: true })
+      .open({ projectSupportGroupId: projectSupport.projectSupportGroupId, projectSupport: projectSupport, requestTeamSupport: true })
       .subscribe(() => {
         this.projectSupportApi.changed.next(null);
       });

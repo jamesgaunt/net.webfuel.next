@@ -5,13 +5,13 @@ namespace Webfuel.Domain;
 
 public class QueryProjectSupport : Query, IRequest<QueryResult<ProjectSupport>>
 {
-    public required Guid ProjectId { get; set; }
+    public required Guid ProjectSupportGroupId { get; set; }
 
     public bool OpenTeamSupportOnly { get; set; }
 
     public Query ApplyCustomFilters()
     {
-        this.Equal(nameof(ProjectSupport.ProjectId), ProjectId);
+        this.Equal(nameof(ProjectSupport.ProjectSupportGroupId), ProjectSupportGroupId);
 
         if (OpenTeamSupportOnly)
             this.SQL($"e.[SupportRequestedTeamId] IS NOT NULL AND e.[SupportRequestedCompletedAt] IS NULL");
@@ -22,26 +22,26 @@ public class QueryProjectSupport : Query, IRequest<QueryResult<ProjectSupport>>
 
 internal class QueryProjectSupportHandler : IRequestHandler<QueryProjectSupport, QueryResult<ProjectSupport>>
 {
-    private readonly IProjectRepository _projectRepository;
+    private readonly IProjectSupportGroupRepository _projectSupportGroupRepository;
     private readonly IProjectSupportRepository _projectSupportRepository;
     private readonly IFileStorageService _fileStorageService;
 
     public QueryProjectSupportHandler(
-        IProjectRepository projectRepository,
+        IProjectSupportGroupRepository projectSupportGroupRepository,
         IProjectSupportRepository projectSupportRepository,
         IFileStorageService fileStorageService)
     {
-        _projectRepository = projectRepository;
+        _projectSupportGroupRepository = projectSupportGroupRepository;
         _projectSupportRepository = projectSupportRepository;
         _fileStorageService = fileStorageService;
     }
 
     public async Task<QueryResult<ProjectSupport>> Handle(QueryProjectSupport request, CancellationToken cancellationToken)
     {
-        var project = await _projectRepository.RequireProject(request.ProjectId);
+        var projectSupportGroup = await _projectSupportGroupRepository.RequireProjectSupportGroup(request.ProjectSupportGroupId);
         var files = await _fileStorageService.QueryFiles(new QueryFileStorageEntry
         {
-            FileStorageGroupId = project.FileStorageGroupId,
+            FileStorageGroupId = projectSupportGroup.FileStorageGroupId,
             Take = 1000
         });
 

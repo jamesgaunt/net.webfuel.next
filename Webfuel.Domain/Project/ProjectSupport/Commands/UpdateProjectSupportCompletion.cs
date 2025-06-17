@@ -37,8 +37,8 @@ internal class UpdateProjectSupportCompletionHandler : IRequestHandler<UpdatePro
     {
         var projectSupport = await _projectSupportRepository.RequireProjectSupport(request.Id);
 
-        var project = await _projectRepository.RequireProject(projectSupport.ProjectId);
-        if (project.Locked)
+        var project = await _projectRepository.GetProjectByProjectSupportGroupId(projectSupport.ProjectSupportGroupId);
+        if (project != null && project.Locked)
             throw new InvalidOperationException("Unable to edit a locked project");
 
         var updated = projectSupport.Copy();
@@ -47,6 +47,7 @@ internal class UpdateProjectSupportCompletionHandler : IRequestHandler<UpdatePro
 
         projectSupport = await _projectSupportRepository.UpdateProjectSupport(updated: updated, original: projectSupport);
 
+        if (project != null)
         {
             var updatedProject = project.Copy();
             await _projectEnrichmentService.CalculateSupportMetricsForProject(updatedProject);
@@ -56,60 +57,5 @@ internal class UpdateProjectSupportCompletionHandler : IRequestHandler<UpdatePro
         TeamSupportProvider.FlushSupportMetrics();
 
         return projectSupport;
-    }
-
-    async Task SyncroniseUserActivity(ProjectSupport projectSupport, RepositoryCommandBuffer cb)
-    {
-        var existingUserActivity = await _userActivityRepository.SelectUserActivityByProjectSupportId(projectSupport.Id);
-
-        foreach (var userActivity in existingUserActivity)
-        {
-            if (projectSupport.AdviserIds.Contains(userActivity.UserId))
-            {
-                // Update
-                var updated = userActivity.Copy();
-                updated.Date = projectSupport.Date;
-                updated.Description = projectSupport.Description;
-                updated.WorkTimeInHours = projectSupport.WorkTimeInHours;
-                updated.ProjectSupportProvidedIds = projectSupport.SupportProvidedIds;
-
-                await _userActivityRepository.UpdateUserActivity(updated: updated, original: userActivity, commandBuffer: cb);
-            }
-            else
-            {
-                // Delete
-                await _userActivityRepository.DeleteUserActivity(userActivity.Id, commandBuffer: cb);
-            }
-        }
-
-        // Insert
-        {
-            string projectPrefixedNumber = existingUserActivity.Count > 0 ? existingUserActivity[0].ProjectPrefixedNumber : String.Empty;
-
-            foreach (var adviserId in projectSupport.AdviserIds)
-            {
-                if (!existingUserActivity.Any(p => p.UserId == adviserId))
-                {
-                    if (projectPrefixedNumber == String.Empty)
-                    {
-                        var project = await _projectRepository.RequireProject(projectSupport.ProjectId);
-                        projectPrefixedNumber = project.PrefixedNumber;
-                    }
-
-                    await _userActivityRepository.InsertUserActivity(new UserActivity
-                    {
-                        UserId = adviserId,
-                        Date = projectSupport.Date,
-                        Description = projectSupport.Description,
-                        WorkTimeInHours = projectSupport.WorkTimeInHours,
-
-                        ProjectId = projectSupport.ProjectId,
-                        ProjectSupportId = projectSupport.Id,
-                        ProjectPrefixedNumber = projectPrefixedNumber,
-                        ProjectSupportProvidedIds = projectSupport.SupportProvidedIds
-                    }, cb);
-                }
-            }
-        }
     }
 }

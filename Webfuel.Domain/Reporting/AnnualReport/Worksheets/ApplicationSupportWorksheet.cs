@@ -244,7 +244,7 @@ internal class ApplicationSupportWorksheet : AnnualReportWorksheet
 
         NextRow();
 
-        var supportEvents = await serviceProvider.GetRequiredService<IProjectSupportRepository>().SelectProjectSupportByProjectId(project.Id);
+        var supportEvents = await serviceProvider.GetRequiredService<IProjectSupportRepository>().SelectProjectSupportByProjectSupportGroupId(project.ProjectSupportGroupId);
         var submissions = await serviceProvider.GetRequiredService<IProjectSubmissionRepository>().SelectProjectSubmissionByProjectId(project.Id);
 
         if (context.Settings.ToDate.HasValue)

@@ -61,8 +61,8 @@ internal class UpdateProjectSupportHandler : IRequestHandler<UpdateProjectSuppor
 
         var original = await _projectSupportRepository.RequireProjectSupport(request.Id);
 
-        var project = await _projectRepository.RequireProject(original.ProjectId);
-        if (project.Locked)
+        var project = await _projectRepository.GetProjectByProjectSupportGroupId(original.ProjectSupportGroupId);
+        if (project != null && project.Locked)
             throw new InvalidOperationException("Unable to edit a locked project");
 
         var updated = original.Copy();
@@ -97,17 +97,18 @@ internal class UpdateProjectSupportHandler : IRequestHandler<UpdateProjectSuppor
         var cb = new RepositoryCommandBuffer();
         {
             original = await _projectSupportRepository.UpdateProjectSupport(updated: updated, original: original, commandBuffer: cb);
-            await SyncroniseUserActivity(original, cb);
+            await SyncroniseUserActivity(project, original, cb);
         }
         await cb.Execute();
 
+        if (project != null)
         {
             var updatedProject = project.Copy();
             await _projectEnrichmentService.CalculateSupportMetricsForProject(updatedProject);
             await _projectRepository.UpdateProject(original: project, updated: updatedProject);
         }
 
-        if (sendTeamSupportRequestedEmail)
+        if (project != null && sendTeamSupportRequestedEmail)
             await _projectAdviserService.SendTeamSupportRequestedEmail(
                 project: project,
                 supportTeamId: updated.SupportRequestedTeamId!.Value,
@@ -119,7 +120,7 @@ internal class UpdateProjectSupportHandler : IRequestHandler<UpdateProjectSuppor
         return original;
     }
 
-    async Task SyncroniseUserActivity(ProjectSupport projectSupport, RepositoryCommandBuffer cb)
+    async Task SyncroniseUserActivity(Project? project, ProjectSupport projectSupport, RepositoryCommandBuffer cb)
     {
         var existingUserActivity = await _userActivityRepository.SelectUserActivityByProjectSupportId(projectSupport.Id);
 
@@ -145,18 +146,10 @@ internal class UpdateProjectSupportHandler : IRequestHandler<UpdateProjectSuppor
 
         // Insert
         {
-            string projectPrefixedNumber = existingUserActivity.Count > 0 ? existingUserActivity[0].ProjectPrefixedNumber : String.Empty;
-
             foreach (var adviserId in projectSupport.AdviserIds)
             {
                 if (!existingUserActivity.Any(p => p.UserId == adviserId))
                 {
-                    if (projectPrefixedNumber == String.Empty)
-                    {
-                        var project = await _projectRepository.RequireProject(projectSupport.ProjectId);
-                        projectPrefixedNumber = project.PrefixedNumber;
-                    }
-
                     await _userActivityRepository.InsertUserActivity(new UserActivity
                     {
                         UserId = adviserId,
@@ -164,9 +157,8 @@ internal class UpdateProjectSupportHandler : IRequestHandler<UpdateProjectSuppor
                         Description = projectSupport.Description,
                         WorkTimeInHours = projectSupport.WorkTimeInHours,
 
-                        ProjectId = projectSupport.ProjectId,
                         ProjectSupportId = projectSupport.Id,
-                        ProjectPrefixedNumber = projectPrefixedNumber,
+                        ProjectPrefixedNumber = project == null ? String.Empty : project.PrefixedNumber,
                         ProjectSupportProvidedIds = projectSupport.SupportProvidedIds
                     }, cb);
                 }

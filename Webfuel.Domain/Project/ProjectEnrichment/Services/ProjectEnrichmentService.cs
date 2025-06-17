@@ -31,9 +31,9 @@ internal class ProjectEnrichmentService : IProjectEnrichmentService
 
     public async Task CalculateSupportMetricsForProject(Project project)
     {
-        project.SupportTotalMinutes = (await _projectSupportRepository.SumMinutesByProjectId(project.Id)) ?? 0;
+        project.SupportTotalMinutes = (await _projectSupportRepository.SumMinutesByProjectSupportGroupId(project.ProjectSupportGroupId)) ?? 0;
 
-        var openSupportRequests = await _projectSupportRepository.SelectOpenSupportRequestsByProjectId(project.Id);
+        var openSupportRequests = await _projectSupportRepository.SelectOpenSupportRequestsByProjectSupportGroupId(project.ProjectSupportGroupId);
 
         project.OpenSupportRequestTeamIds.Clear();
         project.OverdueSupportRequestTeamIds.Clear();

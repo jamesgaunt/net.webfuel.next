@@ -1,51 +1,43 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using Webfuel.Common;
 
-namespace Webfuel.Domain
+namespace Webfuel.Domain;
+
+public class SelectProjectSupportFile : IRequest<List<ProjectSupportFile>>
 {
-    public class SelectProjectSupportFile : IRequest<List<ProjectSupportFile>>
+    public required Guid ProjectSupportGroupId { get; set; }
+}
+
+internal class SelectProjectSupportFileHandler : IRequestHandler<SelectProjectSupportFile, List<ProjectSupportFile>>
+{
+    private readonly IProjectSupportGroupRepository _projectSupportGroupRepository;
+    private readonly IFileStorageService _fileStorageService;
+
+    public SelectProjectSupportFileHandler(
+        IProjectSupportGroupRepository projectSupportGroupRepository,
+        IFileStorageService fileStorageService)
     {
-        public required Guid ProjectId { get; set; }
+        _projectSupportGroupRepository = projectSupportGroupRepository;
+        _fileStorageService = fileStorageService;
     }
 
-    internal class SelectProjectSupportFileHandler : IRequestHandler<SelectProjectSupportFile, List<ProjectSupportFile>>
+    public async Task<List<ProjectSupportFile>> Handle(SelectProjectSupportFile request, CancellationToken cancellationToken)
     {
-        private readonly IProjectRepository _projectRepository;
-        private readonly IFileStorageService _fileStorageService;
+        var projectSupportGroup = await _projectSupportGroupRepository.RequireProjectSupportGroup(request.ProjectSupportGroupId);
 
-        public SelectProjectSupportFileHandler(
-            IProjectRepository projectRepository,
-            IFileStorageService fileStorageService)
+        var files = await _fileStorageService.QueryFiles(new QueryFileStorageEntry
         {
-            _projectRepository = projectRepository;
-            _fileStorageService = fileStorageService;
-        }
-  
-        public async Task<List<ProjectSupportFile>> Handle(SelectProjectSupportFile request, CancellationToken cancellationToken)
+            FileStorageGroupId = projectSupportGroup.FileStorageGroupId,
+            Skip = 0,
+            Take = 200
+        });
+
+        return files.Items.Select(p => new ProjectSupportFile
         {
-            var project = await _projectRepository.RequireProject(request.ProjectId);
-
-            var files = await _fileStorageService.QueryFiles(new QueryFileStorageEntry
-            {
-                FileStorageGroupId = project.FileStorageGroupId,
-                Skip = 0,
-                Take = 200
-            });
-
-            return files.Items.Select(p => new ProjectSupportFile
-            {
-                Id = p.Id,
-                FileName = p.FileName,
-                SizeBytes = p.SizeBytes,
-                UploadedAt = p.UploadedAt
-            }).ToList();
-        }
+            Id = p.Id,
+            FileName = p.FileName,
+            SizeBytes = p.SizeBytes,
+            UploadedAt = p.UploadedAt
+        }).ToList();
     }
 }

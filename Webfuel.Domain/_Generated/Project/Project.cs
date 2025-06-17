@@ -240,6 +240,9 @@ namespace Webfuel.Domain
                     case nameof(Project.FileStorageGroupId):
                         FileStorageGroupId = (Guid)value!;
                         break;
+                    case nameof(Project.ProjectSupportGroupId):
+                        ProjectSupportGroupId = (Guid)value!;
+                        break;
                     case nameof(Project.LeadAdviserUserId):
                         LeadAdviserUserId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
                         break;
@@ -464,6 +467,7 @@ namespace Webfuel.Domain
         string _LegacyProfessionalBackgroundIdsJson = String.Empty;
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid FileStorageGroupId { get; set; }
+        public Guid ProjectSupportGroupId { get; set; }
         public Guid? LeadAdviserUserId { get; set; }
         public Guid? SubmittedFundingStreamId { get; set; }
         public Guid StatusId { get; set; }
@@ -568,6 +572,7 @@ namespace Webfuel.Domain
             entity.LegacyProfessionalBackgroundIdsJson = LegacyProfessionalBackgroundIdsJson;
             entity.CreatedAt = CreatedAt;
             entity.FileStorageGroupId = FileStorageGroupId;
+            entity.ProjectSupportGroupId = ProjectSupportGroupId;
             entity.LeadAdviserUserId = LeadAdviserUserId;
             entity.SubmittedFundingStreamId = SubmittedFundingStreamId;
             entity.StatusId = StatusId;

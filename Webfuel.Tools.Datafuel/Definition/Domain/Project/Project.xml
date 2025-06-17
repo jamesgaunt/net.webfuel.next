@@ -3,9 +3,11 @@
 <Schema>
   <Entity Name="Project" OrderBy="-Number" Tags="ChangeLog">
     <Key Name="Id" Type="guid" />
+    <Property Name="FileStorageGroupId" Type="FileStorageGroup" Tags="ChangeLog:Ignore" />
+    <Property Name="ProjectSupportGroupId" Type="ProjectSupportGroup" Tags="ChangeLog:Ignore" />
+
     <Property Name="Number" Type="Int32" Tags="ChangeLog:Ignore" />
     <Property Name="PrefixedNumber" Type="meta:name" />
-    <Property Name="FileStorageGroupId" Type="FileStorageGroup" Tags="ChangeLog:Ignore" />
     
     <Property Name="SupportRequestId" Type="Guid?" Tags="ChangeLog:Ignore" />
     <Property Name="ClosureDate" Type="Date?" />
@@ -146,7 +148,6 @@
     <!-- Support Metrics -->
     <Property Name="SupportTotalMinutes" Type="int" Tags="ChangeLog:Ignore" />
     <Property Name="OpenSupportRequestTeamIds" Type="Json:List{Guid}" Tags="ChangeLog:Ignore" />
-
     <Property Name="OverdueSupportRequestTeamIds" Type="Json:List{Guid}" Tags="ChangeLog:Ignore" />
     
     <!-- Temp/Legacy -->
@@ -175,6 +176,9 @@
     </Index>
     <Index Unique="false">
       <Member Name="SupportRequestId" />
+    </Index>
+    <Index Unique="true">
+      <Member Name="ProjectSupportGroupId" />
     </Index>
 
   </Entity>

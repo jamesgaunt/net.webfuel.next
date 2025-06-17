@@ -21,9 +21,9 @@ namespace Webfuel.Domain
         Task<List<ProjectSupport>> SelectProjectSupportBySupportRequestedCompletedAt(DateTimeOffset? supportRequestedCompletedAt);
         Task<List<ProjectSupport>> SelectProjectSupportBySupportRequestedTeamId(Guid? supportRequestedTeamId);
         Task<List<ProjectSupport>> SelectProjectSupportByDate(DateOnly date);
-        Task<List<ProjectSupport>> SelectProjectSupportByProjectId(Guid projectId);
-        Task<int?> SumMinutesByProjectId(Guid projectId);
-        Task<List<ProjectSupport>> SelectOpenSupportRequestsByProjectId(Guid projectId);
+        Task<List<ProjectSupport>> SelectProjectSupportByProjectSupportGroupId(Guid projectSupportGroupId);
+        Task<int?> SumMinutesByProjectSupportGroupId(Guid projectSupportGroupId);
+        Task<List<ProjectSupport>> SelectOpenSupportRequestsByProjectSupportGroupId(Guid projectSupportGroupId);
     }
     [Service(typeof(IProjectSupportRepository))]
     internal partial class ProjectSupportRepository: IProjectSupportRepository
@@ -126,31 +126,31 @@ namespace Webfuel.Domain
             };
             return await _connection.ExecuteReader<ProjectSupport, ProjectSupportMetadata>(sql, parameters);
         }
-        public async Task<List<ProjectSupport>> SelectProjectSupportByProjectId(Guid projectId)
+        public async Task<List<ProjectSupport>> SelectProjectSupportByProjectSupportGroupId(Guid projectSupportGroupId)
         {
-            var sql = @"SELECT * FROM [ProjectSupport] WHERE ProjectId = @ProjectId ORDER BY Date DESC, Id DESC";
+            var sql = @"SELECT * FROM [ProjectSupport] WHERE ProjectSupportGroupId = @ProjectSupportGroupId ORDER BY Date DESC, Id DESC";
             var parameters = new List<SqlParameter>
             {
-                new SqlParameter("@ProjectId", projectId),
+                new SqlParameter("@ProjectSupportGroupId", projectSupportGroupId),
             };
             return await _connection.ExecuteReader<ProjectSupport, ProjectSupportMetadata>(sql, parameters);
         }
-        public async Task<int?> SumMinutesByProjectId(Guid projectId)
+        public async Task<int?> SumMinutesByProjectSupportGroupId(Guid projectSupportGroupId)
         {
-            var sql = @"SELECT SUM(CalculatedMinutes) FROM ProjectSupport WHERE ProjectId = @ProjectId";
+            var sql = @"SELECT SUM(CalculatedMinutes) FROM ProjectSupport WHERE ProjectSupportGroupId = @ProjectSupportGroupId";
             var parameters = new List<SqlParameter>
             {
-                new SqlParameter("ProjectId", projectId),
+                new SqlParameter("ProjectSupportGroupId", projectSupportGroupId),
             };
             var result = await _connection.ExecuteScalar(sql, parameters);
             return result == DBNull.Value ? null : (int)result;
         }
-        public async Task<List<ProjectSupport>> SelectOpenSupportRequestsByProjectId(Guid projectId)
+        public async Task<List<ProjectSupport>> SelectOpenSupportRequestsByProjectSupportGroupId(Guid projectSupportGroupId)
         {
-            var sql = @"SELECT SupportRequestedTeamId, SupportRequestedAt FROM ProjectSupport WHERE ProjectId = @ProjectId AND SupportRequestedCompletedAt IS NULL AND SupportRequestedTeamId IS NOT NULL";
+            var sql = @"SELECT SupportRequestedTeamId, SupportRequestedAt FROM ProjectSupport WHERE ProjectSupportGroupId = @ProjectSupportGroupId AND SupportRequestedCompletedAt IS NULL AND SupportRequestedTeamId IS NOT NULL";
             var parameters = new List<SqlParameter>
             {
-                new SqlParameter("ProjectId", projectId),
+                new SqlParameter("ProjectSupportGroupId", projectSupportGroupId),
             };
             return await _connection.ExecuteReader<ProjectSupport, ProjectSupportMetadata>(sql, parameters);
         }

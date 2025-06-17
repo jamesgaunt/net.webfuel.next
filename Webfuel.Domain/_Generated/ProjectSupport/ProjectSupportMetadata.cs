@@ -59,8 +59,8 @@ namespace Webfuel.Domain
                     case nameof(ProjectSupport.CalculatedMinutes):
                         result.Add(new SqlParameter(nameof(ProjectSupport.CalculatedMinutes), entity.CalculatedMinutes));
                         break;
-                    case nameof(ProjectSupport.ProjectId):
-                        result.Add(new SqlParameter(nameof(ProjectSupport.ProjectId), entity.ProjectId));
+                    case nameof(ProjectSupport.ProjectSupportGroupId):
+                        result.Add(new SqlParameter(nameof(ProjectSupport.ProjectSupportGroupId), entity.ProjectSupportGroupId));
                         break;
                     case nameof(ProjectSupport.IsPrePostAwardId):
                         result.Add(new SqlParameter(nameof(ProjectSupport.IsPrePostAwardId), entity.IsPrePostAwardId));
@@ -110,7 +110,7 @@ namespace Webfuel.Domain
                 yield return "SupportRequestedCompletedNotes";
                 yield return "Files";
                 yield return "CalculatedMinutes";
-                yield return "ProjectId";
+                yield return "ProjectSupportGroupId";
                 yield return "IsPrePostAwardId";
                 yield return "SupportRequestedTeamId";
                 yield return "SupportRequestedCompletedByUserId";
@@ -134,7 +134,7 @@ namespace Webfuel.Domain
                 yield return "SupportRequestedCompletedNotes";
                 yield return "Files";
                 yield return "CalculatedMinutes";
-                yield return "ProjectId";
+                yield return "ProjectSupportGroupId";
                 yield return "IsPrePostAwardId";
                 yield return "SupportRequestedTeamId";
                 yield return "SupportRequestedCompletedByUserId";
@@ -157,7 +157,7 @@ namespace Webfuel.Domain
                 yield return "SupportRequestedCompletedNotes";
                 yield return "Files";
                 yield return "CalculatedMinutes";
-                yield return "ProjectId";
+                yield return "ProjectSupportGroupId";
                 yield return "IsPrePostAwardId";
                 yield return "SupportRequestedTeamId";
                 yield return "SupportRequestedCompletedByUserId";

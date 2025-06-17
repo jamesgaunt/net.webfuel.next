@@ -162,6 +162,9 @@ namespace Webfuel.Domain
                     case nameof(SupportRequest.FileStorageGroupId):
                         FileStorageGroupId = (Guid)value!;
                         break;
+                    case nameof(SupportRequest.ProjectSupportGroupId):
+                        ProjectSupportGroupId = (Guid)value!;
+                        break;
                     case nameof(SupportRequest.StatusId):
                         StatusId = (Guid)value!;
                         break;
@@ -281,6 +284,7 @@ namespace Webfuel.Domain
         public Guid? ProjectId  { get; set; } = null;
         public DateTimeOffset CreatedAt  { get; set; } = new DateTimeOffset(599266080000000000L, TimeSpan.Zero);
         public Guid FileStorageGroupId { get; set; }
+        public Guid ProjectSupportGroupId { get; set; }
         public Guid StatusId { get; set; }
         public Guid? IsFellowshipId { get; set; }
         public Guid? ApplicationStageId { get; set; }
@@ -351,6 +355,7 @@ namespace Webfuel.Domain
             entity.ProjectId = ProjectId;
             entity.CreatedAt = CreatedAt;
             entity.FileStorageGroupId = FileStorageGroupId;
+            entity.ProjectSupportGroupId = ProjectSupportGroupId;
             entity.StatusId = StatusId;
             entity.IsFellowshipId = IsFellowshipId;
             entity.ApplicationStageId = ApplicationStageId;

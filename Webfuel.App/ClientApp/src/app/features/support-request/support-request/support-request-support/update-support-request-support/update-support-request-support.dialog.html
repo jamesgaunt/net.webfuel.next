@@ -1,0 +1,76 @@
+<form class="form dialog" [formGroup]="form">
+  <div class="dialog-head">
+    Update Project Support
+    <span style="float: right">
+      <a (click)="addUploadedFiles()"><i class="fas fa-upload"></i> Upload Files</a>
+      &nbsp;&nbsp;&nbsp;
+      <a (click)="addAttachedFiles()"><i class="fas fa-file-plus"></i> Attach Existing Files</a>
+    </span>
+  </div>
+  <div class="dialog-body">
+    <div class="flex" *ngIf="data.requestTeamSupport !== true">
+      <div class="field is-6">
+        <label class="label">Date of support</label>
+        <date-picker placeholder="required" formControlName="date"></date-picker>
+      </div>
+      <div class="field is-6">
+        <label class="label">Time in hours per adviser (0 - 8)</label>
+        <input class="input" type="number" min="0" max="8" formControlName="workTimeInHours" placeholder="required" />
+      </div>
+      <div class="field is-6">
+        <label class="label">Pre/Post Award</label>
+        <dropdown-select [dataSource]="staticDataCache.isPrePostAward" placeholder="required" formControlName="isPrePostAwardId"></dropdown-select>
+      </div>
+      <div class="field is-6">
+        <label class="label">Teams (include all teams providing support)</label>
+        <dropdown-multi-select [dataSource]="staticDataCache.supportTeam" placeholder="required" formControlName="teamIds">
+          <ng-template #optionTemplate let-item> {{ item.name }} </ng-template>
+          <ng-template #pickedTemplate let-item> {{ item.name }} </ng-template>
+        </dropdown-multi-select>
+      </div>
+      <div class="field is-6">
+        <label class="label">Advisers (include all advisers providing support)</label>
+        <dropdown-multi-select [dataSource]="userApi" placeholder="required" formControlName="adviserIds">
+          <ng-template #optionTemplate let-item> {{ item.fullName }} </ng-template>
+          <ng-template #pickedTemplate let-item> {{ item.fullName }} </ng-template>
+        </dropdown-multi-select>
+      </div>
+      <div class="field is-6">
+        <label class="label">Support provided (include all types of support provided)</label>
+        <dropdown-multi-select
+          [dataSource]="staticDataCache.supportProvided"
+          [closeOnSelect]="false"
+          placeholder="required"
+          formControlName="supportProvidedIds"
+        ></dropdown-multi-select>
+      </div>
+    </div>
+    <div class="flex">
+      <div class="field is-12">
+        <label class="label">Description of support provided</label>
+        <html-editor formControlName="description" [height]="300" placeholder="required"></html-editor>
+        <div style="font-size: 0.8em; text-align: right; margin-top: 4px">
+          {{ (form.getRawValue().description.length || 0) | number: '1.0-0' }} / 20,000 characters of html
+        </div>
+      </div>
+    </div>
+    <div class="file-attachments">
+      <div class="tags">
+        <div *ngFor="let existingFile of existingFiles" class="tag is-primary">
+          {{ existingFile.fileName }}&nbsp;&nbsp;&nbsp;<a style="font-size: 1.2em" class="link" (click)="removeExistingFile(existingFile, $event)"
+            ><i class="fas fa-times"></i
+          ></a>
+        </div>
+        <div *ngFor="let uploadedFile of uploadedFiles" class="tag is-success">
+          {{ uploadedFile.name }}&nbsp;&nbsp;&nbsp;<a style="font-size: 1.2em" class="link" (click)="removeUploadedFile(uploadedFile, $event)"
+            ><i class="fas fa-times"></i
+          ></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dialog-buttons">
+    <button type="submit" class="is-success" (click)="save()">Save</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+  </div>
+</form>

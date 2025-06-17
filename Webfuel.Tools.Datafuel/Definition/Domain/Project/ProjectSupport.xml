@@ -1,10 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Schema>
+
+  <Entity Name="ProjectSupportGroup">
+    <Key Name="Id" Type="guid" />
+    <Property Name="FileStorageGroupId" Type="FileStorageGroup" />
+    <Property Name="CreatedAt" Type="DateTime" />
+  </Entity>
+  
   <Entity Name="ProjectSupport" OrderBy="-Date,-Id">
     <Key Name="Id" Type="guid" />
+    <Property Name="ProjectSupportGroupId" Type="ProjectSupportGroup" />
+    
     <Property Name="Date" Type="Date" />
-    <Property Name="ProjectId" Type="Project" CascadeDelete="true" />
 
     <!-- Support Provided -->
     <Property Name="Description" Type="String" />
@@ -28,7 +36,7 @@
     <Property Name="CalculatedMinutes" Type="int" />
     
     <Index Unique="false">
-      <Member Name="ProjectId" />
+      <Member Name="ProjectSupportGroupId" />
     </Index>
     <Index Unique="false">
       <Member Name="Date" />
@@ -40,20 +48,20 @@
       <Member Name="SupportRequestedCompletedAt" />
     </Index>
 
-    <Query Name="SumMinutesByProjectId" ReturnType="int?">
-      <Parameter Name="ProjectId" Type="Guid" />
+    <Query Name="SumMinutesByProjectSupportGroupId" ReturnType="int?">
+      <Parameter Name="ProjectSupportGroupId" Type="Guid" />
       <Sql>
         <![CDATA[
-        SELECT SUM(CalculatedMinutes) FROM ProjectSupport WHERE ProjectId = @ProjectId
+        SELECT SUM(CalculatedMinutes) FROM ProjectSupport WHERE ProjectSupportGroupId = @ProjectSupportGroupId
         ]]>
       </Sql>
     </Query>
 
-    <Query Name="SelectOpenSupportRequestsByProjectId">
-      <Parameter Name="ProjectId" Type="Guid" />
+    <Query Name="SelectOpenSupportRequestsByProjectSupportGroupId">
+      <Parameter Name="ProjectSupportGroupId" Type="Guid" />
       <Sql>
         <![CDATA[
-        SELECT SupportRequestedTeamId, SupportRequestedAt FROM ProjectSupport WHERE ProjectId = @ProjectId AND SupportRequestedCompletedAt IS NULL AND SupportRequestedTeamId IS NOT NULL
+        SELECT SupportRequestedTeamId, SupportRequestedAt FROM ProjectSupport WHERE ProjectSupportGroupId = @ProjectSupportGroupId AND SupportRequestedCompletedAt IS NULL AND SupportRequestedTeamId IS NOT NULL
         ]]>
       </Sql>
     </Query>

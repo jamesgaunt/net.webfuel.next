@@ -20,7 +20,6 @@ namespace Webfuel.Domain
         Task<List<UserActivity>> SelectUserActivityWithPage(int skip, int take);
         Task<List<UserActivity>> SelectUserActivityByDate(DateOnly date);
         Task<List<UserActivity>> SelectUserActivityByProjectSupportId(Guid? projectSupportId);
-        Task<List<UserActivity>> SelectUserActivityByProjectId(Guid? projectId);
         Task<List<UserActivity>> SelectUserActivityByUserId(Guid userId);
     }
     [Service(typeof(IUserActivityRepository))]
@@ -112,15 +111,6 @@ namespace Webfuel.Domain
             var parameters = new List<SqlParameter>
             {
                 new SqlParameter("@ProjectSupportId", (object?)projectSupportId ?? DBNull.Value),
-            };
-            return await _connection.ExecuteReader<UserActivity, UserActivityMetadata>(sql, parameters);
-        }
-        public async Task<List<UserActivity>> SelectUserActivityByProjectId(Guid? projectId)
-        {
-            var sql = @"SELECT * FROM [UserActivity] WHERE ((ProjectId = @ProjectId) OR (ProjectId IS NULL AND @ProjectId IS NULL)) ORDER BY Date DESC";
-            var parameters = new List<SqlParameter>
-            {
-                new SqlParameter("@ProjectId", (object?)projectId ?? DBNull.Value),
             };
             return await _connection.ExecuteReader<UserActivity, UserActivityMetadata>(sql, parameters);
         }

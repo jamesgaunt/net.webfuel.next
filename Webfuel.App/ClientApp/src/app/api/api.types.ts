@@ -1050,6 +1050,7 @@ export interface Project {
     legacyProfessionalBackgroundIds: Array<string>;
     createdAt: string;
     fileStorageGroupId: string;
+    projectSupportGroupId: string;
     leadAdviserUserId: string | null | null;
     submittedFundingStreamId: string | null | null;
     statusId: string;
@@ -1326,7 +1327,7 @@ export interface ProjectSupport {
     supportRequestedCompletedNotes: string;
     files: Array<ProjectSupportFile>;
     calculatedMinutes: number;
-    projectId: string;
+    projectSupportGroupId: string;
     isPrePostAwardId: string;
     supportRequestedTeamId: string | null | null;
     supportRequestedCompletedByUserId: string | null | null;
@@ -1340,7 +1341,7 @@ export interface ProjectSupportFile {
 }
 
 export interface CreateProjectSupport {
-    projectId: string;
+    projectSupportGroupId: string;
     date: string | null | null;
     teamIds: Array<string>;
     adviserIds: Array<string>;
@@ -1386,7 +1387,7 @@ export interface UncompleteProjectSupport {
 }
 
 export interface QueryProjectSupport extends Query {
-    projectId: string;
+    projectSupportGroupId: string;
     openTeamSupportOnly: boolean;
     skip: number;
     take: number;
@@ -1397,7 +1398,7 @@ export interface QueryProjectSupport extends Query {
 }
 
 export interface SelectProjectSupportFile {
-    projectId: string;
+    projectSupportGroupId: string;
 }
 
 export interface Report {
@@ -1605,6 +1606,7 @@ export interface SupportRequest {
     projectId: string | null | null;
     createdAt: string;
     fileStorageGroupId: string;
+    projectSupportGroupId: string;
     statusId: string;
     isFellowshipId: string | null | null;
     applicationStageId: string | null | null;
@@ -1842,7 +1844,6 @@ export interface UserActivity {
     projectSupportProvidedIds: Array<string>;
     userId: string;
     workActivityId: string | null | null;
-    projectId: string | null | null;
     projectSupportId: string | null | null;
 }
 

@@ -4,7 +4,7 @@ namespace Webfuel.Domain;
 
 public class CreateProjectSupport : IRequest<ProjectSupport>
 {
-    public required Guid ProjectId { get; set; }
+    public required Guid ProjectSupportGroupId { get; set; }
 
     public DateOnly? Date { get; set; }
 
@@ -59,12 +59,12 @@ internal class CreateProjectSupportHandler : IRequestHandler<CreateProjectSuppor
 
         request.Description = _htmlSanitizerService.SanitizeHtml(request.Description);
 
-        var project = await _projectRepository.RequireProject(request.ProjectId);
-        if (project.Locked)
+        var project = await _projectRepository.GetProjectByProjectSupportGroupId(request.ProjectSupportGroupId);
+        if (project != null && project.Locked)
             throw new InvalidOperationException("Unable to edit a locked project");
 
         var projectSupport = new ProjectSupport();
-        projectSupport.ProjectId = request.ProjectId;
+        projectSupport.ProjectSupportGroupId = request.ProjectSupportGroupId;
         projectSupport.Date = request.Date ?? DateOnly.FromDateTime(DateTime.Now);
         projectSupport.TeamIds = request.TeamIds;
         projectSupport.AdviserIds = request.AdviserIds;
@@ -88,6 +88,7 @@ internal class CreateProjectSupportHandler : IRequestHandler<CreateProjectSuppor
         }
         await cb.Execute();
 
+        if (project != null)
         {
             var updatedProject = project.Copy();
             await _projectEnrichmentService.CalculateSupportMetricsForProject(updatedProject);
@@ -97,7 +98,8 @@ internal class CreateProjectSupportHandler : IRequestHandler<CreateProjectSuppor
         TeamSupportProvider.FlushSupportMetrics();
         TeamActivityProvider.FlushTeamActivityMetrics();
 
-        if (projectSupport.SupportRequestedTeamId.HasValue)
+        // We can only request support from a team on a project, not while the request is in triage
+        if (project != null && projectSupport.SupportRequestedTeamId.HasValue)
             await _projectAdviserService.SendTeamSupportRequestedEmail(
                 project: project,
                 supportTeamId: projectSupport.SupportRequestedTeamId.Value,
@@ -106,7 +108,7 @@ internal class CreateProjectSupportHandler : IRequestHandler<CreateProjectSuppor
         return projectSupport;
     }
 
-    async Task SyncroniseUserActivity(Project project, ProjectSupport projectSupport, RepositoryCommandBuffer cb)
+    async Task SyncroniseUserActivity(Project? project, ProjectSupport projectSupport, RepositoryCommandBuffer cb)
     {
         foreach (var adviserId in projectSupport.AdviserIds)
         {
@@ -117,9 +119,8 @@ internal class CreateProjectSupportHandler : IRequestHandler<CreateProjectSuppor
                 Description = projectSupport.Description,
                 WorkTimeInHours = projectSupport.WorkTimeInHours,
 
-                ProjectId = projectSupport.ProjectId,
                 ProjectSupportId = projectSupport.Id,
-                ProjectPrefixedNumber = project.PrefixedNumber,
+                ProjectPrefixedNumber = project?.PrefixedNumber ?? String.Empty,
                 ProjectSupportProvidedIds = projectSupport.SupportProvidedIds
             }, cb);
         }

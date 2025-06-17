@@ -3,8 +3,9 @@
 <Schema>
   <Entity Name="SupportRequest" OrderBy="-Id" Tags="ChangeLog">
     <Key Name="Id" Type="guid" />
-
     <Property Name="FileStorageGroupId" Type="FileStorageGroup" Tags="ChangeLog:Ignore" />
+    <Property Name="ProjectSupportGroupId" Type="ProjectSupportGroup" Tags="ChangeLog:Ignore" />
+    
     <Property Name="StatusId" Type="SupportRequestStatus" />
 
     <!-- Meta (not converted to project data) -->
