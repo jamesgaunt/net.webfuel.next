@@ -96,7 +96,7 @@ internal class TeamSupportProvider : ITeamSupportProvider
     {
         var query = new Query();
         query.Equal(nameof(Project.StatusId), ProjectStatusEnum.Active);
-        query.SQL($"EXISTS (SELECT Id FROM [ProjectSupport] AS ps WHERE ps.[ProjectId] = e.Id AND ps.[SupportRequestedTeamId] = '{supportTeam.Id}' AND ps.[SupportRequestedCompletedAt] IS NULL)");
+        query.SQL($"EXISTS (SELECT Id FROM [ProjectSupport] AS ps WHERE ps.[ProjectSupportGroupId] = e.ProjectSupportGroupId AND ps.[SupportRequestedTeamId] = '{supportTeam.Id}' AND ps.[SupportRequestedCompletedAt] IS NULL)");
         var queryResult = await _projectRepository.QueryProject(query, selectItems: false, countTotal: true);
 
         return new DashboardMetric
