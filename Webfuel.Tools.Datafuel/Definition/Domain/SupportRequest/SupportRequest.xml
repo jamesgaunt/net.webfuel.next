@@ -105,6 +105,11 @@
 
     <!-- Audit -->
     <Property Name="CreatedAt" Type="DateTime" Tags="ChangeLog:Ignore" />
+
+    <Index Unique="true">
+      <Member Name="ProjectSupportGroupId" />
+    </Index>
+
   </Entity>
 </Schema>
 

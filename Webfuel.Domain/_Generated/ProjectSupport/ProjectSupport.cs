@@ -54,6 +54,9 @@ namespace Webfuel.Domain
                     case nameof(ProjectSupport.Files):
                         FilesJson = (string)value!;
                         break;
+                    case nameof(ProjectSupport.ProjectId):
+                        ProjectId = (Guid)value!;
+                        break;
                     case nameof(ProjectSupport.CalculatedMinutes):
                         CalculatedMinutes = (int)value!;
                         break;
@@ -128,6 +131,7 @@ namespace Webfuel.Domain
             set { _FilesJson = value; _Files = null; }
         }
         string _FilesJson = String.Empty;
+        public Guid ProjectId  { get; set; } = Guid.Empty;
         public int CalculatedMinutes  { get; set; } = 0;
         public Guid ProjectSupportGroupId { get; set; }
         public Guid IsPrePostAwardId { get; set; } = Guid.Parse("d8c2fe26-3a35-4a49-b61d-b5abc41611f6");
@@ -148,6 +152,7 @@ namespace Webfuel.Domain
             entity.SupportRequestedCompletedDate = SupportRequestedCompletedDate;
             entity.SupportRequestedCompletedNotes = SupportRequestedCompletedNotes;
             entity.FilesJson = FilesJson;
+            entity.ProjectId = ProjectId;
             entity.CalculatedMinutes = CalculatedMinutes;
             entity.ProjectSupportGroupId = ProjectSupportGroupId;
             entity.IsPrePostAwardId = IsPrePostAwardId;

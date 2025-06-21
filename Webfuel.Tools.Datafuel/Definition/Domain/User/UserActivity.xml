@@ -20,7 +20,7 @@
     <Property Name="ProjectPrefixedNumber" Type="meta:name" />
     <Property Name="ProjectSupportProvidedIds" Type="Json:List{Guid}" />
     <!-- /Project Activity -->
-
+    
     <!-- === /Only one of these sections should be populated === -->
 
     <Index Unique="false">

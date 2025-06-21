@@ -36,6 +36,9 @@ namespace Webfuel.Domain
                     case nameof(UserActivity.ProjectSupportProvidedIds):
                         ProjectSupportProvidedIdsJson = (string)value!;
                         break;
+                    case nameof(UserActivity.ProjectId):
+                        ProjectId = value == DBNull.Value ? (Guid?)null : (Guid?)value;
+                        break;
                     case nameof(UserActivity.UserId):
                         UserId = (Guid)value!;
                         break;
@@ -65,6 +68,7 @@ namespace Webfuel.Domain
             set { _ProjectSupportProvidedIdsJson = value; _ProjectSupportProvidedIds = null; }
         }
         string _ProjectSupportProvidedIdsJson = String.Empty;
+        public Guid? ProjectId  { get; set; } = null;
         public Guid UserId { get; set; }
         public Guid? WorkActivityId { get; set; }
         public Guid? ProjectSupportId { get; set; }
@@ -77,6 +81,7 @@ namespace Webfuel.Domain
             entity.WorkTimeInHours = WorkTimeInHours;
             entity.ProjectPrefixedNumber = ProjectPrefixedNumber;
             entity.ProjectSupportProvidedIdsJson = ProjectSupportProvidedIdsJson;
+            entity.ProjectId = ProjectId;
             entity.UserId = UserId;
             entity.WorkActivityId = WorkActivityId;
             entity.ProjectSupportId = ProjectSupportId;

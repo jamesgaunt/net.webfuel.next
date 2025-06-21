@@ -64,4 +64,10 @@ export class MyActivityComponent {
       this.reportService.runReport(result);
     });
   }
+
+  // Project Activity
+
+  isProjectActivity(userActivity: UserActivity): boolean {
+    return userActivity.projectSupportId !== null;
+  }
 }

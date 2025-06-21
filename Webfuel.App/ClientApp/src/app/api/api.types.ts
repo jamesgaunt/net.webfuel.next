@@ -1326,6 +1326,7 @@ export interface ProjectSupport {
     supportRequestedCompletedDate: string | null | null;
     supportRequestedCompletedNotes: string;
     files: Array<ProjectSupportFile>;
+    projectId: string;
     calculatedMinutes: number;
     projectSupportGroupId: string;
     isPrePostAwardId: string;
@@ -1835,13 +1836,13 @@ export interface QuerySupportTeamUser extends Query {
 }
 
 export interface UserActivity {
-    isProjectActivity: boolean;
     id: string;
     date: string;
     description: string;
     workTimeInHours: number;
     projectPrefixedNumber: string;
     projectSupportProvidedIds: Array<string>;
+    projectId: string | null | null;
     userId: string;
     workActivityId: string | null | null;
     projectSupportId: string | null | null;

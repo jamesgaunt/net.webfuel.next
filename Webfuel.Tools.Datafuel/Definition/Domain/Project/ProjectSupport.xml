@@ -10,7 +10,7 @@
   
   <Entity Name="ProjectSupport" OrderBy="-Date,-Id">
     <Key Name="Id" Type="guid" />
-    <Property Name="ProjectSupportGroupId" Type="ProjectSupportGroup" />
+    <Property Name="ProjectSupportGroupId" Type="ProjectSupportGroup" Tags="ChangeLog:Ignore" />
     
     <Property Name="Date" Type="Date" />
 
@@ -34,7 +34,7 @@
 
     <!-- Calculated  -->
     <Property Name="CalculatedMinutes" Type="int" />
-    
+
     <Index Unique="false">
       <Member Name="ProjectSupportGroupId" />
     </Index>

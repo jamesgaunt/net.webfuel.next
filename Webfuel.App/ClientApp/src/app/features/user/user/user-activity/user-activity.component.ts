@@ -1,23 +1,21 @@
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { QueryUserActivity, User, UserActivity } from 'api/api.types';
+import { User, UserActivity } from 'api/api.types';
 import { StaticDataCache } from 'api/static-data.cache';
 import { UserActivityApi } from 'api/user-activity.api';
 import { UserApi } from 'api/user.api';
 import { FormService } from 'core/form.service';
-import { UpdateUserActivityDialog } from '../../../../shared/dialogs/update-user-activity/update-user-activity.dialog';
-import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
-import { ReportService } from '../../../../core/report.service';
 import _ from 'shared/common/underscore';
+import { ReportService } from '../../../../core/report.service';
+import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
+import { UpdateUserActivityDialog } from '../../../../shared/dialogs/update-user-activity/update-user-activity.dialog';
 
 @Component({
   selector: 'user-activity',
-  templateUrl: './user-activity.component.html'
+  templateUrl: './user-activity.component.html',
 })
 export class UserActivityComponent implements OnInit {
-
   destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
@@ -29,10 +27,8 @@ export class UserActivityComponent implements OnInit {
     public userApi: UserApi,
     public userActivityApi: UserActivityApi,
     public staticDataCache: StaticDataCache,
-    public reportService: ReportService,
-
-  ) {
-  }
+    public reportService: ReportService
+  ) {}
 
   ngOnInit() {
     this.reset(this.route.snapshot.data.user);
@@ -49,7 +45,7 @@ export class UserActivityComponent implements OnInit {
     fromDate: new FormControl<string | null>(null),
     toDate: new FormControl<string | null>(null),
     description: new FormControl<string>('', { nonNullable: true }),
-    userId: new FormControl<string | null>(null)
+    userId: new FormControl<string | null>(null),
   });
 
   resetFilterForm() {
@@ -68,8 +64,8 @@ export class UserActivityComponent implements OnInit {
   }
 
   delete(userActivity: UserActivity) {
-    this.confirmDeleteDialog.open({ title: "User Activity" }).subscribe(() => {
-      this.userActivityApi.delete({ id: userActivity.id }, { successGrowl: "User Activity Deleted" }).subscribe();
+    this.confirmDeleteDialog.open({ title: 'User Activity' }).subscribe(() => {
+      this.userActivityApi.delete({ id: userActivity.id }, { successGrowl: 'User Activity Deleted' }).subscribe();
     });
   }
 
@@ -77,5 +73,11 @@ export class UserActivityComponent implements OnInit {
     this.userActivityApi.export(_.merge(this.filterForm.getRawValue(), { skip: 0, take: 0 })).subscribe((result) => {
       this.reportService.runReport(result);
     });
+  }
+
+  // Project Activity
+
+  isProjectActivity(userActivity: UserActivity): boolean {
+    return userActivity.projectSupportId !== null;
   }
 }

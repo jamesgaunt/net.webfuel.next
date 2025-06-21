@@ -4,4 +4,9 @@
     <ProjectReference Include="..\Webfuel.Excel\Webfuel.Excel.csproj" />
     <ProjectReference Include="..\Webfuel.Reporting\Webfuel.Reporting.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>Webfuel.Tools.ConsoleApp</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
 </Project>

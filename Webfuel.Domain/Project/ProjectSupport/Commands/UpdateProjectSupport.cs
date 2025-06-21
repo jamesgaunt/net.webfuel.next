@@ -133,6 +133,8 @@ internal class UpdateProjectSupportHandler : IRequestHandler<UpdateProjectSuppor
                 updated.Date = projectSupport.Date;
                 updated.Description = projectSupport.Description;
                 updated.WorkTimeInHours = projectSupport.WorkTimeInHours;
+
+                updated.ProjectPrefixedNumber = project?.PrefixedNumber ?? "TRIAGE";
                 updated.ProjectSupportProvidedIds = projectSupport.SupportProvidedIds;
 
                 await _userActivityRepository.UpdateUserActivity(updated: updated, original: userActivity, commandBuffer: cb);
@@ -158,7 +160,7 @@ internal class UpdateProjectSupportHandler : IRequestHandler<UpdateProjectSuppor
                         WorkTimeInHours = projectSupport.WorkTimeInHours,
 
                         ProjectSupportId = projectSupport.Id,
-                        ProjectPrefixedNumber = project == null ? String.Empty : project.PrefixedNumber,
+                        ProjectPrefixedNumber = project?.PrefixedNumber ?? "TRIAGE",
                         ProjectSupportProvidedIds = projectSupport.SupportProvidedIds
                     }, cb);
                 }

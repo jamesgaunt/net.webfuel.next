@@ -50,6 +50,7 @@ internal class Program
         Console.WriteLine("-- fix project supports");
         Console.WriteLine("-- fix project submissions");
         Console.WriteLine("-- fix support requests");
+        Console.WriteLine("-- migrate support");
         Console.WriteLine("-- exit");
 
         Console.Write("> ");
@@ -79,6 +80,10 @@ internal class Program
 
             case "fix support requests":
                 await serviceProvider.GetRequiredService<ISupportRequestFix>().FixSupportRequests();
+                break;
+
+            case "migrate support":
+                await serviceProvider.GetRequiredService<ISupportMigration>().Migrate();
                 break;
 
             default:

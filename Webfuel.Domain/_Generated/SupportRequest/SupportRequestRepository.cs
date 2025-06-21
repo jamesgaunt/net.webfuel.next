@@ -18,6 +18,8 @@ namespace Webfuel.Domain
         Task<int> CountSupportRequest();
         Task<List<SupportRequest>> SelectSupportRequest();
         Task<List<SupportRequest>> SelectSupportRequestWithPage(int skip, int take);
+        Task<SupportRequest?> GetSupportRequestByProjectSupportGroupId(Guid projectSupportGroupId);
+        Task<SupportRequest> RequireSupportRequestByProjectSupportGroupId(Guid projectSupportGroupId);
     }
     [Service(typeof(ISupportRequestRepository))]
     internal partial class SupportRequestRepository: ISupportRequestRepository
@@ -92,6 +94,19 @@ namespace Webfuel.Domain
                 new SqlParameter("@Take", take),
             };
             return await _connection.ExecuteReader<SupportRequest, SupportRequestMetadata>(sql, parameters);
+        }
+        public async Task<SupportRequest?> GetSupportRequestByProjectSupportGroupId(Guid projectSupportGroupId)
+        {
+            var sql = @"SELECT * FROM [SupportRequest] WHERE ProjectSupportGroupId = @ProjectSupportGroupId ORDER BY Id DESC";
+            var parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@ProjectSupportGroupId", projectSupportGroupId),
+            };
+            return (await _connection.ExecuteReader<SupportRequest, SupportRequestMetadata>(sql, parameters)).SingleOrDefault();
+        }
+        public async Task<SupportRequest> RequireSupportRequestByProjectSupportGroupId(Guid projectSupportGroupId)
+        {
+            return await GetSupportRequestByProjectSupportGroupId(projectSupportGroupId) ?? throw new InvalidOperationException("The specified SupportRequest does not exist");
         }
     }
 }

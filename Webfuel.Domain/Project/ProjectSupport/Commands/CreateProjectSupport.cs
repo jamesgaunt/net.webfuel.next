@@ -120,7 +120,7 @@ internal class CreateProjectSupportHandler : IRequestHandler<CreateProjectSuppor
                 WorkTimeInHours = projectSupport.WorkTimeInHours,
 
                 ProjectSupportId = projectSupport.Id,
-                ProjectPrefixedNumber = project?.PrefixedNumber ?? String.Empty,
+                ProjectPrefixedNumber = project?.PrefixedNumber ?? "TRIAGE",
                 ProjectSupportProvidedIds = projectSupport.SupportProvidedIds
             }, cb);
         }
