@@ -71,6 +71,7 @@ internal class SupportMigration : ISupportMigration
         }
 
         // Set ProjectSupportGroupId for each project support
+        /*
         foreach (var projectSupport in projectSupports)
         {
             var originalProjectSupport = projectSupport.Copy();
@@ -84,5 +85,6 @@ internal class SupportMigration : ISupportMigration
             projectSupport.ProjectSupportGroupId = project.FileStorageGroupId;
             await _projectSupportRepository.UpdateProjectSupport(updated: projectSupport, original: originalProjectSupport);
         }
+        */
     }
 }

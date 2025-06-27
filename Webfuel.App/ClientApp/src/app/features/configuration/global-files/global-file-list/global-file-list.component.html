@@ -1,0 +1,14 @@
+<ul class="breadcrumbs">
+  <li><a routerLink="/home">Home</a></li>
+  <li><a routerLink="/configuration/configuration-menu">Configuration</a></li>
+  <li><a routerLink="/configuration/global-file-list">Global Files</a></li>
+</ul>
+<div class="container">
+  <div class="columns">
+    <div class="column">
+      <h1 class="title">Global Files</h1>
+      <div class="message">Files added to this file group will be available to attach to outgoing emails.</div>
+      <file-browser [fileStorageGroupId]="globalFileStorageGroupId" />
+    </div>
+  </div>
+</div>

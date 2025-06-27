@@ -1,25 +1,16 @@
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Project } from 'api/api.types';
-import { ProjectApi } from 'api/project.api';
-import { StaticDataCache } from 'api/static-data.cache';
 import { FormService } from 'core/form.service';
-import { Observable, debounceTime, tap } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ConfigurationService } from '../../../../core/configuration.service';
 import { ProjectComponentBase } from '../shared/project-component-base';
 
 @Component({
   selector: 'project-researcher',
-  templateUrl: './project-researcher.component.html'
+  templateUrl: './project-researcher.component.html',
 })
 export class ProjectResearcherComponent extends ProjectComponentBase {
-
-  constructor(
-    private formService: FormService,
-    public configurationService: ConfigurationService
-  ) {
+  constructor(private formService: FormService, public configurationService: ConfigurationService) {
     super();
   }
 
@@ -28,7 +19,7 @@ export class ProjectResearcherComponent extends ProjectComponentBase {
   }
 
   canUnlock() {
-    return this.configurationService.hasClaim(p => p.claims.canUnlockProjects);
+    return this.configurationService.hasClaim((p) => p.claims.canUnlockProjects);
   }
 
   reset(item: Project) {
@@ -58,9 +49,9 @@ export class ProjectResearcherComponent extends ProjectComponentBase {
     teamContactAltEmail: new FormControl<string>('', { validators: [Validators.email], nonNullable: true }),
     teamContactRoleId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
     teamContactRoleFreeText: new FormControl<string>('', { nonNullable: true }),
-    teamContactMailingPermission: new FormControl<boolean>(false, { validators: [Validators.requiredTrue], nonNullable: true }),
-    teamContactPrivacyStatementRead: new FormControl<boolean>(false, { validators: [Validators.requiredTrue], nonNullable: true }),
-    teamContactServiceAgreementRead: new FormControl<boolean>(false, { validators: [Validators.requiredTrue], nonNullable: true }),
+    teamContactMailingPermission: new FormControl<boolean>(false, { nonNullable: true }),
+    teamContactPrivacyStatementRead: new FormControl<boolean>(false, { nonNullable: true }),
+    teamContactServiceAgreementRead: new FormControl<boolean>(false, { nonNullable: true }),
 
     // Lead Applicant Details
 
@@ -71,11 +62,11 @@ export class ProjectResearcherComponent extends ProjectComponentBase {
 
     leadApplicantJobRole: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     leadApplicantCareerStage: new FormControl<string>('', { nonNullable: true }),
-    leadApplicantCareerStageId: new FormControl<string | null>(null, { }),
+    leadApplicantCareerStageId: new FormControl<string | null>(null, {}),
     leadApplicantOrganisationTypeId: new FormControl<string | null>(null!, { validators: [Validators.required], nonNullable: true }),
     leadApplicantOrganisation: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     leadApplicantDepartment: new FormControl<string>('', { nonNullable: true }),
-    leadApplicantLocationId: new FormControl<string | null>(null, { }),
+    leadApplicantLocationId: new FormControl<string | null>(null, {}),
 
     leadApplicantAddressLine1: new FormControl<string>('', { validators: [Validators.required], nonNullable: true }),
     leadApplicantAddressLine2: new FormControl<string>('', { nonNullable: true }),
@@ -93,13 +84,11 @@ export class ProjectResearcherComponent extends ProjectComponentBase {
   });
 
   save(close: boolean) {
-    if (this.formService.hasErrors(this.form))
-      return;
+    if (this.formService.hasErrors(this.form)) return;
 
-    this.projectApi.updateResearcher(this.form.getRawValue(), { successGrowl: "Project Updated" }).subscribe((result) => {
+    this.projectApi.updateResearcher(this.form.getRawValue(), { successGrowl: 'Project Updated' }).subscribe((result) => {
       this.reset(result);
-      if (close)
-        this.router.navigate(['project/project-list']);
+      if (close) this.router.navigate(['project/project-list']);
     });
   }
 

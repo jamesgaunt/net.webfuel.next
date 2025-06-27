@@ -131,11 +131,11 @@ internal class ProjectEnrichmentService : IProjectEnrichmentService
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // If submission yes but no outcome expected date then red flag: what is the outcome expected date
 
-        if (project.FullSubmissionStatusId == FullSubmissionStatusEnum.Yes && project.FullOutcomeExpectedDate == null)
+        if (project.FullSubmissionStatusId == FullSubmissionStatusEnum.Submitted && project.FullOutcomeExpectedDate == null)
         {
             result.Add(ProjectDiagnostic.EnrichmentWarning("Project has been submitted, what is the outcome expected date?"));
         }
-        else if (project.OutlineSubmissionStatusId == OutlineSubmissionStatusEnum.Yes && project.OutlineOutcomeExpectedDate == null)
+        else if (project.OutlineSubmissionStatusId == OutlineSubmissionStatusEnum.Submitted && project.OutlineOutcomeExpectedDate == null)
         {
             result.Add(ProjectDiagnostic.EnrichmentWarning("Project has been submitted, What is the outcome expected date?"));
         }

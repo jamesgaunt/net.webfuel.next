@@ -1,14 +1,10 @@
 import { Component, Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IsPrePostAwardEnum, QueryOp, SupportRequestStatusEnum } from 'api/api.enums';
-import { Project, Query, SupportRequest } from 'api/api.types';
-import { StaticDataCache } from 'api/static-data.cache';
-import { SupportRequestApi } from 'api/support-request.api';
+import { SupportRequest } from 'api/api.types';
 import { TriageTemplateApi } from 'api/triage-template.api';
 import { FormService } from 'core/form.service';
 import { DialogBase, DialogComponentBase } from 'shared/common/dialog-base';
-import _ from 'shared/common/underscore';
 import { SendEmailDialog } from 'shared/dialogs/send-email/send-email.dialog';
 
 export interface SendTriageTemplateDialogData {
@@ -16,20 +12,19 @@ export interface SendTriageTemplateDialogData {
 }
 
 @Injectable()
-export class SendTriageTemplateDialog extends DialogBase<SupportRequest, SendTriageTemplateDialogData>  {
+export class SendTriageTemplateDialog extends DialogBase<SupportRequest, SendTriageTemplateDialogData> {
   open(data: SendTriageTemplateDialogData) {
     return this._open(SendTriageTemplateDialogComponent, data, {
-      width: '800px'
+      width: '800px',
     });
   }
 }
 
 @Component({
   selector: 'send-triage-template-dialog',
-  templateUrl: './send-triage-template.dialog.html'
+  templateUrl: './send-triage-template.dialog.html',
 })
-export class SendTriageTemplateDialogComponent extends DialogComponentBase<SupportRequest, SendTriageTemplateDialogData>  {
-
+export class SendTriageTemplateDialogComponent extends DialogComponentBase<SupportRequest, SendTriageTemplateDialogData> {
   constructor(
     private router: Router,
     private formService: FormService,
@@ -40,19 +35,22 @@ export class SendTriageTemplateDialogComponent extends DialogComponentBase<Suppo
   }
 
   form = new FormGroup({
-    triageTemplateId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true })
+    triageTemplateId: new FormControl<string>(null!, { validators: [Validators.required], nonNullable: true }),
   });
 
   save() {
-    if (this.formService.hasErrors(this.form))
-      return;
+    if (this.formService.hasErrors(this.form)) return;
 
-    this.triageTemplateApi.generateEmail({
-      triageTemplateId: this.form.getRawValue().triageTemplateId,
-      supportRequestId: this.data.supportRequest.id
-    })
+    this.triageTemplateApi
+      .generateEmail({
+        triageTemplateId: this.form.getRawValue().triageTemplateId,
+        supportRequestId: this.data.supportRequest.id,
+      })
       .subscribe((result) => {
-        this.sendEmailDialog.open({ request: result }).subscribe(() => {
+        this.sendEmailDialog.open({ autoSend: false, request: result }).subscribe((request) => {
+          this.triageTemplateApi
+            .sendEmail({ supportRequestId: this.data.supportRequest.id, sendEmailRequest: request }, { successGrowl: 'Triage Email Sent' })
+            .subscribe(() => {});
         });
         this._cancelDialog();
       });

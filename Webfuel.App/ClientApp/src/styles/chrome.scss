@@ -74,6 +74,10 @@
 }
 
 @media print {
+  .chrome {
+    height: auto !important;
+    display: block !important;
+  }
   .chrome-head,
   .chrome-side {
     display: none !important;
@@ -81,5 +85,4 @@
   .app-mode-active {
     background-color: #fff !important;
   }
-
 }

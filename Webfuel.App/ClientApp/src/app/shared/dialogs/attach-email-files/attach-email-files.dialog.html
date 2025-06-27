@@ -1,0 +1,67 @@
+<form class="form dialog" [formGroup]="form">
+  <div class="dialog-head">Attach Files</div>
+  <div class="dialog-body">
+    <div class="tabs">
+      <ul>
+        <li [ngClass]="{ 'is-active': view === 'local' }"><a (click)="switchView('local')">Local Files</a></li>
+        <li [ngClass]="{ 'is-active': view === 'global' }"><a (click)="switchView('global')">Global Files</a></li>
+      </ul>
+    </div>
+
+    @if(view === 'local') { @if(localFiles === null) {
+    <p>Loading...</p>
+    } @else if(localFiles.length > 0) {
+    <div class="table">
+      <table class="selectable">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Filename</th>
+            <th>Size</th>
+            <th>Uploaded At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let file of localFiles" (click)="toggleAttachment(file)" [ngClass]="{ 'is-success' : isAttachment(file) }">
+            <td class="table-checkbox" style="text-align: center"><i class="{{ iconClass(file) }}"></i></td>
+            <td>{{ file.fileName }}</td>
+            <td>{{ formatSize(file) }}</td>
+            <td>{{ file.uploadedAt | date: 'dd MMM yyyy HH:mm' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    } @else {
+    <div class="message">No local files found</div>
+    } } @else if(view === 'global') { @if(globalFiles === null) {
+    <p>Loading...</p>
+    } @else if(globalFiles.length > 0) {
+    <div class="table">
+      <table class="selectable">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Filename</th>
+            <th>Size</th>
+            <th>Uploaded At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let file of globalFiles" (click)="toggleAttachment(file)" [ngClass]="{ 'is-success' : isAttachment(file) }">
+            <td class="table-checkbox" style="text-align: center"><i class="{{ iconClass(file) }}"></i></td>
+            <td>{{ file.fileName }}</td>
+            <td>{{ formatSize(file) }}</td>
+            <td>{{ file.uploadedAt | date: 'dd MMM yyyy HH:mm' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    } @else {
+    <div class="message">No global files found</div>
+    } }
+  </div>
+  <div class="dialog-buttons">
+    <button type="submit" class="is-success" (click)="save()">Attach</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+  </div>
+</form>

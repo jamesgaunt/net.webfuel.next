@@ -1,6 +1,9 @@
 <form class="form dialog" [formGroup]="form">
   <div class="dialog-head">
     Send Email
+    <span style="float: right">
+      <a (click)="attachFiles()"><i class="fas fa-file-plus"></i> Attach Files</a>
+    </span>
   </div>
   <div class="dialog-body">
     <div class="flex">
@@ -19,10 +22,18 @@
         <html-editor formControlName="htmlBody" placeholder="required"></html-editor>
       </div>
     </div>
+    <div class="file-attachments">
+      <div class="tags">
+        <div *ngFor="let attachment of this.attachments" class="tag is-primary">
+          {{ attachment.fileName }}&nbsp;&nbsp;&nbsp;<a style="font-size: 1.2em" class="link" (click)="removeAttachment(attachment, $event)"
+            ><i class="fas fa-times"></i
+          ></a>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="dialog-buttons">
     <button type="button" (click)="send()">Send</button>
     <button type="button" (click)="cancel()">Cancel</button>
   </div>
 </form>
-

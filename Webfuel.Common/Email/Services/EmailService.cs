@@ -12,7 +12,8 @@ public interface IEmailService
         string replyTo,
         string subject,
         string htmlBody,
-        Guid? entityId);
+        Guid? entityId,
+        IEnumerable<EmailRelayAttachment>? attachments);
 
     Task<List<EmailLog>> SelectEmailLogByEntityId(Guid entityId);
 }
@@ -37,7 +38,8 @@ internal class EmailService : IEmailService
         string replyTo,
         string subject,
         string htmlBody,
-        Guid? entityId)
+        Guid? entityId,
+        IEnumerable<EmailRelayAttachment>? attachments)
     {
         await _emailRelayService.SendAsync(
             accountName: "rss-ucl",
@@ -48,7 +50,7 @@ internal class EmailService : IEmailService
             sentBy: sentBy,
             subject: subject,
             htmlBody: htmlBody,
-            attachments: null);
+            attachments: attachments);
 
         await _emailLogRepository.InsertEmailLog(new EmailLog
         {

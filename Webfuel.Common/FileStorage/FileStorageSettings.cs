@@ -2,5 +2,5 @@
 
 public static class FileStorageSettings
 {
-    public static Guid GlobalAttachmentStorageGroupId { get; } = Guid.Parse("69e8f5c7-87c9-4f23-840b-7b42bc35d604");
+    public static Guid GlobalFileStorageGroupId { get; } = Guid.Parse("17c28098-375c-4a1a-bc41-43813786ab84");
 }

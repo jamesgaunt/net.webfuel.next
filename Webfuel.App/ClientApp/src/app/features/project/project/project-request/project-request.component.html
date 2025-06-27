@@ -13,7 +13,9 @@
   <form class="form" [formGroup]="form">
     <div class="flex">
       <div class="is-12" *ngIf="item.supportRequestId">
-        <a class="link is-primary" href="/support-request/support-request-item/{{ item.supportRequestId }}"><i class="fas fa-link"></i> Click here to view the original support request for this project</a>
+        <a style="display: block" class="message is-primary" target="_blank" href="/support-request/support-request-item/{{ item.supportRequestId }}"
+          ><i class="fas fa-link"></i> View the original support request for this project</a
+        >
       </div>
       <div class="field is-12">
         <label class="label">Working title of the project</label>
@@ -21,7 +23,12 @@
       </div>
       <div class="field is-6">
         <label class="label">Stage of application</label>
-        <dropdown-select [dataSource]="staticDataCache.applicationStage" [freeTextControl]="form.controls.applicationStageFreeText" placeholder="required" formControlName="applicationStageId"></dropdown-select>
+        <dropdown-select
+          [dataSource]="staticDataCache.applicationStage"
+          [freeTextControl]="form.controls.applicationStageFreeText"
+          placeholder="required"
+          formControlName="applicationStageId"
+        ></dropdown-select>
       </div>
       <div class="field is-6">
         <label class="label">Is this application for a fellowship?</label>
@@ -29,7 +36,11 @@
       </div>
       <div class="field is-6">
         <label class="label">Proposed funding stream</label>
-        <dropdown-select [dataSource]="staticDataCache.fundingStream" placeholder="required" formControlName="proposedFundingStreamId"></dropdown-select>
+        <dropdown-select
+          [dataSource]="staticDataCache.fundingStream"
+          placeholder="required"
+          formControlName="proposedFundingStreamId"
+        ></dropdown-select>
       </div>
       <div class="field is-6">
         <label class="label">Funding stream name / specialist call if known</label>
@@ -37,7 +48,11 @@
       </div>
       <div class="field is-6">
         <label class="label">Type of call</label>
-        <dropdown-select [dataSource]="staticDataCache.fundingCallType" placeholder="required" formControlName="proposedFundingCallTypeId"></dropdown-select>
+        <dropdown-select
+          [dataSource]="staticDataCache.fundingCallType"
+          placeholder="required"
+          formControlName="proposedFundingCallTypeId"
+        ></dropdown-select>
       </div>
       <div class="field is-6">
         <label class="label">NIHR application ID if known</label>
@@ -49,7 +64,11 @@
       </div>
       <div class="field is-6">
         <label class="label">Have your team members been consulted for support?</label>
-        <dropdown-select [dataSource]="staticDataCache.isTeamMembersConsulted" placeholder="required" formControlName="isTeamMembersConsultedId"></dropdown-select>
+        <dropdown-select
+          [dataSource]="staticDataCache.isTeamMembersConsulted"
+          placeholder="required"
+          formControlName="isTeamMembersConsultedId"
+        ></dropdown-select>
       </div>
       <div class="field is-6">
         <label class="label">Has the application or similar been submitted to a funder before?</label>
@@ -57,37 +76,54 @@
       </div>
       <div class="field is-6">
         <label class="label">Have you already got a CTU involved and if so which one?</label>
-        <dropdown-select [dataSource]="staticDataCache.isCTUAlreadyInvolved" [freeTextControl]="form.controls.isCTUAlreadyInvolvedFreeText" freeTextPlaceholder="Please specify which CTU is already involved..." placeholder="required" formControlName="isCTUAlreadyInvolvedId"></dropdown-select>
+        <dropdown-select
+          [dataSource]="staticDataCache.isCTUAlreadyInvolved"
+          [freeTextControl]="form.controls.isCTUAlreadyInvolvedFreeText"
+          freeTextPlaceholder="Please specify which CTU is already involved..."
+          placeholder="required"
+          formControlName="isCTUAlreadyInvolvedId"
+        ></dropdown-select>
       </div>
       <div class="field is-6">
         <label class="label">How did you hear about our hub?</label>
-        <dropdown-select [dataSource]="staticDataCache.howDidYouFindUs" [freeTextControl]="form.controls.howDidYouFindUsFreeText" placeholder="required" formControlName="howDidYouFindUsId"></dropdown-select>
+        <dropdown-select
+          [dataSource]="staticDataCache.howDidYouFindUs"
+          [freeTextControl]="form.controls.howDidYouFindUsFreeText"
+          placeholder="required"
+          formControlName="howDidYouFindUsId"
+        ></dropdown-select>
       </div>
       <div class="field is-12">
-        <label class="label">What is your (or the CIs)  experience of securing funding awards?</label>
+        <label class="label">What is your (or the CIs) experience of securing funding awards?</label>
         <text-area formControlName="experienceOfResearchAwards" placeholder="required"></text-area>
       </div>
       <div class="field is-12">
         <label class="label">
-          Please add a brief description of your proposed study. Where possible include an outline of research question, aims, need and methods (including analysis), potential impact. [max 500 words]
+          Please add a brief description of your proposed study. Where possible include an outline of research question, aims, need and methods
+          (including analysis), potential impact. [max 500 words]
         </label>
         <text-area formControlName="briefDescription" placeholder="required"></text-area>
       </div>
       <div class="field is-12">
         <label class="label">
-          What support are you looking for from RSS?  Eg funding advice, methods advice, PPIE and EDI advice, CTU support, training in methods for grants?
+          What support are you looking for from RSS? Eg funding advice, methods advice, PPIE and EDI advice, CTU support, training in methods for
+          grants?
         </label>
         <text-area formControlName="supportRequested" placeholder="required"></text-area>
       </div>
       <div class="field is-12">
-        <label class="label">
-          Who else is on your study team and what is their expertise?
-        </label>
+        <label class="label"> Who else is on your study team and what is their expertise? </label>
         <text-area formControlName="whoElseIsOnTheStudyTeam" placeholder="required" maxlength="2000"></text-area>
       </div>
       <div class="field is-12">
         <label class="label">What is the professional background of all team/applicants? (select all that apply)</label>
-        <dropdown-multi-select [dataSource]="staticDataCache.researcherProfessionalBackground" [enableClear]="true" [freeTextControl]="form.controls.professionalBackgroundFreeText" placeholder="required" formControlName="professionalBackgroundIds"></dropdown-multi-select>
+        <dropdown-multi-select
+          [dataSource]="staticDataCache.researcherProfessionalBackground"
+          [enableClear]="true"
+          [freeTextControl]="form.controls.professionalBackgroundFreeText"
+          placeholder="required"
+          formControlName="professionalBackgroundIds"
+        ></dropdown-multi-select>
       </div>
     </div>
     <div *ngIf="!locked" class="floating-buttons">

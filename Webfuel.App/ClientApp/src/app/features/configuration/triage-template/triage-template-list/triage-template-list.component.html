@@ -12,8 +12,6 @@
   <grid [dataSource]="triageTemplateApi" stateKey="TriageTemplateList">
     <grid-column name="name" />
     <grid-column name="subject" />
-    <grid-action-column (add)="add()" (edit)="edit($event)" [canDelete]="false" />
+    <grid-action-column (add)="add()" (edit)="edit($event)" (delete)="delete($event)" />
   </grid>
 </div>
-
-

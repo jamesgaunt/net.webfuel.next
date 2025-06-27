@@ -4,6 +4,7 @@ import { ProjectSupportFile } from 'api/api.types';
 import { ProjectSupportApi } from 'api/project-support.api';
 import { DialogComponentBase } from 'shared/common/dialog-base';
 import { AttachProjectSupportFilesDialog } from 'shared/dialogs/attach-project-support-files/attach-project-support-files.dialog';
+import { ConfirmDialog } from 'shared/dialogs/confirm/confirm.dialog';
 import { UploadProjectSupportFilesDialog } from 'shared/dialogs/upload-project-support-files/upload-project-support-files.dialog';
 import { environment } from '../../../../../../environments/environment';
 
@@ -16,6 +17,7 @@ export abstract class ProjectSupportDialogComponentBase<TResult, TData extends P
   projectSupportApi: ProjectSupportApi = inject(ProjectSupportApi);
   uploadProjectSupportFilesDialog: UploadProjectSupportFilesDialog = inject(UploadProjectSupportFilesDialog);
   attachProjectSupportFilesDialog: AttachProjectSupportFilesDialog = inject(AttachProjectSupportFilesDialog);
+  confirmDialog = inject(ConfirmDialog);
 
   constructor() {
     super();
@@ -69,10 +71,19 @@ export abstract class ProjectSupportDialogComponentBase<TResult, TData extends P
     $event.preventDefault();
     $event.stopPropagation();
 
-    var index = this.existingFiles.indexOf(file);
-    if (index !== -1) {
-      this.existingFiles.splice(index, 1);
-    }
+    this.confirmDialog
+      .open({
+        title: 'Delete Existing Attached File',
+        message: `Are you sure you want to remove this file from this support item?<br/><br/><b>Note:</b> This only removes the link. To permanently delete the file, you will need to delete it separately from the Files tab.`,
+      })
+      .subscribe((result) => {
+        if (!result) return;
+
+        var index = this.existingFiles.indexOf(file);
+        if (index !== -1) {
+          this.existingFiles.splice(index, 1);
+        }
+      });
   }
 
   submitFiles() {

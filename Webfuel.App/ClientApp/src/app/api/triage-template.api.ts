@@ -3,7 +3,7 @@ import { Observable, tap } from 'rxjs';
 import { ApiService, ApiOptions } from '../core/api.service';
 import { ActivatedRouteSnapshot, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { IDataSource } from 'shared/common/data-source';
-import { CreateTriageTemplate, TriageTemplate, UpdateTriageTemplate, SortTriageTemplate, GenerateTriageTemplateEmail, SendEmailRequest, QueryTriageTemplate, QueryResult } from './api.types';
+import { CreateTriageTemplate, TriageTemplate, UpdateTriageTemplate, SortTriageTemplate, GenerateTriageTemplateEmail, SendEmailRequest, SendTriageEmail, QueryTriageTemplate, QueryResult } from './api.types';
 
 @Injectable()
 export class TriageTemplateApi implements IDataSource<TriageTemplate, QueryTriageTemplate, CreateTriageTemplate, UpdateTriageTemplate> {
@@ -27,6 +27,10 @@ export class TriageTemplateApi implements IDataSource<TriageTemplate, QueryTriag
     
     public generateEmail (body: GenerateTriageTemplateEmail, options?: ApiOptions): Observable<SendEmailRequest> {
         return this.apiService.request<GenerateTriageTemplateEmail, SendEmailRequest>("PUT", "api/triage-template/generate-email", body, options);
+    }
+    
+    public sendEmail (body: SendTriageEmail, options?: ApiOptions): Observable<any> {
+        return this.apiService.request<SendTriageEmail, any>("PUT", "api/triage-template/send-email", body, options);
     }
     
     public query (body: QueryTriageTemplate, options?: ApiOptions): Observable<QueryResult<TriageTemplate>> {

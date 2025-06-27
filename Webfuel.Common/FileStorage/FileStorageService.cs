@@ -19,6 +19,8 @@ public interface IFileStorageService
     Task<string> GenerateFileAccessToken(Guid fileStorageEntryId);
 
     Task<MemoryStream?> LoadDirect(string path);
+
+    Task<MemoryStream?> LoadDirect(Guid fileStorageEntryId);
 }
 
 [Service(typeof(IFileStorageService))]
@@ -52,6 +54,21 @@ internal class FileStorageService : IFileStorageService
     {
         if (command.FormFile == null)
             throw new InvalidOperationException("No form file supplied to upload file");
+
+        // Ensure the global file storage group exists
+        if (command.FileStorageGroupId == FileStorageSettings.GlobalFileStorageGroupId)
+        {
+            var globalGroup = await _fileStorageGroupRepository.GetFileStorageGroup(FileStorageSettings.GlobalFileStorageGroupId);
+            if (globalGroup == null)
+            {
+                globalGroup = new FileStorageGroup
+                {
+                    Id = FileStorageSettings.GlobalFileStorageGroupId,
+                    CreatedAt = DateTimeOffset.UtcNow,
+                };
+                globalGroup = await _fileStorageGroupRepository.InsertFileStorageGroup(globalGroup);
+            }
+        }
 
         var entry = new FileStorageEntry
         {
@@ -120,6 +137,14 @@ internal class FileStorageService : IFileStorageService
         stream.Position = 0;
 
         return stream;
+    }
+
+    public async Task<MemoryStream?> LoadDirect(Guid fileStorageEntryId)
+    {
+        var entry = await _fileStorageEntryRepository.GetFileStorageEntry(fileStorageEntryId);
+        if (entry == null)
+            return null;
+        return await LoadDirect(Path(entry));
     }
 
     async Task CalculateFileStorageGroupTags(Guid fileStorageGroupId)

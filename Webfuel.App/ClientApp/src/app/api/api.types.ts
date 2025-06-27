@@ -380,6 +380,15 @@ export interface SendEmailRequest {
     sentBy: string;
     replyTo: string;
     entityId: string | null | null;
+    localFileStorageGroupId: string | null | null;
+    globalFileStorageGroupId: string | null | null;
+    attachments: Array<SendEmailAttachment>;
+}
+
+export interface SendEmailAttachment {
+    fileStorageEntryId: string | null | null;
+    fileName: string;
+    sizeBytes: number;
 }
 
 export interface EmailTemplate {
@@ -966,6 +975,11 @@ export interface GenerateTriageTemplateEmail {
     supportRequestId: string;
 }
 
+export interface SendTriageEmail {
+    supportRequestId: string;
+    sendEmailRequest: SendEmailRequest;
+}
+
 export interface QueryTriageTemplate extends Query {
     skip: number;
     take: number;
@@ -1326,7 +1340,6 @@ export interface ProjectSupport {
     supportRequestedCompletedDate: string | null | null;
     supportRequestedCompletedNotes: string;
     files: Array<ProjectSupportFile>;
-    projectId: string;
     calculatedMinutes: number;
     projectSupportGroupId: string;
     isPrePostAwardId: string;
@@ -1842,7 +1855,6 @@ export interface UserActivity {
     workTimeInHours: number;
     projectPrefixedNumber: string;
     projectSupportProvidedIds: Array<string>;
-    projectId: string | null | null;
     userId: string;
     workActivityId: string | null | null;
     projectSupportId: string | null | null;

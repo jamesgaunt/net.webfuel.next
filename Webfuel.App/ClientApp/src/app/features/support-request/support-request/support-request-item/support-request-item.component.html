@@ -25,8 +25,8 @@
   <form class="form" [formGroup]="form">
     <div class="flex">
       <div class="is-12" *ngIf="item.projectId">
-        <a class="link is-primary" href="/project/project-request/{{ item.projectId }}"
-          ><i class="fas fa-link"></i> Click here to view the project associated with this support request</a
+        <a style="display: block; margin-top: 0" target="_blank" class="message is-primary" href="/project/project-request/{{ item.projectId }}"
+          ><i class="fas fa-link"></i> View the project associated with this support request</a
         >
       </div>
 

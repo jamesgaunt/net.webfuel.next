@@ -8,13 +8,19 @@
     <div class="column">
       <h1 class="title">Project {{ item.prefixedNumber }}</h1>
     </div>
-    <div class="column" *ngIf="!locked">
+    <div class="column" *ngIf="isAdministrator() && !locked">
       <div class="header-buttons">
         <button class="button is-primary" (click)="add()">Add Submission</button>
       </div>
     </div>
   </div>
   <project-tabs></project-tabs>
+
+  <div class="message is-warning">
+    Submission details are now managed in the Projects tab. Please go to the Projects tab and scroll down to the submission section to add or update
+    submission information.
+  </div>
+
   <grid [dataSource]="projectSubmissionApi" (filter)="filter($event)">
     <grid-reference-column name="fundingStreamId" [dataSource]="staticDataCache.fundingStream" />
     <grid-date-column name="submissionDate" />

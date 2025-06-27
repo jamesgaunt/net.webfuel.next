@@ -1,5 +1,4 @@
 using MediatR;
-using Microsoft.AspNetCore.Mvc.Localization;
 using Webfuel.Common;
 
 namespace Webfuel.Domain;
@@ -48,7 +47,9 @@ internal class GenerateTriageTemplateEmailHandler : IRequestHandler<GenerateTria
             SendTo = user.Email,
             SentBy = "admin@rssimperialpartners.org.uk",
             ReplyTo = "admin@rssimperialpartners.org.uk",
-            EntityId = supportRequest.Id
+            EntityId = supportRequest.Id,
+            LocalFileStorageGroupId = supportRequest.FileStorageGroupId,
+            GlobalFileStorageGroupId = FileStorageSettings.GlobalFileStorageGroupId
         };
 
         return result;

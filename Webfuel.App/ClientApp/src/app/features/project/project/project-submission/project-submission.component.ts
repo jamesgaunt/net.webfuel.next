@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Project, ProjectSubmission, QueryProjectSubmission } from 'api/api.types';
+import { ProjectSubmission, QueryProjectSubmission } from 'api/api.types';
 import { ProjectSubmissionApi } from 'api/project-submission.api';
-import { StaticDataCache } from 'api/static-data.cache';
+import { ConfigurationService } from 'core/configuration.service';
 import { FormService } from 'core/form.service';
 import { ConfirmDeleteDialog } from '../../../../shared/dialogs/confirm-delete/confirm-delete.dialog';
 import { UpdateProjectSubmissionDialog } from '../project-submission/update-project-submission/update-project-submission.dialog';
@@ -12,22 +11,25 @@ import { CreateProjectSubmissionDialog } from './create-project-submission/creat
 
 @Component({
   selector: 'project-submission',
-  templateUrl: './project-submission.component.html'
+  templateUrl: './project-submission.component.html',
 })
 export class ProjectSubmissionComponent extends ProjectComponentBase {
-
   constructor(
     private formService: FormService,
     private createProjectSubmissionDialog: CreateProjectSubmissionDialog,
     private updateProjectSubmissionDialog: UpdateProjectSubmissionDialog,
     private confirmDeleteDialog: ConfirmDeleteDialog,
     public projectSubmissionApi: ProjectSubmissionApi,
+    public configurationService: ConfigurationService
   ) {
     super();
   }
 
-  form = new FormGroup({
-  });
+  isAdministrator() {
+    return this.configurationService.hasClaim((p) => p.claims.administrator);
+  }
+
+  form = new FormGroup({});
 
   cancel() {
     this.reset(this.item);
@@ -43,7 +45,6 @@ export class ProjectSubmissionComponent extends ProjectComponentBase {
     this.createProjectSubmissionDialog.open({ projectId: this.item.id, fundingStreamId: this.item.proposedFundingStreamId });
   }
 
-
   edit(item: ProjectSubmission) {
     if (this.locked) return;
     this.updateProjectSubmissionDialog.open({ projectSubmission: item });
@@ -51,8 +52,8 @@ export class ProjectSubmissionComponent extends ProjectComponentBase {
 
   delete(item: ProjectSubmission) {
     if (this.locked) return;
-    this.confirmDeleteDialog.open({ title: "Project Submission" }).subscribe((result) => {
-      this.projectSubmissionApi.delete({ id: item.id }, { successGrowl: "Project Submission Deleted" }).subscribe();
+    this.confirmDeleteDialog.open({ title: 'Project Submission' }).subscribe((result) => {
+      this.projectSubmissionApi.delete({ id: item.id }, { successGrowl: 'Project Submission Deleted' }).subscribe();
     });
   }
 }

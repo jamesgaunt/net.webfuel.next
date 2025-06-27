@@ -160,34 +160,9 @@ internal class TriageSupportRequestHandler : IRequestHandler<TriageSupportReques
 
         await _projectRepository.InsertProject(project);
 
-        await MigrateEmailLogsToSupport(project, supportRequest);
-
         ProjectSummaryProvider.FlushProjectMetrics();
 
         return project;
-    }
-
-    async Task MigrateEmailLogsToSupport(Project project, SupportRequest supportRequest)
-    {
-        var logs = await _emailService.SelectEmailLogByEntityId(supportRequest.Id);
-
-        foreach (var log in logs)
-        {
-            var createProjectSupport = new CreateProjectSupport
-            {
-                ProjectSupportGroupId = project.ProjectSupportGroupId,
-                Date = DateOnly.FromDateTime(log.SentAt.Date),
-                Description = log.HtmlBody,
-                TeamIds = new List<Guid> { SupportTeamEnum.TriageTeam },
-                AdviserIds = new List<Guid>(),
-                SupportProvidedIds = new List<Guid>(),
-                WorkTimeInHours = 0,
-                IsPrePostAwardId = IsPrePostAwardEnum.PreAward,
-                Files = new List<ProjectSupportFile>()
-            };
-
-            await _mediator.Send(createProjectSupport);
-        }
     }
 
     string FormatPrefixedNumber(Project project)

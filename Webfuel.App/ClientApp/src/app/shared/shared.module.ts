@@ -42,6 +42,7 @@ import { FileBrowserComponent } from './file-browser/file-browser.component';
 
 // Dialogs
 import { AlertDialog, AlertDialogComponent } from './dialogs/alert/alert.dialog';
+import { AttachEmailFilesDialog, AttachEmailFilesDialogComponent } from './dialogs/attach-email-files/attach-email-files.dialog';
 import {
   AttachProjectSupportFilesDialog,
   AttachProjectSupportFilesDialogComponent,
@@ -52,6 +53,7 @@ import { ConfirmDeleteDialog, ConfirmDeleteDialogComponent } from './dialogs/con
 import { ConfirmDialog, ConfirmDialogComponent } from './dialogs/confirm/confirm.dialog';
 import { CreateUserActivityDialog, CreateUserActivityDialogComponent } from './dialogs/create-user-activity/create-user-activity.dialog';
 import { DatePickerDialog, DatePickerDialogComponent } from './dialogs/date-picker/date-picker.dialog';
+import { FileEditorDialog, FileEditorDialogComponent } from './dialogs/file-editor/file-editor.dialog';
 import { FileViewerDialog, FileViewerDialogComponent } from './dialogs/file-viewer/file-viewer.dialog';
 import { RunAnnualReportDialog, RunAnnualReportDialogComponent } from './dialogs/run-annual-report/run-annual-report.dialog';
 import { SendEmailDialog, SendEmailDialogComponent } from './dialogs/send-email/send-email.dialog';
@@ -60,7 +62,6 @@ import {
   UploadProjectSupportFilesDialog,
   UploadProjectSupportFilesDialogComponent,
 } from './dialogs/upload-project-support-files/upload-project-support-files.dialog';
-import { FileEditorDialogComponent, FileEditorDialog } from './dialogs/file-editor/file-editor.dialog';
 
 @NgModule({
   imports: [
@@ -123,6 +124,7 @@ import { FileEditorDialogComponent, FileEditorDialog } from './dialogs/file-edit
     SendEmailDialogComponent,
     AttachProjectSupportFilesDialogComponent,
     UploadProjectSupportFilesDialogComponent,
+    AttachEmailFilesDialogComponent,
   ],
   exports: [
     CommonModule,
@@ -179,6 +181,7 @@ import { FileEditorDialogComponent, FileEditorDialog } from './dialogs/file-edit
     RunAnnualReportDialogComponent,
     AttachProjectSupportFilesDialogComponent,
     UploadProjectSupportFilesDialogComponent,
+    AttachEmailFilesDialogComponent,
   ],
   providers: [
     ChangePasswordDialog,
@@ -195,6 +198,7 @@ import { FileEditorDialogComponent, FileEditorDialog } from './dialogs/file-edit
     SendEmailDialog,
     AttachProjectSupportFilesDialog,
     UploadProjectSupportFilesDialog,
+    AttachEmailFilesDialog,
   ],
 })
 export class SharedModule {}

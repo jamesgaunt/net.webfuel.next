@@ -92,6 +92,7 @@ internal class ProjectReportProvider : IProjectReportProvider
                 builder.Add(Guid.Parse("0df4653c-02c9-4c27-b8d4-093c5ec3066b"), "Team Contact First Name", p => p.TeamContactFirstName);
                 builder.Add(Guid.Parse("68f5f5cd-085d-4f8f-8e17-50561840ac3e"), "Team Contact Last Name", p => p.TeamContactLastName);
                 builder.Add(Guid.Parse("252017cf-4058-4d20-b124-53cccc05c55d"), "Team Contact Email", p => p.TeamContactEmail);
+                builder.Add(Guid.Parse("bb035779-7377-4944-a482-c18a65f9e771"), "Team Contact Alt Email", p => p.TeamContactAltEmail);
                 builder.Map<ResearcherRole>(Guid.Parse("826b34c2-b3f4-4841-bb9a-4c553e5237ce"), "Team Contact Role In Application", p => p.TeamContactRoleId);
 
                 // Lead Applicant
@@ -134,6 +135,9 @@ internal class ProjectReportProvider : IProjectReportProvider
                     a.Map<SupportProvided>(Guid.Parse("db47a4e5-84b3-411c-b4f4-4bca919fde2e"), "Support Provided", p => p.SupportProvidedIds);
                     a.Add(Guid.Parse("64c50d12-ab3a-4ce6-a584-c58aa788d153"), "Support Time In Hours", p => p.WorkTimeInHours);
                 });
+
+                builder.Add(Guid.Parse("b3eda4f3-45ef-431f-a0fc-24e08dc91799"), "Mock Interviews", p => p.MockInterviews ? "Yes" : "");
+                builder.Add(Guid.Parse("8c7de021-865c-4013-8e2e-d0e8d8897b40"), "Grantsmapship Review", p => p.GrantsmanshipReview ? "Yes" : "");
 
                 // Open Support Request
 
