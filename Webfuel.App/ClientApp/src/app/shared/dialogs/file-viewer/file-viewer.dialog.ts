@@ -21,6 +21,7 @@ export class FileViewerDialog extends DialogBase<UserActivity, FileViewerDialogD
 })
 export class FileViewerDialogComponent extends DialogComponentBase<UserActivity, FileViewerDialogData>  {
 
+
   constructor(
     private fileStorageEntryApi: FileStorageEntryApi,
     private domSanitizer: DomSanitizer

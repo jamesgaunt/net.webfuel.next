@@ -53,7 +53,7 @@ export abstract class DropDownBase<TItem> {
   placeholder = "";
 
   @Input()
-  filterHidden = false;
+  filterHidden = true;
 
   @Input()
   enableClear: boolean = false;
@@ -273,8 +273,8 @@ export abstract class DropDownBase<TItem> {
       index = null;
     else if (index < 0)
       index = 0;
-    else if (index >= this.optionItems.length)
-      index = this.optionItems.length - 1;
+    else if (index > this.optionItems.length)
+      index = this.optionItems.length;
 
     this.activeIndex = index;
     this.cd.detectChanges();
@@ -300,7 +300,7 @@ export abstract class DropDownBase<TItem> {
       return;
 
     setTimeout(() => {
-      if (this.searchInput.nativeElement)
+      if (this.searchInput && this.searchInput.nativeElement)
         this.searchInput.nativeElement.focus();
     }, 100);
 
@@ -365,7 +365,7 @@ export abstract class DropDownBase<TItem> {
   // Focus Input
 
   @ViewChild('FocusInput', { static: false })
-  private focusInput!: ElementRef<any>;
+  protected focusInput!: ElementRef<any>;
 
   focusControl = new FormControl<string>('');
 

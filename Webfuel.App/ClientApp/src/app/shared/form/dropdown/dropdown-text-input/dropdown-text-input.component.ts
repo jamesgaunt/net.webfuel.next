@@ -18,6 +18,23 @@ import { DropDownBase } from '../dropdown-base';
 })
 export class DropDownTextInputComponent<TItem> extends DropDownBase<TItem> implements ControlValueAccessor {
 
+  constructor() {
+    super();
+    this.enableSearch = false;
+  }
+
+  focusFreeText() {
+    if (this._isDisabled)
+      return;
+
+    this.closePopup();
+    this.focusControl.setValue('');
+    this.cd.detectChanges();
+    setTimeout(() => {
+      this.focusInput.nativeElement.focus();
+    }, 100);
+  }
+
     ngOnInit(): void {
         super.ngOnInit();
         this.focusControl.valueChanges

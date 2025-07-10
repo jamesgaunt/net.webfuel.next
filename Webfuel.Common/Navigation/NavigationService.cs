@@ -31,6 +31,8 @@ internal class NavigationService : INavigationService
             if (_identityAccessor.Claims.CanEditReports)
                 clientConfiguration.SideMenu.AddChild(name: "Reports", action: "/reporting/report-list", icon: "fas fa-fw fa-file-spreadsheet");
 
+            clientConfiguration.SideMenu.AddChild(name: "File Library", action: "/configuration/global-file-list", icon: "fas fa-file");
+
             if (_identityAccessor.Claims.CanAccessConfiguration)
                 clientConfiguration.SideMenu.AddChild(name: "Configuration", action: "/configuration/configuration-menu", icon: "fas fa-fw fa-cogs");
         }
@@ -52,7 +54,6 @@ internal class NavigationService : INavigationService
             {
                 clientConfiguration.SettingsMenu.AddChild(name: "Report Groups", action: "/reporting/report-group-list", icon: "fas fa-layer-group");
                 clientConfiguration.SettingsMenu.AddChild(name: "Triage Templates", action: "/configuration/triage-template-list", icon: "fas fa-envelope-open-text");
-                clientConfiguration.SettingsMenu.AddChild(name: "Global Files", action: "/configuration/global-file-list", icon: "fas fa-file");
             }
         }
 

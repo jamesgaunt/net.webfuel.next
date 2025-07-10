@@ -55,6 +55,9 @@ internal class FileStorageService : IFileStorageService
         if (command.FormFile == null)
             throw new InvalidOperationException("No form file supplied to upload file");
 
+        if (command.FormFile.Length == 0)
+            throw new InvalidOperationException("The supplied form file is empty");
+
         // Ensure the global file storage group exists
         if (command.FileStorageGroupId == FileStorageSettings.GlobalFileStorageGroupId)
         {

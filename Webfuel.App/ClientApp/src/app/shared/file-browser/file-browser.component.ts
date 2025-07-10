@@ -20,6 +20,8 @@ import { ConfirmDeleteDialog } from '../dialogs/confirm-delete/confirm-delete.di
 export class FileBrowserComponent implements OnInit {
   destroyRef: DestroyRef = inject(DestroyRef);
 
+  globalFileStorageGroupId = '17c28098-375c-4a1a-bc41-43813786ab84'; // This is the ID for the Global File Storage Group
+
   constructor(
     private router: Router,
     private httpClient: HttpClient,
@@ -34,6 +36,10 @@ export class FileBrowserComponent implements OnInit {
     this.form.valueChanges.pipe(debounceTime(200), takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.uploadFiles();
     });
+  }
+
+  isGlobalFiles() {
+    return this.fileStorageGroupId == this.globalFileStorageGroupId;
   }
 
   // Inputs

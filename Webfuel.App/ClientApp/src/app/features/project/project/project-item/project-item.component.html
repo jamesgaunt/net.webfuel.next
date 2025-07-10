@@ -121,7 +121,7 @@
           </div>
           <div class="field is-inline is-12">
             <label class="label">Outline submission status</label>
-            <dropdown-select [dataSource]="staticDataCache.outlineSubmissionStatus" placeholder="optional" formControlName="outlineSubmissionStatusId"></dropdown-select>
+            <dropdown-select [dataSource]="staticDataCache.outlineSubmissionStatus" [enableClear]="true" placeholder="optional" formControlName="outlineSubmissionStatusId"></dropdown-select>
           </div>
           <div class="field is-inline is-12">
             <label class="label">Outline outcome expected</label>
@@ -129,7 +129,7 @@
           </div>
           <div class="field is-inline is-12">
             <label class="label">Outline outcome</label>
-            <dropdown-select [dataSource]="staticDataCache.outlineOutcome" placeholder="optional" formControlName="outlineOutcomeId"></dropdown-select>
+            <dropdown-select [dataSource]="staticDataCache.outlineOutcome" [enableClear]="true" placeholder="optional" formControlName="outlineOutcomeId"></dropdown-select>
           </div>
         </div>
       </div>
@@ -145,7 +145,7 @@
           </div>
           <div class="field is-inline is-12">
             <label class="label">Full submission status</label>
-            <dropdown-select [dataSource]="staticDataCache.fullSubmissionStatus" placeholder="optional" formControlName="fullSubmissionStatusId"></dropdown-select>
+            <dropdown-select [dataSource]="staticDataCache.fullSubmissionStatus" [enableClear]="true" placeholder="optional" formControlName="fullSubmissionStatusId"></dropdown-select>
           </div>
           <div class="field is-inline is-12">
             <label class="label">Full outcome expected</label>
@@ -153,7 +153,7 @@
           </div>
           <div class="field is-inline is-12">
             <label class="label">Full outcome</label>
-            <dropdown-select [dataSource]="staticDataCache.fullOutcome" placeholder="optional" formControlName="fullOutcomeId"></dropdown-select>
+            <dropdown-select [dataSource]="staticDataCache.fullOutcome" [enableClear]="true" placeholder="optional" formControlName="fullOutcomeId"></dropdown-select>
           </div>
         </div>
       </div>

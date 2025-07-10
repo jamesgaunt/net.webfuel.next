@@ -63,7 +63,7 @@ export class AttachEmailFilesDialogComponent extends DialogComponentBase<AttachE
   localFiles: FileStorageEntry[] | null = null;
   globalFiles: FileStorageEntry[] | null = null;
 
-  view: 'local' | 'global' = 'local';
+  view: 'local' | 'global' = 'global';
   attachments: SendEmailAttachment[] = [];
 
   switchView(view: 'local' | 'global') {

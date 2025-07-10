@@ -209,7 +209,6 @@ export class QueryService {
   }
 
   private _applyQueryOpToField(field: any, op: string, value: any) {
-
     switch (op) {
       case QueryOp.None:
         return true;

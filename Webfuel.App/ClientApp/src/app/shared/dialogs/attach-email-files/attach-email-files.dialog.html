@@ -3,8 +3,8 @@
   <div class="dialog-body">
     <div class="tabs">
       <ul>
+        <li [ngClass]="{ 'is-active': view === 'global' }"><a (click)="switchView('global')">File Library</a></li>
         <li [ngClass]="{ 'is-active': view === 'local' }"><a (click)="switchView('local')">Local Files</a></li>
-        <li [ngClass]="{ 'is-active': view === 'global' }"><a (click)="switchView('global')">Global Files</a></li>
       </ul>
     </div>
 

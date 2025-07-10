@@ -24,7 +24,7 @@
 
 <ng-template #popupTemplate>
     <div class="dropdown-popup">
-        <div class="dropdown-popup-form">
+        <div *ngIf="enableSearch" class="dropdown-popup-form">
             <input #SearchInput class="dropdown-search-input" [formControl]="searchControl" placeholder="search..." type="text" (keyup)="searchKeyUp($event)" (keydown)="searchKeyDown($event)" (keypress)="searchKeyPress($event)" />
         </div>
         <div class="items" (scroll)="onDropDownScroll($event)">
@@ -36,6 +36,9 @@
             </div>
             <div *ngIf="!optionItemsCallback && optionItems.length == 0" class="dropdown-loading">
                 <i>No items available</i>
+            </div>
+            <div class="dropdown-item" [class.active]="optionItems.length == activeIndex" (mousedown)="focusFreeText()" (mouseover)="setActiveIndex(optionItems.length)" (mouseenter)="setActiveIndex(optionItems.length)">
+              Other
             </div>
         </div>
     </div>

@@ -175,7 +175,10 @@ export class StaticDataCache {
     };
     
     researcherOrganisationType: IDataSourceWithGet<ResearcherOrganisationType> = {
-        query: (query) => this.staticDataService.queryFactory(query, s => s.researcherOrganisationType),
+      query: (query) => {
+        console.log(query);
+        return this.staticDataService.queryFactory(query, s => s.researcherOrganisationType);
+      },
         get: (params: { id: string }) => this.staticDataService.getFactory(params.id, s => s.researcherOrganisationType),
     };
     

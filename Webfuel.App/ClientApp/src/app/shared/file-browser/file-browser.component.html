@@ -59,8 +59,10 @@
     <grid-column justify="right">
       <ng-template #itemTemplate let-item>
         <a *ngIf="!locked" class="link is-primary" (click)="editFile(item)">edit tags</a>
-        &nbsp;|&nbsp;
-        <a *ngIf="!locked" class="link is-primary" (click)="searchSupport(item)">search support</a>
+        <span *ngIf="!locked && !isGlobalFiles()">
+          &nbsp;|&nbsp;
+          <a  class="link is-primary" (click)="searchSupport(item)">search support</a>
+        </span>
         &nbsp;|&nbsp;
         <a *ngIf="!locked" class="link is-danger" (click)="deleteFile(item)">delete</a>
       </ng-template>
